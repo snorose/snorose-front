@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LayoutService } from '../../shared/services/layout.service';
 
 export interface IKeyValue {
   key: string;
@@ -35,4 +36,6 @@ Array.prototype.isEmpty = function () {
 })
 export class AppComponent {
   title = 'snorose';
+
+  constructor(public readonly layoutService: LayoutService) { }
 }

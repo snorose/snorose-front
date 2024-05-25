@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IBoardListData } from '../../../http/board.http';
 import { ActivatedRoute } from '@angular/router';
+import { LayoutService } from '../../../services/layout.service';
 
 @Component({
   selector: 'app-list',
@@ -15,10 +16,12 @@ export class ListComponent implements OnInit {
   public boardId: string | null = null;
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private readonly layoutService: LayoutService
   ) { }
 
   ngOnInit(): void {
+    this.layoutService.isShowHeader = false;
     this.name = this.route.snapshot.paramMap.get('name');
     this.boardId = this.route.snapshot.paramMap.get('boardId');
   }
