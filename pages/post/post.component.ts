@@ -3,6 +3,8 @@ import { GlobalService } from '../../shared/services/global.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IReviewCreateRequest, IReviewCreateResponse, LectureType, Semester } from '../../shared/http/review.http';
 import { Router } from '@angular/router';
+import { DalService } from '../../shared/services/dal.service';
+import { LayoutService } from '../../shared/services/layout.service';
 
 /**
  * 제목, 내용, 작성자
@@ -48,7 +50,8 @@ export class PostComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    public globalService: GlobalService
+    public readonly layoutService: LayoutService,
+    private readonly dalService: DalService
   ) { }
 
   private setHadMidterm(type: string) {
@@ -70,7 +73,7 @@ export class PostComponent {
     const file: File = event.target.files[0];
 
     if (file.type !== 'application/pdf') {
-      this.globalService.httpService.snackBar('파일은 pdf만 업로드 가능합니다.');
+      this.dalService.snackBar('파일은 pdf만 업로드 가능합니다.');
       return;
     }
 
@@ -115,13 +118,13 @@ export class PostComponent {
 
 
       console.log('reviewData', reviewData);
-      this.globalService.dalService.reviewHttp.create(reviewData).subscribe((response: IReviewCreateResponse) => {
+      this.dalService.reviewHttp.create(reviewData).subscribe((response: IReviewCreateResponse) => {
         console.log('리뷰 작성 성공', response);
         this.router.navigateByUrl(`/file/${response.result.postId}`);
       });
     }
     else {
-      this.globalService.httpService.snackBar('입력하지 않은 필드가 있습니다. 모두 입력 후, 제출해 주세요');
+      this.dalService.snackBar('입력하지 않은 필드가 있습니다. 모두 입력 후, 제출해 주세요');
     }
   }
 }

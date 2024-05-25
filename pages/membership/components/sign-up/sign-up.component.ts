@@ -5,6 +5,8 @@ import { GlobalService } from '../../../../shared/services/global.service';
 import { ISignUpRequest, ISignUpResponse } from '../../../../shared/http/membership.http';
 import { Router } from '@angular/router';
 import { majorList } from '../../../../shared/data/major.data';
+import { DalService } from '../../../../shared/services/dal.service';
+import { DateService } from '../../../../shared/services/date.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -35,18 +37,19 @@ export class SignUpComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    public globalService: GlobalService
+    private readonly dalService: DalService,
+    private readonly dateService: DateService,
   ) { }
 
   public onSignUpClick(event: any) {
     console.log('firstFormGroup', this.firstFormGroup.value, 'secondFormGroup', this.secondFormGroup.value);
 
     if (!this.firstFormGroup.valid) {
-      this.globalService.httpService.snackBar('첫번째 양식에 입력하지 않은 필드가 있습니다. 모두 입력 후, 제출해 주세요');
+      this.dalService.snackBar('첫번째 양식에 입력하지 않은 필드가 있습니다. 모두 입력 후, 제출해 주세요');
       return;
     }
     if (!this.secondFormGroup.valid) {
-      this.globalService.httpService.snackBar('두번째 양식에 입력하지 않은 필드가 있습니다. 모두 입력 후, 제출해 주세요');
+      this.dalService.snackBar('두번째 양식에 입력하지 않은 필드가 있습니다. 모두 입력 후, 제출해 주세요');
       return;
     }
 
@@ -59,20 +62,20 @@ export class SignUpComponent {
       nickname: this.secondFormGroup.value.nickname as string,
       studentNumber: this.secondFormGroup.value.studentNumber as number,
       major: this.secondFormGroup.value.major as string,
-      birthday: this.globalService.dateService.getBirthdayString(this.secondFormGroup.value.birthday as Date)
+      birthday: this.dateService.getBirthdayString(this.secondFormGroup.value.birthday as Date)
     };
 
     console.log('signUpData', signUpData);
 
-    this.globalService.dalService.membershipHttp.signUp(signUpData).subscribe((response: ISignUpResponse) => {
+    this.dalService.membershipHttp.signUp(signUpData).subscribe((response: ISignUpResponse) => {
       console.log('response^^', response);
       if (response.isSuccess) {
-        this.globalService.httpService.snackBar(`회원가입을 성공했습니다. 로그인 해주세요.`);
+        this.dalService.snackBar(`회원가입을 성공했습니다. 로그인 해주세요.`);
         this.router.navigateByUrl('/signIn');
       }
       else {
         console.log('회원가입 실패!');
-        this.globalService.httpService.snackBar(`${response.message} 다시 회원가입 해주세요.`);
+        this.dalService.snackBar(`${response.message} 다시 회원가입 해주세요.`);
       }
     });
 

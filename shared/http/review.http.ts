@@ -1,6 +1,7 @@
 import { Observable } from "rxjs";
 import { IBaseResponse } from "./baseResponse.dto";
 import { HttpService } from "../services/http.service";
+import { inject } from "@angular/core";
 
 export enum Semester {
   First = 'FIRST', // 1학기 
@@ -111,7 +112,7 @@ export interface IReviewHttp {
 
 export class ReviewHttp implements IReviewHttp {
 
-  constructor(private readonly httpService: HttpService) { }
+  private readonly httpService = inject(HttpService);
 
   public getList(boardId: number, page: number): Observable<IReviewListResponse> {
     return this.httpService.Get(`/v1/reviews/${boardId}/list/${page}`);
