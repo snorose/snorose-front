@@ -43,19 +43,36 @@
     <p>
       {{ detailData.content }}
     </p>
-    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+    <div class="flex-row-between">
       <p style="font-size: smaller; color: #6A6A6A;">
         {{ detailData.createdAt | full1Date }}
-      </p>
-      <p style="font-size: smaller; color: #5F86BF;">
-        {{ detailData.viewCount }}
       </p>
     </div>
   </mat-card-content>
 
   <mat-card-actions>
-    <button mat-button>공감</button>
-    <button mat-button>스크랩</button>
+    <div matRipple class="flex-row small-button">
+      <mat-icon>chat_bubble</mat-icon>
+      <p class="content-action-button">
+        {{ detailData.likeCount }}
+      </p>
+    </div>
+    <div matRipple class="flex-row small-button">
+      <mat-icon>favorite</mat-icon>
+      <p class="content-action-button">
+        {{ detailData.likeCount }}
+      </p>
+    </div>
+    <div matRipple class="flex-row small-button">
+      <mat-icon>bookmark</mat-icon>
+      <p class="content-action-button">
+        {{ detailData.scrapCount }}
+      </p>
+    </div>
+    <span class="toolbar-spacer"></span>
+    <p class="content-action-button" style="padding-right: 10px; font-size: 12px; color: #5F86BF;">
+      {{ detailData.viewCount }}
+    </p>
   </mat-card-actions>
   <mat-divider></mat-divider>
 
@@ -77,13 +94,20 @@
     </div>
     <div style="transform:translate(1px, 8px); font-size: small;">{{detailData.userDisplay}}</div>
     <span class="toolbar-spacer"></span>
-    <button style="transform:translate(1px, -8px);" mat-icon-button>
+    <div matRipple class="flex-row small-button">
       <mat-icon>chat_bubble</mat-icon>
-    </button>
-    <button style="transform:translate(1px, -8px);" mat-icon-button>
+      <p class="content-action-button">
+        {{ detailData.likeCount }}
+      </p>
+    </div>
+    <div matRipple class="flex-row small-button">
       <mat-icon>favorite</mat-icon>
-    </button>
-    <button style="transform:translate(1px, -8px);" mat-icon-button color="primary" [matMenuTriggerFor]="menu">
+      <p class="content-action-button">
+        {{ detailData.likeCount }}
+      </p>
+    </div>
+    <button class="small-button" style="transform:translate(1px, -8px);" mat-icon-button color="primary"
+      [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
     </button>
   </mat-card-header>
