@@ -1,58 +1,40 @@
 
 export interface Section {
+  id: number;
+  icon: string;
   name: string;
-  boardId: number;
+  description: string;
 }
 
-export const announcements: Section[] = [
+export const BOARDS: Section[] = [
   {
-    name: '명예의 전당',
-    boardId: -1
-  },
-  {
+    id: 2,
+    icon: 'campaign',
     name: '공지사항',
-    boardId: 2
-  },
-];
-
-export const communityList: Section[] = [
-  {
-    name: '함박눈방',
-    boardId: 4
+    description: ''
   },
   {
+    id: 3,
+    icon: 'cloud',
     name: '첫눈온방',
-    boardId: 3
+    description: '새내기 전용 게시판'
   },
   {
+    id: 4,
+    icon: 'cloudy_snowing',
+    name: '함박눈방',
+    description: '눈송이 모두가 이용하는 커뮤니티'
+  },
+  {
+    id: 5,
+    icon: 'sunny',
     name: '만년설방',
-    boardId: 5
+    description: '졸업생 전용 게시판'
+  },
+  {
+    id: 6,
+    icon: 'hotel_class',
+    name: '베숙트',
+    description: '추천을 많이 받은 게시물 모아보기'
   }
-];
-
-export const departmentList: Section[] = [
-  {
-    name: '소프트웨어학부',
-    boardId: -1
-  },
-  {
-    name: '문과대학',
-    boardId: -1
-  },
-  {
-    name: '이과대학',
-    boardId: -1
-  },
-  {
-    name: '공과대학',
-    boardId: -1
-  },
-  {
-    name: '미술대학',
-    boardId: -1
-  },
-  {
-    name: '음악대학',
-    boardId: -1
-  },
 ]

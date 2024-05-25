@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalService } from '../../shared/services/global.service';
-import { announcements, communityList, departmentList, Section } from './consts/board';
+import { BOARDS, Section } from './consts/board';
 import { LayoutService } from '../../shared/services/layout.service';
+import { BLUE1 } from '../../shared/consts/color';
 
 @Component({
   selector: 'app-board-list',
@@ -10,18 +10,13 @@ import { LayoutService } from '../../shared/services/layout.service';
 })
 export class BoardListComponent implements OnInit {
 
-  public announcements: Section[] = [];
-  public communityList: Section[] = [];
-  public departmentList: Section[] = [];
+  public boards: Section[] = BOARDS;
+  public BLUE1 = BLUE1;
 
   constructor(public readonly layoutService: LayoutService) { }
 
   ngOnInit() {
-    this.layoutService.isShowHeader = false;
-    console.log('BoardListComponent oninit');
-    this.announcements = announcements;
-    this.communityList = communityList;
-    this.departmentList = departmentList;
+    this.layoutService.isShowHeader = true;
   }
 
   public clickBoard(event: any) {
