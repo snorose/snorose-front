@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DalService } from '../../../../shared/services/dal.service';
 import { IBoardListData } from '../../../../shared/http/board.http';
+import { BLUE1 } from '../../../../shared/consts/color';
 
 @Component({
   selector: 'app-board',
@@ -13,6 +14,7 @@ export class BoardComponent implements OnInit {
   public name: string | null = null;
   public boardId: string | null = null;
   public boardList: IBoardListData[] = [];
+  public BLUE1 = BLUE1;
 
   constructor(
     private route: ActivatedRoute,

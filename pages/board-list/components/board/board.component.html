@@ -1,28 +1,16 @@
-<mat-menu #menu="matMenu">
-  <button mat-menu-item disabled>
-    <mat-icon>campaign</mat-icon>
-    <span>공지사항 등록</span>
+<mat-toolbar style="background-color: white;">
+  <button mat-icon-button [routerLink]="['/board-list']">
+    <mat-icon [ngStyle]="{ 'color': BLUE1 }">arrow_back_ios</mat-icon>
   </button>
-  <button mat-menu-item [routerLink]="['/board-list', name, 'post']">
-    <mat-icon>edit_note</mat-icon>
-    <span>글 작성</span>
-  </button>
-  <button mat-menu-item>
-    <mat-icon>notifications_off</mat-icon>
-    <span>알림</span>
-  </button>
-</mat-menu>
-
-<mat-toolbar>
-  <button mat-icon-button color="primary" [routerLink]="['/board-list']">
-    <mat-icon>arrow_back_ios</mat-icon>
-  </button>
-  <span class="toolbar-spacer"></span>
   <span>{{ name }}</span>
   <span class="toolbar-spacer"></span>
-  <button mat-icon-button color="primary" [matMenuTriggerFor]="menu">
-    <mat-icon>more_vert</mat-icon>
+  <button mat-icon-button>
+    <mat-icon [ngStyle]="{ 'color': BLUE1 }">search</mat-icon>
   </button>
 </mat-toolbar>
 
 <app-list [lists]="boardList"></app-list>
+
+<button mat-icon-button class="fixed-button" [routerLink]="['/board-list', name, 'post']">
+  <mat-icon>edit</mat-icon>
+</button>
