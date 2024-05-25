@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 
+export interface IKeyValue {
+  key: string;
+  value: any;
+}
+
 declare global {
 
   interface Array<T> {
