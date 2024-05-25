@@ -1,6 +1,6 @@
 <mat-list>
   @for (list of lists; track list) {
-  <mat-list-item matRipple>
+  <mat-list-item matRipple [routerLink]="[list.postId]">
     <div matListItemTitle>{{ list.title }}</div>
     <div matListItemLine>{{ list.createdAt | date }}</div>
     <div matListItemLine>dlra</div>
