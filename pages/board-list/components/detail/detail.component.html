@@ -14,6 +14,12 @@
 </mat-menu>
 
 <!-- content part -->
+<mat-toolbar style="background-color: white;">
+  <button mat-icon-button [routerLink]="['/board-list']">
+    <mat-icon [ngStyle]="{ 'color': BLUE1 }">arrow_back_ios</mat-icon>
+  </button>
+  <span>{{ name }}</span>
+</mat-toolbar>
 
 <mat-card class="example-card">
   <mat-card-header>

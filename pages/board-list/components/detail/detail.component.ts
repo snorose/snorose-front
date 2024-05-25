@@ -3,6 +3,7 @@ import { DalService } from '../../../../shared/services/dal.service';
 import { ActivatedRoute } from '@angular/router';
 import { IBoardDetailData } from '../../../../shared/http/board.http';
 import { LayoutService } from '../../../../shared/services/layout.service';
+import { BLUE1 } from '../../../../shared/consts/color';
 
 @Component({
   selector: 'app-detail',
@@ -32,6 +33,7 @@ export class DetailComponent implements OnInit {
   public boardId: string | null = null;
   public postId: string | null = null;
   public name: string = '';
+  public BLUE1 = BLUE1;
 
   constructor(
     private route: ActivatedRoute,
