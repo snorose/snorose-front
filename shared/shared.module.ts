@@ -26,11 +26,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DatePipe } from './pipes/date.pipe';
 
 @NgModule({
   declarations: [
     SwiperComponent,
-    ListComponent
+    ListComponent,
+    DatePipe
   ],
   imports: [
     RouterLink,
@@ -60,6 +62,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatProgressSpinnerModule,
   ],
   exports: [
+    DatePipe,
     SwiperComponent,
     ListComponent,
     RouterLink,
