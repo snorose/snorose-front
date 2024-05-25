@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { IBoardListData } from '../../../http/board.http';
 import { ActivatedRoute } from '@angular/router';
 import { LayoutService } from '../../../services/layout.service';
+import { PINK1 } from '../../../consts/color';
 
 @Component({
   selector: 'app-list',
@@ -14,6 +15,7 @@ export class ListComponent implements OnInit {
 
   public name: string | null = null;
   public boardId: string | null = null;
+  public PINK1 = PINK1;
 
   constructor(
     private route: ActivatedRoute,

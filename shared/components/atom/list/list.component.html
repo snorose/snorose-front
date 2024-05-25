@@ -1,15 +1,19 @@
 <mat-menu #menu="matMenu">
   <button mat-menu-item disabled>
-    <mat-icon>campaign</mat-icon>
-    <span>공지사항 등록</span>
+    <mat-icon>send</mat-icon>
+    <span>쪽지 보내기</span>
   </button>
   <button mat-menu-item [routerLink]="['/board-list', name, 'post']">
-    <mat-icon>edit_note</mat-icon>
-    <span>글 작성</span>
+    <mat-icon>share</mat-icon>
+    <span>공유하기</span>
   </button>
   <button mat-menu-item>
-    <mat-icon>notifications_off</mat-icon>
-    <span>알림</span>
+    <mat-icon>notifications_on</mat-icon>
+    <span>새 댓글 알림 받기</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon [ngStyle]="{ 'color': PINK1 }">flag</mat-icon>
+    <span [ngStyle]="{ 'color': PINK1 }">게시물/유저 신고</span>
   </button>
 </mat-menu>
 
@@ -32,8 +36,8 @@
       </div>
       <div style="transform:translate(1px, -2px); font-size: small;">{{list.userDisplay}}</div>
       <span class="toolbar-spacer"></span>
-      <button class="small-button" style="transform:translate(1px, -8px);" mat-icon-button color="primary"
-        [matMenuTriggerFor]="menu">
+      <button mat-icon-button class="small-button" style="transform:translate(1px, -8px);" [matMenuTriggerFor]="menu"
+        (click)="$event.stopPropagation()">
         <mat-icon>more_vert</mat-icon>
       </button>
     </div>
