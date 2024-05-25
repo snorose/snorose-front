@@ -1,9 +1,5 @@
-import { Component } from '@angular/core';
-
-export interface Section {
-  name: string;
-  updated: Date;
-}
+import { Component, Input } from '@angular/core';
+import { IBoardListData } from '../../../http/board.http';
 
 @Component({
   selector: 'app-list',
@@ -11,19 +7,5 @@ export interface Section {
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  public name!: string | null;
-  public folders: Section[] = [
-    {
-      name: 'Photos',
-      updated: new Date('1/1/16'),
-    },
-    {
-      name: 'Recipes',
-      updated: new Date('1/17/16'),
-    },
-    {
-      name: 'Work',
-      updated: new Date('1/28/16'),
-    },
-  ];
+  @Input() lists: IBoardListData[] = [];
 }

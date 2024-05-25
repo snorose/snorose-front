@@ -11,7 +11,7 @@ export const routes: Routes = [
     component: BoardListComponent
   },
   {
-    path: ':name',
+    path: 'board/:name/:boardId',
     component: BoardComponent
   },
   {

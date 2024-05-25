@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-export interface Section {
-  name: string;
-  updated: Date;
-}
+import { DalService } from '../../../../shared/services/dal.service';
+import { IBoardListData } from '../../../../shared/http/board.http';
 
 @Component({
   selector: 'app-board',
@@ -13,25 +10,27 @@ export interface Section {
 })
 export class BoardComponent implements OnInit {
   public name!: string | null;
-  public folders: Section[] = [
-    {
-      name: 'Photos',
-      updated: new Date('1/1/16'),
-    },
-    {
-      name: 'Recipes',
-      updated: new Date('1/17/16'),
-    },
-    {
-      name: 'Work',
-      updated: new Date('1/28/16'),
-    },
-  ];
+  public boardId!: string | null;
+  public boardList: IBoardListData[] = [];
 
-
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private readonly dalService: DalService
+  ) { }
 
   ngOnInit() {
+    console.log('board component oninit');
     this.name = this.route.snapshot.paramMap.get('name');
+    this.boardId = this.route.snapshot.paramMap.get('boardId');
+
+    if (this.boardId == null) {
+      this.dalService.snackBar('board Id가 없습니다.');
+    }
+    this.dalService.boardHttp.getBoardList(this.boardId as string, 0).subscribe(response => {
+      console.log('getBoardList response', response);
+      this.boardList = response.result;
+    });
   }
+
+
 }
