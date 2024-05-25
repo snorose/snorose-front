@@ -3,7 +3,7 @@
     <mat-list>
       <div mat-subheader>공지사항</div>
       @for (announcement of announcements; track announcement) {
-      <mat-list-item matRipple [routerLink]="[announcement.name]">
+      <mat-list-item matRipple [routerLink]="['board', announcement.name, announcement.boardId]">
         <mat-icon matListItemIcon>folder</mat-icon>
         <div matListItemTitle>{{announcement.name}}</div>
         <!-- <div matListItemLine>{{folder.updated | date}}</div> -->
@@ -16,7 +16,7 @@
     <mat-list>
       <div mat-subheader>커뮤니티</div>
       @for (community of communityList; track community) {
-      <mat-list-item matRipple [routerLink]="[community.name]">
+      <mat-list-item matRipple [routerLink]="['board', community.name, community.boardId]">
         <mat-icon matListItemIcon>ac_unit</mat-icon>
         <div matListItemTitle>{{community.name}}</div>
         <!-- <div matListItemLine>{{folder.updated | date}}</div> -->
@@ -26,7 +26,7 @@
       <br />
       <div mat-subheader>학과</div>
       @for (department of departmentList; track department) {
-      <mat-list-item matRipple [routerLink]="[department.name]">
+      <mat-list-item matRipple [routerLink]="['board', department.name, department.boardId]">
         <mat-icon matListItemIcon>groups</mat-icon>
         <div matListItemTitle>{{department.name}}</div>
         <!-- <div matListItemLine>{{folder.updated | date}}</div> -->
@@ -39,7 +39,7 @@
     <mat-list>
       <div mat-subheader>커뮤니티</div>
       @for (community of communityList; track community) {
-      <mat-list-item matRipple [routerLink]="[community.name]">
+      <mat-list-item matRipple [routerLink]="['board', community.name, community.boardId]">
         <mat-icon matListItemIcon>groups</mat-icon>
         <div matListItemTitle>{{community.name}}</div>
         <!-- <div matListItemLine>{{folder.updated | date}}</div> -->
