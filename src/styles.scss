@@ -24,12 +24,30 @@ a {
   cursor: pointer;
 }
 
-html,
-body {
-  height: 100%;
+.text-ellipsis {
+  white-space: nowrap;
+  /* 텍스트를 한 줄로 유지 */
+  overflow: hidden;
+  /* 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis;
+  /* 말줄임표(...)를 표시 */
 }
 
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+/* 스크롤바 숨기기 (모던 브라우저) */
+.hide-scrollbar {
+  overflow: auto;
+  /* 스크롤은 유지 */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+  /* 웹킷 기반 브라우저 (크롬, 사파리)에서 스크롤바 숨기기 */
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge에서 스크롤바 숨기기 */
+  scrollbar-width: none;
+  /* Firefox에서 스크롤바 숨기기 */
 }
