@@ -4,6 +4,8 @@ import { MatSort } from '@angular/material/sort';
 import { GlobalService } from '../../shared/services/global.service';
 import { merge, startWith, switchMap, map } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
+import { LayoutService } from '../../shared/services/layout.service';
+import { DalService } from '../../shared/services/dal.service';
 
 export interface FileData {
   userDisplay: string;
@@ -19,7 +21,7 @@ export interface FileData {
   templateUrl: './file.component.html',
   styleUrl: './file.component.scss'
 })
-export class FileComponent implements AfterViewInit {
+export class FileComponent implements OnInit, AfterViewInit {
 
   public displayedColumns: string[] = ['postId', 'title', 'userDisplay', 'createdAt'];
   public dataSource = new MatTableDataSource<FileData>([]);
@@ -30,7 +32,14 @@ export class FileComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(public globalService: GlobalService) { }
+  constructor(
+    private readonly dalService: DalService,
+    public readonly layoutService: LayoutService,
+  ) { }
+
+  ngOnInit(): void {
+    this.layoutService.isShowHeader = false;
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -45,7 +54,7 @@ export class FileComponent implements AfterViewInit {
         this.isLoadingResults = true;
         //console.log('ngAfterViewInit paginator pageIndex', this.paginator.pageIndex);
         console.log('paginator', this.paginator);
-        return this.globalService.dalService.reviewHttp.getList(1, this.paginator.pageIndex);
+        return this.dalService.reviewHttp.getList(1, this.paginator.pageIndex);
       }),
       map((data) => { // Flip flag to show that loading has finished.
         this.isLoadingResults = false;

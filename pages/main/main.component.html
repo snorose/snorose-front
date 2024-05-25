@@ -1,4 +1,4 @@
-<div style="overflow-y: scroll;" [style.height]="globalService.layoutService.getMainHeight()">
+<div style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()">
   <app-swiper></app-swiper>
   <mat-card class="demo-inline-calendar-card">
     <mat-calendar (dateClass)="dateClass" [selected]="selected" (selectedChange)="selectDate($event)">

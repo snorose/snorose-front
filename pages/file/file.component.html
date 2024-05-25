@@ -21,7 +21,7 @@
 </mat-toolbar>
 
 
-<div [style.height]="globalService.layoutService.getMainHeight()">
+<div [style.height]="layoutService.getMainHeight()">
   <mat-form-field>
     <mat-label>검색</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
@@ -56,7 +56,7 @@
       <!-- write_date Column -->
       <ng-container matColumnDef="createdAt">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> 작성일 </th>
-        <td mat-cell *matCellDef="let row" mat-ripple> {{row.createdAt}} </td>
+        <td mat-cell *matCellDef="let row" mat-ripple> {{row.createdAt | full1Date}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

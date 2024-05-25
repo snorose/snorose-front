@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from '../../shared/services/global.service';
 import { announcements, communityList, departmentList, Section } from './consts/board';
+import { LayoutService } from '../../shared/services/layout.service';
 
 @Component({
   selector: 'app-board-list',
@@ -13,9 +14,10 @@ export class BoardListComponent implements OnInit {
   public communityList: Section[] = [];
   public departmentList: Section[] = [];
 
-  constructor(public globalService: GlobalService) { }
+  constructor(public readonly layoutService: LayoutService) { }
 
   ngOnInit() {
+    this.layoutService.isShowHeader = false;
     console.log('BoardListComponent oninit');
     this.announcements = announcements;
     this.communityList = communityList;

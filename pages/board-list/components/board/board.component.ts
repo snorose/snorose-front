@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DalService } from '../../../../shared/services/dal.service';
 import { IBoardListData } from '../../../../shared/http/board.http';
 import { BLUE1 } from '../../../../shared/consts/color';
+import { LayoutService } from '../../../../shared/services/layout.service';
 
 @Component({
   selector: 'app-board',
@@ -18,11 +19,13 @@ export class BoardComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private readonly dalService: DalService
+    private readonly dalService: DalService,
+    public readonly layoutService: LayoutService,
   ) { }
 
   ngOnInit() {
     console.log('board component oninit');
+    this.layoutService.isShowHeader = false;
     this.name = this.route.snapshot.paramMap.get('name');
     this.boardId = this.route.snapshot.paramMap.get('boardId');
 

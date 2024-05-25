@@ -3,6 +3,9 @@ import { GlobalService } from '../../shared/services/global.service';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { PointBottomSheetComponent } from './components/point-bottom-sheet/point-bottom-sheet.component';
+import { DalService } from '../../shared/services/dal.service';
+import { LayoutService } from '../../shared/services/layout.service';
+import { DateService } from '../../shared/services/date.service';
 
 @Component({
   selector: 'app-main',
@@ -18,12 +21,15 @@ export class MainComponent {
 
   constructor(
     private _bottomSheet: MatBottomSheet,
-    public globalService: GlobalService
+    private readonly dalService: DalService,
+    private readonly dateService: DateService,
+    public readonly layoutService: LayoutService,
   ) {
-    this.currentDate = this.globalService.dateService.getCurrentDate();
+    this.currentDate = this.dateService.getCurrentDate();
   }
 
   ngOnInit() {
+    this.layoutService.isShowHeader = true;
     // 현재 날짜에 포인트 체크했는지 체크 후, 달력에 보여주기
 
   }

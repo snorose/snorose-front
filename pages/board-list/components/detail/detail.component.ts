@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DalService } from '../../../../shared/services/dal.service';
 import { ActivatedRoute } from '@angular/router';
 import { IBoardDetailData } from '../../../../shared/http/board.http';
+import { LayoutService } from '../../../../shared/services/layout.service';
 
 @Component({
   selector: 'app-detail',
@@ -34,10 +35,12 @@ export class DetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private readonly dalService: DalService
+    private readonly dalService: DalService,
+    private readonly layoutService: LayoutService,
   ) { }
 
   ngOnInit() {
+    this.layoutService.isShowHeader = false;
     this.boardId = this.route.snapshot.paramMap.get('boardId');
     this.postId = this.route.snapshot.paramMap.get('postId');
     console.log('boardId', this.boardId, 'postId', this.postId);

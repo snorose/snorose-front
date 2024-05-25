@@ -11,4 +11,9 @@ export class LayoutService {
         return this.bodyHeight;
     }
 
+    public getHeightWithoutHeader() {
+        this.bodyHeight = `${window.innerHeight - 60}px`;
+        return this.bodyHeight;
+    }
+
 }
