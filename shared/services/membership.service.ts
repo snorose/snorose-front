@@ -5,9 +5,15 @@ import { ISingInData } from "../http/membership.http";
 export class MembershipService {
 
   public initial: ISingInData = {
-    grantType: '',
-    accessToken: '',
-    refreshToken: '',
+    tokenResponse: {
+      grantType: '',
+      accessToken: '',
+      refreshToken: ''
+    },
+    nickname: '',
+    balance: 0,
+    userRoleId: -1,
+    birthday: ''
   }
 
   public data: ISingInData = this.initial;
@@ -36,7 +42,7 @@ export class MembershipService {
   }
 
   public isLogin() {
-    if (this.data.accessToken === '') return false;
+    if (this.data.tokenResponse.accessToken === '') return false;
     return true;
   }
 

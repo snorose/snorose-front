@@ -1,6 +1,7 @@
 import { Observable } from "rxjs";
 import { IBaseResponse } from "./baseResponse.dto";
 import { HttpService } from "../services/http.service";
+import { inject } from "@angular/core";
 
 export interface ISignUpRequest {
   loginId: string;
@@ -34,9 +35,15 @@ export interface ISignUpData {
 }
 
 export interface ISingInData {
-  grantType: string;
-  accessToken: string;
-  refreshToken: string;
+  tokenResponse: {
+    grantType: string;
+    accessToken: string;
+    refreshToken: string;
+  },
+  nickname: string;
+  balance: number;
+  userRoleId: number;
+  birthday: string;
 }
 
 export interface ISignUpResponse extends IBaseResponse<ISignUpData> { }
@@ -50,7 +57,7 @@ export interface IMembershipHttp {
 
 export class MembershipHttp implements IMembershipHttp {
 
-  constructor(private readonly httpService: HttpService) { }
+  private readonly httpService = inject(HttpService);
 
   public signUp(request: ISignUpRequest): Observable<ISignUpResponse> {
     return this.httpService.PostWithoutToken(`/v1/users/register`, request);
@@ -61,3 +68,4 @@ export class MembershipHttp implements IMembershipHttp {
   }
 
 }
+

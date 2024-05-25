@@ -3,6 +3,8 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { Router } from '@angular/router';
 import { GlobalService } from '../../../../shared/services/global.service';
 import { ISignInResponse } from '../../../../shared/http/membership.http';
+import { DalService } from '../../../../shared/services/dal.service';
+import { MembershipService } from '../../../../shared/services/membership.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -21,7 +23,8 @@ export class SignInComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private globalService: GlobalService
+    private readonly dalService: DalService,
+    private readonly membershipService: MembershipService,
   ) { }
 
   get id() {
@@ -35,13 +38,13 @@ export class SignInComponent {
   public onSignInClick() {
     if (!this.loginForm.valid) return;
 
-    this.globalService.dalService.membershipHttp.signIn(this.loginForm.value).subscribe((response: ISignInResponse) => {
+    this.dalService.membershipHttp.signIn(this.loginForm.value).subscribe((response: ISignInResponse) => {
       if (response.isSuccess) {
-        this.globalService.membershipService.setUser(response.result);
+        this.membershipService.setUser(response.result);
         this.router.navigateByUrl('/main');
       }
       else {
-        this.globalService.httpService.snackBar('로그인 정보가 일치하지 않습니다. 다시 로그인 해주세요.');
+        this.dalService.snackBar('로그인 정보가 일치하지 않습니다. 다시 로그인 해주세요.');
       }
     });
   }

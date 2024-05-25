@@ -30,7 +30,7 @@ export class HttpService {
     return this.http.post(`${BASE_URL}${endPoint}`, data, {
       headers: new HttpHeaders({
         Authorization:
-          `Bearer ${this.membershipService.data.accessToken}`
+          `Bearer ${this.membershipService.data.tokenResponse.accessToken}`
       })
     }).pipe(catchError(this.handleError("Post", data)));
   }
@@ -39,7 +39,7 @@ export class HttpService {
     return this.http.put(`${BASE_URL}${endPoint}`, data, {
       headers: new HttpHeaders({
         Authorization:
-          `Bearer ${this.membershipService.data.accessToken}`
+          `Bearer ${this.membershipService.data.tokenResponse.accessToken}`
       })
     }).pipe(catchError(this.handleError("Put", data)));
   }
@@ -48,7 +48,7 @@ export class HttpService {
     return this.http.patch(`${BASE_URL}${endPoint}`, data, {
       headers: new HttpHeaders({
         Authorization:
-          `Bearer ${this.membershipService.data.accessToken}`
+          `Bearer ${this.membershipService.data.tokenResponse.accessToken}`
       })
     }).pipe(catchError(this.handleError("Patch", data)));
   }
@@ -72,7 +72,7 @@ export class HttpService {
     return this.http.get(`${BASE_URL}${endPoint}`, {
       params: httpParams, headers: new HttpHeaders({
         Authorization:
-          `Bearer ${this.membershipService.data.accessToken}`
+          `Bearer ${this.membershipService.data.tokenResponse.accessToken}`
       })
     }).pipe(catchError(this.handleError("Get")));
   }
@@ -83,7 +83,7 @@ export class HttpService {
     };
   }
 
-  public snackBar(text: string, undo: string = "", duration: number = 2000) {
+  private snackBar(text: string, undo: string = "", duration: number = 2000) {
     this._snackBar.open(text, undo, {
       duration: duration,
       horizontalPosition: "center",
