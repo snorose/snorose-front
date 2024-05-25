@@ -6,3 +6,8 @@
   //background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
 }
+
+.toolbar-spacer {
+  flex: 1;
+  /* 남는 공간을 모두 차지 */
+}
