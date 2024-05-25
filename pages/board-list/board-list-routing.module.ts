@@ -19,7 +19,7 @@ export const routes: Routes = [
     component: PostComponent
   },
   {
-    path: ':name/:id',
+    path: 'board/:name/:boardId/:postId',
     component: DetailComponent
   },
 ];
