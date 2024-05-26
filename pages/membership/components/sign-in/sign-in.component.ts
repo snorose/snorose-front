@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GlobalService } from '../../../../shared/services/global.service';
@@ -13,7 +13,7 @@ import { LayoutService } from '../../../../shared/services/layout.service';
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss'
 })
-export class SignInComponent {
+export class SignInComponent implements OnInit {
 
   public hide = true;
   public BLUE1 = BLUE1;
@@ -30,6 +30,10 @@ export class SignInComponent {
     public readonly layoutService: LayoutService,
     private readonly membershipService: MembershipService,
   ) { }
+
+  ngOnInit() {
+    this.layoutService.isShowHeader = false;
+  }
 
   get id() {
     return this.loginForm.get('id');
@@ -48,7 +52,7 @@ export class SignInComponent {
         this.router.navigateByUrl('/main');
       }
       else {
-        this.dalService.snackBar('로그인 정보가 일치하지 않습니다. 다시 로그인 해주세요.');
+        this.dalService.snackBar('아이디 혹은 비밀번호가 일치하지 않습니다');
       }
     });
   }
