@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LayoutService } from '../../shared/services/layout.service';
+import { BLUE2, BLUE3 } from '../../shared/consts/color';
 
 export interface IKeyValue {
   key: string;
@@ -37,5 +37,8 @@ Array.prototype.isEmpty = function () {
 export class AppComponent {
 
   title = 'snorose';
+
+  public BLUE2 = BLUE2;
+  public BLUE3 = BLUE3;
 
 }
