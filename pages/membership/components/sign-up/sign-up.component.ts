@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { GlobalService } from '../../../../shared/services/global.service';
@@ -21,7 +21,7 @@ import { BLUE1 } from '../../../../shared/consts/color';
   styleUrl: './sign-up.component.scss',
   providers: [provideNativeDateAdapter()],
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent {
 
   public hide = true;
   public majorList = majorList;
@@ -51,9 +51,6 @@ export class SignUpComponent implements OnInit {
     public readonly layoutService: LayoutService,
   ) { }
 
-  ngOnInit() {
-    this.layoutService.isShowHeader = false;
-  }
 
   public onSignUpClick(event: any) {
     console.log('firstFormGroup', this.firstFormGroup.value, 'secondFormGroup', this.secondFormGroup.value);

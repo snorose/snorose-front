@@ -21,7 +21,7 @@ export interface FileData {
   templateUrl: './file.component.html',
   styleUrl: './file.component.scss'
 })
-export class FileComponent implements OnInit, AfterViewInit {
+export class FileComponent implements AfterViewInit {
 
   public displayedColumns: string[] = ['postId', 'title', 'userDisplay', 'createdAt'];
   public dataSource = new MatTableDataSource<FileData>([]);
@@ -36,10 +36,6 @@ export class FileComponent implements OnInit, AfterViewInit {
     private readonly dalService: DalService,
     public readonly layoutService: LayoutService,
   ) { }
-
-  ngOnInit(): void {
-    this.layoutService.isShowHeader = false;
-  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

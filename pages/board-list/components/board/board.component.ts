@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DalService } from '../../../../shared/services/dal.service';
 import { IBoardListData } from '../../../../shared/http/board.http';
@@ -25,7 +25,6 @@ export class BoardComponent implements OnInit {
 
   ngOnInit() {
     console.log('board component oninit');
-    this.layoutService.isShowHeader = false;
     this.name = this.route.snapshot.paramMap.get('name');
     this.boardId = this.route.snapshot.paramMap.get('boardId');
 
@@ -37,6 +36,5 @@ export class BoardComponent implements OnInit {
       this.boardList = response.result;
     });
   }
-
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GlobalService } from '../../../../shared/services/global.service';
@@ -13,7 +13,7 @@ import { LayoutService } from '../../../../shared/services/layout.service';
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss'
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent {
 
   public hide = true;
   public BLUE1 = BLUE1;
@@ -31,9 +31,6 @@ export class SignInComponent implements OnInit {
     private readonly membershipService: MembershipService,
   ) { }
 
-  ngOnInit() {
-    this.layoutService.isShowHeader = false;
-  }
 
   get id() {
     return this.loginForm.get('id');

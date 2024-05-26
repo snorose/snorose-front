@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { GlobalService } from '../../shared/services/global.service';
+import { AfterViewInit, Component } from '@angular/core';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { PointBottomSheetComponent } from './components/point-bottom-sheet/point-bottom-sheet.component';
@@ -28,11 +27,10 @@ export class MainComponent {
     this.currentDate = this.dateService.getCurrentDate();
   }
 
-  ngOnInit() {
-    this.layoutService.isShowHeader = true;
-    // 현재 날짜에 포인트 체크했는지 체크 후, 달력에 보여주기
+  // ngOnInit() {
+  //   // 현재 날짜에 포인트 체크했는지 체크 후, 달력에 보여주기
+  // }
 
-  }
 
   dateClass() {
     // 지금까지 포인트 모은 날을 배열로 가지고 있다가, 뿌리기

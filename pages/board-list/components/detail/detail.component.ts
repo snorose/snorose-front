@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { DalService } from '../../../../shared/services/dal.service';
 import { ActivatedRoute } from '@angular/router';
 import { IBoardDetailData } from '../../../../shared/http/board.http';
@@ -42,7 +42,6 @@ export class DetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.layoutService.isShowHeader = false;
     this.boardId = this.route.snapshot.paramMap.get('boardId');
     this.postId = this.route.snapshot.paramMap.get('postId');
     console.log('boardId', this.boardId, 'postId', this.postId);
