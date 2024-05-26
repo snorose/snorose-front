@@ -5,6 +5,8 @@ import { GlobalService } from '../../../../shared/services/global.service';
 import { ISignInResponse } from '../../../../shared/http/membership.http';
 import { DalService } from '../../../../shared/services/dal.service';
 import { MembershipService } from '../../../../shared/services/membership.service';
+import { BLUE1 } from '../../../../shared/consts/color';
+import { LayoutService } from '../../../../shared/services/layout.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,6 +16,7 @@ import { MembershipService } from '../../../../shared/services/membership.servic
 export class SignInComponent {
 
   public hide = true;
+  public BLUE1 = BLUE1;
 
   public loginForm: FormGroup = this.formBuilder.group({
     loginId: ['', Validators.required],
@@ -24,6 +27,7 @@ export class SignInComponent {
     private router: Router,
     private formBuilder: FormBuilder,
     private readonly dalService: DalService,
+    public readonly layoutService: LayoutService,
     private readonly membershipService: MembershipService,
   ) { }
 

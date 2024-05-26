@@ -1,41 +1,24 @@
-.container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40%;
-  min-width: 350px;
-  max-width: 500px;
-}
-
-.form-item {
+.center-container {
   display: flex;
-  align-items: start;
-}
-
-.divider {
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-.custom-form-field {
-  width: 90%;
-  /* 또는 원하는 폭 */
-  font-size: 16px;
-  /* 폰트 크기 조정 */
-}
-
-.btn-bottom {
-  margin-right: 10px;
-}
-
-.container-bottom {
-  width: 90%;
-  margin-right: 15px;
-}
-
-.inner-item {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 10px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 10px;
+}
+
+.full-width {
+  width: 100%;
+  border-radius: 10px !important;
 }
 
 .error-message {
