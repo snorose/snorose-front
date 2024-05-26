@@ -5,6 +5,8 @@ import { PointBottomSheetComponent } from './components/point-bottom-sheet/point
 import { DalService } from '../../shared/services/dal.service';
 import { LayoutService } from '../../shared/services/layout.service';
 import { DateService } from '../../shared/services/date.service';
+import { BLUE1 } from '../../shared/consts/color';
+import { BOARDS } from '../board-list/consts/board';
 
 @Component({
   selector: 'app-main',
@@ -16,7 +18,8 @@ export class MainComponent {
 
   public selected!: Date | null;
   public currentDate!: Date;
-
+  public BLUE1 = BLUE1;
+  public BOARDS = BOARDS;
 
   constructor(
     private _bottomSheet: MatBottomSheet,

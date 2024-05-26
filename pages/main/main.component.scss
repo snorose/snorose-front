@@ -9,3 +9,48 @@
   color: white;
   /* 글자색은 흰색으로 */
 }
+
+.full-width {
+  width: 90%;
+  border-radius: 10px !important;
+  margin: 10px 10px 40px 10px;
+}
+
+.font-600 {
+  font-weight: 600;
+}
+
+.font-21 {
+  font-size: 21px;
+}
+
+.font-12 {
+  color: #6A6A6A;
+  font-size: 12px;
+}
+
+.flex-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: #5F86BF;
+  gap: 0.5rem;
+}
+
+.button-style {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-right: 10px;
+
+  width: 60px;
+  height: 70px;
+  border: 1px solid #BFD7EC;
+  border-radius: 10px;
+  padding: 10px 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
