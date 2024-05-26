@@ -35,7 +35,7 @@ Array.prototype.isEmpty = function () {
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+
   title = 'snorose';
 
-  constructor(public readonly layoutService: LayoutService) { }
 }

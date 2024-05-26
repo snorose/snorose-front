@@ -12,16 +12,9 @@
     <span>알림</span>
   </button>
 </mat-menu>
-<mat-toolbar>
-  <span>시험 후기</span>
-  <span class="toolbar-spacer"></span>
-  <button mat-icon-button color="primary" [matMenuTriggerFor]="menu">
-    <mat-icon>more_vert</mat-icon>
-  </button>
-</mat-toolbar>
-
 
 <div [style.height]="layoutService.getMainHeight()">
+  <app-header name="시험후기" link="/file"></app-header>
   <mat-form-field>
     <mat-label>검색</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>

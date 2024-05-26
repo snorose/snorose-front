@@ -27,12 +27,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DatePipe } from './pipes/date.pipe';
+import { HeaderComponent } from './components/layouts/header/header.component';
 
 @NgModule({
   declarations: [
     SwiperComponent,
     ListComponent,
-    DatePipe
+    DatePipe,
+    HeaderComponent
   ],
   imports: [
     RouterLink,
@@ -65,6 +67,7 @@ import { DatePipe } from './pipes/date.pipe';
     DatePipe,
     SwiperComponent,
     ListComponent,
+    HeaderComponent,
     RouterLink,
     CommonModule,
     HttpClientModule,
