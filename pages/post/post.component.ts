@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { GlobalService } from '../../shared/services/global.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IReviewCreateRequest, IReviewCreateResponse, LectureType, Semester } from '../../shared/http/review.http';
 import { Router } from '@angular/router';

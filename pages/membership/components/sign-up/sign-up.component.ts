@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { GlobalService } from '../../../../shared/services/global.service';
 import { ISignUpRequest, ISignUpResponse } from '../../../../shared/http/membership.http';
 import { Router } from '@angular/router';
 import { majorList } from '../../../../shared/data/major.data';
