@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { GlobalService } from '../../../../shared/services/global.service';
@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { majorList } from '../../../../shared/data/major.data';
 import { DalService } from '../../../../shared/services/dal.service';
 import { DateService } from '../../../../shared/services/date.service';
+import { LayoutService } from '../../../../shared/services/layout.service';
+import { BLUE1 } from '../../../../shared/consts/color';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,9 +16,10 @@ import { DateService } from '../../../../shared/services/date.service';
   styleUrl: './sign-up.component.scss',
   providers: [provideNativeDateAdapter()],
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnInit {
 
   public majorList = majorList;
+  public BLUE1 = BLUE1;
 
   public firstFormGroup = this.formBuilder.group({
     userName: ['', Validators.required],
@@ -39,7 +42,12 @@ export class SignUpComponent {
     private formBuilder: FormBuilder,
     private readonly dalService: DalService,
     private readonly dateService: DateService,
+    public readonly layoutService: LayoutService,
   ) { }
+
+  ngOnInit() {
+    this.layoutService.isShowHeader = false;
+  }
 
   public onSignUpClick(event: any) {
     console.log('firstFormGroup', this.firstFormGroup.value, 'secondFormGroup', this.secondFormGroup.value);
