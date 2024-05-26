@@ -9,36 +9,39 @@
         </ng-template>
         <div class="p-10">
           <mat-form-field appearance="outline">
-            <mat-label>이름</mat-label>
-            <input matInput placeholder="ex. 홍길동" formControlName="userName" required>
+            <input matInput placeholder="이름" formControlName="userName" required>
           </mat-form-field>
         </div>
         <div class="p-10">
           <mat-form-field appearance="outline">
-            <mat-label>숙명여대 구글 이메일</mat-label>
-            <input matInput placeholder="pat@sm.ac.kr" formControlName="email" required>
+            <input matInput placeholder="숙명 구글 이메일" formControlName="email" required>
           </mat-form-field>
         </div>
         <div class="p-10">
           <mat-form-field appearance="outline">
-            <mat-label>아이디</mat-label>
-            <input matInput placeholder="아이디를 입력해주세요" formControlName="loginId" required>
+            <input matInput placeholder="아이디" formControlName="loginId" required>
           </mat-form-field>
         </div>
         <div class="p-10">
           <mat-form-field appearance="outline">
-            <mat-label>비밀번호</mat-label>
-            <input matInput placeholder="6~11자 사이로 작성해 주세요" formControlName="password" required>
+            <input matInput placeholder="비밀번호" formControlName="password" required [type]="hide ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="hide = !hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
           </mat-form-field>
         </div>
         <div class="p-10">
           <mat-form-field appearance="outline">
-            <mat-label>비밀번호 확인</mat-label>
-            <input matInput placeholder="6~11자 사이로 작성해 주세요" formControlName="checkedPassword" required>
+            <input matInput placeholder="비밀번호 확인" formControlName="checkedPassword" required
+              [type]="hide ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="hide = !hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
           </mat-form-field>
         </div>
         <div>
-          <button mat-button matStepperNext>Next</button>
+          <button mat-button matStepperNext
+            style="border-radius: 50px; border: 1px solid #5F86BF; color: #5F86BF">다음</button>
         </div>
       </form>
     </mat-step>
@@ -50,39 +53,17 @@
           </p>
         </ng-template>
         <div class="p-10">
+          <div>숙명 구글 이메일로</div>
+          <div style="margin-bottom: 25px;">확인 코드를 보내드렸어요!</div>
           <mat-form-field appearance="outline">
-            <mat-label>닉네임</mat-label>
-            <input matInput formControlName="nickname" placeholder="4~6자 사이로 작성해 주세요" required>
-          </mat-form-field>
-        </div>
-        <div class="p-10">
-          <mat-form-field appearance="outline">
-            <mat-label>전공</mat-label>
-            <mat-select formControlName="major">
-              @for (major of majorList; track $index) {
-              <mat-option [value]="major">{{ major }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="p-10">
-          <mat-form-field appearance="outline">
-            <mat-label>학번</mat-label>
-            <input matInput formControlName="studentNumber" placeholder="학번 전체를 작성해 주세요" required>
-          </mat-form-field>
-        </div>
-        <div class="p-10">
-          <mat-form-field appearance="outline">
-            <mat-label>생일</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="birthday" required>
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <input matInput formControlName="nickname" placeholder="확인 코드를 입력해주세요" required>
           </mat-form-field>
         </div>
         <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
+          <button mat-button matStepperPrevious
+            style="margin: 10px; border-radius: 50px; border: 1px solid #5F86BF; color: #5F86BF">이전</button>
+          <button mat-button matStepperNext
+            style="border-radius: 50px; border: 1px solid #5F86BF; color: #5F86BF">다음</button>
         </div>
       </form>
     </mat-step>
@@ -95,14 +76,17 @@
         </ng-template>
         <div class="p-10">
           <mat-form-field appearance="outline">
-            <mat-label>닉네임</mat-label>
-            <input matInput formControlName="nickname" placeholder="4~6자 사이로 작성해 주세요" required>
+            <input matInput formControlName="nickname" placeholder="닉네임" required>
           </mat-form-field>
         </div>
         <div class="p-10">
           <mat-form-field appearance="outline">
-            <mat-label>전공</mat-label>
-            <mat-select formControlName="major">
+            <input matInput formControlName="studentNumber" placeholder="학번" required>
+          </mat-form-field>
+        </div>
+        <div class="p-10">
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="major" placeholder="전공">
               @for (major of majorList; track $index) {
               <mat-option [value]="major">{{ major }}</mat-option>
               }
@@ -111,31 +95,28 @@
         </div>
         <div class="p-10">
           <mat-form-field appearance="outline">
-            <mat-label>학번</mat-label>
-            <input matInput formControlName="studentNumber" placeholder="학번 전체를 작성해 주세요" required>
-          </mat-form-field>
-        </div>
-        <div class="p-10">
-          <mat-form-field appearance="outline">
-            <mat-label>생일</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="birthday" required>
+            <input matInput [matDatepicker]="picker" formControlName="birthday" placeholder="생년월일" required>
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
         <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
+          <button mat-button matStepperPrevious
+            style="margin: 10px; border-radius: 50px; border: 1px solid #5F86BF; color: #5F86BF">이전</button>
+          <button mat-button matStepperNext
+            style="border-radius: 50px; border: 1px solid #5F86BF; color: #5F86BF">다음</button>
         </div>
       </form>
     </mat-step>
     <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
+      <ng-template matStepLabel>완료</ng-template>
       <p>You are now done.</p>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="onSignUpClick($event)">회원가입 완료</button>
+        <button mat-button matStepperPrevious
+          style="margin: 10px; border-radius: 50px; border: 1px solid #5F86BF; color: #5F86BF">이전</button>
+        <button mat-button matStepperNext
+          style="border-radius: 50px; border: 1px solid #5F86BF; color: #5F86BF">다음</button>
       </div>
     </mat-step>
   </mat-stepper>

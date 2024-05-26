@@ -10,6 +10,11 @@ import { DateService } from '../../../../shared/services/date.service';
 import { LayoutService } from '../../../../shared/services/layout.service';
 import { BLUE1 } from '../../../../shared/consts/color';
 
+// 이름, 숙명 구글 메일, 아이디, 비밀번호, 비밀번호 확인
+// 확인코드
+// 닉네임, 학번, 전공, 생년월일
+// 
+
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -18,6 +23,7 @@ import { BLUE1 } from '../../../../shared/consts/color';
 })
 export class SignUpComponent implements OnInit {
 
+  public hide = true;
   public majorList = majorList;
   public BLUE1 = BLUE1;
 
@@ -32,7 +38,7 @@ export class SignUpComponent implements OnInit {
   public secondFormGroup = this.formBuilder.group({
     nickname: ['', Validators.required],
     major: ['', Validators.required],
-    studentNumber: [1111111, Validators.required],
+    studentNumber: [0, Validators.required],
     birthday: [new Date(), Validators.required],
   });
 
