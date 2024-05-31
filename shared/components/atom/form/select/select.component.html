@@ -1,0 +1,28 @@
+<div [formGroup]="dynamicForm" [ngStyle]="control.styles?.layout">
+  @if (control.label) {
+  <div [ngStyle]="control.styles?.label">{{ control.label }}</div>
+  }
+  <mat-form-field appearance="outline">
+    <input matInput [type]="control.type" [placeholder]="control.placeholder || ''" [formControlName]="control.name"
+      [matAutocomplete]="autoGroup">
+    <mat-autocomplete #autoGroup="matAutocomplete">
+      @for (group of groupOptions[getSelectIndex(control.name)] | async; track $index) {
+      @if (group.main === '') {
+      @for (element of group.sub; track element) {
+      <mat-option [value]="element">{{ element }}</mat-option>
+      }
+      }
+      @else {
+      <mat-optgroup [label]="group.main">
+        @for (element of group.sub; track $index) {
+        <mat-option [value]="element">{{ element }}</mat-option>
+        }
+      </mat-optgroup>
+      }
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+  @if (dynamicForm.get(control.name)?.invalid && dynamicForm.get(control.name)?.touched) {
+  <mat-error style="margin-top: -25px;">{{ getErrorMessage(control, null) }}</mat-error>
+  }
+</div>
