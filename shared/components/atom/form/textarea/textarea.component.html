@@ -1,0 +1,15 @@
+<div [formGroup]="dynamicForm" [ngStyle]="control.styles?.layout">
+  @if (control.label) {
+  <div [ngStyle]="control.styles?.label">{{ control.label }}</div>
+  }
+  @if (control.styles?.textarea) {
+  <textarea [ngStyle]="control.styles?.textarea" [placeholder]="control.placeholder"
+    [formControlName]="control.name"></textarea>
+  }
+  @else {
+  <textarea [placeholder]="control.placeholder" [formControlName]="control.name"></textarea>
+  }
+  @if (dynamicForm.get(control.name)?.invalid && dynamicForm.get(control.name)?.touched) {
+  <mat-error style="margin-bottom: -10px;">{{ getErrorMessage(control, null) }}</mat-error>
+  }
+</div>
