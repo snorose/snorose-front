@@ -28,13 +28,28 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DatePipe } from './pipes/date.pipe';
 import { HeaderComponent } from './components/layouts/header/header.component';
+import { DynamicFormComponent } from './components/moleclues/dynamic-form/dynamic-form.component';
+import { InputComponent } from './components/atom/form/input/input.component';
+import { PasswordComponent } from './components/atom/form/password/password.component';
+import { RadioButtonComponent } from './components/atom/form/radio-button/radio-button.component';
+import { SelectComponent } from './components/atom/form/select/select.component';
+import { TextareaComponent } from './components/atom/form/textarea/textarea.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 
 @NgModule({
   declarations: [
     SwiperComponent,
     ListComponent,
     DatePipe,
-    HeaderComponent
+    HeaderComponent,
+    DynamicFormComponent,
+    InputComponent,
+    PasswordComponent,
+    RadioButtonComponent,
+    SelectComponent,
+    TextareaComponent
   ],
   imports: [
     RouterLink,
@@ -62,6 +77,8 @@ import { HeaderComponent } from './components/layouts/header/header.component';
     MatSelectModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatRadioModule,
+    MatAutocompleteModule,
   ],
   exports: [
     DatePipe,
@@ -93,6 +110,8 @@ import { HeaderComponent } from './components/layouts/header/header.component';
     MatSelectModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatRadioModule,
+    MatAutocompleteModule,
   ]
 })
 export class SharedModule { }

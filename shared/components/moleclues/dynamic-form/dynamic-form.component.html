@@ -1,0 +1,37 @@
+@if(!isLoading) {
+<form [formGroup]="dynamicMultiForm" (ngSubmit)="onSubmit()" class="form-full-layout">
+  @for (control of formData; track $index) {
+  @if (control.category === 'group' && isIFormGroup(control)) {
+  <div [formGroupName]="control.name">
+    @for (groupControl of control.controls; track $index) {
+    <mat-form-field appearance="outline">
+      <mat-label>{{ groupControl.label }}</mat-label>
+      <input matInput [type]="groupControl.type" [placeholder]="groupControl.placeholder || ''"
+        [formControlName]="groupControl.name">
+    </mat-form-field>
+    <!-- @if (dynamicMultiForm.get(control.name)?.get(groupControl.name)?.invalid && dynamicMultiForm.get(control.name)?.get(groupControl.name)?.touched) {
+              <mat-error style="margin-bottom: 10px;">{{ getErrorMessage(control, groupControl) }}</mat-error>
+            } -->
+    }
+  </div>
+  }
+  @if (control.category === 'textarea') {
+  <app-textarea [control]="control" [dynamicForm]="dynamicMultiForm"></app-textarea>
+  }
+  @if (control.category === 'input') {
+  <app-input [control]="control" [dynamicForm]="dynamicMultiForm"></app-input>
+  }
+  @if (control.category === 'password') {
+  <app-password [control]="control" [dynamicForm]="dynamicMultiForm"></app-password>
+  }
+  @if (control.category === 'select') {
+  <app-select [control]="control" [dynamicForm]="dynamicMultiForm" [formStructure]="formData"
+    [groupOptions]="groupOptions"></app-select>
+  }
+  @if (control.category === 'radio-button') {
+  <app-radio-button [control]="control" [dynamicForm]="dynamicMultiForm"></app-radio-button>
+  }
+  }
+  <button mat-flat-button color="primary" type="submit">Submit</button>
+</form>
+}
