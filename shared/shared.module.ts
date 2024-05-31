@@ -85,6 +85,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     SwiperComponent,
     ListComponent,
     HeaderComponent,
+    DynamicFormComponent,
     RouterLink,
     CommonModule,
     HttpClientModule,
