@@ -1,5 +1,6 @@
 <div [style.height]="layoutService.getMainHeight()" style="overflow-y: auto; margin: 10px;">
-  <div [formGroup]="reviewForm">
+  <app-dynamic-form [key]="'post'"></app-dynamic-form>
+  <!-- <div [formGroup]="reviewForm">
     <h3>강의 및 시험 후기에 대해 입력해 주세요</h3>
     <h4>제목</h4>
     <mat-form-field class="example-full-width" appearance="outline">
@@ -84,5 +85,5 @@
     </mat-form-field>
   </div>
   <button mat-flat-button color="primary" style="width: 100%; margin-bottom: 10px;"
-    (click)="onClickSubmit($event)">제출</button>
+    (click)="onClickSubmit($event)">제출</button> -->
 </div>

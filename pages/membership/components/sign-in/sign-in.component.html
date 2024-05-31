@@ -10,17 +10,6 @@
   </div>
 
   <div class="form-container" [formGroup]="loginForm" (keydown.enter)="onSignInClick()" (submit)="onSignInClick()">
-    <mat-form-field class="full-width" appearance="outline">
-      <input matInput formControlName="loginId" placeholder="아이디를 입력해 주세요">
-    </mat-form-field>
-    <mat-form-field class="full-width" appearance="outline">
-      <input matInput formControlName="password" placeholder="영어, 숫자, 특수문자를 포함한 비밀번호"
-        [type]="hide ? 'password' : 'text'">
-      <button mat-icon-button matSuffix (click)="hide = !hide">
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-    </mat-form-field>
-    <button class="full-width" [ngStyle]="{ 'background-color': BLUE1, 'color': 'white' }" mat-raised-button
-      (click)="onSignInClick()">로그인</button>
+    <app-dynamic-form [key]="'sign-in'"></app-dynamic-form>
   </div>
 </div>
