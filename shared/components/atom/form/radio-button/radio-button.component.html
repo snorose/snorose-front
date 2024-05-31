@@ -1,0 +1,22 @@
+<div [formGroup]="dynamicForm" [ngStyle]="control.styles?.layout">
+  @if (control.label) {
+  <div [ngStyle]="control.styles?.label">{{ control.label }}</div>
+  }
+  @if (control.styles?.radioButton) {
+  <mat-radio-group [ngStyle]="control.styles?.radioButton" [formControlName]="control.name">
+    @for (item of control.group; track $index) {
+    <mat-radio-button [value]="item.main">{{ item.sub.first() }}</mat-radio-button>
+    }
+  </mat-radio-group>
+  }
+  @else {
+  <mat-radio-group [formControlName]="control.name">
+    @for (item of control.group; track $index) {
+    <mat-radio-button [value]="item.main">{{ item.sub.first() }}</mat-radio-button>
+    }
+  </mat-radio-group>
+  }
+  @if (dynamicForm.get(control.name)?.invalid && dynamicForm.get(control.name)?.touched) {
+  <mat-error style="margin-top: -10px;">{{ getErrorMessage(control, null) }}</mat-error>
+  }
+</div>
