@@ -45,7 +45,7 @@ export class FormService {
   private readonly httpService = inject(HttpService);
 
   public getFormStructure() {
-    return this.httpService.Get('./assets/json/form.json');
+    return this.httpService.GetJson('./assets/json/form.json');
   }
 
 }

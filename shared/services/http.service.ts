@@ -77,6 +77,11 @@ export class HttpService {
     }).pipe(catchError(this.handleError("Get")));
   }
 
+  public GetJson(url: string): Observable<any> {
+    return this.http.get(url)
+      .pipe(catchError(this.handleError("GetJson")));
+  }
+
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): any => {
       this.snackBar(error.message, "ERROR");
