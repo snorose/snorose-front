@@ -3,7 +3,7 @@
     <button mat-icon-button>
       <mat-icon>close</mat-icon>
     </button>
-    <button mat-button style="color: #00368E; font-size: medium; font-weight: 500;">게시</button>
+    <!-- <button mat-button style="color: #00368E; font-size: medium; font-weight: 500;">게시</button> -->
   </div>
-  <app-dynamic-form [key]="'post'" [button]="null"></app-dynamic-form>
+  <app-dynamic-form [key]="'post'" [button]="'게시'" (submit)="onClickSubmit($event)"></app-dynamic-form>
 </div>

@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IReviewCreateRequest, IReviewCreateResponse, LectureType, Semester } from '../../shared/http/review.http';
+import { LectureType, Semester } from '../../shared/http/review.http';
 import { Router } from '@angular/router';
 import { DalService } from '../../shared/services/dal.service';
 import { LayoutService } from '../../shared/services/layout.service';
+import { IPostCreateRequest } from '../../shared/http/board.http';
+import { MembershipService } from '../../shared/services/membership.service';
 
 /**
  * 제목, 내용, 작성자
@@ -50,7 +52,8 @@ export class PostComponent {
     private router: Router,
     private formBuilder: FormBuilder,
     public readonly layoutService: LayoutService,
-    private readonly dalService: DalService
+    private readonly dalService: DalService,
+    private readonly membershipService: MembershipService,
   ) { }
 
   private setHadMidterm(type: string) {
@@ -83,47 +86,59 @@ export class PostComponent {
   }
 
   public onClickSubmit(event: any) {
-    console.log('button click');
-    if (this.reviewForm.valid && this.lectureForm.valid) {
-      // 제출!!
-      console.log('review', this.reviewForm.value);
-      console.log('lecture', this.lectureForm.value);
+    console.log('button click', event.value);
 
-      this.setHadMidterm(this.lectureForm.value.hadMidterm);
+    const request: IPostCreateRequest = {
+      title: event.value.title,
+      content: event.value.content,
+      userdisplay: this.membershipService.getUser()?.nickname as string
+    };
 
-      const reviewData: IReviewCreateRequest = {
-        // 게시글 정보
-        boardId: 1,
-        userDisplay: '사용자 닉네임',
-        category: '테스트태그', // 없앨 듯
-        title: this.reviewForm.value.title,
-        content: this.reviewForm.value.content,
+    this.dalService.boardHttp.create(1, request).subscribe(response => {
+      console.log('리뷰 작성 성공', response);
+      //     this.router.navigateByUrl(`/file/${response.result.postId}`);
+    });
 
-        // 강의 정보
-        lectureName: this.lectureForm.value.lectureName,
-        professor: this.lectureForm.value.professor,
-        classNumber: Number(this.lectureForm.value.classNumber),
-        lectureYear: Number(this.lectureForm.value.lectureYear),
-        semester: this.lectureForm.value.semester,
-        hasMidterm: this.hasMidterm,
-        hasFinalterm: this.hasFinalterm,
-        lectureType: this.lectureForm.value.lectureType,
-        isPF: this.lectureForm.value.isPF,
+    // if (this.reviewForm.valid && this.lectureForm.valid) {
+    //   // 제출!!
+    //   console.log('review', this.reviewForm.value);
+    //   console.log('lecture', this.lectureForm.value);
 
-        // 파일 정보
-        filePath: null,
-        fileName: this.fileName,
-      };
+    //   this.setHadMidterm(this.lectureForm.value.hadMidterm);
+
+    //   const reviewData: IReviewCreateRequest = {
+    //     // 게시글 정보
+    //     boardId: 1,
+    //     userDisplay: '사용자 닉네임',
+    //     category: '테스트태그', // 없앨 듯
+    //     title: this.reviewForm.value.title,
+    //     content: this.reviewForm.value.content,
+
+    //     // 강의 정보
+    //     lectureName: this.lectureForm.value.lectureName,
+    //     professor: this.lectureForm.value.professor,
+    //     classNumber: Number(this.lectureForm.value.classNumber),
+    //     lectureYear: Number(this.lectureForm.value.lectureYear),
+    //     semester: this.lectureForm.value.semester,
+    //     hasMidterm: this.hasMidterm,
+    //     hasFinalterm: this.hasFinalterm,
+    //     lectureType: this.lectureForm.value.lectureType,
+    //     isPF: this.lectureForm.value.isPF,
+
+    //     // 파일 정보
+    //     filePath: null,
+    //     fileName: this.fileName,
+    //   };
 
 
-      console.log('reviewData', reviewData);
-      this.dalService.reviewHttp.create(reviewData).subscribe((response: IReviewCreateResponse) => {
-        console.log('리뷰 작성 성공', response);
-        this.router.navigateByUrl(`/file/${response.result.postId}`);
-      });
-    }
-    else {
-      this.dalService.snackBar('입력하지 않은 필드가 있습니다. 모두 입력 후, 제출해 주세요');
-    }
+    //   console.log('reviewData', reviewData);
+    //   this.dalService.reviewHttp.create(reviewData).subscribe((response: IReviewCreateResponse) => {
+    //     console.log('리뷰 작성 성공', response);
+    //     this.router.navigateByUrl(`/file/${response.result.postId}`);
+    //   });
+    // }
+    // else {
+    //   this.dalService.snackBar('입력하지 않은 필드가 있습니다. 모두 입력 후, 제출해 주세요');
+    // }
   }
 }
