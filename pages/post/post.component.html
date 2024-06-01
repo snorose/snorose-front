@@ -1,89 +1,9 @@
 <div [style.height]="layoutService.getMainHeight()" style="overflow-y: auto; margin: 10px;">
-  <app-dynamic-form [key]="'post'"></app-dynamic-form>
-  <!-- <div [formGroup]="reviewForm">
-    <h3>강의 및 시험 후기에 대해 입력해 주세요</h3>
-    <h4>제목</h4>
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>제목</mat-label>
-      <input matInput formControlName="title">
-    </mat-form-field>
-    <h4>내용</h4>
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>내용을 입력해 주세요.</mat-label>
-      <textarea matInput formControlName="content"></textarea>
-    </mat-form-field>
+  <div style="display: flex; justify-content: space-between;">
+    <button mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+    <button mat-button style="color: #00368E; font-size: medium; font-weight: 500;">게시</button>
   </div>
-  <div [formGroup]="lectureForm">
-    <h3>강의 및 시험 정보에 대해 입력해 주세요</h3>
-    <mat-form-field class="example-full-width" appearance="outline" required>
-      <mat-label>강의명</mat-label>
-      <input matInput formControlName="lectureName">
-    </mat-form-field>
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>교수님 성함</mat-label>
-      <input matInput formControlName="professor">
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>분반</mat-label>
-      <mat-select formControlName="classNumber">
-        <mat-option value="1">1분반</mat-option>
-        <mat-option value="2">2분반</mat-option>
-        <mat-option value="3">3분반</mat-option>
-        <mat-option value="4">4분반</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>년도</mat-label>
-      <mat-select formControlName="lectureYear">
-        <mat-option value="2020">2020</mat-option>
-        <mat-option value="2019">2019</mat-option>
-        <mat-option value="2018">2018</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>학기</mat-label>
-      <mat-select formControlName="semester">
-        <mat-option [value]="Semester.First">1학기</mat-option>
-        <mat-option [value]="Semester.Second">2학기</mat-option>
-        <mat-option [value]="Semester.Summer">여름학기</mat-option>
-        <mat-option [value]="Semester.Winter">겨울학기</mat-option>
-        <mat-option [value]="Semester.Other">기타</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>강의 타입</mat-label>
-      <mat-select formControlName="lectureType">
-        <mat-option [value]="LectureType.MajorRequired">전공필수</mat-option>
-        <mat-option [value]="LectureType.MajorElective">전공선택</mat-option>
-        <mat-option [value]="LectureType.GeneralRequired">교양 필수</mat-option>
-        <mat-option [value]="LectureType.GeneralElective">교양 선택</mat-option>
-        <mat-option [value]="LectureType.Other">기타</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>중간/기말 여부</mat-label>
-      <mat-select formControlName="hadMidterm">
-        <mat-option value="onlyMidterm">중간고사만</mat-option>
-        <mat-option value="onlyFinal">기말고사만</mat-option>
-        <mat-option value="both">중간고사/기말고사 둘 다</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>PF 여부</mat-label>
-      <mat-select formControlName="isPF">
-        <mat-option value="true">네</mat-option>
-        <mat-option value="false">아니요</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="example-full-width" appearance="outline">
-      <input matInput [value]="fileName" readonly placeholder="파일 선택...">
-      <button style="padding-right: 10px;" matSuffix mat-icon-button (click)="fileInput.click()" matTooltip="파일 업로드">
-        <mat-icon>upload_file</mat-icon>
-      </button>
-      <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)" formControlName="file">
-    </mat-form-field>
-  </div>
-  <button mat-flat-button color="primary" style="width: 100%; margin-bottom: 10px;"
-    (click)="onClickSubmit($event)">제출</button> -->
+  <app-dynamic-form [key]="'post'" [button]="null"></app-dynamic-form>
 </div>
