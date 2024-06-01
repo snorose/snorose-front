@@ -32,6 +32,8 @@
   <app-radio-button [control]="control" [dynamicForm]="dynamicMultiForm"></app-radio-button>
   }
   }
-  <button mat-flat-button color="primary" type="submit">Submit</button>
+  @if (button != null) {
+  <button mat-flat-button color="primary" type="submit">{{ button }}</button>
+  }
 </form>
 }

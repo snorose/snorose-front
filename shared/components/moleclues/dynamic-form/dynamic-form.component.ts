@@ -18,6 +18,7 @@ export const _filter = (opt: string[], value: string) => {
 export class DynamicFormComponent implements OnInit {
 
   @Input() key: string = 'sign-up';
+  @Input() button: string | null = 'Submit';
 
   public isLoading: boolean = true;
   public formData: (IControl | IFormGroup)[] = [];
