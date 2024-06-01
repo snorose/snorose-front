@@ -38,9 +38,7 @@ export interface IBoardDetailResponse extends IBaseResponse<IBoardDetailData> { 
 export interface IPostCreateRequest {
   title: string;
   content: string;
-  userId: string;
   userdisplay: string;
-  boardId: number;
 }
 
 export interface IPostCreateResponse extends IBaseResponse<{ postId: number; }> { }
