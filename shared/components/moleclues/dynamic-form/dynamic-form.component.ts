@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { Observable, startWith, map } from 'rxjs';
 import { IKeyValue } from '../../../../src/app/app.component';
@@ -19,6 +19,8 @@ export class DynamicFormComponent implements OnInit {
 
   @Input() key: string = 'sign-up';
   @Input() button: string | null = 'Submit';
+
+  @Output() submit = new EventEmitter<any>();
 
   public isLoading: boolean = true;
   public formData: (IControl | IFormGroup)[] = [];
@@ -107,8 +109,12 @@ export class DynamicFormComponent implements OnInit {
   }
 
   public onSubmit() {
-    console.log('ngSubmit valid', this.dynamicMultiForm.valid);
-    console.log('ngSubmit', this.dynamicMultiForm.value);
+    // console.log('ngSubmit valid', this.dynamicMultiForm.valid);
+    // console.log('ngSubmit', this.dynamicMultiForm.value);
+
+    if (this.dynamicMultiForm.valid) {
+      this.submit.emit({ value: this.dynamicMultiForm.value });
+    }
   }
 
   public isIFormGroup(control: IControl): control is IFormGroup {
