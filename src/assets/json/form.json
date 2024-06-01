@@ -5,10 +5,9 @@
       {
         "category": "input",
         "type": "text",
-        "label": "Title",
         "name": "title",
         "value": "",
-        "placeholder": "제목을 입력해 주세요.",
+        "placeholder": "제목",
         "validations": [
           {
             "name": "minLength",
@@ -30,16 +29,23 @@
           "label": {
             "font-size": "medium",
             "font-weight": "500"
+          },
+          "input": {
+            "outline": "none",
+            "border": "none",
+            "box-sizing": "border-box",
+            "width": "100%",
+            "font-size": "1rem",
+            "padding": "5px"
           }
         }
       },
       {
         "category": "textarea",
         "type": "text",
-        "label": "Content",
         "name": "content",
         "value": "",
-        "placeholder": "내용을 입력해 주세요.",
+        "placeholder": "내용",
         "validations": [
           {
             "name": "minLength",
