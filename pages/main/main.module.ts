@@ -3,13 +3,16 @@ import { MainComponent } from './main.component';
 import { SharedModule } from '../../shared/shared.module';
 import { MainRoutingModule } from './main-routing.module';
 import { PointBottomSheetComponent } from './components/point-bottom-sheet/point-bottom-sheet.component';
+import { AttendanceDialogComponent } from './components/attendance-dialog/attendance-dialog.component';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 
 
 @NgModule({
   declarations: [
     MainComponent,
-    PointBottomSheetComponent
+    PointBottomSheetComponent,
+    AttendanceDialogComponent
   ],
   imports: [
     MainRoutingModule,
