@@ -1,5 +1,5 @@
 @if(!isLoading) {
-<form [formGroup]="dynamicMultiForm" (ngSubmit)="onSubmit()" class="form-full-layout">
+<form [formGroup]="dynamicMultiForm" (ngSubmit)="onSubmit()" class="form-full-layout hide-scrollbar">
   @for (control of formData; track $index) {
   @if (control.category === 'group' && isIFormGroup(control)) {
   <div [formGroupName]="control.name">
