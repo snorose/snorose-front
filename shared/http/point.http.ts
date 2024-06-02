@@ -8,7 +8,7 @@ export interface IAddPointRequest {
   userId: number;
   difference: number;
   category: string;
-  sourceId: number;
+  sourceId?: number;
   source: POINT_SOURCE;
 }
 
