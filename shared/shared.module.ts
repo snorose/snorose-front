@@ -36,6 +36,7 @@ import { SelectComponent } from './components/atom/form/select/select.component'
 import { TextareaComponent } from './components/atom/form/textarea/textarea.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ConfirmDialogComponent } from './components/atom/confirm-dialog/confirm-dialog.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     PasswordComponent,
     RadioButtonComponent,
     SelectComponent,
-    TextareaComponent
+    TextareaComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     RouterLink,
