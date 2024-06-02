@@ -7,12 +7,13 @@ import { LayoutService } from '../../shared/services/layout.service';
 import { DateService } from '../../shared/services/date.service';
 import { BLUE1 } from '../../shared/consts/color';
 import { BOARDS } from '../board-list/consts/board';
+import { MatDialog } from '@angular/material/dialog';
+import { AttendanceDialogComponent } from './components/attendance-dialog/attendance-dialog.component';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrl: './main.component.scss',
-  providers: [provideNativeDateAdapter()]
+  styleUrl: './main.component.scss'
 })
 export class MainComponent {
 
@@ -22,6 +23,7 @@ export class MainComponent {
   public BOARDS = BOARDS;
 
   constructor(
+    private dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
     private readonly dalService: DalService,
     private readonly dateService: DateService,
@@ -34,6 +36,23 @@ export class MainComponent {
   //   // 현재 날짜에 포인트 체크했는지 체크 후, 달력에 보여주기
   // }
 
+  public attendanceCheck(event: any) {
+    console.log('attendanceCheck', event);
+    this.openDialog();
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AttendanceDialogComponent, {
+      data: {
+        title: '출석체크',
+        btnNo: '닫기'
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 
   dateClass() {
     // 지금까지 포인트 모은 날을 배열로 가지고 있다가, 뿌리기

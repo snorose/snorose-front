@@ -30,7 +30,8 @@
       </div>
     </div>
 
-    <button class="full-width" mat-raised-button [ngStyle]="{ 'background-color': BLUE1, 'color': 'white' }">오늘의
+    <button class="full-width" mat-raised-button [ngStyle]="{ 'background-color': BLUE1, 'color': 'white' }"
+      (click)="attendanceCheck($event)">오늘의
       출석체크</button>
 
     <div class="font-600 font-21" style="transform: translate(-130px, 0px);">커뮤니티</div>
@@ -48,11 +49,6 @@
       </mat-list>
     </div>
   </div>
-
-  <mat-card class="demo-inline-calendar-card">
-    <mat-calendar (dateClass)="dateClass" [selected]="selected" (selectedChange)="selectDate($event)">
-    </mat-calendar>
-  </mat-card>
 
   <mat-divider style="margin-bottom: 25px;"></mat-divider>
   <footer style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
