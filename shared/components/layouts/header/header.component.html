@@ -1,5 +1,5 @@
 <mat-toolbar style="background-color: white;">
-  <button mat-icon-button>
+  <button mat-icon-button (click)="clickLeftButton()">
     <mat-icon [ngStyle]="{ 'color': BLUE1 }">{{ icon }}</mat-icon>
   </button>
   <span [routerLink]="[link]">{{ name }}</span>
