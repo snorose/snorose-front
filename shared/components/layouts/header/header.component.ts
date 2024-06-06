@@ -8,6 +8,7 @@ import { BLUE1 } from '../../../consts/color';
 })
 export class HeaderComponent {
 
+  @Input() icon: string = '';
   @Input() name: string = '';
   @Input() link: string = '';
 
