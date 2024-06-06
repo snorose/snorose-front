@@ -39,7 +39,7 @@
         <div class="font-600 font-size" mat-subheader>커뮤니티</div>
         <div style="border: 1px solid #C7C7C7; border-radius: 25px;">
           @for (board of BOARDS; track $index) {
-          <mat-list-item class="pointer" matRipple [routerLink]="['/board-list', 'board', board.name, board.id]">
+          <mat-list-item class="pointer" matRipple [routerLink]="['/board', board.id]">
             <mat-icon [ngStyle]="{ 'color': BLUE1 }" matListItemIcon>{{ board.icon }}</mat-icon>
             {{ board.name }}
           </mat-list-item>

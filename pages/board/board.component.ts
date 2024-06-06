@@ -15,9 +15,4 @@ export class BoardComponent {
 
   constructor(public readonly layoutService: LayoutService) { }
 
-
-  public clickBoard(event: any) {
-    console.log('clickBoard');
-  }
-  
 }

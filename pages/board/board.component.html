@@ -3,7 +3,7 @@
   <mat-list style="padding: 20px;">
     <div class="font-600 font-size" mat-subheader>커뮤니티</div>
     @for (board of boards; track board) {
-    <mat-list-item matRipple class="list pointer" [routerLink]="['board', board.name, board.id]">
+    <mat-list-item matRipple class="list pointer" [routerLink]="[board.id]">
       <mat-icon [ngStyle]="{ 'color': BLUE1 }" matListItemIcon>{{ board.icon }}</mat-icon>
       <div matListItemTitle class="flex-row text-ellipsis">
         <p class="translate-1">{{ board.name }}</p>
