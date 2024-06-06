@@ -65,14 +65,16 @@ export interface IReviewUpdateRequest {
   fileName: string;
 }
 
-export interface IReviewListResponse extends IBaseResponse<Array<{
+export interface IReviewListData {
   userDisplay: string;
   postId: number,
   title: string;
   createdAt: string;
   likeCount: number;
   viewCount: number;
-}>> { }
+}
+
+export interface IReviewListResponse extends IBaseResponse<Array<IReviewListData>> { }
 
 export interface IReviewGetData {
   userDisplay: string;
