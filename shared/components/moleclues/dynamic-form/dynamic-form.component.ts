@@ -24,7 +24,7 @@ export class DynamicFormComponent implements OnInit {
 
   public isLoading: boolean = true;
   public formData: (IControl | IFormGroup)[] = [];
-  public dynamicMultiForm!: FormGroup;
+  public dynamicForm!: FormGroup;
   private customValidator = new CustomValidator();
   public groupOptions: Observable<IGroup[]>[] = [];
 
@@ -64,12 +64,12 @@ export class DynamicFormComponent implements OnInit {
         }
       });
 
-      this.dynamicMultiForm = this.formBuilder.group(entireGroup);
+      this.dynamicForm = this.formBuilder.group(entireGroup);
 
       this.formData.forEach((control: IControl | IFormGroup) => {
         if (control.category === 'select') {
           this.groupOptions.push(
-            this.dynamicMultiForm.get(control.name)!.valueChanges.pipe(
+            this.dynamicForm.get(control.name)!.valueChanges.pipe(
               startWith(''),
               map(value => this.filterGroup(control.group as IGroup[], value || ''))
             )
@@ -96,7 +96,7 @@ export class DynamicFormComponent implements OnInit {
       validations.forEach((validation: IValidation) => {
         if (validation.validator === 'required') controlValidators.push(Validators.required);
         if (validation.validator === 'email') controlValidators.push(Validators.email);
-        if (validation.validator == 'email-domain') controlValidators.push(this.customValidator.emailDomain())
+        if (validation.validator == 'email-domain') controlValidators.push(this.customValidator.emailDomain());
         if (validation.validator.startsWith('maxLength')) controlValidators.push(this.customValidator.maxLength(validation.validator));
         if (validation.validator.startsWith('minLength')) controlValidators.push(this.customValidator.minLength(validation.validator));
         if (validation.validator === 'password') controlValidators.push(this.customValidator.password());
@@ -108,12 +108,11 @@ export class DynamicFormComponent implements OnInit {
     return controlValidators;
   }
 
-  public onSubmit() {
-    // console.log('ngSubmit valid', this.dynamicMultiForm.valid);
-    // console.log('ngSubmit', this.dynamicMultiForm.value);
+  public onSubmit(event: any) {
+    event.stopPropagation();
 
-    if (this.dynamicMultiForm.valid) {
-      this.submit.emit({ value: this.dynamicMultiForm.value });
+    if (this.dynamicForm.valid) {
+      this.submit.emit({ value: this.dynamicForm.value });
     }
   }
 

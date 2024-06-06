@@ -1,5 +1,5 @@
 @if(!isLoading) {
-<form [formGroup]="dynamicMultiForm" (ngSubmit)="onSubmit()" class="form-full-layout hide-scrollbar">
+<form [formGroup]="dynamicForm" (ngSubmit)="onSubmit($event)" class="form-full-layout hide-scrollbar">
   @for (control of formData; track $index) {
   @if (control.category === 'group' && isIFormGroup(control)) {
   <div [formGroupName]="control.name">
@@ -16,20 +16,20 @@
   </div>
   }
   @if (control.category === 'textarea') {
-  <app-textarea [control]="control" [dynamicForm]="dynamicMultiForm"></app-textarea>
+  <app-textarea [control]="control" [dynamicForm]="dynamicForm"></app-textarea>
   }
   @if (control.category === 'input') {
-  <app-input [control]="control" [dynamicForm]="dynamicMultiForm"></app-input>
+  <app-input [control]="control" [dynamicForm]="dynamicForm"></app-input>
   }
   @if (control.category === 'password') {
-  <app-password [control]="control" [dynamicForm]="dynamicMultiForm"></app-password>
+  <app-password [control]="control" [dynamicForm]="dynamicForm"></app-password>
   }
   @if (control.category === 'select') {
-  <app-select [control]="control" [dynamicForm]="dynamicMultiForm" [formStructure]="formData"
+  <app-select [control]="control" [dynamicForm]="dynamicForm" [formStructure]="formData"
     [groupOptions]="groupOptions"></app-select>
   }
   @if (control.category === 'radio-button') {
-  <app-radio-button [control]="control" [dynamicForm]="dynamicMultiForm"></app-radio-button>
+  <app-radio-button [control]="control" [dynamicForm]="dynamicForm"></app-radio-button>
   }
   }
   @if (button != null) {

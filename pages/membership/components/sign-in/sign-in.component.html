@@ -9,7 +9,8 @@
     <div style="margin-bottom: 1rem; font-size: small;">스노로즈에 오신 것을 환영합니다</div>
   </div>
 
-  <div class="form-container" [formGroup]="loginForm" (keydown.enter)="onSignInClick()" (submit)="onSignInClick()">
-    <app-dynamic-form [key]="'sign-in'" [button]="'로그인'"></app-dynamic-form>
+  <div class="form-container">
+    <app-dynamic-form #dynamicFormComponent [key]="'sign-in'" [button]="'로그인'"
+      (submit)="onSignInClick($event)"></app-dynamic-form>
   </div>
 </div>

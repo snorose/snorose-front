@@ -1,12 +1,10 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { GlobalService } from '../../../../shared/services/global.service';
 import { ISignInResponse } from '../../../../shared/http/membership.http';
 import { DalService } from '../../../../shared/services/dal.service';
 import { MembershipService } from '../../../../shared/services/membership.service';
-import { BLUE1 } from '../../../../shared/consts/color';
 import { LayoutService } from '../../../../shared/services/layout.service';
+import { DynamicFormComponent } from '../../../../shared/components/moleclues/dynamic-form/dynamic-form.component';
 
 @Component({
   selector: 'app-sign-in',
@@ -15,35 +13,19 @@ import { LayoutService } from '../../../../shared/services/layout.service';
 })
 export class SignInComponent {
 
-  public hide = true;
-  public BLUE1 = BLUE1;
-
-  public loginForm: FormGroup = this.formBuilder.group({
-    loginId: ['', Validators.required],
-    password: ['', Validators.required]
-  });
+  @ViewChild('dynamicFormComponent') dynamicFormComponent!: DynamicFormComponent;
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
     private readonly dalService: DalService,
     public readonly layoutService: LayoutService,
     private readonly membershipService: MembershipService,
   ) { }
 
+  public onSignInClick(event: any) {
+    if (!this.dynamicFormComponent.dynamicForm.valid) return;
 
-  get id() {
-    return this.loginForm.get('id');
-  }
-
-  get password() {
-    return this.loginForm.get('password');
-  }
-
-  public onSignInClick() {
-    if (!this.loginForm.valid) return;
-
-    this.dalService.membershipHttp.signIn(this.loginForm.value).subscribe((response: ISignInResponse) => {
+    this.dalService.membershipHttp.signIn(event.value).subscribe((response: ISignInResponse) => {
       if (response.isSuccess) {
         this.membershipService.setUser(response.result);
         this.router.navigateByUrl('/main');

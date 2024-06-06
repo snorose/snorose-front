@@ -471,7 +471,7 @@
       {
         "category": "input",
         "type": "text",
-        "name": "id",
+        "name": "loginId",
         "value": "",
         "placeholder": "아이디를 입력해 주세요.",
         "validations": [
