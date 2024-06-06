@@ -10,7 +10,7 @@ export const routes: Routes = [
     component: ReviewComponent
   },
   {
-    path: ':reviewId',
+    path: ':postId',
     component: ReviewDetailComponent
   },
   {

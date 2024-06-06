@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { LayoutService } from '../../shared/services/layout.service';
 
 @Component({
   selector: 'app-review',
@@ -7,12 +8,15 @@ import { Component } from '@angular/core';
 })
 export class ReviewComponent {
 
+  public readonly layoutService = inject(LayoutService);
+
+
   public applyFilter(event: any) {
-    
+
   }
 
   public searchReview(event: any) {
-    
+
   }
 
 }

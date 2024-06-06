@@ -1,5 +1,5 @@
 <app-header name="" icon="menu" link=""></app-header>
-<div style="margin: 5px 20px;">
+<div style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()">
   <mat-form-field appearance="outline" style="border-radius: 30px !important; width: 100%;">
     <mat-label>Filter</mat-label>
     <input style="width: 100%;" matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
@@ -7,6 +7,6 @@
       <mat-icon>search</mat-icon>
     </button>
   </mat-form-field>
+  <app-review-list></app-review-list>
 </div>
-<app-review-list></app-review-list>
 <app-bottom-navigation></app-bottom-navigation>
