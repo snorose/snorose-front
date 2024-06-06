@@ -1,0 +1,7 @@
+<div style="display: flex; align-items: flex-end; gap: 0.8rem; background-color: #F5F5F5; border-radius: 7px; padding: 5px 10px; position: fixed; bottom: 0; left: 0; right: 0; margin: 10px auto 0;">
+  <mat-icon style="transform: translate(0px, -5px);">sentiment_very_satisfied</mat-icon>
+  <textarea #textarea rows="1" 
+    (keyup)="textareaChange()"  (keydown.enter)="textareaEnter($event, textarea.value)"
+    placeholder="댓글을 입력해주세요." style="width: 85%; max-height: 100px; font-size: 16px; resize: none; outline: none; border: none; box-sizing: border-box; padding: 10px 0; background-color: transparent;"></textarea>
+  <mat-icon style="transform: translate(0px, -5px);">send</mat-icon>
+</div>
