@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { DalService } from '../../../../shared/services/dal.service';
 import { IReviewListData } from '../../../../shared/http/review.http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-review-list',
@@ -9,6 +10,7 @@ import { IReviewListData } from '../../../../shared/http/review.http';
 })
 export class ReviewListComponent implements OnInit {
 
+  private readonly router = inject(Router);
   private readonly dalService = inject(DalService);
 
   private page: number = 0;
@@ -23,20 +25,20 @@ export class ReviewListComponent implements OnInit {
 
   private loadData() {
     this.isLoading = true;
-    this.dalService.reviewHttp.getList(1, this.page).subscribe(response => {
-      this.dataSource = [...this.dataSource, ...response.result];
-      this.page++;
+    // this.dalService.reviewHttp.getList('1', this.page).subscribe(response => {
+    //   this.dataSource = [...this.dataSource, ...response.result];
+    //   this.page++;
 
-      const scrollTop = document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight;
-      const clientHeight = window.innerHeight || document.documentElement.clientHeight;
-      const scrollPosition = scrollTop + clientHeight;
+    //   const scrollTop = document.documentElement.scrollTop;
+    //   const scrollHeight = document.documentElement.scrollHeight;
+    //   const clientHeight = window.innerHeight || document.documentElement.clientHeight;
+    //   const scrollPosition = scrollTop + clientHeight;
 
-      if (scrollHeight <= scrollPosition) {
-        this.loadData();
-      }
-      this.isLoading = false;
-    });
+    //   if (scrollHeight <= scrollPosition) {
+    //     this.loadData();
+    //   }
+    //   this.isLoading = false;
+    // });
   }
 
   public onNearEndScroll() {
@@ -45,9 +47,9 @@ export class ReviewListComponent implements OnInit {
     }
   }
 
-  public clickRow(row: any) {
-    console.log('clickRow', row);
+  public clickRipple(row: IReviewListData) {
+    console.log('row', row);
+    this.router.navigate(['/review', row.postId]);
   }
-
 
 }

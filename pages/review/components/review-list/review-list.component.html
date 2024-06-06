@@ -29,6 +29,6 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row class="ripple" *matRowDef="let row; columns: displayedColumns" (click)="clickRow(row)"></tr>
+    <tr mat-row class="ripple cursor" *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id]"></tr>
   </table>
 </div>
