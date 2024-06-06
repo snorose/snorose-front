@@ -6,9 +6,9 @@ import { DalService } from '../../shared/services/dal.service';
 import { LayoutService } from '../../shared/services/layout.service';
 import { DateService } from '../../shared/services/date.service';
 import { BLUE1 } from '../../shared/consts/color';
-import { BOARDS } from '../board-list/consts/board';
 import { MatDialog } from '@angular/material/dialog';
 import { AttendanceDialogComponent } from './components/attendance-dialog/attendance-dialog.component';
+import { BOARDS } from '../board/consts/board';
 
 @Component({
   selector: 'app-main',

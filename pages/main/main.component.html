@@ -1,5 +1,5 @@
-<div style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()">
-  <app-header name="SNOWROSE" link="/main"></app-header>
+<div style="overflow-y: scroll;" [style.height]="layoutService.getHeightWithoutHeader()">
+  <app-header name="SNOWROSE" link="/main" icon="menu"></app-header>
   <app-swiper></app-swiper>
 
   <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
@@ -34,18 +34,20 @@
       (click)="attendanceCheck($event)">오늘의
       출석체크</button>
 
-    <div class="font-600 font-21" style="transform: translate(-130px, 0px);">커뮤니티</div>
-    <div style="border: 1px solid #C7C7C7; border-radius: 25px; margin: 10px; width: 90%;">
+    <div style="width: 90%; margin: 0 10px;">
       <mat-list>
-        @for (board of BOARDS; track $index) {
-        <mat-list-item class="pointer" matRipple [routerLink]="['/board-list', 'board', board.name, board.id]">
-          <mat-icon [ngStyle]="{ 'color': BLUE1 }" matListItemIcon>{{ board.icon }}</mat-icon>
-          {{ board.name }}
-        </mat-list-item>
-        @if (BOARDS.length !== $index + 1) {
-        <mat-divider></mat-divider>
-        }
-        }
+        <div class="font-600 font-size" mat-subheader>커뮤니티</div>
+        <div style="border: 1px solid #C7C7C7; border-radius: 25px;">
+          @for (board of BOARDS; track $index) {
+          <mat-list-item class="pointer" matRipple [routerLink]="['/board-list', 'board', board.name, board.id]">
+            <mat-icon [ngStyle]="{ 'color': BLUE1 }" matListItemIcon>{{ board.icon }}</mat-icon>
+            {{ board.name }}
+          </mat-list-item>
+          @if (BOARDS.length !== $index + 1) {
+          <mat-divider></mat-divider>
+          }
+          }
+        </div>
       </mat-list>
     </div>
   </div>
@@ -64,3 +66,5 @@
     <p class="font-12">이용 약관 | 배너 및 광고 문의 | 개인정보 처리방침</p>
   </footer>
 </div>
+
+<app-bottom-navigation></app-bottom-navigation>
