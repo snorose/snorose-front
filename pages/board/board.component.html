@@ -1,0 +1,19 @@
+<div [style.height]="layoutService.getMainHeight()">
+  <app-header icon="menu"></app-header>
+  <mat-list style="padding: 20px;">
+    <div class="font-600 font-size" mat-subheader>커뮤니티</div>
+    @for (board of boards; track board) {
+    <mat-list-item matRipple class="list pointer" [routerLink]="['board', board.name, board.id]">
+      <mat-icon [ngStyle]="{ 'color': BLUE1 }" matListItemIcon>{{ board.icon }}</mat-icon>
+      <div matListItemTitle class="flex-row text-ellipsis">
+        <p class="translate-1">{{ board.name }}</p>
+        <span class="toolbar-spacer"></span>
+        <p class="gray-small-font translate-1 text-ellipsis">{{ board.description }}</p>
+      </div>
+    </mat-list-item>
+    }
+  </mat-list>
+  <mat-divider></mat-divider>
+  <h3 class="font-600 p-30">스노로즈에서 더 다양한 게시판을 준비하고 있어요</h3>
+</div>
+<app-bottom-navigation></app-bottom-navigation>

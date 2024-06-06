@@ -1,0 +1,25 @@
+<app-header icon="arrow_back_ios"></app-header>
+
+<app-user-header [userDisplay]="detailData.userDisplay"></app-user-header>
+
+<div style="margin: 0 27px;">
+  <h2 style="font-weight: 600;">{{ detailData.title }}</h2>
+  <p>
+    {{ detailData.content }}
+  </p>
+
+  <div style="display: flex;">
+    <app-chat [reportCount]="detailData.reportCount"></app-chat>
+    <app-like [likeCount]="detailData.likeCount"></app-like>
+    <app-scrap [scrapCount]="detailData.scrapCount"></app-scrap>
+    <span class="toolbar-spacer"></span>
+    <p class="content-action-button" style="margin: 10px; color: #5F86BF;">
+      {{ detailData.viewCount }}
+    </p>
+  </div>
+</div>
+<mat-divider></mat-divider>
+@for (comment of comments; track $index) {
+  <app-comment [comment]="comment"></app-comment>
+}
+<app-comment-input (enter)="enterComment($event)"></app-comment-input>
