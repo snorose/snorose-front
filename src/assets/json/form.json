@@ -473,12 +473,12 @@
         "type": "text",
         "name": "loginId",
         "value": "",
-        "placeholder": "아이디를 입력해 주세요.",
+        "placeholder": "아이디를 입력해 주세요",
         "validations": [
           {
             "name": "required",
             "validator": "required",
-            "message": "Id is required"
+            "message": "아이디는 필수 항목입니다"
           }
         ]
       },
@@ -492,7 +492,7 @@
           {
             "name": "required",
             "validator": "required",
-            "message": "Password is required"
+            "message": "비밀번호는 필수 항목입니다"
           }
         ]
       }
