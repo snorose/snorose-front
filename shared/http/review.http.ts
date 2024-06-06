@@ -106,21 +106,21 @@ export interface IReviewCreateResponse extends IBaseResponse<{ postId: number; }
 export interface IReviewUpdateResponse extends IBaseResponse<{ postId: number; }> { }
 
 export interface IReviewHttp {
-  getList(boardId: number, page: number): Observable<IReviewListResponse>;
-  getDetail(postId: number): Observable<IReviewDetailResponse>;
+  getList(boardId: string, page: number): Observable<IReviewListResponse>;
+  getDetail(postId: string): Observable<IReviewDetailResponse>;
   create(request: IReviewCreateRequest): Observable<IReviewCreateResponse>;
-  update(postId: number, request: IReviewUpdateRequest): Observable<IReviewUpdateResponse>;
+  update(postId: string, request: IReviewUpdateRequest): Observable<IReviewUpdateResponse>;
 }
 
 export class ReviewHttp implements IReviewHttp {
 
   private readonly httpService = inject(HttpService);
 
-  public getList(boardId: number, page: number): Observable<IReviewListResponse> {
+  public getList(boardId: string, page: number): Observable<IReviewListResponse> {
     return this.httpService.Get(`/v1/reviews/${boardId}/list/${page}`);
   }
 
-  public getDetail(postId: number): Observable<IReviewDetailResponse> {
+  public getDetail(postId: string): Observable<IReviewDetailResponse> {
     return this.httpService.Get(`/v1/reviews/${postId}`);
   }
 
@@ -128,7 +128,7 @@ export class ReviewHttp implements IReviewHttp {
     return this.httpService.Post(`/v1/reviews/review`, request);
   }
 
-  public update(postId: number, request: IReviewUpdateRequest): Observable<IReviewUpdateResponse> {
+  public update(postId: string, request: IReviewUpdateRequest): Observable<IReviewUpdateResponse> {
     return this.httpService.Patch(`/v1/reviews/${postId}`, request);
   }
 
