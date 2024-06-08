@@ -1,4 +1,9 @@
 <div matRipple style="display: flex; gap: 5px; padding: 10px 10px 0 10px;" (click)="clickScrap()">
-  <mat-icon inline="true" [ngClass]="{ 'fill': isScrap, 'default-color': !isScrap }">bookmark</mat-icon>
+  @if (isScrap) {
+    <mat-icon class="fill">bookmark</mat-icon>
+  }
+  @else {
+    <span class="material-symbols-outlined" style="font-size: 20px;">bookmark</span>
+  }
   <p style="transform: translate(0px, 1px);">{{ scrapCount }}</p>
 </div>

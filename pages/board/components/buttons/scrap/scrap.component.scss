@@ -1,7 +1,12 @@
 .fill {
   color: #00368E;
+  font-size: 20px;
 }
 
-// .default-color {
-//   color: #00368E; /* 원하는 기본 색상으로 변경 */
-// }
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}

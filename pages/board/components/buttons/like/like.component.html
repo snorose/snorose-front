@@ -1,4 +1,13 @@
 <div matRipple style="display: flex; gap: 5px; padding: 10px 10px 0 10px;" (click)="clickLike()">
-  <mat-icon inline="true" [ngClass]="{ 'fill': isLike, 'default-color': !isLike }">favorite</mat-icon>
+  @if (isLike) {
+    <mat-icon class="fill">
+      favorite
+    </mat-icon>
+  } 
+  @else {
+    <span class="material-symbols-outlined" style="font-size: 20px;">
+      favorite
+    </span>
+  }
   <p style="transform: translate(0px, 1px);">{{ likeCount }}</p>
 </div>
