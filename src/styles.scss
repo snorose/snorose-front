@@ -1,6 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use '@angular/material-experimental' as matx;
+
 @import 'swiper/scss';
 @import 'swiper/scss/pagination';
+
+$baseColor : #00368E;
+$m3-light-theme: matx.define-theme((
+  color: (
+    primary: matx.$m3-azure-palette,
+    tertiary: matx.$m3-blue-palette,
+    )
+));
+
+.light-theme {
+  @include mat.all-component-themes($m3-light-theme);
+}
 
 html,
 body {
