@@ -2,9 +2,9 @@
   @if (control.label) {
   <div [ngStyle]="control.styles?.label">{{ control.label }}</div>
   }
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" style="width: 100%;">
     <input matInput [type]="control.type" [placeholder]="control.placeholder || ''" [formControlName]="control.name"
-      [matAutocomplete]="autoGroup">
+      [matAutocomplete]="autoGroup" [ngStyle]="control.styles?.input">
     <mat-autocomplete #autoGroup="matAutocomplete">
       @for (group of groupOptions[getSelectIndex(control.name)] | async; track $index) {
       @if (group.main === '') {
@@ -22,7 +22,7 @@
       }
     </mat-autocomplete>
   </mat-form-field>
-  @if (dynamicForm.get(control.name)?.invalid && dynamicForm.get(control.name)?.touched) {
-  <mat-error style="margin-top: -25px;">{{ getErrorMessage(control, null) }}</mat-error>
-  }
 </div>
+@if (dynamicForm.get(control.name)?.invalid && dynamicForm.get(control.name)?.touched) {
+<mat-error>{{ getErrorMessage(control, null) }}</mat-error>
+}
