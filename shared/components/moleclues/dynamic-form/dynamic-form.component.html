@@ -1,5 +1,5 @@
 @if(!isLoading) {
-<form [formGroup]="dynamicForm" (ngSubmit)="onSubmit($event)" class="form-full-layout hide-scrollbar">
+<form [formGroup]="dynamicForm" (keydown.enter)="onEnterSubmit($event)" (ngSubmit)="onSubmit($event)" class="form-full-layout hide-scrollbar">
   @for (control of formData; track $index) {
   @if (control.category === 'group' && isIFormGroup(control)) {
   <div [formGroupName]="control.name">
@@ -33,7 +33,7 @@
   }
   }
   @if (button != null) {
-  <button mat-flat-button color="primary" type="submit">{{ button }}</button>
+  <button mat-flat-button [ngStyle]="{ 'background-color': BLUE1, 'color': 'white' }" type="submit">{{ button }}</button>
   }
 </form>
 }

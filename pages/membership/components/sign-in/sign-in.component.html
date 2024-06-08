@@ -11,6 +11,6 @@
 
   <div class="form-container">
     <app-dynamic-form #dynamicFormComponent [key]="'sign-in'" [button]="'로그인'"
-      (submit)="onSignInClick($event)"></app-dynamic-form>
+      (submit)="onSignInClick($event)" (enter)="onSignInClick($event)"></app-dynamic-form>
   </div>
 </div>

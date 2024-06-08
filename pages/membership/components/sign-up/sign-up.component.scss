@@ -2,6 +2,34 @@
   padding: 10px;
 }
 
+.stepper-label {
+  font-size: 18px; 
+  font-weight: 600;
+}
+
 .mat-step-icon-selected {
   background-color: #00368E !important;
+}
+
+.custom-button {
+  border: 1px solid #5F86BF;
+  border-radius: 20px;
+  background-color: white;
+  color: #5F86BF;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.custom-button:hover {
+  background-color: #5F86BF;
+  color: white;
+}
+
+.custom-button:active {
+  background-color: #5F86BF;
+  color: white;
 }

@@ -26,10 +26,6 @@
             "flex-direction": "column",
             "gap": "1rem"
           },
-          "label": {
-            "font-size": "medium",
-            "font-weight": "500"
-          },
           "input": {
             "outline": "none",
             "border": "none",
@@ -63,10 +59,6 @@
             "display": "flex",
             "flex-direction": "column",
             "gap": "1rem"
-          },
-          "label": {
-            "font-size": "medium",
-            "font-weight": "500"
           },
           "textarea": {
             "outline": "none",
@@ -229,7 +221,38 @@
             "gap": "0.5rem"
           }
         }
-      },
+      }
+    ]
+  },
+  {
+    "key": "sign-up-2",
+    "value": [
+      {
+        "category": "input",
+        "type": "text",
+        "name": "nickname",
+        "value": "",
+        "placeholder": "확인 코드를 입력해주세요",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "확인 코드는 필수 항목입니다"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "flex-direction": "column",
+            "gap": "0.5rem"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "key": "sign-up-3",
+    "value": [
       {
         "category": "input",
         "type": "text",
@@ -263,16 +286,12 @@
             "display": "flex",
             "flex-direction": "column",
             "gap": "0.5rem"
-          },
-          "label": {
-            "font-size": "medium",
-            "font-weight": "500"
           }
         }
       },
       {
         "category": "input",
-        "type": "number",
+        "type": "string",
         "name": "studentNumber",
         "value": "",
         "placeholder": "학번",
@@ -283,8 +302,8 @@
             "message": "학번은 필수 항목입니다"
           },
           {
-            "name": "minLength",
-            "validator": "minLength-2",
+            "name": "studentNumber",
+            "validator": "studentNumber",
             "message": "학번 형식이 옳지 않습니다"
           }
         ],
@@ -293,10 +312,6 @@
             "display": "flex",
             "flex-direction": "column",
             "gap": "0.5rem"
-          },
-          "label": {
-            "font-size": "medium",
-            "font-weight": "500"
           }
         }
       },
@@ -307,12 +322,10 @@
         "value": "",
         "group": [
           {
-            "main": "A",
+            "main": "소프트웨어학부",
             "sub": [
-              "Alabama",
-              "Alaska",
-              "Arizona",
-              "Arkansas"
+              "컴퓨터과학전공",
+              "소프트웨어전공"
             ]
           },
           {
@@ -334,7 +347,7 @@
           {
             "name": "maxLength",
             "validator": "maxLength-50",
-            "message": "기타 전공일 경우 : 50자 미만으로  입력해주세요"
+            "message": "기타 전공일 경우 : 50자 미만으로 입력해주세요"
           }
         ],
         "styles": {
@@ -342,124 +355,6 @@
             "display": "flex",
             "flex-direction": "column",
             "gap": "0.5rem"
-          },
-          "label": {
-            "font-size": "medium",
-            "font-weight": "500"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "key": "sign-up-2",
-    "value": [
-      {
-        "category": "input",
-        "type": "text",
-        "name": "nickname",
-        "value": "",
-        "placeholder": "닉네임",
-        "validations": [
-          {
-            "name": "minLength",
-            "validator": "minLength-2",
-            "message": "Min Length is 2"
-          },
-          {
-            "name": "maxLength",
-            "validator": "maxLength-30",
-            "message": "Max Length is 30"
-          },
-          {
-            "name": "textPattern",
-            "validator": "textPattern",
-            "message": "Only type korean or english or number or - or _"
-          }
-        ],
-        "styles": {
-          "layout": {
-            "display": "flex",
-            "flex-direction": "column",
-            "gap": "0.5rem"
-          },
-          "label": {
-            "font-size": "medium",
-            "font-weight": "500"
-          }
-        }
-      },
-      {
-        "category": "input",
-        "type": "number",
-        "name": "studentNumber",
-        "value": "",
-        "placeholder": "학번",
-        "validations": [
-          {
-            "name": "minLength",
-            "validator": "minLength-2",
-            "message": "Min Length is 2"
-          },
-          {
-            "name": "maxLength",
-            "validator": "maxLength-30",
-            "message": "Max Length is 30"
-          }
-        ],
-        "styles": {
-          "layout": {
-            "display": "flex",
-            "flex-direction": "column",
-            "gap": "0.5rem"
-          },
-          "label": {
-            "font-size": "medium",
-            "font-weight": "500"
-          }
-        }
-      },
-      {
-        "category": "select",
-        "type": "text",
-        "name": "major",
-        "value": "",
-        "group": [
-          {
-            "main": "A",
-            "sub": [
-              "Alabama",
-              "Alaska",
-              "Arizona",
-              "Arkansas"
-            ]
-          },
-          {
-            "main": "C",
-            "sub": [
-              "California",
-              "Colorado",
-              "Connecticut"
-            ]
-          }
-        ],
-        "placeholder": "전공",
-        "validations": [
-          {
-            "name": "required",
-            "validator": "required",
-            "message": "Major is required"
-          }
-        ],
-        "styles": {
-          "layout": {
-            "display": "flex",
-            "flex-direction": "column",
-            "gap": "0.5rem"
-          },
-          "label": {
-            "font-size": "medium",
-            "font-weight": "500"
           }
         }
       }
@@ -495,6 +390,543 @@
             "message": "비밀번호는 필수 항목입니다"
           }
         ]
+      }
+    ]
+  },
+  {
+    "key": "find-id",
+    "value": [
+      {
+        "category": "input",
+        "type": "text",
+        "label": "이름",
+        "name": "username",
+        "value": "",
+        "placeholder": "이름을 입력해 주세요",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "이름은 필수 항목입니다"
+          },
+          {
+            "name": "maxLength",
+            "validator": "maxLength-50",
+            "message": "50자 미만으로 입력해주세요"
+          },
+          {
+            "name": "koreanEnglish",
+            "validator": "koreanEnglish",
+            "message": "특수문자는 사용할 수 없습니다"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "flex-direction": "column",
+            "gap": "10px"
+          },
+          "label": {
+            "font-size": "medium",
+            "font-weight": "600"
+          }
+        }
+      },
+      {
+        "category": "input",
+        "type": "email",
+        "label": "이메일",
+        "name": "email",
+        "value": "",
+        "placeholder": "숙명 구글 이메일을 입력해 주세요",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "이메일은 필수 항목입니다"
+          },
+          {
+            "name": "email",
+            "validator": "email",
+            "message": "이메일 형식이 옳지 않습니다"
+          },
+          {
+            "name": "domain",
+            "validator": "email-domain",
+            "message": "숙명 이메일만 입력 가능합니다"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "flex-direction": "column",
+            "gap": "10px"
+          },
+          "label": {
+            "font-size": "medium",
+            "font-weight": "600"
+          }
+        }
+      },
+      {
+        "category": "input",
+        "type": "string",
+        "label": "학번",
+        "name": "studentNumber",
+        "value": "",
+        "placeholder": "학번을 입력해 주세요",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "학번은 필수 항목입니다"
+          },
+          {
+            "name": "studentNumber",
+            "validator": "studentNumber",
+            "message": "학번 형식이 옳지 않습니다"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "flex-direction": "column",
+            "gap": "10px"
+          },
+          "label": {
+            "font-size": "medium",
+            "font-weight": "600"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "key": "find-password",
+    "value": [
+      {
+        "category": "input",
+        "type": "text",
+        "label": "아이디",
+        "name": "loginId",
+        "value": "",
+        "placeholder": "아이디를 입력해 주세요",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "이름은 필수 항목입니다"
+          },
+          {
+            "name": "maxLength",
+            "validator": "maxLength-50",
+            "message": "50자 미만으로 입력해주세요"
+          },
+          {
+            "name": "koreanEnglish",
+            "validator": "koreanEnglish",
+            "message": "특수문자는 사용할 수 없습니다"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "flex-direction": "column",
+            "gap": "10px"
+          },
+          "label": {
+            "font-size": "medium",
+            "font-weight": "600"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "key": "board-post",
+    "value": [
+      {
+        "category": "input",
+        "type": "text",
+        "name": "title",
+        "value": "",
+        "placeholder": "제목",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "제목을 작성해 주세요"
+          },
+          {
+            "name": "maxLength",
+            "validator": "maxLength-40",
+            "message": "40자 미만으로 입력해주세요"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "flex-direction": "column",
+            "gap": "10px"
+          },
+          "input": {
+            "outline": "none",
+            "border": "none",
+            "box-sizing": "border-box",
+            "font-size": "20px",
+            "width": "100%"
+          }
+        }
+      },
+      {
+        "category": "textarea",
+        "type": "text",
+        "name": "content",
+        "value": "",
+        "placeholder": "내용",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "내용을 작성해 주세요"
+          },
+          {
+            "name": "maxLength",
+            "validator": "maxLength-4000",
+            "message": "4000자 미만으로 입력해주세요"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "flex-direction": "column",
+            "gap": "10px"
+          },
+          "textarea": {
+            "outline": "none",
+            "border": "none",
+            "box-sizing": "border-box",
+            "font-size": "15px",
+            "height": "200px"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "key": "review-post",
+    "value": [
+      {
+        "category": "input",
+        "type": "text",
+        "label": "강의명",
+        "name": "lectureName",
+        "value": "",
+        "placeholder": "강의명을 입력해 주세요",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "이름은 필수 항목입니다"
+          },
+          {
+            "name": "maxLength",
+            "validator": "maxLength-50",
+            "message": "50자 미만으로 입력해주세요"
+          },
+          {
+            "name": "koreanEnglish",
+            "validator": "koreanEnglish",
+            "message": "특수문자는 사용할 수 없습니다"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "flex-direction": "column",
+            "gap": "12px"
+          },
+          "label": {
+            "font-size": "18px",
+            "font-weight": "600"
+          },
+          "input": {
+            "outline": "none",
+            "border": "none",
+            "box-sizing": "border-box",
+            "font-size": "15px",
+            "width": "100%"
+          }
+        }
+      },
+      {
+        "category": "input",
+        "type": "text",
+        "label": "교수",
+        "name": "professor",
+        "value": "",
+        "placeholder": "교수 성함을 입력해 주세요",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "교수 성함은 필수 항목입니다"
+          },
+          {
+            "name": "maxLength",
+            "validator": "maxLength-50",
+            "message": "50자 미만으로 입력해주세요"
+          },
+          {
+            "name": "koreanEnglish",
+            "validator": "koreanEnglish",
+            "message": "특수문자는 사용할 수 없습니다"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "flex-direction": "column",
+            "gap": "12px"
+          },
+          "label": {
+            "font-size": "18px",
+            "font-weight": "600"
+          },
+          "input": {
+            "outline": "none",
+            "border": "none",
+            "box-sizing": "border-box",
+            "font-size": "15px",
+            "width": "100%"
+          }
+        }
+      },
+      {
+        "category": "select",
+        "type": "text",
+        "label": "강의 종류",
+        "name": "lectureType",
+        "value": "",
+        "group": [
+          {
+            "main": "",
+            "sub": [
+              "전공필수",
+              "전공선택",
+              "교양필수",
+              "교양선택",
+              "기타"
+            ]
+          }
+        ],
+        "placeholder": "종류",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "강의 종류는 필수 항목입니다"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "gap": "12px"
+          },
+          "label": {
+            "font-size": "18px",
+            "font-weight": "600",
+            "width": "30%",
+            "transform": "translate(0px, 18px)"
+          }
+        }
+      },
+      {
+        "category": "select",
+        "type": "text",
+        "label": "수강학기",
+        "name": "lectureYear",
+        "value": "",
+        "group": [
+          {
+            "main": "",
+            "sub": [
+              "2024",
+              "2023",
+              "2022",
+              "2021",
+              "2020",
+              "2019",
+              "2018",
+              "2017",
+              "2016",
+              "2015"
+            ]
+          }
+        ],
+        "placeholder": "연도",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "전공은 필수 항목입니다"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "flex-direction": "column",
+            "gap": "0.5rem"
+          },
+          "label": {
+            "font-size": "18px",
+            "font-weight": "600"
+          }
+        }
+      },
+      {
+        "category": "select",
+        "type": "text",
+        "name": "semester",
+        "value": "",
+        "group": [
+          {
+            "main": "",
+            "sub": [
+              "1학기",
+              "2학기",
+              "여름학기",
+              "겨울학기",
+              "기타"
+            ]
+          }
+        ],
+        "placeholder": "학기",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "전공은 필수 항목입니다"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "flex-direction": "column",
+            "gap": "0.5rem"
+          },
+          "label": {
+            "font-size": "18px",
+            "font-weight": "600"
+          }
+        }
+      },
+      {
+        "category": "select",
+        "type": "text",
+        "label": "PF 여부",
+        "name": "isPF",
+        "value": "",
+        "group": [
+          {
+            "main": "",
+            "sub": [
+              "O",
+              "X"
+            ]
+          }
+        ],
+        "placeholder": "O",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "전공은 필수 항목입니다"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "gap": "12px"
+          },
+          "label": {
+            "font-size": "18px",
+            "font-weight": "600",
+            "width": "30%",
+            "transform": "translate(0px, 18px)"
+          }
+        }
+      },
+      {
+        "category": "textarea",
+        "type": "text",
+        "label": "시험 유형 및 설명",
+        "name": "content",
+        "value": "",
+        "placeholder": "시험 유형 및 설명을 입력해 주세요",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "시험 유형 및 설명은 필수 항목입니다"
+          },
+          {
+            "name": "maxLength",
+            "validator": "maxLength-4000",
+            "message": "4000자 미만으로 입력해주세요"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "flex-direction": "column",
+            "gap": "10px"
+          },
+          "label": {
+            "font-size": "18px",
+            "font-weight": "600"
+          },
+          "textarea": {
+            "outline": "none",
+            "border": "none",
+            "box-sizing": "border-box",
+            "font-size": "15px",
+            "height": "100px"
+          }
+        }
+      },
+      {
+        "category": "input",
+        "type": "text",
+        "label": "분반(선택)",
+        "name": "classNumber",
+        "value": "",
+        "placeholder": "분반을 입력해 주세요(ex. 001)",
+        "validations": [
+          {
+            "name": "maxLength",
+            "validator": "maxLength-40",
+            "message": "40자 미만으로 입력해주세요"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "flex-direction": "column",
+            "gap": "10px"
+          },
+          "label": {
+            "font-size": "18px",
+            "font-weight": "600"
+          },
+          "input": {
+            "outline": "none",
+            "border": "none",
+            "box-sizing": "border-box",
+            "font-size": "15px",
+            "width": "100%"
+          }
+        }
       }
     ]
   }

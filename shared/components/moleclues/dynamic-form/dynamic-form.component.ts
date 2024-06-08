@@ -4,6 +4,7 @@ import { Observable, startWith, map } from 'rxjs';
 import { IKeyValue } from '../../../../src/app/app.component';
 import { IControl, IFormGroup, IGroup, FormService, IValidation } from '../../../services/form.service';
 import { CustomValidator } from '../../../classes/custom-validator';
+import { BLUE1 } from '../../../consts/color';
 
 export const _filter = (opt: string[], value: string) => {
   const filterValue = value.toLowerCase();
@@ -21,7 +22,9 @@ export class DynamicFormComponent implements OnInit {
   @Input() button: string | null = 'Submit';
 
   @Output() submit = new EventEmitter<any>();
+  @Output() enter = new EventEmitter<any>();
 
+  public BLUE1 = BLUE1;
   public isLoading: boolean = true;
   public formData: (IControl | IFormGroup)[] = [];
   public dynamicForm!: FormGroup;
@@ -103,6 +106,7 @@ export class DynamicFormComponent implements OnInit {
         if (validation.validator === 'password-match') controlValidators.push(this.customValidator.passwordMatch());
         if (validation.validator === 'koreanEnglish') controlValidators.push(this.customValidator.koreanEnglish());
         if (validation.validator === 'textPattern') controlValidators.push(this.customValidator.textPattern());
+        if (validation.validator === 'studentNumber') controlValidators.push(this.customValidator.studentNumber());
       });
     }
     return controlValidators;
@@ -113,6 +117,14 @@ export class DynamicFormComponent implements OnInit {
 
     if (this.dynamicForm.valid) {
       this.submit.emit({ value: this.dynamicForm.value });
+    }
+  }
+
+  public onEnterSubmit(event: any) {
+    event.stopPropagation();
+
+    if (this.dynamicForm.valid) {
+      this.enter.emit({ value: this.dynamicForm.value });
     }
   }
 

@@ -1,1 +1,4 @@
-<p>review-post works!</p>
+<app-header icon="close" rightButton="게시" (clickRight)="post()"></app-header>
+<div class=" hide-scrollbar" style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()">
+  <app-dynamic-form key="review-post" [button]="null"></app-dynamic-form>
+</div>

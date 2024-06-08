@@ -1,9 +1,32 @@
-<div [style.height]="layoutService.getHeightWithoutHeader()" style="margin: 10px; overflow-y: auto;">
-  <mat-toolbar style="background-color: white;">
-    <button mat-icon-button [routerLink]="['/board-list']">
-      <mat-icon [ngStyle]="{ 'color': BLUE1 }">arrow_back_ios</mat-icon>
-    </button>
-    <span>회원가입</span>
-  </mat-toolbar>
-  <app-dynamic-form [key]="'sign-up-1'" [button]="'다음'" (submit)="onSignUpClick($event)"></app-dynamic-form>
+<app-header name="회원가입" icon="arrow_back_ios" (clickLeft)="goBack()"></app-header>
+<div [style.height]="layoutService.getMainHeight()" class="hide-scrollbar" style="margin: 10px; overflow-y: auto;">
+  <mat-stepper orientation="vertical" style="background-color: white;">
+    <mat-step>
+      <ng-template matStepLabel><span class="stepper-label">계정 정보 입력</span></ng-template>
+      <app-dynamic-form key="sign-up-1" [button]="null"></app-dynamic-form>
+      <div>
+        <button class="custom-button" matStepperNext (click)="onSubmit('sign-up-1')">다음</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel><span class="stepper-label">이메일 인증</span></ng-template>
+      <div style="margin: 30px 10px;">
+        <div>숙명 구글 이메일로</div>
+        <div>확인 코드를 보내드렸어요!</div>
+      </div>
+      <app-dynamic-form key="sign-up-2" [button]="null"></app-dynamic-form>
+      <div style="display: flex; gap: 10px;">
+        <button class="custom-button" matStepperPrevious>이전</button>
+        <button class="custom-button" matStepperNext (click)="onSubmit('sign-up-2')">다음</button>
+      </div>
+    </mat-step> 
+    <mat-step>
+      <ng-template matStepLabel><span class="stepper-label">사용자 정보 입력</span></ng-template>
+      <app-dynamic-form key="sign-up-3" [button]="null"></app-dynamic-form>
+      <div style="display: flex; gap: 10px;">
+        <button class="custom-button" matStepperPrevious>이전</button>
+        <button class="custom-button" matStepperNext (click)="onSubmit('sign-up-2')">다음</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
 </div>

@@ -13,7 +13,7 @@ import { DynamicFormComponent } from '../../../../shared/components/moleclues/dy
 })
 export class SignInComponent {
 
-  @ViewChild('dynamicFormComponent') dynamicFormComponent!: DynamicFormComponent;
+  @ViewChild(DynamicFormComponent) dynamicFormComponent!: DynamicFormComponent;
 
   constructor(
     private router: Router,
@@ -25,13 +25,18 @@ export class SignInComponent {
   public onSignInClick(event: any) {
     if (!this.dynamicFormComponent.dynamicForm.valid) return;
 
-    this.dalService.membershipHttp.signIn(event.value).subscribe((response: ISignInResponse) => {
-      if (response.isSuccess) {
-        this.membershipService.setUser(response.result);
-        this.router.navigateByUrl('/main');
-      }
-      else {
-        this.dalService.snackBar('아이디 혹은 비밀번호가 일치하지 않습니다');
+    this.dalService.membershipHttp.signIn(event.value).subscribe({
+      next: (response: ISignInResponse) => {
+        if (response.isSuccess) {
+          this.membershipService.setUser(response.result);
+          this.router.navigateByUrl('/main');
+        }
+        else {
+          this.dalService.snackBar('아이디 혹은 비밀번호가 일치하지 않습니다');
+        }
+      },
+      error: (error) => {
+        this.dalService.snackBar('서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요');
       }
     });
   }

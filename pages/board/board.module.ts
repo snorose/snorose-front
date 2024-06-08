@@ -9,6 +9,7 @@ import { ChatComponent } from './components/buttons/chat/chat.component';
 import { ScrapComponent } from './components/buttons/scrap/scrap.component';
 import { CommentComponent } from './components/comments/comment/comment.component';
 import { CommentInputComponent } from './components/comments/comment-input/comment-input.component';
+import { BoardPostComponent } from './components/board-post/board-post.component';
 
 
 
@@ -22,6 +23,7 @@ import { CommentInputComponent } from './components/comments/comment-input/comme
     ScrapComponent,
     CommentComponent,
     CommentInputComponent,
+    BoardPostComponent,
   ],
   imports: [
     BoardRoutingModule,

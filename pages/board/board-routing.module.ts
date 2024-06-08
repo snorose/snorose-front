@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BoardComponent } from './board.component';
 import { BoardDetailComponent } from './components/board-detail/board-detail.component';
 import { BoardListComponent } from './components/board-list/board-list.component';
+import { BoardPostComponent } from './components/board-post/board-post.component';
 
 export const routes: Routes = [
   {
@@ -12,6 +13,10 @@ export const routes: Routes = [
   {
     path: ':boardId',
     component: BoardListComponent
+  },
+  {
+    path: ':boardId/post',
+    component: BoardPostComponent
   },
   {
     path: ':boardId/:postId',
