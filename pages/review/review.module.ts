@@ -5,6 +5,9 @@ import { ReviewRoutingModule } from './review-routing.module';
 import { ReviewDetailComponent } from './components/review-detail/review-detail.component';
 import { ReviewListComponent } from './components/review-list/review-list.component';
 import { ReviewPostComponent } from './components/review-post/review-post.component';
+import { SemesterPipe } from './pipes/semester.pipe';
+import { LectureTypePipe } from './pipes/lecture-type.pipe';
+import { PfPipe } from './pipes/pf.pipe';
 
 
 
@@ -13,7 +16,10 @@ import { ReviewPostComponent } from './components/review-post/review-post.compon
     ReviewComponent,
     ReviewDetailComponent,
     ReviewListComponent,
-    ReviewPostComponent
+    ReviewPostComponent,
+    SemesterPipe,
+    LectureTypePipe,
+    PfPipe,
   ],
   imports: [
     ReviewRoutingModule,

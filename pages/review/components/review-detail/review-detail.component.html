@@ -1,4 +1,43 @@
 <app-header name="" icon="arrow_back_ios" (clickLeft)="goBack()"></app-header>
-<div>
-  <p>{{ reviewDetail.userDisplay }}</p>
+<div style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()">
+  <app-user-header [userDisplay]="review.userDisplay"></app-user-header>
+  <div style="margin: 0 20px;">
+    <div class="review-title">{{ review.lectureName }}/{{ review.professor }}/{{ review.classNumber }}</div>
+    <mat-list class="review-style">
+      <div class="review-item-layout">
+        <mat-list-item>강의명 |</mat-list-item>
+        <mat-list-item class="review-item">{{ review.title }}</mat-list-item>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="review-item-layout">
+        <mat-list-item>교수 |</mat-list-item>
+        <mat-list-item class="review-item">{{ review.professor }}</mat-list-item>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="review-item-layout">
+        <mat-list-item stlye="color: #6A6A6A;">강의종류 |</mat-list-item>
+        <mat-list-item class="review-item">{{ review.lectureType | lectureType }}</mat-list-item>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="review-item-layout">
+        <mat-list-item>수강학기 |</mat-list-item>
+        <mat-list-item class="review-item">{{ review.lectureYear}} - {{ review.semester | semester }}</mat-list-item>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="review-item-layout">
+        <mat-list-item>PF여부 |</mat-list-item>
+        <mat-list-item class="review-item">{{ review.pf | pf }}</mat-list-item>
+      </div>
+    </mat-list>
+    <div class="review-bottom-layout">
+      <div class="color6 font-size15">시험유형 및 문항 수</div>
+      <mat-divider></mat-divider>
+      <div>{{ review.content }}</div>
+      <div matRipple class="file-button" (click)="download($event)">
+        <span class="material-symbols-outlined">draft</span>
+        <p style="transform: translate(10px, 4px);">{{ review.fileName }}</p>
+      </div>
+      <div class="color6 font-size12">{{ review.createdAt | full1Date }}</div>
+    </div>
+  </div>
 </div>

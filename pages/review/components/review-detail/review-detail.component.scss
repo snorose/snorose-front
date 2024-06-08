@@ -1,0 +1,57 @@
+.review-style {
+  background-color: #F0F0F0; 
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+
+.review-title {
+  font-size: 20px; 
+  font-weight: 600; 
+  margin: 10px;
+}
+
+.review-item-layout {
+  display: flex; 
+  justify-content: space-between;
+}
+
+.review-item {
+  flex-grow: 1; 
+  text-align: end;
+}
+
+.review-bottom-layout {
+  display: flex; 
+  flex-direction: column; 
+  gap: 10px; 
+  margin: 20px 10px;
+}
+
+.file-button {
+  display: flex; 
+  border: 1px solid #6A6A6A; 
+  border-radius: 30px; 
+  padding: 5px 0 0 10px; 
+  margin-top: 20px;
+}
+
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+.color6 {
+  color: #6A6A6A;
+}
+
+.font-size12 {
+  font-size: 12px;
+}
+
+.font-size15 {
+  font-size: 15px;
+}
