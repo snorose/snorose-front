@@ -30,8 +30,10 @@ export class BoardPostComponent implements OnInit {
   }
 
   public post() {
-    if (!this.dynamicFormComponent.dynamicForm.valid) return;
-    
+    if (!this.dynamicFormComponent.dynamicForm.valid) {
+      this.dalService.snackBar('필수 정보를 모두 입력해 주세요');
+      return;
+    }
     if (this.boardId == null) {
       this.dalService.snackBar('해당 게시판을 찾을 수 없습니다.');
       return;

@@ -20,10 +20,12 @@ export class ReviewPostComponent {
 
   public post() {
     console.log('review post', this.dynamicFormComponent.dynamicForm.value);
-
-    if (this.dynamicFormComponent.dynamicForm.valid) {
-      const value = this.dynamicFormComponent.dynamicForm.value;
+    if (!this.dynamicFormComponent.dynamicForm.valid) {
+      this.dalService.snackBar('필수 정보를 모두 입력해 주세요');
+      return;
     }
+
+    const value = this.dynamicFormComponent.dynamicForm.value;
   }
 
 }
