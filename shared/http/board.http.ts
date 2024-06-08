@@ -72,8 +72,8 @@ export interface IPostUpdateResponse extends IBaseResponse<IPostUpdateData> { }
 export interface IBoardHttp {
   getList(boardId: string, page: number): Observable<IBoardListResponse>;
   getDetail(boardId: string, postId: string): Observable<IBoardDetailResponse>;
-  create(boardId: number, request: IPostCreateRequest): Observable<IPostCreateResponse>;
-  update(boardId: number, postId: number, request: IPostUpdateResquest): Observable<IPostUpdateResponse>;
+  create(boardId: string, request: IPostCreateRequest): Observable<IPostCreateResponse>;
+  update(boardId: string, postId: string, request: IPostUpdateResquest): Observable<IPostUpdateResponse>;
 }
 
 export class BoardHttp implements IBoardHttp {
@@ -88,11 +88,11 @@ export class BoardHttp implements IBoardHttp {
     return this.httpService.Get(`/v1/boards/${boardId}/posts/${postId}`);
   }
 
-  create(boardId: number, request: IPostCreateRequest): Observable<IPostCreateResponse> {
+  create(boardId: string, request: IPostCreateRequest): Observable<IPostCreateResponse> {
     return this.httpService.Post(`/v1/boards/${boardId}/posts/newpost`, request);
   }
 
-  update(boardId: number, postId: number, request: IPostUpdateResquest): Observable<IPostUpdateResponse> {
+  update(boardId: string, postId: string, request: IPostUpdateResquest): Observable<IPostUpdateResponse> {
     return this.httpService.Post(`/v1/boards/${boardId}/posts/${postId}/update`, request);
   }
 
