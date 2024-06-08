@@ -25,20 +25,25 @@ export class ReviewListComponent implements OnInit {
 
   private loadData() {
     this.isLoading = true;
-    // this.dalService.reviewHttp.getList('1', this.page).subscribe(response => {
-    //   this.dataSource = [...this.dataSource, ...response.result];
-    //   this.page++;
-
-    //   const scrollTop = document.documentElement.scrollTop;
-    //   const scrollHeight = document.documentElement.scrollHeight;
-    //   const clientHeight = window.innerHeight || document.documentElement.clientHeight;
-    //   const scrollPosition = scrollTop + clientHeight;
-
-    //   if (scrollHeight <= scrollPosition) {
-    //     this.loadData();
-    //   }
-    //   this.isLoading = false;
-    // });
+    this.dalService.reviewHttp.getList('1', this.page).subscribe({
+      next: (response) => {
+        this.dataSource = [...this.dataSource, ...response.result];
+        this.page++;
+  
+        // const scrollTop = document.documentElement.scrollTop;
+        // const scrollHeight = document.documentElement.scrollHeight;
+        // const clientHeight = window.innerHeight || document.documentElement.clientHeight;
+        // const scrollPosition = scrollTop + clientHeight;
+  
+        // if (scrollHeight <= scrollPosition) {
+        //   this.loadData();
+        // }
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.dalService.snackBar('서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요');
+      }
+    });
   }
 
   public onNearEndScroll() {

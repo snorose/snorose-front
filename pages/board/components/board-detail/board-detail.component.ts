@@ -86,21 +86,31 @@ export class BoardDetailComponent implements OnInit {
       return;
     }
 
-    this.dalService.boardHttp.getDetail(this.boardId, this.postId).subscribe(response => {
-      if (response.isSuccess) {
-        this.detailData = response.result;
-      }
-      else {
-        this.dalService.snackBar('해당 게시물의 상세정보를 찾을 수 없습니다');
+    this.dalService.boardHttp.getDetail(this.boardId, this.postId).subscribe({
+      next: (response) => {
+        if (response.isSuccess) {
+          this.detailData = response.result;
+        }
+        else {
+          this.dalService.snackBar('해당 게시물의 상세정보를 찾을 수 없습니다');
+        }
+      },
+      error: (error) => {
+        this.dalService.snackBar('서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요');
       }
     });
 
-    this.dalService.commentHttp.getList(this.postId).subscribe(response => {
-      if (response.isSuccess) {
-        this.comments = [...this.comments, ...response.result];
-      }
-      else {
-        this.dalService.snackBar('해당 게시물의 댓글을 찾을 수 없습니다');
+    this.dalService.commentHttp.getList(this.postId).subscribe({
+      next: (response) => {
+        if (response.isSuccess) {
+          this.comments = [...this.comments, ...response.result];
+        }
+        else {
+          this.dalService.snackBar('해당 게시물의 댓글을 찾을 수 없습니다');
+        }
+      },
+      error: (error) => {
+        this.dalService.snackBar('서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요');
       }
     });
 

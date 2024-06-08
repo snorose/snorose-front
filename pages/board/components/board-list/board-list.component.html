@@ -1,6 +1,9 @@
 <app-header icon="arrow_back_ios" [name]="name" (clickLeft)="goBack()"></app-header>
-<div style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()" appScrollNearEnd
+<div class="hide-scrollbar" style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()" appScrollNearEnd
   (nearEnd)="onNearEndScroll()">
   <app-list [lists]="boardList"></app-list>
 </div>
 <app-bottom-navigation></app-bottom-navigation>
+<button class="post-button" [routerLink]="['post']">
+  <span class="material-symbols-outlined">edit</span>
+</button>

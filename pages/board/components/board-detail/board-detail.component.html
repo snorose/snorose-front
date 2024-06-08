@@ -7,8 +7,8 @@
     <p>
       {{ detailData.content }}
     </p>
-
-    <div style="display: flex;">
+    <div class="color6 font-size12">{{ detailData.createdAt | full1Date }}</div>
+    <div style="display: flex; margin-left: -10px;">
       <app-chat [reportCount]="detailData.reportCount"></app-chat>
       <app-like [likeCount]="detailData.likeCount"></app-like>
       <app-scrap [scrapCount]="detailData.scrapCount"></app-scrap>
