@@ -32,3 +32,6 @@
     <tr mat-row class="ripple cursor" *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.postId]"></tr>
   </table>
 </div>
+<button class="post-button" [routerLink]="['post']">
+  <span class="material-symbols-outlined">edit</span>
+</button>

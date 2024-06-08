@@ -4,6 +4,7 @@ import { DalService } from '../../../../shared/services/dal.service';
 import { LayoutService } from '../../../../shared/services/layout.service';
 import { IReviewCreateRequest } from '../../../../shared/http/review.http';
 import { MembershipService } from '../../../../shared/services/membership.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-review-post',
@@ -12,6 +13,7 @@ import { MembershipService } from '../../../../shared/services/membership.servic
 })
 export class ReviewPostComponent {
 
+  private readonly router = inject(Router);
   private readonly dalService = inject(DalService);
   public readonly layoutService = inject(LayoutService);
   private readonly membershipService = inject(MembershipService);
@@ -26,6 +28,10 @@ export class ReviewPostComponent {
     }
 
     const value = this.dynamicFormComponent.dynamicForm.value;
+  }
+
+  public closePost() {
+    this.router.navigate(['/review']);
   }
 
 }
