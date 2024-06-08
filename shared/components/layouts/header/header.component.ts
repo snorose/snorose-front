@@ -11,13 +11,19 @@ export class HeaderComponent {
   @Input() icon: string = '';
   @Input() name: string = '';
   @Input() link: string = '';
+  @Input() rightButton: string | null = null;
 
   @Output() clickLeft = new EventEmitter<any>();
+  @Output() clickRight = new EventEmitter<any>();
 
   public BLUE1 = BLUE1;
 
   public clickLeftButton() {
     this.clickLeft.emit();
+  }
+
+  public clickRightButton() {
+    this.clickRight.emit();
   }
 
 }

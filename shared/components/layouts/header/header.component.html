@@ -2,9 +2,11 @@
   <button mat-icon-button (click)="clickLeftButton()">
     <mat-icon [ngStyle]="{ 'color': BLUE1 }">{{ icon }}</mat-icon>
   </button>
-  <span [routerLink]="[link]">{{ name }}</span>
+  <span style="transform: translate(0px, 4px);" [routerLink]="[link]">{{ name }}</span>
   <span class="toolbar-spacer"></span>
-  <!-- <button mat-icon-button>
-    <mat-icon [ngStyle]="{ 'color': BLUE1 }">search</mat-icon>
-  </button> -->
+  @if (rightButton != null) {
+    <button mat-button (click)="clickRightButton()" [ngStyle]="{ 'color': BLUE1 }" class="right-button">
+      {{ rightButton }}
+    </button>
+  }
 </mat-toolbar>
