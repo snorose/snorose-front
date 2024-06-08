@@ -3,7 +3,7 @@
     <mat-icon>send</mat-icon>
     <span>쪽지 보내기</span>
   </button>
-  <button mat-menu-item [routerLink]="['/board-list', name, 'post']">
+  <button mat-menu-item [routerLink]="['/board', this.boardId, '/post']">
     <mat-icon>share</mat-icon>
     <span>공유하기</span>
   </button>
