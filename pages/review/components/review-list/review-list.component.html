@@ -1,4 +1,4 @@
-<div appScrollNearEnd (nearEnd)="onNearEndScroll()">
+<!-- <div appScrollNearEnd (nearEnd)="onNearEndScroll()">
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>Id</th>
@@ -34,4 +34,6 @@
 </div>
 <button class="post-button" [routerLink]="['post']">
   <span class="material-symbols-outlined">edit</span>
-</button>
+</button> -->
+
+<app-list [lists]="dataSource"></app-list>

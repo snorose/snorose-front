@@ -8,6 +8,7 @@ import { ReviewPostComponent } from './components/review-post/review-post.compon
 import { SemesterPipe } from './pipes/semester.pipe';
 import { LectureTypePipe } from './pipes/lecture-type.pipe';
 import { PfPipe } from './pipes/pf.pipe';
+import { ListComponent } from './components/list/list.component';
 
 
 
@@ -20,6 +21,7 @@ import { PfPipe } from './pipes/pf.pipe';
     SemesterPipe,
     LectureTypePipe,
     PfPipe,
+    ListComponent,
   ],
   imports: [
     ReviewRoutingModule,
