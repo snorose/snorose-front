@@ -10,6 +10,7 @@ import { ScrapComponent } from './components/buttons/scrap/scrap.component';
 import { CommentComponent } from './components/comments/comment/comment.component';
 import { CommentInputComponent } from './components/comments/comment-input/comment-input.component';
 import { BoardPostComponent } from './components/board-post/board-post.component';
+import { ListComponent } from './components/list/list.component';
 
 
 
@@ -24,6 +25,7 @@ import { BoardPostComponent } from './components/board-post/board-post.component
     CommentComponent,
     CommentInputComponent,
     BoardPostComponent,
+    ListComponent,
   ],
   imports: [
     BoardRoutingModule,

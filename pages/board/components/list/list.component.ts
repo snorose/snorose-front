@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-import { IBoardListData } from '../../../http/board.http';
-import { ActivatedRoute } from '@angular/router';
-import { LayoutService } from '../../../services/layout.service';
-import { PINK1 } from '../../../consts/color';
+import { Component, OnInit, Input } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { PINK1 } from "../../../../shared/consts/color";
+import { IBoardListData } from "../../../../shared/http/board.http";
+import { LayoutService } from "../../../../shared/services/layout.service";
+
 
 @Component({
   selector: 'app-list',

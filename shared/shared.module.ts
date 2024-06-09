@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { SwiperComponent } from './components/atom/swiper/swiper.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ListComponent } from './components/atom/list/list.component';
 import { MatListModule } from '@angular/material/list';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
@@ -44,7 +43,6 @@ import { BottomNavigationComponent } from './components/layouts/bottom-navigatio
 @NgModule({
   declarations: [
     SwiperComponent,
-    ListComponent,
     DatePipe,
     HeaderComponent,
     DynamicFormComponent,
@@ -90,7 +88,6 @@ import { BottomNavigationComponent } from './components/layouts/bottom-navigatio
   exports: [
     DatePipe,
     SwiperComponent,
-    ListComponent,
     HeaderComponent,
     DynamicFormComponent,
     UserHeaderComponent,
