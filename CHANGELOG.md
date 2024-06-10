@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-4](https://github.com/snorose/snorose-front/compare/v0.0.1-3...v0.0.1-4) (2024-06-10)
+
+
+### Features
+
+* **loading:** 로딩 바 추가 ([f1ce946](https://github.com/snorose/snorose-front/commit/f1ce946a04a0e1a93acfa9547161aa4b2174cb00))
+* **signIn:** 로그인 로딩바 추가 ([b73463a](https://github.com/snorose/snorose-front/commit/b73463ac2357dcc720674c0781d28f147bab9e6f))
+
 ### [0.0.1-3](https://github.com/snorose/snorose-front/compare/v0.0.1-2...v0.0.1-3) (2024-06-10)
 
 ### [0.0.1-2](https://github.com/snorose/snorose-front/compare/v0.0.1-1...v0.0.1-2) (2024-06-10)
