@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-5](https://github.com/snorose/snorose-front/compare/v0.0.1-4...v0.0.1-5) (2024-06-10)
+
+
+### Features
+
+* **main:** 로그인, 로그아웃 버튼 추가 ([ff6355c](https://github.com/snorose/snorose-front/commit/ff6355c1b1c0723e24a758797c980b84483fed24))
+* **mypage:** 마이페이지 생성 ([03fa3aa](https://github.com/snorose/snorose-front/commit/03fa3aae2899999d304cde692ccd051bfcb211d4))
+
 ### [0.0.1-4](https://github.com/snorose/snorose-front/compare/v0.0.1-3...v0.0.1-4) (2024-06-10)
 
 
