@@ -4,6 +4,7 @@ import { MembershipComponent } from './membership.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { IdComponent } from './components/find/id/id.component';
 import { PasswordComponent } from './components/find/password/password.component';
+import { MyPageComponent } from './components/my-page/my-page.component';
 
 export const routes: Routes = [
   {
@@ -13,6 +14,10 @@ export const routes: Routes = [
   {
     path: 'signup',
     component: SignUpComponent
+  },
+  {
+    path: 'myPage',
+    component: MyPageComponent
   },
   {
     path: 'find/id',
