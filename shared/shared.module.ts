@@ -35,9 +35,9 @@ import { TextareaComponent } from './components/atom/form/textarea/textarea.comp
 import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ConfirmDialogComponent } from './components/atom/confirm-dialog/confirm-dialog.component';
-import { ScrollNearEndDirective } from './directives/scroll-near-end.directive';
 import { UserHeaderComponent } from './components/layouts/user-header/user-header.component';
 import { BottomNavigationComponent } from './components/layouts/bottom-navigation/bottom-navigation.component';
+import { InfiniteScrollDirective } from './directives/infinite-scroll.directive';
 
 
 @NgModule({
@@ -52,9 +52,9 @@ import { BottomNavigationComponent } from './components/layouts/bottom-navigatio
     SelectComponent,
     TextareaComponent,
     ConfirmDialogComponent,
-    ScrollNearEndDirective,
     UserHeaderComponent,
-    BottomNavigationComponent
+    BottomNavigationComponent,
+    InfiniteScrollDirective
   ],
   imports: [
     RouterLink,
@@ -92,6 +92,7 @@ import { BottomNavigationComponent } from './components/layouts/bottom-navigatio
     DynamicFormComponent,
     UserHeaderComponent,
     BottomNavigationComponent,
+    InfiniteScrollDirective,
     RouterLink,
     CommonModule,
     HttpClientModule,

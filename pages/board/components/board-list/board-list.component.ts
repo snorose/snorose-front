@@ -22,8 +22,9 @@ export class BoardListComponent implements OnInit {
   public boardList: IBoardListData[] = [];
   public boardId: string | null = null;
 
-  public page: number = 0;
-  public isLoading: boolean = true;
+  private page: number = 0;
+  private isLoading: boolean = true;
+  private isEnd: boolean = false;
 
   ngOnInit() {
     this.boardId = this.route.snapshot.paramMap.get('boardId');
@@ -43,6 +44,8 @@ export class BoardListComponent implements OnInit {
   }
 
   private loadData() {
+    if (this.isEnd) return;
+
     this.isLoading = true;
     if (this.boardId == null) {
       this.dalService.snackBar('해당 게시판을 찾을 수 없습니다.');
@@ -51,17 +54,12 @@ export class BoardListComponent implements OnInit {
 
     this.dalService.boardHttp.getList(this.boardId, this.page).subscribe({
       next: (response) => {
+        if (response.result.isEmpty()) {
+          this.isEnd = true;
+          return;
+        }  
         this.boardList = [...this.boardList, ...response.result];
         this.page++;
-  
-        // const scrollTop = document.documentElement.scrollTop;
-        // const scrollHeight = document.documentElement.scrollHeight;
-        // const clientHeight = window.innerHeight || document.documentElement.clientHeight;
-        // const scrollPosition = scrollTop + clientHeight;
-  
-        // if (scrollHeight <= scrollPosition) {
-        //   this.loadData();
-        // }
         this.isLoading = false;
       },
       error: (error) => {

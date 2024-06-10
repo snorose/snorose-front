@@ -18,9 +18,9 @@
 </mat-menu>
 
 <mat-list>
-  @for (list of lists; track list) {
+  @for (element of list; track element) {
   <mat-card matRipple class="text-ellipsis pointer" style="background-color: white; border-radius: 0px;"
-    [routerLink]="[list.postId]">
+    [routerLink]="[element.postId]">
     <div class="flex-row div-p15-height">
       <div mat-card-avatar>
         <p style="color: #00368E; font-size: 12px;">23-겨울계절 | 기말</p>
@@ -33,13 +33,13 @@
     </div>
     <mat-card-content>
       <p>
-        {{ list.title }}
+        {{ element.title }}
       </p>
     </mat-card-content>
     <mat-card-actions align="end" style="padding: 0px; height: 20px;">
       <div style="display: flex; gap: 10px; font-size: 12px;">
-        <div>{{ list.userDisplay }}</div>
-        <div>{{ list.createdAt | full1Date }}</div>
+        <div>{{ element.userDisplay }}</div>
+        <div>{{ element.createdAt | full1Date }}</div>
       </div>
     </mat-card-actions>
   </mat-card>

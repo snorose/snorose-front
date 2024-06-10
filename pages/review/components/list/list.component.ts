@@ -9,7 +9,7 @@ import { IReviewListData } from '../../../../shared/http/review.http';
 })
 export class ListComponent implements OnInit {
 
-  @Input() lists: IReviewListData[] = [];
+  @Input() list: IReviewListData[] = [];
 
   public PINK1 = PINK1;
 
