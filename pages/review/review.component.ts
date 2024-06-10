@@ -18,7 +18,7 @@ export class ReviewComponent implements OnInit {
   public list: IReviewListData[] = [];
 
   private page: number = 0;
-  private isLoading: boolean = true;
+  public isLoading: boolean = true;
   private isEnd: boolean = false;
 
   ngOnInit() {
@@ -33,6 +33,7 @@ export class ReviewComponent implements OnInit {
       next: (response) => {
         if (response.result.isEmpty()) {
           this.isEnd = true;
+          this.isLoading = false;
           return;
         }
         this.list = [...this.list, ...response.result];

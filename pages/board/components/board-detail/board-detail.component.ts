@@ -21,6 +21,7 @@ export class BoardDetailComponent implements OnInit {
   public boardId: string | null = null;
   public postId: string | null = null;
   public commentId: string | null = null;
+  public isLoading: boolean = true;
 
   public detailData: IBoardDetailData = {
     postId: 1,
@@ -86,10 +87,12 @@ export class BoardDetailComponent implements OnInit {
       return;
     }
 
+    this.isLoading = true;
     this.dalService.boardHttp.getDetail(this.boardId, this.postId).subscribe({
       next: (response) => {
         if (response.isSuccess) {
           this.detailData = response.result;
+          this.isLoading = false;
         }
         else {
           this.dalService.snackBar('해당 게시물의 상세정보를 찾을 수 없습니다');

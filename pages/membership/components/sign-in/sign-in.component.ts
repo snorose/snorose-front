@@ -36,13 +36,11 @@ export class SignInComponent {
         }
         else {
           this.dalService.snackBar('아이디 혹은 비밀번호가 일치하지 않습니다');
-          this.router.navigateByUrl('/signIn');
           this.isLoading = false;
         }
       },
       error: (error) => {
         this.dalService.snackBar('서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요');
-        this.router.navigateByUrl('/signIn');
         this.isLoading = false;
       }
     });

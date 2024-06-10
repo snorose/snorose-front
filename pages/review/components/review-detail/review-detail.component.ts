@@ -18,6 +18,7 @@ export class ReviewDetailComponent implements OnInit {
   public readonly layoutService = inject(LayoutService);
 
   public postId: string | null = null;
+  public isLoading: boolean = true;
 
   public review: IReviewGetData = {
     userDisplay: '송이',
@@ -51,11 +52,13 @@ export class ReviewDetailComponent implements OnInit {
       return;
     }
 
+    this.isLoading = true;
     this.dalService.reviewHttp.getDetail(this.postId).subscribe({
       next: (response) => {
         if (response.isSuccess) {
           this.review = response.result;
           this.review.fileName = 'file.pdf'; // 지워야함!!!!
+          this.isLoading = false;
         }
         else {
           this.dalService.snackBar('해당 게시물의 상세정보를 찾을 수 없습니다');

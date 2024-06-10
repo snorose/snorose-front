@@ -1,5 +1,9 @@
 <app-header name="" icon="arrow_back_ios" (clickLeft)="goBack()"></app-header>
 <div style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()">
+  @if (isLoading) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+  @else {
   <app-user-header [userDisplay]="review.userDisplay"></app-user-header>
   <div style="margin: 0 20px;">
     <div class="review-title">{{ review.lectureName }}/{{ review.professor }}/{{ review.classNumber }}</div>
@@ -40,4 +44,5 @@
       <div class="color6 font-size12">{{ review.createdAt | full1Date }}</div>
     </div>
   </div>
+  }
 </div>

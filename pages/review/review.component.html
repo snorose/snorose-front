@@ -1,5 +1,6 @@
 <app-header name="" icon="menu" link=""></app-header>
-<div class="hide-scrollbar" style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()" appInfiniteScroll (nearEnd)="onNearEndScroll()">
+<div class="hide-scrollbar" style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()" appInfiniteScroll
+  (nearEnd)="onNearEndScroll()">
   <!-- <mat-form-field appearance="outline" style="border-radius: 30px !important; width: 100%;">
     <mat-label>Filter</mat-label>
     <input style="width: 100%;" matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
@@ -7,6 +8,9 @@
       <mat-icon>search</mat-icon>
     </button>
   </mat-form-field> -->
+  @if (isLoading) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
   <app-review-list [list]="list"></app-review-list>
 </div>
 <app-bottom-navigation></app-bottom-navigation>

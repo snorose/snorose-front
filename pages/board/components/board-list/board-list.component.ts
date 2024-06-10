@@ -23,7 +23,7 @@ export class BoardListComponent implements OnInit {
   public boardId: string | null = null;
 
   private page: number = 0;
-  private isLoading: boolean = true;
+  public isLoading: boolean = true;
   private isEnd: boolean = false;
 
   ngOnInit() {
@@ -56,8 +56,9 @@ export class BoardListComponent implements OnInit {
       next: (response) => {
         if (response.result.isEmpty()) {
           this.isEnd = true;
+          this.isLoading = false;
           return;
-        }  
+        }
         this.boardList = [...this.boardList, ...response.result];
         this.page++;
         this.isLoading = false;
