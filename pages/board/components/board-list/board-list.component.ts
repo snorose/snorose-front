@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { IBoardListData } from '../../../../shared/http/board.http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DalService } from '../../../../shared/services/dal.service';
 import { LayoutService } from '../../../../shared/services/layout.service';
 import { BOARDS } from '../../consts/board';
@@ -13,10 +13,10 @@ import { Location } from '@angular/common';
 })
 export class BoardListComponent implements OnInit {
 
+  private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly dalService = inject(DalService);
   public readonly layoutService = inject(LayoutService);
-  private readonly location = inject(Location);
 
   public name: string = '';
   public boardList: IBoardListData[] = [];
@@ -76,7 +76,7 @@ export class BoardListComponent implements OnInit {
   }
 
   public goBack(): void {
-    this.location.back();
+    this.router.navigateByUrl('/board');
   }
 
 }
