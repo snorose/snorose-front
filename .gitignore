@@ -1,7 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # env
-.env
 /src/environments/env.ts
 /src/environments/environment.development.ts
 /src/environments/environment.production.ts
