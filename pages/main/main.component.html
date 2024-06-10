@@ -1,5 +1,6 @@
 <div style="overflow-y: scroll;" [style.height]="layoutService.getHeightWithoutHeader()">
-  <app-header name="SNOWROSE" link="/main" icon="menu"></app-header>
+  <app-header icon="menu" [rightButton]="membershipService.isLogin() ? 'LOGOUT' : 'LOGIN'"
+    (clickRight)="clickLogin()"></app-header>
   <app-swiper></app-swiper>
 
   <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">

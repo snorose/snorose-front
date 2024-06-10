@@ -9,6 +9,8 @@ import { BLUE1 } from '../../shared/consts/color';
 import { MatDialog } from '@angular/material/dialog';
 import { AttendanceDialogComponent } from './components/attendance-dialog/attendance-dialog.component';
 import { BOARDS } from '../board/consts/board';
+import { MembershipService } from '../../shared/services/membership.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -25,9 +27,11 @@ export class MainComponent {
   constructor(
     private dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
+    private readonly router: Router,
     private readonly dalService: DalService,
     private readonly dateService: DateService,
     public readonly layoutService: LayoutService,
+    public readonly membershipService: MembershipService
   ) {
     this.currentDate = this.dateService.getCurrentDate();
   }
@@ -88,4 +92,14 @@ export class MainComponent {
   // 오늘과 같지 않으면 클릭 disabled
 
   // 오늘과 같은 날짜면 포인트! 획득
+
+  public clickLogin() {
+    if (this.membershipService.isLogin()) {
+      this.membershipService.removeUser();
+      this.dalService.snackBar('로그아웃 되었습니다');
+    }
+    else {
+      this.router.navigateByUrl('/signIn');
+    }
+  }
 }
