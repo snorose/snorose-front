@@ -29,8 +29,8 @@ export class BottomNavigationComponent implements OnInit {
     const currentUrl = this.router.url;
 
     this.navigations.forEach(navigation => {
-      if (navigation.url === currentUrl) {
-        navigation.select = true;
+      navigation.select = currentUrl.startsWith(navigation.url);
+      if (navigation.select) {
         this.currentNavigation = navigation;
       }
     });
