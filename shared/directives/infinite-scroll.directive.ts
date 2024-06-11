@@ -1,4 +1,5 @@
 import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ScrollService } from './../services/scroll.service';
 
 @Directive({
   selector: '[appInfiniteScroll]'
@@ -10,7 +11,10 @@ export class InfiniteScrollDirective implements OnInit, OnDestroy {
 
   private el: HTMLElement;
 
-  constructor(private elementRef: ElementRef) { 
+  constructor(
+    private elementRef: ElementRef,
+    private scrollService: ScrollService
+  ) { 
     this.el = this.elementRef.nativeElement;
   }
 
@@ -27,6 +31,8 @@ export class InfiniteScrollDirective implements OnInit, OnDestroy {
     const scrollHeight = this.el.scrollHeight;
     const offsetHeight = this.el.offsetHeight;
     const scrollPosition = scrollTop + offsetHeight;
+
+    this.scrollService.currentScrollTop = scrollTop;
 
     if (scrollHeight - scrollPosition < this.threshold) {
       this.nearEnd.emit();
