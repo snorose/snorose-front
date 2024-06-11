@@ -1,6 +1,6 @@
 {
   "name": "snorose",
-  "version": "0.0.1-6",
+  "version": "0.0.1-7",
   "scripts": {
     "ng": "ng",
     "start:dev": "ng serve --configuration=development",

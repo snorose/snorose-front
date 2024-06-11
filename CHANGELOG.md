@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-7](https://github.com/snorose/snorose-front/compare/v0.0.1-6...v0.0.1-7) (2024-06-11)
+
+
+### Bug Fixes
+
+* **navigation:** url 일치 패턴 수정 ([91d1a30](https://github.com/snorose/snorose-front/commit/91d1a3073123f3f84a0dc3b8bc5456089bea0d85))
+
 ### [0.0.1-6](https://github.com/snorose/snorose-front/compare/v0.0.1-5...v0.0.1-6) (2024-06-11)
 
 
