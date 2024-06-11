@@ -11,6 +11,7 @@ import { CommentComponent } from './components/comments/comment/comment.componen
 import { CommentInputComponent } from './components/comments/comment-input/comment-input.component';
 import { BoardPostComponent } from './components/board-post/board-post.component';
 import { ListComponent } from './components/list/list.component';
+import { ScrollService } from '../../shared/services/scroll.service';
 
 
 
@@ -30,6 +31,7 @@ import { ListComponent } from './components/list/list.component';
   imports: [
     BoardRoutingModule,
     SharedModule,
-  ]
+  ],
+  providers: [ScrollService]
 })
 export class BoardModule { }

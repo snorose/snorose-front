@@ -9,6 +9,7 @@ import { SemesterPipe } from './pipes/semester.pipe';
 import { LectureTypePipe } from './pipes/lecture-type.pipe';
 import { PfPipe } from './pipes/pf.pipe';
 import { ListComponent } from './components/list/list.component';
+import { ScrollService } from '../../shared/services/scroll.service';
 
 
 
@@ -26,6 +27,7 @@ import { ListComponent } from './components/list/list.component';
   imports: [
     ReviewRoutingModule,
     SharedModule
-  ]
+  ],
+  providers: [ScrollService]
 })
 export class ReviewModule { }
