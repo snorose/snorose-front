@@ -19,6 +19,7 @@ export interface IStyle {
   textarea?: any;
   password?: any;
   radioButton?: any;
+  datepicker?: any;
 }
 
 export interface IControl {

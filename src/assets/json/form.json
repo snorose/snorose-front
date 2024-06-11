@@ -357,6 +357,27 @@
             "gap": "0.5rem"
           }
         }
+      },
+      {
+        "category": "datepicker",
+        "type": "string",
+        "name": "birthday",
+        "value": "",
+        "placeholder": "생년월일",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "생년월일은 필수 항목입니다"
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "flex-direction": "column",
+            "gap": "0.5rem"
+          }
+        }
       }
     ]
   },
