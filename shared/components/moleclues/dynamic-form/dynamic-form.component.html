@@ -31,6 +31,9 @@
   @if (control.category === 'radio-button') {
   <app-radio-button [control]="control" [dynamicForm]="dynamicForm"></app-radio-button>
   }
+  @if (control.category === 'datepicker') {
+  <app-date-picker [control]="control" [dynamicForm]="dynamicForm"></app-date-picker>
+  }
   }
   @if (button != null) {
   <button mat-flat-button [ngStyle]="{ 'background-color': BLUE1, 'color': 'white' }" type="submit">{{ button }}</button>
