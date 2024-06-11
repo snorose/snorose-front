@@ -38,6 +38,7 @@ import { ConfirmDialogComponent } from './components/atom/confirm-dialog/confirm
 import { UserHeaderComponent } from './components/layouts/user-header/user-header.component';
 import { BottomNavigationComponent } from './components/layouts/bottom-navigation/bottom-navigation.component';
 import { InfiniteScrollDirective } from './directives/infinite-scroll.directive';
+import { DatePickerComponent } from './components/atom/form/date-picker/date-picker.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { InfiniteScrollDirective } from './directives/infinite-scroll.directive'
     ConfirmDialogComponent,
     UserHeaderComponent,
     BottomNavigationComponent,
-    InfiniteScrollDirective
+    InfiniteScrollDirective,
+    DatePickerComponent
   ],
   imports: [
     RouterLink,

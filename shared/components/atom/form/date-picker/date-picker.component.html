@@ -1,0 +1,24 @@
+<div [formGroup]="dynamicForm" [ngStyle]="control.styles?.layout">
+  @if (control.label) {
+    <div [ngStyle]="control.styles?.label">{{ control.label }}</div>
+  }
+  <div style="width: 100%;">
+    @if (control.styles?.datepicker) {
+      <input matInput [matDatepicker]="picker" [placeholder]="control.placeholder || ''" [formControlName]="control.name">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    }
+    @else {
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <input matInput [matDatepicker]="picker" [placeholder]="control.placeholder || ''" [formControlName]="control.name">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    }
+    @if (dynamicForm.get(control.name)?.invalid && dynamicForm.get(control.name)?.touched) {
+      <mat-error style="color: #BA1A1A;">
+        {{ getErrorMessage(control, null) }}
+      </mat-error>
+    }
+  </div>
+</div>
