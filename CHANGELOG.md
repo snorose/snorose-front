@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-6](https://github.com/snorose/snorose-front/compare/v0.0.1-5...v0.0.1-6) (2024-06-11)
+
+
+### Features
+
+* **board, review:** 스크롤 위치 저장 로직 개발 ([cd2544e](https://github.com/snorose/snorose-front/commit/cd2544ef16e7b7f6c8931c971fb654b9861976d6))
+* **form:** 동적폼에 date-picker 등록 ([5d16e30](https://github.com/snorose/snorose-front/commit/5d16e30fba43a42d0c460df303742b288b5b26d5))
+* **form:** date-picker  컴포넌트 개발 ([3c2dc18](https://github.com/snorose/snorose-front/commit/3c2dc182a16011ff2025e5ddf4e5a2b3354267b2))
+* **scroll:** 스크롤 위치 저장 ([d581148](https://github.com/snorose/snorose-front/commit/d5811481c2db8c5a0945a8bf557c67d51d2b346e))
+* **scroll:** scroll 서비스 생성 및 모듈에 등록 ([c7648d8](https://github.com/snorose/snorose-front/commit/c7648d81f01dfe6118ae3592f8bea7001421d1a0))
+* **sign-up:** 회원가입에 datepicker 추가 ([88b5a46](https://github.com/snorose/snorose-front/commit/88b5a46209100f106dbbdffad1a24c281ef8641a))
+
+
+### Bug Fixes
+
+* **board:** 뒤로가기 버튼 url 수정 ([0baaac2](https://github.com/snorose/snorose-front/commit/0baaac2420648a999379d91c2bb45273aaaee2a4))
+* **navigation:** bottom 네비게이션 클릭 시, 색 변하도록 수정 ([601375c](https://github.com/snorose/snorose-front/commit/601375c80c29a644da7c17fb52d549195de589b6))
+
 ### [0.0.1-5](https://github.com/snorose/snorose-front/compare/v0.0.1-4...v0.0.1-5) (2024-06-10)
 
 
