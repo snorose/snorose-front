@@ -1,5 +1,5 @@
 <app-header icon="arrow_back_ios" [name]="name" (clickLeft)="goBack()"></app-header>
-<div class="hide-scrollbar" style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()" appInfiniteScroll
+<div #listDiv class="hide-scrollbar" style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()" appInfiniteScroll
   (nearEnd)="onNearEndScroll()">
   @if (isLoading) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>

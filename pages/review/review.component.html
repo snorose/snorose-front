@@ -1,5 +1,5 @@
 <app-header name="" icon="menu" link=""></app-header>
-<div class="hide-scrollbar" style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()" appInfiniteScroll
+<div #listDiv class="hide-scrollbar" style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()" appInfiniteScroll
   (nearEnd)="onNearEndScroll()">
   <!-- <mat-form-field appearance="outline" style="border-radius: 30px !important; width: 100%;">
     <mat-label>Filter</mat-label>

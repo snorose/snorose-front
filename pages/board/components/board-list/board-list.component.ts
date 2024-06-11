@@ -1,17 +1,17 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { IBoardListData } from '../../../../shared/http/board.http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DalService } from '../../../../shared/services/dal.service';
 import { LayoutService } from '../../../../shared/services/layout.service';
 import { BOARDS } from '../../consts/board';
-import { Location } from '@angular/common';
+import { ScrollAbstract } from '../../../../shared/classes/scroll.abstract';
 
 @Component({
   selector: 'app-board-list',
   templateUrl: './board-list.component.html',
   styleUrl: './board-list.component.scss'
 })
-export class BoardListComponent implements OnInit {
+export class BoardListComponent extends ScrollAbstract implements OnInit, OnDestroy {
 
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
@@ -21,9 +21,6 @@ export class BoardListComponent implements OnInit {
   public name: string = '';
   public boardList: IBoardListData[] = [];
   public boardId: string | null = null;
-
-  private page: number = 0;
-  public isLoading: boolean = true;
   private isEnd: boolean = false;
 
   ngOnInit() {
@@ -40,10 +37,37 @@ export class BoardListComponent implements OnInit {
     }
     this.name = board.name;
 
-    this.loadData();
+    const boardState = this.scrollService.boardState.find(board => board.id === this.boardId);
+    if (boardState?.isBack) {
+      this.handleRouter();
+      boardState.isBack = false;
+    }
+    else {
+      this.loadData();
+    }
   }
 
-  private loadData() {
+  protected override handleRouter() {
+    const storage = this.scrollService.boardStorage;
+
+    if (storage.boardList.isEmpty()) {
+      this.loadData();
+      return;
+    }
+
+    this.boardList = storage.boardList;
+    this.isLoading = false;
+
+    if (storage.page) {
+      this.page = storage.page;
+    }
+
+    if (storage.scrollPosition) {
+      this.scrollPosition = storage.scrollPosition;
+    }
+  }
+
+  protected override loadData() {
     if (this.isEnd) return;
 
     this.isLoading = true;
@@ -69,7 +93,7 @@ export class BoardListComponent implements OnInit {
     });
   }
 
-  public onNearEndScroll() {
+  public override onNearEndScroll() {
     if (!this.isLoading) {
       this.loadData();
     }
@@ -77,6 +101,14 @@ export class BoardListComponent implements OnInit {
 
   public goBack(): void {
     this.router.navigateByUrl('/board');
+  }
+
+  ngOnDestroy() {
+    this.scrollService.boardStorage = {
+      boardList: this.boardList,
+      page: this.page,
+      scrollPosition: this.scrollService.currentScrollTop
+    }
   }
 
 }

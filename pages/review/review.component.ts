@@ -1,31 +1,54 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { LayoutService } from '../../shared/services/layout.service';
 import { Router } from '@angular/router';
 import { IReviewListData } from '../../shared/http/review.http';
 import { DalService } from '../../shared/services/dal.service';
+import { ScrollAbstract } from '../../shared/classes/scroll.abstract';
 
 @Component({
   selector: 'app-review',
   templateUrl: './review.component.html',
   styleUrl: './review.component.scss'
 })
-export class ReviewComponent implements OnInit {
+export class ReviewComponent extends ScrollAbstract implements OnInit, OnDestroy {
 
-  private readonly router = inject(Router);
   private readonly dalService = inject(DalService);
   public readonly layoutService = inject(LayoutService);
 
   public list: IReviewListData[] = [];
-
-  private page: number = 0;
-  public isLoading: boolean = true;
   private isEnd: boolean = false;
 
   ngOnInit() {
-    this.loadData();
+    if (this.scrollService.reviewState.isBack) {
+      this.handleRouter();
+      this.scrollService.reviewState.isBack = false;
+    }
+    else {
+      this.loadData();
+    }
   }
 
-  private loadData() {
+  protected override handleRouter() {
+    const storage = this.scrollService.reviewStorage;
+
+    if (storage.reviewList.isEmpty()) {
+      this.loadData();
+      return;
+    }
+
+    this.list = storage.reviewList;
+    this.isLoading = false;
+
+    if (storage.page) {
+      this.page = storage.page;
+    }
+
+    if (storage.scrollPosition) {
+      this.scrollPosition = storage.scrollPosition;
+    }
+  }
+
+  protected override loadData() {
     if (this.isEnd) return;
 
     this.isLoading = true;
@@ -46,7 +69,7 @@ export class ReviewComponent implements OnInit {
     });
   }
 
-  public onNearEndScroll() {
+  public override onNearEndScroll() {
     if (!this.isLoading) {
       this.loadData();
     }
@@ -59,5 +82,14 @@ export class ReviewComponent implements OnInit {
   public searchReview(event: any) {
 
   }
+
+  ngOnDestroy() {
+    this.scrollService.reviewStorage = {
+      reviewList: this.list,
+      page: this.page,
+      scrollPosition: this.scrollService.currentScrollTop
+    }
+  }
+
 
 }

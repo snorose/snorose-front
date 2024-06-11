@@ -5,6 +5,7 @@ import { DalService } from '../../../../shared/services/dal.service';
 import { ICommentData } from '../../../../shared/http/comment.http';
 import { Location } from '@angular/common';
 import { LayoutService } from '../../../../shared/services/layout.service';
+import { ScrollService } from './../../../../shared/services/scroll.service';
 
 @Component({
   selector: 'app-board-detail',
@@ -17,6 +18,7 @@ export class BoardDetailComponent implements OnInit {
   private readonly dalService = inject(DalService);
   private readonly location = inject(Location);
   public readonly layoutService = inject(LayoutService);
+  private scrollService = inject(ScrollService);
 
   public boardId: string | null = null;
   public postId: string | null = null;
@@ -124,7 +126,11 @@ export class BoardDetailComponent implements OnInit {
   }
 
   public goBack(): void {
-    this.location.back();
+    const board = this.scrollService.boardState.find(board => board.id === this.boardId);
+    if (board) {
+      board.isBack = true;
+      this.location.back();
+    }
   }
 
 }

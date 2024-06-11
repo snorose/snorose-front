@@ -4,6 +4,7 @@ import { DalService } from '../../../../shared/services/dal.service';
 import { ActivatedRoute } from '@angular/router';
 import { IReviewGetData, LectureType, Semester } from '../../../../shared/http/review.http';
 import { LayoutService } from '../../../../shared/services/layout.service';
+import { ScrollService } from '../../../../shared/services/scroll.service';
 
 @Component({
   selector: 'app-review-detail',
@@ -16,6 +17,7 @@ export class ReviewDetailComponent implements OnInit {
   private readonly location = inject(Location);
   private readonly dalService = inject(DalService);
   public readonly layoutService = inject(LayoutService);
+  private scrollService = inject(ScrollService);
 
   public postId: string | null = null;
   public isLoading: boolean = true;
@@ -88,6 +90,7 @@ export class ReviewDetailComponent implements OnInit {
   }
 
   public goBack(): void {
+    this.scrollService.reviewState.isBack = true;
     this.location.back();
   }
 
