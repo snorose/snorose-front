@@ -20,6 +20,8 @@ export class ReviewPostComponent {
 
   @ViewChild(DynamicFormComponent) dynamicFormComponent!: DynamicFormComponent;
 
+  private selectedFile: File | null = null;
+
   public post() {
     console.log('review post', this.dynamicFormComponent.dynamicForm.value);
     if (!this.dynamicFormComponent.dynamicForm.valid) {
@@ -27,7 +29,18 @@ export class ReviewPostComponent {
       return;
     }
 
+    if (this.selectedFile == null) {
+      this.dalService.snackBar('파일을 추가해 주세요');
+      return;
+    }
+
     const value = this.dynamicFormComponent.dynamicForm.value;
+
+  }
+
+  public uploadFile(file: File) {
+    console.log('uploadFile', file);
+    this.selectedFile = file;
   }
 
   public closePost() {
