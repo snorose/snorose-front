@@ -1,0 +1,10 @@
+<div style="display: flex; flex-direction: column; gap: 0.5rem; margin: 15px 10px 0 10px;">
+  <label style="font-size: 18px; font-weight: 600;">족보</label>
+  <mat-form-field appearance="outline" style="width: 100%;">
+    <input matInput [readonly]="true" placeholder="업로드" [value]="name" style="color: black;">
+    <button matSuffix mat-icon-button (click)="clickSelect($event)">
+      <mat-icon>upload_file</mat-icon>
+    </button>
+  </mat-form-field>
+  <input type="file" #fileInput style="display: none;" (change)="selectFileInput($event)">
+</div>

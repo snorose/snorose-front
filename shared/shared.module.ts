@@ -39,6 +39,7 @@ import { UserHeaderComponent } from './components/layouts/user-header/user-heade
 import { BottomNavigationComponent } from './components/layouts/bottom-navigation/bottom-navigation.component';
 import { InfiniteScrollDirective } from './directives/infinite-scroll.directive';
 import { DatePickerComponent } from './components/atom/form/date-picker/date-picker.component';
+import { FileComponent } from './components/atom/form/file/file.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { DatePickerComponent } from './components/atom/form/date-picker/date-pic
     UserHeaderComponent,
     BottomNavigationComponent,
     InfiniteScrollDirective,
-    DatePickerComponent
+    DatePickerComponent,
+    FileComponent
   ],
   imports: [
     RouterLink,
@@ -94,6 +96,7 @@ import { DatePickerComponent } from './components/atom/form/date-picker/date-pic
     DynamicFormComponent,
     UserHeaderComponent,
     BottomNavigationComponent,
+    FileComponent,
     InfiniteScrollDirective,
     RouterLink,
     CommonModule,
