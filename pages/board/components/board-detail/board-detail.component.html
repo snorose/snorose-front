@@ -1,6 +1,6 @@
 <app-header icon="arrow_back_ios" (clickLeft)="goBack()"></app-header>
 
-<div style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()">
+<div class="hide-scrollbar" style="overflow-y: scroll;" [style.height]="layoutService.getHeightWithoutHeader()">
   @if (isLoading) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   }
@@ -23,9 +23,15 @@
     </div>
   </div>
   }
-  <mat-divider></mat-divider>
-  @for (comment of comments; track $index) {
-  <app-comment [comment]="comment"></app-comment>
+  <app-comment-input (enter)="enterComment($event)"></app-comment-input>
+  @if (isCommentLoading) {
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <mat-spinner></mat-spinner>
+    </div>
+  } 
+  @else {
+    @for (comment of comments; track $index) {
+      <app-comment [comment]="comment"></app-comment> 
+    }
   }
 </div>
-<app-comment-input (enter)="enterComment($event)"></app-comment-input>
