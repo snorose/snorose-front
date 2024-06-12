@@ -17,7 +17,7 @@ export class PasswordComponent {
   }
 
   public goBack(): void {
-    this.router.navigate(['/signIn']);
+    this.router.navigate(['/login']);
   }
   
 }

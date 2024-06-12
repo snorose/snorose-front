@@ -40,7 +40,7 @@ export class SignUpComponent {
         console.log('response^^', response);
         if (response.isSuccess) {
           this.dalService.snackBar(`회원가입을 성공했습니다. 로그인 해주세요.`);
-          this.router.navigateByUrl('/signIn');
+          this.router.navigateByUrl('/login');
         }
         else {
           console.log('회원가입 실패!');

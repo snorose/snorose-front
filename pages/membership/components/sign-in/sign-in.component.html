@@ -1,4 +1,7 @@
-<div [style.height]="layoutService.getHeightWithoutHeader()" class="center-container">
+@if (!isLoading) { 
+  <app-header icon="arrow_back_ios" (clickLeft)="goBack()"></app-header>
+}
+<div style="overflow-y: hidden;" [style.height]="layoutService.getMainHeight()" class="center-container">
   <div class="center-container">
     @if (isLoading) {
     <mat-spinner></mat-spinner>
@@ -16,6 +19,10 @@
     <div class="form-container">
       <app-dynamic-form #dynamicFormComponent [key]="'sign-in'" [button]="'로그인'" (submit)="onSignInClick($event)"
         (enter)="onSignInClick($event)"></app-dynamic-form>
+    </div>
+    <div style="display: flex; justify-content: center; margin-top: 15px;">
+      <button mat-button [routerLink]="['/membership/find/id']">아이디 찾기</button>
+      <button mat-button [routerLink]="['/membership/find/password']">비밀번호 찾기</button>
     </div>
     }
   </div>

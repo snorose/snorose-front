@@ -5,6 +5,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { IdComponent } from './components/find/id/id.component';
 import { PasswordComponent } from './components/find/password/password.component';
 import { MyPageComponent } from './components/my-page/my-page.component';
+import { authGuard } from '../../shared/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -17,7 +18,8 @@ export const routes: Routes = [
   },
   {
     path: 'myPage',
-    component: MyPageComponent
+    component: MyPageComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'find/id',

@@ -53,4 +53,8 @@ export class SignInComponent {
   public onResetPasswordClick() {
     // 비밀번호 초기화 페이지로 이동
   }
+
+  public goBack(): void {
+    this.router.navigate(['/main']);
+  }
 }
