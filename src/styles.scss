@@ -5,6 +5,13 @@
 @import 'swiper/scss';
 @import 'swiper/scss/pagination';
 
+@font-face {
+  font-family: 'NotoSans';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./assets/font/NotoSansKR-Regular.ttf) format('woff2');
+}
+
 $baseColor : #00368E;
 $m3-light-theme: matx.define-theme((
   color: (
@@ -20,18 +27,22 @@ $m3-light-theme: matx.define-theme((
 html,
 body {
   height: 100%;
+  font-family: "NotoSans" !important;
 }
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "NotoSans" !important;
 }
 
 button {
   all: initial;
-  /* 모든 속성 초기화 */
   cursor: pointer;
-  //@include mat.all-component-colors($snowrose-front-theme);
+  font-family: "NotoSans" !important;
+}
+
+input, textarea {
+  font-family: "NotoSans" !important;
 }
 
 a {
@@ -74,4 +85,16 @@ a {
 
 .pointer {
   cursor: pointer;
+}
+
+mat-toolbar {
+  font-family: "NotoSans" !important;
+}
+
+mat-card-title, mat-card-subtitle {
+  font-family: "NotoSans" !important;
+}
+
+div, p, h1, h2, h3 {
+  font-family: "NotoSans" !important;
 }
