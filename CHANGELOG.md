@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-8](https://github.com/snorose/snorose-front/compare/v0.0.1-7...v0.0.1-8) (2024-06-12)
+
+
+### Features
+
+* **comment:** 댓글 서버 연결 ([654e138](https://github.com/snorose/snorose-front/commit/654e13817941fde93a2d334a9c9a85ff2a0f5211))
+* **guard:** auth guard 개발 및 적용 ([4fc8e43](https://github.com/snorose/snorose-front/commit/4fc8e432bdc18b8e57175b4f99b544b4db503b42))
+* **point:** 출석체크 포인트 서버 연결 ([00e7ba2](https://github.com/snorose/snorose-front/commit/00e7ba24eec2c2dd211b742266e40295c8b6a010))
+* **review:** 시험후기 작성 버튼 추가 ([b81954b](https://github.com/snorose/snorose-front/commit/b81954b130134815c6961bcb294360048fbab56b))
+* **review:** 파일 다운로드 구현 ([cae5c41](https://github.com/snorose/snorose-front/commit/cae5c41b51216f8e6890a2640ec8f70fe0aa2042))
+* **review:** 파일 업로드 구현 ([5d467d4](https://github.com/snorose/snorose-front/commit/5d467d4123932997ea32a7690f9ba9037de39958))
+* **review:** 파일 업로드 폼 구현 ([23113ca](https://github.com/snorose/snorose-front/commit/23113caf9cd8589194db94b2e665f21ffbf08d88))
+* **signin:** membership 관련 버튼 달기 ([c833662](https://github.com/snorose/snorose-front/commit/c833662c72292b8309f0560769de3197f779352a))
+
+
+### Bug Fixes
+
+* **comment:** 댓글 입력창 수정 개발 ([50f524f](https://github.com/snorose/snorose-front/commit/50f524f6a2afccffcf2878ed5149b164dabac535))
+
 ### [0.0.1-7](https://github.com/snorose/snorose-front/compare/v0.0.1-6...v0.0.1-7) (2024-06-11)
 
 
