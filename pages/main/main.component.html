@@ -1,4 +1,4 @@
-<div style="overflow-y: scroll;" [style.height]="layoutService.getHeightWithoutHeader()">
+<div class="hide-scrollbar" style="overflow-y: scroll;" [style.height]="layoutService.getHeightWithoutHeader()">
   <app-header icon="menu" [rightButton]="membershipService.isLogin() ? 'LOGOUT' : 'LOGIN'"
     (clickRight)="clickLogin()"></app-header>
   <app-swiper></app-swiper>
@@ -42,7 +42,7 @@
           @for (board of BOARDS; track $index) {
           <mat-list-item class="pointer" matRipple [routerLink]="['/board', board.id]">
             <mat-icon [ngStyle]="{ 'color': BLUE1 }" matListItemIcon>{{ board.icon }}</mat-icon>
-            {{ board.name }}
+            <p style="transform: translate(0px, 5px);">{{ board.name }}</p>
           </mat-list-item>
           @if (BOARDS.length !== $index + 1) {
           <mat-divider></mat-divider>

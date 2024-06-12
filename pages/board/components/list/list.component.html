@@ -19,7 +19,7 @@
 
 <mat-list>
   @for (list of lists; track list) {
-  <mat-card matRipple class="text-ellipsis pointer" style="background-color: white; border-radius: 0px;"
+  <mat-card matRipple class="text-ellipsis pointer" style="background-color: white; border-radius: 0px; border-bottom: 1px solid #C7C7C7;"
     [routerLink]="[list.postId]">
     <div class="flex-row div-p15-height">
       <div style="transform:translate(1px, -2px);" mat-card-avatar class="example-header-image">
@@ -62,6 +62,5 @@
       </div>
     </div>
   </mat-card>
-  <mat-divider></mat-divider>
   }
 </mat-list>

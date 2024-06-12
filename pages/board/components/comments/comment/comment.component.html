@@ -28,7 +28,7 @@
       <app-like [likeCount]="comment.likeCount"></app-like>
       <span class="toolbar-spacer"></span>
       <p class="content-action-button" style="margin: 10px; color: #5F86BF;">
-        {{ comment.createdAt }}
+        {{ comment.createdAt | full1Date }}
       </p>
     </div>
   </div>

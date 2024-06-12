@@ -1,5 +1,7 @@
 <div style="margin: 10px;">
-  <h1 mat-dialog-title>{{ title }}</h1>
+  <div style="margin: 10px;">
+    <h1 mat-dialog-title>{{ title }}</h1>
+  </div>
   <mat-card class="demo-inline-calendar-card">
     <mat-calendar (dateClass)="dateClass()" [selected]="selected" (selectedChange)="selectDate($event)">
     </mat-calendar>
