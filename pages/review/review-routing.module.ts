@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ReviewComponent } from './review.component';
 import { ReviewDetailComponent } from './components/review-detail/review-detail.component';
 import { ReviewPostComponent } from './components/review-post/review-post.component';
+import { authGuard } from '../../shared/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -11,11 +12,13 @@ export const routes: Routes = [
   },
   {
     path: 'post',
-    component: ReviewPostComponent
+    component: ReviewPostComponent,
+    canActivate: [authGuard]
   },
   {
     path: ':postId',
-    component: ReviewDetailComponent
+    component: ReviewDetailComponent,
+    canActivate: [authGuard]
   }
 ];
 

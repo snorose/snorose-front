@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SignInComponent } from '../../pages/membership/components/sign-in/sign-in.component';
 import { PageNotFoundComponent } from '../../pages/page-not-found/page-not-found.component';
+import { authGuard } from '../../shared/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/signIn',
+    redirectTo: '/main',
     pathMatch: 'full',
   },
   {
@@ -24,9 +25,10 @@ const routes: Routes = [
   {
     path: 'review',
     loadChildren: () => import('../../pages/review/review.module').then(m => m.ReviewModule),
+    canActivate: [authGuard]
   },
   {
-    path: 'signIn',
+    path: 'login',
     component: SignInComponent
   },
   {

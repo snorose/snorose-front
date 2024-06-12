@@ -41,7 +41,12 @@ export class MainComponent {
   // }
 
   public attendanceCheck(event: any) {
-    console.log('attendanceCheck', event);
+    // console.log('attendanceCheck', event);
+    if (!this.membershipService.isLogin()) {
+      this.router.navigateByUrl('/login');
+      this.dalService.snackBar('로그인 후 이용 가능합니다. 로그인 해주세요');
+      return;
+    }
     this.openDialog();
   }
 
@@ -99,7 +104,7 @@ export class MainComponent {
       this.dalService.snackBar('로그아웃 되었습니다');
     }
     else {
-      this.router.navigateByUrl('/signIn');
+      this.router.navigateByUrl('/login');
     }
   }
 }

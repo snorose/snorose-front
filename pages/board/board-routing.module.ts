@@ -4,6 +4,7 @@ import { BoardComponent } from './board.component';
 import { BoardDetailComponent } from './components/board-detail/board-detail.component';
 import { BoardListComponent } from './components/board-list/board-list.component';
 import { BoardPostComponent } from './components/board-post/board-post.component';
+import { authGuard } from '../../shared/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -12,15 +13,18 @@ export const routes: Routes = [
   },
   {
     path: ':boardId',
-    component: BoardListComponent
+    component: BoardListComponent,
+    canActivate: [authGuard]
   },
   {
     path: ':boardId/post',
-    component: BoardPostComponent
+    component: BoardPostComponent,
+    canActivate: [authGuard]
   },
   {
     path: ':boardId/:postId',
-    component: BoardDetailComponent
+    component: BoardDetailComponent,
+    canActivate: [authGuard]
   }
 ];
 
