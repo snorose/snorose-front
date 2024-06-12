@@ -1,6 +1,6 @@
-<mat-toolbar class="nav" style="box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);">
+<mat-toolbar class="nav" style="box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);">
   @for (navigation of navigations; track $index) {
-    <button matRipple class="flex-center" (click)="navigationClick(navigation)">
+    <button class="flex-center" (click)="navigationClick(navigation)">
       <mat-icon [ngClass]="navigation.select ? 'select' : 'non-select-icon'">{{ navigation.icon }}</mat-icon>
       <span [ngClass]="navigation.select ? 'select' : 'non-select-name'">{{ navigation.name }}</span>
     </button>
