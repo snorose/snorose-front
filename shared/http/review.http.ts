@@ -145,7 +145,7 @@ export class ReviewHttp implements IReviewHttp {
   }
 
   public download(postId: string, fileName: string): Observable<HttpResponse<Blob>> {
-    return this.httpService.Get(`/v1/reviews/files/${postId}/download/${fileName}`);
+    return this.httpService.GetBlob(`/v1/reviews/files/${postId}/download/${fileName}`);
   }
 
 }

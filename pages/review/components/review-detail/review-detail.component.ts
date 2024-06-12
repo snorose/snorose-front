@@ -59,7 +59,7 @@ export class ReviewDetailComponent implements OnInit {
       next: (response) => {
         if (response.isSuccess) {
           this.review = response.result;
-          this.review.fileName = 'file.pdf'; // 지워야함!!!!
+          // this.review.fileName = 'file.pdf'; // 지워야함!!!!
           this.isLoading = false;
         }
         else {
@@ -81,7 +81,20 @@ export class ReviewDetailComponent implements OnInit {
     }
     this.dalService.reviewHttp.download(this.postId, this.review.fileName).subscribe({
       next: (response) => {
-        console.log('download response', response.headers.get('content-type'));
+        console.log('download response', response);
+        if (response) {
+          const blob = new Blob([response.body!], { type: response.headers.get('content-type')! });
+          const linkEl = document.createElement('a');
+          linkEl.style.display = 'none';
+          
+          const url = window.URL.createObjectURL(blob);
+          linkEl.href = url;
+          linkEl.download = `${this.review.fileName}`;
+          document.body.appendChild(linkEl);
+          linkEl.click();
+          document.body.removeChild(linkEl);
+          window.URL.revokeObjectURL(url);
+        }
       },
       error: (error) => {
         this.dalService.snackBar('서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요');

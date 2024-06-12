@@ -82,6 +82,10 @@ export class HttpService {
       .pipe(catchError(this.handleError("GetJson")));
   }
 
+  public GetBlob(endPoint: string){
+    return this.http.get(`${BASE_URL}${endPoint}`,  { responseType: 'blob', observe: 'response' });
+  }
+
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): any => {
       this.snackBar(error.message, "ERROR");
