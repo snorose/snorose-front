@@ -1,7 +1,15 @@
-<div style="display: flex; align-items: flex-end; gap: 0.8rem; background-color: #F5F5F5; border-radius: 7px; padding: 5px 10px; position: fixed; bottom: 0; left: 0; right: 0; margin: 10px auto 0;">
-  <mat-icon style="transform: translate(0px, -5px);">sentiment_very_satisfied</mat-icon>
-  <textarea #textarea rows="1" 
-    (keyup)="textareaChange()"  (keydown.enter)="textareaEnter($event, textarea.value)"
-    placeholder="댓글을 입력해주세요." style="width: 85%; max-height: 100px; font-size: 16px; resize: none; outline: none; border: none; box-sizing: border-box; padding: 10px 0; background-color: transparent;"></textarea>
-  <mat-icon style="transform: translate(0px, -5px);">send</mat-icon>
-</div>
+<mat-toolbar class="comment-nav">
+  <!-- <button mat-icon-button disabled style="transform: translate(-1px, -2.1px);">
+    <mat-icon [ngStyle]="{ 'color': BLUE1 }">face_6</mat-icon>
+  </button> -->
+  <div style="width: 100%;">
+    <textarea #textarea row="1"
+    (input)="autoResize()"
+    (focus)="expandTextarea()"
+    (blur)="shrinkTextarea()"
+    (keydown.enter)="submitComment($event, textarea.value)"
+    placeholder="댓글을 입력하세요..."
+    class="comment-textarea"></textarea>
+  </div>
+  <button mat-button [ngStyle]="{ 'color': BLUE1 }" style="transform: translate(2px, -2px);" (click)="submitComment($event, textarea.value)">게시</button>
+</mat-toolbar>

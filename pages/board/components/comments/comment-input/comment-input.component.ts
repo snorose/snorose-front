@@ -1,4 +1,5 @@
-import { Component, ElementRef, EventEmitter, Output, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { BLUE1 } from '../../../../../shared/consts/color';
 
 @Component({
   selector: 'app-comment-input',
@@ -11,21 +12,41 @@ export class CommentInputComponent {
 
   @Output() enter = new EventEmitter<any>();
 
-  constructor(private renderer: Renderer2) {}
+  public BLUE1 = BLUE1;
+  public commentText: string = '';
 
-  public textareaChange() {
+  public autoResize() {
     const textarea = this.textarea.nativeElement;
-    this.renderer.setStyle(textarea, 'height', 'auto');
-    this.renderer.setStyle(textarea, 'height', `${this.textarea.nativeElement.scrollHeight}px`);
+    if (textarea) {
+      textarea.style.height = '46px';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
   }
 
-  public textareaEnter(event: any, value: string) {
+  public expandTextarea() {
+    const textarea = this.textarea.nativeElement;
+    if (textarea) {
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  }
+
+  public shrinkTextarea() {
+    const textarea = this.textarea.nativeElement;
+    if (textarea) {
+      textarea.style.height = '46px';
+    }
+  }
+
+  public submitComment(event: any, value: string) {
     if (event.isComposing) return;
     if (!value) return;
     event.preventDefault();
 
+    const textarea = this.textarea.nativeElement;
+    
     this.enter.emit({ value });
     this.textarea.nativeElement.value = '';
+    textarea.style.height = '46px';
   }
 
 }

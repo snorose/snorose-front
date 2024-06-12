@@ -1,0 +1,30 @@
+.comment-nav {
+  // padding: 10px;
+  padding-top: 20px;
+  background-color: #fff; 
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 0 0px 2px rgba(0, 0, 0, 0.09);
+}
+
+.comment-textarea {
+  position: relative;
+  width: 100%;
+  height: 46px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  overflow: hidden;
+  resize: none;
+  transition: height 0.2s ease;
+  max-height: 100px;
+  background-color:#fff;
+  z-index: 1;
+}
+
+.comment-textarea:focus {
+  border-color: #00368E;
+  outline: none;
+}
