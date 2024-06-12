@@ -1,13 +1,13 @@
 import { Observable } from "rxjs";
-import { POINT_SOURCE } from "../data/point.data";
+import { POINT_CATEGORY, POINT_SOURCE } from "../data/point.data";
 import { IBaseResponse } from "./baseResponse.dto";
 import { HttpService } from "../services/http.service";
 import { inject } from "@angular/core";
 
 export interface IAddPointRequest {
   userId: number;
-  difference: number;
-  category: string;
+  difference?: number;
+  category: POINT_CATEGORY;
   sourceId?: number;
   source: POINT_SOURCE;
 }
@@ -35,7 +35,7 @@ export interface IGetPointResponse extends IBaseResponse<{
 }> { }
 
 export interface IPointHttp {
-  add(request: IAddPointRequest): Observable<IAddPointResponse>;
+  fluctuate(request: IAddPointRequest): Observable<IAddPointResponse>;
   get(page: number): Observable<IGetPointResponse>;
 }
 
@@ -43,8 +43,8 @@ export class PointHttp implements IPointHttp {
 
   private readonly httpService = inject(HttpService);
 
-  add(request: IAddPointRequest): Observable<IAddPointResponse> {
-    return this.httpService.Post(`/v1/points`, null);
+  fluctuate(request: IAddPointRequest): Observable<IAddPointResponse> {
+    return this.httpService.Post(`/v1/points`, request);
   }
 
   get(page: number): Observable<IGetPointResponse> {

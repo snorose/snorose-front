@@ -4,8 +4,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PointBottomSheetComponent } from '../point-bottom-sheet/point-bottom-sheet.component';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { DalService } from '../../../../shared/services/dal.service';
-import { MembershipService } from '../../../../shared/services/membership.service';
-import { POINT_SOURCE } from '../../../../shared/data/point.data';
 
 export interface IAttendanceDialog {
   title: string;
@@ -31,7 +29,6 @@ export class AttendanceDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<IAttendanceDialog>,
     @Inject(MAT_DIALOG_DATA) public data: IAttendanceDialog,
     private readonly dalService: DalService,
-    private readonly membershipService: MembershipService,
   ) {
     this.title = data.title;
     this.btnNo = data.btnNo;
@@ -58,7 +55,7 @@ export class AttendanceDialogComponent implements OnInit {
     const currentDateWithoutTime = new Date(this.currentDate.setHours(0, 0, 0, 0)).toLocaleDateString();
     const specificDateWithoutTime = new Date(event.setHours(0, 0, 0, 0)).toLocaleDateString();
 
-    // 오늘과 같은 날짜면 포인트! 획득
+    // 오늘과 같은 날짜면 포인트 획득!
     if (currentDateWithoutTime === specificDateWithoutTime) {
       this.openBottomSheet();
       return;
@@ -70,15 +67,8 @@ export class AttendanceDialogComponent implements OnInit {
     const bottomSheetRef = this._bottomSheet.open(PointBottomSheetComponent, { disableClose: true });
     bottomSheetRef.afterDismissed().subscribe(d => {
       if (d.isChecked) {
-        this.dalService.pointHttp.add({
-          userId: this.membershipService.getUser()?.userRoleId as number,
-          difference: 1,
-          category: '출석체크',
-          source: POINT_SOURCE.Attendance
-        }).subscribe(response => {
-          // 달력에 표시
-          this.selected = this.currentDate;
-        })
+        // 달력에 표시
+        this.selected = this.currentDate;
       }
     });
   }
