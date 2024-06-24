@@ -18,7 +18,6 @@ export class ScrapComponent {
   public clickScrap() {
     this.isScrap = !this.isScrap;
     this.click.emit({ isScrap: this.isScrap });
-    console.log('clickScrap', this.isScrap);
   }
   
 }

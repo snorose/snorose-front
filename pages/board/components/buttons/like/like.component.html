@@ -9,5 +9,8 @@
       favorite
     </span>
   }
-  <p style="font-size: 12px; transform: translate(0px, -1.6px);">{{ likeCount }}</p>
+  <p 
+    style="font-size: 12px; transform: translate(0px, -1.6px);"
+    [style.transform]="'translate(' + translate.x + 'px, ' + translate.y + 'px)'"
+  >{{ likeCount }}</p>
 </div>
