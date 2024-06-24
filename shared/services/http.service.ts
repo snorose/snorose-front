@@ -22,8 +22,13 @@ export class HttpService {
   }
 
   public Delete(endPoint: string, data?: any, header?: any): Observable<any> {
-    return this.http.delete(`${BASE_URL}${endPoint}`, data)
-      .pipe(catchError(this.handleError("Delete")));
+    return this.http.delete(`${BASE_URL}${endPoint}`, {
+      headers: new HttpHeaders({
+        Authorization:
+          `Bearer ${this.membershipService.data.tokenResponse.accessToken}`
+      }),
+      body: data ?? null
+    }).pipe(catchError(this.handleError("Delete")));
   }
 
   public Post(endPoint: string, data: any, header?: any): Observable<any> {
