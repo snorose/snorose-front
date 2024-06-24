@@ -5,6 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { IReviewGetData, LectureType, Semester } from '../../../../shared/http/review.http';
 import { LayoutService } from '../../../../shared/services/layout.service';
 import { ScrollService } from '../../../../shared/services/scroll.service';
+import { IAddPointRequest } from '../../../../shared/http/point.http';
+import { MembershipService } from '../../../../shared/services/membership.service';
+import { POINT_CATEGORY, POINT_SOURCE } from '../../../../shared/data/point.data';
+import { GlobalService } from '../../../../shared/services/global.service';
 
 @Component({
   selector: 'app-review-detail',
@@ -18,6 +22,8 @@ export class ReviewDetailComponent implements OnInit {
   private readonly dalService = inject(DalService);
   public readonly layoutService = inject(LayoutService);
   private scrollService = inject(ScrollService);
+  private readonly membershipService = inject(MembershipService);
+  private globalService = inject(GlobalService);
 
   public postId: string | null = null;
   public isLoading: boolean = true;
@@ -40,7 +46,7 @@ export class ReviewDetailComponent implements OnInit {
     lectureYear: 2024,
     semester: Semester.First,
     lectureType: LectureType.GeneralElective,
-    pf: false,
+    isPF: false,
     isEdited: false,
 
     // 파일 정보
@@ -79,6 +85,14 @@ export class ReviewDetailComponent implements OnInit {
       this.dalService.snackBar('해당 게시물을 찾을 수 없습니다');
       return;
     }
+
+    const pointData: IAddPointRequest = {
+      userId: this.membershipService.getUser()?.userId as number,
+      category: POINT_CATEGORY.Exam_Review_Download,
+      sourceId: Number(this.postId),
+      source: POINT_SOURCE.Review
+    };
+
     this.dalService.reviewHttp.download(this.postId, this.review.fileName).subscribe({
       next: (response) => {
         console.log('download response', response);
@@ -94,6 +108,16 @@ export class ReviewDetailComponent implements OnInit {
           linkEl.click();
           document.body.removeChild(linkEl);
           window.URL.revokeObjectURL(url);
+
+          this.dalService.pointHttp.fluctuate(pointData).subscribe({
+            next: (response) => {
+              this.dalService.snackBar(`${response.result.difference} 포인트가 적립되었습니다!`);
+              this.globalService.point = response.result.balance;
+            },
+            error: (error) => {
+              this.dalService.snackBar('서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요');
+            }
+          });
         }
       },
       error: (error) => {
