@@ -8,6 +8,7 @@ export interface ICommentData {
   postId: number;
   userProfile: string | null;
   userDisplay: string;
+  isWriter: boolean;
   content: string;
   likeCount: number;
   reportCount: number;
@@ -17,7 +18,8 @@ export interface ICommentData {
   isVisible: boolean;
   isUpdated: boolean;
   isDeleted: boolean;
-  children: ICommentData[]
+  parentId: number | null;
+  children: ICommentData[];
 }
 
 export interface ICommentCreateRequest {
@@ -38,8 +40,8 @@ export interface ICommentDeleteResponse extends IBaseResponse<ICommentData>{}
 export interface ICommentHttp {
   getList(postId: string): Observable<ICommentListResponse>;
   create(postId: string, request: ICommentCreateRequest): Observable<ICommentCreateResponse>;
-  update(postId: string, commentId: string, request: ICommentUpdateRequest): Observable<ICommentUpdateResponse>;
-  delete(postId: string, commentId: string): Observable<ICommentDeleteResponse>;
+  update(postId: number, commentId: number, request: ICommentUpdateRequest): Observable<ICommentUpdateResponse>;
+  delete(postId: number, commentId: number): Observable<ICommentDeleteResponse>;
 }
 
 export class CommentHttp implements ICommentHttp {
@@ -54,11 +56,11 @@ export class CommentHttp implements ICommentHttp {
     return this.httpService.Post(`/v1/posts/${postId}/comments`, request);
   }
   
-  update(postId: string, commentId: string, request: ICommentUpdateRequest): Observable<ICommentUpdateResponse> {
+  update(postId: number, commentId: number, request: ICommentUpdateRequest): Observable<ICommentUpdateResponse> {
     return this.httpService.Patch(`/v1/posts/${postId}/comments/${commentId}`, request);
   }
 
-  delete(postId: string, commentId: string): Observable<ICommentDeleteResponse> {
+  delete(postId: number, commentId: number): Observable<ICommentDeleteResponse> {
     return this.httpService.Delete(`/v1/posts/${postId}/comments/${commentId}`);
   }
 

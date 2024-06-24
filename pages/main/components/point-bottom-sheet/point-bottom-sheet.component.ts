@@ -24,7 +24,7 @@ export class PointBottomSheetComponent {
     // 포인트 적립 로직
     // 하루에 한번만 적립하도록 예외 처리
     const request = {
-      userId: this.membershipService.getUser()?.userRoleId as number,
+      userId: this.membershipService.getUser()?.userId as number,
       category: POINT_CATEGORY.Attendance,
       source: POINT_SOURCE.Attendance
     };

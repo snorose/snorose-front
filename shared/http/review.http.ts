@@ -40,7 +40,26 @@ export interface IReviewCreateRequest {
   isPF: boolean;
 
   // 파일 정보
-  filePath: string | null;
+  file: File;
+}
+
+export interface IReviewCreateResponseData {
+  userProfile: string | null;
+  userDisplay: string;
+  title: string;
+  content: string;
+  viewCount: number;
+  likeCount: number;
+  createdAt: string;
+  lectureName: string;
+  professor: string;
+  classNumber: number;
+  lectureYear: number;
+  semester: Semester;
+  hasMidterm: boolean;
+  hasFinalterm: boolean;
+  lectureType: LectureType;
+  isPF: boolean;
   fileName: string;
 }
 
@@ -95,19 +114,15 @@ export interface IReviewGetData {
   lectureYear: number;
   semester: Semester;
   lectureType: LectureType;
-  pf: boolean;
+  isPF: boolean;
   isEdited: boolean;
 
   // 파일 정보
   fileName: string;
 }
 
-export interface IReviewUploadRequest {
-  file: File;
-}
-
 export interface IReviewDetailResponse extends IBaseResponse<IReviewGetData> { }
-export interface IReviewCreateResponse extends IBaseResponse<{ postId: number; }> { }
+export interface IReviewCreateResponse extends IBaseResponse<IReviewCreateResponseData> { }
 export interface IReviewUpdateResponse extends IBaseResponse<{ postId: number; }> { }
 export interface IReviewUploadResponse extends IBaseResponse<{ fileName: string; }> { }
 
@@ -116,7 +131,6 @@ export interface IReviewHttp {
   getDetail(postId: string): Observable<IReviewDetailResponse>;
   create(request: IReviewCreateRequest): Observable<IReviewCreateResponse>;
   update(postId: string, request: IReviewUpdateRequest): Observable<IReviewUpdateResponse>;
-  upload(postId: string, request: IReviewUploadRequest): Observable<IReviewUploadResponse>;
   download(postId: string, fileName: string): Observable<HttpResponse<Blob>>;
 }
 
@@ -138,10 +152,6 @@ export class ReviewHttp implements IReviewHttp {
 
   public update(postId: string, request: IReviewUpdateRequest): Observable<IReviewUpdateResponse> {
     return this.httpService.Patch(`/v1/reviews/${postId}`, request);
-  }
-
-  public upload(postId: string, request: IReviewUploadRequest): Observable<IReviewUploadResponse> {
-    return this.httpService.Post(`/v1/reviews/files/${postId}/upload`, request);
   }
 
   public download(postId: string, fileName: string): Observable<HttpResponse<Blob>> {
