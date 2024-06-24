@@ -1,1 +1,13 @@
-<p>confirm-dialog works!</p>
+<div>
+    <h1 mat-dialog-title>{{ title }}</h1>
+    <div mat-dialog-content>
+        {{ content }}
+    </div>
+    
+    @if (!isBtnDisabled) {
+        <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close (click)="onClickNo()">{{ btnNo }}</button>
+            <button mat-button [mat-dialog-close]="true" (click)="onClickYes()">{{ btnYes }}</button>
+        </mat-dialog-actions>
+    }
+</div>
