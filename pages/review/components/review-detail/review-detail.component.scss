@@ -13,11 +13,11 @@
 .review-item-layout {
   display: flex; 
   justify-content: space-between;
+  padding: 10px;
 }
 
-.review-item {
-  flex-grow: 1; 
-  text-align: end;
+.reveiw-item-bottom {
+  border-bottom: 1px solid #C7C7C7;
 }
 
 .review-bottom-layout {
