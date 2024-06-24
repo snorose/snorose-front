@@ -10,6 +10,7 @@ export class MembershipService {
       accessToken: '',
       refreshToken: ''
     },
+    userId: 0,
     nickname: '',
     balance: 0,
     userRoleId: -1,
