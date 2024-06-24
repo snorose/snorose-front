@@ -106,7 +106,8 @@ export class DynamicFormComponent implements OnInit {
         if (validation.validator === 'password-match') controlValidators.push(this.customValidator.passwordMatch());
         if (validation.validator === 'koreanEnglish') controlValidators.push(this.customValidator.koreanEnglish());
         if (validation.validator === 'textPattern') controlValidators.push(this.customValidator.textPattern());
-        if (validation.validator === 'studentNumber') controlValidators.push(this.customValidator.studentNumber());
+        if (validation.validator === 'isStudentNumber') controlValidators.push(this.customValidator.isStudentNumber());
+        if (validation.validator === 'isNumber') controlValidators.push(this.customValidator.isNumber());
       });
     }
     return controlValidators;
@@ -114,7 +115,7 @@ export class DynamicFormComponent implements OnInit {
 
   public onSubmit(event: any) {
     event.stopPropagation();
-
+    
     if (this.dynamicForm.valid) {
       this.submit.emit({ value: this.dynamicForm.value });
     }

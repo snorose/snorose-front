@@ -92,11 +92,18 @@ export class CustomValidator {
   }
 
   /** 숫자인지를 확인하는 */
-  public studentNumber(): ValidatorFn {
+  public isStudentNumber(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const isNumber = !isNaN(Number(control.value));
       const isSeven = /^\d{7}$/.test(control.value);
-      return !(isNumber && isSeven) ? { numberCheck: true } : null;
+      return !(isNumber && isSeven) ? { studentNumber: true } : null;
+    }
+  }
+
+  public isNumber(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const isNumber = !isNaN(Number(control.value));
+      return !isNumber ? { studentNumber: true } : null;
     }
   }
 
