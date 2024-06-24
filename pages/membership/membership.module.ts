@@ -7,6 +7,7 @@ import { MembershipRoutingModule } from './membership-routing.module';
 import { IdComponent } from './components/find/id/id.component';
 import { PasswordComponent } from './components/find/password/password.component';
 import { MyPageComponent } from './components/my-page/my-page.component';
+import { WithdrawalComponent } from './components/user/withdrawal/withdrawal.component';
 
 
 
@@ -17,7 +18,8 @@ import { MyPageComponent } from './components/my-page/my-page.component';
     SignUpComponent,
     IdComponent,
     PasswordComponent,
-    MyPageComponent
+    MyPageComponent,
+    WithdrawalComponent
   ],
   imports: [
     MembershipRoutingModule,

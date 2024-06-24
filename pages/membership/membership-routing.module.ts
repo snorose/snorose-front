@@ -6,6 +6,7 @@ import { IdComponent } from './components/find/id/id.component';
 import { PasswordComponent } from './components/find/password/password.component';
 import { MyPageComponent } from './components/my-page/my-page.component';
 import { authGuard } from '../../shared/guards/auth.guard';
+import { WithdrawalComponent } from './components/user/withdrawal/withdrawal.component';
 
 export const routes: Routes = [
   {
@@ -17,11 +18,6 @@ export const routes: Routes = [
     component: SignUpComponent
   },
   {
-    path: 'myPage',
-    component: MyPageComponent,
-    canActivate: [authGuard]
-  },
-  {
     path: 'find/id',
     component: IdComponent
   },
@@ -29,6 +25,16 @@ export const routes: Routes = [
     path: 'find/password',
     component: PasswordComponent
   },
+  {
+    path: 'myPage',
+    component: MyPageComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'myPage/withdrawal',
+    component: WithdrawalComponent,
+    canActivate: [authGuard]
+  }
 ];
 
 @NgModule({

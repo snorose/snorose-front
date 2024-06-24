@@ -48,8 +48,8 @@
           <mat-list-item matRipple matListItemTitle>개인정보 처리 방침</mat-list-item>
           <mat-list-item matRipple matListItemTitle>서비스 이용 약관</mat-list-item>
           <mat-divider style="padding: 0 10px;"></mat-divider>
-          <mat-list-item matRipple matListItemTitle>회원 탈퇴</mat-list-item>
-          <mat-list-item matRipple matListItemTitle>로그아웃</mat-list-item>
+          <mat-list-item matRipple matListItemTitle  [routerLink]="['withdrawal']">회원 탈퇴</mat-list-item>
+          <mat-list-item matRipple matListItemTitle (click)="logout()">로그아웃</mat-list-item>
         </div>
       </mat-list>
     </mat-card>
