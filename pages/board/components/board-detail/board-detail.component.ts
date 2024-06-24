@@ -7,6 +7,12 @@ import { Location } from '@angular/common';
 import { LayoutService } from '../../../../shared/services/layout.service';
 import { ScrollService } from './../../../../shared/services/scroll.service';
 import { MembershipService } from '../../../../shared/services/membership.service';
+import { filter, map, mergeMap, of, tap, withLatestFrom } from 'rxjs';
+import { IAddPointRequest } from '../../../../shared/http/point.http';
+import { POINT_CATEGORY, POINT_SOURCE } from '../../../../shared/data/point.data';
+import { GlobalService } from '../../../../shared/services/global.service';
+import { isBoardDetailResponse, isCommentListResponse } from '../../../../shared/http/type-guard';
+import { ICommnetUpdate } from '../comments/comment/comment.component';
 
 @Component({
   selector: 'app-board-detail',
@@ -21,10 +27,11 @@ export class BoardDetailComponent implements OnInit {
   public readonly layoutService = inject(LayoutService);
   private scrollService = inject(ScrollService);
   private readonly membershipService = inject(MembershipService);
+  private globalService = inject(GlobalService);
 
   public boardId: string | null = null;
   public postId: string | null = null;
-  public commentId: string | null = null;
+  public commentId: number | null = null;
   public isLoading: boolean = true;
   public isCommentLoading: boolean = true;
 
@@ -47,37 +54,7 @@ export class BoardDetailComponent implements OnInit {
   };
 
   public comments: ICommentData[] = [];
-  //   {
-  //   id: 0,
-  //     postId: 0,
-  //       userProfile: '송이',
-  //         userDisplay: '송이',
-  //           content: '댓글 입니다.',
-  //             likeCount: 10,
-  //               reportCount: 10,
-  //                 createdAt: '2024-01-21',
-  //                   updatedAt: '2024-01-21',
-  //                     deletedAt: null,
-  //                       isVisible: true,
-  //                         isUpdated: true,
-  //                           isDeleted: false,
-  //                             children: [{
-  //                               id: 0,
-  //                               postId: 0,
-  //                               userProfile: '송이',
-  //                               userDisplay: '송이',
-  //                               content: '댓글 입니다.',
-  //                               likeCount: 10,
-  //                               reportCount: 10,
-  //                               createdAt: '2024-01-21',
-  //                               updatedAt: '2024-01-21',
-  //                               deletedAt: null,
-  //                               isVisible: true,
-  //                               isUpdated: true,
-  //                               isDeleted: false,
-  //                               children: []
-  //                             }]
-  // }
+  private pointData: IAddPointRequest | null = null; 
 
   ngOnInit() {
     this.boardId = this.route.snapshot.paramMap.get('boardId');
@@ -93,41 +70,30 @@ export class BoardDetailComponent implements OnInit {
     }
 
     this.isLoading = true;
-    this.dalService.boardHttp.getDetail(this.boardId, this.postId).subscribe({
+    this.isCommentLoading = true;
+    of(this.dalService.boardHttp.getDetail(this.boardId, this.postId), this.dalService.commentHttp.getList(this.postId)).pipe(
+      mergeMap(request => request),
+      tap(response => !response.isSuccess ? this.dalService.snackBar(response.message) : null),
+      filter(response => response.isSuccess)
+    ).subscribe({
       next: (response) => {
-        if (response.isSuccess) {
+        if (isBoardDetailResponse(response)) {
           this.detailData = response.result;
           this.isLoading = false;
         }
-        else {
-          this.dalService.snackBar('해당 게시물의 상세정보를 찾을 수 없습니다');
-        }
-      },
-      error: (error) => {
-        this.dalService.snackBar('서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요');
-      }
-    });
 
-    this.isCommentLoading = true;
-    this.dalService.commentHttp.getList(this.postId).subscribe({
-      next: (response) => {
-        if (response.isSuccess) {
-          this.comments = [...this.comments, ...response.result];
+        if (isCommentListResponse(response)) {
+          this.comments = [...response.result];
           this.isCommentLoading = false;
         }
-        else {
-          this.dalService.snackBar('해당 게시물의 댓글을 찾을 수 없습니다');
-        }
       },
       error: (error) => {
         this.dalService.snackBar('서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요');
       }
     });
-
   }
 
   public enterComment(event: any) {
-    this.postId = this.route.snapshot.paramMap.get('postId');
     if (this.postId == null) {
       this.dalService.snackBar('해당 게시물을 찾을 수 없습니다.');
       return;
@@ -135,18 +101,79 @@ export class BoardDetailComponent implements OnInit {
 
     const request: ICommentCreateRequest = {
       userDisplay: this.membershipService.getUser()?.nickname as string,
-      parentId: null,
+      parentId: event.parentId ?? null,
       content: event.value
     };
-    console.log('enterComment request', request);
-    this.dalService.commentHttp.create(this.postId, request).subscribe({
+
+    this.isCommentLoading = true;
+    this.dalService.commentHttp.create(this.postId, request)
+    .pipe(
+      tap(response => {
+        this.commentId = response.result.id
+                     
+        this.pointData = {
+          userId: this.membershipService.getUser()?.userId as number,
+          category: POINT_CATEGORY.Comment_Create,
+          sourceId: this.commentId!,
+          source: POINT_SOURCE.Comment
+        }; 
+      }),
+      withLatestFrom(this.dalService.commentHttp.getList(this.postId!), this.dalService.pointHttp.fluctuate(this.pointData!)),
+      map(([comment, comments, pointResponse]) => ({ comment, comments, pointResponse })) // 결과 조합,
+    )
+    .subscribe({
+      next: (response) => {
+        this.comments = response.comments.result;
+        this.isCommentLoading = false;
+        
+        this.dalService.snackBar(`${response.pointResponse.result.difference} 포인트가 적립되었습니다!`);
+        this.globalService.point = response.pointResponse.result.balance;
+      },
+      error: (error) => {
+        this.dalService.snackBar('서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요');
+      }
+    });
+  }
+
+  public updateComment(event: ICommnetUpdate) {
+    this.dalService.commentHttp.update(event.postId, event.commentId, { content: event.content }).subscribe({
       next: (response) => {
         if (response.isSuccess) {
-          this.comments = [...this.comments, response.result];
+          this.dalService.snackBar('댓글이 수정되었습니다');
         }
         else {
           this.dalService.snackBar(response.message);
         }
+      },
+      error: (error) => {
+        this.dalService.snackBar('서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요');
+      }
+    })
+  }
+  
+  public deleteComment(event: { postId: number; commentId: number; }) {
+    this.dalService.commentHttp.delete(event.postId, event.commentId).pipe(
+      tap(response => {
+        this.isCommentLoading = true;
+
+        this.pointData = {
+          userId: this.membershipService.getUser()?.userId as number,
+          category: POINT_CATEGORY.Comment_Delete,
+          sourceId: event.commentId,
+          source: POINT_SOURCE.Comment
+        }; 
+      }),
+      withLatestFrom(this.dalService.commentHttp.getList(String(event.postId)), this.dalService.pointHttp.fluctuate(this.pointData!)),
+      map(([comment, comments, pointResponse]) => ({ comment, comments, pointResponse }))
+    ).subscribe({
+      next: (response) => {
+        this.comments = response.comments.result;
+        this.isCommentLoading = false;
+
+        this.dalService.snackBar(`${response.pointResponse.result.difference} 포인트가 차감되었습니다`);
+        this.globalService.point = response.pointResponse.result.balance;
+        this.isCommentLoading = false;
+
       },
       error: (error) => {
         this.dalService.snackBar('서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요');

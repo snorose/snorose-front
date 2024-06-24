@@ -13,45 +13,70 @@
           fill="#00368E" />
       </svg>
     </div>
-    <div style="transform: translate(20px, -2.8px); font-size: medium;">{{ comment.userDisplay }}</div>
+    @if (comment.isDeleted) {
+      <div style="transform: translate(20px, -2.8px); font-size: 14px;">삭제됨</div>
+    }
+    @else {
+      <div style="transform: translate(20px, -2.8px); font-size: 14px;">{{ comment.userDisplay }}{{ comment.isWriter ? ' (글쓴이)' : '' }}{{ comment.isUpdated ? ' (편집됨)' : '' }}</div>
+    }
     <span class="toolbar-spacer"></span>
-    <button mat-icon-button  [matMenuTriggerFor]="menu" style="transform: translate(0px, -5.8px);">
+    <div style="display: flex;">
+      <app-chat [reportCount]="comment.children.length"></app-chat>
+      <app-like [likeCount]="comment.likeCount" [translate]="{ x: 0, y: -4.6 }" style="transform: translate(0px, 3px);"></app-like>
+    </div>
+    <button mat-icon-button  [matMenuTriggerFor]="menu" [disabled]="comment.isDeleted" style="transform: translate(0px, -5.8px);">
       <mat-icon [ngStyle]="{ 'color': BLUE1 }">more_vert</mat-icon>
     </button>
   </mat-toolbar>
   <div style="margin: 0 27px;">
-    <p>
-      {{ comment.content }}
+    @if (isUpdating) {
+      <div style="display: flex; gap: 20px; width: 100%;">
+        <input #input class="none-outline" atInput type="text" [(ngModel)]="comment.content">
+        <button mat-button [ngStyle]="{ 'color': BLUE1 }" (click)="updateCommnet(input.value)">수정</button>
+      </div>
+    }
+    @else {
+      <p style="word-wrap: break-word; white-space: pre-wrap;">{{ comment.isDeleted ? '(삭제됨)' : comment.content }}</p>
+    }
+    <p class="content-action-button" style="font-size: 12px; color: #6A6A6A;">
+      {{ comment.createdAt | full1Date }}
     </p>
-    <div style="display: flex;">
-      <app-chat [reportCount]="comment.reportCount"></app-chat>
-      <app-like [likeCount]="comment.likeCount"></app-like>
-      <span class="toolbar-spacer"></span>
-      <p class="content-action-button" style="margin: 10px; color: #5F86BF;">
-        {{ comment.createdAt | full1Date }}
-      </p>
-    </div>
   </div>
-  <mat-divider></mat-divider>
+  @if (isShowReply) {
+    <app-comment-input (enter)="enterComment($event)"></app-comment-input>
+  }
+  @else {
+  <mat-divider></mat-divider>    
+  }
 </div>
 @if (!comment.children.isEmpty()) {
   @for (child of comment.children; track $index) {
-    <app-comment [marginLeft]="marginLeft + 30" [comment]="child"></app-comment>
+    <app-comment [marginLeft]="marginLeft + 30" [comment]="child" (enter)="enterComment($event)"></app-comment>
   }
 }
 
 
 <mat-menu #menu="matMenu">
-  <button mat-menu-item disabled>
-    <mat-icon>campaign</mat-icon>
-    <span>쪽지 보내기</span>
-  </button>
-  <button mat-menu-item>
-    <mat-icon>edit_note</mat-icon>
-    <span>대댓글 알림 받기</span>
-  </button>
-  <button mat-menu-item>
-    <mat-icon>notifications_off</mat-icon>
-    <span>댓글/유저 신고</span>
-  </button>
+  @if (comment.parentId == null) {
+    <button mat-menu-item (click)="isShowReply = !isShowReply">
+      <mat-icon>reply</mat-icon>
+      <span>{{ isShowReply ? '대댓글 쓰기 취소' : '대댓글 쓰기' }}</span>
+    </button>
+  }
+  @if (comment.isWriter) {
+    <button mat-menu-item (click)="isUpdating = !isUpdating">
+      <mat-icon>edit_note</mat-icon>
+      <span>{{ isUpdating ? '수정취소' : '수정하기' }}</span>
+    </button>
+    <button mat-menu-item (click)="deleteComment()">
+      <mat-icon>delete</mat-icon>
+      <span>삭제하기</span>
+    </button>
+  }
+  @else {
+    <button mat-menu-item>
+      <mat-icon>notifications_off</mat-icon>
+      <span>댓글/유저 신고</span>
+    </button>
+  }
 </mat-menu>
