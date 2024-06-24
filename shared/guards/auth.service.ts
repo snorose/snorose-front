@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { MembershipService } from '../services/membership.service';
 import { Router } from '@angular/router';
-import { withLatestFrom } from 'rxjs';
 import { DalService } from '../services/dal.service';
 
 @Injectable({

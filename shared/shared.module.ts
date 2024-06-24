@@ -18,7 +18,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
@@ -40,7 +40,7 @@ import { BottomNavigationComponent } from './components/layouts/bottom-navigatio
 import { InfiniteScrollDirective } from './directives/infinite-scroll.directive';
 import { DatePickerComponent } from './components/atom/form/date-picker/date-picker.component';
 import { FileComponent } from './components/atom/form/file/file.component';
-
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -88,6 +88,8 @@ import { FileComponent } from './components/atom/form/file/file.component';
     MatProgressSpinnerModule,
     MatRadioModule,
     MatAutocompleteModule,
+    MatDialogModule,
+    FormsModule,
   ],
   exports: [
     DatePipe,
@@ -96,6 +98,7 @@ import { FileComponent } from './components/atom/form/file/file.component';
     DynamicFormComponent,
     UserHeaderComponent,
     BottomNavigationComponent,
+    ConfirmDialogComponent,
     FileComponent,
     InfiniteScrollDirective,
     RouterLink,
@@ -125,6 +128,8 @@ import { FileComponent } from './components/atom/form/file/file.component';
     MatProgressSpinnerModule,
     MatRadioModule,
     MatAutocompleteModule,
+    MatDialogModule,
+    FormsModule,
   ]
 })
 export class SharedModule { }
