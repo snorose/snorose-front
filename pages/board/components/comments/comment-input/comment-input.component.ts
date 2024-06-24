@@ -41,6 +41,7 @@ export class CommentInputComponent {
     if (event.isComposing) return;
     if (!value) return;
     event.preventDefault();
+    event.stopPropagation();
 
     const textarea = this.textarea.nativeElement;
     
