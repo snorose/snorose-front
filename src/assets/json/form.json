@@ -303,7 +303,7 @@
           },
           {
             "name": "studentNumber",
-            "validator": "studentNumber",
+            "validator": "isStudentNumber",
             "message": "학번 형식이 옳지 않습니다"
           }
         ],
@@ -421,7 +421,7 @@
         "category": "input",
         "type": "text",
         "label": "이름",
-        "name": "username",
+        "name": "userName",
         "value": "",
         "placeholder": "이름을 입력해 주세요",
         "validations": [
@@ -504,7 +504,7 @@
           },
           {
             "name": "studentNumber",
-            "validator": "studentNumber",
+            "validator": "isStudentNumber",
             "message": "학번 형식이 옳지 않습니다"
           }
         ],
@@ -560,6 +560,40 @@
             "font-weight": "600"
           }
         }
+      }
+    ]
+  },
+  {
+    "key": "delete-user",
+    "value": [
+      {
+        "category": "password",
+        "type": "password",
+        "name": "currentPassword",
+        "value": "",
+        "placeholder": "현재 비밀번호를 입력해 주세요",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "비밀번호는 필수 항목입니다"
+          },
+          {
+            "name": "minLength",
+            "validator": "minLength-8",
+            "message": "8자 이상으로 입력해주세요"
+          },
+          {
+            "name": "maxLength",
+            "validator": "maxLength-16",
+            "message": "16자 미만으로 입력해주세요"
+          },
+          {
+            "name": "password",
+            "validator": "password",
+            "message": "영어, 숫자, 특수문자를 포함해 8자 이상으로 작성해주세요"
+          }
+        ]
       }
     ]
   },
@@ -648,7 +682,7 @@
           {
             "name": "required",
             "validator": "required",
-            "message": "이름은 필수 항목입니다"
+            "message": "강의명은 필수 항목입니다"
           },
           {
             "name": "maxLength",
@@ -843,26 +877,27 @@
         }
       },
       {
-        "category": "select",
+        "category": "radio-button",
         "type": "text",
-        "label": "PF 여부",
-        "name": "isPF",
+        "label": "중간고사 여부",
+        "name": "hasMidterm",
         "value": "",
         "group": [
           {
-            "main": "",
-            "sub": [
-              "O",
-              "X"
-            ]
+            "main": true,
+            "sub": ["네"]
+          },
+          {
+            "main": false,
+            "sub": ["아니요"]
           }
         ],
-        "placeholder": "O",
+        "placeholder": "중간고사 여부를 선택해 주세요",
         "validations": [
           {
             "name": "required",
             "validator": "required",
-            "message": "전공은 필수 항목입니다"
+            "message": "중간고사 여부는 필수 항목입니다"
           }
         ],
         "styles": {
@@ -871,10 +906,96 @@
             "gap": "12px"
           },
           "label": {
-            "font-size": "18px",
+            "font-size": "16px",
             "font-weight": "600",
             "width": "30%",
-            "transform": "translate(0px, 18px)"
+            "transform": "translate(0px, 10px)"
+          },
+          "radioButton": {
+            "display": "flex",
+            "gap": "12px"
+          }
+        }
+      },
+      {
+        "category": "radio-button",
+        "type": "text",
+        "label": "기말고사 여부",
+        "name": "hasFinalterm",
+        "value": "",
+        "group": [
+          {
+            "main": true,
+            "sub": ["네"]
+          },
+          {
+            "main": false,
+            "sub": ["아니요"]
+          }
+        ],
+        "placeholder": "기말고사 여부를 선택해 주세요",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "기말고사 여부는 필수 항목입니다" 
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "gap": "12px"
+          },
+          "label": {
+            "font-size": "16px",
+            "font-weight": "600",
+            "width": "30%",
+            "transform": "translate(0px, 10px)"
+          },
+          "radioButton": {
+            "display": "flex",
+            "gap": "12px"
+          }
+        }
+      },
+      {
+        "category": "radio-button",
+        "type": "text",
+        "label": "PF 여부",
+        "name": "isPF",
+        "value": "",
+        "group": [
+          {
+            "main": true,
+            "sub": ["네"]
+          },
+          {
+            "main": false,
+            "sub": ["아니요"]
+          }
+        ],
+        "placeholder": "PF 여부를 선택해 주세요",
+        "validations": [
+          {
+            "name": "required",
+            "validator": "required",
+            "message": "PF 여부는 필수 항목입니다" 
+          }
+        ],
+        "styles": {
+          "layout": {
+            "display": "flex",
+            "gap": "12px"
+          },
+          "label": {
+            "font-size": "16px",
+            "font-weight": "600",
+            "width": "30%",
+            "transform": "translate(0px, 10px)"
+          },
+          "radioButton": {
+            "display": "flex",
+            "gap": "12px"
           }
         }
       },
@@ -918,16 +1039,16 @@
       },
       {
         "category": "input",
-        "type": "text",
+        "type": "number",
         "label": "분반(선택)",
         "name": "classNumber",
         "value": "",
-        "placeholder": "분반을 입력해 주세요(ex. 001)",
+        "placeholder": "분반을 입력해 주세요(ex. 1)",
         "validations": [
           {
-            "name": "maxLength",
-            "validator": "maxLength-40",
-            "message": "40자 미만으로 입력해주세요"
+            "name": "isNumber",
+            "validator": "isNumber",
+            "message": "숫자만 입력해 주세요"
           }
         ],
         "styles": {
