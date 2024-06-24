@@ -1,12 +1,12 @@
 {
   "name": "snorose",
-  "version": "0.0.1-8",
+  "version": "0.0.1-7",
   "scripts": {
     "ng": "ng",
     "start:dev": "ng serve --configuration=development",
     "start:prod": "ng serve --configuration=production",
     "start:local": "ng serve --configuration=local",
-    "build": "ng build",
+    "build": "ng build --prod",
     "watch": "ng build --watch --configuration=development",
     "test": "ng test",
     "release": "standard-version"
