@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-9](https://github.com/snorose/snorose-front/compare/v0.0.1-8...v0.0.1-9) (2024-07-21)
+
+
+### Features
+
+* **adsense:** 구글 에드센스 추가 ([650e5aa](https://github.com/snorose/snorose-front/commit/650e5aa3923589e87de2a691d0a5207966b44b60))
+* **comment:** 댓글 crud 구현 ([d6365e5](https://github.com/snorose/snorose-front/commit/d6365e53ce3f67022351409b948ce5a89eec26c3))
+* **d3:** d3 라이브러리 설치 ([898380b](https://github.com/snorose/snorose-front/commit/898380b45a10f2fe0a5c580ecb73098d3c3c2b01))
+* **dialog:** 다이얼로그 컴포넌트 생성 ([0121267](https://github.com/snorose/snorose-front/commit/01212670f6a884687864571a7a1be4395105d452))
+* **form:** form 데이터 추가 ([9db90bc](https://github.com/snorose/snorose-front/commit/9db90bc193c1fe4e682e790c1750ed4e47031368))
+* **form:** validator 추가 ([7931ed4](https://github.com/snorose/snorose-front/commit/7931ed49e47d6adcc794c2ab0641d5f32e210746))
+* **membership:** 마이페이지 및 회원탈퇴 구현 ([2232530](https://github.com/snorose/snorose-front/commit/22325307efe0423f195049437eeea44ee129533f))
+* **membership:** 서버 연결 개발 및 응답 속성 추가 ([29c1d64](https://github.com/snorose/snorose-front/commit/29c1d64e913ef96c349cbc674f12bb5cba3718eb))
+* **membership:** 아이디 찾기 서버 연결 ([a820c9a](https://github.com/snorose/snorose-front/commit/a820c9abc19057dfaec8b11a64b425cb914fe157))
+* **point:** d3로 포인트 차트 개발 ([644fe4e](https://github.com/snorose/snorose-front/commit/644fe4e128b688248195347b9cb4691d6d263ef6))
+* **post:** 서버 연결 및 다이얼로그 추가 ([778395c](https://github.com/snorose/snorose-front/commit/778395cf61f7ee9d3a50b2e278dc7b4f035b0b3c))
+* **review:** 파일 다운로드 및 포인트 서버 연결 ([f868c32](https://github.com/snorose/snorose-front/commit/f868c327162d1518a0593b554e3e279d5a88370b))
+* **type:** 타입 가드 생성 ([6271698](https://github.com/snorose/snorose-front/commit/6271698ab1e89e6e42735a06b1a4414f8189fad1))
+
+
+### Bug Fixes
+
+* **board:** api call 수정 ([cbda076](https://github.com/snorose/snorose-front/commit/cbda0764b36da2bbb6090baed061460427bc4e83))
+* **comment:** event 추가 ([4c86969](https://github.com/snorose/snorose-front/commit/4c86969f76b0939512d17783fa831ce948ccef12))
+* **http:** 토큰 추가 ([fb1e46c](https://github.com/snorose/snorose-front/commit/fb1e46cc659278a5c6ee081c41945fb39b5f26b1))
+* **like:** like 위치 동적으로 변경 가능하도록 수정 ([9cdb615](https://github.com/snorose/snorose-front/commit/9cdb6152df5451d0a5bd84b54b4e5d00b6c6bbaf))
+* **point:** 포인트 enum 정의 ([e87f119](https://github.com/snorose/snorose-front/commit/e87f119b0eaa74b89046656be7def6f06aff43c6))
+* **property:** 속성명 추가 및 변경 ([840a2eb](https://github.com/snorose/snorose-front/commit/840a2eb7cbcc78b9cc9a9ed9a7e06092a06db25c))
+* **review:** 리뷰 세부 디자인 수정 ([16d507f](https://github.com/snorose/snorose-front/commit/16d507f64d550542aaa23cc928e11ecfd67d3448))
+
 ### [0.0.1-8](https://github.com/snorose/snorose-front/compare/v0.0.1-7...v0.0.1-8) (2024-06-12)
 
 
