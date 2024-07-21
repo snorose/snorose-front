@@ -1,6 +1,6 @@
-<app-header name="" icon="menu" link=""></app-header>
-<div #listDiv class="hide-scrollbar" style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()" appInfiniteScroll
-  (nearEnd)="onNearEndScroll()">
+<app-header icon="menu" name="시험 후기" rightButton="후기 작성" (clickRight)="write()"></app-header>
+<div #listDiv class="hide-scrollbar" style="overflow-y: scroll;" [style.height]="layoutService.getMainHeight()"
+  appInfiniteScroll (nearEnd)="onNearEndScroll()">
   <!-- <mat-form-field appearance="outline" style="border-radius: 30px !important; width: 100%;">
     <mat-label>Filter</mat-label>
     <input style="width: 100%;" matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
@@ -14,6 +14,3 @@
   <app-review-list [list]="list"></app-review-list>
 </div>
 <app-bottom-navigation></app-bottom-navigation>
-<button class="review-button" [routerLink]="['post']">
-  <span class="material-symbols-outlined">edit</span>
-</button>

@@ -103,6 +103,10 @@ export class BoardListComponent extends ScrollAbstract implements OnInit, OnDest
     this.router.navigateByUrl('/board');
   }
 
+  public write(): void {
+    this.router.navigate(['/board', this.boardId, 'post']);
+  }
+
   ngOnDestroy() {
     this.scrollService.boardStorage = {
       boardList: this.boardList,

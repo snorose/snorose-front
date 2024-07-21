@@ -12,6 +12,7 @@ import { ScrollAbstract } from '../../shared/classes/scroll.abstract';
 })
 export class ReviewComponent extends ScrollAbstract implements OnInit, OnDestroy {
 
+  private readonly router = inject(Router);
   private readonly dalService = inject(DalService);
   public readonly layoutService = inject(LayoutService);
 
@@ -81,6 +82,10 @@ export class ReviewComponent extends ScrollAbstract implements OnInit, OnDestroy
 
   public searchReview(event: any) {
 
+  }
+
+  public write() {
+    this.router.navigate(['/review/post']);
   }
 
   ngOnDestroy() {
