@@ -5,31 +5,48 @@
       <mat-list>
         <div style="display: flex; justify-content: space-between;">
           <mat-list-item matListItemTitle>보유 포인트</mat-list-item>
-          <mat-list-item matListItemLine
-            style="flex-grow: 1; text-align: end; transform: translate(-8px, 8.3px);">39</mat-list-item>
+          <mat-list-item matListItemLine *ngIf="!isLoading" class="position-basic">
+            {{ profile?.balance }}
+          </mat-list-item>
+          <ngx-skeleton-loader *ngIf="isLoading" class="position-basic" appearance="line" />
         </div>
         <div style="margin: 0 10px;">
           <mat-divider style="padding: 0 10px;"></mat-divider>
           <h2 style="margin: 17px">계정</h2>
           <div style="display: flex; justify-content: space-between;">
             <mat-list-item>아이디</mat-list-item>
-            <mat-list-item matListItemLine style="flex-grow: 1; text-align: end;">suen0904</mat-list-item>
+            <mat-list-item matListItemLine *ngIf="!isLoading" class="position-basic">
+              {{ profile?.loginId }}
+            </mat-list-item>
+            <ngx-skeleton-loader *ngIf="isLoading" class="position-basic" appearance="line" />
           </div>
           <div style="display: flex; justify-content: space-between;">
             <mat-list-item matListItemTitle>이메일</mat-list-item>
-            <mat-list-item matListItemLine style="flex-grow: 1; text-align: end;">suen0904sookmyungackr</mat-list-item>
+            <mat-list-item matListItemLine *ngIf="!isLoading" class="position-basic">
+              {{ profile?.email }}
+            </mat-list-item>
+            <ngx-skeleton-loader *ngIf="isLoading" class="position-basic" appearance="line" />
           </div>
           <div style="display: flex; justify-content: space-between;">
             <mat-list-item matListItemTitle>학번</mat-list-item>
-            <mat-list-item matListItemLine style="flex-grow: 1; text-align: end;">17123123</mat-list-item>
+            <mat-list-item matListItemLine *ngIf="!isLoading" class="position-basic">
+              {{ profile?.studentNumber }}
+            </mat-list-item>
+            <ngx-skeleton-loader *ngIf="isLoading" class="position-basic" appearance="line" />
           </div>
           <div style="display: flex; justify-content: space-between;">
             <mat-list-item matListItemTitle>전공</mat-list-item>
-            <mat-list-item matListItemLine style="flex-grow: 1; text-align: end;">시각영상디자인과</mat-list-item>
+            <mat-list-item matListItemLine *ngIf="!isLoading" class="position-basic">
+              {{ profile?.major }}
+            </mat-list-item>
+            <ngx-skeleton-loader *ngIf="isLoading" class="position-basic" appearance="line" />
           </div>
           <div style="display: flex; justify-content: space-between;">
             <mat-list-item matListItemTitle>생년월일</mat-list-item>
-            <mat-list-item matListItemLine style="flex-grow: 1; text-align: end;">1996.01.01</mat-list-item>
+            <mat-list-item matListItemLine *ngIf="!isLoading" class="position-basic">
+              {{ profile?.birthday }}
+            </mat-list-item>
+            <ngx-skeleton-loader *ngIf="isLoading" class="position-basic" appearance="line" />
           </div>
           <mat-list-item matRipple matListItemTitle>내 정보 수정</mat-list-item>
           <mat-list-item matRipple matListItemTitle>비밀번호 변경</mat-list-item>
@@ -48,13 +65,12 @@
           <mat-list-item matRipple matListItemTitle>개인정보 처리 방침</mat-list-item>
           <mat-list-item matRipple matListItemTitle>서비스 이용 약관</mat-list-item>
           <mat-divider style="padding: 0 10px;"></mat-divider>
-          <mat-list-item matRipple matListItemTitle  [routerLink]="['withdrawal']">회원 탈퇴</mat-list-item>
+          <mat-list-item matRipple matListItemTitle [routerLink]="['withdrawal']">회원 탈퇴</mat-list-item>
           <mat-list-item matRipple matListItemTitle (click)="logout()">로그아웃</mat-list-item>
         </div>
       </mat-list>
     </mat-card>
   </div>
 </div>
-
 
 <app-bottom-navigation></app-bottom-navigation>

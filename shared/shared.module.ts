@@ -41,6 +41,7 @@ import { InfiniteScrollDirective } from './directives/infinite-scroll.directive'
 import { DatePickerComponent } from './components/atom/form/date-picker/date-picker.component';
 import { FileComponent } from './components/atom/form/file/file.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatAutocompleteModule,
     MatDialogModule,
     FormsModule,
+    NgxSkeletonLoaderModule,
   ],
   exports: [
     DatePipe,
@@ -130,6 +132,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatAutocompleteModule,
     MatDialogModule,
     FormsModule,
+    NgxSkeletonLoaderModule,
   ]
 })
 export class SharedModule { }
