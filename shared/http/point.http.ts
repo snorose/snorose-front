@@ -34,9 +34,16 @@ export interface IGetPointResponse extends IBaseResponse<{
   pointLogResponse: IGetPointData[];
 }> { }
 
+export interface IGetMonthPointResponse extends IBaseResponse<Array<{
+  id: number;
+  difference: number;
+  createdAt: string;
+}>> { }
+
 export interface IPointHttp {
   fluctuate(request: IAddPointRequest): Observable<IAddPointResponse>;
   get(page: number): Observable<IGetPointResponse>;
+  month(year: number, month: number): Observable<IGetMonthPointResponse>;
 }
 
 export class PointHttp implements IPointHttp {
@@ -49,6 +56,13 @@ export class PointHttp implements IPointHttp {
 
   get(page: number): Observable<IGetPointResponse> {
     return this.httpService.Get(`/v1/points/${page}`);
+  }
+
+  month(year: number, month: number): Observable<IGetMonthPointResponse> {
+    return this.httpService.Get(`/v1/points/attendance`, {
+      'year': year,
+      'month': month
+    });
   }
 
 }

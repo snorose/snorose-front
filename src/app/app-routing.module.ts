@@ -28,6 +28,11 @@ const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'point',
+    loadChildren: () => import('../../pages/point/point.module').then(m => m.PointModule),
+    canActivate: [authGuard]
+  },
+  {
     path: 'login',
     component: SignInComponent
   },
