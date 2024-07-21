@@ -81,7 +81,10 @@ export class BoardHttp implements IBoardHttp {
   private readonly httpService = inject(HttpService);
 
   getList(boardId: string, page: number): Observable<IBoardListResponse> {
-    return this.httpService.Get(`/v1/boards/${boardId}/posts/postlist/${page}`);
+    return this.httpService.Get(
+      `/v1/boards/${boardId}/posts/postlist`, {
+      'page': page
+    });
   }
 
   getDetail(boardId: string, postId: string): Observable<IBoardDetailResponse> {

@@ -6,7 +6,7 @@ import { Observable, catchError } from "rxjs";
 import { MembershipService } from "./membership.service";
 
 export interface IParams {
-  [param: string]: string | string[]
+  [param: string]: string | string[] | number;
 }
 
 export const BASE_URL = environment.base_url;
@@ -87,8 +87,8 @@ export class HttpService {
       .pipe(catchError(this.handleError("GetJson")));
   }
 
-  public GetBlob(endPoint: string){
-    return this.http.get(`${BASE_URL}${endPoint}`,  { responseType: 'blob', observe: 'response' });
+  public GetBlob(endPoint: string) {
+    return this.http.get(`${BASE_URL}${endPoint}`, { responseType: 'blob', observe: 'response' });
   }
 
   private handleError<T>(operation = "operation", result?: T) {
