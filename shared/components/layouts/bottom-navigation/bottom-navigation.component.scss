@@ -12,15 +12,14 @@
   justify-content: space-around;
   width: 100%;
   padding: 10px 0;
-  /* 버튼 위 아래 간격 조절 */
-  background-color: #fff;
-  /* 선택적으로 배경색 지정 */
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1;
 }
 
 .nav button {
   margin: 0 5px;
-  /* 버튼 좌우 간격 조절 */
 }
 
 .flex-center {
