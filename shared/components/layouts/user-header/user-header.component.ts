@@ -8,8 +8,12 @@ import { BLUE1 } from '../../../consts/color';
 })
 export class UserHeaderComponent {
 
-  @Input() userDisplay: string = '송이';
+  @Input() userDisplay: string = '';
 
   public BLUE1 = BLUE1;
+  public userDisplayStyle = {
+    width: '30%',
+    height: '10px'
+  }
 
 }

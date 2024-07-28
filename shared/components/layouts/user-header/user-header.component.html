@@ -12,9 +12,10 @@
         fill="#00368E" />
     </svg>
   </div>
-  <div style="transform: translate(20px, -2.8px); font-size: medium;">{{ userDisplay }}</div>
+  <div style="transform: translate(20px, -2.8px); font-size: medium;" *ngIf="!!userDisplay">{{ userDisplay }}</div>
+  <ngx-skeleton-loader *ngIf="userDisplay === ''" [theme]="userDisplayStyle" appearance="line" />
   <span class="toolbar-spacer"></span>
-  <button mat-icon-button  [matMenuTriggerFor]="menu" style="transform: translate(0px, -5.8px);">
+  <button mat-icon-button [matMenuTriggerFor]="menu" style="transform: translate(0px, -5.8px);">
     <mat-icon [ngStyle]="{ 'color': BLUE1 }">more_vert</mat-icon>
   </button>
 </mat-toolbar>

@@ -38,7 +38,7 @@ export class BoardDetailComponent implements OnInit {
   public detailData: IBoardDetailData = {
     postId: 1,
     userId: 1,
-    userDisplay: '송이',
+    userDisplay: '',
     title: '글 제목',
     content: '글 내용 입니다. 글 내용 입니다. 글 내용 입니다. 글 내용 입니다.',
     viewCount: 0,
@@ -54,7 +54,16 @@ export class BoardDetailComponent implements OnInit {
   };
 
   public comments: ICommentData[] = [];
-  private pointData: IAddPointRequest | null = null; 
+  private pointData: IAddPointRequest | null = null;
+
+  public titleStyle = {
+    width: '50%',
+    height: '40px'
+  }
+  public dateStyle = {
+    width: '15%',
+    height: '15px'
+  }
 
   ngOnInit() {
     this.boardId = this.route.snapshot.paramMap.get('boardId');
@@ -107,32 +116,32 @@ export class BoardDetailComponent implements OnInit {
 
     this.isCommentLoading = true;
     this.dalService.commentHttp.create(this.postId, request)
-    .pipe(
-      tap(response => {
-        this.commentId = response.result.id
-                     
-        this.pointData = {
-          userId: this.membershipService.getUser()?.userId as number,
-          category: POINT_CATEGORY.Comment_Create,
-          sourceId: this.commentId!,
-          source: POINT_SOURCE.Comment
-        }; 
-      }),
-      withLatestFrom(this.dalService.commentHttp.getList(this.postId!), this.dalService.pointHttp.fluctuate(this.pointData!)),
-      map(([comment, comments, pointResponse]) => ({ comment, comments, pointResponse })) // 결과 조합,
-    )
-    .subscribe({
-      next: (response) => {
-        this.comments = response.comments.result;
-        this.isCommentLoading = false;
-        
-        this.dalService.snackBar(`${response.pointResponse.result.difference} 포인트가 적립되었습니다!`);
-        this.globalService.point = response.pointResponse.result.balance;
-      },
-      error: (error) => {
-        this.dalService.snackBar('서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요');
-      }
-    });
+      .pipe(
+        tap(response => {
+          this.commentId = response.result.id
+
+          this.pointData = {
+            userId: this.membershipService.getUser()?.userId as number,
+            category: POINT_CATEGORY.Comment_Create,
+            sourceId: this.commentId!,
+            source: POINT_SOURCE.Comment
+          };
+        }),
+        withLatestFrom(this.dalService.commentHttp.getList(this.postId!), this.dalService.pointHttp.fluctuate(this.pointData!)),
+        map(([comment, comments, pointResponse]) => ({ comment, comments, pointResponse })) // 결과 조합,
+      )
+      .subscribe({
+        next: (response) => {
+          this.comments = response.comments.result;
+          this.isCommentLoading = false;
+
+          this.dalService.snackBar(`${response.pointResponse.result.difference} 포인트가 적립되었습니다!`);
+          this.globalService.point = response.pointResponse.result.balance;
+        },
+        error: (error) => {
+          this.dalService.snackBar('서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요');
+        }
+      });
   }
 
   public updateComment(event: ICommnetUpdate) {
@@ -150,7 +159,7 @@ export class BoardDetailComponent implements OnInit {
       }
     })
   }
-  
+
   public deleteComment(event: { postId: number; commentId: number; }) {
     this.dalService.commentHttp.delete(event.postId, event.commentId).pipe(
       tap(response => {
@@ -161,7 +170,7 @@ export class BoardDetailComponent implements OnInit {
           category: POINT_CATEGORY.Comment_Delete,
           sourceId: event.commentId,
           source: POINT_SOURCE.Comment
-        }; 
+        };
       }),
       withLatestFrom(this.dalService.commentHttp.getList(String(event.postId)), this.dalService.pointHttp.fluctuate(this.pointData!)),
       map(([comment, comments, pointResponse]) => ({ comment, comments, pointResponse }))

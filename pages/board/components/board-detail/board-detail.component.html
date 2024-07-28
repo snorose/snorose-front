@@ -1,17 +1,16 @@
 <app-header icon="arrow_back_ios" (clickLeft)="goBack()"></app-header>
 
 <div class="hide-scrollbar" style="overflow-y: scroll;" [style.height]="layoutService.getHeightWithoutHeader()">
-  @if (isLoading) {
-  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-  }
-  @else {
-  <app-user-header [userDisplay]="detailData.userDisplay"></app-user-header>
+  <app-user-header [userDisplay]="detailData!.userDisplay"></app-user-header>
   <div style="margin: 0 27px;">
-    <h2 style="font-weight: 600;">{{ detailData.title }}</h2>
-    <p>
+    <h2 style="font-weight: 600;" *ngIf="!isLoading">{{ detailData.title }}</h2>
+    <ngx-skeleton-loader *ngIf="isLoading" [theme]="titleStyle" appearance="line" />
+    <p *ngIf="!isLoading">
       {{ detailData.content }}
     </p>
-    <div class="color6 font-size12">{{ detailData.createdAt | full1Date }}</div>
+    <ngx-skeleton-loader *ngIf="isLoading" appearance="line" />
+    <div class="color6 font-size12" *ngIf="!isLoading">{{ detailData.createdAt | full1Date }}</div>
+    <ngx-skeleton-loader *ngIf="isLoading" [theme]="dateStyle" appearance="line" />
     <div style="display: flex; margin-left: -10px;">
       <app-chat [reportCount]="detailData.reportCount"></app-chat>
       <app-like [likeCount]="detailData.likeCount" [translate]="{ x: 0, y: -1.6}"></app-like>
@@ -22,14 +21,14 @@
       </p>
     </div>
   </div>
-  }
   <app-comment-input (enter)="enterComment($event)"></app-comment-input>
   @if (isCommentLoading) {
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   }
   @else {
-    @for (comment of comments; track $index) {
-      <app-comment [comment]="comment" (enter)="enterComment($event)" (update)="updateComment($event)" (delete)="deleteComment($event)"></app-comment> 
-    }
+  @for (comment of comments; track $index) {
+  <app-comment [comment]="comment" (enter)="enterComment($event)" (update)="updateComment($event)"
+    (delete)="deleteComment($event)"></app-comment>
+  }
   }
 </div>
