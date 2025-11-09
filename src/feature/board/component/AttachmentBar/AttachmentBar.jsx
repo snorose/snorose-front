@@ -2,7 +2,10 @@ import { React, useRef, useState } from 'react';
 
 import { Icon } from '@/shared/component';
 import { useToast } from '@/shared/hook';
-import { ATTACHMENT_SIZE_LIMIT } from '@/shared/constant';
+import {
+  ATTACHMENT_SIZE_LIMIT,
+  ATTACHMENT_EXTENTION_LIMIT,
+} from '@/shared/constant';
 import {
   checkImageQuantity,
   checkImageSize,
@@ -97,7 +100,7 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
         />
         <input
           type='file'
-          accept='.jpg, .jpeg, .jfif, .png, .webp, .bmp'
+          accept={ATTACHMENT_EXTENTION_LIMIT.imageExtentions.join(', ')}
           className={styles.imageInput}
           ref={img}
           onChange={changeImageUpload}
@@ -116,7 +119,7 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
         />
         <input
           type='file'
-          accept='video/*'
+          accept={ATTACHMENT_EXTENTION_LIMIT.videoExtentions.join(', ')}
           className={styles.videoInput}
           ref={vid}
           onChange={changeVideoUpload}

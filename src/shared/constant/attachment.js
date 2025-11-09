@@ -5,3 +5,7 @@ export const ATTACHMENT_SIZE_LIMIT = Object.freeze({
   videoFileSize: 50 * 1024 * 1024,
   videoQuantity: 1,
 });
+export const ATTACHMENT_EXTENTION_LIMIT = Object.freeze({
+  imageExtentions: ['.jpg', '.jpeg', '.png', '.jiff', '.bmp', '.webp'],
+  videoExtentions: ['.mp4', '.mov', '.avi', '.mkv'],
+});

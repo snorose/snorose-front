@@ -1,11 +1,19 @@
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
-import { TOAST, ATTACHMENT_SIZE_LIMIT } from '@/shared/constant';
+import {
+  TOAST,
+  ATTACHMENT_SIZE_LIMIT,
+  ATTACHMENT_EXTENTION_LIMIT,
+} from '@/shared/constant';
 
 //첨부파일 확장자가 이미지인지 확인하는 함수
 export const isExtImg = (url) => {
-  return url.includes('.webp');
+  const cleanUrl = url.split('?')[0].toLowerCase();
+
+  return ATTACHMENT_EXTENTION_LIMIT.imageExtentions.some((ext) =>
+    cleanUrl.endsWith(ext.toLowerCase())
+  );
 };
 
 //s3 url로부터 첨부파일 다운받는 함수
