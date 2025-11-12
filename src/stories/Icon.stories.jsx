@@ -1,5 +1,4 @@
-import Icon from '@/shared/component';
-
+import { Icon } from '@/shared/component';
 import {
   STATIC_ICON_LIST,
   FILL_ICON_LIST,
