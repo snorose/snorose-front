@@ -1,7 +1,7 @@
-import { MenuIcon } from '@/shared/component';
+import MenuIcon from './MenuIcon';
 
 const meta = {
-  title: 'Component/MenuIcon',
+  title: 'Component/Navigation/MenuIcon',
   component: MenuIcon,
   parameters: {
     docs: {
