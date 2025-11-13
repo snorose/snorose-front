@@ -1,20 +1,21 @@
-import { FetchLoadingOverlay } from '@/shared/component';
+import FetchLoadingOverlay from './FetchLoadingOverlay';
 
 const meta = {
-  title: 'Component/FetchLoadingOverlay',
+  title: 'Component/Loading/FetchLoadingOverlay',
   component: FetchLoadingOverlay,
   parameters: {
     docs: {
       description: {
         component:
-          '**FetchLoadingOverlay 컴포넌트**는 데이터 로딩 시 오버레이와 함께 로딩 메시지를 표시합니다. 내부적으로 FetchLoading 컴포넌트를 포함하며, `text` props를 통해 메시지를 커스터마이징할 수 있습니다.',
+          'FetchLoadingOverlay 컴포넌트는 데이터 로딩 시 오버레이와 함께 로딩 메시지를 표시합니다.<br />' +
+          '내부적으로 FetchLoading 컴포넌트를 사용하며, 전체 화면을 덮는 반투명 배경 위에 로딩 UI를 표시합니다.',
       },
     },
   },
   argTypes: {
     text: {
-      control: 'text',
       description: '로딩 중 화면에 표시할 텍스트',
+      control: 'text',
     },
   },
 };
