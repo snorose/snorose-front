@@ -21,7 +21,7 @@ const SearchWrapper = (props) => {
 };
 
 const searchStoryConfig = {
-  title: 'Component/Search',
+  title: 'Component/Interaction/Search',
   component: Search,
   parameters: {
     docs: {
