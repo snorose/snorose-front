@@ -1,7 +1,7 @@
-import HomeCardSkeleton from '../feature/home/component/HomeCard/HomeCardSkeleton';
+import HomeCardSkeleton from './HomeCardSkeleton';
 
 const meta = {
-  title: 'Component/HomeCard/HomeCardSkeleton',
+  title: 'Feature/Home/HomeCardSkeleton',
   component: HomeCardSkeleton,
   parameters: {
     docs: {

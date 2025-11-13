@@ -1,7 +1,7 @@
-import HomeCard from '../feature/home/component/HomeCard/HomeCard';
+import HomeCard from './HomeCard';
 
 const meta = {
-  title: 'Component/HomeCard/HomeCard',
+  title: 'Feature/Home/HomeCard',
   component: HomeCard,
   parameters: {
     docs: {

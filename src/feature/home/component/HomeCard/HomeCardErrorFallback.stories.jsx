@@ -1,7 +1,7 @@
-import HomeCardErrorFallback from '../feature/home/component/HomeCard/HomeCardErrorFallback';
+import HomeCardErrorFallback from './HomeCardErrorFallback';
 
 const meta = {
-  title: 'Component/HomeCard/HomeCardErrorFallback',
+  title: 'Feature/Home/HomeCardErrorFallback',
   component: HomeCardErrorFallback,
   parameters: {
     docs: {
