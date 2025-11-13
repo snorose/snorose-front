@@ -1,6 +1,9 @@
 /** @type { import('@storybook/react-webpack5').StorybookConfig } */
 
-const path = require('path');
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const config = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
