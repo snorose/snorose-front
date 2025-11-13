@@ -38,7 +38,7 @@ const PTRWrapper = (props) => {
 };
 
 const PTRStoryConfig = {
-  title: 'Component/Interaction/PullToRefresh',
+  title: 'Component/PullToRefresh',
   component: PullToRefresh,
   parameters: {
     docs: {

@@ -1,7 +1,7 @@
 import ServerErrorFallback from '@/shared/component/suspense/ServerErrorFallback/ServerErrorFallback';
 
 const serverErrorFallbackStoryConfig = {
-  title: 'Component/Feedback/ServerErrorFallback',
+  title: 'Component/ServerErrorFallback',
   component: ServerErrorFallback,
   parameters: {
     docs: {

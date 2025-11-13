@@ -2,7 +2,7 @@ import { Icon } from '@/shared/component';
 import styles from './Toast.module.css';
 
 const toastStoryConfig = {
-  title: 'Component/Feedback/Toast',
+  title: 'Component/Toast',
   parameters: {
     docs: {
       description: {
