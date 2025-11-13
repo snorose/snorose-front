@@ -10,14 +10,8 @@ const SearchWrapper = (props) => {
 
     navigate(`/board/all/search`);
   };
-  // Override args.onRefresh to use refetch
-  const newArgs = {
-    className: null,
-    placeholder: '전체 게시판 내 검색',
-    onKeyDown: handleKeyDown,
-  };
 
-  return <Search {...newArgs} />;
+  return <Search {...props} onKeyDown={props.onKeyDown || handleKeyDown} />;
 };
 
 const searchStoryConfig = {
