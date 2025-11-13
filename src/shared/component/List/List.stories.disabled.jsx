@@ -1,7 +1,7 @@
 import { List } from '@/shared/component';
 
 const meta = {
-  title: 'Component/List',
+  title: 'Component/Navigation/List',
   component: List,
   parameters: {
     docs: {
