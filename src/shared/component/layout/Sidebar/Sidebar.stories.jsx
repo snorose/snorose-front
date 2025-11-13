@@ -1,4 +1,4 @@
-import Sidebar from '@/shared/component/layout/Sidebar/Sidebar';
+import Sidebar from './Sidebar';
 import { useSidebarStore } from '@/shared/store';
 
 const sidebarStoryConfig = {

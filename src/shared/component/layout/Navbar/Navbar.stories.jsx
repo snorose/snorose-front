@@ -1,4 +1,4 @@
-import { Navbar } from '@/shared/component';
+import Navbar from './Navbar';
 
 const meta = {
   title: 'Layout/Navbar',
