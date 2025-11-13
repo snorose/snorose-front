@@ -2,7 +2,7 @@ import Sidebar from './Sidebar';
 import { useSidebarStore } from '@/shared/store';
 
 const sidebarStoryConfig = {
-  title: 'Layout/Sidebar',
+  title: 'Component/Layout/Sidebar',
   component: Sidebar,
   parameters: {
     docs: {

@@ -1,7 +1,7 @@
 import Navbar from './Navbar';
 
 const meta = {
-  title: 'Layout/Navbar',
+  title: 'Component/Layout/Navbar',
   component: Navbar,
   parameters: {
     docs: {
