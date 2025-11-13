@@ -1,35 +1,45 @@
-import PTR from '../shared/component/PullToRefresh/PullToRefresh';
-import { useSearch } from '@/feature/search/hook';
-import { FetchLoading, List } from '@/shared/component';
+import { useState } from 'react';
+import PullToRefresh from './PullToRefresh';
+import { List } from '@/shared/component';
 import { PostBar } from '@/feature/board/component';
-import { deduplicatePaginatedData, flatPaginationCache } from '@/shared/lib';
-import { provideFullMemberAccessToken } from '../../.storybook/provideAccessToken';
-import PullToRefresh from '../shared/component/PullToRefresh/PullToRefresh';
-provideFullMemberAccessToken();
+import { POST_LIST } from '@/dummy/data/postList';
 
 const PTRWrapper = (props) => {
-  const { data, ref, isFetching, refetch } = useSearch({ boardId: 32 });
-  const searchList = deduplicatePaginatedData(flatPaginationCache(data));
+  const [postList, setPostList] = useState(POST_LIST.slice(0, 3));
 
-  // Override args.onRefresh to use refetch
+  const handleRefresh = () => {
+    // Simulate API call
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        // Simulate getting fresh data
+        setPostList([...POST_LIST.slice(0, 3)]);
+        console.log('Refreshed!');
+        resolve();
+      }, 1500);
+    });
+  };
+
   const newArgs = {
     children: (
       <List>
-        {searchList.map((post, index) => (
-          <PostBar data={post} hasLike={false} />
+        {postList.map((post) => (
+          <PostBar key={post.postId} data={post} hasLike={false} />
         ))}
-        {isFetching && <FetchLoading />}
       </List>
     ),
-    onRefresh: () => refetch().then(() => console.log('Refreshed!')),
+    onRefresh: handleRefresh,
   };
 
-  return <PullToRefresh {...newArgs} />;
+  return (
+    <div style={{ height: '400px', overflow: 'hidden' }}>
+      <PullToRefresh {...newArgs} />
+    </div>
+  );
 };
 
 const PTRStoryConfig = {
-  title: 'Component/PullToRefresh',
-  component: PTR,
+  title: 'Component/Interaction/PullToRefresh',
+  component: PullToRefresh,
   parameters: {
     docs: {
       description: {
