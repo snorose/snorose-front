@@ -46,11 +46,12 @@ const PTRStoryConfig = {
         component:
           'PTR 컴포넌트는 게시판을 밑으로 당기면 새글을 불러주는 역할을 합니다.\n' +
           '전체 페이지가 refresh되는 것이 아니라, 게시판에서 글이 나타나는 부분만 refresh됩니다.\n\n' +
-          'Refresh 중이면 위에 아이콘을 띄워줍니다.\n\n' +
-          '**참고를 위해 쓰이는 파일 목록**\n' +
-          '- `SearchExamReviews.jsx`: ExamReviewsPage에 있는 PTR을 담당합니다.\n' +
-          '- `Posts.jsx`: ActivityPage와 기타 페이지들의 PTR을 담당합니다.\n' +
-          '- `SearchResults.jsx`: SearchPage의 PTR을 담당합니다. \n\n',
+          'Refresh 중이면 위에 아이콘을 띄워줍니다.\n\n',
+
+        // '**참고를 위해 쓰이는 파일 목록**\n' +
+        // '- `SearchExamReviews.jsx`: ExamReviewsPage에 있는 PTR을 담당합니다.\n' +
+        // '- `Posts.jsx`: ActivityPage와 기타 페이지들의 PTR을 담당합니다.\n' +
+        // '- `SearchResults.jsx`: SearchPage의 PTR을 담당합니다. \n\n',
       },
     },
   },

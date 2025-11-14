@@ -1,7 +1,7 @@
 import Navbar from './Navbar';
 
 const meta = {
-  title: 'Component/Layout/Navbar',
+  title: 'Component/Navbar',
   component: Navbar,
   decorators: [
     (Story) => (

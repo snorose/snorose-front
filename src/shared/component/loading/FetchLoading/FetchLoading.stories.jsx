@@ -1,7 +1,7 @@
 import FetchLoading from './FetchLoading';
 
 const meta = {
-  title: 'Component/Loading/FetchLoading',
+  title: 'Component/FetchLoading',
   component: FetchLoading,
   parameters: {
     docs: {

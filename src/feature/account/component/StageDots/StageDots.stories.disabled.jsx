@@ -8,9 +8,7 @@ const stageDotsStoryConfig = {
       description: {
         component:
           'StageDots 컴포넌트는 회원가입 단계를 직관적으로 보여줍니다.\n\n' +
-          '회원가입 단계에 따라 파랗게 변하는 버튼이 달라집니다.\n\n' +
-          '**참고를 위해 쓰이는 파일 목록**\n' +
-          '- `SignUpPage.jsx`: 회원가입 단계를 유저들에게 직관적으로 보여주기 위해서 StageDots를 사용합니다.\n\n',
+          '회원가입 단계에 따라 파랗게 변하는 버튼이 달라집니다.\n\n',
       },
     },
   },

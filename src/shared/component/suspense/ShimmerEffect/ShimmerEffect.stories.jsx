@@ -1,7 +1,7 @@
 import ShimmerEffect from './ShimmerEffect';
 
 const meta = {
-  title: 'Component/Loading/ShimmerEffect',
+  title: 'Component/ShimmerEffect',
   component: ShimmerEffect,
   decorators: [
     (Story) => (

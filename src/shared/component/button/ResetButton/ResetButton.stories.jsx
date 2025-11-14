@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions';
 import ResetButton from './ResetButton';
 
 const resetButtonStoryConfig = {
-  title: 'Component/Button/ResetButton',
+  title: 'Component/ResetButton',
   component: ResetButton,
   decorators: [
     (Story) => (

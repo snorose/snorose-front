@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Input from './Input';
 
 const meta = {
-  title: 'Component/Form/Input',
+  title: 'Component/Input',
   component: Input,
   parameters: {
     docs: {

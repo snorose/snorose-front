@@ -1,7 +1,7 @@
 import Button from './Button';
 
 const submitButtonConfig = {
-  title: 'Component/Button/Submit',
+  title: 'Component/SubmitButton',
   component: Button,
   decorators: [
     (Story) => (

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Textarea from './Textarea';
 
 const meta = {
-  title: 'Component/Form/Textarea',
+  title: 'Component/Textarea',
   component: Textarea,
   parameters: {
     docs: {

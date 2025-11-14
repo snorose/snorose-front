@@ -1,7 +1,7 @@
 import Footer from './Footer';
 
 const meta = {
-  title: 'Component/Layout/Footer',
+  title: 'Component/Footer',
   component: Footer,
   decorators: [
     (Story) => (
@@ -26,4 +26,3 @@ export default meta;
 const Template = () => <Footer />;
 
 export const Default = Template.bind({});
-
