@@ -3,7 +3,8 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const fileName = fileURLToPath(import.meta.url);
+const dirname = path.dirname(fileName);
 
 const config = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -21,9 +22,10 @@ const config = {
   staticDirs: ['../public'],
   webpackFinal: async (config) => {
     config.resolve.alias = {
-      '@': path.resolve(__dirname, '../src'),
+      '@': path.resolve(dirname, '../src'),
     };
     return config;
   },
 };
+
 export default config;
