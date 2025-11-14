@@ -16,6 +16,8 @@ export default function AttachmentList({
           key={index}
           className={styles.imageContainer}
           draggable
+          onContextMenu={(e) => e.preventDefault()}
+          onTouchStart={(e) => e.preventDefault()}
           onDragStart={(e) => {
             e.dataTransfer.setData('text/plain', index);
             e.dataTransfer.effectAllowed = 'move';
@@ -51,6 +53,7 @@ export default function AttachmentList({
               onError={(e) => {
                 e.currentTarget.src = altImage;
               }}
+              draggable={false}
             />
           ) : (
             //첨부파일이 영상일 경우
@@ -59,6 +62,7 @@ export default function AttachmentList({
                 src={att.url || (att.file && URL.createObjectURL(att.file))}
                 playsInline
                 className={styles.video}
+                draggable={false}
                 onError={(e) => {
                   const img = document.createElement('img');
                   img.src = altImage;
