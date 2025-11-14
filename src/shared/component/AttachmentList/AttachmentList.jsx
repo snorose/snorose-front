@@ -64,7 +64,7 @@ function AttachmentList({ attachmentsInfo, setAttachmentsInfo }) {
                 onError={(e) => {
                   const img = document.createElement('img');
                   img.src = altImage;
-                  img.className = styles.attachment;
+                  img.className = styles.image;
                   e.currentTarget.replaceWith(img);
                 }}
               />
