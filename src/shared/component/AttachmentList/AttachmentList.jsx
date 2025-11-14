@@ -5,10 +5,7 @@ import altImage from '@/assets/images/altImage.png';
 
 import styles from './AttachmentList.module.css';
 
-export default function AttachmentList({
-  attachmentsInfo,
-  setAttachmentsInfo,
-}) {
+function AttachmentList({ attachmentsInfo, setAttachmentsInfo }) {
   return (
     <ul className={styles.imageList}>
       {attachmentsInfo.map((att, index) => (
@@ -90,3 +87,4 @@ export default function AttachmentList({
     </ul>
   );
 }
+export default React.memo(AttachmentList);
