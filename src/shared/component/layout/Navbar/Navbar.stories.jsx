@@ -3,6 +3,23 @@ import Navbar from './Navbar';
 const meta = {
   title: 'Component/Layout/Navbar',
   component: Navbar,
+  decorators: [
+    (Story) => (
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          minHeight: '200px',
+          paddingBottom: '7.5rem',
+        }}
+      >
+        <div style={{ padding: '20px' }}>
+          <p>Navbar 위 컨텐츠 영역입니다.</p>
+        </div>
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
     docs: {
       description: {
