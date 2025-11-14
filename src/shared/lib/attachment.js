@@ -74,7 +74,6 @@ export const checkImageQuantity = (orgAtts, newAtts, toast) => {
 export const checkImageSize = (entireAtts, filteredAtts, toast) => {
   if (entireAtts.length !== filteredAtts.length) {
     toast({ message: TOAST.ATTACHMENT.imageFileSizeError, variant: 'info' });
-    throw new Error('이미지 용량 초과');
   }
 };
 export const checkVideoQuantity = (orgAtts, newAtts, toast) => {
