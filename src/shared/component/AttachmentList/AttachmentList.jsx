@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Icon } from '@/shared/component';
 import altImage from '@/assets/images/altImage.png';
+import { getSafeSrc } from '@/shared/lib';
 
 import styles from './AttachmentList.module.css';
 
@@ -45,7 +46,7 @@ function AttachmentList({ attachmentsInfo, setAttachmentsInfo }) {
           {attachmentsInfo[index].type === 'PHOTO' ? (
             //첨부파일이 이미지일 경우
             <img
-              src={att.url || (att.file && URL.createObjectURL(att.file))}
+              src={getSafeSrc(att)}
               className={styles.image}
               onError={(e) => {
                 e.currentTarget.src = altImage;
@@ -56,7 +57,7 @@ function AttachmentList({ attachmentsInfo, setAttachmentsInfo }) {
             //첨부파일이 영상일 경우
             <div className={styles.image}>
               <video
-                src={att.url || (att.file && URL.createObjectURL(att.file))}
+                src={getSafeSrc(att)}
                 playsInline
                 className={styles.video}
                 draggable={false}

@@ -92,3 +92,17 @@ export const checkVideoSize = (entireAtts, filteredAtts, toast) => {
     throw new Error('비디오 용량 초과');
   }
 };
+
+//AttachmentList에 createObjectURL로 인해 에러가 나지 않게 src가 안전한지 확인하기
+export const getSafeSrc = (att) => {
+  // 1) 백엔드에 이미 올려서 url이 존재하는 첨부파일들은 url 리턴하기
+  if (att.url) return att.url;
+  // 2) file이 존재하지만 Blob이 아니면 올바른 타입이 아니니 null 리턴하기
+  if (att.file && !(att.file instanceof Blob)) return null;
+  // 3) file이 Blob이지만 생성이 안되면 null 리턴하기
+  try {
+    return att.file ? URL.createObjectURL(att.file) : null;
+  } catch (err) {
+    return null;
+  }
+};

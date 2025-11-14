@@ -5,6 +5,7 @@ import { Pagination, Keyboard } from 'swiper/modules';
 import { useToast } from '@/shared/hook';
 import { Icon, ChoiceModal } from '@/shared/component';
 import { handleDownload, handleZipDownload } from '@/shared/lib';
+import altImage from '@/assets/images/altImage.png';
 
 import styles from './FullScreenAttachment.module.css';
 import 'swiper/css';
@@ -79,6 +80,9 @@ export default function FullScreenAttachment({
                   src={att.url}
                   className={styles.attachment}
                   draggable={false}
+                  onError={(e) => {
+                    e.currentTarget.src = altImage;
+                  }}
                 />
               ) : (
                 <div className={styles.videoWrapper}>
@@ -93,6 +97,12 @@ export default function FullScreenAttachment({
                     }}
                     onDragStart={(e) => {
                       e.preventDefault();
+                    }}
+                    onError={(e) => {
+                      const img = document.createElement('img');
+                      img.src = altImage;
+                      img.className = styles.attachment;
+                      e.currentTarget.replaceWith(img);
                     }}
                   />
                 </div>
