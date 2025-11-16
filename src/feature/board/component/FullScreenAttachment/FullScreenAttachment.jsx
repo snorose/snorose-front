@@ -51,7 +51,6 @@ export default function FullScreenAttachment({
       </div>
       <div className={styles.bodyContainer}>
         <Swiper
-          autoHeight={true}
           className={styles.attachmentsContainer}
           modules={[Pagination, Keyboard]}
           slidesPerView={1}
