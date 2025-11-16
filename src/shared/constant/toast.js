@@ -14,8 +14,8 @@ const TOAST = Object.freeze({
     delete: '게시글이 삭제되었어요 (-2P)',
     deleteNoPoints: '게시글이 삭제되었어요',
     edit: '게시글이 수정되었어요',
-    emptyTitle: '게시글 제목을 작성해 주세요',
-    emptyContent: '게시글 본문을 작성해 주세요',
+    emptyTitle: '게시글 제목을 작성해주세요',
+    emptyContent: '게시글 본문을 작성해주세요',
   },
   COMMENT: {
     create: '댓글을 등록했어요 (+1P)',
@@ -24,7 +24,7 @@ const TOAST = Object.freeze({
     deleteNoPoints: '댓글이 삭제되었어요',
     edit: '댓글이 수정되었어요',
     emptyContent: '댓글 내용을 입력하세요',
-    tooLongContent: '댓글은 1,000자 이내로 작성해 주세요',
+    tooLongContent: '댓글은 1,000자 이내로 작성해주세요',
   },
   REPORT: {
     commentSuccess: '댓글이 신고되었어요',
@@ -56,10 +56,10 @@ const TOAST = Object.freeze({
     fail: '복사에 실패했어요',
   },
   ATTACHMENT: {
-    imageFileSizeError: '파일 크기는 최대 5MB까지 업로드할 수 있어요.',
-    imageQuantityError: '이미지는 최대 5개까지 첨부 가능해요.',
-    videoFileSizeError: '파일 크기는 최대 50MB까지 업로드할 수 있어요.',
-    videoQuantityError: '영상은 최대 1개까지 첨부 가능해요.',
+    imageFileSizeError: '파일 크기는 최대 5MB까지 업로드할 수 있어요',
+    imageQuantityError: '이미지는 최대 5개까지 첨부 가능해요',
+    videoFileSizeError: '파일 크기는 최대 50MB까지 업로드할 수 있어요',
+    videoQuantityError: '영상은 최대 1개까지 첨부 가능해요',
   },
   EVENT: {
     FAIL: '잘못된 링크에요.',
