@@ -95,8 +95,8 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
           onClick={() => {
             img.current.click();
           }}
-          onMouseOver={() => setIsImageIconHighlighted(true)}
-          onMouseLeave={() => setIsImageIconHighlighted(false)}
+          onPointerEnter={() => setIsImageIconHighlighted(true)}
+          onPointerLeave={() => setIsImageIconHighlighted(false)}
         />
         <input
           type='file'
@@ -114,8 +114,8 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
           onClick={() => {
             vid.current.click();
           }}
-          onMouseOver={() => setIsVideoIconHighlighted(true)}
-          onMouseLeave={() => setIsVideoIconHighlighted(false)}
+          onPointerEnter={() => setIsVideoIconHighlighted(true)}
+          onPointerLeave={() => setIsVideoIconHighlighted(false)}
         />
         <input
           type='file'
