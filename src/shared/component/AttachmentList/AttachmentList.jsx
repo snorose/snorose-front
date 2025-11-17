@@ -17,7 +17,7 @@ function AttachmentList({ attachmentsInfo, setAttachmentsInfo }) {
           onContextMenu={(e) => e.preventDefault()}
           onTouchStart={(e) => e.preventDefault()}
           onDragStart={(e) => {
-            e.dataTransfer.setData('application/index', index);
+            e.dataTransfer.setData('text/plain', index);
             e.dataTransfer.effectAllowed = 'move';
           }}
           onDragOver={(e) => {
@@ -26,7 +26,7 @@ function AttachmentList({ attachmentsInfo, setAttachmentsInfo }) {
           onDrop={(e) => {
             e.preventDefault();
             const draggedIndex = parseInt(
-              e.dataTransfer.getData('application/index'),
+              e.dataTransfer.getData('text/plain'),
               10
             );
             const droppedIndex = index;
