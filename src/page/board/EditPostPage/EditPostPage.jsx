@@ -90,9 +90,10 @@ export default function EditPostPage() {
     setIsBlock(
       data.title !== title.trim() ||
         data.content !== text.trim() ||
-        data.isNotice !== isNotice
+        data.isNotice !== isNotice ||
+        data.attachments !== attachmentsInfo
     );
-  }, [title, text, isNotice]);
+  }, [title, text, isNotice, attachmentsInfo]);
 
   // 게시글 수정
   const mutation = useMutation({
