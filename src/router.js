@@ -1,4 +1,5 @@
 import { attendanceLoader } from '@/shared/loader';
+import { NavbarLayout } from '@/shared/ui';
 import { ROLE } from '@/shared/constant';
 
 import App from '@/App';
@@ -131,9 +132,6 @@ const boardRoutes = boardPaths.flatMap((boardPath) => [
         {boardPath === 'notice' ? <NoticeListPage /> : <PostListPage />}
       </ProtectedRoute>
     ),
-    meta: {
-      hideNav: true,
-    },
   },
   {
     path: `/board/${boardPath}/notice`,
@@ -145,9 +143,6 @@ const boardRoutes = boardPaths.flatMap((boardPath) => [
         <NoticeListPage />
       </ProtectedRoute>
     ),
-    meta: {
-      hideNav: true,
-    },
   },
   {
     path: `/board/${boardPath}/post/:postId`,
@@ -159,9 +154,6 @@ const boardRoutes = boardPaths.flatMap((boardPath) => [
         <PostPage />
       </ProtectedRoute>
     ),
-    meta: {
-      hideNav: true,
-    },
   },
   {
     path: `/board/${boardPath}/post-write`,
@@ -173,9 +165,6 @@ const boardRoutes = boardPaths.flatMap((boardPath) => [
         <WritePostPage />
       </ProtectedRoute>
     ),
-    meta: {
-      hideNav: true,
-    },
   },
   {
     path: `/board/${boardPath}/post/:postId/edit`,
@@ -187,9 +176,6 @@ const boardRoutes = boardPaths.flatMap((boardPath) => [
         <EditPostPage />
       </ProtectedRoute>
     ),
-    meta: {
-      hideNav: true,
-    },
   },
   {
     path: `/board/${boardPath}/search`,
@@ -201,9 +187,6 @@ const boardRoutes = boardPaths.flatMap((boardPath) => [
         <SearchPage />
       </ProtectedRoute>
     ),
-    meta: {
-      hideNav: true,
-    },
   },
 ]);
 
@@ -214,23 +197,32 @@ export const routeList = [
     children: [
       {
         index: true,
-        element: <MainPage />,
+        element: (
+          <NavbarLayout>
+            <MainPage />
+          </NavbarLayout>
+        ),
       },
       {
         path: '/home',
-        element: <MainPage />,
+        element: (
+          <NavbarLayout>
+            <MainPage />
+          </NavbarLayout>
+        ),
       },
       {
         path: '/board',
-        element: <BoardCategoryPage />,
+        element: (
+          <NavbarLayout>
+            <BoardCategoryPage />
+          </NavbarLayout>
+        ),
       },
       ...boardRoutes,
       {
         path: '/board/all/search',
         element: <SearchPage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/board/event',
@@ -242,9 +234,6 @@ export const routeList = [
             <EventListPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: `/board/event/notice`,
@@ -256,9 +245,6 @@ export const routeList = [
             <NoticeListPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/board/event-notice/post/:postId',
@@ -270,9 +256,6 @@ export const routeList = [
             <PostPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/board/event-notice/post/:postId/edit',
@@ -284,9 +267,6 @@ export const routeList = [
             <EditPostPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: `/board/event/event-post-write`,
@@ -298,9 +278,6 @@ export const routeList = [
             <WriteEventPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: `/board/event/post/:postId/edit`,
@@ -312,9 +289,6 @@ export const routeList = [
             <EditEventPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: `/board/event/post/:postId`,
@@ -326,9 +300,6 @@ export const routeList = [
             <EventPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/board/exam-review',
@@ -337,7 +308,9 @@ export const routeList = [
             roles={[ROLE.user, ROLE.admin]}
             message={'시험후기 접근 권한이 없어요'}
           >
-            <ExamReviewListPage />
+            <NavbarLayout>
+              <ExamReviewListPage />
+            </NavbarLayout>
           </ProtectedRoute>
         ),
       },
@@ -351,9 +324,6 @@ export const routeList = [
             <NoticeListPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/board/exam-review/search',
@@ -362,11 +332,12 @@ export const routeList = [
             roles={[ROLE.user, ROLE.admin]}
             message={'시험후기 접근 권한이 없어요'}
           >
-            <ExamReviewListPage />
+            <NavbarLayout>
+              <ExamReviewListPage />
+            </NavbarLayout>
           </ProtectedRoute>
         ),
       },
-
       {
         path: '/board/exam-review/post/:postId',
         element: (
@@ -377,9 +348,6 @@ export const routeList = [
             <ExamReviewPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/board/exam-review-notice/post/:postId',
@@ -391,9 +359,6 @@ export const routeList = [
             <PostPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/board/exam-review-notice/post/:postId/edit',
@@ -405,9 +370,6 @@ export const routeList = [
             <EditPostPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/board/exam-review/:postId/edit',
@@ -419,9 +381,6 @@ export const routeList = [
             <EditExamReviewPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/board/exam-review-write',
@@ -435,15 +394,14 @@ export const routeList = [
             </ProtectedRoute>
           </CheckExamPeriodRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/alert',
         element: (
           <ProtectedRoute>
-            <AlertPage />
+            <NavbarLayout>
+              <AlertPage />
+            </NavbarLayout>
           </ProtectedRoute>
         ),
       },
@@ -458,23 +416,19 @@ export const routeList = [
       {
         path: '/terms/marketing',
         element: <MarketingTermsPage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/attendance',
         element: <AttendancePage />,
         loader: attendanceLoader,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/my-page',
         element: (
           <ProtectedRoute>
-            <MyPage />
+            <NavbarLayout>
+              <MyPage />
+            </NavbarLayout>
           </ProtectedRoute>
         ),
       },
@@ -485,9 +439,6 @@ export const routeList = [
             <ChangePwPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/my-page/edit-info',
@@ -496,9 +447,6 @@ export const routeList = [
             <EditProfilePage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/my-page/view-point-list',
@@ -507,9 +455,6 @@ export const routeList = [
             <PointLogListPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/my-page/delete-account',
@@ -518,30 +463,18 @@ export const routeList = [
             <DeleteAccountPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/my-page/faq',
         element: <FAQPage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/my-page/privacy-policy',
         element: <PrivacyPolicyPage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/my-page/service-policy',
         element: <ServicePolicyPage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/my-page/my-post',
@@ -550,9 +483,6 @@ export const routeList = [
             <ActivityPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/my-page/comment',
@@ -561,9 +491,6 @@ export const routeList = [
             <ActivityPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/my-page/download-exam-review',
@@ -572,9 +499,6 @@ export const routeList = [
             <ActivityPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/my-page/scrap',
@@ -583,9 +507,6 @@ export const routeList = [
             <ActivityPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/my-page/scrap-exam-review',
@@ -594,16 +515,10 @@ export const routeList = [
             <ActivityPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/about',
         element: <AboutPage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/verify',
@@ -615,93 +530,54 @@ export const routeList = [
             <SnoroseVerifyPage />
           </ProtectedRoute>
         ),
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/login',
         element: <LoginPage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/find-id',
         element: <FindIdPage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/find-pw',
         element: <FindPwPage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/found-id',
         element: <FoundIdPage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/found-pw',
         element: <FoundPwPage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/not-found-id',
         element: <NotFoundIdPage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/not-found-pw',
         element: <NotFoundPwPage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/signup',
         element: <SignUpPage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/signup/success',
         element: <SignUpSuccessPage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/signup/failure',
         element: <SignUpFailurePage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '/maintenance',
         element: <MaintenancePage />,
-        meta: {
-          hideNav: true,
-        },
       },
       {
         path: '*',
         element: <NotFoundPage />,
-        meta: {
-          hideNav: true,
-        },
       },
     ],
   },
