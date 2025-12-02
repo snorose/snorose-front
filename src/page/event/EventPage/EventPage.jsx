@@ -13,7 +13,7 @@ import {
   PrimaryButton,
 } from '@/shared/component';
 import { LIKE_TYPE, QUERY_KEY, ROLE, TOAST } from '@/shared/constant';
-import { convertHyperlink, fullDateTimeFormat, getBoard } from '@/shared/lib';
+import { convertHyperlink, DateTime, getBoard } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useModalReset } from '@/shared/hook/useBlocker';
 import { useAuth, useToast } from '@/shared/hook';
@@ -195,8 +195,9 @@ export default function EventPage() {
             />
             <p>응모 날짜</p>
             <p className={styles.data}>
-              시작일 : {fullDateTimeFormat(data.startAt)} <br />
-              종료일 : {fullDateTimeFormat(data.endAt)}
+              시작일 : {DateTime.format(data.startAt, 'YMD_HM')}
+              <br />
+              종료일 : {DateTime.format(data.endAt, 'YMD_HM')}
             </p>
           </div>
 
@@ -209,7 +210,9 @@ export default function EventPage() {
               stroke='#484848'
             />
             <p>당첨자 발표일</p>
-            <p className={styles.data}>{fullDateTimeFormat(data.announceAt)}</p>
+            <p className={styles.data}>
+              {DateTime.format(data.announceAt, 'YMD_HM')}
+            </p>
           </div>
           <p
             className={styles.contentText}
@@ -322,8 +325,7 @@ function MetaContainer({
         )}
         <p className={styles.dot}>·</p>
         <p>
-          {fullDateTimeFormat(createdAt)}
-          {isEdited && ' (수정됨)'}
+          {DateTime.format(createdAt, 'YMD_HM')} {isEdited && '(수정됨)'}
         </p>
       </div>
 

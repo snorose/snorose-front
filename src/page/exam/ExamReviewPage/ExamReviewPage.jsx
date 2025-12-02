@@ -10,7 +10,7 @@ import {
   FetchLoadingOverlay,
   Icon,
 } from '@/shared/component';
-import { dateFormat } from '@/shared/lib';
+import { DateTime } from '@/shared/lib';
 import { QUERY_KEY } from '@/shared/constant';
 
 import { NotFoundPage } from '@/page/etc';
@@ -124,7 +124,7 @@ export default function ExamReviewPage() {
             <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
             <span>{userDisplay}</span>
             <span className={styles.dot}></span>
-            <span>{dateFormat(createdAt)}</span>
+            <span>{DateTime.format(createdAt, 'YMD')}</span>
             {isEdited && <span>&nbsp;(수정됨)</span>}
             {isConfirmed && <Icon id='check-circle' width={15} height={15} />}
           </div>

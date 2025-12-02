@@ -1,6 +1,6 @@
 import { Badge, Icon } from '@/shared/component';
 import { ROLE } from '@/shared/constant';
-import { postBarDateFormat } from '@/shared/lib';
+import { DateTime } from '@/shared/lib';
 import { Chip } from '@/feature/board/component';
 import altImage from '@/assets/images/altImage.png';
 import cloudLogo from '@/assets/images/cloudLogo.svg';
@@ -29,7 +29,7 @@ export default function PostBar({ data, hasComment = true, hasLike = true }) {
               <Badge userRoleId={data.userRoleId} className={styles.badge} />
             )}
             <p className={styles.dot}>·</p>
-            <p>{postBarDateFormat(data.createdAt)}</p>
+            <p>{DateTime.formatAdaptive(data.createdAt)}</p>
             {data.isEdited && <p className={styles.edited}>&nbsp;(수정됨)</p>}
             {data.isConfirmed && (
               <Icon

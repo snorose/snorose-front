@@ -1,5 +1,5 @@
 import { authAxios } from '@/axios';
-import { kstISO } from '@/shared/lib';
+import { DateTime } from '@/shared/lib';
 
 // 이벤트 게시글 목록 조회
 export const getEventPosts = async ({ page, progressType }) => {
@@ -40,9 +40,9 @@ export const postEvent = async ({
     content: content,
     host: host,
     place: place,
-    startAt: kstISO(startAt),
-    endAt: kstISO(endAt),
-    announceAt: kstISO(announceAt),
+    startAt: DateTime.format(startAt, 'ISO'),
+    endAt: DateTime.format(endAt, 'ISO'),
+    announceAt: DateTime.format(announceAt, 'ISO'),
     drawCount: drawCount,
     link: link,
   };
@@ -76,9 +76,9 @@ export const patchEvent = async ({
     content: content,
     host: host,
     place: place,
-    startAt: kstISO(startAt),
-    endAt: kstISO(endAt),
-    announceAt: kstISO(announceAt),
+    startAt: DateTime.format(startAt, 'ISO'),
+    endAt: DateTime.format(endAt, 'ISO'),
+    announceAt: DateTime.format(announceAt, 'ISO'),
     drawCount: drawCount,
     link: link,
   };
