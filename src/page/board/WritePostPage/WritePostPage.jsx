@@ -22,7 +22,7 @@ import {
   ATTACHMENT_MODAL_TEXT,
 } from '@/shared/constant';
 import { useAuth, useBlocker, useToast, useModal } from '@/shared/hook';
-import { formattedNowTime, getBoard } from '@/shared/lib';
+import { DateTime, getBoard } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
 
 import { createThumbnail, postPost } from '@/apis';
@@ -272,7 +272,7 @@ export default function WritePostPage() {
                 )}
                 <p>{userInfo?.nickname}</p>
                 <p className={styles.dot}></p>
-                <p>{formattedNowTime()}</p>
+                <p>{DateTime.format(new Date(), 'MD_HM')}</p>
               </div>
               {textId !== 'notice' && (
                 <div

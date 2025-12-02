@@ -1,10 +1,10 @@
 import { Icon } from '@/shared/component';
-import { dateFormat } from '@/shared/lib';
+import { DateTime } from '@/shared/lib';
 
 import styles from './NoticeBar.module.css';
 
 export default function NoticeBar({ data, onClick }) {
-  const formattedDate = dateFormat(data.createdAt);
+  const formattedDate = DateTime.format(data.createdAt, 'YMD');
 
   return (
     <div className={styles.post} onClick={onClick}>

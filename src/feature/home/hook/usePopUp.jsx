@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { addDays } from 'date-fns';
 
-import { isDayOver } from '@/shared/lib';
+import { DateTime } from '@/shared/lib';
 
 const POP_UP_STATE_LOCAL_STORAGE_KEY = 'popUpState';
 const POP_UP_DATE_LOCAL_STORAGE_KEY = 'popUpDate';
@@ -23,7 +23,7 @@ export default function usePopUp() {
 
     const initialStatus = popUpState === null || popUpDate === null;
 
-    if (initialStatus || isDayOver(popUpDate)) {
+    if (initialStatus || DateTime.isDayOver(popUpDate)) {
       initializePopupStorage();
       setIsPopUpOpened(true);
       return;
