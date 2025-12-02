@@ -8,7 +8,7 @@ import {
   SHOW_BADGE_PATH,
   MORE_OPTION_MODAL_TEXT,
 } from '@/shared/constant';
-import { convertHyperlink, timeAgo } from '@/shared/lib';
+import { convertHyperlink, DateTime } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
 
 import {
@@ -133,7 +133,7 @@ const Comment = forwardRef((props, ref) => {
             )}
             <p className={styles.dot}>·</p>
             <p>
-              {timeAgo(createdAt)} {isUpdated ? ' (수정됨)' : null}
+              {DateTime.timeAgo(createdAt)} {isUpdated ? ' (수정됨)' : null}
             </p>
           </div>
           {!isDeleted && isVisible && blockAdminReport && (
