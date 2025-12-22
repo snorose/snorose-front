@@ -10,6 +10,10 @@
   white-space: pre-line;
 }
 
+.noticeContainer div {
+  padding-top: 1rem;
+}
+
 /* notice */
 .notice {
   margin: 0 var(--default-margin) 5rem;
@@ -30,4 +34,9 @@
 .notice .listStyleNone {
   padding-left: 0;
   list-style: none;
+}
+
+.title {
+  word-break: break-all;
+  white-space: pre-line;
 }
