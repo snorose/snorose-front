@@ -80,9 +80,25 @@ export const SIDEBAR_MENUS = Object.freeze([
     to: '/board/exam-review',
     title: '시험후기',
   },
+  // 추후 "문의" 게시판 완성 전 ver
+  {
+    to: '/support/faq',
+    title: '자주 묻는 질문',
+  },
+  // 추후 "문의" 게시판 완성 후 ver
   // {
-  //   to: '/help',
-  //   title: '문의/신고',
+  //   to: '/support',
+  //   title: '문의',
+  //   items: [
+  //     {
+  //       to: '/support/inquiry',
+  //       name: '문의하기',
+  //     },
+  //     {
+  //       to: '/support/faq',
+  //       name: '자주 묻는 질문',
+  //     },
+  //   ],
   // },
   {
     to: '/',

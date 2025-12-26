@@ -12,7 +12,7 @@ const PolicyTab = () => {
     <>
       <div className={styles.infoWrapper}>
         {[
-          { label: '자주 묻는 질문 (FAQ)', link: 'faq' },
+          { label: '자주 묻는 질문 (FAQ)', link: '/support/faq' },
           { label: '개인정보 처리방침', link: 'privacy-policy' },
           { label: '서비스 이용 약관', link: 'service-policy' },
         ].map((item, index) => (
