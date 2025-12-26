@@ -26,16 +26,29 @@ export const downloadFromS3 = async (s3Url) =>
     },
   });
 
+//백엔드에서 보내는 createdAt의 시간 정보 꺼내기
+const getDate = (createdAt) => {
+  const [datePart, timePart] = createdAt.split('T');
+  const [year, month, day] = datePart.split('-');
+  const [hour, minute, second] = timePart.split('.')[0].split(':');
+  return [year, month, day, hour, minute, second];
+};
+
 //첨부파일이 한개일 시 사용하는 함수
-export const handleDownload = async (s3Url) => {
+export const handleDownload = async (att, createdAt) => {
+  const s3Url = att.url;
   const response = await downloadFromS3(s3Url);
+
+  const [year, month, day, hour, minute, second] = getDate(createdAt);
 
   if (response.ok) {
     const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = isExtImg(s3Url) ? '첨부파일.webp' : '첨부파일.mp4';
+    link.download = isExtImg(s3Url)
+      ? `snorose-${year}-${month}-${day}-${hour}_${minute}_${second}.webp`
+      : `snorose-${year}-${month}-${day}-${hour}_${minute}_${second}.mp4`;
 
     // 자동 다운로드 트리거
     document.body.appendChild(link);
@@ -48,11 +61,15 @@ export const handleDownload = async (s3Url) => {
 };
 
 //다수의 첨부파일을 다운받을때 -> zip으로 묶고 다운받는 함수
-export const handleZipDownload = async (urls) => {
+export const handleZipDownload = async (urls, createdAt) => {
   const zip = new JSZip();
+  const [year, month, day, hour, minute, second] = getDate(createdAt);
+
   for (let i = 0; i < urls.length; i++) {
     const url = urls[i];
-    const filename = isExtImg(url) ? `첨부파일${i}.webp` : `첨부파일${i}.mp4`;
+    const filename = isExtImg(url)
+      ? `snorose-${year}-${month}-${day}-${hour}_${minute}_${second}(${i}).webp`
+      : `snorose-${year}-${month}-${day}-${hour}_${minute}_${second}(${i}).mp4`;
     const response = await downloadFromS3(url);
     const blob = await response.blob();
     zip.file(filename, blob);
