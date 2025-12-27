@@ -58,6 +58,8 @@ export const handleDownload = async (att, createdAt) => {
     // URL 정리
     window.URL.revokeObjectURL(url);
   }
+
+  return true;
 };
 
 //다수의 첨부파일을 다운받을때 -> zip으로 묶고 다운받는 함수
@@ -76,6 +78,8 @@ export const handleZipDownload = async (urls, createdAt) => {
   }
   const zipContent = await zip.generateAsync({ type: 'blob' });
   saveAs(zipContent, 'attachments.zip');
+
+  return true;
 };
 
 //첨부파일 정책에 맞는지 확인하는 함수들

@@ -116,33 +116,46 @@ export default function FullScreenAttachment({
         isOpen={isChoiceModalOpen}
         closeFn={() => setIsChoiceModalOpen(false)}
         optionFns={[
-          () => {
+          async () => {
             //게시글 사진 전체 저장 - 전체 파일들을 zip 해서 리턴하기
             //attachmentUrls안에 있는 모든 url을 zip 해서 한 파일로 만들고, 그걸 다운로드 받게 하기
             try {
-              handleZipDownload(urls, data.createdAt);
+              setIsChoiceModalOpen(false);
+
+              await handleZipDownload(urls, data.createdAt);
+              toast({
+                message: '첨부파일 저장이 완료되었어요.',
+                variant: 'success',
+              });
             } catch (e) {
               toast({
                 message: '다운로드에 문제가 발생했습니다. 다시 시도해주세요.',
                 variant: 'error',
               });
             }
-            setIsChoiceModalOpen(false);
           },
-          () => {
+          async () => {
             //이 사진만 저장
             //attachmentUrls[currentIndex]
             try {
+              setIsChoiceModalOpen(false);
+
               const currentIndex =
                 paginationRef.current?.textContent.split('/')[0] - 1;
-              handleDownload(attachmentUrls[currentIndex], data.createdAt);
+              await handleDownload(
+                attachmentUrls[currentIndex],
+                data.createdAt
+              );
+              toast({
+                message: '첨부파일 저장이 완료되었어요.',
+                variant: 'success',
+              });
             } catch (e) {
               toast({
                 message: '다운로드에 문제가 발생했습니다. 다시 시도해주세요.',
                 variant: 'error',
               });
             }
-            setIsChoiceModalOpen(false);
           },
         ]}
       />
