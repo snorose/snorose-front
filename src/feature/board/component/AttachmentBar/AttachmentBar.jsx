@@ -4,13 +4,15 @@ import { Icon } from '@/shared/component';
 import { useToast } from '@/shared/hook';
 import {
   ATTACHMENT_SIZE_LIMIT,
-  ATTACHMENT_EXTENTION_LIMIT,
+  ATTACHMENT_EXTENSION_LIMIT,
 } from '@/shared/constant';
 import {
   checkImageQuantity,
   checkImageSize,
+  checkIfImage,
   checkVideoQuantity,
   checkVideoSize,
+  checkIfVideo,
 } from '@/shared/lib';
 
 import styles from './AttachmentBar.module.css';
@@ -31,6 +33,8 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
     );
 
     try {
+      //이미지 확장자 확인
+      checkIfImage(newFiles, toast);
       //이미지 첨부 개수 제한
       checkImageQuantity(attachmentsInfo, newFiles, toast);
       //이미지 용량 제한
@@ -61,6 +65,8 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
     );
 
     try {
+      //영상 확장자 확인
+      checkIfVideo(newFiles, toast);
       //영상 첨부 개수 제한
       checkVideoQuantity(attachmentsInfo, newFiles, toast);
       //영상 용량 제한
@@ -100,7 +106,7 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
         />
         <input
           type='file'
-          accept={ATTACHMENT_EXTENTION_LIMIT.imageExtentions.join(', ')}
+          accept={ATTACHMENT_EXTENSION_LIMIT.imageExtensions.join(', ')}
           className={styles.imageInput}
           ref={img}
           onChange={changeImageUpload}
@@ -119,7 +125,7 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
         />
         <input
           type='file'
-          accept={ATTACHMENT_EXTENTION_LIMIT.videoExtentions.join(', ')}
+          accept={ATTACHMENT_EXTENSION_LIMIT.videoExtensions.join(', ')}
           className={styles.videoInput}
           ref={vid}
           onChange={changeVideoUpload}

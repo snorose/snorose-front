@@ -4,14 +4,14 @@ import { saveAs } from 'file-saver';
 import {
   TOAST,
   ATTACHMENT_SIZE_LIMIT,
-  ATTACHMENT_EXTENTION_LIMIT,
+  ATTACHMENT_EXTENSION_LIMIT,
 } from '@/shared/constant';
 
 //첨부파일 확장자가 이미지인지 확인하는 함수
 export const isExtImg = (url) => {
   const cleanUrl = url.split('?')[0].toLowerCase();
 
-  return ATTACHMENT_EXTENTION_LIMIT.imageExtentions.some((ext) =>
+  return ATTACHMENT_EXTENSION_LIMIT.imageExtensions.some((ext) =>
     cleanUrl.endsWith(ext.toLowerCase())
   );
 };
@@ -92,6 +92,12 @@ export const checkImageQuantity = (orgAtts, newAtts, toast) => {
     throw new Error('이미지 개수 초과');
   }
 };
+export const checkIfImage = (newAtts, toast) => {
+  if ([...newAtts].some((a) => a.type && !a.type.startsWith('image/'))) {
+    toast({ message: TOAST.ATTACHMENT.notImageError, variant: 'info' });
+    throw new Error('이미지가 아님');
+  }
+};
 export const checkImageSize = (entireAtts, filteredAtts, toast) => {
   if (entireAtts.length !== filteredAtts.length) {
     toast({ message: TOAST.ATTACHMENT.imageFileSizeError, variant: 'info' });
@@ -110,6 +116,12 @@ export const checkVideoSize = (entireAtts, filteredAtts, toast) => {
   if (entireAtts.length !== filteredAtts.length) {
     toast({ message: TOAST.ATTACHMENT.videoFileSizeError, variant: 'info' });
     throw new Error('비디오 용량 초과');
+  }
+};
+export const checkIfVideo = (newAtts, toast) => {
+  if ([...newAtts].some((a) => a.type && !a.type.startsWith('video/'))) {
+    toast({ message: TOAST.ATTACHMENT.notVideoError, variant: 'info' });
+    throw new Error('비디오가 아님');
   }
 };
 
