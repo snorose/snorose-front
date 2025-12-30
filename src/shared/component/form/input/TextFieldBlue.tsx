@@ -2,16 +2,14 @@ import { createContext, useContext, useId } from 'react';
 
 import styles from './TextFieldBlue.module.css';
 
-interface TextInputBlueContextType {
+interface FieldContextType {
   id: string;
 }
 
-const TextFieldBlueContext = createContext<
-  TextInputBlueContextType | undefined
->(undefined);
+const FieldContext = createContext<FieldContextType | undefined>(undefined);
 
-const useTextFieldBlueContext = () => {
-  const context = useContext(TextFieldBlueContext);
+const useFieldContext = () => {
+  const context = useContext(FieldContext);
   if (!context) {
     throw new Error(
       'TextFieldBlue sub-components must be used within a TextFieldBlue'
@@ -24,14 +22,14 @@ function TextFieldBlue({ children }: { children: React.ReactNode }) {
   const id = useId();
 
   return (
-    <TextFieldBlueContext.Provider value={{ id }}>
+    <FieldContext.Provider value={{ id }}>
       <div className={styles.field}>{children}</div>
-    </TextFieldBlueContext.Provider>
+    </FieldContext.Provider>
   );
 }
 
 function Label({ children }: { children: React.ReactNode }) {
-  const { id } = useTextFieldBlueContext();
+  const { id } = useFieldContext();
 
   return (
     <label className={styles.label} htmlFor={id}>
@@ -47,9 +45,9 @@ function Input({
 }: {
   placeholder: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (next: string) => void;
 }) {
-  const { id } = useTextFieldBlueContext();
+  const { id } = useFieldContext();
 
   return (
     <input
@@ -58,7 +56,7 @@ function Input({
       type='text'
       placeholder={placeholder}
       value={value}
-      onChange={onChange}
+      onChange={(e) => onChange(e.target.value)}
     />
   );
 }

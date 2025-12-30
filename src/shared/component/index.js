@@ -29,6 +29,8 @@ export { default as PwInput } from './form/input/PwInput';
 
 export { default as Textarea } from './form/Textarea/Textarea';
 
+export { default as TextareaFieldBlue } from './form/Textarea/TextareaFieldBlue';
+
 // layout
 export { default as AppBar } from './layout/AppBar/AppBar';
 export { default as BackAppBar } from './layout/BackAppBar/BackAppBar';
