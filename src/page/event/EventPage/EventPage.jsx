@@ -83,16 +83,25 @@ export default function EventPage() {
     : null;
 
   // 신청 버튼 상태 계산
-  const opened =
-    (!openDraw && !closeDraw && !announceDraw) || // 상시 오픈
-    (openDraw && !closeDraw && now >= openDraw) || // startAt만 있음
-    (!openDraw && closeDraw && now <= closeDraw) || // endAt만 있음
-    (openDraw && closeDraw && now >= openDraw && now <= closeDraw); // 둘 다 있음
+  const effectiveEndAt = closeDraw ?? announceDraw;
 
   const beforeOpen = openDraw && now < openDraw;
-  const closed =
-    (closeDraw && now > closeDraw) ||
-    (!closeDraw && announceDraw && now > announceDraw);
+  const closed = effectiveEndAt && now > effectiveEndAt;
+
+  let opened = false;
+  if (!openDraw && !effectiveEndAt) {
+    // 상시 오픈
+    opened = true;
+  } else if (openDraw && !effectiveEndAt) {
+    // 시작일만 있는 경우
+    opened = now >= openDraw;
+  } else if (!openDraw && effectiveEndAt) {
+    // 종료일만 있는 경우
+    opened = now <= effectiveEndAt;
+  } else if (openDraw && effectiveEndAt) {
+    // 시작일과 종료일이 모두 있는 경우
+    opened = now >= openDraw && now <= effectiveEndAt;
+  }
 
   const [open, setOpen] = useState(false);
 
