@@ -7,6 +7,7 @@ export { default as ResetButton } from './button/ResetButton/ResetButton';
 export { default as WriteButton } from './button/WriteButton/WriteButton';
 
 // dropdown
+export { DropdownBlue } from './dropdown/DropdownBlue/DropdownBlue';
 export { default as Dropdown } from './dropdown/Dropdown/Dropdown';
 export { default as DropdownList } from './dropdown/DropdownList/DropdownList';
 export { default as SelectedItem } from './dropdown/SelectedItem/SelectedItem';
