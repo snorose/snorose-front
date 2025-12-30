@@ -34,7 +34,9 @@ const DropdownBlueContext = createContext<DropdownBlueContextType | undefined>(
 const useDropdownBlueContext = () => {
   const context = useContext(DropdownBlueContext);
   if (!context) {
-    throw new Error('Dropdown sub-components must be used within a Dropdown');
+    throw new Error(
+      'DropdownBlue sub-components must be used within a DropdownBlue'
+    );
   }
   return context;
 };

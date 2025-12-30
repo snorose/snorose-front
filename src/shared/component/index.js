@@ -23,6 +23,8 @@ export { default as NumberInput } from './form/input/NumberInput';
 export { default as PasswordInput } from './form/input/PasswordInput';
 export { default as TextInput } from './form/input/TextInput';
 
+export { default as TextFieldBlue } from './form/input/TextFieldBlue';
+
 export { default as PwInput } from './form/input/PwInput';
 
 export { default as Textarea } from './form/Textarea/Textarea';
