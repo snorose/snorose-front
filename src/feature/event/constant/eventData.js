@@ -8,7 +8,7 @@ export const EVENT_FORM_DATA = (eventType) => ({
   startAt: '',
   endAt: '',
   announceAt: '',
-  drawCount: 1,
+  drawCount: '',
   link: '',
 });
 
