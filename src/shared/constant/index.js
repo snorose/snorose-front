@@ -7,7 +7,7 @@ export * from './menus.js';
 export * from './modalText.js';
 export * from './modalOptions.js';
 export * from './reactQuery.js';
-export * from './role.js';
+export * from './role';
 export * from './route.js';
 export * from './toast.js';
 export * from './type.js';
