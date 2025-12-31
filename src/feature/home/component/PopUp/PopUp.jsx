@@ -1,6 +1,6 @@
 import { usePopUp } from '@/feature/home/hook';
 import styles from './PopUp.module.css';
-import PopUpContents from './PopUpContents';
+import { PopUpContents, hasValidContents } from './PopUpContents';
 
 const POPUP_FOOTER_BUTTONS = [
   { label: '오늘 하루 보지 않기', duration: 0, className: 'hideButton' },
@@ -15,7 +15,7 @@ export default function PopUp() {
     closePopUp({ popupHideDuration });
   };
 
-  if (!isPopUpOpened) {
+  if (!isPopUpOpened || !hasValidContents()) {
     return null;
   }
 

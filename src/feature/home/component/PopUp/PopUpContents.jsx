@@ -6,28 +6,56 @@ const POPUP_CONTENTS = [
     title: '1월 스노로즈 일정',
     content: null,
     image: calendar,
-  },
-  {
-    title: null,
-    content: [
-      '스노로즈 인스타그램(@snorose1906)에서 월별 스노로즈 일정을 쉽게 확인할 수 있습니다.',
-      '공식 문의 창구 [이메일(snorose1906@gmail.com), 카카오톡 1:1 문의] 이외의 문의는 받고 있지 않습니다. 공식 문의 창구 이외의 문의 글은 답변 없이 삭제될 수 있음을 알려드립니다.',
-    ],
-    image: null,
+    startDate: '2025-12-31',
+    endDate: '2026-01-07',
   },
 ];
 
-export default function PopUpContents() {
+const POPUP_INFO_CONTENTS = [
+  '스노로즈 인스타그램(@snorose1906)에서 월별 스노로즈 일정을 쉽게 확인할 수 있습니다.',
+  '공식 문의 창구 [이메일(snorose1906@gmail.com), 카카오톡 1:1 문의] 이외의 문의는 받고 있지 않습니다. 공식 문의 창구 이외의 문의 글은 답변 없이 삭제될 수 있음을 알려드립니다.',
+];
+
+// 날짜 범위 내에 오늘이 있는지 확인
+const isDateInRange = (startDate, endDate) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const start = new Date(startDate);
+  start.setHours(0, 0, 0, 0);
+  const end = new Date(endDate);
+  end.setHours(23, 59, 59, 999);
+
+  return start <= today && today <= end;
+};
+
+// 유효한 컨텐츠 필터링 (날짜 기반)
+export const getFilteredContents = () => {
+  return POPUP_CONTENTS.filter((section) =>
+    isDateInRange(section.startDate, section.endDate)
+  );
+};
+
+export const hasValidContents = () => {
+  return getFilteredContents().length > 0;
+};
+
+export const PopUpContents = () => {
+  const filteredContents = getFilteredContents();
+
+  if (!filteredContents.length) {
+    return null;
+  }
+
   return (
     <div className={styles.popupSectionContainer}>
-      {POPUP_CONTENTS.map((section) => (
+      {filteredContents.map((section) => (
         <div key={section.title} className={styles.popupSection}>
           {section.title && (
             <h3 className={styles.popupSectionTitle}>{section.title}</h3>
           )}
 
           {section.content && (
-            <ul>
+            <ul className={styles.popupSectionContentList}>
               {section.content.map((content) => (
                 <li key={content} className={styles.popupSectionContent}>
                   {content}
@@ -45,6 +73,18 @@ export default function PopUpContents() {
           )}
         </div>
       ))}
+
+      {/* 유효한 컨텐츠가 있을 때만 표시 */}
+      <div className={styles.popupSection}>
+        {hasValidContents() &&
+          POPUP_INFO_CONTENTS.map((content) => (
+            <ul className={styles.popupSectionContentList}>
+              <li key={content} className={styles.popupSectionContent}>
+                {content}
+              </li>
+            </ul>
+          ))}
+      </div>
     </div>
   );
-}
+};
