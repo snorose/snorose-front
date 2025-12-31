@@ -81,31 +81,25 @@ export default function PopUp() {
           <pre>{content}</pre>
         </div>
         <div className={styles.bottom}>
-          <div className={styles.radios} onChange={updatePopupHideDuration}>
-            <label className={styles.radio}>
-              <input type='radio' value={0} name='hideDuration' />
-              <span>오늘 하루 보지 않기</span>
-            </label>
-            <label className={styles.radio}>
-              <input type='radio' value={2} name='hideDuration' />
-              <span>3일간 보지 않기</span>
-            </label>
-          </div>
-          <button onClick={close}>닫기</button>
+          <button
+            value={0}
+            onClick={updatePopupHideDuration}
+            className={styles.hideButton}
+          >
+            오늘 하루 보지 않기
+          </button>
+          <button
+            value={2}
+            onClick={updatePopupHideDuration}
+            className={styles.hideButton}
+          >
+            3일간 보지 않기
+          </button>
+          <button onClick={close} className={styles.closeButton}>
+            닫기
+          </button>
         </div>
       </div>
     </section>
   );
-}
-
-export function Heading({ children }) {
-  return <h2 className={styles.title}>{children}</h2>;
-}
-
-export function SubHeading({ children }) {
-  return <h3 className={styles.subTitle}>{children}</h3>;
-}
-
-export function Content({ children }) {
-  return <p className={styles.content}>{children}</p>;
 }
