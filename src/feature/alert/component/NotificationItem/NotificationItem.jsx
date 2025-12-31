@@ -9,7 +9,7 @@ export default function NotificationItem({
   url,
   onClick,
 }) {
-  const isRootUrl = url === '/';
+  const isRootUrl = typeof url === 'string' && url.trim() === '/';
 
   return (
     <div
