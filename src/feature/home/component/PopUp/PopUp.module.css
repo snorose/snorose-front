@@ -78,7 +78,7 @@
   font: var(--text-headline-2-med);
 }
 
-.bottom {
+.buttonContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -88,27 +88,24 @@
   padding-top: 1.2rem;
 }
 
-.hideButton {
+.button {
   width: 100%;
   height: 4.8rem;
   border-top: 1px solid var(--blue-2);
-  color: var(--blue-3);
   font: var(--text-headline-2-reg);
+}
+.button:hover {
+  background: var(--blue-0);
+}
+
+.hideButton {
+  color: var(--blue-3);
 }
 
 .closeButton {
-  width: 100%;
-  height: 4.8rem;
-  border-top: 1px solid var(--blue-2);
   color: var(--blue-4);
-  font: var(--text-headline-2-med);
 }
-
-.bottom button:hover {
-  background: var(--blue-0);
-  overflow: hidden;
-}
-
 .closeButton:hover {
+  background: var(--blue-0);
   border-radius: 0 0 0.5rem 0.5rem;
 }

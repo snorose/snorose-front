@@ -34,12 +34,12 @@ export default function PopUp() {
           </div>
         </div>
 
-        <div className={styles.bottom}>
+        <div className={styles.buttonContainer}>
           {POPUP_FOOTER_BUTTONS.map((button) => (
             <button
               key={button.label}
               onClick={() => handleCloseButtonClick(button.duration)}
-              className={styles[button.className]}
+              className={`${styles.button} ${styles[button.className]}`}
             >
               {button.label}
             </button>
