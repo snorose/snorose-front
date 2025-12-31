@@ -75,16 +75,17 @@ export const PopUpContents = () => {
       ))}
 
       {/* 유효한 컨텐츠가 있을 때만 표시 */}
-      <div className={styles.popupSection}>
-        {hasValidContents() &&
-          POPUP_INFO_CONTENTS.map((content) => (
-            <ul className={styles.popupSectionContentList}>
+      {hasValidContents() && (
+        <div className={styles.popupSection}>
+          <ul className={styles.popupSectionContentList}>
+            {POPUP_INFO_CONTENTS.map((content) => (
               <li key={content} className={styles.popupInfoSectionContent}>
                 {content}
               </li>
-            </ul>
-          ))}
-      </div>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
