@@ -77,6 +77,8 @@
   display: flex;
   padding: 1.5rem;
   justify-content: space-between;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .goNotice {
