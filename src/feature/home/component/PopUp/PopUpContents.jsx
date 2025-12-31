@@ -17,9 +17,7 @@ const POPUP_INFO_CONTENTS = [
 ];
 
 // 날짜 범위 내에 오늘이 있는지 확인
-const isDateInRange = (startDate, endDate) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+const isDateInRange = (today, startDate, endDate) => {
   const start = new Date(startDate);
   start.setHours(0, 0, 0, 0);
   const end = new Date(endDate);
@@ -30,8 +28,11 @@ const isDateInRange = (startDate, endDate) => {
 
 // 유효한 컨텐츠 필터링 (날짜 기반)
 export const getFilteredContents = () => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   return POPUP_CONTENTS.filter((section) =>
-    isDateInRange(section.startDate, section.endDate)
+    isDateInRange(today, section.startDate, section.endDate)
   );
 };
 
