@@ -110,10 +110,22 @@
   font-weight: 500;
 }
 
+.popupSection ul {
+  margin: 0;
+  padding-left: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  list-style-type: disc;
+}
+
 .popupSectionContent {
   color: var(--grey-4);
   font-size: 1.3rem;
   font-weight: 400;
+  line-height: 1.6;
+  word-break: keep-all;
+  display: list-item;
 }
 
 .popupSectionImage {
