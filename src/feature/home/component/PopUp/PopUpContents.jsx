@@ -79,7 +79,7 @@ export const PopUpContents = () => {
         {hasValidContents() &&
           POPUP_INFO_CONTENTS.map((content) => (
             <ul className={styles.popupSectionContentList}>
-              <li key={content} className={styles.popupSectionContent}>
+              <li key={content} className={styles.popupInfoSectionContent}>
                 {content}
               </li>
             </ul>
