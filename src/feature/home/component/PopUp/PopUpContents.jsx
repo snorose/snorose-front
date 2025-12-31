@@ -35,13 +35,7 @@ export const getFilteredContents = () => {
   );
 };
 
-export const hasValidContents = () => {
-  return getFilteredContents().length > 0;
-};
-
-export const PopUpContents = () => {
-  const filteredContents = getFilteredContents();
-
+export const PopUpContents = ({ filteredContents }) => {
   if (!filteredContents.length) {
     return null;
   }
@@ -75,17 +69,15 @@ export const PopUpContents = () => {
       ))}
 
       {/* 유효한 컨텐츠가 있을 때만 표시 */}
-      {hasValidContents() && (
-        <div className={styles.popupSection}>
-          <ul className={styles.popupSectionContentList}>
-            {POPUP_INFO_CONTENTS.map((content) => (
-              <li key={content} className={styles.popupInfoSectionContent}>
-                {content}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <div className={styles.popupSection}>
+        <ul className={styles.popupSectionContentList}>
+          {POPUP_INFO_CONTENTS.map((content) => (
+            <li key={content} className={styles.popupInfoSectionContent}>
+              {content}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

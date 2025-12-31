@@ -1,6 +1,6 @@
 import { usePopUp } from '@/feature/home/hook';
 import styles from './PopUp.module.css';
-import { PopUpContents, hasValidContents } from './PopUpContents';
+import { PopUpContents, getFilteredContents } from './PopUpContents';
 
 const POPUP_FOOTER_BUTTONS = [
   { label: '오늘 하루 보지 않기', duration: 0, className: 'hideButton' },
@@ -10,12 +10,13 @@ const POPUP_FOOTER_BUTTONS = [
 
 export default function PopUp() {
   const { isPopUpOpened, closePopUp } = usePopUp();
+  const filteredContents = getFilteredContents();
 
   const handleCloseButtonClick = (popupHideDuration) => {
     closePopUp({ popupHideDuration });
   };
 
-  if (!isPopUpOpened || !hasValidContents()) {
+  if (!isPopUpOpened || filteredContents.length === 0) {
     return null;
   }
 
@@ -30,7 +31,7 @@ export default function PopUp() {
               <br />
               숙명인을 위한 커뮤니티, 스노로즈입니다.
             </p>
-            <PopUpContents />
+            <PopUpContents filteredContents={filteredContents} />
           </div>
         </div>
 
