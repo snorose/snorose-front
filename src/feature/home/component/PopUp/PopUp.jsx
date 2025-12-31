@@ -18,46 +18,6 @@ const POPUP_CONTENTS = [
   },
 ];
 
-const content = (
-  <div className={styles.notice}>
-    <div>
-      <span className={styles.popupTitle}>스노로즈 공지</span>
-    </div>
-    <div>
-      <p className={styles.popupContent}>
-        안녕하세요!
-        <br />
-        숙명인을 위한 커뮤니티, 스노로즈입니다.
-      </p>
-    </div>
-    <div className={styles.popupSectionContainer}>
-      {POPUP_CONTENTS.map((section) => (
-        <div key={section.title} className={styles.popupSection}>
-          {section.title && (
-            <span className={styles.popupSectionTitle}>{section.title}</span>
-          )}
-          {section.content && (
-            <ul>
-              {section.content.map((content) => (
-                <li key={content} className={styles.popupSectionContent}>
-                  {content}
-                </li>
-              ))}
-            </ul>
-          )}
-          {section.image && (
-            <img
-              src={section.image}
-              alt={section.title}
-              className={styles.popupSectionImage}
-            />
-          )}
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
 export default function PopUp() {
   const { isPopUpOpened, closePopUp } = usePopUp();
 
@@ -73,8 +33,49 @@ export default function PopUp() {
     <section className={styles.container}>
       <div className={styles.popUp}>
         <div className={styles.top}>
-          <pre>{content}</pre>
+          <div className={styles.notice}>
+            <span className={styles.popupTitle}>스노로즈 공지</span>
+            <p className={styles.popupContent}>
+              안녕하세요!
+              <br />
+              숙명인을 위한 커뮤니티, 스노로즈입니다.
+            </p>
+
+            <div className={styles.popupSectionContainer}>
+              {POPUP_CONTENTS.map((section) => (
+                <div key={section.title} className={styles.popupSection}>
+                  {section.title && (
+                    <h3 className={styles.popupSectionTitle}>
+                      {section.title}
+                    </h3>
+                  )}
+
+                  {section.content && (
+                    <ul>
+                      {section.content.map((content) => (
+                        <li
+                          key={content}
+                          className={styles.popupSectionContent}
+                        >
+                          {content}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {section.image && (
+                    <img
+                      src={section.image}
+                      alt={section.title}
+                      className={styles.popupSectionImage}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
+
         <div className={styles.bottom}>
           <button
             onClick={() => handleCloseButtonClick(0)}
