@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { usePopUp } from '@/feature/home/hook';
 import styles from './PopUp.module.css';
 import calendar from './calendar.png';
@@ -61,14 +59,11 @@ const content = (
 );
 
 export default function PopUp() {
-  const [popupHideDuration, setPopupHideDuration] = useState();
-  const updatePopupHideDuration = (event) => {
-    const { value } = event.target;
-    setPopupHideDuration(Number(value));
-  };
-
   const { isPopUpOpened, closePopUp } = usePopUp();
-  const close = () => closePopUp({ popupHideDuration });
+
+  const handleCloseButtonClick = (popupHideDuration) => {
+    closePopUp({ popupHideDuration });
+  };
 
   if (!isPopUpOpened) {
     return null;
@@ -82,20 +77,21 @@ export default function PopUp() {
         </div>
         <div className={styles.bottom}>
           <button
-            value={0}
-            onClick={updatePopupHideDuration}
+            onClick={() => handleCloseButtonClick(0)}
             className={styles.hideButton}
           >
             오늘 하루 보지 않기
           </button>
           <button
-            value={2}
-            onClick={updatePopupHideDuration}
+            onClick={() => handleCloseButtonClick(2)}
             className={styles.hideButton}
           >
             3일간 보지 않기
           </button>
-          <button onClick={close} className={styles.closeButton}>
+          <button
+            onClick={() => handleCloseButtonClick()}
+            className={styles.closeButton}
+          >
             닫기
           </button>
         </div>
