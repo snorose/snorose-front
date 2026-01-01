@@ -3,8 +3,29 @@ import calendar from './calendar.png';
 
 const POPUP_CONTENTS = [
   {
+    title: '스노로즈 신입 리자 추가 모집',
+    content: [
+      '서류 지원 기간: 2025.12.29(월) ~ 01.03 (토) 23:59',
+      '추가 모집 분야: 이벤트기획, 프론트엔드',
+    ],
+    link: [
+      {
+        title: '스노로즈 공지 바로가기',
+        url: 'https://snorose.com/board/notice/post/1868102',
+      },
+      {
+        title: '모집 공고 바로가기',
+        url: 'https://snorose.notion.site/10c7ef0aa3bf8027a04ee35b7c521e12',
+      },
+    ],
+    image: null,
+    startDate: '2025-12-29',
+    endDate: '2026-01-03',
+  },
+  {
     title: '1월 스노로즈 일정',
     content: null,
+    link: null,
     image: calendar,
     startDate: '2025-12-31',
     endDate: '2026-01-07',
@@ -49,13 +70,29 @@ export const PopUpContents = ({ filteredContents }) => {
             <h3 className={styles.popupSectionTitle}>{section.title}</h3>
           )}
 
-          {section.content && (
+          {(section.content || section.link) && (
             <ul className={styles.popupSectionContentList}>
               {section.content.map((content) => (
                 <li key={content} className={styles.popupSectionContent}>
                   {content}
                 </li>
               ))}
+
+              {section.link &&
+                section.link.map((link) => (
+                  <li
+                    key={link.title}
+                    className={`${styles.popupSectionContent} ${styles.popupSectionLink}`}
+                  >
+                    <a
+                      href={link.url}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      {link.title}
+                    </a>
+                  </li>
+                ))}
             </ul>
           )}
 

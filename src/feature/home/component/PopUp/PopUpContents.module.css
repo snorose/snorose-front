@@ -9,7 +9,7 @@
   padding: 1rem;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.8rem;
+  gap: 0.4rem;
   border-radius: 0.5rem;
   background: var(--blue-0);
 }
@@ -22,7 +22,7 @@
 
 .popupSectionContentList {
   margin: 0;
-  padding-left: 2rem;
+  padding-left: 1.6rem;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
@@ -44,8 +44,18 @@
   display: list-item;
 }
 
+.popupSectionLink {
+  color: var(--blue-3);
+  font-weight: 500;
+  cursor: pointer;
+}
+.popupSectionLink:hover {
+  text-decoration: underline;
+}
+
 .popupSectionImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  margin-top: 0.4rem;
 }
