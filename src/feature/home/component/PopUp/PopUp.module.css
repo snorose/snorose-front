@@ -30,12 +30,11 @@
   background-color: white;
   border-radius: 0.5rem 0.5rem 0 0;
   overflow: auto;
-  scrollbar-width: none;
+  scrollbar-width: none; /* Firefox */
 }
 
 .top::-webkit-scrollbar {
-  width: 1rem;
-  display: block;
+  display: none; /* Chrome, Safari, Edge */
 }
 
 .top::-webkit-scrollbar-thumb {
