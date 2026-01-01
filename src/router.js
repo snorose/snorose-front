@@ -78,6 +78,7 @@ const getRolesForReadBoard = (boardPath) => {
         ROLE.admin,
         ROLE.official,
         ROLE.blacklist,
+        ROLE.advertiser,
       ];
     case 'student-council':
       return [ROLE.user, ROLE.admin, ROLE.official];
@@ -236,7 +237,7 @@ export const routeList = [
         path: '/board/event',
         element: (
           <ProtectedRoute
-            roles={[ROLE.user, ROLE.admin]}
+            roles={[ROLE.user, ROLE.admin, ROLE.advertiser]}
             message={'이벤트 게시판 접근 권한이 없어요'}
           >
             <EventListPage />
@@ -250,7 +251,7 @@ export const routeList = [
         path: `/board/event/notice`,
         element: (
           <ProtectedRoute
-            roles={[ROLE.user, ROLE.admin]}
+            roles={[ROLE.user, ROLE.admin, ROLE.advertiser]}
             message={'이벤트 게시판 접근 권한이 없어요'}
           >
             <NoticeListPage />
@@ -264,7 +265,7 @@ export const routeList = [
         path: '/board/event-notice/post/:postId',
         element: (
           <ProtectedRoute
-            roles={[ROLE.user, ROLE.admin]}
+            roles={[ROLE.user, ROLE.admin, ROLE.advertiser]}
             message={'공지글 접근 권한이 없어요'}
           >
             <PostPage />
@@ -320,7 +321,7 @@ export const routeList = [
         path: `/board/event/post/:postId`,
         element: (
           <ProtectedRoute
-            roles={[ROLE.user, ROLE.admin]}
+            roles={[ROLE.user, ROLE.admin, ROLE.advertiser]}
             message={'게시글 접근 권한이 없어요'}
           >
             <EventPage />
