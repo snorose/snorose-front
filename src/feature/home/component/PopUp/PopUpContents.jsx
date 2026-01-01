@@ -1,6 +1,23 @@
 import styles from './PopUpContents.module.css';
 import calendar from './calendar.png';
 
+/**
+ * @typedef {Object} PopupLink
+ * @property {string} title - 링크 텍스트
+ * @property {string} url - 링크 URL
+ */
+
+/**
+ * @typedef {Object} PopupContent
+ * @property {string} title - 팝업 섹션 제목
+ * @property {string[] | null} content - 본문 내용 배열 (리스트 아이템)
+ * @property {PopupLink[] | null} link - 링크 목록
+ * @property {string | null} image - 이미지 경로
+ * @property {string} startDate - 시작 날짜 (YYYY-MM-DD)
+ * @property {string} endDate - 종료 날짜 (YYYY-MM-DD)
+ */
+
+/** @type {PopupContent[]} */
 const POPUP_CONTENTS = [
   {
     title: '스노로즈 신입 리자 추가 모집',
@@ -32,6 +49,7 @@ const POPUP_CONTENTS = [
   },
 ];
 
+/** @type {string[]} */
 const POPUP_INFO_CONTENTS = [
   '스노로즈 인스타그램(@snorose1906)에서 월별 스노로즈 일정을 쉽게 확인할 수 있습니다.',
   '공식 문의 창구 [이메일(snorose1906@gmail.com), 카카오톡 1:1 문의] 이외의 문의는 받고 있지 않습니다. 공식 문의 창구 이외의 문의 글은 답변 없이 삭제될 수 있음을 알려드립니다.',
