@@ -177,7 +177,6 @@ export default function WriteEventPage() {
     request
       .then((response) => {
         if (response.status === 201) {
-          console.log(response);
           const newPostId = response.data.result.postId;
 
           queryClient.removeQueries([QUERY_KEY.post]);
