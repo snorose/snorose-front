@@ -97,27 +97,22 @@ export const PopUpContents = ({ filteredContents }) => {
 
           {(section.content || section.link) && (
             <ul className={styles.popupSectionContentList}>
-              {section.content.map((content) => (
+              {section.content?.map((content) => (
                 <li key={content} className={styles.popupSectionContent}>
                   {content}
                 </li>
               ))}
 
-              {section.link &&
-                section.link.map((link) => (
-                  <li
-                    key={link.title}
-                    className={`${styles.popupSectionContent} ${styles.popupSectionLink}`}
-                  >
-                    <a
-                      href={link.url}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                    >
-                      {link.title}
-                    </a>
-                  </li>
-                ))}
+              {section.link?.map((link) => (
+                <li
+                  key={link.title}
+                  className={`${styles.popupSectionContent} ${styles.popupSectionLink}`}
+                >
+                  <a href={link.url} target='_blank' rel='noopener noreferrer'>
+                    {link.title}
+                  </a>
+                </li>
+              ))}
             </ul>
           )}
 
