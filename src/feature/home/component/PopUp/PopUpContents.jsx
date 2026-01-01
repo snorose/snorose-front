@@ -55,23 +55,30 @@ const POPUP_INFO_CONTENTS = [
   '공식 문의 창구 [이메일(snorose1906@gmail.com), 카카오톡 1:1 문의] 이외의 문의는 받고 있지 않습니다. 공식 문의 창구 이외의 문의 글은 답변 없이 삭제될 수 있음을 알려드립니다.',
 ];
 
+// 한국 시간대 기준 오늘 날짜 객체 생성
+const getTodayInKorea = () => {
+  const now = new Date();
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  const koreaTime = new Date(utc + 9 * 3600000); // UTC+9
+  koreaTime.setHours(0, 0, 0, 0);
+
+  return koreaTime;
+};
+
 // 날짜 범위 내에 오늘이 있는지 확인
 const isDateInRange = (today, startDate, endDate) => {
-  const start = new Date(startDate);
-  start.setHours(0, 0, 0, 0);
-  const end = new Date(endDate);
-  end.setHours(23, 59, 59, 999);
+  const start = new Date(`${startDate}T00:00:00`);
+  const end = new Date(`${endDate}T23:59:59`);
 
   return start <= today && today <= end;
 };
 
 // 유효한 컨텐츠 필터링 (날짜 기반)
 export const getFilteredContents = () => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const todayInKorea = getTodayInKorea();
 
   return POPUP_CONTENTS.filter((section) =>
-    isDateInRange(today, section.startDate, section.endDate)
+    isDateInRange(todayInKorea, section.startDate, section.endDate)
   );
 };
 
