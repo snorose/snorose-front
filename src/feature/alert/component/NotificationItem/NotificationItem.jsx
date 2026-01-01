@@ -9,6 +9,8 @@ export default function NotificationItem({
   url,
   onClick,
 }) {
+  const isRootUrl = typeof url === 'string' && url.trim() === '/';
+
   return (
     <div
       className={`${style.container} ${isRead ? style.read : style.unread}`}
@@ -23,7 +25,9 @@ export default function NotificationItem({
       </div>
 
       <div className={style.bottom}>
-        <div className={style.content}>{content}</div>
+        <div className={isRootUrl ? style.contentFull : style.content}>
+          {content}
+        </div>
       </div>
     </div>
   );
