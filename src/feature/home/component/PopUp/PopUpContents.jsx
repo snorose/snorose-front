@@ -1,5 +1,6 @@
 import styles from './PopUpContents.module.css';
 import calendar from './calendar.png';
+import { Link } from 'react-router-dom';
 
 /**
  * @typedef {Object} PopupLink
@@ -116,9 +117,7 @@ export const PopUpContents = ({ filteredContents }) => {
                   key={link.title}
                   className={`${styles.popupSectionListItem} ${styles.popupSectionLink}`}
                 >
-                  <a href={link.url} target='_blank' rel='noopener noreferrer'>
-                    {link.title}
-                  </a>
+                  <Link href={link.url}>{link.title}</Link>
                 </li>
               ))}
             </ul>
