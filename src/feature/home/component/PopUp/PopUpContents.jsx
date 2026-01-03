@@ -31,11 +31,11 @@ const POPUP_CONTENTS = [
     link: [
       {
         title: '스노로즈 공지 바로가기',
-        url: 'https://snorose.com/board/notice/post/1868102',
+        url: '/board/notice/post/1868102',
       },
       {
         title: '모집 공고 바로가기',
-        url: 'https://snorose.notion.site/10c7ef0aa3bf8027a04ee35b7c521e12',
+        url: '/board/event-notice/post/1868102',
       },
     ],
     image: null,
@@ -117,7 +117,7 @@ export const PopUpContents = ({ filteredContents }) => {
                   key={link.title}
                   className={`${styles.popupSectionListItem} ${styles.popupSectionLink}`}
                 >
-                  <Link href={link.url}>{link.title}</Link>
+                  <Link to={link.url}>{link.title}</Link>
                 </li>
               ))}
             </ul>
