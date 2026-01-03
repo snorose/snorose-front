@@ -119,7 +119,7 @@ export default function EditProfilePage() {
       VALIDATIONS.EMOJI.test(value)
     ) {
       setNicknameError(
-        '특수문자, 띄어쓰기를 제외한 2자 이상 30자 이하로 작성해 주세요'
+        '특수문자, 띄어쓰기를 제외한 2자 이상 30자 이하로 작성해주세요'
       );
     } else {
       setNicknameError('');

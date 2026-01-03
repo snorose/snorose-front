@@ -80,12 +80,12 @@ export default function WritePostPage() {
 
   // 페이지 이탈 방지 모달 노출
   useEffect(() => {
-    if (title.trim().length > 0 || text.trim().length > 0) {
-      setIsBlock(true);
-    } else {
-      setIsBlock(false);
-    }
-  }, [title, text]);
+    setIsBlock(
+      title.trim().length > 0 ||
+        text.trim().length > 0 ||
+        attachmentsInfo.length > 0
+    );
+  }, [title, text, attachmentsInfo]);
 
   useBlocker(isBlock);
 

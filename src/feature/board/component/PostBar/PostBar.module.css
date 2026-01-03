@@ -12,6 +12,10 @@
   justify-content: space-between;
 }
 
+.postBarLeft {
+  flex: 1;
+}
+
 .postBarTop {
   padding-bottom: 1rem;
   display: flex;
@@ -81,6 +85,14 @@
 }
 
 .thumbnail {
+  width: 7.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 4.7rem;
+}
+
+.thumbnailImg {
   width: 7.4rem;
   height: 7.4rem;
   border-radius: 0.5rem;

@@ -5,21 +5,23 @@ import { Pagination, Keyboard } from 'swiper/modules';
 import { useToast } from '@/shared/hook';
 import { Icon, ChoiceModal } from '@/shared/component';
 import { handleDownload, handleZipDownload } from '@/shared/lib';
+import altImage from '@/assets/images/altImage.png';
 
 import styles from './FullScreenAttachment.module.css';
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 
 export default function FullScreenAttachment({
-  attachmentUrls,
+  data,
   clickedImageIndex,
   setClickedImageIndex,
 }) {
+  const attachmentUrls = data.attachments;
+  const urls = attachmentUrls.map((att) => att.url);
   const { toast } = useToast();
   const paginationRef = useRef(null);
   const swiperRef = useRef(null);
   const [isChoiceModalOpen, setIsChoiceModalOpen] = useState(false);
-  const urls = attachmentUrls.map((att) => att.url);
 
   return (
     <div className={styles.fullScreenContainer}>
@@ -50,7 +52,6 @@ export default function FullScreenAttachment({
       </div>
       <div className={styles.bodyContainer}>
         <Swiper
-          autoHeight={true}
           className={styles.attachmentsContainer}
           modules={[Pagination, Keyboard]}
           slidesPerView={1}
@@ -79,6 +80,9 @@ export default function FullScreenAttachment({
                   src={att.url}
                   className={styles.attachment}
                   draggable={false}
+                  onError={(e) => {
+                    e.currentTarget.src = altImage;
+                  }}
                 />
               ) : (
                 <div className={styles.videoWrapper}>
@@ -94,6 +98,12 @@ export default function FullScreenAttachment({
                     onDragStart={(e) => {
                       e.preventDefault();
                     }}
+                    onError={(e) => {
+                      const img = document.createElement('img');
+                      img.src = altImage;
+                      img.className = styles.attachment;
+                      e.currentTarget.replaceWith(img);
+                    }}
                   />
                 </div>
               )}
@@ -106,33 +116,46 @@ export default function FullScreenAttachment({
         isOpen={isChoiceModalOpen}
         closeFn={() => setIsChoiceModalOpen(false)}
         optionFns={[
-          () => {
+          async () => {
             //게시글 사진 전체 저장 - 전체 파일들을 zip 해서 리턴하기
             //attachmentUrls안에 있는 모든 url을 zip 해서 한 파일로 만들고, 그걸 다운로드 받게 하기
             try {
-              handleZipDownload(urls);
+              setIsChoiceModalOpen(false);
+
+              await handleZipDownload(urls, data.createdAt);
+              toast({
+                message: '첨부파일 저장이 완료되었어요.',
+                variant: 'success',
+              });
             } catch (e) {
               toast({
                 message: '다운로드에 문제가 발생했습니다. 다시 시도해주세요.',
                 variant: 'error',
               });
             }
-            setIsChoiceModalOpen(false);
           },
-          () => {
+          async () => {
             //이 사진만 저장
             //attachmentUrls[currentIndex]
             try {
+              setIsChoiceModalOpen(false);
+
               const currentIndex =
                 paginationRef.current?.textContent.split('/')[0] - 1;
-              handleDownload(urls[currentIndex]);
+              await handleDownload(
+                attachmentUrls[currentIndex],
+                data.createdAt
+              );
+              toast({
+                message: '첨부파일 저장이 완료되었어요.',
+                variant: 'success',
+              });
             } catch (e) {
               toast({
                 message: '다운로드에 문제가 발생했습니다. 다시 시도해주세요.',
                 variant: 'error',
               });
             }
-            setIsChoiceModalOpen(false);
           },
         ]}
       />

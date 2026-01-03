@@ -205,10 +205,10 @@ const CONFIRM_MODAL = {
 
   // etc 확인 모달
   EXIT_PAGE: {
-    title: '페이지를 떠나시겠습니까?',
-    description: '지금까지 작업한 내용이\n저장되지 않습니다',
-    confirmText: '떠나기',
-    cancelText: '머물기',
+    title: '작성 중인 글을 삭제할까요?',
+    description: '지금까지 작성한 내용은\n저장되지 않아요',
+    confirmText: '삭제',
+    cancelText: '취소',
   },
   ACCESS_DENIED: {
     title: null,

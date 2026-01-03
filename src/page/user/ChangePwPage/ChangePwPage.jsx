@@ -48,7 +48,7 @@ export default function ChangePwPage() {
       emojiRegex.test(password)
     ) {
       setNewPasswordError(
-        '영어, 숫자, 특수문자(!@#%^&*)를 사용하여 8자 이상 16자 이하로 작성해 주세요.'
+        '영어, 숫자, 특수문자(!@#%^&*)를 사용하여 8자 이상 16자 이하로 작성해주세요.'
       );
       setIsPasswordValid(false);
     } else {
