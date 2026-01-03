@@ -139,7 +139,7 @@ export const PopUpContents = ({ filteredContents }) => {
           {POPUP_INFO_CONTENTS.map((content) => (
             <li
               key={content}
-              className={`${styles.popupSectionListItem} ${styles.popupSectionInfo}`}
+              className={`${styles.popupSectionContent} ${styles.popupSectionListItem} ${styles.popupSectionInfo}`}
             >
               {content}
             </li>
