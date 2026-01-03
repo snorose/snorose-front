@@ -20,6 +20,12 @@
   font-weight: 500;
 }
 
+.popupSectionContent {
+  color: var(--grey-4);
+  font: var(--text-body-2-reg);
+  word-break: keep-all;
+}
+
 .popupSectionContentList {
   margin: 0;
   padding-left: 1.6rem;
@@ -29,10 +35,7 @@
   list-style-type: disc;
 }
 
-.popupSectionContent {
-  color: var(--grey-4);
-  font: var(--text-body-2-reg);
-  word-break: keep-all;
+.popupSectionListItem {
   display: list-item;
 }
 

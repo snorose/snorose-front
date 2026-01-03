@@ -10,7 +10,8 @@ import calendar from './calendar.png';
 /**
  * @typedef {Object} PopupContent
  * @property {string} title - 팝업 섹션 제목
- * @property {string[] | null} content - 본문 내용 배열 (리스트 아이템)
+ * @property {string | null} description - 팝업 섹션 설명
+ * @property {string[] | null} contentList - 본문 내용 배열 (리스트 아이템)
  * @property {PopupLink[] | null} link - 링크 목록
  * @property {string | null} image - 이미지 경로
  * @property {string} startDate - 시작 날짜 (YYYY-MM-DD)
@@ -21,7 +22,8 @@ import calendar from './calendar.png';
 const POPUP_CONTENTS = [
   {
     title: '스노로즈 신입 리자 추가 모집',
-    content: [
+    description: null,
+    contentList: [
       '서류 지원 기간: 2025.12.29(월) ~ 01.03 (토) 23:59',
       '추가 모집 분야: 이벤트기획, 프론트엔드',
     ],
@@ -95,10 +97,16 @@ export const PopUpContents = ({ filteredContents }) => {
             <h3 className={styles.popupSectionTitle}>{section.title}</h3>
           )}
 
-          {(section.content || section.link) && (
-            <ul className={styles.popupSectionContentList}>
-              {section.content?.map((content) => (
-                <li key={content} className={styles.popupSectionContent}>
+          {section.description && (
+            <p className={styles.popupSectionContent}>{section.description}</p>
+          )}
+
+          {(section.contentList || section.link) && (
+            <ul
+              className={`${styles.popupSectionContent} ${styles.popupSectionContentList}`}
+            >
+              {section.contentList?.map((content) => (
+                <li key={content} className={styles.popupSectionListItem}>
                   {content}
                 </li>
               ))}
@@ -106,7 +114,7 @@ export const PopUpContents = ({ filteredContents }) => {
               {section.link?.map((link) => (
                 <li
                   key={link.title}
-                  className={`${styles.popupSectionContent} ${styles.popupSectionLink}`}
+                  className={`${styles.popupSectionListItem} ${styles.popupSectionLink}`}
                 >
                   <a href={link.url} target='_blank' rel='noopener noreferrer'>
                     {link.title}
@@ -132,7 +140,7 @@ export const PopUpContents = ({ filteredContents }) => {
           {POPUP_INFO_CONTENTS.map((content) => (
             <li
               key={content}
-              className={`${styles.popupSectionContent} ${styles.popupSectionInfo}`}
+              className={`${styles.popupSectionListItem} ${styles.popupSectionInfo}`}
             >
               {content}
             </li>
