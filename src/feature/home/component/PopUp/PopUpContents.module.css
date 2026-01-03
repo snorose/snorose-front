@@ -31,25 +31,18 @@
 
 .popupSectionContent {
   color: var(--grey-4);
-  font-size: 1.3rem;
+  font: var(--text-body-2-reg);
   word-break: keep-all;
   display: list-item;
 }
 
-.popupInfoSectionContent {
+.popupSectionInfo {
   color: var(--blue-4);
-  font-size: 1.3rem;
-  line-height: 1.6;
-  word-break: keep-all;
-  display: list-item;
 }
 
 .popupSectionLink {
   color: var(--blue-3);
-  font-weight: 500;
   cursor: pointer;
-}
-.popupSectionLink:hover {
   text-decoration: underline;
 }
 

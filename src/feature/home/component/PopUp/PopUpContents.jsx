@@ -130,7 +130,10 @@ export const PopUpContents = ({ filteredContents }) => {
       <div className={styles.popupSection}>
         <ul className={styles.popupSectionContentList}>
           {POPUP_INFO_CONTENTS.map((content) => (
-            <li key={content} className={styles.popupInfoSectionContent}>
+            <li
+              key={content}
+              className={`${styles.popupSectionContent} ${styles.popupSectionInfo}`}
+            >
               {content}
             </li>
           ))}
