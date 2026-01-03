@@ -135,11 +135,13 @@ export const PopUpContents = ({ filteredContents }) => {
 
       {/* 유효한 컨텐츠가 있을 때만 표시 */}
       <div className={styles.popupSection}>
-        <ul className={styles.popupSectionContentList}>
+        <ul
+          className={`${styles.popupSectionContentList} ${styles.popupSectionContent}`}
+        >
           {POPUP_INFO_CONTENTS.map((content) => (
             <li
               key={content}
-              className={`${styles.popupSectionContent} ${styles.popupSectionListItem} ${styles.popupSectionInfo}`}
+              className={`${styles.popupSectionListItem} ${styles.popupSectionInfo}`}
             >
               {content}
             </li>
