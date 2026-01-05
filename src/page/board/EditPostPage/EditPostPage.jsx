@@ -289,10 +289,6 @@ export default function EditPostPage() {
               e.dataTransfer.getData('text/plain'),
               10
             );
-            setDeleteAttachments((prev) => [
-              ...prev,
-              attachmentsInfo[draggedIndex].id,
-            ]);
             setTrashImageIndex(draggedIndex);
             setIsTrashOverlapped(false);
             trashImageConfirmModal.openModal();
@@ -308,6 +304,11 @@ export default function EditPostPage() {
         <ConfirmModal
           modalText={ATTACHMENT_MODAL_TEXT.DELETE_ATTACHMENT}
           onConfirm={() => {
+            setDeleteAttachments((prev) =>
+              attachmentsInfo[trashImageIndex]?.id
+                ? [...prev, attachmentsInfo[trashImageIndex].id]
+                : prev
+            );
             setAttachmentsInfo((prev) =>
               prev
                 .slice(0, trashImageIndex)
