@@ -11,11 +11,10 @@ function AttachmentList({ attachmentsInfo, setAttachmentsInfo }) {
     <ul className={styles.imageList}>
       {attachmentsInfo.map((att, index) => (
         <li
-          key={index}
+          key={`${att.file.name}-${att.file.lastModified}`}
           className={styles.imageContainer}
           draggable
           onContextMenu={(e) => e.preventDefault()}
-          onTouchStart={(e) => e.preventDefault()}
           onDragStart={(e) => {
             e.dataTransfer.setData('text/plain', index);
             e.dataTransfer.effectAllowed = 'move';
