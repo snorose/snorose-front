@@ -13,7 +13,7 @@ import {
   checkVideoQuantity,
   checkVideoSize,
   checkIfVideo,
-} from '@/shared/lib';
+} from '@/feature/attachment/lib';
 
 import styles from './AttachmentBar.module.css';
 
@@ -34,12 +34,19 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
 
     try {
       //이미지 확장자 확인
-      checkIfImage(newFiles, toast);
+      checkIfImage(newFiles);
       //이미지 첨부 개수 제한
-      checkImageQuantity(attachmentsInfo, newFiles, toast);
+      checkImageQuantity(attachmentsInfo, newFiles);
       //이미지 용량 제한
-      checkImageSize(newFiles, newFileArray, toast);
+      const warningMessage = checkImageSize(newFiles);
+      if (warningMessage) {
+        toast({
+          message: warningMessage,
+          variant: 'info',
+        });
+      }
     } catch (e) {
+      toast({ message: e.message, variant: 'info' });
       return;
     }
 
@@ -66,12 +73,13 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
 
     try {
       //영상 확장자 확인
-      checkIfVideo(newFiles, toast);
+      checkIfVideo(newFiles);
       //영상 첨부 개수 제한
-      checkVideoQuantity(attachmentsInfo, newFiles, toast);
+      checkVideoQuantity(attachmentsInfo, newFiles);
       //영상 용량 제한
-      checkVideoSize(newFiles, newFileArray, toast);
+      checkVideoSize(newFiles);
     } catch (e) {
+      toast({ message: e.message, variant: 'info' });
       return;
     }
 

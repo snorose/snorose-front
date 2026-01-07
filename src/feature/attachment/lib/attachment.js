@@ -83,45 +83,46 @@ export const handleZipDownload = async (urls, createdAt) => {
 };
 
 //첨부파일 정책에 맞는지 확인하는 함수들
-export const checkImageQuantity = (orgAtts, newAtts, toast) => {
+export const checkImageQuantity = (orgAtts, newAtts) => {
   if (
     orgAtts.filter((att) => att.type === 'PHOTO').length + newAtts.length >
     ATTACHMENT_SIZE_LIMIT.imageQuantity
   ) {
-    toast({ message: TOAST.ATTACHMENT.imageQuantityError, variant: 'info' });
-    throw new Error('이미지 개수 초과');
+    throw new Error(TOAST.ATTACHMENT.imageQuantityError);
   }
 };
-export const checkIfImage = (newAtts, toast) => {
+export const checkIfImage = (newAtts) => {
   if ([...newAtts].some((a) => a.type && !a.type.startsWith('image/'))) {
-    toast({ message: TOAST.ATTACHMENT.notImageError, variant: 'info' });
-    throw new Error('이미지가 아님');
+    throw new Error(TOAST.ATTACHMENT.notImageError);
   }
 };
-export const checkImageSize = (entireAtts, filteredAtts, toast) => {
+export const checkImageSize = (entireAtts, toast) => {
+  const filteredAtts = Array.from(entireAtts).filter(
+    (file) => file.size <= ATTACHMENT_SIZE_LIMIT.imageFileSize
+  );
   if (entireAtts.length !== filteredAtts.length) {
-    toast({ message: TOAST.ATTACHMENT.imageFileSizeError, variant: 'info' });
+    return TOAST.ATTACHMENT.imageFileSizeError;
   }
 };
-export const checkVideoQuantity = (orgAtts, newAtts, toast) => {
+export const checkVideoQuantity = (orgAtts, newAtts) => {
   if (
     orgAtts.filter((att) => att.type === 'VIDEO').length + newAtts.length >
     ATTACHMENT_SIZE_LIMIT.videoQuantity
   ) {
-    toast({ message: TOAST.ATTACHMENT.videoQuantityError, variant: 'info' });
-    throw new Error('비디오 개수 초과');
+    throw new Error(TOAST.ATTACHMENT.videoQuantityError);
   }
 };
-export const checkVideoSize = (entireAtts, filteredAtts, toast) => {
+export const checkVideoSize = (entireAtts) => {
+  const filteredAtts = Array.from(entireAtts).filter(
+    (file) => file.size <= ATTACHMENT_SIZE_LIMIT.videoFileSize
+  );
   if (entireAtts.length !== filteredAtts.length) {
-    toast({ message: TOAST.ATTACHMENT.videoFileSizeError, variant: 'info' });
-    throw new Error('비디오 용량 초과');
+    throw new Error(TOAST.ATTACHMENT.videoFileSizeError);
   }
 };
-export const checkIfVideo = (newAtts, toast) => {
+export const checkIfVideo = (newAtts) => {
   if ([...newAtts].some((a) => a.type && !a.type.startsWith('video/'))) {
-    toast({ message: TOAST.ATTACHMENT.notVideoError, variant: 'info' });
-    throw new Error('비디오가 아님');
+    throw new Error(TOAST.ATTACHMENT.notVideoError);
   }
 };
 
