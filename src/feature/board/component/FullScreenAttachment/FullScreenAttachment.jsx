@@ -12,11 +12,11 @@ import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 
 export default function FullScreenAttachment({
-  data,
+  attachmentUrls,
+  createdAt,
   clickedImageIndex,
   setClickedImageIndex,
 }) {
-  const attachmentUrls = data.attachments;
   const urls = attachmentUrls.map((att) => att.url);
   const { toast } = useToast();
   const paginationRef = useRef(null);
@@ -122,7 +122,7 @@ export default function FullScreenAttachment({
             try {
               setIsChoiceModalOpen(false);
 
-              await handleZipDownload(urls, data.createdAt);
+              await handleZipDownload(urls, createdAt);
               toast({
                 message: '첨부파일 저장이 완료되었어요.',
                 variant: 'success',
@@ -142,10 +142,7 @@ export default function FullScreenAttachment({
 
               const currentIndex =
                 paginationRef.current?.textContent.split('/')[0] - 1;
-              await handleDownload(
-                attachmentUrls[currentIndex],
-                data.createdAt
-              );
+              await handleDownload(attachmentUrls[currentIndex], createdAt);
               toast({
                 message: '첨부파일 저장이 완료되었어요.',
                 variant: 'success',

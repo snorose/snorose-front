@@ -127,7 +127,8 @@ export default function PostPage() {
         <BackAppBar backgroundColor={'#eaf5fd'} />
       ) : (
         <FullScreenAttachment
-          data={data}
+          attachmentUrls={data.attachments}
+          createdAt={data.createdAt}
           clickedImageIndex={clickedImageIndex}
           setClickedImageIndex={setClickedImageIndex}
         />
