@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Keyboard } from 'swiper/modules';
 
 import { useToast } from '@/shared/hook';
-import { Icon, ChoiceModal } from '@/shared/component';
+import { Icon, ChoiceModal, CloseAppBar } from '@/shared/component';
 import { handleDownload, handleZipDownload } from '@/shared/lib';
 import altImage from '@/assets/images/altImage.png';
 
@@ -25,17 +25,12 @@ export default function FullScreenAttachment({
 
   return (
     <div className={styles.fullScreenContainer}>
-      <div className={styles.topContainer}>
-        <Icon
-          id={'x'}
-          width={'1.8rem'}
-          height={'1.8rem'}
-          className={styles.x}
-          onClick={() => {
-            //clickedImageIndex가 0이야지 FullScreenAttachment가 보이지 않음 (PostPage.jsx 분기처리 확인하기)
-            setClickedImageIndex(0);
-          }}
-        />
+      <CloseAppBar
+        backgroundColor={'var(--blue-0)'}
+        onClose={() => {
+          setClickedImageIndex(0);
+        }}
+      >
         <p
           className={`${styles.pagination} swiper-custom-pagination`}
           ref={paginationRef}
@@ -49,7 +44,8 @@ export default function FullScreenAttachment({
             setIsChoiceModalOpen(true);
           }}
         />
-      </div>
+      </CloseAppBar>
+
       <div className={styles.bodyContainer}>
         <Swiper
           className={styles.attachmentsContainer}

@@ -7,14 +7,6 @@
   z-index: 15;
   overflow: hidden;
 }
-.topContainer {
-  width: 100%;
-  height: 6rem;
-  padding: 0 0.875rem;
-  display: flex;
-  justify-content: space-between;
-  padding: 1.4rem 2rem;
-}
 .pagination {
   width: fit-content !important;
   margin: 0 auto;
@@ -26,7 +18,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 6rem; /*topContainer로 밑으로 내린 만큼 위로 올려줘야 함*/
+  padding-top: 6rem; /*topContainer만큼 밑으로 내려줘야 함*/
 }
 .attachmentsContainer {
   width: 100%;
