@@ -11,7 +11,7 @@ function AttachmentList({ attachmentsInfo, setAttachmentsInfo }) {
     <ul className={styles.imageList}>
       {attachmentsInfo.map((att, index) => (
         <li
-          key={`${att.file.name}-${att.file.lastModified}`}
+          key={`${att.fileName}-${att.id || att.file.lastModified}`}
           className={styles.imageContainer}
           draggable
           onContextMenu={(e) => e.preventDefault()}
