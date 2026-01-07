@@ -4,7 +4,7 @@ import { Pagination, Keyboard } from 'swiper/modules';
 
 import { useToast } from '@/shared/hook';
 import { Icon, ChoiceModal, CloseAppBar } from '@/shared/component';
-import { handleDownload, handleZipDownload } from '@/shared/lib';
+import { handleDownload, handleZipDownload } from '@/feature/attachment/lib';
 import altImage from '@/assets/images/altImage.png';
 
 import styles from './FullScreenAttachment.module.css';

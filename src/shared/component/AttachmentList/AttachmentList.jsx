@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Icon } from '@/shared/component';
 import altImage from '@/assets/images/altImage.png';
-import { getSafeSrc } from '@/shared/lib';
+import { getSafeSrc } from '@/feature/attachment/lib';
 
 import styles from './AttachmentList.module.css';
 
