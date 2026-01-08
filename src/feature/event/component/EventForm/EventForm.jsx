@@ -115,7 +115,7 @@ export default function EventForm({
           label='추첨 인원'
           name='drawCount'
           value={data.drawCount}
-          placeholder='단위와 함께 인원을 작성해주세요.(1 명 / n 명 / 미정 등)'
+          placeholder='단위와 함께 인원을 작성해주세요.(n 명) *빈칸시 미정'
           onChange={onChange}
           error={errors.drawCount}
         />
@@ -142,7 +142,7 @@ export default function EventForm({
           placeholder={
             ['theater', 'movie'].includes(formType)
               ? '추첨 구글폼을 넣어주세요'
-              : '관련 링크를 넣어주세요'
+              : 'https://로 시작하는 링크를 넣어주세요'
           }
           onChange={onChange}
           error={errors.link}
