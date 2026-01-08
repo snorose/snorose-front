@@ -59,6 +59,15 @@
   text-overflow: ellipsis;
 }
 
+.contentFull {
+  font: var(--text-body-1-reg);
+
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  word-break: break-word;
+}
+
 /* chip */
 
 .category {

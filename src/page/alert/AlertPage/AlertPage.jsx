@@ -138,9 +138,9 @@ function NotificationList({ category }) {
   const read = async (item) => {
     await markNotificationAsRead.mutate(item);
 
-    if (item.url) {
-      navigate(item.url);
-    }
+    const url = typeof item.url === 'string' ? item.url.trim() : '';
+    if (!url || url === '/') return;
+    navigate(url);
   };
 
   if (notifications.length === 0) {
