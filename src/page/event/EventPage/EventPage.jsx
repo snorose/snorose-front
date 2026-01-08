@@ -75,11 +75,33 @@ export default function EventPage() {
 
   // 신청 시간 판단
   const now = Date.now();
+
   const openDraw = data?.startAt ? new Date(data.startAt).getTime() : null;
   const closeDraw = data?.endAt ? new Date(data.endAt).getTime() : null;
-  const beforeOpen = now < openDraw;
-  const opened = now >= openDraw && now <= closeDraw;
-  const closed = now > closeDraw;
+  const announceDraw = data?.announceAt
+    ? new Date(data.announceAt).getTime()
+    : null;
+
+  // 신청 버튼 상태 계산
+  const effectiveEndAt = closeDraw ?? announceDraw;
+
+  const beforeOpen = openDraw && now < openDraw;
+  const closed = effectiveEndAt && now > effectiveEndAt;
+
+  let opened = false;
+  if (!openDraw && !effectiveEndAt) {
+    // 상시 오픈
+    opened = true;
+  } else if (openDraw && !effectiveEndAt) {
+    // 시작일만 있는 경우
+    opened = now >= openDraw;
+  } else if (!openDraw && effectiveEndAt) {
+    // 종료일만 있는 경우
+    opened = now <= effectiveEndAt;
+  } else if (openDraw && effectiveEndAt) {
+    // 시작일과 종료일이 모두 있는 경우
+    opened = now >= openDraw && now <= effectiveEndAt;
+  }
 
   const [open, setOpen] = useState(false);
 
@@ -182,38 +204,49 @@ export default function EventPage() {
           <div className={styles.drawCount}>
             <Icon id='person' width={20} height={20} />
             <p>추첨 인원</p>
-            <p className={styles.data}>{data.drawCount} 명</p>
+            <p className={styles.data}>{data.drawCount}</p>
           </div>
 
-          <div className={styles.applicationDate}>
-            <Icon
-              id='calendar-stroke'
-              width={20}
-              height={20}
-              fill='none'
-              stroke='#484848'
-            />
-            <p>응모 날짜</p>
-            <p className={styles.data}>
-              시작일 : {DateTime.format(data.startAt, 'YMD_HM')}
-              <br />
-              종료일 : {DateTime.format(data.endAt, 'YMD_HM')}
-            </p>
-          </div>
+          {(data.startAt || data.endAt) && (
+            <div className={styles.applicationDate}>
+              <Icon
+                id='calendar-stroke'
+                width={20}
+                height={20}
+                fill='none'
+                stroke='#484848'
+              />
+              <p>응모 날짜</p>
+              <p className={styles.data}>
+                {data.startAt && (
+                  <>
+                    시작일 : {DateTime.format(data.startAt, 'YMD_HM')}
+                    <br />
+                  </>
+                )}
+                {data.endAt && (
+                  <>종료일 : {DateTime.format(data.endAt, 'YMD_HM')}</>
+                )}
+              </p>
+            </div>
+          )}
 
-          <div className={styles.announceDate}>
-            <Icon
-              id='calendar-stroke'
-              width={20}
-              height={20}
-              fill='none'
-              stroke='#484848'
-            />
-            <p>당첨자 발표일</p>
-            <p className={styles.data}>
-              {DateTime.format(data.announceAt, 'YMD_HM')}
-            </p>
-          </div>
+          {data.announceAt && (
+            <div className={styles.announceDate}>
+              <Icon
+                id='calendar-stroke'
+                width={20}
+                height={20}
+                fill='none'
+                stroke='#484848'
+              />
+              <p>당첨자 발표일</p>
+              <p className={styles.data}>
+                {DateTime.format(data.announceAt, 'YMD_HM')}
+              </p>
+            </div>
+          )}
+
           <p
             className={styles.contentText}
             dangerouslySetInnerHTML={convertHyperlink(data.content)}
