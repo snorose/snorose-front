@@ -47,29 +47,32 @@ export default function GuideModal({
           </button>
         </div>
 
-        <Swiper
-          modules={[Pagination, Keyboard]}
-          slidesPerView={1}
-          allowTouchMove
-          pagination={{ clickable: true }}
-          keyboard={{ enabled: true }}
-          onSwiper={(swipe) => (swiperRef.current = swipe)}
-          onSlideChange={(swipe) => setStep(swipe.activeIndex)}
-        >
-          {options.map((option, index) => (
-            <SwiperSlide key={index} className={styles.slide}>
-              <div className={styles.illustration}>
-                <img
-                  src={option.image}
-                  alt={`illustration-${index}`}
-                  className={styles.image}
-                />
-              </div>
-              <h2>{option.title}</h2>
-              <div className={styles.content}>{option.content}</div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <div className={styles.modalContent}>
+          <Swiper
+            className={styles.modalContent}
+            modules={[Pagination, Keyboard]}
+            slidesPerView={1}
+            allowTouchMove
+            pagination={{ clickable: true }}
+            keyboard={{ enabled: true }}
+            onSwiper={(swipe) => (swiperRef.current = swipe)}
+            onSlideChange={(swipe) => setStep(swipe.activeIndex)}
+          >
+            {options.map((option, index) => (
+              <SwiperSlide key={index}>
+                <div className={styles.illustration}>
+                  <img
+                    src={option.image}
+                    alt={`illustration-${index}`}
+                    className={styles.image}
+                  />
+                </div>
+                <h2>{option.title}</h2>
+                <div className={styles.content}>{option.content}</div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
 
         <div className={styles.buttons}>
           <button className={styles.goNotice} onClick={goEventNotice}>
