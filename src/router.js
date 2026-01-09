@@ -442,6 +442,19 @@ export const routeList = [
 
       /* 문의 및 신고 */
       {
+        path: 'support',
+        children: [
+          {
+            path: 'faq',
+            element: (
+              <ProtectedRoute>
+                <FAQPage />
+              </ProtectedRoute>
+            ),
+          },
+        ],
+      },
+      {
         path: 'inquiry',
         children: [
           {
@@ -594,10 +607,6 @@ export const routeList = [
       //   path: '/my-page/inquiry-report',
       //   element: <FAQPage />,
       // },
-      {
-        path: '/my-page/faq',
-        element: <FAQPage />,
-      },
       {
         path: '/my-page/privacy-policy',
         element: <PrivacyPolicyPage />,
