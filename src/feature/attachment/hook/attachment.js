@@ -25,11 +25,11 @@ export function useAttachmentUpload({ attachmentsInfo, setAttachmentsInfo }) {
       if (warningMessage) {
         toast({
           message: warningMessage,
-          variant: 'info',
+          variant: 'error',
         });
       }
     } catch (err) {
-      toast({ message: err.message, variant: 'info' });
+      toast({ message: err.message, variant: 'error' });
       return;
     }
 
@@ -57,7 +57,7 @@ export function useAttachmentUpload({ attachmentsInfo, setAttachmentsInfo }) {
       checkVideoQuantity(attachmentsInfo, newFiles);
       checkVideoSize(newFiles);
     } catch (err) {
-      toast({ message: err.message, variant: 'info' });
+      toast({ message: err.message, variant: 'error' });
       return;
     }
 
