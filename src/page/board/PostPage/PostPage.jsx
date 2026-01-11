@@ -128,6 +128,7 @@ export default function PostPage() {
       ) : (
         <FullScreenAttachment
           attachmentUrls={data.attachments}
+          createdAt={data.createdAt}
           clickedImageIndex={clickedImageIndex}
           setClickedImageIndex={setClickedImageIndex}
         />

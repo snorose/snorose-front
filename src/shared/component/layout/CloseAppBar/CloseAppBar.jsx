@@ -31,7 +31,7 @@ export default function CloseAppBar({
         onClick={onClose ? onClose : () => navigate(-1)}
         stroke={stroke}
       />
-      <div className={styles.actions}>{children}</div>
+      {children}
     </div>
   );
 }

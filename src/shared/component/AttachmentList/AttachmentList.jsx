@@ -2,20 +2,19 @@ import React from 'react';
 
 import { Icon } from '@/shared/component';
 import altImage from '@/assets/images/altImage.png';
+import { getSafeSrc } from '@/feature/attachment/lib';
 
 import styles from './AttachmentList.module.css';
 
-export default function AttachmentList({
-  attachmentsInfo,
-  setAttachmentsInfo,
-}) {
+function AttachmentList({ attachmentsInfo, setAttachmentsInfo }) {
   return (
     <ul className={styles.imageList}>
       {attachmentsInfo.map((att, index) => (
         <li
-          key={index}
+          key={`${att.fileName}-${att.id || att.file.lastModified}`}
           className={styles.imageContainer}
           draggable
+          onContextMenu={(e) => e.preventDefault()}
           onDragStart={(e) => {
             e.dataTransfer.setData('text/plain', index);
             e.dataTransfer.effectAllowed = 'move';
@@ -46,23 +45,25 @@ export default function AttachmentList({
           {attachmentsInfo[index].type === 'PHOTO' ? (
             //첨부파일이 이미지일 경우
             <img
-              src={att.url || (att.file && URL.createObjectURL(att.file))}
+              src={getSafeSrc(att)}
               className={styles.image}
               onError={(e) => {
                 e.currentTarget.src = altImage;
               }}
+              draggable={false}
             />
           ) : (
             //첨부파일이 영상일 경우
             <div className={styles.image}>
               <video
-                src={att.url || (att.file && URL.createObjectURL(att.file))}
+                src={getSafeSrc(att)}
                 playsInline
                 className={styles.video}
+                draggable={false}
                 onError={(e) => {
                   const img = document.createElement('img');
                   img.src = altImage;
-                  img.className = styles.attachment;
+                  img.className = styles.image;
                   e.currentTarget.replaceWith(img);
                 }}
               />
@@ -86,3 +87,4 @@ export default function AttachmentList({
     </ul>
   );
 }
+export default React.memo(AttachmentList);
