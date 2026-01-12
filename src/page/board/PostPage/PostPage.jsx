@@ -35,6 +35,7 @@ import { useLike } from '@/feature/like/hook';
 import { useScrap } from '@/feature/scrap/hook';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
+import sponsorBanner from '@/assets/banners/sponsorBanner.png';
 
 import styles from './PostPage.module.css';
 
@@ -163,6 +164,12 @@ export default function PostPage() {
             setClickedImageIndex={setClickedImageIndex}
           />
         )}
+
+        <img
+          src={sponsorBanner}
+          alt='스노로즈 후원하기'
+          className={styles.sponsorBanner}
+        />
 
         <ActionContainer
           isNotice={data.isNotice}
