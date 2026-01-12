@@ -81,7 +81,7 @@
 .contentText {
   font: var(--text-headline-2-reg);
   color: var(--grey-4);
-  padding: 0 1.3rem 1.5rem 0;
+  padding-bottom: 1.5rem;
   white-space: pre-wrap;
   word-break: keep-all;
 
@@ -132,4 +132,13 @@
   background-color: #fff;
   width: 100%;
   height: 5rem;
+}
+
+/* sponsor banner */
+
+.sponsorBanner {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  margin: 0.2rem 0 1.7rem;
 }
