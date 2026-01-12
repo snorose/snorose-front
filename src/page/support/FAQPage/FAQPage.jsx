@@ -44,7 +44,11 @@ export default function FAQPage() {
                     </h3>
                   )}
                   {list && (
-                    <ul className={listStyle === 'none' && style.listStyleNone}>
+                    <ul
+                      className={
+                        listStyle === 'none' ? style.listStyleNone : undefined
+                      }
+                    >
                       {list.map((item, itemIndex) => (
                         <li key={itemIndex}>{renderTextWithLinks(item)}</li>
                       ))}

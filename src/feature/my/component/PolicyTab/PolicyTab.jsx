@@ -12,7 +12,7 @@ const PolicyTab = () => {
     <>
       <div className={styles.infoWrapper}>
         {[
-          { label: '자주 묻는 질문 (FAQ)', link: '/support/faq' },
+          { label: '자주 묻는 질문 (FAQ)', link: '/support/faq' }, // 자주 묻는 질문의 경우, /my-page가 아니라 /support 경로로 이동
           { label: '개인정보 처리방침', link: 'privacy-policy' },
           { label: '서비스 이용 약관', link: 'service-policy' },
         ].map((item, index) => (
