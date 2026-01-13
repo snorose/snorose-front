@@ -1,5 +1,5 @@
 import styles from './PopUpContents.module.css';
-import calendar from './calendar.png';
+import accountingReport from './accountingReport.png';
 import { Link } from 'react-router-dom';
 
 /**
@@ -22,39 +22,40 @@ import { Link } from 'react-router-dom';
 /** @type {PopupContent[]} */
 const POPUP_CONTENTS = [
   {
-    title: '스노로즈 신입 리자 추가 모집',
-    description: null,
+    title: '2025년 12월 회계 보고',
+    description:
+      '숙명 메일 계정으로 접속하시면 회계 내역을 확인하실 수 있습니다.',
     contentList: [
-      '서류 지원 기간: 2025.12.29(월) ~ 01.03 (토) 23:59',
-      '추가 모집 분야: 이벤트기획, 프론트엔드',
+      // '내용',
+      // '추가 모집 분야: 이벤트기획, 프론트엔드',
     ],
     link: [
       {
-        title: '스노로즈 공지 바로가기',
-        url: '/board/notice/post/1868102',
+        title: '스노로즈 회계 장부 (Google Sheets)',
+        url: 'https://docs.google.com/spreadsheets/d/1MzXAHemKqPwVj3PzPJch5cR5z49gFtzABPgJ_FVjCXM',
       },
       {
-        title: '모집 공고 바로가기',
-        url: '/board/event-notice/post/1868102',
+        title: '스노로즈 공지 바로가기',
+        url: '/board/notice/post/1869660',
       },
     ],
-    image: null,
-    startDate: '2025-12-29',
-    endDate: '2026-01-03',
+    image: accountingReport,
+    startDate: '2026-01-12',
+    endDate: '2026-01-20',
   },
-  {
-    title: '1월 스노로즈 일정',
-    content: null,
-    link: null,
-    image: calendar,
-    startDate: '2025-12-31',
-    endDate: '2026-01-07',
-  },
+  // {
+  //   title: '1월 스노로즈 일정',
+  //   content: null,
+  //   link: null,
+  //   image: calendar,
+  //   startDate: '2025-12-31',
+  //   endDate: '2026-01-07',
+  // },
 ];
 
 /** @type {string[]} */
 const POPUP_INFO_CONTENTS = [
-  '스노로즈 인스타그램(@snorose1906)에서 월별 스노로즈 일정을 쉽게 확인할 수 있습니다.',
+  '스노로즈 인스타그램(@snorose1906)에서 월별 스노로즈 일정을 확인할 수 있습니다.',
   '공식 문의 창구 [이메일(snorose1906@gmail.com), 카카오톡 1:1 문의] 이외의 문의는 받고 있지 않습니다. 공식 문의 창구 이외의 문의 글은 답변 없이 삭제될 수 있음을 알려드립니다.',
 ];
 
