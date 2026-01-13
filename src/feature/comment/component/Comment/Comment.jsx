@@ -8,7 +8,7 @@ import {
   SHOW_BADGE_PATH,
   MORE_OPTION_MODAL_TEXT,
 } from '@/shared/constant';
-import { convertHyperlink, DateTime } from '@/shared/lib';
+import { renderTextWithLinks, DateTime } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
 
 import {
@@ -151,10 +151,7 @@ const Comment = forwardRef((props, ref) => {
         >
           {!isDeleted &&
             (isVisible ? (
-              <p
-                className={styles.content}
-                dangerouslySetInnerHTML={convertHyperlink(content)}
-              ></p>
+              <p className={styles.content}>{renderTextWithLinks(content)}</p>
             ) : (
               '(관리자에 의해 차단된 댓글입니다)'
             ))}

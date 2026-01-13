@@ -13,7 +13,7 @@ import {
   PrimaryButton,
 } from '@/shared/component';
 import { LIKE_TYPE, QUERY_KEY, ROLE, TOAST } from '@/shared/constant';
-import { convertHyperlink, DateTime, getBoard } from '@/shared/lib';
+import { renderTextWithLinks, DateTime, getBoard } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useModalReset } from '@/shared/hook/useBlocker';
 import { useAuth, useToast } from '@/shared/hook';
@@ -214,10 +214,9 @@ export default function EventPage() {
               {DateTime.format(data.announceAt, 'YMD_HM')}
             </p>
           </div>
-          <p
-            className={styles.contentText}
-            dangerouslySetInnerHTML={convertHyperlink(data.content)}
-          ></p>
+          <p className={styles.contentText}>
+            {renderTextWithLinks(data.content)}
+          </p>
 
           <div className={styles.note}>
             <p>
