@@ -34,16 +34,11 @@
   max-height: 22.8rem;
   overflow: auto;
 
+  display: flex;
+  flex-direction: column;
   border-radius: 0.5rem;
 
   box-shadow: 0 0 3.6rem 0 rgba(0, 0, 0, 0.1);
-}
-
-.menu .list {
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
 }
 
 .item {
@@ -71,8 +66,13 @@
     border: none;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: var(--blue-0);
     color: var(--blue-4);
+  }
+
+  &:focus {
+    outline: none;
   }
 }

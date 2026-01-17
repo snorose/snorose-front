@@ -1,15 +1,21 @@
 import {
-  useState,
-  useContext,
+  ReactNode,
   createContext,
+  useContext,
   useRef,
   useEffect,
-  ReactNode,
+  useId,
+  useState,
 } from 'react';
 
 import { Icon } from '@/shared/component';
 
 import styles from './DropdownBlue.module.css';
+
+interface AccessibilityContextType {
+  triggerId: string;
+  menuId: string;
+}
 
 interface DropdownBlueContextType {
   isOpen: boolean;
@@ -17,19 +23,23 @@ interface DropdownBlueContextType {
   close: () => void;
 }
 
-interface DropdownBlueProps {
-  children: ReactNode;
-}
-
-interface ItemProps {
-  children: ReactNode;
-  selected?: boolean;
-  onClick?: () => void;
-}
+const AccessibilityContext = createContext<
+  AccessibilityContextType | undefined
+>(undefined);
 
 const DropdownBlueContext = createContext<DropdownBlueContextType | undefined>(
   undefined
 );
+
+const useAccessibilityContext = () => {
+  const context = useContext(AccessibilityContext);
+  if (!context) {
+    throw new Error(
+      'DropdownBlue sub-components must be used within a DropdownBlue'
+    );
+  }
+  return context;
+};
 
 const useDropdownBlueContext = () => {
   const context = useContext(DropdownBlueContext);
@@ -41,8 +51,12 @@ const useDropdownBlueContext = () => {
   return context;
 };
 
-export const DropdownBlue = ({ children }: DropdownBlueProps) => {
+export const DropdownBlue = ({ children }: { children: ReactNode }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const menuId = useId();
+  const triggerId = useId();
+
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen((prev) => !prev);
   const close = () => setIsOpen(false);
@@ -63,19 +77,37 @@ export const DropdownBlue = ({ children }: DropdownBlueProps) => {
   }, []);
 
   return (
-    <DropdownBlueContext.Provider value={{ isOpen, toggle, close }}>
-      <div ref={dropdownRef} className={styles.container}>
-        {children}
-      </div>
-    </DropdownBlueContext.Provider>
+    <AccessibilityContext.Provider value={{ menuId, triggerId }}>
+      <DropdownBlueContext.Provider value={{ isOpen, toggle, close }}>
+        <div ref={dropdownRef} className={styles.container}>
+          {children}
+        </div>
+      </DropdownBlueContext.Provider>
+    </AccessibilityContext.Provider>
   );
 };
 
-const Trigger = ({ children }: DropdownBlueProps) => {
-  const { toggle } = useDropdownBlueContext();
+const Trigger = ({ children }: { children: ReactNode }) => {
+  const { triggerId, menuId } = useAccessibilityContext();
+  const { isOpen, toggle } = useDropdownBlueContext();
 
   return (
-    <div className={styles.trigger} onClick={toggle}>
+    <div
+      className={styles.trigger}
+      onClick={toggle}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          toggle();
+        }
+      }}
+      id={triggerId}
+      role='button'
+      tabIndex={0}
+      aria-haspopup='listbox'
+      aria-expanded={isOpen}
+      aria-controls={menuId}
+    >
       <div>
         <Icon
           className={styles.icon}
@@ -92,19 +124,78 @@ const Trigger = ({ children }: DropdownBlueProps) => {
   );
 };
 
-const Menu = ({ children }: DropdownBlueProps) => {
-  const { isOpen } = useDropdownBlueContext();
+const Menu = ({ children }: { children: ReactNode }) => {
+  const menuRef = useRef<HTMLDivElement>(null);
 
-  if (!isOpen) return null;
+  const { triggerId, menuId } = useAccessibilityContext();
+  const { isOpen, close } = useDropdownBlueContext();
+
+  useEffect(() => {
+    if (isOpen && menuRef.current) {
+      const firstOption =
+        menuRef.current.querySelector<HTMLElement>('[role="option"]');
+      firstOption?.focus();
+    }
+  }, [isOpen]);
+
+  if (!isOpen) {
+    return null;
+  }
+
+  const handleKeyEvent = (e: React.KeyboardEvent) => {
+    if (!menuRef.current) return;
+
+    const options =
+      menuRef.current.querySelectorAll<HTMLElement>('[role="option"]');
+
+    const index = Array.from(options).indexOf(
+      document.activeElement as HTMLElement
+    );
+
+    switch (e.key) {
+      case 'ArrowUp': {
+        const nextIndex = index > 0 ? index - 1 : 0;
+        options[nextIndex].focus();
+        break;
+      }
+      case 'ArrowDown': {
+        const nextIndex =
+          index < options.length - 1 ? index + 1 : options.length - 1;
+        options[nextIndex].focus();
+        break;
+      }
+      case 'Enter':
+        (document.activeElement as HTMLElement).click();
+        break;
+      case 'Escape':
+        close();
+        break;
+    }
+  };
 
   return (
-    <div className={styles.menu}>
-      <ul className={styles.list}>{children}</ul>
+    <div
+      ref={menuRef}
+      className={styles.menu}
+      onKeyDown={handleKeyEvent}
+      id={menuId}
+      role='listbox'
+      aria-labelledby={triggerId}
+    >
+      {children}
     </div>
   );
 };
 
-const Item = ({ children, selected = false, onClick }: ItemProps) => {
+const Item = ({
+  children,
+  selected = false,
+  onClick,
+}: {
+  children: ReactNode;
+  selected?: boolean;
+  onClick?: () => void;
+}) => {
   const { close } = useDropdownBlueContext();
 
   const handleClick = () => {
@@ -113,13 +204,17 @@ const Item = ({ children, selected = false, onClick }: ItemProps) => {
   };
 
   return (
-    <li
+    <div
       className={`${styles.item} ${selected && styles.selected}`}
       onClick={handleClick}
+      onKeyDown={() => {}}
+      role='option'
+      aria-selected={selected}
+      tabIndex={-1}
     >
       {children}
       {selected && <Icon id='check' width={14} height={11} />}
-    </li>
+    </div>
   );
 };
 
