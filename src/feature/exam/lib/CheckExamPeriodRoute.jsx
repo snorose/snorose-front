@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/shared/hook';
 import { ROLE } from '@/shared/constant/role';
 
-// 시험 후기 작성 기간: 2025년 10월 27일 ~ 2025년 11월 2일
-const examStart = new Date(2025, 9, 27, 0, 0, 0);
-const examEnd = new Date(2025, 10, 2, 23, 59, 59);
+// 시험 후기 작성 기간: 2025년 12월 22일 ~ 2026년 1월 18일
+const examStart = new Date(2025, 11, 22, 0, 0, 0);
+const examEnd = new Date(2026, 0, 18, 23, 59, 59);
 
 export default function CheckExamPeriodRoute({ children }) {
   const { userInfo } = useAuth();

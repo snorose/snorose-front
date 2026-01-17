@@ -1,7 +1,6 @@
 export * from './AppError';
 export * from './GrowthBook';
 
-export * from './attachment';
 export * from './board-registry';
 export * as DateTime from './date-time';
 export * from './getBoardTextId';

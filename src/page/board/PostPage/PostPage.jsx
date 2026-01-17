@@ -10,7 +10,12 @@ import { getPostContent } from '@/apis';
 
 import { NotFoundPage } from '@/page/etc';
 
-import { AppError, convertHyperlink, DateTime, getBoard } from '@/shared/lib';
+import {
+  AppError,
+  renderTextWithLinks,
+  DateTime,
+  getBoard,
+} from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useToast, useModalReset } from '@/shared/hook';
 import {
@@ -128,6 +133,7 @@ export default function PostPage() {
       ) : (
         <FullScreenAttachment
           attachmentUrls={data.attachments}
+          createdAt={data.createdAt}
           clickedImageIndex={clickedImageIndex}
           setClickedImageIndex={setClickedImageIndex}
         />
@@ -151,10 +157,9 @@ export default function PostPage() {
           </span>
         </div>
 
-        <p
-          className={styles.contentText}
-          dangerouslySetInnerHTML={convertHyperlink(data.content)}
-        ></p>
+        <p className={styles.contentText}>
+          {renderTextWithLinks(data.content)}
+        </p>
 
         {data.attachments.length !== 0 && (
           <AttachmentSwiper

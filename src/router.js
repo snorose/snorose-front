@@ -42,10 +42,16 @@ import { AttendancePage, MainPage } from '@/page/home';
 import { SearchPage } from '@/page/search';
 import {
   AboutPage,
-  FAQPage,
   PrivacyPolicyPage,
   ServicePolicyPage,
 } from '@/page/snorose';
+import {
+  WriteInquiryPage,
+  EditInquiryPage,
+  WriteReportPage,
+  EditReportPage,
+  FAQPage,
+} from '@/page/support';
 import {
   ActivityPage,
   ChangePwPage,
@@ -79,6 +85,7 @@ const getRolesForReadBoard = (boardPath) => {
         ROLE.admin,
         ROLE.official,
         ROLE.blacklist,
+        ROLE.advertiser,
       ];
     case 'student-council':
       return [ROLE.user, ROLE.admin, ROLE.official];
@@ -224,11 +231,13 @@ export const routeList = [
         path: '/board/all/search',
         element: <SearchPage />,
       },
+
+      /* 이벤트 */
       {
         path: '/board/event',
         element: (
           <ProtectedRoute
-            roles={[ROLE.user, ROLE.admin]}
+            roles={[ROLE.user, ROLE.admin, ROLE.advertiser]}
             message={'이벤트 게시판 접근 권한이 없어요'}
           >
             <EventListPage />
@@ -239,7 +248,7 @@ export const routeList = [
         path: `/board/event/notice`,
         element: (
           <ProtectedRoute
-            roles={[ROLE.user, ROLE.admin]}
+            roles={[ROLE.user, ROLE.admin, ROLE.advertiser]}
             message={'이벤트 게시판 접근 권한이 없어요'}
           >
             <NoticeListPage />
@@ -250,7 +259,7 @@ export const routeList = [
         path: '/board/event-notice/post/:postId',
         element: (
           <ProtectedRoute
-            roles={[ROLE.user, ROLE.admin]}
+            roles={[ROLE.user, ROLE.admin, ROLE.advertiser]}
             message={'공지글 접근 권한이 없어요'}
           >
             <PostPage />
@@ -294,13 +303,15 @@ export const routeList = [
         path: `/board/event/post/:postId`,
         element: (
           <ProtectedRoute
-            roles={[ROLE.user, ROLE.admin]}
+            roles={[ROLE.user, ROLE.admin, ROLE.advertiser]}
             message={'게시글 접근 권한이 없어요'}
           >
             <EventPage />
           </ProtectedRoute>
         ),
       },
+
+      /* 시험후기 */
       {
         path: '/board/exam-review',
         element: (
@@ -395,6 +406,8 @@ export const routeList = [
           </CheckExamPeriodRoute>
         ),
       },
+
+      /* 알림 */
       {
         path: '/alert',
         element: (
@@ -419,9 +432,94 @@ export const routeList = [
       },
       {
         path: '/attendance',
-        element: <AttendancePage />,
+        element: (
+          <ProtectedRoute>
+            <AttendancePage />
+          </ProtectedRoute>
+        ),
         loader: attendanceLoader,
       },
+
+      /* 문의 및 신고 */
+      {
+        path: 'support',
+        children: [
+          {
+            path: 'faq',
+            element: (
+              <ProtectedRoute>
+                <FAQPage />
+              </ProtectedRoute>
+            ),
+          },
+        ],
+      },
+      {
+        path: 'inquiry',
+        children: [
+          {
+            path: 'write',
+            element: (
+              <ProtectedRoute>
+                <WriteInquiryPage />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: ':inquiryId',
+            element: (
+              <ProtectedRoute>
+                <PostPage />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: ':inquiryId/edit',
+            element: (
+              <ProtectedRoute>
+                <EditInquiryPage />
+              </ProtectedRoute>
+            ),
+          },
+        ],
+      },
+      {
+        path: 'report',
+        children: [
+          {
+            path: 'write',
+            children: [
+              { index: true, element: <NotFoundPage /> },
+              {
+                path: ':reportType',
+                element: (
+                  <ProtectedRoute>
+                    <WriteReportPage />
+                  </ProtectedRoute>
+                ),
+              },
+            ],
+          },
+          {
+            path: ':reportId',
+            element: (
+              <ProtectedRoute>
+                <PostPage />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: ':reportId/edit',
+            element: (
+              <ProtectedRoute>
+                <EditReportPage />
+              </ProtectedRoute>
+            ),
+          },
+        ],
+      },
+
+      /* 마이페이지 */
       {
         path: '/my-page',
         element: (
@@ -464,18 +562,7 @@ export const routeList = [
           </ProtectedRoute>
         ),
       },
-      {
-        path: '/my-page/faq',
-        element: <FAQPage />,
-      },
-      {
-        path: '/my-page/privacy-policy',
-        element: <PrivacyPolicyPage />,
-      },
-      {
-        path: '/my-page/service-policy',
-        element: <ServicePolicyPage />,
-      },
+
       {
         path: '/my-page/my-post',
         element: (
@@ -515,6 +602,18 @@ export const routeList = [
             <ActivityPage />
           </ProtectedRoute>
         ),
+      },
+      // {
+      //   path: '/my-page/inquiry-report',
+      //   element: <FAQPage />,
+      // },
+      {
+        path: '/my-page/privacy-policy',
+        element: <PrivacyPolicyPage />,
+      },
+      {
+        path: '/my-page/service-policy',
+        element: <ServicePolicyPage />,
       },
       {
         path: '/about',

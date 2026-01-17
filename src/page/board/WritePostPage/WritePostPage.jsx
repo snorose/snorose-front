@@ -80,12 +80,12 @@ export default function WritePostPage() {
 
   // 페이지 이탈 방지 모달 노출
   useEffect(() => {
-    if (title.trim().length > 0 || text.trim().length > 0) {
-      setIsBlock(true);
-    } else {
-      setIsBlock(false);
-    }
-  }, [title, text]);
+    setIsBlock(
+      title.trim().length > 0 ||
+        text.trim().length > 0 ||
+        attachmentsInfo.length > 0
+    );
+  }, [title, text, attachmentsInfo]);
 
   useBlocker(isBlock);
 
@@ -143,46 +143,46 @@ export default function WritePostPage() {
     attachmentsInfo: attachmentsInfo,
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (submitDisabled) return;
 
     setSubmitDisabled(true);
 
-    // 게시글 등록
-    postPost(data)
-      .then((response) => {
-        if (response.status === 201) {
-          !response.data.result.pointDifference
-            ? toast({
-                message: TOAST.POST.createNoPoints,
-                variant: 'success',
-              })
-            : toast({ message: TOAST.POST.create, variant: 'success' });
-          const newPostId = response.data.result.postId;
+    try {
+      const response = await postPost(data);
 
-          queryClient.removeQueries(QUERY_KEY.post());
-          invalidUserInfoQuery();
-          currentBoard.id === 12 || isNotice
-            ? navigate(`/board/${currentBoard.textId}/notice`, {
-                replace: true,
-              })
-            : navigate(
-                `/board/${BOARD_MENUS.find((menu) => menu.id === boardId).textId}/post/${newPostId}`,
-                { replace: true }
-              );
+      if (response.status === 201) {
+        !response.data.result.pointDifference
+          ? toast({
+              message: TOAST.POST.createNoPoints,
+              variant: 'success',
+            })
+          : toast({ message: TOAST.POST.create, variant: 'success' });
 
-          // post 등록이 잘 되었으면 썸네일 생성하기
-          createThumbnail(boardId, newPostId);
-        }
-      })
-      .catch(({ response }) => {
-        toast({ message: response.data.message, variant: 'error' });
-      })
-      .finally(() => {
-        setSubmitDisabled(false);
-      });
+        const newPostId = response.data.result.postId;
+
+        queryClient.removeQueries(QUERY_KEY.post());
+        invalidUserInfoQuery();
+
+        currentBoard.id === 12 || isNotice
+          ? navigate(`/board/${currentBoard.textId}/notice`, { replace: true })
+          : navigate(
+              `/board/${
+                BOARD_MENUS.find((menu) => menu.id === boardId).textId
+              }/post/${newPostId}`,
+              { replace: true }
+            );
+
+        // post 등록이 잘 되었으면 썸네일 생성하기
+        await createThumbnail(boardId, newPostId);
+      }
+    } catch (err) {
+      toast({ message: err.response?.data?.message, variant: 'error' });
+    } finally {
+      setSubmitDisabled(false);
+    }
   };
 
   // 제목 127자 제한
