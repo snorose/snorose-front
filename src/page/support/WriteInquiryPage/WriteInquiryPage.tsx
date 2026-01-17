@@ -13,13 +13,9 @@ import {
 import { INQUIRY_OPTION } from '@/feature/support/data';
 import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 
-import styles from './WriteInquiryPage.module.css';
+import { Option } from '@/types';
 
-// 중복 타입
-type Option = {
-  key: string;
-  label: string;
-};
+import styles from './WriteInquiryPage.module.css';
 
 export default function WriteInquiryPage() {
   const { userInfo } = useAuth();

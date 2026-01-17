@@ -16,14 +16,11 @@ import { NotFoundPage } from '@/page/etc';
 import { REPORT_OPTION } from '@/feature/report/data';
 import { REPORT_PLACEHOLDERS } from '@/feature/report/constant';
 
+import { Option } from '@/types';
+
 import styles from './WriteReportPage.module.css';
 
 type ReportType = (typeof VALID_REPORT_TYPES)[number];
-
-type Option = {
-  key: string;
-  label: string;
-};
 
 const VALID_REPORT_TYPES = ['post', 'comment', 'user', 'exam'] as const;
 
