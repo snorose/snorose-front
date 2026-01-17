@@ -78,7 +78,9 @@ export default function WriteReportPage() {
           ))}
         </DropdownBlue.Menu>
       </DropdownBlue>
+
       <Profile userRoleId={userInfo.userRoleId} nickname={userInfo.nickname} />
+
       <div className={styles.form}>
         <TextFieldBlue>
           <TextFieldBlue.Label>제목</TextFieldBlue.Label>

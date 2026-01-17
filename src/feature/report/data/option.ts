@@ -28,7 +28,7 @@ const user = [
 ];
 
 const exam = [
-  { key: 'EXAM_FAKE_CONTENT', label: '허위 족보' },
+  { key: 'EXAM_FAKE_REVIEW', label: '허위 족보' },
   { key: 'EXAM_COMMERCIAL_SALE', label: ' 상업적 판매' },
   { key: 'EXAM_OTHER', label: '기타' },
 ];
