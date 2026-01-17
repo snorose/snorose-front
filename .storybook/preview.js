@@ -2,7 +2,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ToastProvider } from '@/shared/context/ToastContext';
 
-import './index.css';
+import '@/index.css';
+import '../.storybook/index.css';
 
 /** @type { import('@storybook/react').Preview } */
 

@@ -20,13 +20,13 @@ export default function NoticeBar({ data, onClick }) {
           <div className={styles.iconContainer}>
             <Icon id='like' width={14} height={13} fill='#D9D9D9' />
             <span className={styles.like_cnt}>
-              {data.likeCount.toLocaleString()}
+              {(data.likeCount ?? 0).toLocaleString()}
             </span>
           </div>
           <div className={styles.iconContainer}>
             <Icon id='bookmark-fill' width={11} height={13} fill='#D9D9D9' />
             <span className={styles.like_cnt}>
-              {data.scrapCount.toLocaleString()}
+              {(data.scrapCount ?? 0).toLocaleString()}
             </span>
           </div>
         </div>
