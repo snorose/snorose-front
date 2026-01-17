@@ -15,6 +15,8 @@ import styles from './DropdownBlue.module.css';
 interface AccessibilityContextType {
   triggerId: string;
   menuId: string;
+  triggerRef: React.RefObject<HTMLDivElement>;
+  itemRefs: React.RefObject<Map<string, HTMLDivElement>>;
 }
 
 interface DropdownBlueContextType {
@@ -54,6 +56,9 @@ const useDropdownBlueContext = () => {
 export const DropdownBlue = ({ children }: { children: ReactNode }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef(new Map<string, HTMLDivElement>());
+
   const menuId = useId();
   const triggerId = useId();
 
@@ -77,7 +82,9 @@ export const DropdownBlue = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AccessibilityContext.Provider value={{ menuId, triggerId }}>
+    <AccessibilityContext.Provider
+      value={{ menuId, triggerId, triggerRef, itemRefs }}
+    >
       <DropdownBlueContext.Provider value={{ isOpen, toggle, close }}>
         <div ref={dropdownRef} className={styles.container}>
           {children}
@@ -88,11 +95,12 @@ export const DropdownBlue = ({ children }: { children: ReactNode }) => {
 };
 
 const Trigger = ({ children }: { children: ReactNode }) => {
-  const { triggerId, menuId } = useAccessibilityContext();
+  const { triggerRef, triggerId, menuId } = useAccessibilityContext();
   const { isOpen, toggle } = useDropdownBlueContext();
 
   return (
     <div
+      ref={triggerRef}
       className={styles.trigger}
       onClick={toggle}
       onKeyDown={(e) => {
@@ -125,16 +133,13 @@ const Trigger = ({ children }: { children: ReactNode }) => {
 };
 
 const Menu = ({ children }: { children: ReactNode }) => {
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  const { triggerId, menuId } = useAccessibilityContext();
+  const { itemRefs, triggerRef, triggerId, menuId } = useAccessibilityContext();
   const { isOpen, close } = useDropdownBlueContext();
 
   useEffect(() => {
-    if (isOpen && menuRef.current) {
-      const firstOption =
-        menuRef.current.querySelector<HTMLElement>('[role="option"]');
-      firstOption?.focus();
+    if (isOpen && itemRefs.current) {
+      const items = Array.from(itemRefs.current.values());
+      items[0]?.focus();
     }
   }, [isOpen]);
 
@@ -143,39 +148,39 @@ const Menu = ({ children }: { children: ReactNode }) => {
   }
 
   const handleKeyEvent = (e: React.KeyboardEvent) => {
-    if (!menuRef.current) return;
+    const map = itemRefs.current;
+    if (!map) return;
 
-    const options =
-      menuRef.current.querySelectorAll<HTMLElement>('[role="option"]');
-
-    const index = Array.from(options).indexOf(
-      document.activeElement as HTMLElement
-    );
+    const items = Array.from(map.values());
+    const index = items.indexOf(e.target as HTMLDivElement);
 
     switch (e.key) {
       case 'ArrowUp': {
-        const nextIndex = index > 0 ? index - 1 : 0;
-        options[nextIndex].focus();
+        const prevIndex = index > 0 ? index - 1 : 0;
+        items[prevIndex].focus();
         break;
       }
       case 'ArrowDown': {
         const nextIndex =
-          index < options.length - 1 ? index + 1 : options.length - 1;
-        options[nextIndex].focus();
+          index < items.length - 1 ? index + 1 : items.length - 1;
+        items[nextIndex].focus();
         break;
       }
-      case 'Enter':
-        (document.activeElement as HTMLElement).click();
+      case 'Enter': {
+        items[index].click();
+        triggerRef.current?.focus();
         break;
-      case 'Escape':
+      }
+      case 'Escape': {
         close();
+        triggerRef.current?.focus();
         break;
+      }
     }
   };
 
   return (
     <div
-      ref={menuRef}
       className={styles.menu}
       onKeyDown={handleKeyEvent}
       id={menuId}
@@ -189,13 +194,16 @@ const Menu = ({ children }: { children: ReactNode }) => {
 
 const Item = ({
   children,
+  id,
   selected = false,
   onClick,
 }: {
   children: ReactNode;
+  id: string;
   selected?: boolean;
   onClick?: () => void;
 }) => {
+  const { itemRefs } = useAccessibilityContext();
   const { close } = useDropdownBlueContext();
 
   const handleClick = () => {
@@ -205,9 +213,15 @@ const Item = ({
 
   return (
     <div
+      ref={(el) => {
+        if (el) {
+          itemRefs.current.set(id, el);
+        } else {
+          itemRefs.current.delete(id);
+        }
+      }}
       className={`${styles.item} ${selected && styles.selected}`}
       onClick={handleClick}
-      onKeyDown={() => {}}
       role='option'
       aria-selected={selected}
       tabIndex={-1}
