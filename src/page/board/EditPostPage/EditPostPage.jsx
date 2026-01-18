@@ -26,6 +26,7 @@ import { useAuth, useBlocker, useModal, useToast } from '@/shared/hook';
 import { DateTime } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
 
+import { createThumbnail } from '@/apis';
 import { getPostContent, patchPost } from '@/apis';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
@@ -90,19 +91,23 @@ export default function EditPostPage() {
     setIsBlock(
       data.title !== title.trim() ||
         data.content !== text.trim() ||
-        data.isNotice !== isNotice
+        data.isNotice !== isNotice ||
+        data.attachments !== attachmentsInfo
     );
-  }, [title, text, isNotice]);
+  }, [title, text, isNotice, attachmentsInfo]);
 
   // 게시글 수정
   const mutation = useMutation({
     mutationKey: [MUTATION_KEY.editPost],
     mutationFn: patchPost,
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries(QUERY_KEY.post(postId));
       navigate(-1);
       toast({ message: TOAST.POST.edit, variant: 'success' });
       setSubmitDisabled(false);
+
+      // post 수정 등록이 잘 되었으면 썸네일 생성하기
+      await createThumbnail(currentBoard?.id, postId);
     },
     onError: ({ response }) => {
       toast({ message: response.data.message, variant: 'error' });
@@ -288,10 +293,6 @@ export default function EditPostPage() {
               e.dataTransfer.getData('text/plain'),
               10
             );
-            setDeleteAttachments((prev) => [
-              ...prev,
-              attachmentsInfo[draggedIndex].id,
-            ]);
             setTrashImageIndex(draggedIndex);
             setIsTrashOverlapped(false);
             trashImageConfirmModal.openModal();
@@ -307,6 +308,11 @@ export default function EditPostPage() {
         <ConfirmModal
           modalText={ATTACHMENT_MODAL_TEXT.DELETE_ATTACHMENT}
           onConfirm={() => {
+            setDeleteAttachments((prev) =>
+              attachmentsInfo[trashImageIndex]?.id
+                ? [...prev, attachmentsInfo[trashImageIndex].id]
+                : prev
+            );
             setAttachmentsInfo((prev) =>
               prev
                 .slice(0, trashImageIndex)

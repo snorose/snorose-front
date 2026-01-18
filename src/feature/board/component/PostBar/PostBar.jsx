@@ -16,7 +16,7 @@ export default function PostBar({ data, hasComment = true, hasLike = true }) {
   return (
     <div className={styles.post}>
       <div className={styles.thumbnailContainer}>
-        <div>
+        <div className={styles.postBarLeft}>
           <div className={styles.postBarTop}>
             <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
             <p className={styles.author}>{data.userDisplay}</p>
@@ -46,14 +46,16 @@ export default function PostBar({ data, hasComment = true, hasLike = true }) {
         </div>
 
         {data.hasMediaAttachment && (
-          <img
-            className={styles.thumbnail}
-            src={data.thumbnailUrl || altImage}
-            loading='lazy'
-            onError={(e) => {
-              e.currentTarget.src = altImage;
-            }}
-          />
+          <div className={styles.thumbnail}>
+            <img
+              className={styles.thumbnailImg}
+              src={data.thumbnailUrl || altImage}
+              loading='lazy'
+              onError={(e) => {
+                e.currentTarget.src = altImage;
+              }}
+            />
+          </div>
         )}
       </div>
 

@@ -114,7 +114,7 @@ export const patchPost = async ({
     .filter((att) => att.id === '')
     .map((att) => att.file);
   let attachmentUrlList = response.data.result.attachmentUrlList;
-  putFileInBucket(attachmentUrlList, newFiles);
+  await putFileInBucket(attachmentUrlList, newFiles);
 
   return response;
 };
