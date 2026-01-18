@@ -19,52 +19,6 @@
   background: var(--blue-2);
 }
 
-.drawCount {
-  margin-top: 1.8rem;
-}
-
-.counterControls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin: 0.7rem 0 1.8rem;
-}
-
-.minus {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  border: none;
-  background-color: var(--blue-2);
-  color: #fff;
-}
-
-.plus {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  border: none;
-  background-color: var(--blue-4);
-  color: #fff;
-}
-
-.drawNumber {
-  border: 1px solid var(--blue-2);
-  border-radius: 0.5rem;
-  padding: 1.4rem 0 1.4rem 1.4rem;
-  background-color: transparent;
-  color: var(--grey-3-1);
-  width: 30%;
-  display: inline-block;
-  text-align: center;
-  font: var(--text-body-1-med);
-}
-
-.count {
-  min-width: 2rem;
-  text-align: center;
-}
-
 .error {
   border: 1px solid var(--pink-3);
   color: var(--pink-3);
