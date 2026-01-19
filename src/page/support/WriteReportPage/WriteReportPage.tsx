@@ -59,7 +59,7 @@ export default function WriteReportPage() {
         <SubmitButton disabled={disabled} />
       </CloseAppBar>
 
-      <DropdownBlue>
+      <DropdownBlue className={styles.dropdown}>
         <DropdownBlue.Trigger>
           {selectedOption?.label ?? placeholder.dropdown}
         </DropdownBlue.Trigger>
