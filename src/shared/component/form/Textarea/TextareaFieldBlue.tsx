@@ -71,7 +71,9 @@ function Input({
         minRows={minRows}
         maxRows={maxRows}
       />
-      <div>{value.length}/2000</div>
+      <div>
+        {value.length}/{maxLength}
+      </div>
     </div>
   );
 }
