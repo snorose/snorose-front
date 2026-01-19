@@ -81,7 +81,7 @@ export default function WriteInquiryPage() {
         </TextFieldBlue>
 
         <TextareaFieldBlue>
-          <TextareaFieldBlue.Label>신고 내용</TextareaFieldBlue.Label>
+          <TextareaFieldBlue.Label>문의 내용</TextareaFieldBlue.Label>
           <TextareaFieldBlue.Input
             placeholder={INQUIRY_PLACEHOLDERS.content}
             value={content}
