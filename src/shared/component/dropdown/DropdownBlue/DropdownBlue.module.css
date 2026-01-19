@@ -34,8 +34,6 @@
   max-height: 22.8rem;
   overflow: auto;
 
-  display: flex;
-  flex-direction: column;
   border-radius: 0.5rem;
 
   box-shadow: 0 0 3.6rem 0 rgba(0, 0, 0, 0.1);

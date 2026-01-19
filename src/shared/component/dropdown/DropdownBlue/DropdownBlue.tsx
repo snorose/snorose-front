@@ -53,7 +53,13 @@ const useDropdownBlueContext = () => {
   return context;
 };
 
-export const DropdownBlue = ({ children }: { children: ReactNode }) => {
+export const DropdownBlue = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -86,7 +92,7 @@ export const DropdownBlue = ({ children }: { children: ReactNode }) => {
       value={{ menuId, triggerId, triggerRef, itemRefs }}
     >
       <DropdownBlueContext.Provider value={{ isOpen, toggle, close }}>
-        <div ref={dropdownRef} className={styles.container}>
+        <div ref={dropdownRef} className={`${styles.container} ${className}`}>
           {children}
         </div>
       </DropdownBlueContext.Provider>
