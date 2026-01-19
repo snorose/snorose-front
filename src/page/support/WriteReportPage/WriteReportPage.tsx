@@ -67,6 +67,7 @@ export default function WriteReportPage() {
         <DropdownBlue.Menu>
           {options.map((option) => (
             <DropdownBlue.Item
+              key={option.key}
               id={option.key}
               selected={selectedOption?.key === option.key}
               onClick={() => updateOption(option)}

@@ -49,6 +49,7 @@ export default function WriteInquiryPage() {
         <DropdownBlue.Menu>
           {INQUIRY_OPTION.map((option) => (
             <DropdownBlue.Item
+              key={option.key}
               id={option.key}
               selected={selectedOption?.key === option.key}
               onClick={() => updateOption(option)}
