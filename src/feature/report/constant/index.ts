@@ -1,1 +1,1 @@
-export * from './placholder';
+export * from './placeholder';
