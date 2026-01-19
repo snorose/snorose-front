@@ -20,9 +20,9 @@ import { Option } from '@/types';
 
 import styles from './WriteReportPage.module.css';
 
-type ReportType = (typeof VALID_REPORT_TYPES)[number];
-
 const VALID_REPORT_TYPES = ['post', 'comment', 'user', 'exam'] as const;
+
+type ReportType = (typeof VALID_REPORT_TYPES)[number];
 
 function isValidReportType(x: any): x is ReportType {
   return VALID_REPORT_TYPES.includes(x);
