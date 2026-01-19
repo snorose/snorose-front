@@ -1,0 +1,38 @@
+.container {
+  margin: 0 var(--default-margin);
+
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+
+    font: var(--text-headline-2-med);
+    color: var(--grey-4);
+  }
+
+  & > .fileName {
+    flex: 1;
+
+    padding: 0 1.3rem;
+
+    height: 4rem;
+
+    display: flex;
+    align-items: center;
+    border-radius: 0.5rem;
+    border: 1px solid var(--blue-2);
+    background-color: var(--blue-0);
+
+    font: var(--text-body-1-reg);
+    text-decoration: underline;
+  }
+
+  & > .fileName.placeholder {
+    color: var(--grey-3-1);
+    text-decoration: none;
+  }
+}

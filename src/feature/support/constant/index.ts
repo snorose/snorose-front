@@ -1,1 +1,2 @@
-export * from './placeholder';
+export * from './inquiry';
+export * from './report';

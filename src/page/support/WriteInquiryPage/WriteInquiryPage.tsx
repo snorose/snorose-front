@@ -1,15 +1,15 @@
-import { useId, useState } from 'react';
+import { useState } from 'react';
 
 import { useAuth } from '@/shared/hook';
 import {
   CloseAppBar,
   DropdownBlue,
-  Icon,
   Profile,
   TextareaFieldBlue,
   TextFieldBlue,
 } from '@/shared/component';
 
+import { SubmitButton, FileUploadSection } from '@/feature/support/ui';
 import { INQUIRY_OPTION } from '@/feature/support/data';
 import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 
@@ -38,7 +38,9 @@ export default function WriteInquiryPage() {
   return (
     <div className={styles.container}>
       <CloseAppBar backgroundColor={'#eaf5fd'}>
-        <SubmitButton disabled={disabled} />
+        <SubmitButton onClick={() => alert('submit!')} disabled={disabled}>
+          등록
+        </SubmitButton>
       </CloseAppBar>
 
       <DropdownBlue className={styles.dropdown}>
@@ -95,59 +97,5 @@ export default function WriteInquiryPage() {
         <FileUploadSection files={files} updateFiles={updateFiles} />
       </div>
     </div>
-  );
-}
-
-function FileUploadSection({
-  files,
-  updateFiles,
-}: {
-  files: File[];
-  updateFiles: (files: File[]) => void;
-}) {
-  const id = useId();
-
-  return (
-    <label htmlFor={id} className={styles.fileContainer}>
-      <input
-        id={id}
-        type='file'
-        onChange={(e) => updateFiles(Array.from(e.target.files))}
-        multiple
-        hidden
-      />
-
-      <div>
-        <Icon
-          id='clip-board-list'
-          fill={'#bfd7ec'}
-          stroke={'#5f86bf'}
-          width={24}
-          height={24}
-        />
-        <div>첨부파일</div>
-      </div>
-
-      {files.length === 0 && (
-        <div className={`${styles.fileName} ${styles.placeholder}`}>
-          파일을 첨부하세요
-        </div>
-      )}
-      {files.length > 0 && (
-        <div className={styles.fileName}>{files[0].name}</div>
-      )}
-    </label>
-  );
-}
-
-function SubmitButton({ disabled }: { disabled: boolean }) {
-  return (
-    <button
-      className={styles.submit}
-      onClick={() => alert('submit!')}
-      disabled={disabled}
-    >
-      등록
-    </button>
   );
 }
