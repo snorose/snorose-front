@@ -23,7 +23,7 @@ export default function FileUploadSection({
         hidden
       />
 
-      <div>
+      <div className={styles.left}>
         <Icon
           id='clip-board-list'
           fill={'#bfd7ec'}
@@ -34,14 +34,17 @@ export default function FileUploadSection({
         <div>첨부파일</div>
       </div>
 
-      {files.length === 0 && (
-        <div className={`${styles.fileName} ${styles.placeholder}`}>
-          파일을 첨부하세요
-        </div>
-      )}
-      {files.length > 0 && (
-        <div className={styles.fileName}>{files[0].name}</div>
-      )}
+      <div className={styles.right}>
+        {files.length > 0 && (
+          <span className={styles.fileName}>
+            {files.map((file) => file.name).join(', ')}
+          </span>
+        )}
+
+        {files.length === 0 && (
+          <span className={styles.placeholder}>파일을 첨부하세요</span>
+        )}
+      </div>
     </label>
   );
 }
