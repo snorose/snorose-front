@@ -128,7 +128,6 @@ const Trigger = ({ children }: { children: ReactNode }) => {
           id='clip-board-list'
           width={21}
           height={22}
-          fill='white'
         />
         <p>{children}</p>
       </div>
