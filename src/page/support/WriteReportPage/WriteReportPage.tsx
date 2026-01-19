@@ -107,7 +107,13 @@ export default function WriteReportPage() {
   );
 }
 
-function FileUploadSection({ files, updateFiles }) {
+function FileUploadSection({
+  files,
+  updateFiles,
+}: {
+  files: File[];
+  updateFiles: (files: File[]) => void;
+}) {
   const id = useId();
 
   return (
