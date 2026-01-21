@@ -33,6 +33,8 @@ export const postEvent = async ({
   drawCount,
   link,
 }) => {
+  const nullDate = (date) => (date ? DateTime.format(date, 'ISO') : null);
+
   const data = {
     category: category,
     isNotice: isNotice,
@@ -40,9 +42,9 @@ export const postEvent = async ({
     content: content,
     host: host,
     place: place,
-    startAt: kstISO(startAt),
-    endAt: kstISO(endAt),
-    announceAt: kstISO(announceAt),
+    startAt: nullDate(startAt),
+    endAt: nullDate(endAt),
+    announceAt: nullDate(announceAt),
     drawCount: drawCount,
     link: link,
   };
@@ -68,6 +70,8 @@ export const patchEvent = async ({
   drawCount,
   link,
 }) => {
+  const nullDate = (date) => (date ? DateTime.format(date, 'ISO') : null);
+
   const editedEvent = {
     postId: postId,
     category: category,
@@ -76,9 +80,9 @@ export const patchEvent = async ({
     content: content,
     host: host,
     place: place,
-    startAt: kstISO(startAt),
-    endAt: kstISO(endAt),
-    announceAt: kstISO(announceAt),
+    startAt: nullDate(startAt),
+    endAt: nullDate(endAt),
+    announceAt: nullDate(announceAt),
     drawCount: drawCount,
     link: link,
   };
