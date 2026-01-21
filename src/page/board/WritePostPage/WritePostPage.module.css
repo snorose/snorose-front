@@ -1,3 +1,26 @@
+.buttons {
+  width: 100%;
+  height: 7rem;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+}
+.button {
+  width: 100%;
+  height: 100%;
+  padding: 10px 0px;
+  color: white;
+  border-top: 1px solid var(--grey-3-1);
+  z-index: 1000;
+}
+.button:first-child {
+  border-right: 1px solid var(--grey-3-1);
+}
+.button:hover {
+  background-color: var(--grey-3-1);
+}
+
 .container {
   height: 100vh;
 

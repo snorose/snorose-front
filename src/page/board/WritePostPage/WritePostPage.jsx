@@ -27,8 +27,12 @@ import { ModalContext } from '@/shared/context/ModalContext';
 
 import { createThumbnail, postPost } from '@/apis';
 import { AttachmentBar } from '@/feature/board/component';
+import { Guideline } from '@/feature/attachment/component';
+import { useGuide } from '@/feature/attachment/hook';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
+import attachmentGuide1 from '@/assets/images/attachmentGuide1.png';
+import attachmentGuide2 from '@/assets/images/attachmentGuide2.png';
 
 import styles from './WritePostPage.module.css';
 
@@ -47,7 +51,11 @@ export default function WritePostPage() {
   const [text, setText] = useState('');
   const submitLockRef = useRef(false);
   const [isBlock, setIsBlock] = useState(false);
-
+  //가이드 이미지 관련 로직
+  const { isGuideOpened, closeGuide, disableGuide } = useGuide({
+    guideKey: 'attachmentGuide',
+    maxGuideVisitNum: 3,
+  });
   //'게시글 생성' API에서 요구하는 데이터 (중 attachments array)
   const [attachmentsInfo, setAttachmentsInfo] = useState([]);
 
@@ -213,6 +221,18 @@ export default function WritePostPage() {
 
   return (
     <>
+      {isGuideOpened && (
+        <Guideline guideImages={[attachmentGuide1, attachmentGuide2]}>
+          <div className={styles.buttons}>
+            <button className={styles.button} onClick={closeGuide}>
+              닫기
+            </button>
+            <button className={styles.button} onClick={disableGuide}>
+              다시는 보지 않기
+            </button>
+          </div>
+        </Guideline>
+      )}
       <div className={styles.container}>
         {(createPostMutation.isPending ||
           createThumbnailMutation.isPending) && (
