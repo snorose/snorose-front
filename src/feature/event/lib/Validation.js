@@ -48,17 +48,8 @@ export const validateOnSubmit = (data) => {
 export const validateRequiredFields = (formType, data, errors) => {
   const required =
     formType === 'etc'
-      ? ['title', 'host', 'startAt', 'endAt', 'announceAt', 'content', 'link']
-      : [
-          'title',
-          'host',
-          'place',
-          'startAt',
-          'endAt',
-          'announceAt',
-          'content',
-          'link',
-        ];
+      ? ['title', 'host', 'content', 'link']
+      : ['title', 'host', 'place', 'content', 'link'];
   const isFilled = required.every((field) => data[field]?.trim());
   const hasErrors = Object.keys(errors).length > 0;
 

@@ -13,7 +13,7 @@ import {
   PrimaryButton,
 } from '@/shared/component';
 import { LIKE_TYPE, QUERY_KEY, ROLE, TOAST } from '@/shared/constant';
-import { convertHyperlink, DateTime, getBoard } from '@/shared/lib';
+import { renderTextWithLinks, DateTime, getBoard } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useModalReset } from '@/shared/hook/useBlocker';
 import { useAuth, useToast } from '@/shared/hook';
