@@ -249,7 +249,7 @@ export default function EventPage() {
 
           <p
             className={styles.contentText}
-            dangerouslySetInnerHTML={convertHyperlink(data.content)}
+            dangerouslySetInnerHTML={renderTextWithLinks(data.content)}
           ></p>
 
           <div className={styles.note}>
