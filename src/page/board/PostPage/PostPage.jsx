@@ -223,10 +223,11 @@ function MetaContainer({
     try {
       await updateNotificationSetting.mutateAsync(nextStatus);
 
-      const message = nextStatus
-        ? '댓글 알림이 설정되었습니다.'
-        : '댓글 알림이 해제되었습니다.';
-      toast(message);
+      toast({
+        message: nextStatus
+          ? '댓글 알림이 설정되었습니다.'
+          : '댓글 알림이 해제되었습니다.',
+      });
     } catch (error) {
       if (error instanceof AppError) {
         toast.error(error.message);
