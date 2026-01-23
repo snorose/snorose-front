@@ -229,11 +229,12 @@ function MetaContainer({
           : '댓글 알림이 해제되었습니다.',
       });
     } catch (error) {
-      if (error instanceof AppError) {
-        toast.error(error.message);
-      } else {
-        toast.error('잠시 후 다시 시도해주세요.');
-      }
+      const errorMessage =
+        error instanceof AppError
+          ? error.message
+          : '잠시 후 다시 시도해주세요.';
+
+      toast({ message: errorMessage, variant: 'error' });
     }
   };
 
