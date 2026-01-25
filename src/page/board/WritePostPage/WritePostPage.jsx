@@ -222,7 +222,10 @@ export default function WritePostPage() {
   return (
     <>
       {isGuideOpened && (
-        <Guideline guideImages={[attachmentGuide1, attachmentGuide2]}>
+        <Guideline
+          guideImages={[attachmentGuide1, attachmentGuide2]}
+          guideStyle={{ position: 'absolute', bottom: '10.2rem' }}
+        >
           <div className={styles.buttons}>
             <button className={styles.button} onClick={closeGuide}>
               닫기
