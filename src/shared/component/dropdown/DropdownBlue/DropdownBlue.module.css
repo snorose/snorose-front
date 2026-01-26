@@ -64,13 +64,9 @@
     border: none;
   }
 
-  &:hover,
   &:focus {
     background-color: var(--blue-0);
     color: var(--blue-4);
-  }
-
-  &:focus {
     outline: none;
   }
 }

@@ -144,7 +144,12 @@ const Menu = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (isOpen && itemRefs.current) {
       const items = Array.from(itemRefs.current.values());
-      items[0]?.focus();
+      const selectedItem = items.find(
+        (el) => el.getAttribute('aria-selected') === 'true'
+      );
+
+      const fucusTargetItem = selectedItem || items[0];
+      fucusTargetItem.focus();
     }
   }, [isOpen]);
 
@@ -227,6 +232,9 @@ const Item = ({
       }}
       className={`${styles.item} ${selected && styles.selected}`}
       onClick={handleClick}
+      onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) =>
+        e.currentTarget.focus()
+      }
       role='option'
       aria-selected={selected}
       tabIndex={-1}
