@@ -6,7 +6,7 @@
     "start": "craco start",
     "build:origin": "craco build",
     "build:stage": "REACT_APP_SERVER_DOMAIN=https://stage.snorose.com npm run build:origin",
-    "build": "if [ \"$CF_PAGES_BRANCH\" = \"stage\" ]; then build:stage; else npm run build:origin; fi",
+    "build": "if [ \"$CF_PAGES_BRANCH\" = \"stage\" ]; then npm run build:stage; else npm run build:origin; fi",
     "test": "craco test",
     "eject": "craco eject",
     "storybook": "storybook dev -p 6006",
