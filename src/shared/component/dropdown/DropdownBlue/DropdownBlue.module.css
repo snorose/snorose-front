@@ -5,7 +5,7 @@
 }
 
 .trigger {
-  height: 4.5rem;
+  height: 5rem;
 
   display: flex;
   justify-content: space-between;
@@ -26,7 +26,7 @@
 
 .menu {
   position: absolute;
-  top: 100%;
+  top: 93%;
   left: 0;
   z-index: var(--z-index-dropdown);
 
