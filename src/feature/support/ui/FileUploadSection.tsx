@@ -16,11 +16,11 @@ export default function FileUploadSection({
   return (
     <label htmlFor={id} className={styles.container}>
       <input
+        className={styles.srOnly}
         id={id}
         type='file'
         onChange={(e) => updateFiles(Array.from(e.target.files))}
         multiple
-        hidden
       />
 
       <div className={styles.left}>

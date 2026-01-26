@@ -6,6 +6,17 @@
   gap: 1.2rem;
 }
 
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
 /* left */
 .left {
   flex-shrink: 0;
@@ -44,6 +55,10 @@
   white-space: nowrap;
 
   text-decoration: underline;
+}
+
+.container:focus-within .right {
+  border-color: var(--blue-3);
 }
 
 .placeholder {
