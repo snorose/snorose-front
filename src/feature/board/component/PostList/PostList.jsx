@@ -3,7 +3,6 @@ import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { useSuspensePagination } from '@/shared/hook';
 import { FetchLoading, List, PullToRefresh } from '@/shared/component';
 import {
-  timeAgo,
   getBoard,
   getBoardTitleToTextId,
   deduplicatePaginatedData,
@@ -72,7 +71,7 @@ export default function PostList() {
               }
               ref={index === postList.length - 1 ? ref : undefined}
             >
-              <PostBar data={{ ...post, timeAgo: timeAgo(post.date) }} />
+              <PostBar data={{ ...post }} />
             </Link>
           ))}
           {isFetching && <FetchLoading />}

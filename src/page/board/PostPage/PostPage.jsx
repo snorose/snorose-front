@@ -10,12 +10,7 @@ import { getPostContent } from '@/apis';
 
 import { NotFoundPage } from '@/page/etc';
 
-import {
-  AppError,
-  convertHyperlink,
-  fullDateTimeFormat,
-  getBoard,
-} from '@/shared/lib';
+import { AppError, convertHyperlink, DateTime, getBoard } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useToast, useModalReset } from '@/shared/hook';
 import {
@@ -265,7 +260,7 @@ function MetaContainer({
         )}
         <p className={styles.dot}>·</p>
         <p>
-          {fullDateTimeFormat(createdAt)}
+          {DateTime.format(createdAt, 'YMD_HM')}
           {isEdited && ' (수정됨)'}
         </p>
       </div>

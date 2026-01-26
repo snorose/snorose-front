@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { validateRequiredFields } from '@/feature/event/lib';
-import { eventTime } from '@/shared/lib';
+import { DateTime } from '@/shared/lib';
 import { TextField, DateField } from '@/feature/event/component';
 import styles from './EventForm.module.css';
 
@@ -89,7 +89,7 @@ export default function EventForm({
         label='시작일'
         name='startAt'
         type='datetime-local'
-        value={eventTime(data.startAt)}
+        value={DateTime.format(data.startAt, 'ISO').slice(0, 16)}
         min={today}
         onChange={onChange}
         error={errors.startAt}
@@ -98,7 +98,7 @@ export default function EventForm({
         label='종료일'
         name='endAt'
         type='datetime-local'
-        value={eventTime(data.endAt)}
+        value={DateTime.format(data.endAt, 'ISO').slice(0, 16)}
         min={data.startAt || today}
         onChange={onChange}
         error={errors.endAt}
@@ -108,7 +108,7 @@ export default function EventForm({
         label='당첨자 발표일'
         name='announceAt'
         type='datetime-local'
-        value={eventTime(data.announceAt)}
+        value={DateTime.format(data.announceAt, 'ISO').slice(0, 16)}
         min={data.endAt || today}
         onChange={onChange}
         error={errors.announceAt}

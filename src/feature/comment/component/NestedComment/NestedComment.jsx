@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { Icon, Badge } from '@/shared/component';
-import { timeAgo, convertHyperlink } from '@/shared/lib';
+import { DateTime, convertHyperlink } from '@/shared/lib';
 import { LIKE_TYPE, ROLE, SHOW_BADGE_PATH } from '@/shared/constant';
 
 import { useCommentContext } from '@/feature/comment/context';
@@ -71,7 +71,7 @@ export default function NestedComment({
           )}
           <p className={styles.dot}>·</p>
           <p>
-            {timeAgo(createdAt)} {isUpdated ? ' (수정됨)' : null}
+            {DateTime.timeAgo(createdAt)} {isUpdated ? ' (수정됨)' : null}
           </p>
         </div>
         {!isDeleted && isVisible && blockAdminReport && (

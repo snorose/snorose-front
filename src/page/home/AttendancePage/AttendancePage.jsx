@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useAuth, useToast } from '@/shared/hook';
 import { BackAppBar, FetchLoadingOverlay, Icon } from '@/shared/component';
 import { QUERY_KEY, TOAST } from '@/shared/constant';
-import { fireConfetti } from '@/shared/lib/confetti';
+import { fireConfetti } from '@/feature/attendance/lib/confetti';
 
 import { updatePoint } from '@/apis';
 

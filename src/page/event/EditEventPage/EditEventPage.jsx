@@ -19,7 +19,7 @@ import {
   CONFIRM_MODAL_TEXT,
 } from '@/shared/constant';
 import { useAuth, useBlocker, useToast } from '@/shared/hook';
-import { formattedNowTime } from '@/shared/lib';
+import { DateTime } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
 
 import { getEventContent, patchEvent } from '@/apis';
@@ -259,7 +259,7 @@ export default function EditEventPage() {
               )}
               <p>{userDisplay}</p>
               <p className={styles.dot}></p>
-              <p>{formattedNowTime()}</p>
+              <p>{DateTime.format(new Date(), 'MD_HM')}</p>
             </div>
           </div>
           <div className={styles.form}>{renderForm()}</div>

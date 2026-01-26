@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getMonthlyAttendanceHistory } from '@/apis';
 
 import { FetchLoadingOverlay, Icon } from '@/shared/component';
-import { isToday } from '@/shared/lib';
+import { DateTime } from '@/shared/lib';
 import { LOADING_MESSAGE, QUERY_KEY } from '@/shared/constant';
 
 import { StyledCalendar } from '@/feature/attendance/component/Calendar/Calendar.style.jsx';
@@ -89,7 +89,9 @@ function Tile({ date, data = [] }) {
       {checked ? (
         <Icon id='check-circle-fill' width={33} height={33} />
       ) : (
-        <div className={`${styles.day} ${isToday(date) && styles.today}`}>
+        <div
+          className={`${styles.day} ${DateTime.isToday(date) && styles.today}`}
+        >
           {new Intl.DateTimeFormat('ko-KR', {
             day: 'numeric',
           })

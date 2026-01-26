@@ -2,7 +2,7 @@ import { Suspense, useContext, useReducer } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
-import { AppError, fullDateTimeFormat } from '@/shared/lib';
+import { AppError, DateTime } from '@/shared/lib';
 import { useToast } from '@/shared/hook';
 import { ModalContext } from '@/shared/context/ModalContext';
 import {
@@ -177,7 +177,7 @@ function NotificationSettings() {
                 ),
               description: NOTICE_MODAL_TEXT.MAEKETING_NOTICE_MODAL.description(
                 isMarketingConsent,
-                fullDateTimeFormat(marketingConsentUpdatedAt)
+                DateTime.format(marketingConsentUpdatedAt, 'YMD_HM')
               ),
               confirmText: NOTICE_MODAL_TEXT.MAEKETING_NOTICE_MODAL.confirmText,
             };

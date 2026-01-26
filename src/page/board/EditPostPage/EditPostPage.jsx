@@ -3,14 +3,11 @@ import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { AttachmentBar } from '@/feature/board/component';
 import {
-  AttachmentList,
   BackAppBar,
   Badge,
   CloseAppBar,
   ConfirmModal,
-  DeleteModal,
   FetchLoading,
   Icon,
 } from '@/shared/component';
@@ -21,10 +18,9 @@ import {
   ROLE,
   TOAST,
   CONFIRM_MODAL_TEXT,
-  ATTACHMENT_MODAL_TEXT,
 } from '@/shared/constant';
-import { useAuth, useBlocker, useModal, useToast } from '@/shared/hook';
-import { formattedNowTime } from '@/shared/lib';
+import { useAuth, useBlocker, useToast } from '@/shared/hook';
+import { DateTime } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
 
 import { getPostContent, patchPost } from '@/apis';
@@ -199,6 +195,7 @@ export default function EditPostPage() {
               <p className={styles.categorySelectText}>{boardTitle}</p>
             </div>
           </div>
+
           <div className={styles.profileBox}>
             <div className={styles.profileBoxLeft}>
               {userInfo?.userRoleId !== ROLE.admin &&
@@ -212,8 +209,9 @@ export default function EditPostPage() {
               )}
               <p>{userDisplay}</p>
               <p className={styles.dot}></p>
-              <p>{formattedNowTime()}</p>
+              <p>{DateTime.format(new Date(), 'MD_HM')}</p>
             </div>
+
             {textId !== 'notice' && (
               <div
                 className={
@@ -233,6 +231,7 @@ export default function EditPostPage() {
               </div>
             )}
           </div>
+
           <div className={styles.content}>
             <TextareaAutosize
               className={styles.title}
@@ -247,9 +246,9 @@ export default function EditPostPage() {
               onChange={(e) => setText(e.target.value)}
             />
             {/* <AttachmentList
-                attachmentsInfo={attachmentsInfo}
-                setAttachmentsInfo={setAttachmentsInfo}
-              /> */}
+              attachmentsInfo={attachmentsInfo}
+              setAttachmentsInfo={setAttachmentsInfo}
+            /> */}
           </div>
         </div>
 
