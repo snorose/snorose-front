@@ -1,0 +1,15 @@
+name = "snorose-front"
+pages_build_output_dir = "build"
+
+# ---------------------------------------------------------
+# [env.브랜치명.vars] 형식으로 브랜치별 설정을 분리합니다.
+# ---------------------------------------------------------
+
+[env.dev.vars]
+REACT_APP_SERVER_DOMAIN = "https://dev.snorose.com"
+
+[env.stage.vars]
+REACT_APP_SERVER_DOMAIN = "https://stage.snorose.com"
+
+[env.main.vars]
+REACT_APP_SERVER_DOMAIN = "https://prod.snorose.com"
