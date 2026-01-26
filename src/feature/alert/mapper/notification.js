@@ -1,3 +1,5 @@
+import { DateTime } from '@/shared/lib';
+
 export function toNotificationItem({
   id,
   title,
@@ -12,29 +14,8 @@ export function toNotificationItem({
     title,
     content: body,
     isRead,
-    createdAt: formatToKST_MMDD_HHMM(createdAt),
+    createdAt: DateTime.format(createdAt, 'MD_HM'),
     url,
     category: filter,
   };
-}
-
-function formatToKST_MMDD_HHMM(iso) {
-  const d = new Date(iso);
-  if (isNaN(d.getTime())) return '';
-
-  const parts = new Intl.DateTimeFormat('ko-KR', {
-    timeZone: 'Asia/Seoul',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  })
-    .formatToParts(d)
-    .reduce((acc, p) => {
-      acc[p.type] = p.value;
-      return acc;
-    }, {});
-
-  return `${parts.month}.${parts.day} ${parts.hour}:${parts.minute}`;
 }
