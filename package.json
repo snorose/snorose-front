@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build:origin": "craco build",
+    "build": "if [ \"$CF_PAGES_BRANCH\" = \"stage\" ]; then REACT_APP_SERVER_DOMAIN=https://stage.snorose.com npm run build:origin; else npm run build:origin; fi",
     "test": "craco test",
     "eject": "craco eject",
     "storybook": "storybook dev -p 6006",
