@@ -3,8 +3,9 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { getBest3 } from '@/apis';
 
+import { BOARD_REGISTRY } from '@/shared/lib';
 import { QUERY_KEY } from '@/shared/constant';
-import { getBoardTextId } from '@/shared/lib';
+
 import { PostBar } from '@/feature/board/component';
 
 import styles from './HomeBesookt.module.css';
@@ -18,14 +19,19 @@ export default function HomeBesookt({ className }) {
 
   return (
     <div className={`${styles.list} ${className}`}>
-      {besookts.map((besookt) => (
-        <Link
-          key={`home-besookt-${besookt.boardId}-${besookt.postId}`}
-          to={`/board/${getBoardTextId(besookt.boardId)}/post/${besookt.postId}`}
-        >
-          <PostBar data={besookt} />
-        </Link>
-      ))}
+      {besookts.map((besookt) => {
+        const board = BOARD_REGISTRY.find(besookt.boardId);
+        const boardName = board.key.toLowerCase();
+
+        return (
+          <Link
+            key={`home-besookt-${besookt.boardId}-${besookt.postId}`}
+            to={`/board/${boardName}/post/${besookt.postId}`}
+          >
+            <PostBar data={besookt} />
+          </Link>
+        );
+      })}
     </div>
   );
 }
