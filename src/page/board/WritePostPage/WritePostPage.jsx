@@ -1,5 +1,5 @@
-import { useQueryClient } from '@tanstack/react-query';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useContext, useEffect, useMemo, useState, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
@@ -45,7 +45,7 @@ export default function WritePostPage() {
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
-  const [submitDisabled, setSubmitDisabled] = useState(false);
+  const submitLockRef = useRef(false);
   const [isBlock, setIsBlock] = useState(false);
 
   //'게시글 생성' API에서 요구하는 데이터 (중 attachments array)
@@ -143,46 +143,64 @@ export default function WritePostPage() {
     attachmentsInfo: attachmentsInfo,
   };
 
-  const handleSubmit = async (e) => {
+  const createThumbnailMutation = useMutation({
+    mutationFn: ({ boardId, postId }) => createThumbnail(boardId, postId),
+  });
+  const createPostMutation = useMutation({
+    mutationFn: postPost,
+    onSuccess: async (response, variables) => {
+      if (response.status !== 201) return;
+
+      !response.data.result.pointDifference
+        ? toast({
+            message: TOAST.POST.createNoPoints,
+            variant: 'success',
+          })
+        : toast({ message: TOAST.POST.create, variant: 'success' });
+
+      const newPostId = response.data.result.postId;
+      try {
+        await createThumbnailMutation.mutateAsync({
+          boardId: variables.boardId,
+          postId: newPostId,
+        });
+      } catch (err) {
+        toast({
+          message: '썸네일 생성 중 오류가 발생했습니다.',
+          variant: 'error',
+        });
+      }
+
+      queryClient.removeQueries(QUERY_KEY.post());
+      invalidUserInfoQuery();
+
+      currentBoard.id === 12 || variables.isNotice
+        ? navigate(`/board/${currentBoard.textId}/notice`, { replace: true })
+        : navigate(
+            `/board/${
+              BOARD_MENUS.find((menu) => menu.id === variables.boardId).textId
+            }/post/${newPostId}`,
+            { replace: true }
+          );
+    },
+    onError: (err) => {
+      toast({
+        message: err.response?.data?.message,
+        variant: 'error',
+      });
+    },
+  });
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (submitDisabled) return;
+    if (submitLockRef.current) return;
+    submitLockRef.current = true;
 
-    setSubmitDisabled(true);
-
-    try {
-      const response = await postPost(data);
-
-      if (response.status === 201) {
-        !response.data.result.pointDifference
-          ? toast({
-              message: TOAST.POST.createNoPoints,
-              variant: 'success',
-            })
-          : toast({ message: TOAST.POST.create, variant: 'success' });
-
-        const newPostId = response.data.result.postId;
-
-        queryClient.removeQueries(QUERY_KEY.post());
-        invalidUserInfoQuery();
-
-        currentBoard.id === 12 || isNotice
-          ? navigate(`/board/${currentBoard.textId}/notice`, { replace: true })
-          : navigate(
-              `/board/${
-                BOARD_MENUS.find((menu) => menu.id === boardId).textId
-              }/post/${newPostId}`,
-              { replace: true }
-            );
-
-        // post 등록이 잘 되었으면 썸네일 생성하기
-        await createThumbnail(boardId, newPostId);
-      }
-    } catch (err) {
-      toast({ message: err.response?.data?.message, variant: 'error' });
-    } finally {
-      setSubmitDisabled(false);
-    }
+    createPostMutation.mutate(data, {
+      onSettled: () => {
+        submitLockRef.current = false;
+      },
+    });
   };
 
   // 제목 127자 제한
@@ -193,21 +211,26 @@ export default function WritePostPage() {
     }
   };
 
-  if (status === 'loading') {
-    return (
-      <>
-        <FetchLoading>로딩 중...</FetchLoading>
-      </>
-    );
-  }
-
   return (
     <>
       <div className={styles.container}>
+        {(createPostMutation.isPending ||
+          createThumbnailMutation.isPending) && (
+          <div className={styles.fetchLoadingContainer}>
+            <FetchLoading>게시글 처리 중...</FetchLoading>
+          </div>
+        )}
         <div>
           <div className={styles.top}>
             <CloseAppBar backgroundColor={'#eaf5fd'}>
-              <ActionButton onClick={handleSubmit} disabled={!pass}>
+              <ActionButton
+                onClick={handleSubmit}
+                disabled={
+                  !pass ||
+                  createPostMutation.isPending ||
+                  createThumbnailMutation.isPending
+                }
+              >
                 등록
               </ActionButton>
             </CloseAppBar>
