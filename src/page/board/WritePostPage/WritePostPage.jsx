@@ -7,6 +7,7 @@ import {
   ActionButton,
   AttachmentList,
   Badge,
+  CheckBox,
   CloseAppBar,
   DropdownList,
   FetchLoading,
@@ -52,6 +53,7 @@ export default function WritePostPage() {
   const submitLockRef = useRef(false);
   const [isBlock, setIsBlock] = useState(false);
   //가이드 이미지 관련 로직
+  const [dontShowAgain, setDontShowAgain] = useState(false);
   const { isGuideOpened, closeGuide, disableGuide } = useGuide({
     guideKey: 'attachmentGuide',
     maxGuideVisitNum: 3,
@@ -232,11 +234,24 @@ export default function WritePostPage() {
           }}
         >
           <div className={styles.buttons}>
-            <button className={styles.button} onClick={closeGuide}>
+            <label className={styles.guideButton1}>
+              <CheckBox
+                id='dontShowAgain'
+                checked={dontShowAgain}
+                onChange={() => setDontShowAgain((prev) => !prev)}
+              />
+              <p className={styles.guideButton1Text}>다시 보지 않기</p>
+            </label>
+            <button
+              className={styles.guideButton2}
+              onClick={() => {
+                if (dontShowAgain) {
+                  disableGuide();
+                }
+                closeGuide();
+              }}
+            >
               닫기
-            </button>
-            <button className={styles.button} onClick={disableGuide}>
-              다시는 보지 않기
             </button>
           </div>
         </Guideline>
