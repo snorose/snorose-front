@@ -63,6 +63,11 @@ const SNOROSE = [
     name: '공지사항',
   },
   {
+    key: 'SUPPORT',
+    id: 13,
+    name: '문의 및 신고',
+  },
+  {
     key: 'EVENT',
     id: 14,
     name: '스노로즈 이벤트',
@@ -78,15 +83,15 @@ const SNOROSE = [
 
 const ALL = [...COMMUNITY, ...OFFICIAL, ...REVIEW, ...SNOROSE] as const;
 
-export type BoardKey = (typeof ALL)[number]['key'];
 type BoardId = (typeof ALL)[number]['id'];
+export type BoardKey = (typeof ALL)[number]['key'];
 
 export const BOARD_REGISTRY = {
   communities: COMMUNITY,
   officials: OFFICIAL,
   all: ALL,
 
-  find(identifier: BoardId | BoardKey) {
+  find(identifier: BoardId | BoardKey): Board {
     if (typeof identifier === 'number') {
       return ALL.find(({ id }) => id === identifier);
     }
