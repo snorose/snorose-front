@@ -156,10 +156,17 @@ export default function WritePostPage() {
         : toast({ message: TOAST.POST.create, variant: 'success' });
 
       const newPostId = response.data.result.postId;
-      await createThumbnailMutation.mutateAsync({
-        boardId: variables.boardId,
-        postId: newPostId,
-      });
+      try {
+        await createThumbnailMutation.mutateAsync({
+          boardId: variables.boardId,
+          postId: newPostId,
+        });
+      } catch (err) {
+        toast({
+          message: '썸네일 생성 중 오류가 발생했습니다.',
+          variant: 'error',
+        });
+      }
 
       queryClient.removeQueries(QUERY_KEY.post());
       invalidUserInfoQuery();
