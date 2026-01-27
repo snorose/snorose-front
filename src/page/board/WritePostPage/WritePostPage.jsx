@@ -143,6 +143,9 @@ export default function WritePostPage() {
     attachmentsInfo: attachmentsInfo,
   };
 
+  const createThumbnailMutation = useMutation({
+    mutationFn: ({ boardId, postId }) => createThumbnail(boardId, postId),
+  });
   const createPostMutation = useMutation({
     mutationFn: postPost,
     onSuccess: async (response, variables) => {
@@ -186,9 +189,6 @@ export default function WritePostPage() {
         variant: 'error',
       });
     },
-  });
-  const createThumbnailMutation = useMutation({
-    mutationFn: ({ boardId, postId }) => createThumbnail(boardId, postId),
   });
   const handleSubmit = (e) => {
     e.preventDefault();
