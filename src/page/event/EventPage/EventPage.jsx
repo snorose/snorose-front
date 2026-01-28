@@ -76,32 +76,41 @@ export default function EventPage() {
   // 신청 시간 판단
   const now = Date.now();
 
-  const openDraw = data?.startAt ? new Date(data.startAt).getTime() : null;
-  const closeDraw = data?.endAt ? new Date(data.endAt).getTime() : null;
-  const announceDraw = data?.announceAt
-    ? new Date(data.announceAt).getTime()
-    : null;
+  const openDraw =
+    data?.startAt != null ? new Date(data.startAt).getTime() : undefined;
+  const closeDraw =
+    data?.endAt != null ? new Date(data.endAt).getTime() : undefined;
+  const announceDraw =
+    data?.announceAt != null ? new Date(data.announceAt).getTime() : undefined;
 
   // 신청 버튼 상태 계산
   const effectiveEndAt = closeDraw ?? announceDraw;
 
-  const beforeOpen = openDraw && now < openDraw;
-  const closed = effectiveEndAt && now > effectiveEndAt;
+  const hasOpen = openDraw !== undefined;
+  const hasEnd = effectiveEndAt !== undefined;
 
-  let opened = false;
-  if (!openDraw && !effectiveEndAt) {
+  const beforeOpen = hasOpen && now < openDraw;
+  const closed = hasEnd && now > effectiveEndAt;
+
+  const opened = (() => {
     // 상시 오픈
-    opened = true;
-  } else if (openDraw && !effectiveEndAt) {
+    if (!hasOpen && !hasEnd) {
+      return true;
+    }
+
     // 시작일만 있는 경우
-    opened = now >= openDraw;
-  } else if (!openDraw && effectiveEndAt) {
+    if (hasOpen && !hasEnd) {
+      return now >= openDraw;
+    }
+
     // 종료일만 있는 경우
-    opened = now <= effectiveEndAt;
-  } else if (openDraw && effectiveEndAt) {
-    // 시작일과 종료일이 모두 있는 경우
-    opened = now >= openDraw && now <= effectiveEndAt;
-  }
+    if (!hasOpen && hasEnd) {
+      return now <= effectiveEndAt;
+    }
+
+    // 시작일 + 종료일 모두 있는 경우
+    return now >= openDraw && now <= effectiveEndAt;
+  })();
 
   const [open, setOpen] = useState(false);
 
@@ -207,7 +216,7 @@ export default function EventPage() {
             <p className={styles.data}>{data.drawCount}</p>
           </div>
 
-          {(data.startAt || data.endAt) && (
+          {(data.startAt != null || data.endAt != null) && (
             <div className={styles.applicationDate}>
               <Icon
                 id='calendar-stroke'
@@ -357,7 +366,8 @@ function MetaContainer({
         )}
         <p className={styles.dot}>·</p>
         <p>
-          {DateTime.format(createdAt, 'YMD_HM')} {isEdited && '(수정됨)'}
+          {createdAt ? DateTime.format(createdAt, 'YMD_HM') : ''}{' '}
+          {isEdited && '(수정됨)'}
         </p>
       </div>
 
@@ -393,7 +403,7 @@ function ActionContainer({
     <div className={styles.actionContainer}>
       <div
         className={styles.count}
-        styles={{
+        style={{
           display: isNotice ? 'none' : 'flex',
           backgroundColor:
             focusedItem === 'post' ? 'var(--blue-1)' : 'transparent',
@@ -450,7 +460,7 @@ function CommentContainer({ isNotice, commentCount, userInfo }) {
       ) : (
         <>
           <CommentListSuspense commentCount={commentCount} />
-          {userInfo === 4 ? <CommentInput /> : ''}
+          {userInfo === 4 && <CommentInput />}
         </>
       )}
     </>
