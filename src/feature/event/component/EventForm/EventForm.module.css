@@ -30,3 +30,9 @@
   margin-top: 0.3rem;
   display: block;
 }
+
+.required {
+  color: var(--pink-3);
+  font: var(--text-headline-1-med);
+  margin-left: 0.3rem;
+}
