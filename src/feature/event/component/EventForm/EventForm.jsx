@@ -18,7 +18,9 @@ export default function EventForm({
   return (
     <div className={styles.form}>
       <div className={styles.section}>
-        <p>제목</p>
+        <p>
+          제목<span className={styles.required}>*</span>
+        </p>
         <TextField
           label='제목'
           name='title'
@@ -36,6 +38,7 @@ export default function EventForm({
             : formType === 'movie'
               ? '영화명'
               : '주최'}
+          <span className={styles.required}>*</span>
         </p>
         <TextField
           label='호스트'
@@ -55,7 +58,9 @@ export default function EventForm({
 
       {['theater', 'movie'].includes(formType) && (
         <div className={styles.section}>
-          <p>장소</p>
+          <p>
+            장소<span className={styles.required}>*</span>
+          </p>
           <TextField
             label='장소'
             name='place'
@@ -122,7 +127,9 @@ export default function EventForm({
       </div>
 
       <div className={styles.section}>
-        <p>상세 설명</p>
+        <p>
+          상세 설명<span className={styles.required}>*</span>
+        </p>
         <TextField
           label='상세 설명'
           name='content'
@@ -134,7 +141,9 @@ export default function EventForm({
       </div>
 
       <div className={styles.section}>
-        <p>연계 링크</p>
+        <p>
+          연계 링크<span className={styles.required}>*</span>
+        </p>
         <TextField
           label='연계 링크'
           name='link'
