@@ -8,18 +8,6 @@
   display: flex;
   flex-direction: column;
 }
-.guidelineContainer {
-  :global(.swiper-pagination-bullet) {
-    width: 10px;
-    height: 10px;
-    background-color: var(--grey-3-1);
-  }
-  :global(.swiper-pagination-bullet-active) {
-    width: 10px;
-    height: 10px;
-    background-color: var(--white);
-  }
-}
 .guideContainer {
   flex: 1;
   overflow: hidden;
@@ -38,19 +26,4 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.pagination {
-  height: fit-content;
-  display: flex;
-  justify-content: center;
-  padding: 20px 0px;
-  position: absolute;
-  top: 0 !important;
 }
