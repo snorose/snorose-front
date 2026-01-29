@@ -7,6 +7,7 @@ import {
   ActionButton,
   AttachmentList,
   Badge,
+  CheckBox,
   CloseAppBar,
   DropdownList,
   FetchLoading,
@@ -27,8 +28,12 @@ import { ModalContext } from '@/shared/context/ModalContext';
 
 import { createThumbnail, postPost } from '@/apis';
 import { AttachmentBar } from '@/feature/board/component';
+import { Guideline } from '@/feature/attachment/component';
+import { useGuide } from '@/feature/attachment/hook';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
+import attachmentGuide1 from '@/assets/images/attachmentGuide1.png';
+import attachmentGuide2 from '@/assets/images/attachmentGuide2.png';
 
 import styles from './WritePostPage.module.css';
 
@@ -47,7 +52,12 @@ export default function WritePostPage() {
   const [text, setText] = useState('');
   const submitLockRef = useRef(false);
   const [isBlock, setIsBlock] = useState(false);
-
+  //가이드 이미지 관련 로직
+  const [dontShowAgain, setDontShowAgain] = useState(false);
+  const { isGuideOpened, closeGuide, disableGuide } = useGuide({
+    guideKey: 'attachmentGuide',
+    maxGuideVisitNum: 3,
+  });
   //'게시글 생성' API에서 요구하는 데이터 (중 attachments array)
   const [attachmentsInfo, setAttachmentsInfo] = useState([]);
 
@@ -213,6 +223,39 @@ export default function WritePostPage() {
 
   return (
     <>
+      {isGuideOpened && (
+        <Guideline
+          guideImages={[attachmentGuide1, attachmentGuide2]}
+          guideStyle={{
+            width: '27.4rem',
+            height: '36.1rem',
+            position: 'absolute',
+            bottom: '10.2rem',
+          }}
+        >
+          <div className={styles.buttons}>
+            <label className={styles.guideButton1}>
+              <CheckBox
+                id='dontShowAgain'
+                checked={dontShowAgain}
+                onChange={() => setDontShowAgain((prev) => !prev)}
+              />
+              <p className={styles.guideButton1Text}>다시 보지 않기</p>
+            </label>
+            <button
+              className={styles.guideButton2}
+              onClick={() => {
+                if (dontShowAgain) {
+                  disableGuide();
+                }
+                closeGuide();
+              }}
+            >
+              닫기
+            </button>
+          </div>
+        </Guideline>
+      )}
       <div className={styles.container}>
         {(createPostMutation.isPending ||
           createThumbnailMutation.isPending) && (
