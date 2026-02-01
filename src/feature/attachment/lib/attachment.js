@@ -26,20 +26,26 @@ export const downloadFromS3 = async (s3Url) =>
     },
   });
 
-//백엔드에서 보내는 createdAt의 시간 정보 꺼내기
-const getDate = (createdAt) => {
-  const [datePart, timePart] = createdAt.split('T');
-  const [year, month, day] = datePart.split('-');
-  const [hour, minute, second] = timePart.split('.')[0].split(':');
-  return [year, month, day, hour, minute, second];
+//Date의 시간 정보 꺼내기
+export const getLocalDateParts = (date = new Date()) => {
+  const pad = (n) => String(n).padStart(2, '0');
+
+  return [
+    date.getFullYear(),
+    pad(date.getMonth() + 1),
+    pad(date.getDate()),
+    pad(date.getHours()),
+    pad(date.getMinutes()),
+    pad(date.getSeconds()),
+  ];
 };
 
 //첨부파일이 한개일 시 사용하는 함수
-export const handleDownload = async (att, createdAt) => {
+export const handleDownload = async (att) => {
   const s3Url = att.url;
   const response = await downloadFromS3(s3Url);
 
-  const [year, month, day, hour, minute, second] = getDate(createdAt);
+  const [year, month, day, hour, minute, second] = getLocalDateParts();
 
   if (response.ok) {
     const blob = await response.blob();
@@ -63,9 +69,9 @@ export const handleDownload = async (att, createdAt) => {
 };
 
 //다수의 첨부파일을 다운받을때 -> zip으로 묶고 다운받는 함수
-export const handleZipDownload = async (urls, createdAt) => {
+export const handleZipDownload = async (urls) => {
   const zip = new JSZip();
-  const [year, month, day, hour, minute, second] = getDate(createdAt);
+  const [year, month, day, hour, minute, second] = getLocalDateParts();
 
   for (let i = 0; i < urls.length; i++) {
     const url = urls[i];
@@ -77,7 +83,10 @@ export const handleZipDownload = async (urls, createdAt) => {
     zip.file(filename, blob);
   }
   const zipContent = await zip.generateAsync({ type: 'blob' });
-  saveAs(zipContent, 'attachments.zip');
+  saveAs(
+    zipContent,
+    `snorose-${year}-${month}-${day}-${hour}_${minute}_${second}.zip`
+  );
 
   return true;
 };
