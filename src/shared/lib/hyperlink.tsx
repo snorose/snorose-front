@@ -1,11 +1,13 @@
-import React from 'react';
+import { ReactNode } from 'react';
 
 const URL_REGEX = /(https?:\/\/[^\s]+)/g;
 
-export const renderTextWithLinks = (text) => {
+export const renderTextWithLinks = (
+  text: string | null | undefined
+): ReactNode => {
   if (!text) return null;
 
-  const parts = text.split(URL_REGEX);
+  const parts: string[] = text.split(URL_REGEX);
 
   return (
     <>
