@@ -26,26 +26,10 @@ export const downloadFromS3 = async (s3Url) =>
     },
   });
 
-//Date의 시간 정보 꺼내기
-export const getLocalDateParts = (date = new Date()) => {
-  const pad = (n) => String(n).padStart(2, '0');
-
-  return [
-    date.getFullYear(),
-    pad(date.getMonth() + 1),
-    pad(date.getDate()),
-    pad(date.getHours()),
-    pad(date.getMinutes()),
-    pad(date.getSeconds()),
-  ];
-};
-
 //첨부파일이 한개일 시 사용하는 함수
 export const handleDownload = async (att) => {
   const s3Url = att.url;
   const response = await downloadFromS3(s3Url);
-
-  const [year, month, day, hour, minute, second] = getLocalDateParts();
 
   if (response.ok) {
     const blob = await response.blob();
@@ -53,8 +37,8 @@ export const handleDownload = async (att) => {
     const link = document.createElement('a');
     link.href = url;
     link.download = isExtImg(s3Url)
-      ? `snorose-${year}-${month}-${day}-${hour}_${minute}_${second}.webp`
-      : `snorose-${year}-${month}-${day}-${hour}_${minute}_${second}.mp4`;
+      ? `snorose-${Date.now()}.webp`
+      : `snorose-${Date.now()}.mp4`;
 
     // 자동 다운로드 트리거
     document.body.appendChild(link);
@@ -71,22 +55,18 @@ export const handleDownload = async (att) => {
 //다수의 첨부파일을 다운받을때 -> zip으로 묶고 다운받는 함수
 export const handleZipDownload = async (urls) => {
   const zip = new JSZip();
-  const [year, month, day, hour, minute, second] = getLocalDateParts();
 
   for (let i = 0; i < urls.length; i++) {
     const url = urls[i];
     const filename = isExtImg(url)
-      ? `snorose-${year}-${month}-${day}-${hour}_${minute}_${second}(${i}).webp`
-      : `snorose-${year}-${month}-${day}-${hour}_${minute}_${second}(${i}).mp4`;
+      ? `snorose-${Date.now()}(${i}).webp`
+      : `snorose-${Date.now()}(${i}).mp4`;
     const response = await downloadFromS3(url);
     const blob = await response.blob();
     zip.file(filename, blob);
   }
   const zipContent = await zip.generateAsync({ type: 'blob' });
-  saveAs(
-    zipContent,
-    `snorose-${year}-${month}-${day}-${hour}_${minute}_${second}.zip`
-  );
+  saveAs(zipContent, `snorose-${Date.now()}.zip`);
 
   return true;
 };
