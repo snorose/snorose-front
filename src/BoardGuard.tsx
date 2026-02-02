@@ -4,20 +4,16 @@ import { useAuth } from '@/shared/hook';
 import { ConfirmModal, NoticeModal } from '@/shared/component';
 import { CONFIRM_MODAL_TEXT, PERMISSION_MATRIX, ROLE } from '@/shared/constant';
 
-interface BoardGuardProps {
-  isAdminOnly: boolean;
-  action?: 'read' | 'write';
-}
+type BoardGuardProps =
+  | { isAdminOnly: true; action?: never }
+  | { isAdminOnly: false; action: 'read' | 'write' };
 
 const MESSAGE = {
   read: '게시판 접근 권한이 없어요',
   write: '글 작성 권한이 없어요',
 };
 
-export default function BoardGuard({
-  action,
-  isAdminOnly = false,
-}: BoardGuardProps) {
+export default function BoardGuard(props: BoardGuardProps) {
   const navigate = useNavigate();
   const { boardName } = useParams();
   const { userInfo } = useAuth();
@@ -26,7 +22,7 @@ export default function BoardGuard({
     return null;
   }
 
-  if (isAdminOnly) {
+  if (props.isAdminOnly) {
     if (userInfo.userRoleId !== ROLE.admin) {
       const modalText = {
         title: '리자 전용 공간이에요',
@@ -41,6 +37,8 @@ export default function BoardGuard({
 
     return <Outlet />;
   }
+
+  const { action } = props;
 
   const roles = PERMISSION_MATRIX[action][boardName] ?? [];
   if (!roles.includes(userInfo?.userRoleId)) {
