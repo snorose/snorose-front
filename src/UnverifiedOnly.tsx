@@ -3,8 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/shared/hook';
 import { NoticeModal } from '@/shared/component';
 import { NOTICE_MODAL_TEXT, ROLE } from '@/shared/constant';
+import React from 'react';
 
-export default function UnverifiedOnly({ children }) {
+export default function UnverifiedOnly({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const navigate = useNavigate();
   const { userInfo } = useAuth();
 
