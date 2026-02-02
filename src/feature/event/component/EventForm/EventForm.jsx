@@ -3,6 +3,7 @@ import { validateRequiredFields } from '@/feature/event/lib';
 import { DateTime } from '@/shared/lib';
 import { TextField, DateField } from '@/feature/event/component';
 import styles from './EventForm.module.css';
+import { func } from 'prop-types';
 
 export default function EventForm({
   formType,
@@ -18,7 +19,7 @@ export default function EventForm({
   return (
     <div className={styles.form}>
       <div className={styles.section}>
-        <p>제목</p>
+        <RequriedLabel>제목</RequriedLabel>
         <TextField
           label='제목'
           name='title'
@@ -30,13 +31,13 @@ export default function EventForm({
       </div>
 
       <div className={styles.section}>
-        <p>
+        <RequriedLabel>
           {formType === 'theater'
             ? '공연명'
             : formType === 'movie'
               ? '영화명'
               : '주최'}
-        </p>
+        </RequriedLabel>
         <TextField
           label='호스트'
           name='host'
@@ -55,7 +56,7 @@ export default function EventForm({
 
       {['theater', 'movie'].includes(formType) && (
         <div className={styles.section}>
-          <p>장소</p>
+          <RequriedLabel>장소</RequriedLabel>
           <TextField
             label='장소'
             name='place'
@@ -122,7 +123,7 @@ export default function EventForm({
       </div>
 
       <div className={styles.section}>
-        <p>상세 설명</p>
+        <RequriedLabel>상세 설명</RequriedLabel>
         <TextField
           label='상세 설명'
           name='content'
@@ -134,7 +135,7 @@ export default function EventForm({
       </div>
 
       <div className={styles.section}>
-        <p>연계 링크</p>
+        <RequriedLabel>연계 링크</RequriedLabel>
         <TextField
           label='연계 링크'
           name='link'
@@ -150,5 +151,16 @@ export default function EventForm({
         />
       </div>
     </div>
+  );
+}
+
+function RequriedLabel({ children }) {
+  return (
+    <p>
+      {children}
+      <span className={styles.required} aria-label='필수 입력'>
+        *
+      </span>
+    </p>
   );
 }
