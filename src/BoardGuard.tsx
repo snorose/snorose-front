@@ -6,7 +6,7 @@ import { CONFIRM_MODAL_TEXT, PERMISSION_MATRIX, ROLE } from '@/shared/constant';
 
 type BoardGuardProps =
   | { isAdminOnly: true; action?: never }
-  | { isAdminOnly: false; action: 'read' | 'write' };
+  | { isAdminOnly?: false; action: 'read' | 'write' };
 
 const MESSAGE = {
   read: '게시판 접근 권한이 없어요',
