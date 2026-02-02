@@ -3,7 +3,11 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '@/shared/hook';
 import { USER_STATUS } from '@/shared/constant';
 
-export default function RequireAuth({ children }) {
+export default function RequireAuth({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const location = useLocation();
   const { status } = useAuth();
 
