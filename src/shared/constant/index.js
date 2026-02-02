@@ -1,4 +1,6 @@
-export * from './board';
+export * from './board.ts';
+export * from './board.js';
+
 export * from './footerData';
 export * from './icon';
 export * from './loading';
