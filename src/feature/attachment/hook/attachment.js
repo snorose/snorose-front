@@ -18,9 +18,6 @@ export function useAttachmentUpload({ attachmentsInfo, setAttachmentsInfo }) {
   const { toast } = useToast();
   const changeImageUpload = (e) => {
     const newFiles = e.target.files;
-    const newFileArray = Array.from(newFiles).filter(
-      (file) => file.size <= ATTACHMENT_SIZE_LIMIT.imageFileSize
-    );
     const filteredFileArray = combineFilters(
       [filterOversizedImage, filterUnusableCharNamedAtts],
       newFiles
@@ -47,7 +44,7 @@ export function useAttachmentUpload({ attachmentsInfo, setAttachmentsInfo }) {
     }
 
     //백엔드에서 요구하는 body에 맞춰 데이터 가공
-    const mappedFiles = newFileArray.map((file) => ({
+    const mappedFiles = filteredFileArray.map((file) => ({
       fileName: file.name,
       fileComment: '',
       fileType: file.type,
@@ -62,8 +59,9 @@ export function useAttachmentUpload({ attachmentsInfo, setAttachmentsInfo }) {
 
   const changeVideoUpload = (e) => {
     const newFiles = e.target.files;
-    const newFileArray = Array.from(newFiles).filter(
-      (file) => file.size <= ATTACHMENT_SIZE_LIMIT.videoFileSize
+    const filteredFileArray = combineFilters(
+      [filterOversizedVideo, filterUnusableCharNamedAtts],
+      newFiles
     );
 
     //동영상 정책 확인하기
@@ -71,14 +69,21 @@ export function useAttachmentUpload({ attachmentsInfo, setAttachmentsInfo }) {
       //아예 처음부터 다시 이미지 선택해야하는 경우 (애초에 영상 개수 제한 1개라서 모두 여기에 해당)
       checkIfVideo(newFiles);
       checkVideoQuantity(attachmentsInfo, newFiles);
-      checkVideoSize(newFiles);
+      const warningMessage =
+        checkVideoSize(newFiles) || checkIfFilesContainUnusableChar(newFiles);
+      if (warningMessage) {
+        toast({
+          message: warningMessage,
+          variant: 'error',
+        });
+      }
     } catch (err) {
       toast({ message: err.message, variant: 'error' });
       return;
     }
 
     //백엔드에서 요구하는 body에 맞춰 데이터 가공
-    const mappedFiles = newFileArray.map((file) => ({
+    const mappedFiles = filteredFileArray.map((file) => ({
       fileName: file.name,
       fileComment: '',
       fileType: file.type,
