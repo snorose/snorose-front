@@ -5,11 +5,11 @@ import { Icon } from '@/shared/component';
 import styles from './CloseAppBar.module.css';
 
 export default function CloseAppBar({
-  alignRight,
+  alignRight = false,
   children,
   stroke = 'black',
-  onClose,
-  notFixed,
+  onClose = undefined,
+  notFixed = false,
   backgroundColor,
 }) {
   const navigate = useNavigate();

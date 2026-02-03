@@ -1,0 +1,53 @@
+.field {
+  margin: 0 var(--default-margin);
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.label {
+  align-self: flex-start;
+
+  font: var(--text-headline-2-med);
+  color: var(--grey-4);
+}
+
+.textarea {
+  padding: 1.6rem 1.3rem;
+
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  background-color: var(--blue-0);
+  border: 1px solid var(--blue-2);
+
+  font: var(--text-body-1-reg);
+
+  transition: 100ms ease border-color;
+
+  &:focus-within {
+    border-color: var(--blue-3);
+  }
+
+  & > textarea {
+    resize: none;
+
+    width: 100%;
+
+    outline: none;
+    border: none;
+    background-color: var(--blue-0);
+    color: var(--grey-4);
+  }
+
+  & > textarea::placeholder {
+    color: var(--grey-3-1);
+  }
+
+  & > div {
+    align-self: flex-end;
+
+    color: var(--grey-3-1);
+  }
+}
