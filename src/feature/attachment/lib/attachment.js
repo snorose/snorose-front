@@ -7,6 +7,10 @@ import {
   ATTACHMENT_EXTENSION_LIMIT,
 } from '@/shared/constant';
 
+//여러 filter 함수를 적용하는 pipeline
+export const combineFilters = (filterFns, data) =>
+  filterFns.reduce((result, fn) => fn(result), data);
+
 //첨부파일 확장자가 이미지인지 확인하는 함수
 export const isExtImg = (url) => {
   const cleanUrl = url.split('?')[0].toLowerCase();
@@ -81,14 +85,15 @@ export const checkImageQuantity = (orgAtts, newAtts) => {
   }
 };
 export const checkIfImage = (newAtts) => {
-  if ([...newAtts].some((a) => a.type && !a.type.startsWith('image/'))) {
+  if (newAtts.some((a) => a.type && !a.type.startsWith('image/'))) {
     throw new Error(TOAST.ATTACHMENT.notImageError);
   }
 };
-export const checkImageSize = (entireAtts, toast) => {
-  const filteredAtts = Array.from(entireAtts).filter(
-    (file) => file.size <= ATTACHMENT_SIZE_LIMIT.imageFileSize
-  );
+export const filterOversizedImage = (atts) =>
+  atts.filter((file) => file.size <= ATTACHMENT_SIZE_LIMIT.imageFileSize);
+
+export const checkImageSize = (entireAtts) => {
+  const filteredAtts = filterOversizedImage(entireAtts);
   if (entireAtts.length !== filteredAtts.length) {
     return TOAST.ATTACHMENT.imageFileSizeError;
   }
@@ -101,18 +106,37 @@ export const checkVideoQuantity = (orgAtts, newAtts) => {
     throw new Error(TOAST.ATTACHMENT.videoQuantityError);
   }
 };
+export const filterOversizedVideo = (atts) =>
+  atts.filter((file) => file.size <= ATTACHMENT_SIZE_LIMIT.videoFileSize);
 export const checkVideoSize = (entireAtts) => {
-  const filteredAtts = Array.from(entireAtts).filter(
-    (file) => file.size <= ATTACHMENT_SIZE_LIMIT.videoFileSize
-  );
+  const filteredAtts = filterOversizedVideo(entireAtts);
   if (entireAtts.length !== filteredAtts.length) {
     throw new Error(TOAST.ATTACHMENT.videoFileSizeError);
   }
 };
 export const checkIfVideo = (newAtts) => {
-  if ([...newAtts].some((a) => a.type && !a.type.startsWith('video/'))) {
+  if (newAtts.some((a) => a.type && !a.type.startsWith('video/'))) {
     throw new Error(TOAST.ATTACHMENT.notVideoError);
   }
+};
+export const filterUnusableCharNamedAtts = (atts) => {
+  //특수문자 regex
+  const specialChars = /[^\p{L}\p{N}_]/u;
+  //특수문자 허용범위 regex
+  const allowedSpecialChars = /[~!@$^&()\-_=\\[\]{};',.]/;
+
+  return atts.filter(
+    (att) =>
+      ![...att.name].some(
+        (char) => specialChars.test(char) && !allowedSpecialChars.test(char)
+      )
+  );
+};
+export const checkIfFilesContainUnusableChar = (atts) => {
+  const filteredAtts = filterUnusableCharNamedAtts(atts);
+
+  if (atts.length !== filteredAtts.length)
+    return TOAST.ATTACHMENT.containUnusableChar;
 };
 
 //AttachmentList에 createObjectURL로 인해 에러가 나지 않게 src가 안전한지 확인하기
