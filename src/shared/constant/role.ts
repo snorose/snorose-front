@@ -1,3 +1,5 @@
+export type Role = (typeof ROLE)[keyof typeof ROLE];
+
 export const ROLE = Object.freeze({
   preUser: 1,
   user: 2,
