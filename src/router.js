@@ -494,6 +494,7 @@ export const routeList = [
       {
         path: 'report',
         children: [
+          { index: true, element: <NotFoundPage /> },
           {
             path: 'write',
             children: [
