@@ -121,7 +121,7 @@ export const checkIfVideo = (newAtts) => {
 };
 export const filterUnusableCharNamedAtts = (atts) => {
   //특수문자 regex
-  const specialChars = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/;
+  const specialChars = /[^\p{L}\p{N}_]/u;
   //특수문자 허용범위 regex
   const allowedSpecialChars = /[~!@$^&()\-_=\\[\]{};',.]/;
 
