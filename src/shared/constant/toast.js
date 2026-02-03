@@ -62,6 +62,7 @@ const TOAST = Object.freeze({
     videoFileSizeError: '파일 크기는 최대 50MB까지 업로드할 수 있어요',
     videoQuantityError: '영상은 최대 1개까지 첨부 가능해요',
     notVideoError: '영상 파일만 업로드할 수 있어요',
+    containUnusableChar: '너 정말로 말썽쟁이구나?',
   },
   EVENT: {
     FAIL: '잘못된 링크에요.',
