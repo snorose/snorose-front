@@ -21,6 +21,10 @@ export function useAttachmentUpload({ attachmentsInfo, setAttachmentsInfo }) {
     const newFileArray = Array.from(newFiles).filter(
       (file) => file.size <= ATTACHMENT_SIZE_LIMIT.imageFileSize
     );
+    const filteredFileArray = combineFilters(
+      [filterOversizedImage, filterUnusableCharNamedAtts],
+      newFiles
+    );
 
     //이미지 정책 확인하기
     try {

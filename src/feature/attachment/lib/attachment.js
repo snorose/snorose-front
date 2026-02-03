@@ -9,7 +9,7 @@ import {
 
 //여러 filter 함수를 적용하는 pipeline
 export const combineFilters = (filterFns, data) =>
-  data.filter((item) => filterFns.every((fn) => fn(item)));
+  filterFns.reduce((result, fn) => fn(result), Array.from(data));
 
 //첨부파일 확장자가 이미지인지 확인하는 함수
 export const isExtImg = (url) => {
@@ -129,10 +129,11 @@ export const filterUnusableCharNamedAtts = (atts) => {
   //특수문자 허용범위 regex
   const allowedSpecialChars = /[~!@$^&()\-_=\\[\]{};',.]/;
 
-  return Array.from(atts).filter((att) =>
-    [...att.name].some(
-      (char) => specialChars.test(char) && !allowedSpecialChars.test(char)
-    )
+  return Array.from(atts).filter(
+    (att) =>
+      ![...att.name].some(
+        (char) => specialChars.test(char) && !allowedSpecialChars.test(char)
+      )
   );
 };
 export const checkIfFilesContainUnusableChar = (atts) => {
