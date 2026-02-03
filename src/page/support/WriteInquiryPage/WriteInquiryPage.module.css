@@ -1,0 +1,18 @@
+.container {
+  padding-top: var(--default-appbar-height);
+
+  height: 100dvh;
+  background-color: var(--blue-0);
+}
+
+/* line */
+.dropdown {
+  border-bottom: 0.5px solid var(--grey-3-1);
+}
+
+/* form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
