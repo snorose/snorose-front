@@ -9,7 +9,7 @@ import {
 
 //여러 filter 함수를 적용하는 pipeline
 export const combineFilters = (filterFns, data) =>
-  filterFns.reduce((result, fn) => fn(result), Array.from(data));
+  filterFns.reduce((result, fn) => fn(result), data);
 
 //첨부파일 확장자가 이미지인지 확인하는 함수
 export const isExtImg = (url) => {
@@ -85,14 +85,12 @@ export const checkImageQuantity = (orgAtts, newAtts) => {
   }
 };
 export const checkIfImage = (newAtts) => {
-  if ([...newAtts].some((a) => a.type && !a.type.startsWith('image/'))) {
+  if (newAtts.some((a) => a.type && !a.type.startsWith('image/'))) {
     throw new Error(TOAST.ATTACHMENT.notImageError);
   }
 };
 export const filterOversizedImage = (atts) =>
-  Array.from(atts).filter(
-    (file) => file.size <= ATTACHMENT_SIZE_LIMIT.imageFileSize
-  );
+  atts.filter((file) => file.size <= ATTACHMENT_SIZE_LIMIT.imageFileSize);
 
 export const checkImageSize = (entireAtts) => {
   const filteredAtts = filterOversizedImage(entireAtts);
@@ -109,9 +107,7 @@ export const checkVideoQuantity = (orgAtts, newAtts) => {
   }
 };
 export const filterOversizedVideo = (atts) =>
-  Array.from(atts).filter(
-    (file) => file.size <= ATTACHMENT_SIZE_LIMIT.videoFileSize
-  );
+  atts.filter((file) => file.size <= ATTACHMENT_SIZE_LIMIT.videoFileSize);
 export const checkVideoSize = (entireAtts) => {
   const filteredAtts = filterOversizedVideo(entireAtts);
   if (entireAtts.length !== filteredAtts.length) {
@@ -119,7 +115,7 @@ export const checkVideoSize = (entireAtts) => {
   }
 };
 export const checkIfVideo = (newAtts) => {
-  if ([...newAtts].some((a) => a.type && !a.type.startsWith('video/'))) {
+  if (newAtts.some((a) => a.type && !a.type.startsWith('video/'))) {
     throw new Error(TOAST.ATTACHMENT.notVideoError);
   }
 };
@@ -129,7 +125,7 @@ export const filterUnusableCharNamedAtts = (atts) => {
   //특수문자 허용범위 regex
   const allowedSpecialChars = /[~!@$^&()\-_=\\[\]{};',.]/;
 
-  return Array.from(atts).filter(
+  return atts.filter(
     (att) =>
       ![...att.name].some(
         (char) => specialChars.test(char) && !allowedSpecialChars.test(char)

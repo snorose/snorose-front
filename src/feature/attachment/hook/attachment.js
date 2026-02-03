@@ -17,7 +17,7 @@ import {
 export function useAttachmentUpload({ attachmentsInfo, setAttachmentsInfo }) {
   const { toast } = useToast();
   const changeImageUpload = (e) => {
-    const newFiles = e.target.files;
+    const newFiles = Array.from(e.target.files);
     const filteredFileArray = combineFilters(
       [filterOversizedImage, filterUnusableCharNamedAtts],
       newFiles
@@ -58,7 +58,7 @@ export function useAttachmentUpload({ attachmentsInfo, setAttachmentsInfo }) {
   };
 
   const changeVideoUpload = (e) => {
-    const newFiles = e.target.files;
+    const newFiles = Array.from(e.target.files);
     const filteredFileArray = combineFilters(
       [filterOversizedVideo, filterUnusableCharNamedAtts],
       newFiles
