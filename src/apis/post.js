@@ -96,8 +96,6 @@ export const patchPost = async ({
       title,
       content,
       isNotice,
-      finalAttachments: [],
-      deleteAttachments: [],
       finalAttachments: attachmentsInfo.map(
         ({ id, fileName, fileComment, type }) => ({
           id,
