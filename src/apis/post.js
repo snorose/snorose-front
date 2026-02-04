@@ -86,8 +86,8 @@ export const patchPost = async ({
   title,
   content,
   isNotice,
-  // attachmentsInfo,
-  // deleteAttachments,
+  attachmentsInfo,
+  deleteAttachments,
 }) => {
   const response = await authAxios.patch(
     `/v1/boards/${boardId}/posts/${postId}/update`,
@@ -96,26 +96,23 @@ export const patchPost = async ({
       title,
       content,
       isNotice,
-      finalAttachments: [],
-      deleteAttachments: [],
-      // finalAttachments: attachmentsInfo.map(
-      //   ({ id, fileName, fileComment, type }) => ({
-      //     id,
-      //     fileName,
-      //     fileComment,
-      //     type,
-      //   })
-      // ),
-      // deleteAttachments,
+      finalAttachments: attachmentsInfo.map(
+        ({ id, fileName, fileComment, type }) => ({
+          id,
+          fileName,
+          fileComment,
+          type,
+        })
+      ),
+      deleteAttachments,
     }
   );
 
-  // const newFiles = attachmentsInfo
-  //   .filter((att) => att.id === '')
-  //   .map((att) => att.file);
-
-  // let attachmentUrlList = response.data.result.attachmentUrlList;
-  // putFileInBucket(attachmentUrlList, newFiles);
+  const newFiles = attachmentsInfo
+    .filter((att) => att.id === '')
+    .map((att) => att.file);
+  let attachmentUrlList = response.data.result.attachmentUrlList;
+  await putFileInBucket(attachmentUrlList, newFiles);
 
   return response;
 };

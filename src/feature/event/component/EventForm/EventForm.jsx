@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { validateRequiredFields } from '@/feature/event/lib';
-import { eventTime } from '@/shared/lib';
+import { DateTime } from '@/shared/lib';
 import { TextField, DateField } from '@/feature/event/component';
 import styles from './EventForm.module.css';
+import { func } from 'prop-types';
 
 export default function EventForm({
   formType,
@@ -11,22 +12,6 @@ export default function EventForm({
   onValid,
   errors,
 }) {
-  const today = new Date().toISOString().slice(0, 16);
-
-  const handleDrawCountChange = (e) => {
-    const value = e.target.value;
-    onChange('drawCount', value);
-  };
-
-  const handleDrawCountBlur = () => {
-    const num = Number(data.drawCount);
-    if (!num || num < 1) {
-      onChange('drawCount', 1);
-    } else {
-      onChange('drawCount', num);
-    }
-  };
-
   useEffect(() => {
     onValid(validateRequiredFields(formType, data, errors));
   }, [formType, data, errors, onValid]);
@@ -34,7 +19,7 @@ export default function EventForm({
   return (
     <div className={styles.form}>
       <div className={styles.section}>
-        <p>제목</p>
+        <RequriedLabel>제목</RequriedLabel>
         <TextField
           label='제목'
           name='title'
@@ -46,13 +31,13 @@ export default function EventForm({
       </div>
 
       <div className={styles.section}>
-        <p>
+        <RequriedLabel>
           {formType === 'theater'
             ? '공연명'
             : formType === 'movie'
               ? '영화명'
               : '주최'}
-        </p>
+        </RequriedLabel>
         <TextField
           label='호스트'
           name='host'
@@ -71,7 +56,7 @@ export default function EventForm({
 
       {['theater', 'movie'].includes(formType) && (
         <div className={styles.section}>
-          <p>장소</p>
+          <RequriedLabel>장소</RequriedLabel>
           <TextField
             label='장소'
             name='place'
@@ -84,73 +69,61 @@ export default function EventForm({
       )}
 
       {/* 날짜 그룹 */}
-      <p>응모 날짜</p>
-      <DateField
-        label='시작일'
-        name='startAt'
-        type='datetime-local'
-        value={eventTime(data.startAt)}
-        min={today}
-        onChange={onChange}
-        error={errors.startAt}
-      />
-      <DateField
-        label='종료일'
-        name='endAt'
-        type='datetime-local'
-        value={eventTime(data.endAt)}
-        min={data.startAt || today}
-        onChange={onChange}
-        error={errors.endAt}
-      />
-      <hr className={styles.divider} />
-      <DateField
-        label='당첨자 발표일'
-        name='announceAt'
-        type='datetime-local'
-        value={eventTime(data.announceAt)}
-        min={data.endAt || today}
-        onChange={onChange}
-        error={errors.announceAt}
-      />
-
-      {/* 추첨 인원 */}
-      <div className={styles.drawCount}>
-        <p>추첨 인원</p>
-        <div className={styles.counterControls}>
-          <button
-            className={styles.minus}
-            onClick={() =>
-              onChange(
-                'drawCount',
-                Math.max(Number(data.drawCount || 1) - 1, 1)
-              )
-            }
-            disabled={data.drawCount <= 1}
-          >
-            -
-          </button>
-          <input
-            type='number'
-            className={styles.drawNumber}
-            value={data.drawCount ?? ''}
-            onChange={handleDrawCountChange}
-            onBlur={handleDrawCountBlur}
-            min={1}
-          />
-          <button
-            className={styles.plus}
-            onClick={() =>
-              onChange('drawCount', Number(data.drawCount || 1) + 1)
-            }
-          >
-            +
-          </button>
-        </div>
+      <div className={styles.section}>
+        <p>응모 날짜</p>
+        <DateField
+          label='시작일'
+          name='startAt'
+          type='datetime-local'
+          value={
+            data?.startAt
+              ? DateTime.format(data.startAt, 'ISO').slice(0, 16)
+              : ''
+          }
+          onChange={onChange}
+          error={errors.startAt}
+        />
+        <DateField
+          label='종료일'
+          name='endAt'
+          type='datetime-local'
+          value={
+            data?.endAt ? DateTime.format(data.endAt, 'ISO').slice(0, 16) : ''
+          }
+          min={data.startAt}
+          onChange={onChange}
+          error={errors.endAt}
+        />
+        <hr className={styles.divider} />
+        <DateField
+          label='당첨자 발표일'
+          name='announceAt'
+          type='datetime-local'
+          value={
+            data?.announceAt
+              ? DateTime.format(data.announceAt, 'ISO').slice(0, 16)
+              : ''
+          }
+          min={data.endAt}
+          onChange={onChange}
+          error={errors.announceAt}
+        />
       </div>
 
       <div className={styles.section}>
-        <p>상세 설명</p>
+        <p>추첨 인원</p>
+        <TextField
+          label='추첨 인원'
+          name='drawCount'
+          value={data.drawCount}
+          placeholder='단위와 함께 인원을 작성해주세요.(n 명) *빈칸시 미정'
+          onChange={onChange}
+          error={errors.drawCount}
+        />
+      </div>
+
+      <div className={styles.section}>
+        <RequriedLabel>상세 설명</RequriedLabel>
         <TextField
           label='상세 설명'
           name='content'
@@ -162,7 +135,7 @@ export default function EventForm({
       </div>
 
       <div className={styles.section}>
-        <p>연계 링크</p>
+        <RequriedLabel>연계 링크</RequriedLabel>
         <TextField
           label='연계 링크'
           name='link'
@@ -170,7 +143,7 @@ export default function EventForm({
           placeholder={
             ['theater', 'movie'].includes(formType)
               ? '추첨 구글폼을 넣어주세요'
-              : '관련 링크를 넣어주세요'
+              : 'https://로 시작하는 링크를 넣어주세요'
           }
           onChange={onChange}
           error={errors.link}
@@ -178,5 +151,16 @@ export default function EventForm({
         />
       </div>
     </div>
+  );
+}
+
+function RequriedLabel({ children }) {
+  return (
+    <p>
+      {children}
+      <span className={styles.required} aria-label='필수 입력'>
+        *
+      </span>
+    </p>
   );
 }

@@ -15,7 +15,7 @@ export default function SelectedItem({ select, placeholder, isOpen, onClick }) {
         className={`${styles.select} ${select ? '' : styles.unselect}`}
         onClick={onClick}
       >
-        {select?.name ?? (
+        {select?.name || (
           <span className={styles.placeholder}>{placeholder}</span>
         )}
         <Icon

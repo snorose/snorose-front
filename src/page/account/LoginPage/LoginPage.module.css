@@ -1,101 +1,44 @@
-a:hover {
-  cursor: pointer;
-}
-
-.prev:hover {
-  cursor: pointer;
-}
-
-.loginframe {
-  background-color: var(--white);
-  width: 100%;
+.container {
   height: 100vh;
-  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background-color: var(--white);
 }
 
-.back {
-  margin-top: 1.4rem;
-}
-.back:hover {
-  cursor: pointer;
-}
-
-.loginBody {
-  padding: 0 2rem;
-  text-align: center;
-  font-family: 'Noto Sans KR', sans-serif;
+.container form {
+  margin: 0 var(--default-margin);
 }
 
 .logo {
+  margin: 0 auto 2.5rem;
   width: 27.2rem;
   height: 5rem;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 11rem;
-  margin-bottom: 2.5rem;
 }
 
 .title {
-  font: var(--text-headline-2-reg);
   margin-bottom: 4.8rem;
+
+  font: var(--text-headline-2-reg);
   color: var(--blue-4);
+  text-align: center;
 }
 
-.inputWrapper {
+.form {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
 }
 
-.pwFrame {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  height: 5rem;
-  border-radius: 0.6rem;
-  padding-right: 1.7rem;
-  /* margin-bottom: 1.7rem; */
-}
-
-.ready {
-  background-color: var(--grey-1-1);
-}
-
-.wrong {
-  background-color: var(--pink-1);
-}
-
-.pwInput {
-  width: 80%;
-  background-color: var(--blue-4);
-  display: inline-block;
-}
-
-.visibility {
-  display: inline-block;
-}
-
-.visibility:hover {
-  cursor: pointer;
-}
-
-.RememberIdCheckbox {
+.rememberIdCheckbox {
   display: flex;
   align-items: center;
   margin: 1.5rem 0;
   gap: 0.8rem;
   color: var(--grey-4);
   font: var(--text-body-1-reg);
-}
-
-.button {
-  display: block;
-  width: 18rem;
-  height: 3.2rem;
-  background-color: var(--blue-4);
-  color: var(--white);
-  margin: 1.8rem auto;
-  border-radius: 0.7rem;
 }
 
 .find {

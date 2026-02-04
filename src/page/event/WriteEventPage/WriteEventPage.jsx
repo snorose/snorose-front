@@ -12,7 +12,7 @@ import {
 } from '@/shared/component';
 import { QUERY_KEY, ROLE, CONFIRM_MODAL_TEXT } from '@/shared/constant';
 import { useAuth, useBlocker, useToast } from '@/shared/hook';
-import { formattedNowTime, getBoard } from '@/shared/lib';
+import { DateTime, getBoard } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
 
 import { postEvent, postPost } from '@/apis';
@@ -177,7 +177,6 @@ export default function WriteEventPage() {
     request
       .then((response) => {
         if (response.status === 201) {
-          console.log(response);
           const newPostId = response.data.result.postId;
 
           queryClient.removeQueries([QUERY_KEY.post]);
@@ -275,7 +274,7 @@ export default function WriteEventPage() {
               )}
               <p>{userInfo?.nickname}</p>
               <p className={styles.dot}></p>
-              <p>{formattedNowTime()}</p>
+              <p>{DateTime.format(new Date(), 'MD_HM')}</p>
             </div>
           </div>
 

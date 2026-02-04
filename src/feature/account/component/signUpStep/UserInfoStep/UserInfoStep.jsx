@@ -4,129 +4,150 @@ import { useNavigate } from 'react-router-dom';
 import { useRegister } from '@/apis';
 
 import {
-  CategoryFieldset,
   Button,
   Dropdown,
   Icon,
-  Input,
+  Label,
+  TextInput,
+  ErrorMessage,
+  NumberInput,
+  NewButton,
 } from '@/shared/component';
 import { MAJORS } from '@/shared/constant';
 
 import {
-  checkSpecialChar,
-  checkStudentNum,
-  checkBirthday,
+  validateNickname,
+  validateStudentNumber,
+  validateBirthday,
 } from '@/feature/account/lib';
-
-import style from './UserInfoStep.module.css';
 import { PRIVACY_TERM } from '@/feature/account/constant/privacyTerm';
 
-export default function UserInfoStep({ setFormData, formData }) {
-  const register = useRegister();
-  const navigate = useNavigate();
+import styles from './UserInfoStep.module.css';
 
-  const [nicknameStyle, setNicknameStyle] = useState('ready');
-  const [stuNumStyle, setStuNumStyle] = useState('ready');
-  const [birthdayStyle, setBirthdayStyle] = useState('ready');
+export default function UserInfoStep({ setFormData, formData }) {
+  const navigate = useNavigate();
+  const register = useRegister();
+
   const [isTermsChecked, setIsTermsChecked] = useState(false);
 
-  const isFormValid = () =>
-    nicknameStyle === 'right' &&
-    stuNumStyle === 'right' &&
-    birthdayStyle === 'right' &&
-    formData.name &&
+  const isFormValid =
+    validateNickname(formData.nickname) === 'valid' &&
+    validateStudentNumber(formData.studentNumber) === 'valid' &&
+    validateBirthday(formData.birthday) === 'valid' &&
+    formData.major &&
     isTermsChecked;
 
-  const getButtonState = () => (isFormValid() ? 'right' : 'ready');
-
-  const handleRegister = async () => {
-    if (getButtonState() !== 'right') {
-      alert('모든 필드를 올바르게 입력해주세요.');
-      return;
-    }
-    try {
-      await register(formData, navigate);
-    } catch (error) {
-      console.error('회원가입 처리 중 오류:', error);
-      alert('회원가입 처리 중 오류가 발생했습니다.');
-    }
-  };
+  const inputList = [
+    {
+      type: 'text',
+      label: '닉네임',
+      id: 'nickname',
+      placeholder: '닉네임을 입력해 주세요',
+      value: formData.nickname,
+      onChange: (next) =>
+        setFormData((prev) => ({
+          ...prev,
+          nickname: next,
+        })),
+      validate: validateNickname,
+      message: '특수문자 제외 2자 이상 20자 이하로 작성해 주세요',
+    },
+    {
+      type: 'number',
+      label: '학번',
+      id: 'studentNumber',
+      maxLength: 7,
+      placeholder: '학번을 입력해 주세요',
+      value: formData.studentNumber,
+      onChange: (next) =>
+        setFormData((prev) => ({
+          ...prev,
+          studentNumber: next,
+        })),
+      validate: validateStudentNumber,
+      message: '학번은 7자리 숫자예요',
+    },
+    {
+      type: 'text',
+      label: '생년월일',
+      id: 'birthday',
+      placeholder: 'YYYY-MM-DD',
+      value: formData.birthday,
+      onChange: (next) =>
+        setFormData((prev) => ({
+          ...prev,
+          birthday: next,
+        })),
+      validate: validateBirthday,
+      message: '입력 형식을 확인해 주세요',
+    },
+    {
+      type: 'dropdown',
+      label: '전공',
+      id: 'major',
+      placeholder: '전공을 선택해주세요',
+      options: MAJORS,
+      select: { id: formData.major, name: formData.major },
+      setFn: (_, option) => {
+        setFormData((prev) => ({
+          ...prev,
+          major: option.name,
+        }));
+      },
+    },
+  ];
 
   return (
-    <>
+    <div className={styles.container}>
       <div>
-        <p className={style.title}>
+        <p className={styles.title}>
           사용자 정보를
           <br />
           입력해 주세요
         </p>
-        <div className={style.inputFrame}>
-          <Input
-            title={'닉네임'}
-            placeholder={'닉네임을 입력해 주세요'}
-            className={nicknameStyle}
-            setClassName={setNicknameStyle}
-            classNameCheck={checkSpecialChar}
-            inputType={'nickname'}
-            inputData={setFormData}
-            data={formData}
-            errMsg={'특수문자 제외 2자 이상 20자 이하로 작성해 주세요'}
-          />
-        </div>
-        <div className={style.inputFrame}>
-          <Input
-            title={'학번'}
-            placeholder={'학번을 입력해 주세요'}
-            className={stuNumStyle}
-            setClassName={setStuNumStyle}
-            classNameCheck={checkStudentNum}
-            inputType={'studentNumber'}
-            inputData={setFormData}
-            data={formData}
-            errMsg={'학번 형식을 올바르게 입력해 주세요'}
-          />
-        </div>
-        <div className={style.inputFrame}>
-          <CategoryFieldset title='전공' required>
-            <Dropdown
-              options={MAJORS}
-              select={formData}
-              setFn={setFormData}
-              placeholder='전공을 선택해주세요'
-            />
-          </CategoryFieldset>
-        </div>
-        <div className={style.inputFrame}>
-          <Input
-            title={'생년월일'}
-            placeholder={'YYYY-MM-DD'}
-            className={birthdayStyle}
-            setClassName={setBirthdayStyle}
-            classNameCheck={checkBirthday}
-            inputType={'birthday'}
-            inputData={setFormData}
-            data={formData}
-            errMsg={'입력 형식을 확인해 주세요'}
-          />
-        </div>
 
-        <CheckTerms
-          label={'개인정보 수집 및 이용 동의'}
-          required
-          navigate={navigate}
-          isChecked={isTermsChecked}
-          setIsChecked={setIsTermsChecked}
-        />
+        <div className={styles.inputList}>
+          {inputList.map((props) => {
+            const { validate } = props;
+
+            const Input = {
+              text: TextInput,
+              number: NumberInput,
+              dropdown: Dropdown,
+            }[props.type];
+
+            const status = validate?.(props.value);
+
+            return (
+              <div key={`signup-${props.id}`} className={styles.field}>
+                <Label htmlFor={props.id}>{props.label}</Label>
+                <Input status={status} {...props} />
+                {status === 'error' && (
+                  <ErrorMessage>{props.message}</ErrorMessage>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
 
-      <div className={style.submit}>
-        <Button
-          btnName='다음으로'
-          className={getButtonState()}
-          onClick={handleRegister}
-        />
+      <CheckTerms
+        label={'개인정보 수집 및 이용 동의'}
+        required
+        navigate={navigate}
+        isChecked={isTermsChecked}
+        setIsChecked={setIsTermsChecked}
+      />
+
+      <div className={styles.submit}>
+        <NewButton
+          onClick={async () => await register(formData, navigate)}
+          disabled={!isFormValid}
+        >
+          다음으로
+        </NewButton>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -138,7 +159,7 @@ function CheckTerms({
   setIsChecked,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const tagStyle = required ? style.required : style.optional;
+  const tagStyle = required ? styles.required : styles.optional;
   const tag = required ? '필수' : '선택';
 
   const handlePrivacyTermClick = () => {
@@ -159,34 +180,34 @@ function CheckTerms({
   };
 
   return (
-    <div className={style.checkTerms}>
+    <div className={styles.checkTerms}>
       <input
         id='terms'
-        className={style.checkbox}
+        className={styles.checkbox}
         type='checkbox'
         hidden
         checked={isChecked}
         onChange={handleCheckboxChange}
       />
-      <label htmlFor='terms' className={style.label}>
+      <label htmlFor='terms' className={styles.label}>
         <Icon
-          className={`${style.blueBox} ${isChecked ? style.checked : ''}`}
+          className={`${styles.blueBox} ${isChecked ? styles.checked : ''}`}
           id='checkbox-blue'
           width={20}
           height={20}
         />
         <Icon
-          className={`${style.greyBox} ${!isChecked ? style.unchecked : ''}`}
+          className={`${styles.greyBox} ${!isChecked ? styles.unchecked : ''}`}
           id='checkbox-grey'
           width={20}
           height={20}
         />
 
-        <span className={`${style.tag} ${tagStyle}`}>{tag}</span>
-        <p className={style.checkboxLabel}>{label}</p>
+        <span className={`${styles.tag} ${tagStyle}`}>{tag}</span>
+        <p className={styles.checkboxLabel}>{label}</p>
       </label>
 
-      <div className={style.termsLink} onClick={handlePrivacyTermClick}>
+      <div className={styles.termsLink} onClick={handlePrivacyTermClick}>
         <Icon id='chevron-right' width={20} height={20} />
       </div>
 
@@ -234,35 +255,35 @@ function PrivacyTermModal({ onAgree, onClose }) {
   };
 
   return (
-    <div className={style.modalOverlay} onClick={handleOverlayClick}>
-      <div className={style.modalContainer}>
-        <div className={style.modalHeader}>
-          <h2 className={style.modalTitle}>
+    <div className={styles.modalOverlay} onClick={handleOverlayClick}>
+      <div className={styles.modalContainer}>
+        <div className={styles.modalHeader}>
+          <h2 className={styles.modalTitle}>
             {PRIVACY_TERM.title}
-            <span className={style.modalRequired}>*</span>
+            <span className={styles.modalRequired}>*</span>
           </h2>
-          <button className={style.closeButton} onClick={onClose}>
+          <button className={styles.closeButton} onClick={onClose}>
             <Icon id='x' width={24} height={24} />
           </button>
         </div>
 
         <div
-          className={style.modalContent}
+          className={styles.modalContent}
           ref={descriptionRef}
           onScroll={handleScroll}
         >
-          <div className={style.modalSummary}>{PRIVACY_TERM.summary}</div>
-          <div className={style.modalGuide}>{PRIVACY_TERM.guide}</div>
+          <div className={styles.modalSummary}>{PRIVACY_TERM.summary}</div>
+          <div className={styles.modalGuide}>{PRIVACY_TERM.guide}</div>
           {PRIVACY_TERM.details.map((section, idx) => (
-            <div key={idx} className={style.modalDetails}>
-              <div className={style.modalSubtitle}>{section.title}</div>
-              <div className={style.modalText}>{section.content}</div>
+            <div key={idx} className={styles.modalDetails}>
+              <div className={styles.modalSubtitle}>{section.title}</div>
+              <div className={styles.modalText}>{section.content}</div>
             </div>
           ))}
-          <div className={style.modalNotice}>{PRIVACY_TERM.notice}</div>
+          <div className={styles.modalNotice}>{PRIVACY_TERM.notice}</div>
         </div>
 
-        <div className={style.modalFooter}>
+        <div className={styles.modalFooter}>
           <Button
             btnName='동의하고 계속하기'
             className={hasScrolledToEnd ? 'right' : 'ready'}

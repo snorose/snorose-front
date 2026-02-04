@@ -8,7 +8,7 @@ export default function Dropdown({ options, placeholder, select, setFn }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const updateSelect = (option) => {
-    setFn((prev) => ({ ...prev, ...option }));
+    setFn((prev) => ({ ...prev, ...option }), option);
     setIsOpen(false);
   };
 

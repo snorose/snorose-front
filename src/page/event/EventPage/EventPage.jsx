@@ -13,7 +13,7 @@ import {
   PrimaryButton,
 } from '@/shared/component';
 import { LIKE_TYPE, QUERY_KEY, ROLE, TOAST } from '@/shared/constant';
-import { convertHyperlink, fullDateTimeFormat, getBoard } from '@/shared/lib';
+import { renderTextWithLinks, DateTime, getBoard } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useModalReset } from '@/shared/hook/useBlocker';
 import { useAuth, useToast } from '@/shared/hook';
@@ -75,11 +75,42 @@ export default function EventPage() {
 
   // 신청 시간 판단
   const now = Date.now();
-  const openDraw = data?.startAt ? new Date(data.startAt).getTime() : null;
-  const closeDraw = data?.endAt ? new Date(data.endAt).getTime() : null;
-  const beforeOpen = now < openDraw;
-  const opened = now >= openDraw && now <= closeDraw;
-  const closed = now > closeDraw;
+
+  const openDraw =
+    data?.startAt != null ? new Date(data.startAt).getTime() : undefined;
+  const closeDraw =
+    data?.endAt != null ? new Date(data.endAt).getTime() : undefined;
+  const announceDraw =
+    data?.announceAt != null ? new Date(data.announceAt).getTime() : undefined;
+
+  // 신청 버튼 상태 계산
+  const effectiveEndAt = closeDraw ?? announceDraw;
+
+  const hasOpen = openDraw !== undefined;
+  const hasEnd = effectiveEndAt !== undefined;
+
+  const beforeOpen = hasOpen && now < openDraw;
+  const closed = hasEnd && now > effectiveEndAt;
+
+  const opened = (() => {
+    // 상시 오픈
+    if (!hasOpen && !hasEnd) {
+      return true;
+    }
+
+    // 시작일만 있는 경우
+    if (hasOpen && !hasEnd) {
+      return now >= openDraw;
+    }
+
+    // 종료일만 있는 경우
+    if (!hasOpen && hasEnd) {
+      return now <= effectiveEndAt;
+    }
+
+    // 시작일 + 종료일 모두 있는 경우
+    return now >= openDraw && now <= effectiveEndAt;
+  })();
 
   const [open, setOpen] = useState(false);
 
@@ -182,39 +213,52 @@ export default function EventPage() {
           <div className={styles.drawCount}>
             <Icon id='person' width={20} height={20} />
             <p>추첨 인원</p>
-            <p className={styles.data}>{data.drawCount} 명</p>
+            <p className={styles.data}>{data.drawCount}</p>
           </div>
 
-          <div className={styles.applicationDate}>
-            <Icon
-              id='calendar-stroke'
-              width={20}
-              height={20}
-              fill='none'
-              stroke='#484848'
-            />
-            <p>응모 날짜</p>
-            <p className={styles.data}>
-              시작일 : {fullDateTimeFormat(data.startAt)} <br />
-              종료일 : {fullDateTimeFormat(data.endAt)}
-            </p>
-          </div>
+          {(data.startAt != null || data.endAt != null) && (
+            <div className={styles.applicationDate}>
+              <Icon
+                id='calendar-stroke'
+                width={20}
+                height={20}
+                fill='none'
+                stroke='#484848'
+              />
+              <p>응모 날짜</p>
+              <p className={styles.data}>
+                {data.startAt && (
+                  <>
+                    시작일 : {DateTime.format(data.startAt, 'YMD_HM')}
+                    <br />
+                  </>
+                )}
+                {data.endAt && (
+                  <>종료일 : {DateTime.format(data.endAt, 'YMD_HM')}</>
+                )}
+              </p>
+            </div>
+          )}
 
-          <div className={styles.announceDate}>
-            <Icon
-              id='calendar-stroke'
-              width={20}
-              height={20}
-              fill='none'
-              stroke='#484848'
-            />
-            <p>당첨자 발표일</p>
-            <p className={styles.data}>{fullDateTimeFormat(data.announceAt)}</p>
-          </div>
-          <p
-            className={styles.contentText}
-            dangerouslySetInnerHTML={convertHyperlink(data.content)}
-          ></p>
+          {data.announceAt && (
+            <div className={styles.announceDate}>
+              <Icon
+                id='calendar-stroke'
+                width={20}
+                height={20}
+                fill='none'
+                stroke='#484848'
+              />
+              <p>당첨자 발표일</p>
+              <p className={styles.data}>
+                {DateTime.format(data.announceAt, 'YMD_HM')}
+              </p>
+            </div>
+          )}
+
+          <p className={styles.contentText}>
+            {renderTextWithLinks(data.content)}
+          </p>
 
           <div className={styles.note}>
             <p>
@@ -322,8 +366,8 @@ function MetaContainer({
         )}
         <p className={styles.dot}>·</p>
         <p>
-          {fullDateTimeFormat(createdAt)}
-          {isEdited && ' (수정됨)'}
+          {createdAt ? DateTime.format(createdAt, 'YMD_HM') : ''}{' '}
+          {isEdited && '(수정됨)'}
         </p>
       </div>
 
@@ -359,7 +403,7 @@ function ActionContainer({
     <div className={styles.actionContainer}>
       <div
         className={styles.count}
-        styles={{
+        style={{
           display: isNotice ? 'none' : 'flex',
           backgroundColor:
             focusedItem === 'post' ? 'var(--blue-1)' : 'transparent',
@@ -416,7 +460,7 @@ function CommentContainer({ isNotice, commentCount, userInfo }) {
       ) : (
         <>
           <CommentListSuspense commentCount={commentCount} />
-          {userInfo === 4 ? <CommentInput /> : ''}
+          {userInfo === 4 && <CommentInput />}
         </>
       )}
     </>

@@ -12,13 +12,18 @@ export { default as DropdownList } from './dropdown/DropdownList/DropdownList';
 export { default as SelectedItem } from './dropdown/SelectedItem/SelectedItem';
 
 // form
-export { default as CheckBox } from './form/CheckBox/CheckBox';
-export { default as Input } from './form/input/Input';
-export { default as NumberInput } from './form/input/NumberInput';
-export { default as SpecialInput } from './form/input/SpecialInput';
-export { default as TextInput } from './form/input/TextInput';
 export { default as Label } from './form/Label/Label';
-export { default as PwInput } from './form/PwInput/PwInput';
+export { default as ErrorMessage } from './form/ErrorMessage/ErrorMessage';
+
+export { default as CheckBox } from './form/CheckBox/CheckBox';
+
+export { default as EmailInput } from './form/input/EmailInput';
+export { default as NumberInput } from './form/input/NumberInput';
+export { default as PasswordInput } from './form/input/PasswordInput';
+export { default as TextInput } from './form/input/TextInput';
+
+export { default as PwInput } from './form/input/PwInput';
+
 export { default as Textarea } from './form/Textarea/Textarea';
 
 // layout

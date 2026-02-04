@@ -3,22 +3,47 @@
   height: 5rem;
 
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  gap: 1rem;
 
   border-radius: 0.5rem;
-  background-color: var(--grey-1-1);
 
   font: var(--text-body-1-reg);
-  color: var(--grey-4);
 
-  &::placeholder {
+  & input::placeholder {
     color: var(--grey-3-1);
   }
 }
+.default {
+  background-color: var(--grey-1-1);
+  color: var(--grey-4);
+}
+.valid {
+  background-color: var(--blue-0);
+  color: var(--blue-4);
+}
+.error {
+  background-color: var(--pink-1);
+  color: var(--pink-3);
+}
 
+/* input */
 .container input {
+  width: 100%;
+  height: 100%;
+
   outline: none;
   border: none;
   background-color: transparent;
+}
+
+.container.default input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px var(--grey-1-1) inset;
+}
+.container.valid input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px var(--blue-0) inset;
+}
+.container.error input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px var(--pink-1) inset;
 }

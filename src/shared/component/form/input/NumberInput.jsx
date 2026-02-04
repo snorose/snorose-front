@@ -1,20 +1,28 @@
-import { validClassNumber } from '@/shared/lib';
+import { isNumber } from '@/shared/lib';
 import InputLayout from '@/shared/component/form/input/InputLayout';
 
-export default function NumberInput({ id, value, onChange, placeholder }) {
+export default function NumberInput({
+  id,
+  placeholder,
+  value,
+  onChange,
+  status = 'default',
+  maxLength,
+}) {
   return (
-    <InputLayout>
+    <InputLayout status={status}>
       <input
         id={id}
         type='text'
-        value={value}
-        placeholder={placeholder}
         inputMode='numeric'
+        {...(maxLength ? { maxLength } : {})}
+        placeholder={placeholder}
+        value={value}
         onChange={(e) => {
-          const { value: number } = e.target;
+          const { value } = e.target;
 
-          if (validClassNumber(number)) {
-            onChange(number);
+          if (isNumber(value) || value === '') {
+            onChange(value);
           }
         }}
       />

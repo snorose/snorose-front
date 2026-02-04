@@ -1,0 +1,29 @@
+.guidelineContainer {
+  width: 100%;
+  max-width: var(--default-width);
+  height: 100vh;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: var(--z-index-toast);
+  display: flex;
+  flex-direction: column;
+}
+.guideContainer {
+  flex: 1;
+  overflow: hidden;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.swiperSlide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

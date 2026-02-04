@@ -5,12 +5,10 @@ import { TOAST } from '@/shared/constant';
 
 export const useRegister = () => {
   const { toast } = useToast();
+
   const register = async (formData, navigate) => {
     const endpoint = '/v1/users/register';
     const data = { ...formData, userRoleId: 1, isBlacklist: false };
-
-    data['major'] = data['name'];
-    delete data['name'];
 
     try {
       await defaultAxios.post(endpoint, data);

@@ -1,18 +1,28 @@
+.container {
+  flex: 1;
+
+  margin-bottom: 4rem;
+}
+
 .title {
   font: var(--text-title-1-bold);
   margin-bottom: 2rem;
 }
 
-.inputFrame {
-  margin-bottom: 2.4rem;
+.inputList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.submit {
-  margin-bottom: 4rem;
+.field {
+  height: 10.5rem;
 }
 
 /* checkbox */
 .checkTerms {
+  margin-bottom: 7rem;
+
   display: flex;
   justify-content: space-between;
   align-items: center;

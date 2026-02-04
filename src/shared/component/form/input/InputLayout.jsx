@@ -1,5 +1,15 @@
 import styles from './InputLayout.module.css';
 
-export default function InputLayout({ children }) {
-  return <div className={styles.container}>{children}</div>;
+const inputStyle = {
+  default: styles.default,
+  valid: styles.valid,
+  error: styles.error,
+};
+
+export default function InputLayout({ children, status }) {
+  return (
+    <div className={`${styles.container} ${inputStyle[status]}`}>
+      {children}
+    </div>
+  );
 }

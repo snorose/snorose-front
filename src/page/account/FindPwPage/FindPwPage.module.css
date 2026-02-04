@@ -24,40 +24,39 @@
   justify-content: space-between;
 }
 
-.back {
-  margin-top: 1.4rem;
-  margin-bottom: 2.7rem;
-}
-.back:hover {
-  cursor: pointer;
-}
-
 .pageTitle {
   font: var(--text-title-1-bold);
   margin-top: 1.4rem;
   margin-bottom: 5.1rem;
 }
 
-.inputFrame {
+.form {
   margin-bottom: 2.4rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
 }
 
 .alert {
   font: var(--text-body-1-reg);
   color: grey;
   word-break: keep-all;
-}
-.alert ul {
-  list-style-type: circle;
-  padding-left: 2rem;
+
+  & ul {
+    list-style-type: circle;
+    padding-left: 2rem;
+  }
+
+  & a {
+    color: var(--blue-3);
+  }
 }
 
-.alert a {
-  color: var(--blue-3);
-}
 .highlight {
   color: var(--blue-3);
 }
+
 .googleFormBtn {
   width: 8.5rem;
   height: 3.6rem;
@@ -70,11 +69,10 @@
   gap: 0.1rem;
 }
 
-.findIDButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--grey-4);
-  margin-top: 1.2rem;
+.buttonFrame {
   margin-bottom: 4rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }

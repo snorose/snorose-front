@@ -1,7 +1,17 @@
 {
-  "name": "snorose-front-react",
+  "name": "snorose-front",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "craco start",
+    "build:origin": "craco build",
+    "build:stage": "REACT_APP_SERVER_DOMAIN=https://stage.snorose.com npm run build:origin",
+    "build": "if [ \"$CF_PAGES_BRANCH\" = \"stage\" ]; then npm run build:stage; else npm run build:origin; fi",
+    "test": "craco test",
+    "eject": "craco eject",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
   "dependencies": {
     "@growthbook/growthbook-react": "^1.6.0",
     "@svgr/webpack": "latest",
@@ -33,32 +43,6 @@
     "web-vitals": "^2.1.0",
     "zustand": "^5.0.2"
   },
-  "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "craco eject",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.3",
     "@craco/craco": "^7.1.0",
@@ -72,10 +56,32 @@
     "@storybook/react-webpack5": "^8.4.7",
     "@storybook/test": "^8.4.7",
     "@tanstack/react-query-devtools": "^5.51.23",
+    "@types/node": "^24.10.1",
+    "@types/react": "^18.3.27",
+    "@types/react-dom": "^18.3.7",
     "eslint-plugin-storybook": "^0.11.2",
     "prettier": "^3.3.2",
     "prop-types": "^15.8.1",
     "storybook": "^8.4.7",
+    "typescript": "^4.9.5",
     "webpack": "^5.97.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   }
 }

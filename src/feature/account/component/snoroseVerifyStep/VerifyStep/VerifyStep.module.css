@@ -6,7 +6,9 @@
   flex: 1;
 }
 
-.verify {
+.inputList {
+  padding-bottom: 5.4rem;
+
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
@@ -14,9 +16,8 @@
 
 /* button */
 .button {
-  position: absolute;
-  left: 0;
-  bottom: 4rem;
+  position: sticky;
+  bottom: 2rem;
 
-  height: 5.4rem;
+  width: 100%;
 }

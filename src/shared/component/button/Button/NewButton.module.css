@@ -35,6 +35,10 @@
   color: var(--white);
   background-color: var(--blue-4);
 }
+.solid:disabled {
+  color: var(--blue-3);
+  background-color: var(--blue-1);
+}
 
 .outlined {
   color: var(--blue-4);

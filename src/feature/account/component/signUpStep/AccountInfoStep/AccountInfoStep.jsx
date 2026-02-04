@@ -1,148 +1,152 @@
-import { useState } from 'react';
-
-import { Button, Input, SpecialInput } from '@/shared/component';
+import { useToast } from '@/shared/hook';
+import {
+  EmailInput,
+  ErrorMessage,
+  Label,
+  NewButton,
+  PasswordInput,
+  TextInput,
+} from '@/shared/component';
 
 import {
-  checkName,
-  checkSookmyungMail,
-  checkID,
-  checkPW,
-  checkIfSame,
+  validateUserName,
+  validateSookmyungEmail,
+  validateId,
+  validatePassword,
 } from '@/feature/account/lib';
 
 import styles from './AccountInfoStep.module.css';
 
 export default function AccountInfoStep({ formData, setFormData, setStage }) {
-  const [nameStyle, setNameStyle] = useState('ready');
-  const [emailStyle, setEmailStyle] = useState('ready');
-  const [idStyle, setIdStyle] = useState('ready');
-  const [pwStyle, setPwStyle] = useState('ready');
-  const [pw2Style, setPw2Style] = useState('ready');
+  const { toast } = useToast();
 
-  // 모든 필드가 유효한지 확인하는 함수
-  const isAllValid = () => {
-    return (
-      nameStyle === 'right' &&
-      emailStyle === 'right' &&
-      idStyle === 'right' &&
-      pwStyle === 'right' &&
-      pw2Style === 'right'
-    );
+  const validateCheckedPassword = () => {
+    if (formData.checkedPassword === '') return 'default';
+    return formData.password === formData.checkedPassword ? 'valid' : 'error';
   };
 
-  // 다음 단계로 이동하는 함수
+  const inputList = [
+    {
+      type: 'text',
+      label: '이름',
+      id: 'userName',
+      placeholder: '이름을 입력해 주세요',
+      value: formData.userName,
+      onChange: (next) =>
+        setFormData((prev) => ({
+          ...prev,
+          userName: next,
+        })),
+      validate: validateUserName,
+      message: '한글 또는 영어로 2자 이상 30자 이하로 입력해 주세요',
+    },
+    {
+      type: 'email',
+      label: '숙명 구글 이메일',
+      id: 'email',
+      placeholder: 'example@sookmyung.ac.kr',
+      value: formData.email,
+      onChange: (next) =>
+        setFormData((prev) => ({
+          ...prev,
+          email: next,
+        })),
+      validate: validateSookmyungEmail,
+      message: '숙명 이메일만 입력 가능해요',
+    },
+    {
+      type: 'text',
+      label: '아이디',
+      id: 'loginId',
+      placeholder: '사용할 아이디를 입력해주세요',
+      value: formData.loginId,
+      onChange: (next) =>
+        setFormData((prev) => ({
+          ...prev,
+          loginId: next,
+        })),
+      validate: validateId,
+      message: '특수문자를 제외한 5자 이상 30자 이하로 입력해 주세요',
+    },
+    {
+      type: 'password',
+      label: '비밀번호',
+      id: 'password',
+      placeholder: '비밀번호를 입력해 주세요',
+      value: formData.password,
+      onChange: (next) =>
+        setFormData((prev) => ({
+          ...prev,
+          password: next,
+        })),
+      validate: validatePassword,
+      message:
+        '영어, 숫자, 특수문자(!@#%^&*)를 사용하여 8자 이상 16자 이하로 작성해 주세요',
+    },
+    {
+      type: 'password',
+      label: '비밀번호 확인',
+      id: 'checkedPassword',
+      placeholder: '비밀번호를 다시 입력해 주세요',
+      value: formData.checkedPassword,
+      onChange: (next) =>
+        setFormData((prev) => ({
+          ...prev,
+          checkedPassword: next,
+        })),
+      validate: validateCheckedPassword,
+      message: '비밀번호가 일치하지 않아요',
+    },
+  ];
+
+  const isAllValid = inputList.every(
+    (field) => field.validate(field.value) === 'valid'
+  );
+
   const handleNext = () => {
-    if (isAllValid()) {
-      setStage(2); // 직접 2단계로 설정
+    if (isAllValid) {
+      setStage(2);
     } else {
-      // 유효성 검사가 완료되지 않은 경우 알림 또는 다른 처리
-      alert('모든 필드를 올바르게 입력해주세요.');
+      toast({
+        message: '모든 필드를 올바르게 입력해주세요.',
+        variant: 'error',
+      });
     }
   };
 
-  const setDoneState = () => {
-    return isAllValid() ? 'right' : 'ready';
-  };
-
   return (
-    <>
+    <div className={styles.container}>
       <p className={styles.title}>
         계정 정보를
         <br /> 입력해 주세요
       </p>
-      <div className={styles.inputFrame}>
-        <Input
-          title={'이름'}
-          placeholder={'이름을 입력해 주세요'}
-          className={nameStyle}
-          setClassName={setNameStyle}
-          classNameCheck={checkName}
-          inputType={'userName'}
-          inputData={setFormData}
-          data={formData}
-          errMsg={
-            '한글 또는 영어 대소문자로 2자 이상 30자 이하로 입력해 주세요'
-          }
-        />
-      </div>
-      <div className={styles.inputFrame}>
-        <Input
-          title={'숙명 구글 이메일'}
-          placeholder={'sample@sookmyung.ac.kr'}
-          className={emailStyle}
-          setClassName={setEmailStyle}
-          classNameCheck={checkSookmyungMail}
-          inputType={'email'}
-          inputData={setFormData}
-          data={formData}
-          errMsg={'숙명 이메일만 입력 가능해요'}
-        />
-      </div>
-      <div className={styles.inputFrame}>
-        <Input
-          title={'아이디'}
-          placeholder={'사용할 아이디를 입력해 주세요'}
-          className={idStyle}
-          setClassName={setIdStyle}
-          classNameCheck={checkID}
-          inputType={'loginId'}
-          inputData={setFormData}
-          data={formData}
-          errMsg={'특수문자를 제외한 5자 이상 30자 이하로 입력해 주세요'}
-        />
-      </div>
-      <div className={styles.inputFrame}>
-        <SpecialInput
-          title={'비밀번호'}
-          placeholder={'비밀번호를 입력해 주세요'}
-          className={pwStyle}
-          setClassName={setPwStyle}
-          classNameCheck={checkPW}
-          inputType={'password'}
-          inputData={setFormData}
-          data={formData}
-          id1={'opened-eye'}
-          id2={'closed-eye'}
-          color1={'#898989'}
-          color2={'#00368e'}
-          color3={'#ff4b6c'}
-          state1={'text'}
-          state2={'password'}
-          errMsg={
-            '영어, 숫자, 특수문자(!@#%^&*)를 사용하여 8자 이상 16자 이하로 작성해 주세요'
-          }
-        />
-      </div>
-      <div className={styles.inputFrame}>
-        <SpecialInput
-          title={'비밀번호 확인'}
-          placeholder={'비밀번호를 다시 입력해 주세요'}
-          className={pw2Style}
-          setClassName={setPw2Style}
-          classNameCheck={() =>
-            checkIfSame(formData.password, formData.checkedPassword)
-          }
-          inputType={'checkedPassword'}
-          inputData={setFormData}
-          data={formData}
-          id1={'opened-eye'}
-          id2={'closed-eye'}
-          color1={'#898989'}
-          color2={'#00368e'}
-          color3={'#ff4b6c'}
-          state1={'text'}
-          state2={'password'}
-          errMsg={'비밀번호가 일치하지 않아요'}
-        />
+
+      <div className={styles.inputList}>
+        {inputList.map((props) => {
+          const Input = {
+            text: TextInput,
+            email: EmailInput,
+            password: PasswordInput,
+          }[props.type];
+
+          const { validate } = props;
+          const status = validate(props.value);
+
+          return (
+            <div key={`signup-${props.id}`} className={styles.field}>
+              <Label htmlFor={props.id}>{props.label}</Label>
+              <Input status={status} {...props} />
+              {status === 'error' && (
+                <ErrorMessage>{props.message}</ErrorMessage>
+              )}
+            </div>
+          );
+        })}
       </div>
 
-      <div className={styles.submit}>
-        <Button
-          btnName='다음으로'
-          className={setDoneState()}
-          onClick={handleNext}
-        />
-      </div>
-    </>
+      <NewButton onClick={handleNext} disabled={!isAllValid}>
+        다음으로
+      </NewButton>
+    </div>
   );
 }

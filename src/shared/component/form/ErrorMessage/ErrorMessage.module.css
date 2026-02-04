@@ -1,0 +1,6 @@
+.message {
+  margin: 0.6rem 0;
+
+  font: var(--text-body-1-reg);
+  color: var(--pink-3);
+}

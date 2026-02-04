@@ -1,5 +1,5 @@
-import { useQueryClient } from '@tanstack/react-query';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useContext, useEffect, useMemo, useState, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
@@ -7,6 +7,7 @@ import {
   ActionButton,
   AttachmentList,
   Badge,
+  CheckBox,
   CloseAppBar,
   DropdownList,
   FetchLoading,
@@ -22,13 +23,17 @@ import {
   ATTACHMENT_MODAL_TEXT,
 } from '@/shared/constant';
 import { useAuth, useBlocker, useToast, useModal } from '@/shared/hook';
-import { formattedNowTime, getBoard } from '@/shared/lib';
+import { DateTime, getBoard } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
 
 import { createThumbnail, postPost } from '@/apis';
 import { AttachmentBar } from '@/feature/board/component';
+import { Guideline } from '@/feature/attachment/component';
+import { useGuide } from '@/feature/attachment/hook';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
+import attachmentGuide1 from '@/assets/images/attachmentGuide1.png';
+import attachmentGuide2 from '@/assets/images/attachmentGuide2.png';
 
 import styles from './WritePostPage.module.css';
 
@@ -45,18 +50,20 @@ export default function WritePostPage() {
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
-  const [submitDisabled, setSubmitDisabled] = useState(false);
+  const submitLockRef = useRef(false);
   const [isBlock, setIsBlock] = useState(false);
-
-  /**
-   * 이미지 TF 코드
-   */
+  //가이드 이미지 관련 로직
+  const [dontShowAgain, setDontShowAgain] = useState(false);
+  const { isGuideOpened, closeGuide, disableGuide } = useGuide({
+    guideKey: 'attachmentGuide',
+    maxGuideVisitNum: 3,
+  });
   //'게시글 생성' API에서 요구하는 데이터 (중 attachments array)
-  // const [attachmentsInfo, setAttachmentsInfo] = useState([]);
+  const [attachmentsInfo, setAttachmentsInfo] = useState([]);
 
-  // const [isTrashOverlapped, setIsTrashOverlapped] = useState(false);
-  // const [trashImageIndex, setTrashImageIndex] = useState(null); //지우는 이미지 index
-  // const trashImageConfirmModal = useModal();
+  const [isTrashOverlapped, setIsTrashOverlapped] = useState(false);
+  const [trashImageIndex, setTrashImageIndex] = useState(null); //지우는 이미지 index
+  const trashImageConfirmModal = useModal();
 
   const textId = pathname.split('/')[2];
   const currentBoard = getBoard(textId);
@@ -83,12 +90,12 @@ export default function WritePostPage() {
 
   // 페이지 이탈 방지 모달 노출
   useEffect(() => {
-    if (title.trim().length > 0 || text.trim().length > 0) {
-      setIsBlock(true);
-    } else {
-      setIsBlock(false);
-    }
-  }, [title, text]);
+    setIsBlock(
+      title.trim().length > 0 ||
+        text.trim().length > 0 ||
+        attachmentsInfo.length > 0
+    );
+  }, [title, text, attachmentsInfo]);
 
   useBlocker(isBlock);
 
@@ -143,52 +150,67 @@ export default function WritePostPage() {
     title,
     content: text,
     isNotice: textId === 'notice' ? true : isNotice,
-    // attachmentsInfo: attachmentsInfo,
+    attachmentsInfo: attachmentsInfo,
   };
 
+  const createThumbnailMutation = useMutation({
+    mutationFn: ({ boardId, postId }) => createThumbnail(boardId, postId),
+  });
+  const createPostMutation = useMutation({
+    mutationFn: postPost,
+    onSuccess: async (response, variables) => {
+      if (response.status !== 201) return;
+
+      !response.data.result.pointDifference
+        ? toast({
+            message: TOAST.POST.createNoPoints,
+            variant: 'success',
+          })
+        : toast({ message: TOAST.POST.create, variant: 'success' });
+
+      const newPostId = response.data.result.postId;
+      try {
+        await createThumbnailMutation.mutateAsync({
+          boardId: variables.boardId,
+          postId: newPostId,
+        });
+      } catch (err) {
+        toast({
+          message: '썸네일 생성 중 오류가 발생했습니다.',
+          variant: 'error',
+        });
+      }
+
+      queryClient.removeQueries(QUERY_KEY.post());
+      invalidUserInfoQuery();
+
+      currentBoard.id === 12 || variables.isNotice
+        ? navigate(`/board/${currentBoard.textId}/notice`, { replace: true })
+        : navigate(
+            `/board/${
+              BOARD_MENUS.find((menu) => menu.id === variables.boardId).textId
+            }/post/${newPostId}`,
+            { replace: true }
+          );
+    },
+    onError: (err) => {
+      toast({
+        message: err.response?.data?.message,
+        variant: 'error',
+      });
+    },
+  });
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (submitDisabled) return;
+    if (submitLockRef.current) return;
+    submitLockRef.current = true;
 
-    setSubmitDisabled(true);
-
-    // 게시글 등록
-    postPost(data)
-      .then((response) => {
-        if (response.status === 201) {
-          !response.data.result.pointDifference
-            ? toast({
-                message: TOAST.POST.createNoPoints,
-                variant: 'success',
-              })
-            : toast({ message: TOAST.POST.create, variant: 'success' });
-          const newPostId = response.data.result.postId;
-
-          queryClient.removeQueries(QUERY_KEY.post());
-          invalidUserInfoQuery();
-          currentBoard.id === 12 || isNotice
-            ? navigate(`/board/${currentBoard.textId}/notice`, {
-                replace: true,
-              })
-            : navigate(
-                `/board/${BOARD_MENUS.find((menu) => menu.id === boardId).textId}/post/${newPostId}`,
-                { replace: true }
-              );
-
-          /**
-           * 이미지 TF 코드
-           */
-          // post 등록이 잘 되었으면 썸네일 생성하기
-          // createThumbnail(boardId, newPostId);
-        }
-      })
-      .catch(({ response }) => {
-        toast({ message: response.data.message, variant: 'error' });
-      })
-      .finally(() => {
-        setSubmitDisabled(false);
-      });
+    createPostMutation.mutate(data, {
+      onSettled: () => {
+        submitLockRef.current = false;
+      },
+    });
   };
 
   // 제목 127자 제한
@@ -199,21 +221,59 @@ export default function WritePostPage() {
     }
   };
 
-  if (status === 'loading') {
-    return (
-      <>
-        <FetchLoading>로딩 중...</FetchLoading>
-      </>
-    );
-  }
-
   return (
     <>
+      {isGuideOpened && (
+        <Guideline
+          guideImages={[attachmentGuide1, attachmentGuide2]}
+          guideStyle={{
+            width: '27.4rem',
+            height: '36.1rem',
+            position: 'absolute',
+            bottom: '10.2rem',
+          }}
+        >
+          <div className={styles.buttons}>
+            <label className={styles.guideButton1}>
+              <CheckBox
+                id='dontShowAgain'
+                checked={dontShowAgain}
+                onChange={() => setDontShowAgain((prev) => !prev)}
+              />
+              <p className={styles.guideButton1Text}>다시 보지 않기</p>
+            </label>
+            <button
+              className={styles.guideButton2}
+              onClick={() => {
+                if (dontShowAgain) {
+                  disableGuide();
+                }
+                closeGuide();
+              }}
+            >
+              닫기
+            </button>
+          </div>
+        </Guideline>
+      )}
       <div className={styles.container}>
+        {(createPostMutation.isPending ||
+          createThumbnailMutation.isPending) && (
+          <div className={styles.fetchLoadingContainer}>
+            <FetchLoading>게시글 처리 중...</FetchLoading>
+          </div>
+        )}
         <div>
           <div className={styles.top}>
             <CloseAppBar backgroundColor={'#eaf5fd'}>
-              <ActionButton onClick={handleSubmit} disabled={!pass}>
+              <ActionButton
+                onClick={handleSubmit}
+                disabled={
+                  !pass ||
+                  createPostMutation.isPending ||
+                  createThumbnailMutation.isPending
+                }
+              >
                 등록
               </ActionButton>
             </CloseAppBar>
@@ -272,7 +332,7 @@ export default function WritePostPage() {
                 )}
                 <p>{userInfo?.nickname}</p>
                 <p className={styles.dot}></p>
-                <p>{formattedNowTime()}</p>
+                <p>{DateTime.format(new Date(), 'MD_HM')}</p>
               </div>
               {textId !== 'notice' && (
                 <div
@@ -306,10 +366,10 @@ export default function WritePostPage() {
                 value={text}
                 onChange={(e) => setText(e.target.value)}
               />
-              {/* <AttachmentList
+              <AttachmentList
                 attachmentsInfo={attachmentsInfo}
                 setAttachmentsInfo={setAttachmentsInfo}
-              /> */}
+              />
             </div>
           </div>
         </div>
@@ -321,7 +381,7 @@ export default function WritePostPage() {
           />
         )}
 
-        {/* <Icon
+        <Icon
           id='trashcan'
           width='10rem'
           height='10rem'
@@ -352,10 +412,10 @@ export default function WritePostPage() {
         <AttachmentBar
           attachmentsInfo={attachmentsInfo}
           setAttachmentsInfo={setAttachmentsInfo}
-        /> */}
+        />
       </div>
 
-      {/* {trashImageConfirmModal.isOpen && (
+      {trashImageConfirmModal.isOpen && (
         <ConfirmModal
           modalText={ATTACHMENT_MODAL_TEXT.DELETE_ATTACHMENT}
           onConfirm={() => {
@@ -370,7 +430,7 @@ export default function WritePostPage() {
             trashImageConfirmModal.closeModal();
           }}
         />
-      )} */}
+      )}
     </>
   );
 }

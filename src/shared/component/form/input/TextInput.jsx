@@ -1,13 +1,19 @@
 import InputLayout from '@/shared/component/form/input/InputLayout';
 
-export default function TextInput({ id, value, onChange, placeholder }) {
+export default function TextInput({
+  id,
+  placeholder,
+  value,
+  onChange,
+  status = 'default',
+}) {
   return (
-    <InputLayout>
+    <InputLayout status={status}>
       <input
         id={id}
         type='text'
-        value={value}
         placeholder={placeholder}
+        value={value}
         onChange={(e) => onChange(e.target.value)}
       />
     </InputLayout>

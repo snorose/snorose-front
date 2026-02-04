@@ -1,26 +1,28 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useFindPw } from '@/apis';
 
 import {
   BackAppBar,
-  Button,
+  EmailInput,
+  ErrorMessage,
   FetchLoadingOverlay,
   Icon,
-  Input,
+  Label,
+  NewButton,
+  TextInput,
 } from '@/shared/component';
 import { LOADING_MESSAGE } from '@/shared/constant';
 
-import { checkIfEntered, checkMail } from '@/feature/account/lib';
+import { validateEmail, validateId } from '@/feature/account/lib';
 
 import styles from './FindPwPage.module.css';
 
 export default function FindPwPage() {
   const findPw = useFindPw();
   const navigate = useNavigate();
-  const [idStyle, setIdStyle] = useState('ready');
-  const [emailStyle, setEmailStyle] = useState('ready');
+
   const [allowSubmit, setAllowSubmit] = useState(true);
   const [loading, setLoading] = useState();
   const [formData, setFormData] = useState({
@@ -29,25 +31,31 @@ export default function FindPwPage() {
   });
 
   const inputProps = [
-    [
-      '아이디',
-      '아이디를 입력해주세요',
-      idStyle,
-      setIdStyle,
-      checkIfEntered,
-      'loginId',
-      '아이디는 영어, 숫자만 가능합니다',
-    ],
-    [
-      '이메일',
-      '이메일을 입력해주세요',
-      emailStyle,
-      setEmailStyle,
-      checkMail,
-      'email',
-      '이메일만 입력 가능합니다',
-    ],
+    {
+      type: 'text',
+      label: '아이디',
+      id: 'loginId',
+      placeholder: '아이디를 입력해주세요',
+      value: formData.loginId,
+      onChange: (next) => setFormData((prev) => ({ ...prev, loginId: next })),
+      validate: validateId,
+      message: '아이디는 영어, 숫자만 가능합니다',
+    },
+    {
+      type: 'email',
+      label: '이메일',
+      id: 'email',
+      placeholder: '이메일을 입력해주세요',
+      value: formData.email,
+      onChange: (next) => setFormData((prev) => ({ ...prev, email: next })),
+      validate: validateEmail,
+      message: '이메일만 입력 가능합니다',
+    },
   ];
+
+  const isFormValid = inputProps.every(
+    ({ validate, value }) => validate(value) === 'valid'
+  );
 
   return (
     <div className={styles.container}>
@@ -57,9 +65,8 @@ export default function FindPwPage() {
         className={styles.form}
         onSubmit={(e) => {
           e.preventDefault();
-          if (formData.loginId && formData.email && allowSubmit) {
+          if (isFormValid && allowSubmit) {
             findPw(e, formData, navigate, setLoading);
-            //버튼 한번만 누를 수 있게 제한하는 코드
             setAllowSubmit(false);
           }
         }}
@@ -67,21 +74,28 @@ export default function FindPwPage() {
         <div className={styles.findIdFrame}>
           <div>
             <h1 className={styles.pageTitle}>비밀번호 찾기</h1>
-            {inputProps.map((props, i) => (
-              <div className={styles.inputFrame} key={i}>
-                <Input
-                  title={props[0]}
-                  placeholder={props[1]}
-                  className={props[2]}
-                  setClassName={props[3]}
-                  classNameCheck={props[4]}
-                  inputType={props[5]}
-                  inputData={setFormData}
-                  errMsg={props[6]}
-                  data={formData}
-                />
-              </div>
-            ))}
+
+            <div className={styles.form}>
+              {inputProps.map((props) => {
+                const Input = {
+                  text: TextInput,
+                  email: EmailInput,
+                }[props.type];
+
+                const { validate } = props;
+                const status = validate(props.value);
+
+                return (
+                  <div key={`find-pw-${props.id}`} className={styles.field}>
+                    <Label>{props.label}</Label>
+                    <Input status={status} {...props} />
+                    {status === 'error' && (
+                      <ErrorMessage>{props.message}</ErrorMessage>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
 
             <div className={styles.alert}>
               <ul>
@@ -111,16 +125,19 @@ export default function FindPwPage() {
               </button>
             </div>
           </div>
+
           <div className={styles.buttonFrame}>
-            <Button btnName='완료' className={'right'} />
-            <Link to='/find-id'>
-              <div className={styles.findIDButton}>
-                <Button btnName='아이디를 잊어버렸어요' className={'ready'} />
-              </div>
-            </Link>
+            <NewButton disabled={!isFormValid}>완료</NewButton>
+            <NewButton
+              variant='outlinedSecondary'
+              onClick={() => navigate('/find-id')}
+            >
+              아이디를 잊어버렸어요
+            </NewButton>
           </div>
         </div>
       </form>
+
       {loading && <FetchLoadingOverlay text={LOADING_MESSAGE.default} />}
     </div>
   );

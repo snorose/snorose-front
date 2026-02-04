@@ -4,45 +4,38 @@ import { verifySookmyungPortal } from '@/apis';
 
 import { useToast } from '@/shared/hook';
 import {
+  EmailInput,
+  ErrorMessage,
   FetchLoadingOverlay,
-  PrimaryButton,
-  PwInput,
+  Label,
+  NewButton,
+  NumberInput,
+  PasswordInput,
 } from '@/shared/component';
-import { isEmailValid } from '@/shared/lib';
-import { TOAST } from '@/shared/constant';
 
-import { AuthInput } from '@/feature/account/component';
+import { validateEmail, validateStudentNumber } from '@/feature/account/lib';
 
 import styles from './VerifyStep.module.css';
 
 export default function VerifyStep({ setStep }) {
   const { toast } = useToast();
-  const [studentId, setStudentId] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  const [formData, setFormData] = useState({
+    studentId: '',
+    password: '',
+    email: '',
+  });
   const [loading, setLoading] = useState();
 
-  const isAllFieldsCompleted = studentId && password && email;
+  const isAllValid =
+    validateStudentNumber(formData.studentId) === 'valid' &&
+    validateEmail(formData.email) === 'valid' &&
+    formData.password;
 
   const verify = async () => {
-    if (!isAllFieldsCompleted) {
-      toast({ message: TOAST.VERIFY.notCompleted, variant: 'info' });
-      return;
-    }
-
-    if (!isEmailValid(email)) {
-      toast({ message: TOAST.VERIFY.invalidEmail, variant: 'info' });
-      return;
-    }
-
     setLoading(true);
 
     try {
-      await verifySookmyungPortal({
-        studentId,
-        password,
-        email,
-      });
+      await verifySookmyungPortal(formData);
 
       setStep('complete');
     } catch ({ response }) {
@@ -52,37 +45,82 @@ export default function VerifyStep({ setStep }) {
     }
   };
 
+  const inputList = [
+    {
+      type: 'number',
+      label: '학번',
+      id: 'studentId',
+      maxLength: 7,
+      placeholder: '학번을 입력해 주세요',
+      value: formData.studentId,
+      onChange: (next) =>
+        setFormData((prev) => ({
+          ...prev,
+          studentId: next,
+        })),
+      validate: validateStudentNumber,
+      message: '학번은 7자리 숫자예요',
+    },
+    {
+      type: 'password',
+      label: '숙명포털 비밀번호',
+      id: 'password',
+      placeholder: '닉네임을 입력해 주세요',
+      value: formData.password,
+      onChange: (next) =>
+        setFormData((prev) => ({
+          ...prev,
+          password: next,
+        })),
+    },
+    {
+      type: 'email',
+      label: '이메일',
+      id: 'email',
+      placeholder: 'YYYY-MM-DD',
+      value: formData.email,
+      onChange: (next) =>
+        setFormData((prev) => ({
+          ...prev,
+          email: next,
+        })),
+      validate: validateEmail,
+      message: '입력 형식을 확인해 주세요',
+    },
+  ];
+
   return (
     <section className={styles.container}>
-      <div className={styles.verify}>
-        <AuthInput
-          label='학번'
-          type='text'
-          value={studentId}
-          placeholder='학번을 입력해주세요'
-          onChange={(event) => setStudentId(event.target.value)}
-        />
-        <PwInput
-          title='숙명포털 비밀번호'
-          placeholder='숙명포털 비밀번호를 입력해주세요'
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          isStatic
-        />
-        <AuthInput
-          label='이메일'
-          type='text'
-          value={email}
-          placeholder='이메일을 입력해주세요'
-          onChange={(event) => setEmail(event.target.value)}
-          validate={isEmailValid}
-          errorMessage='올바른 이메일을 입력해주세요'
-        />
+      <div className={styles.inputList}>
+        {inputList.map((props) => {
+          const { validate } = props;
+
+          const Input = {
+            number: NumberInput,
+            password: PasswordInput,
+            email: EmailInput,
+          }[props.type];
+
+          const status = validate?.(props.value) ?? 'default';
+
+          return (
+            <div key={`signup-${props.id}`} className={styles.field}>
+              <Label htmlFor={props.id}>{props.label}</Label>
+              <Input status={status} {...props} />
+              {status === 'error' && (
+                <ErrorMessage>{props.message}</ErrorMessage>
+              )}
+            </div>
+          );
+        })}
       </div>
 
-      <PrimaryButton className={styles.button} onClick={verify}>
-        인증
-      </PrimaryButton>
+      <div className={styles.button}>
+        <NewButton onClick={verify} disabled={!isAllValid}>
+          인증
+        </NewButton>
+      </div>
+
       {loading && <FetchLoadingOverlay />}
     </section>
   );

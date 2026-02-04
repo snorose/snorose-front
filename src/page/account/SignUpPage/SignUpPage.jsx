@@ -14,7 +14,17 @@ import styles from './SignUpPage.module.css';
 
 export default function SignUpPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    loginId: '',
+    password: '',
+    checkedPassword: '',
+    userName: '',
+    email: '',
+    nickname: '',
+    studentNumber: '',
+    major: '',
+    birthday: '',
+  });
 
   // URL에서 step 파라미터 읽기
   const getStepFromUrl = () => {

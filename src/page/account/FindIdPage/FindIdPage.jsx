@@ -6,52 +6,57 @@ import { useFindId } from '@/apis';
 import {
   FetchLoadingOverlay,
   Icon,
-  Input,
-  Button,
   BackAppBar,
+  NumberInput,
+  TextInput,
+  Label,
+  ErrorMessage,
+  NewButton,
 } from '@/shared/component';
 import { LOADING_MESSAGE } from '@/shared/constant';
 
-import { checkName, checkStudentNum } from '@/feature/account/lib';
+import { validateStudentNumber, validateUserName } from '@/feature/account/lib';
 
 import styles from './FindIdPage.module.css';
 
 export default function FindIdPage() {
   const findId = useFindId();
   const navigate = useNavigate();
-  const [nameStyle, setNameStyle] = useState('ready');
-  const [numberStyle, setNumberStyle] = useState('ready');
   const [allowSubmit, setAllowSubmit] = useState(true);
   const [loading, setLoading] = useState();
   const [formData, setFormData] = useState({
     userName: '',
     studentNumber: '',
   });
+
   const inputProps = [
-    [
-      '이름',
-      '이름을 입력해주세요',
-      nameStyle,
-      setNameStyle,
-      checkName,
-      'userName',
-      '특수문자는 사용할 수 없습니다',
-    ],
-    [
-      '학번',
-      '학번을 입력해주세요',
-      numberStyle,
-      setNumberStyle,
-      checkStudentNum,
-      'studentNumber',
-      '학번 형식이 옳지 않습니다',
-    ],
+    {
+      type: 'text',
+      label: '이름',
+      id: 'name',
+      placeholder: '이름을 입력해주세요',
+      value: formData.userName,
+      onChange: (next) => setFormData((prev) => ({ ...prev, userName: next })),
+      validate: validateUserName,
+      message: '특수문자는 사용할 수 없습니다',
+    },
+    {
+      type: 'number',
+      label: '학번',
+      id: 'studentNumber',
+      placeholder: '학번을 입력해주세요',
+      value: formData.studentNumber,
+      onChange: (next) =>
+        setFormData((prev) => ({ ...prev, studentNumber: next })),
+      maxLength: 7,
+      validate: validateStudentNumber,
+      message: '학번 형식이 옳지 않습니다',
+    },
   ];
-  const submitState = () => {
-    if (nameStyle === 'right' && numberStyle === 'right') return 'right';
-    else if (nameStyle === 'wrong' || numberStyle === 'wrong') return 'wrong';
-    else return 'ready';
-  };
+
+  const isFormValid = inputProps.every(
+    ({ validate, value }) => validate(value) === 'valid'
+  );
 
   return (
     <div className={styles.container}>
@@ -60,9 +65,8 @@ export default function FindIdPage() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (formData.userName && formData.studentNumber && allowSubmit) {
+          if (isFormValid && allowSubmit) {
             findId(e, formData, navigate, setLoading);
-            //버튼 한번만 누를 수 있게 제한하는 코드
             setAllowSubmit(false);
           }
         }}
@@ -71,21 +75,27 @@ export default function FindIdPage() {
           <div>
             <h1 className={styles.pageTitle}>아이디 찾기</h1>
 
-            {inputProps.map((props, i) => (
-              <div className={styles.inputFrame} key={i}>
-                <Input
-                  title={props[0]}
-                  placeholder={props[1]}
-                  className={props[2]}
-                  setClassName={props[3]}
-                  classNameCheck={props[4]}
-                  inputType={props[5]}
-                  inputData={setFormData}
-                  errMsg={props[6]}
-                  data={formData}
-                />
-              </div>
-            ))}
+            <div className={styles.form}>
+              {inputProps.map((props) => {
+                const Input = {
+                  text: TextInput,
+                  number: NumberInput,
+                }[props.type];
+
+                const { validate } = props;
+                const status = validate(props.value);
+
+                return (
+                  <div key={`find-id-${props.id}`} className={styles.field}>
+                    <Label htmlFor={props.id}>{props.label}</Label>
+                    <Input status={status} {...props} />
+                    {status === 'error' && (
+                      <ErrorMessage>{props.message}</ErrorMessage>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
 
             <div className={styles.alert}>
               <ol>
@@ -123,7 +133,7 @@ export default function FindIdPage() {
           </div>
 
           <div className={styles.buttonFrame}>
-            <Button btnName='다음으로' className={submitState()} />
+            <NewButton disabled={!isFormValid}>다음으로</NewButton>
           </div>
         </div>
       </form>

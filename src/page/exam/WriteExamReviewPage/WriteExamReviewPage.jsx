@@ -248,6 +248,7 @@ export default function WriteExamReviewPage() {
           </Label>
           <NumberInput
             id='classNumber'
+            maxLength={3}
             value={classNumber}
             onChange={(next) => setClassNumber(next)}
             placeholder='수강분반을 입력해주세요'
