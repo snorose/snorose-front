@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions';
 import ActionButton from './ActionButton';
 
 const meta = {
-  title: 'Component/ActionButton',
+  title: 'Component/Button/ActionButton',
   component: ActionButton,
   decorators: [
     (Story) => (

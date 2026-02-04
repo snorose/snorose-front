@@ -3,7 +3,7 @@ import TextInput from './TextInput';
 import { Label, ErrorMessage } from '@/shared/component';
 
 const meta = {
-  title: 'Component/Form/TextInput',
+  title: 'Component/Input/TextInput',
   component: TextInput,
   parameters: {
     docs: {
@@ -48,7 +48,7 @@ const Template = (args) => {
 
   const handleChange = (newValue) => {
     setValue(newValue);
-    
+
     // 간단한 validation 예시
     if (newValue.trim().length === 0) {
       setStatus('default');
@@ -69,9 +69,7 @@ const Template = (args) => {
         onChange={handleChange}
         status={status}
       />
-      {status === 'error' && (
-        <ErrorMessage>3자 이상 입력해주세요</ErrorMessage>
-      )}
+      {status === 'error' && <ErrorMessage>3자 이상 입력해주세요</ErrorMessage>}
     </div>
   );
 };
@@ -95,4 +93,3 @@ Error.args = {
   value: '가',
   status: 'error',
 };
-

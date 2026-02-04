@@ -1,7 +1,7 @@
 import WriteButton from './WriteButton';
 
 const writeButtonStoryConfig = {
-  title: 'Component/WriteButton',
+  title: 'Component/Button/WriteButton',
   component: WriteButton,
   decorators: [
     (Story) => (

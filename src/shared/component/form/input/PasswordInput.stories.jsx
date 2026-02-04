@@ -3,7 +3,7 @@ import PasswordInput from './PasswordInput';
 import { Label, ErrorMessage } from '@/shared/component';
 
 const meta = {
-  title: 'Component/Form/PasswordInput',
+  title: 'Component/Input/PasswordInput',
   component: PasswordInput,
   parameters: {
     docs: {
@@ -48,12 +48,14 @@ const Template = (args) => {
 
   const validatePassword = (password) => {
     // 최소 8자, 영문, 숫자 포함
-    return password.length >= 8 && /[A-Za-z]/.test(password) && /\d/.test(password);
+    return (
+      password.length >= 8 && /[A-Za-z]/.test(password) && /\d/.test(password)
+    );
   };
 
   const handleChange = (newValue) => {
     setValue(newValue);
-    
+
     if (newValue.length === 0) {
       setStatus('default');
     } else if (validatePassword(newValue)) {
@@ -99,4 +101,3 @@ Error.args = {
   value: 'short',
   status: 'error',
 };
-

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PwInput from './PwInput';
 
 const meta = {
-  title: 'Component/PwInput',
+  title: 'Component/Input/PwInput',
   component: PwInput,
   decorators: [
     (Story) => (

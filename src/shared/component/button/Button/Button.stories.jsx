@@ -1,7 +1,7 @@
 import Button from './Button';
 
-const submitButtonConfig = {
-  title: 'Component/SubmitButton',
+const buttonConfig = {
+  title: 'Component/Button/Button',
   component: Button,
   decorators: [
     (Story) => (
@@ -34,7 +34,7 @@ const submitButtonConfig = {
     },
   },
 };
-export default submitButtonConfig;
+export default buttonConfig;
 
 const Template = (args) => <Button {...args} />;
 

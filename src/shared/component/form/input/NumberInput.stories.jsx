@@ -3,7 +3,7 @@ import NumberInput from './NumberInput';
 import { Label, ErrorMessage } from '@/shared/component';
 
 const meta = {
-  title: 'Component/Form/NumberInput',
+  title: 'Component/Input/NumberInput',
   component: NumberInput,
   parameters: {
     docs: {
@@ -53,7 +53,7 @@ const Template = (args) => {
 
   const handleChange = (newValue) => {
     setValue(newValue);
-    
+
     if (newValue.length === 0) {
       setStatus('default');
     } else if (newValue.length >= 3) {
@@ -106,4 +106,3 @@ WithMaxLength.args = {
   maxLength: 6,
   status: 'default',
 };
-

@@ -3,7 +3,7 @@ import EmailInput from './EmailInput';
 import { Label, ErrorMessage } from '@/shared/component';
 
 const meta = {
-  title: 'Component/Form/EmailInput',
+  title: 'Component/Input/EmailInput',
   component: EmailInput,
   parameters: {
     docs: {
@@ -53,7 +53,7 @@ const Template = (args) => {
 
   const handleChange = (newValue) => {
     setValue(newValue);
-    
+
     if (newValue.trim().length === 0) {
       setStatus('default');
     } else if (validateEmail(newValue)) {
@@ -99,4 +99,3 @@ Error.args = {
   value: 'invalid-email',
   status: 'error',
 };
-
