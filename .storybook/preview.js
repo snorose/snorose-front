@@ -27,6 +27,13 @@ const preview = {
         date: /Date$/i,
       },
     },
+    options: {
+      storySort: {
+        order: ['Component', ['Button', 'Input', '*'], 'Feature', '*'],
+        method: 'alphabetical',
+        locales: 'en-US',
+      },
+    },
   },
   tags: ['autodocs'],
   // 모든 스토리에 필요한 Provider 적용
