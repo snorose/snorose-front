@@ -1,6 +1,23 @@
-/* 스토리북에서만 배경색을 하얀색으로 설정 */
 html {
-  background-color: #ffffff !important;
+  background-color: var(
+    --white
+  ) !important; /* 스토리북에서만 배경색을 하얀색으로 설정 */
+  overflow: auto !important;
+  height: auto !important;
+}
+
+::-webkit-scrollbar {
+  display: block !important;
+  width: 8px !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--grey-3-1) !important;
+  border-radius: 10px !important;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--grey-3) !important;
 }
 
 :root {
