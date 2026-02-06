@@ -1,3 +1,14 @@
+:root {
+  font-size: 62.5%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+}
+
 html {
   background-color: var(
     --white
@@ -6,57 +17,8 @@ html {
   height: auto !important;
 }
 
-::-webkit-scrollbar {
-  display: block !important;
-  width: 8px !important;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--grey-3-1) !important;
-  border-radius: 10px !important;
-}
-
-::-webkit-scrollbar-track {
-  background-color: var(--grey-3) !important;
-}
-
-:root {
-  font-size: 62.5%;
-}
-
 html,
-body,
-header,
-nav,
-main,
-article,
-section,
-aside,
-footer,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-div,
-p,
-span,
-ul,
-ol,
-fieldset,
-legend,
-label,
-form,
-input,
-button,
-select,
-option,
-textarea,
-pre {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+body {
   font: inherit;
   vertical-align: baseline;
   letter-spacing: -0.5px;
