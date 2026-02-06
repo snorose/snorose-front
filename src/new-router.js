@@ -1,9 +1,11 @@
 import { attendanceLoader } from '@/shared/loader';
-import { NavbarLayout } from '@/shared/ui';
-// import WriteLayoutSelector from '@/shared/ui/WriteLayoutSelector';
-// import PostListLayoutSelector from '@/shared/ui/PostListLayoutSelector';
-// import PostLayoutSelector from '@/shared/ui/PostLayoutSelector';
-// import EditLayoutSelector from '@/shared/ui/EditLayoutSelector';
+import {
+  NavbarLayout,
+  PostListPageSelector,
+  PostPageSelector,
+  WritePageSelector,
+  EditPageSelector,
+} from '@/shared/ui';
 import { BOARD_SECTION } from '@/shared/constant';
 
 import App from '@/App';
@@ -122,7 +124,7 @@ export const routeList = [
           </BoardValidator>
         ),
         children: [
-          // { index: true, element: <PostListLayoutSelector /> },
+          { index: true, element: <PostListPageSelector /> },
           {
             path: `search`,
             element: <SearchPage />,
@@ -137,10 +139,7 @@ export const routeList = [
                 element: <BoardGuard isAdminOnly />,
                 children: [
                   { path: `write`, element: <WritePostPage isNotice /> },
-                  {
-                    path: `:postId/edit`,
-                    element: <EditPostPage isNotice />,
-                  } /* 공지글 수정 페이지 오류나고 있음 */,
+                  { path: `:postId/edit`, element: <EditPostPage isNotice /> },
                 ],
               },
             ],
@@ -148,14 +147,14 @@ export const routeList = [
           },
           {
             path: `post/:postId`,
-            // element: <PostLayoutSelector />,
+            element: <PostPageSelector />,
             handle: { feature: BOARD_SECTION.DETAIL },
           },
           {
             element: <BoardGuard action={'write'} />,
             children: [
-              // { path: `write`, element: <WriteLayoutSelector /> },
-              // { path: `post/:postId/edit`, element: <EditLayoutSelector /> },
+              { path: `write`, element: <WritePageSelector /> },
+              { path: `post/:postId/edit`, element: <EditPageSelector /> },
             ],
             handle: { feature: BOARD_SECTION.EDITOR },
           },
