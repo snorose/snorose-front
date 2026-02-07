@@ -15,7 +15,7 @@ const MESSAGE = {
 
 export default function BoardGuard(props: BoardGuardProps) {
   const navigate = useNavigate();
-  const { boardName } = useParams();
+  const { boardKey } = useParams();
   const { userInfo } = useAuth();
 
   if (!userInfo) {
@@ -40,7 +40,7 @@ export default function BoardGuard(props: BoardGuardProps) {
 
   const { action } = props;
 
-  const roles = PERMISSION_MATRIX[action][boardName] ?? [];
+  const roles = PERMISSION_MATRIX[action][boardKey] ?? [];
   if (!roles.includes(userInfo?.userRoleId)) {
     const modalText = {
       ...CONFIRM_MODAL_TEXT.ACCESS_DENIED,

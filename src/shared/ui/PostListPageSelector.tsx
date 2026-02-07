@@ -7,9 +7,9 @@ import { EventListPage } from '@/page/event';
 import { PostListPage } from '@/page/board';
 
 export default function PostListPageSelector() {
-  const { boardName } = useParams();
+  const { boardKey } = useParams();
 
-  switch (boardName) {
+  switch (boardKey) {
     case 'exam-review': {
       return (
         <NavbarLayout>

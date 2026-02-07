@@ -5,9 +5,9 @@ import { EventPage } from '@/page/event';
 import { PostPage } from '@/page/board';
 
 export default function PostPageSelector() {
-  const { boardName } = useParams();
+  const { boardKey } = useParams();
 
-  switch (boardName) {
+  switch (boardKey) {
     case 'exam-review': {
       return <ExamReviewPage />;
     }

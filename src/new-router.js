@@ -115,7 +115,7 @@ export const routeList = [
 
       /* 게시판 */
       {
-        path: '/board/:boardName',
+        path: '/board/:boardKey',
         element: (
           <BoardValidator>
             <RequireAuth>
