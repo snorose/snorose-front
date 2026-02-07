@@ -36,7 +36,7 @@ const POPUP_CONTENTS = [
       },
       {
         title: '스노로즈 공지 바로가기',
-        url: '/notice/post/1869660',
+        url: '/notice/1869660',
       },
     ],
     image: accountingReport,
