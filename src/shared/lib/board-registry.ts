@@ -105,7 +105,7 @@ export const BOARD_REGISTRY = {
   officials: OFFICIAL,
   all: ALL,
 
-  find(identifier: BoardId | BoardKey): Board {
+  find(identifier: BoardId | BoardKey): Board | undefined {
     if (typeof identifier === 'number') {
       return ALL.find(({ id }) => id === identifier);
     }
