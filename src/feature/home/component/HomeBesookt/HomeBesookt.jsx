@@ -21,12 +21,12 @@ export default function HomeBesookt({ className }) {
     <div className={`${styles.list} ${className}`}>
       {besookts.map((besookt) => {
         const board = BOARD_REGISTRY.find(besookt.boardId);
-        const boarKey = board.key.toLowerCase();
+        if (!board) return null;
 
         return (
           <Link
             key={`home-besookt-${besookt.boardId}-${besookt.postId}`}
-            to={`/board/${boarKey}/post/${besookt.postId}`}
+            to={`/board/${board.key}/post/${besookt.postId}`}
           >
             <PostBar data={besookt} />
           </Link>
