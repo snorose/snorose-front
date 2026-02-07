@@ -10,21 +10,21 @@ interface Board {
 
 const COMMUNITY = [
   {
-    key: 'FIRST-SNOW',
+    key: 'first-snow',
     id: 21,
     name: '첫눈온방',
     to: '/board/first-snow',
     desc: '새내기 전용 커뮤니티',
   },
   {
-    key: 'LARGE-SNOW',
+    key: 'large-snow',
     id: 22,
     name: '함박눈방',
     to: '/board/large-snow',
     desc: '눈송이 모두의 커뮤니티',
   },
   {
-    key: 'PERMANENT-SNOW',
+    key: 'permanent-snow',
     id: 23,
     name: '만년설방',
     to: '/board/permanent-snow',
@@ -34,21 +34,21 @@ const COMMUNITY = [
 
 const OFFICIAL = [
   {
-    key: 'STUDENT-COUNCIL',
+    key: 'student-council',
     id: 60,
     name: '총학생회',
     to: '/board/student-council',
     desc: '총학생회 공지',
   },
   {
-    key: 'GRADUATION-PREPARATION',
+    key: 'graduation-preparation',
     id: 61,
     name: '졸업준비위원회',
     to: '/board/graduation-preparation',
     desc: '졸업준비위원회 공지',
   },
   {
-    key: 'FINANCE-AUDIT',
+    key: 'finance-audit',
     id: 62,
     name: '재정감사위원회',
     to: '/board/finance-audit',
@@ -58,7 +58,7 @@ const OFFICIAL = [
 
 const REVIEW = [
   {
-    key: 'EXAM-REVIEW',
+    key: 'exam-review',
     id: 32,
     name: '시험후기',
     to: '/board/exam-review',
@@ -68,26 +68,26 @@ const REVIEW = [
 
 const SNOROSE = [
   {
-    key: 'NOTICE',
+    key: 'notice',
     id: 12,
     name: '공지사항',
     to: ROUTE.notice,
   },
   {
-    key: 'SUPPORT',
+    key: 'support',
     id: 13,
     name: '문의 및 신고',
     to: '/support',
   },
   {
-    key: 'EVENT',
+    key: 'event',
     id: 14,
     name: '스노로즈 이벤트',
     to: '/board/event',
     desc: '스노로즈 이벤트 게시판',
   },
   {
-    key: 'BESOOKT',
+    key: 'besookt',
     id: 20,
     name: '베숙트',
     to: '/board/besookt',

@@ -5,9 +5,9 @@ import { EditEventPage } from '@/page/event';
 import { EditPostPage } from '@/page/board';
 
 export default function EditPageSelector() {
-  const { boardName } = useParams();
+  const { boardKey } = useParams();
 
-  switch (boardName) {
+  switch (boardKey) {
     case 'exam-review': {
       return <EditExamReviewPage />;
     }

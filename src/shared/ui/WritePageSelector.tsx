@@ -7,9 +7,9 @@ import { WritePostPage } from '@/page/board';
 import { CheckExamPeriodRoute } from '@/feature/exam/lib';
 
 export default function WritePageSelector() {
-  const { boardName } = useParams();
+  const { boardKey } = useParams();
 
-  switch (boardName) {
+  switch (boardKey) {
     case 'exam-review': {
       return (
         <CheckExamPeriodRoute>
