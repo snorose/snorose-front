@@ -24,7 +24,7 @@ export default function HomeCard() {
     <div className={styles.layout}>
       <Card
         className={styles.left}
-        to={BOARD_REGISTRY.find('NOTICE').to}
+        to={BOARD_REGISTRY.find('notice').to}
         title={notice.title}
         icon={{
           id: isLogin ? 'blueMegaphone' : 'megaphone',
