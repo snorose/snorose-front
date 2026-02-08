@@ -209,8 +209,8 @@ export const routeList = [
           {
             path: '/account',
             children: [
-              { path: '/password', element: <ChangePwPage /> },
-              { path: '/delete', element: <DeleteAccountPage /> },
+              { path: 'password', element: <ChangePwPage /> },
+              { path: 'delete', element: <DeleteAccountPage /> },
             ],
           },
           {
