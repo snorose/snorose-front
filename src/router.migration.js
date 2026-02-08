@@ -26,6 +26,7 @@ import { AlertPage, AlertSettingPage, MarketingTermsPage } from '@/page/alert';
 import {
   BoardCategoryPage,
   EditPostPage,
+  NewNoticeListPage,
   NoticeListPage,
   PostPage,
   WritePostPage,
@@ -88,7 +89,7 @@ export const routeList = [
       {
         path: '/notice',
         children: [
-          { index: true, element: <NoticeListPage /> },
+          { index: true, element: <NewNoticeListPage /> },
           { path: ':postId', element: <PostPage /> },
           {
             element: <BoardGuard isAdminOnly />,
@@ -129,6 +130,19 @@ export const routeList = [
         children: [
           { index: true, element: <PostListPageSelector /> },
           {
+            path: `:postId`,
+            element: <PostPageSelector />,
+            handle: { feature: BOARD_SECTION.DETAIL },
+          },
+          {
+            element: <BoardGuard action={'write'} />,
+            children: [
+              { path: `write`, element: <WritePageSelector /> },
+              { path: `:postId/edit`, element: <EditPageSelector /> },
+            ],
+            handle: { feature: BOARD_SECTION.EDITOR },
+          },
+          {
             path: `search`,
             element: <SearchPage />,
             handle: { feature: BOARD_SECTION.SEARCH },
@@ -147,19 +161,6 @@ export const routeList = [
               },
             ],
             handle: { feature: BOARD_SECTION.NOTICE },
-          },
-          {
-            path: `:postId`,
-            element: <PostPageSelector />,
-            handle: { feature: BOARD_SECTION.DETAIL },
-          },
-          {
-            element: <BoardGuard action={'write'} />,
-            children: [
-              { path: `write`, element: <WritePageSelector /> },
-              { path: `:postId/edit`, element: <EditPageSelector /> },
-            ],
-            handle: { feature: BOARD_SECTION.EDITOR },
           },
         ],
       },
