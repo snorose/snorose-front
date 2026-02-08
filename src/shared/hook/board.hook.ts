@@ -20,6 +20,9 @@ export function useBoard() {
   }
 
   const board = BOARD_REGISTRY.find(isGlobalNotice ? 'notice' : boardKey);
+  if (!board) {
+    throw new Error('[useBoard] 유효하지 않은 게시판입니다.');
+  }
 
   return { ...board, isGlobalNotice };
 }
