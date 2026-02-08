@@ -106,10 +106,17 @@ export const BOARD_REGISTRY = {
   all: ALL,
 
   find(identifier: BoardId | BoardKey): Board {
-    if (typeof identifier === 'number') {
-      return ALL.find(({ id }) => id === identifier);
+    const result =
+      typeof identifier === 'number'
+        ? ALL.find(({ id }) => id === identifier)
+        : ALL.find(({ key }) => key === identifier);
+
+    if (!result) {
+      throw new Error(
+        `[BoardRegistry] 존재하지 않는 게시판 식별자입니다. (identifier: ${identifier})`
+      );
     }
 
-    return ALL.find(({ key }) => key === identifier);
+    return result;
   },
 } as const;
