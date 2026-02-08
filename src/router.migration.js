@@ -27,6 +27,7 @@ import {
   BoardCategoryPage,
   EditPostPage,
   NewNoticeListPage,
+  NewWritePostPage,
   NoticeListPage,
   PostPage,
   WritePostPage,
@@ -93,7 +94,7 @@ export const routeList = [
           {
             element: <BoardGuard isAdminOnly />,
             children: [
-              { path: 'write', element: <WritePostPage isNotice /> },
+              { path: 'write', element: <NewWritePostPage isNotice /> },
               { path: ':postId/edit', element: <EditPostPage isNotice /> },
             ],
           },
