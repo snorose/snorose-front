@@ -187,7 +187,6 @@ export const routeList = [
         element: <RequireAuth />,
         children: [
           {
-            index: true,
             element: (
               <NavbarLayout>
                 <MyPage />
