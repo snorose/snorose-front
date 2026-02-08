@@ -646,7 +646,11 @@ export function NewWritePostPage({ isNotice = false }) {
                   height={22}
                   fill='white'
                 />
-                <p className={styles.categorySelectText}>{boardName}</p>
+                <p className={styles.categorySelectText}>
+                  {!isGlobalNotice && isNotice
+                    ? `${boardName} 공지`
+                    : boardName}
+                </p>
               </div>
             </div>
 
