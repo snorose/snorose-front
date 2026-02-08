@@ -106,7 +106,12 @@ export default function NoticeListPage() {
 export function NewNoticeListPage() {
   const navigate = useNavigate();
   const { userInfo } = useAuth();
-  const { id: boardId, name: boardName, isGlobalNotice } = useBoard();
+  const {
+    key: boardKey,
+    id: boardId,
+    name: boardName,
+    isGlobalNotice,
+  } = useBoard();
   const { toNoticeWrite } = useBoardNavigate();
 
   const isAdmin = userInfo?.userRoleId === ROLE.admin;
@@ -166,7 +171,7 @@ export function NewNoticeListPage() {
 
       {isAdmin && isGlobalNotice && (
         <WriteButton
-          to={toNoticeWrite({ isGlobalNotice })}
+          to={toNoticeWrite(boardKey, { isGlobalNotice })}
           className={styles.writeButton}
         />
       )}
