@@ -93,7 +93,6 @@ export const routeList = [
         path: '/notice',
         children: [
           { index: true, element: <NewNoticeListPage /> },
-          { path: ':postId', element: <NewPostPage /> },
           {
             element: <BoardGuard isAdminOnly />,
             children: [
@@ -101,6 +100,7 @@ export const routeList = [
               { path: ':postId/edit', element: <NewEditPostPage isNotice /> },
             ],
           },
+          { path: ':postId', element: <NewPostPage /> },
         ],
       },
 
@@ -133,9 +133,24 @@ export const routeList = [
         children: [
           { index: true, element: <PostListPageSelector /> },
           {
-            path: `:postId`,
-            element: <PostPageSelector />,
-            handle: { feature: BOARD_SECTION.DETAIL },
+            path: `search`,
+            element: <SearchPage />,
+            handle: { feature: BOARD_SECTION.SEARCH },
+          },
+          {
+            path: `notice`,
+            children: [
+              { index: true, element: <NoticeListPage /> },
+              {
+                element: <BoardGuard isAdminOnly />,
+                children: [
+                  { path: `write`, element: <WritePostPage isNotice /> },
+                  { path: `:postId/edit`, element: <EditPostPage isNotice /> },
+                ],
+              },
+              { path: `:postId`, element: <PostPage /> },
+            ],
+            handle: { feature: BOARD_SECTION.NOTICE },
           },
           {
             element: <BoardGuard action={'write'} />,
@@ -146,24 +161,9 @@ export const routeList = [
             handle: { feature: BOARD_SECTION.EDITOR },
           },
           {
-            path: `search`,
-            element: <SearchPage />,
-            handle: { feature: BOARD_SECTION.SEARCH },
-          },
-          {
-            path: `notice`,
-            children: [
-              { index: true, element: <NoticeListPage /> },
-              { path: `:postId`, element: <PostPage /> },
-              {
-                element: <BoardGuard isAdminOnly />,
-                children: [
-                  { path: `write`, element: <WritePostPage isNotice /> },
-                  { path: `:postId/edit`, element: <EditPostPage isNotice /> },
-                ],
-              },
-            ],
-            handle: { feature: BOARD_SECTION.NOTICE },
+            path: `:postId`,
+            element: <PostPageSelector />,
+            handle: { feature: BOARD_SECTION.DETAIL },
           },
         ],
       },
