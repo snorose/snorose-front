@@ -28,3 +28,5 @@ export { default as HomeBesooktErrorFallback } from './HomeBesookt/HomeBesooktEr
 
 // 팝업
 export { default as PopUp } from './PopUp/PopUp';
+
+export * from './HomeCard/HomeCard';
