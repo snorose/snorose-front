@@ -25,31 +25,43 @@ export function useBoard() {
   return { ...board, isGlobalNotice };
 }
 
+type NoticeOption = {
+  isGlobalNotice?: boolean;
+};
+
 export function useBoardNavigate() {
   const { boardKey, postId } = useParams<BoardParams>();
 
+  const toNoticeList = ({ isGlobalNotice = false }: NoticeOption = {}) =>
+    isGlobalNotice
+      ? NEW_ROUTES.globalNotice.list
+      : NEW_ROUTES.notice.list(boardKey);
+
+  const toNoticeWrite = ({ isGlobalNotice = false }: NoticeOption = {}) =>
+    isGlobalNotice
+      ? NEW_ROUTES.globalNotice.write
+      : NEW_ROUTES.notice.write(boardKey);
+
+  const toNoticeDetail = ({ isGlobalNotice = false }: NoticeOption = {}) =>
+    isGlobalNotice
+      ? NEW_ROUTES.globalNotice.detail(postId)
+      : NEW_ROUTES.notice.detail(boardKey, postId);
+
+  const toNoticeEdit = ({ isGlobalNotice = false }: NoticeOption = {}) =>
+    isGlobalNotice
+      ? NEW_ROUTES.globalNotice.edit(postId)
+      : NEW_ROUTES.notice.edit(boardKey, postId);
+
   return {
+    toNoticeList,
+    toNoticeWrite,
+    toNoticeDetail,
+    toNoticeEdit,
+
     toList: () => NEW_ROUTES.post.list(boardKey),
     toWrite: () => NEW_ROUTES.post.write(boardKey),
     toDetail: () => NEW_ROUTES.post.detail(boardKey, postId),
     toEdit: () => NEW_ROUTES.post.edit(boardKey, postId),
     toSearch: () => NEW_ROUTES.post.search(boardKey),
-
-    toNoticeList: (isGlobalNotice: boolean) =>
-      isGlobalNotice
-        ? NEW_ROUTES.globalNotice.list
-        : NEW_ROUTES.notice.list(boardKey),
-    toNoticeWrite: (isGlobalNotice: boolean) =>
-      isGlobalNotice
-        ? NEW_ROUTES.globalNotice.write
-        : NEW_ROUTES.notice.write(boardKey),
-    toNoticeDetail: (isGlobalNotice: boolean) =>
-      isGlobalNotice
-        ? NEW_ROUTES.globalNotice.detail(postId)
-        : NEW_ROUTES.notice.detail(boardKey, postId),
-    toNoticeEdit: (isGlobalNotice: boolean) =>
-      isGlobalNotice
-        ? NEW_ROUTES.globalNotice.edit(postId)
-        : NEW_ROUTES.notice.edit(boardKey, postId),
   };
 }

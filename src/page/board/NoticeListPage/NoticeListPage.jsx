@@ -166,7 +166,7 @@ export function NewNoticeListPage() {
 
       {isAdmin && isGlobalNotice && (
         <WriteButton
-          to={toNoticeWrite(toNoticeWrite)}
+          to={toNoticeWrite({ isGlobalNotice })}
           className={styles.writeButton}
         />
       )}
