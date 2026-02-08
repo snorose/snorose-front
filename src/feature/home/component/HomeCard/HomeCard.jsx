@@ -63,7 +63,7 @@ export function NewHomeCard() {
     <div className={styles.layout}>
       <Card
         className={styles.left}
-        to={toNoticeList({ isGlobalNotice: true })}
+        to={toNoticeList('notice')}
         title={notice.title}
         icon={{
           id: isLogin ? 'blueMegaphone' : 'megaphone',

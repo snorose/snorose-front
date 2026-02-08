@@ -24,32 +24,26 @@ export function useBoard() {
   return { ...board, isGlobalNotice };
 }
 
-type NoticeOption = {
-  isGlobalNotice?: boolean;
-};
-
 export function useBoardNavigate() {
-  const toNoticeList = (boardKey: BoardKey, { isGlobalNotice = false }: NoticeOption = {}) =>
-    isGlobalNotice ? NEW_ROUTES.globalNotice.list : NEW_ROUTES.notice.list(boardKey);
+  const isGlobalNotice = (boardKey: BoardKey) => boardKey === 'notice';
 
-  const toNoticeWrite = (boardKey: BoardKey, { isGlobalNotice = false }: NoticeOption = {}) =>
-    isGlobalNotice ? NEW_ROUTES.globalNotice.write : NEW_ROUTES.notice.write(boardKey);
+  const toNoticeList = (boardKey: BoardKey) =>
+    isGlobalNotice(boardKey)
+      ? NEW_ROUTES.globalNotice.list
+      : NEW_ROUTES.notice.list(boardKey);
 
-  const toNoticeDetail = (
-    boardKey: BoardKey,
-    postId: string,
-    { isGlobalNotice = false }: NoticeOption = {}
-  ) =>
-    isGlobalNotice
+  const toNoticeWrite = (boardKey: BoardKey) =>
+    isGlobalNotice(boardKey)
+      ? NEW_ROUTES.globalNotice.write
+      : NEW_ROUTES.notice.write(boardKey);
+
+  const toNoticeDetail = (boardKey: BoardKey, postId: string) =>
+    isGlobalNotice(boardKey)
       ? NEW_ROUTES.globalNotice.detail(postId)
       : NEW_ROUTES.notice.detail(boardKey, postId);
 
-  const toNoticeEdit = (
-    boardKey: BoardKey,
-    postId: string,
-    { isGlobalNotice = false }: NoticeOption = {}
-  ) =>
-    isGlobalNotice
+  const toNoticeEdit = (boardKey: BoardKey, postId: string) =>
+    isGlobalNotice(boardKey)
       ? NEW_ROUTES.globalNotice.edit(postId)
       : NEW_ROUTES.notice.edit(boardKey, postId);
 
@@ -61,8 +55,10 @@ export function useBoardNavigate() {
 
     toList: (boardKey: BoardKey) => NEW_ROUTES.post.list(boardKey),
     toWrite: (boardKey: BoardKey) => NEW_ROUTES.post.write(boardKey),
-    toDetail: (boardKey: BoardKey, postId: string) => NEW_ROUTES.post.detail(boardKey, postId),
-    toEdit: (boardKey: BoardKey, postId: string) => NEW_ROUTES.post.edit(boardKey, postId),
+    toDetail: (boardKey: BoardKey, postId: string) =>
+      NEW_ROUTES.post.detail(boardKey, postId),
+    toEdit: (boardKey: BoardKey, postId: string) =>
+      NEW_ROUTES.post.edit(boardKey, postId),
     toSearch: (boardKey: BoardKey) => NEW_ROUTES.post.search(boardKey),
   };
 }
