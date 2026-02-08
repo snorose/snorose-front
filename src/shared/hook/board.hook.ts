@@ -14,7 +14,7 @@ export function useBoard() {
   const { boardKey } = useParams<BoardParams>();
   const { pathname } = useLocation();
 
-  const isGlobalNotice = pathname === NEW_ROUTES.globalNotice.list;
+  const isGlobalNotice = pathname.startsWith(NEW_ROUTES.globalNotice.list);
   const notBoard = !boardKey && !isGlobalNotice;
   if (notBoard) {
     throw new Error('[useBoard] 게시판 페이지에서만 사용 가능한 훅입니다.');
