@@ -26,6 +26,7 @@ import { AlertPage, AlertSettingPage, MarketingTermsPage } from '@/page/alert';
 import {
   BoardCategoryPage,
   EditPostPage,
+  NewNoticeListPage,
   NoticeListPage,
   PostPage,
   WritePostPage,
@@ -88,7 +89,7 @@ export const routeList = [
       {
         path: '/notice',
         children: [
-          { index: true, element: <NoticeListPage /> },
+          { index: true, element: <NewNoticeListPage /> },
           {
             element: <BoardGuard isAdminOnly />,
             children: [
