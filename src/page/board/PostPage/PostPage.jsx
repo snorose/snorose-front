@@ -17,7 +17,7 @@ import {
   getBoard,
 } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
-import { useToast, useModalReset } from '@/shared/hook';
+import { useToast, useModalReset, useBoard } from '@/shared/hook';
 import {
   AttachmentSwiper,
   BackAppBar,
@@ -194,6 +194,147 @@ export default function PostPage() {
   );
 }
 
+/**
+ * TODO: 라우트 개선 작업 완료 후 기존 컴포넌트와 교체 예정
+ */
+export function NewPostPage() {
+  const navigate = useNavigate();
+  const { postId } = useParams();
+  const { key: boardKey, id: boardId } = useBoard();
+  const { modal, setModal } = useContext(ModalContext);
+  const { toast } = useToast();
+  const [clickedImageIndex, setClickedImageIndex] = useState(0);
+
+  // 페이지 언마운트 시 모달 상태 초기화
+  useModalReset();
+
+  const { data, isLoading, error, isError } = useQuery({
+    queryKey: QUERY_KEY.post(postId),
+    queryFn: () => getPostContent(boardId, postId),
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const { handleDelete } = useDeletePostHandler(boardId, boardKey);
+  const { handleReport } = useReportHandler(modal, setModal, data);
+
+  const handleEdit = () => {
+    setModal({ id: null, type: null });
+    navigate(`./edit`);
+  };
+
+  const handleShare = async () => {
+    try {
+      const url = window.location.href;
+      await navigator.clipboard.writeText(url);
+      toast({ message: '링크가 복사되었어요', variant: 'success' });
+    } catch (error) {
+      toast({ message: '링크 복사에 실패했어요', variant: 'error' });
+    }
+  };
+
+  // 로딩과 에러 상태에 따라 조건부 렌더링
+  if (isLoading) {
+    return (
+      <>
+        <BackAppBar notFixed />
+        <FetchLoading>게시글 불러오는 중...</FetchLoading>
+      </>
+    );
+  }
+
+  if (error?.response.status === 404) {
+    return <NotFoundPage />;
+  }
+
+  if (isError) {
+    return (
+      <>
+        <BackAppBar notFixed />
+        <FetchLoading animation={false}>
+          게시글을 불러오지 못했습니다.
+        </FetchLoading>
+      </>
+    );
+  }
+
+  if (!data) {
+    return (
+      <>
+        <BackAppBar notFixed />
+        <FetchLoading animation={false}>
+          게시글을 찾을 수 없습니다.
+        </FetchLoading>
+      </>
+    );
+  }
+
+  return (
+    <div className={styles.container}>
+      {clickedImageIndex === 0 ? (
+        <BackAppBar backgroundColor={'#eaf5fd'} />
+      ) : (
+        <FullScreenAttachment
+          attachmentUrls={data.attachments}
+          clickedImageIndex={clickedImageIndex}
+          setClickedImageIndex={setClickedImageIndex}
+        />
+      )}
+
+      <div className={styles.blueContainer}>
+        <NewMetaContainer
+          userDisplay={data.userDisplay}
+          userRoleId={data.userRoleId}
+          createdAt={data.createdAt}
+          isEdited={data.isEdited}
+          isNotice={data.isNotice}
+          isWriter={data.isWriter}
+          isCommentAlertConsent={data.isCommentAlertConsent}
+        />
+
+        <div className={styles.titleContainer}>
+          <h1 className={styles.title}>{data.title}</h1>
+          <span className={styles.views}>
+            &nbsp;&nbsp;{data.viewCount.toLocaleString()} views
+          </span>
+        </div>
+
+        <p className={styles.contentText}>
+          {renderTextWithLinks(data.content)}
+        </p>
+
+        {data.attachments.length !== 0 && (
+          <AttachmentSwiper
+            data={data}
+            setClickedImageIndex={setClickedImageIndex}
+          />
+        )}
+
+        <ActionContainer
+          isNotice={data.isNotice}
+          commentCount={data.commentCount}
+          isLiked={data.isLiked}
+          likeCount={data.likeCount}
+          isScrapped={data.isScrapped}
+          scrapCount={data.scrapCount}
+        />
+      </div>
+
+      <CommentContainer
+        isNotice={data.isNotice}
+        commentCount={data.commentCount}
+      />
+
+      <PostModalRenderer
+        modal={modal}
+        handleEdit={handleEdit}
+        handleReport={handleReport}
+        handleDelete={handleDelete}
+        handleShare={handleShare}
+      />
+    </div>
+  );
+}
+
 function MetaContainer({
   userDisplay,
   userRoleId,
@@ -209,6 +350,101 @@ function MetaContainer({
 
   const { setModal } = useContext(ModalContext);
 
+  const { toast } = useToast();
+
+  const updateNotificationSetting = useUpdateCommentNotificationSetting(
+    boardId,
+    postId
+  );
+
+  const updateSetting = async () => {
+    const nextStatus = !isCommentAlertConsent;
+
+    try {
+      await updateNotificationSetting.mutateAsync(nextStatus);
+
+      toast({
+        message: nextStatus
+          ? '댓글 알림이 설정되었습니다.'
+          : '댓글 알림이 해제되었습니다.',
+      });
+    } catch (error) {
+      const errorMessage =
+        error instanceof AppError
+          ? error.message
+          : '잠시 후 다시 시도해주세요.';
+
+      toast({ message: errorMessage, variant: 'error' });
+    }
+  };
+
+  const onMenuOpen = () => {
+    const id = isWriter ? 'my-post-more-options' : 'post-more-options';
+
+    setModal({
+      id,
+      type: null,
+    });
+  };
+
+  const showBadge =
+    userRoleId === ROLE.official ||
+    (userRoleId === ROLE.admin && userDisplay !== '익명송이');
+
+  const showBellIcon = !isNotice && isWriter;
+  const showMeatBallIcon = !isNotice || isWriter;
+
+  return (
+    <div className={styles.metaContainer}>
+      <div className={styles.meta}>
+        <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
+        <p>{userDisplay || 'Unknown'}</p>
+        {showBadge && (
+          <Badge userRoleId={userRoleId} className={styles.badge} />
+        )}
+        <p className={styles.dot}>·</p>
+        <p>
+          {DateTime.format(createdAt, 'YMD_HM')}
+          {isEdited && ' (수정됨)'}
+        </p>
+      </div>
+
+      <div className={styles.actions}>
+        {showBellIcon && (
+          <div className={styles.commentBell} onClick={updateSetting}>
+            <Icon
+              id={isCommentAlertConsent ? 'comment-bell-fill' : 'comment-bell'}
+              width={18}
+              height={21}
+            />
+          </div>
+        )}
+
+        {showMeatBallIcon && (
+          <div className={styles.meatBall} onClick={onMenuOpen}>
+            <Icon id='meat-ball' width={18} height={4} stroke='none' />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * TODO: 라우트 개선 작업 완료 후 기존 컴포넌트와 교체 예정
+ */
+function NewMetaContainer({
+  userDisplay,
+  userRoleId,
+  createdAt,
+  isEdited,
+  isNotice,
+  isWriter,
+  isCommentAlertConsent,
+}) {
+  const { postId } = useParams();
+  const { id: boardId } = useBoard();
+  const { setModal } = useContext(ModalContext);
   const { toast } = useToast();
 
   const updateNotificationSetting = useUpdateCommentNotificationSetting(
