@@ -39,13 +39,13 @@ import {
   PrivacyPolicyPage,
   ServicePolicyPage,
 } from '@/page/snorose';
-// import {
-//   WriteInquiryPage,
-//   EditInquiryPage,
-//   WriteReportPage,
-//   EditReportPage,
-//   FAQPage,
-// } from '@/page/support';
+import {
+  WriteInquiryPage,
+  EditInquiryPage,
+  WriteReportPage,
+  EditReportPage,
+  FAQPage,
+} from '@/page/support';
 import {
   ActivityPage,
   ChangePwPage,
@@ -100,6 +100,13 @@ export const routeList = [
         ],
       },
 
+      /* 전체 검색 */
+      {
+        path: '/search',
+        element: <SearchPage />,
+      },
+
+      /* 게시판 홈 */
       {
         path: '/board',
         element: (
@@ -107,10 +114,6 @@ export const routeList = [
             <BoardCategoryPage />
           </NavbarLayout>
         ),
-      },
-      {
-        path: '/search',
-        element: <SearchPage />,
       },
 
       /* 게시판 */
@@ -146,7 +149,7 @@ export const routeList = [
             handle: { feature: BOARD_SECTION.NOTICE },
           },
           {
-            path: `post/:postId`,
+            path: `:postId`,
             element: <PostPageSelector />,
             handle: { feature: BOARD_SECTION.DETAIL },
           },
@@ -154,7 +157,7 @@ export const routeList = [
             element: <BoardGuard action={'write'} />,
             children: [
               { path: `write`, element: <WritePageSelector /> },
-              { path: `post/:postId/edit`, element: <EditPageSelector /> },
+              { path: `:postId/edit`, element: <EditPageSelector /> },
             ],
             handle: { feature: BOARD_SECTION.EDITOR },
           },
@@ -178,11 +181,91 @@ export const routeList = [
         ],
       },
 
+      /* 마이페이지 */
       {
-        path: '/terms/marketing',
-        element: <MarketingTermsPage />,
+        path: '/my-page',
+        element: <RequireAuth />,
+        children: [
+          {
+            index: true,
+            element: (
+              <NavbarLayout>
+                <MyPage />
+              </NavbarLayout>
+            ),
+            children: [
+              { path: 'account', element: <div></div> },
+              { path: 'activity', element: <div></div> },
+              { path: 'guide', element: <div></div> },
+            ],
+          },
+        ],
+      },
+      {
+        element: <RequireAuth />,
+        children: [
+          { path: '/point-history', element: <PointLogListPage /> },
+          { path: '/profile/edit', element: <EditProfilePage /> },
+          {
+            path: '/account',
+            children: [
+              { path: 'password', element: <ChangePwPage /> },
+              { path: 'delete', element: <DeleteAccountPage /> },
+            ],
+          },
+          {
+            path: '/activity',
+            children: [
+              { path: 'post', element: <ActivityPage /> },
+              { path: 'comment', element: <ActivityPage /> },
+              { path: 'exam-review', element: <ActivityPage /> },
+              { path: 'scrap/exam-review', element: <ActivityPage /> },
+              { path: 'scrap/post', element: <ActivityPage /> },
+            ],
+          },
+        ],
       },
 
+      /* 인증 */
+      { path: '/login', element: <LoginPage /> },
+      {
+        path: '/signup',
+        children: [
+          { path: 'account', element: <SignUpPage /> }, // 각 스텝 컴포넌트 새로 추가 필요
+          { path: 'verify', element: <SignUpPage /> },
+          { path: 'profile', element: <SignUpPage /> },
+          { path: 'success', element: <SignUpSuccessPage /> },
+          { path: 'failure', element: <SignUpFailurePage /> },
+        ],
+      },
+      { path: '/find-id', element: <FindIdPage /> },
+      { path: '/find-pw', element: <FindPwPage /> },
+      { path: '/found-id', element: <FoundIdPage /> },
+      { path: '/found-pw', element: <FoundPwPage /> },
+      { path: '/not-found-id', element: <NotFoundIdPage /> },
+      { path: '/not-found-pw', element: <NotFoundPwPage /> },
+
+      /* 기타 */
+      { path: '/faq', element: <FAQPage /> },
+      { path: '/privacy', element: <PrivacyPolicyPage /> },
+      {
+        path: '/terms',
+        children: [
+          { index: true, element: <ServicePolicyPage /> },
+          { path: 'marketing', element: <MarketingTermsPage /> },
+        ],
+      },
+      { path: '/about', element: <AboutPage /> },
+      {
+        path: '/verify',
+        element: (
+          <RequireAuth>
+            <UnverifiedOnly>
+              <SnoroseVerifyPage />
+            </UnverifiedOnly>
+          </RequireAuth>
+        ),
+      },
       {
         path: '/attendance',
         element: (
@@ -192,6 +275,9 @@ export const routeList = [
         ),
         loader: attendanceLoader,
       },
+      { path: '/maintenance', element: <MaintenancePage /> },
+
+      { path: '*', element: <NotFoundPage /> },
 
       /* 문의 및 신고 */
       // {
@@ -272,59 +358,6 @@ export const routeList = [
       //     },
       //   ],
       // },
-
-      /* 마이페이지 */
-      {
-        path: '/my-page',
-        element: <RequireAuth />,
-        children: [
-          {
-            index: true,
-            element: (
-              <NavbarLayout>
-                <MyPage />
-              </NavbarLayout>
-            ),
-          },
-          { path: 'password', element: <ChangePwPage /> },
-          { path: 'edit-info', element: <EditProfilePage /> },
-          { path: 'view-point-list', element: <PointLogListPage /> },
-          { path: 'delete-account', element: <DeleteAccountPage /> },
-          { path: 'my-post', element: <ActivityPage /> },
-          { path: 'comment', element: <ActivityPage /> },
-          { path: 'download-exam-review', element: <ActivityPage /> },
-          { path: 'scrap', element: <ActivityPage /> },
-          { path: 'scrap-exam-review', element: <ActivityPage /> },
-          // { path: '/my-page/inquiry-report', element: <FAQPage /> },
-        ],
-      },
-
-      { path: '/my-page/privacy-policy', element: <PrivacyPolicyPage /> },
-      { path: '/my-page/service-policy', element: <ServicePolicyPage /> },
-
-      { path: '/about', element: <AboutPage /> },
-      {
-        path: '/verify',
-        element: (
-          <RequireAuth>
-            <UnverifiedOnly>
-              <SnoroseVerifyPage />
-            </UnverifiedOnly>
-          </RequireAuth>
-        ),
-      },
-      { path: '/login', element: <LoginPage /> },
-      { path: '/find-id', element: <FindIdPage /> },
-      { path: '/find-pw', element: <FindPwPage /> },
-      { path: '/found-id', element: <FoundIdPage /> },
-      { path: '/found-pw', element: <FoundPwPage /> },
-      { path: '/not-found-id', element: <NotFoundIdPage /> },
-      { path: '/not-found-pw', element: <NotFoundPwPage /> },
-      { path: '/signup', element: <SignUpPage /> },
-      { path: '/signup/success', element: <SignUpSuccessPage /> },
-      { path: '/signup/failure', element: <SignUpFailurePage /> },
-      { path: '/maintenance', element: <MaintenancePage /> },
-      { path: '*', element: <NotFoundPage /> },
     ],
   },
 ];
