@@ -12,7 +12,7 @@ import { growthbook } from '@/shared/lib';
 import { CommentContextProvider } from '@/feature/comment/context';
 
 import { routeList } from '@/router.js';
-// import { routeList } from '@/new-router.js';
+// import { routeList } from '@/router.migration.js';
 import reportWebVitals from '@/reportWebVitals';
 import '@/index.css';
 
