@@ -27,6 +27,7 @@ import {
   BoardCategoryPage,
   EditPostPage,
   NewNoticeListPage,
+  NewPostPage,
   NewWritePostPage,
   NoticeListPage,
   PostPage,
@@ -98,7 +99,7 @@ export const routeList = [
               { path: ':postId/edit', element: <EditPostPage isNotice /> },
             ],
           },
-          { path: ':postId', element: <PostPage /> },
+          { path: ':postId', element: <NewPostPage /> },
         ],
       },
 

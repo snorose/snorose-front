@@ -1,7 +1,5 @@
-import { useLocation } from 'react-router-dom';
-
+import { useBoard } from '@/shared/hook';
 import { MoreOptionModal, ConfirmModal, OptionModal } from '@/shared/component';
-import { getBoard } from '@/shared/lib';
 import {
   MORE_OPTION_MODAL_TEXT,
   CONFIRM_MODAL_TEXT,
@@ -15,8 +13,7 @@ export default function PostModalRenderer({
   handleDelete,
   handleShare,
 }) {
-  const { pathname } = useLocation();
-  const currentBoard = getBoard(pathname.split('/')[2]);
+  const { id: boardId } = useBoard();
 
   return (
     <>
@@ -86,7 +83,7 @@ export default function PostModalRenderer({
             return (
               <ConfirmModal
                 modalText={
-                  [21, 22].includes(Number(currentBoard.id))
+                  [21, 22].includes(Number(boardId))
                     ? CONFIRM_MODAL_TEXT.DELETE_POST
                     : CONFIRM_MODAL_TEXT.DELETE_POST_WITHOUT_POINT_DEDUCTION
                 }
