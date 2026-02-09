@@ -25,6 +25,7 @@ import {
 import { useAuth, useBlocker, useToast, useModal } from '@/shared/hook';
 import { DateTime, getBoard } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
+import { Editor } from '@/shared/component';
 
 import { createThumbnail, postPost } from '@/apis';
 import { AttachmentBar } from '@/feature/board/component';
@@ -360,12 +361,15 @@ export default function WritePostPage() {
                 value={title}
                 onChange={handleTitleChange}
               />
-              <TextareaAutosize
-                className={styles.text}
-                placeholder='내용'
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-              />
+              {
+                <TextareaAutosize
+                  className={styles.text}
+                  placeholder='내용'
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                />
+              }
+              {/*<Editor />*/}
               <AttachmentList
                 attachmentsInfo={attachmentsInfo}
                 setAttachmentsInfo={setAttachmentsInfo}
