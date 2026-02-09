@@ -554,7 +554,7 @@ export function NewWritePostPage({ isNotice = false }) {
       invalidUserInfoQuery();
 
       const path = isNotice
-        ? toNoticeDetail(boardKey, newPostId, { isGlobalNotice })
+        ? toNoticeDetail(boardKey, newPostId)
         : toDetail(boardKey, newPostId);
       navigate(path, { replace: true });
     },
