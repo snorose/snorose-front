@@ -26,6 +26,10 @@ import { AlertPage, AlertSettingPage, MarketingTermsPage } from '@/page/alert';
 import {
   BoardCategoryPage,
   EditPostPage,
+  NewEditPostPage,
+  NewNoticeListPage,
+  NewPostPage,
+  NewWritePostPage,
   NoticeListPage,
   PostPage,
   WritePostPage,
@@ -88,15 +92,15 @@ export const routeList = [
       {
         path: '/notice',
         children: [
-          { index: true, element: <NoticeListPage /> },
+          { index: true, element: <NewNoticeListPage /> },
           {
             element: <BoardGuard isAdminOnly />,
             children: [
-              { path: 'write', element: <WritePostPage isNotice /> },
-              { path: ':postId/edit', element: <EditPostPage isNotice /> },
+              { path: 'write', element: <NewWritePostPage isNotice /> },
+              { path: ':postId/edit', element: <NewEditPostPage isNotice /> },
             ],
           },
-          { path: ':postId', element: <PostPage /> },
+          { path: ':postId', element: <NewPostPage /> },
         ],
       },
 
@@ -187,7 +191,6 @@ export const routeList = [
         element: <RequireAuth />,
         children: [
           {
-            index: true,
             element: (
               <NavbarLayout>
                 <MyPage />

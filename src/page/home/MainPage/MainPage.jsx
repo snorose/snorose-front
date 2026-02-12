@@ -12,6 +12,7 @@ import {
   HomeBesooktErrorFallback,
   HomeBesooktSkeleton,
   HomeCard,
+  NewHomeCard,
   HomeCardErrorFallback,
   HomeCardSkeleton,
   HomeCommunity,
@@ -20,6 +21,9 @@ import {
 
 import styles from './MainPage.module.css';
 
+/**
+ * TODO: 라우트 개선 작업 완료 후 HomeCard 교체
+ */
 export default function MainPage() {
   return (
     <main>
@@ -46,6 +50,7 @@ export default function MainPage() {
           >
             <Suspense fallback={<HomeCardSkeleton />}>
               <HomeCard />
+              {/* <NewHomeCard /> */}
             </Suspense>
           </ErrorBoundary>
         )}
