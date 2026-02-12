@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import { Header } from '@/shared/component';
-import { BOARD_MENUS } from '@/shared/constant';
+import { BOARD_MENUS, NEW_ROUTES } from '@/shared/constant';
 
 import { BoardBar } from '@/feature/board/component';
 import { Search } from '@/feature/search/component';
@@ -17,7 +17,11 @@ export default function BoardCategoryPage() {
       return;
     }
 
+    /**
+     * TODO: 라우트 개선 작업 완료 후 교체 필요
+     */
     navigate(`/board/all/search`);
+    // navigate(NEW_ROUTES.globalSearch);
   };
 
   return (

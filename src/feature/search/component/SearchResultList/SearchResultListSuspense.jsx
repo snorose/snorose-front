@@ -8,8 +8,12 @@ import { FetchLoading } from '@/shared/component';
 import {
   SearchResultList,
   SearchResultListErrorFallback,
+  SearchResultListWrapper,
 } from '@/feature/search/component';
 
+/**
+ * TODO: 라우트 개선 작업 완료 후 교체
+ */
 export default function SearchResultListSuspense() {
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
@@ -23,7 +27,8 @@ export default function SearchResultListSuspense() {
           resetKeys={[params]}
         >
           <Suspense fallback={<FetchLoading>검색 중</FetchLoading>}>
-            <SearchResultList />
+            {/* <SearchResultList /> */}
+            <SearchResultListWrapper />
           </Suspense>
         </ErrorBoundary>
       )}
