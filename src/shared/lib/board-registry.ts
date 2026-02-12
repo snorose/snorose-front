@@ -1,10 +1,7 @@
-import { ROUTE } from '@/shared/constant';
-
 interface Board {
   key: string;
   id: number;
   name: string;
-  to: string;
   desc?: string;
 }
 
@@ -13,21 +10,18 @@ const COMMUNITY = [
     key: 'first-snow',
     id: 21,
     name: '첫눈온방',
-    to: '/board/first-snow',
     desc: '새내기 전용 커뮤니티',
   },
   {
     key: 'large-snow',
     id: 22,
     name: '함박눈방',
-    to: '/board/large-snow',
     desc: '눈송이 모두의 커뮤니티',
   },
   {
     key: 'permanent-snow',
     id: 23,
     name: '만년설방',
-    to: '/board/permanent-snow',
     desc: '졸업생 전용 커뮤니티',
   },
 ] as const satisfies readonly Board[];
@@ -37,21 +31,18 @@ const OFFICIAL = [
     key: 'student-council',
     id: 60,
     name: '총학생회',
-    to: '/board/student-council',
     desc: '총학생회 공지',
   },
   {
     key: 'graduation-preparation',
     id: 61,
     name: '졸업준비위원회',
-    to: '/board/graduation-preparation',
     desc: '졸업준비위원회 공지',
   },
   {
     key: 'finance-audit',
     id: 62,
     name: '재정감사위원회',
-    to: '/board/finance-audit',
     desc: '재정감사 보고',
   },
 ] as const satisfies readonly Board[];
@@ -61,7 +52,6 @@ const REVIEW = [
     key: 'exam-review',
     id: 32,
     name: '시험후기',
-    to: '/board/exam-review',
     desc: '시험 정보를 조회할 수\n있는 게시판입니다.',
   },
 ] as const satisfies readonly Board[];
@@ -71,26 +61,22 @@ const SNOROSE = [
     key: 'notice',
     id: 12,
     name: '공지사항',
-    to: ROUTE.notice,
   },
   {
     key: 'support',
     id: 13,
     name: '문의 및 신고',
-    to: '/support',
   },
   {
     key: 'event',
     id: 14,
     name: '스노로즈 이벤트',
-    to: '/board/event',
     desc: '스노로즈 이벤트 게시판',
   },
   {
     key: 'besookt',
     id: 20,
     name: '베숙트',
-    to: '/board/besookt',
     desc: '추천을 가장 많이\n받은 게시물 모아보기',
   },
 ] as const satisfies readonly Board[];

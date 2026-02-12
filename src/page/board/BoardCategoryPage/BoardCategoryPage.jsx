@@ -115,8 +115,8 @@ export function NewBoardCategoryPage() {
                 <NewBoardBar
                   key={`board-category-${key}`}
                   name={name}
-                  to={to}
                   desc={desc}
+                  to={NEW_ROUTES.post.list(key)}
                   image={BOARD_IMAGES[key].category}
                 />
               ))}
