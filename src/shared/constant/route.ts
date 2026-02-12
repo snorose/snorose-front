@@ -50,6 +50,7 @@ export const NEW_ROUTES = Object.freeze({
   root: '/',
   home: '/home',
   boardList: '/board',
+  globalSearch: '/search',
 
   globalNotice: {
     list: '/notice',
@@ -77,7 +78,6 @@ export const NEW_ROUTES = Object.freeze({
       `/board/${boardKey}/notice/${postId}/edit`,
   },
 
-  // allSearch: (keyword) => `/board/all/search/${keyword}`,
   // boardSearch: (boardKey) => `/board/${boardKey}/search`,
   // alert: '/alert',
   // alertSetting: '/alert/setting',

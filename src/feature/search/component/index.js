@@ -7,3 +7,5 @@ export { default as SearchResultListSuspense } from './SearchResultList/SearchRe
 export { default as SearchExamReviewList } from './SearchExamReviewList/SearchExamReviewList';
 export { default as SearchExamReviewListSuspense } from './SearchExamReviewList/SearchExamReviewListSuspense';
 export { default as SearchExamReviewListErrorFallback } from './SearchExamReviewList/SearchExamReviewListErrorFallback';
+
+export * from './SearchResultList/SearchResultList';
