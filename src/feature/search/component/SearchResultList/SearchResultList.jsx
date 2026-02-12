@@ -43,7 +43,7 @@ export default function SearchResultList() {
 }
 
 /**
- * TODO: 새로 교체
+ * TODO(global search): 새로 교체
  */
 export function SearchResultListWrapper() {
   const { pathname } = useLocation();

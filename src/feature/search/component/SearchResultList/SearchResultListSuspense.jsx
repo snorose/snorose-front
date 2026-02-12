@@ -12,7 +12,7 @@ import {
 } from '@/feature/search/component';
 
 /**
- * TODO: 라우트 개선 작업 완료 후 교체
+ * TODO(global search): 라우트 개선 작업 완료 후 교체
  */
 export default function SearchResultListSuspense() {
   const [searchParams] = useSearchParams();
@@ -27,8 +27,8 @@ export default function SearchResultListSuspense() {
           resetKeys={[params]}
         >
           <Suspense fallback={<FetchLoading>검색 중</FetchLoading>}>
-            {/* <SearchResultList /> */}
-            <SearchResultListWrapper />
+            <SearchResultList />
+            {/* <SearchResultListWrapper /> */}
           </Suspense>
         </ErrorBoundary>
       )}

@@ -18,7 +18,7 @@ export default function BoardCategoryPage() {
     }
 
     /**
-     * TODO: 라우트 개선 작업 완료 후 교체 필요
+     * TODO(global search): 라우트 개선 작업 완료 후 교체 필요
      */
     navigate(`/board/all/search`);
     // navigate(NEW_ROUTES.globalSearch);
