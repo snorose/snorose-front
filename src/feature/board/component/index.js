@@ -11,3 +11,5 @@ export { default as PostListErrorFallback } from './PostList/PostListErrorFallba
 export { default as PostListSuspense } from './PostList/PostListSuspense';
 
 export { default as PostModalRenderer } from './PostModalRenderer/PostModalRenderer';
+
+export * from './BoardBar/BoardBar';
