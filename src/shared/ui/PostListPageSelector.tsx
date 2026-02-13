@@ -4,7 +4,7 @@ import NavbarLayout from '@/shared/ui/NavbarLayout';
 
 import { ExamReviewListPage } from '@/page/exam';
 import { EventListPage } from '@/page/event';
-import { PostListPage } from '@/page/board';
+import { NewPostListPage } from '@/page/board';
 
 export default function PostListPageSelector() {
   const { boardKey } = useParams();
@@ -21,7 +21,7 @@ export default function PostListPageSelector() {
       return <EventListPage />;
     }
     default: {
-      return <PostListPage />;
+      return <NewPostListPage />;
     }
   }
 }
