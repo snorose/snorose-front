@@ -9,20 +9,15 @@ import styles from './Editor.module.css';
 
 export default function Toolbar({ editor }) {
 
-  // 색상 상태
   const [textColor, setTextColor] = useState('#000000');
   const [bgColor, setBgColor] = useState('#ffffff');
 
-  // 팔레트 토글 상태
   const [showTextColor, setShowTextColor] = useState(false);
   const [showBgColor, setShowBgColor] = useState(false);
 
-  // 팔레트 참조
   const textColorRef = useRef(null);
   const bgColorRef = useRef(null);
   
-
-  // 외부 클릭 시 팔레트 닫기
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (textColorRef.current && !textColorRef.current.contains(event.target)) {
@@ -35,18 +30,17 @@ export default function Toolbar({ editor }) {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
   if (!editor) return null;
 
   return (
     <div className={styles.toolbar}>
 
-      {/* =================== 텍스트 서식 =================== */}
       <button onClick={() => editor.chain().focus().toggleBold().run()}><FaBold /></button>
       <button onClick={() => editor.chain().focus().toggleItalic().run()}><FaItalic /></button>
       <button onClick={() => editor.chain().focus().toggleUnderline().run()}><FaUnderline /></button>
       <button onClick={() => editor.chain().focus().toggleStrike().run()}><FaStrikethrough /></button>
 
-      {/* =================== 글자색 팔레트 =================== */}
       <div ref={textColorRef} style={{ position: 'relative', display: 'inline-block' }}>
         <button onClick={() => setShowTextColor(prev => !prev)}><FaPalette /></button>
         {showTextColor && (
@@ -63,7 +57,7 @@ export default function Toolbar({ editor }) {
         )}
       </div>
 
-      {/* =================== 배경색 팔레트 =================== */}
+      {/* 배경색 팔레트 */}
       <div ref={bgColorRef} style={{ position: 'relative', display: 'inline-block', marginLeft: 8 }}>
         <button onClick={() => setShowBgColor(prev => !prev)}><FaFillDrip /></button>
         {showBgColor && (
@@ -77,26 +71,40 @@ export default function Toolbar({ editor }) {
               disableAlpha
             />
             <button
-              style={{ marginTop: 4 }}
+              className={styles.cancelButton}
               onClick={() => {
-                setBgColor('#ffffff');
-                editor.chain().focus().setMark('textStyle', { backgroundColor: null }).run();
-                setShowBgColor(false);
+              setBgColor('#ffffff');
+              editor.chain().focus().setMark('textStyle', { backgroundColor: null }).run();
+              setShowBgColor(false);
               }}
             >
-              X
+                배경색 취소
             </button>
           </div>
         )}
       </div>
 
-      {/* =================== 폰트 선택 =================== */}
-      <button onClick={() => editor.chain().focus().setMark('textStyle', { fontFamily: 'Arial' }).run()}>Arial</button>
-      <button onClick={() => editor.chain().focus().setMark('textStyle', { fontFamily: 'Courier New' }).run()}>Courier</button>
+      {/* 폰트 선택 드롭다운 */}
+      <select
+        onChange={e => {
+          const font = e.target.value;
+          editor.chain().focus().setMark('textStyle', { fontFamily: font }).run();
+        }}
+        defaultValue="default"
+        style={{ marginLeft: 8 }}
+      >
+        <option value="default" disabled>폰트 선택</option>
+        <option value="Arial">Arial</option>
+        <option value="'Apple SD Gothic Neo', '애플 SD 고딕 Neo'">Apple SD Gothic Neo</option>
+        <option value="Courier New">Courier New</option>
+        <option value="Times New Roman">Times New Roman</option>
+        <option value="Verdana">Verdana</option>
+        <option value="'Malgun Gothic', '맑은 고딕'">맑은 고딕</option>
+        <option value="'Nanum Gothic', '나눔고딕'">나눔고딕</option>
+      </select>
 
       <div className={styles.divider} />
 
-      {/* =================== 정렬 / 목록 =================== */}
       <button onClick={() => editor.chain().focus().setTextAlign('left').run()}><FaAlignLeft /></button>
       <button onClick={() => editor.chain().focus().setTextAlign('center').run()}><FaAlignCenter /></button>
       <button onClick={() => editor.chain().focus().setTextAlign('right').run()}><FaAlignRight /></button>
@@ -105,11 +113,36 @@ export default function Toolbar({ editor }) {
 
       <div className={styles.divider} />
 
-      {/* =================== 그림 / 주석 =================== */}
-      <button onClick={() => console.log('이미지 삽입 기능 구현 필요')}><FaImage /></button>
-      <div className={styles.divider} />
-      <button onClick={() => console.log('주석 기능 구현 필요')}><FaCommentDots /></button>
+      <button
+        onClick={() => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = () => {
+            const file = input.files && input.files[0];
+            if (!file) return;
 
+            const reader = new FileReader();
+            reader.onload = () => {
+                const src = reader.result;
+                if (typeof src === 'string') {
+                editor.chain().focus().insertContent({
+                    type: 'image',
+                    attrs: { src }
+                }).run();
+                } else {
+                }
+            };
+            reader.readAsDataURL(file);
+            };
+            input.click();
+        }}
+        >
+        <FaImage />
+      </button>
+      {/*
+      <div className={styles.divider} />
+      <button onClick={() => console.log('주석 기능 구현 필요')}><FaCommentDots /></button> */}
     </div>
   );
 }
