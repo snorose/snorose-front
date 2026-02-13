@@ -4,8 +4,15 @@ import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import { FetchLoading } from '@/shared/component';
 
-import { PostList, PostListErrorFallback } from '@/feature/board/component';
+import {
+  NewPostList,
+  PostList,
+  PostListErrorFallback,
+} from '@/feature/board/component';
 
+/**
+ * TODO(board): 라우트 개선 작업 완료 후 교체
+ */
 export default function PostListSuspense() {
   return (
     <QueryErrorResetBoundary>
@@ -18,6 +25,7 @@ export default function PostListSuspense() {
             fallback={<FetchLoading>게시글 불러오는 중...</FetchLoading>}
           >
             <PostList />
+            {/* <NewPostList /> */}
           </Suspense>
         </ErrorBoundary>
       )}
