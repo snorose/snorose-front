@@ -27,7 +27,10 @@ import {
 } from '@/shared/component';
 import { LIKE_TYPE, QUERY_KEY, ROLE } from '@/shared/constant';
 
-import { FullScreenAttachment } from '@/feature/board/component';
+import {
+  FullScreenAttachment,
+  NewPostModalRenderer,
+} from '@/feature/board/component';
 import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { PostModalRenderer } from '@/feature/board/component';
 
@@ -324,7 +327,7 @@ export function NewPostPage() {
         commentCount={data.commentCount}
       />
 
-      <PostModalRenderer
+      <NewPostModalRenderer
         modal={modal}
         handleEdit={handleEdit}
         handleReport={handleReport}
