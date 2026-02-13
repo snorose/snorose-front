@@ -75,11 +75,12 @@ export default function BoardCategoryPage() {
  * TODO(board): 라우트 개선 작업 완료 후 교체 필요
  */
 const COMMUNITIES = BOARD_REGISTRY.communities;
+const BESOOKT = BOARD_REGISTRY.find('besookt');
 const OFFICIALS = BOARD_REGISTRY.officials;
 const SNOROSES = [BOARD_REGISTRY.find('event')];
 
 const BOARD_CATEGORIES = [
-  { title: '커뮤니티', list: [...COMMUNITIES] },
+  { title: '커뮤니티', list: [...COMMUNITIES, BESOOKT] },
   { title: '공식 게시판', list: [...OFFICIALS] },
   { title: '스노로즈 게시판', list: [...SNOROSES] },
 ];
