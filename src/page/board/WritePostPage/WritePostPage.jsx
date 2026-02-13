@@ -374,7 +374,12 @@ export default function WritePostPage() {
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                 />*/}
-              {<Editor placeholder='내용' />}
+              <Editor
+                setText={(editor) => {
+                  const htmlContent = editor.getHTML();
+                  setText(htmlContent);
+                }}
+              />
               <AttachmentList
                 attachmentsInfo={attachmentsInfo}
                 setAttachmentsInfo={setAttachmentsInfo}
