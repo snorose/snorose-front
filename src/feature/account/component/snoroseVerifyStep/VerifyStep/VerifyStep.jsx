@@ -77,7 +77,7 @@ export default function VerifyStep({ setStep }) {
       type: 'email',
       label: '이메일',
       id: 'email',
-      placeholder: '이메일을 입력해주세요.',
+      placeholder: '이메일을 입력해 주세요.',
       value: formData.email,
       onChange: (next) =>
         setFormData((prev) => ({
