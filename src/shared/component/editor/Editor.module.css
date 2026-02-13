@@ -92,3 +92,36 @@
   background-color: #d1d5db;
 }
 
+.colorPickerWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.colorPickerPopup {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+}
+
+.bgColorWrapper {
+  position: relative;
+  display: inline-block;
+  margin-left: 0.5rem; /* 지금 inline style marginLeft: 8px 대신 */
+}
+
+.bgColorPopup {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+}
+
+.fontSelect {
+  margin-left: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+
