@@ -1,0 +1,18 @@
+/*에디터 inital style*/
+:global(.ProseMirror) {
+  font: var(--text-headline-2-reg);
+  color: var(--grey-4);
+}
+:global(.ProseMirror:focus) {
+  outline: none;
+}
+
+/*에디터 placeholder style*/
+:global(.ProseMirror p.is-editor-empty:first-child::before) {
+  content: attr(data-placeholder);
+  color: #757575;
+  font: var(--text-headline-2-reg);
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
