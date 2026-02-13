@@ -1,4 +1,4 @@
-/*에디터 inital style*/
+/*에디터 initial style*/
 :global(.ProseMirror) {
   font: var(--text-headline-2-reg);
   color: var(--grey-4);
@@ -10,7 +10,7 @@
 /*에디터 placeholder style*/
 :global(.ProseMirror p.is-editor-empty:first-child::before) {
   content: attr(data-placeholder);
-  color: #757575;
+  color: var(--grey-placeholder);
   font: var(--text-headline-2-reg);
   pointer-events: none;
   float: left;
