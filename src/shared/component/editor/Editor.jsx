@@ -7,7 +7,7 @@ import BubbleMenuButtons from './BubbleMenuButtons';
 
 import styles from './Editor.module.css';
 
-export default function Editor({ placeholder }) {
+export default function Editor({ placeholder, onChange }) {
   const extensions = [
     StarterKit,
     Placeholder.configure({
@@ -17,7 +17,13 @@ export default function Editor({ placeholder }) {
   ];
 
   return (
-    <EditorProvider extensions={extensions}>
+    <EditorProvider
+      extensions={extensions}
+      onUpdate={({ editor }) => {
+        const html = editor.getHTML();
+        onChange?.(html);
+      }}
+    >
       <EditorContent />
 
       <BubbleMenu>

@@ -156,9 +156,10 @@ export default function PostPage() {
           </span>
         </div>
 
-        <p className={styles.contentText}>
-          {renderTextWithLinks(data.content)}
-        </p>
+        <div
+          className={styles.contentText}
+          dangerouslySetInnerHTML={{ __html: data.content }}
+        />
 
         {data.attachments.length !== 0 && (
           <AttachmentSwiper
