@@ -89,7 +89,6 @@ export const routeList = [
         path: '/notice',
         children: [
           { index: true, element: <NoticeListPage /> },
-          { path: ':postId', element: <PostPage /> },
           {
             element: <BoardGuard isAdminOnly />,
             children: [
@@ -97,6 +96,7 @@ export const routeList = [
               { path: ':postId/edit', element: <EditPostPage isNotice /> },
             ],
           },
+          { path: ':postId', element: <PostPage /> },
         ],
       },
 
@@ -137,7 +137,6 @@ export const routeList = [
             path: `notice`,
             children: [
               { index: true, element: <NoticeListPage /> },
-              { path: `:postId`, element: <PostPage /> },
               {
                 element: <BoardGuard isAdminOnly />,
                 children: [
@@ -145,13 +144,9 @@ export const routeList = [
                   { path: `:postId/edit`, element: <EditPostPage isNotice /> },
                 ],
               },
+              { path: `:postId`, element: <PostPage /> },
             ],
             handle: { feature: BOARD_SECTION.NOTICE },
-          },
-          {
-            path: `:postId`,
-            element: <PostPageSelector />,
-            handle: { feature: BOARD_SECTION.DETAIL },
           },
           {
             element: <BoardGuard action={'write'} />,
@@ -160,6 +155,11 @@ export const routeList = [
               { path: `:postId/edit`, element: <EditPageSelector /> },
             ],
             handle: { feature: BOARD_SECTION.EDITOR },
+          },
+          {
+            path: `:postId`,
+            element: <PostPageSelector />,
+            handle: { feature: BOARD_SECTION.DETAIL },
           },
         ],
       },
