@@ -1,29 +1,28 @@
-import { useEditor, EditorContent } from '@tiptap/react';
+import { useEditor, EditorContent, EditorProvider } from '@tiptap/react';
 import { FloatingMenu, BubbleMenu } from '@tiptap/react/menus';
 import { Placeholder } from '@tiptap/extensions';
 import StarterKit from '@tiptap/starter-kit';
 
+import BubbleMenuButtons from './BubbleMenuButtons';
+
 import styles from './Editor.module.css';
 
 export default function Editor({ placeholder }) {
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Placeholder.configure({
-        emptyEditorClass: 'is-editor-empty',
-        placeholder,
-      }),
-    ],
-    immediatelyRender: false,
-  });
-
-  if (!editor) return null;
+  const extensions = [
+    StarterKit,
+    Placeholder.configure({
+      emptyEditorClass: 'is-editor-empty',
+      placeholder,
+    }),
+  ];
 
   return (
-    <>
-      <EditorContent editor={editor} />
-      {/*<FloatingMenu editor={editor}>This is the floating menu</FloatingMenu>*/}
-      <BubbleMenu editor={editor}>This is the bubble menu</BubbleMenu>
-    </>
+    <EditorProvider extensions={extensions}>
+      <EditorContent />
+
+      <BubbleMenu>
+        <BubbleMenuButtons />
+      </BubbleMenu>
+    </EditorProvider>
   );
 }
