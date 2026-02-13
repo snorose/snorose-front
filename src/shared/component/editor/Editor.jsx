@@ -1,7 +1,11 @@
-import { useEditor, EditorContent } from '@tiptap/react';
+import { useEditor, EditorContent, EditorProvider } from '@tiptap/react';
 import { FloatingMenu, BubbleMenu } from '@tiptap/react/menus';
 import { Placeholder } from '@tiptap/extensions';
 import StarterKit from '@tiptap/starter-kit';
+
+import BubbleMenuButtons from './BubbleMenuButtons';
+
+import styles from './Editor.module.css';
 import TextAlign from '@tiptap/extension-text-align';
 import { TextStyle, Color, BackgroundColor, FontFamily } from '@tiptap/extension-text-style';
 import Image from '@tiptap/extension-image';
@@ -35,9 +39,29 @@ export default function Editor({ placeholder, setText }) {
     },
   });
 
-  if (!editor) return null;
+export default function Editor({ placeholder, onChange }) {
+  const extensions = [
+    StarterKit,
+    Placeholder.configure({
+      emptyEditorClass: 'is-editor-empty',
+      placeholder,
+    }),
+  ];
 
   return (
+    <EditorProvider
+      extensions={extensions}
+      onUpdate={({ editor }) => {
+        const html = editor.getHTML();
+        onChange?.(html);
+      }}
+    >
+      <EditorContent />
+
+      <BubbleMenu>
+        <BubbleMenuButtons />
+      </BubbleMenu>
+    </EditorProvider>
     <> 
       <Toolbar editor={editor} />
       <EditorContent editor={editor} />

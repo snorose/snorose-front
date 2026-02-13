@@ -1,0 +1,6 @@
+.btn {
+  padding: 0 3px;
+}
+.activeBtn {
+  background-color: red;
+}
