@@ -361,15 +361,13 @@ export default function WritePostPage() {
                 value={title}
                 onChange={handleTitleChange}
               />
-              {
-                <TextareaAutosize
+              {/*<TextareaAutosize
                   className={styles.text}
                   placeholder='내용'
                   value={text}
                   onChange={(e) => setText(e.target.value)}
-                />
-              }
-              {/*<Editor />*/}
+                />*/}
+              {<Editor placeholder='내용' />}
               <AttachmentList
                 attachmentsInfo={attachmentsInfo}
                 setAttachmentsInfo={setAttachmentsInfo}
