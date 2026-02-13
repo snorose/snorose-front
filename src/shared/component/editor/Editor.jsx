@@ -38,9 +38,10 @@ export default function Editor({ placeholder, setText }) {
   if (!editor) return null;
 
   return (
-    <>
-      <EditorContent editor={editor} />
+    <> 
       <Toolbar editor={editor} />
+      <EditorContent editor={editor} />
+
       {/*<FloatingMenu editor={editor}>This is the floating menu</FloatingMenu>*/}
       {/*<BubbleMenu editor={editor}>This is the bubble menu</BubbleMenu>*/}
     </>
