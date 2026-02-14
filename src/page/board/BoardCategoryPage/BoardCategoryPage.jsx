@@ -108,7 +108,7 @@ export function NewBoardCategoryPage() {
 
       <div className={styles.paddingContainer}>
         {BOARD_CATEGORIES.map(({ title, list }) => (
-          <div className={styles.boardBox}>
+          <div key={`board-home-${title}`} className={styles.boardBox}>
             <div className={styles.boardTitle}>{title}</div>
             <div className={styles.boardListBox}>
               {list.map(({ key, to, name, desc }) => (
