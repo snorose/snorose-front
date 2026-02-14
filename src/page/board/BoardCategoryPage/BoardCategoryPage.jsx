@@ -114,7 +114,6 @@ export function NewBoardCategoryPage() {
               {list.map(({ key, to, name, desc }) => (
                 <NewBoardBar
                   key={`board-category-${key}`}
-                  boardKey={key}
                   name={name}
                   to={to}
                   desc={desc}
