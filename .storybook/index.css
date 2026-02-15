@@ -1,82 +1,24 @@
 :root {
   font-size: 62.5%;
-
-  --default-width: 60rem;
-  --default-margin: 2rem;
-
-  /* Color */
-
-  /* Blue */
-  --blue-0: #eaf5fd;
-  --blue-1: #ddebf6;
-  --blue-2: #bfd7ec;
-  --blue-3: #5f86bf;
-  --blue-4: #00368e;
-
-  /* Pink */
-  --pink-1: #fee9eb;
-  --pink-2: #ff849a;
-  --pink-3: #ff4b6c;
-
-  /* Grey */
-  --white: #ffffff;
-  --white-rgb: 255, 255, 255;
-  --grey-1: #f8f8f8;
-  --grey-1-1: #f4f4f4;
-  --grey-2: #f0f0f0;
-  --grey-3: #d9d9d9;
-  --grey-3-1: #898989;
-  --grey-4: #484848;
-  --grey-4-rgb: 72, 72, 72;
-  --black: #000000;
-  --black-rgb: 0, 0, 0;
-
-  /* Gradient */
-  --gradient-1: radial-gradient(
-    148.79% 155.78% at 31.85% 57.65%,
-    var(--blue-4) 0%,
-    var(--blue-3) 100%
-  );
-  --gradient-2: radial-gradient(
-    119.45% 119.45% at 77.84% 58.88%,
-    #c5d2ff 29.14%,
-    #82b5ff 100%
-  );
 }
 
-html,
-body,
-header,
-nav,
-main,
-article,
-section,
-aside,
-footer,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-div,
-p,
-span,
-ul,
-ol,
-fieldset,
-legend,
-label,
-form,
-input,
-button,
-select,
-option,
-textarea,
-pre {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scrollbar-width: thin;
+}
+
+html {
+  background-color: var(
+    --white
+  ) !important; /* 스토리북에서만 배경색을 하얀색으로 설정 */
+  overflow: auto !important;
+  height: auto !important;
+}
+
+html,
+body {
   font: inherit;
   vertical-align: baseline;
   letter-spacing: -0.5px;
@@ -87,6 +29,26 @@ button {
   border: none;
   background-color: transparent;
   cursor: pointer;
+}
+
+#modal {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-index-modal);
+}
+
+#toast {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: var(--z-index-toast);
 }
 
 .react-calendar {
