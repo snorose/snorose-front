@@ -15,10 +15,6 @@
   row-gap: 0.8rem;
 }
 
-.empty {
-  height: 100vh;
-}
-
 .writeButton {
   bottom: 1.9rem;
 }

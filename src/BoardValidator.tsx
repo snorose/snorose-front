@@ -27,10 +27,10 @@ const BOARD_NAMES = [
 ];
 
 export default function BoardValidator({ children }: { children: ReactNode }) {
-  const { boardName } = useParams();
+  const { boardKey } = useParams();
   const matches = useMatches();
 
-  const isValidBoard = BOARD_NAMES.includes(boardName);
+  const isValidBoard = BOARD_NAMES.includes(boardKey);
   if (!isValidBoard) {
     return <NotFoundPage />;
   }
@@ -41,7 +41,7 @@ export default function BoardValidator({ children }: { children: ReactNode }) {
     .at(-1);
 
   const notFound =
-    UNSUPPORTED_BOARD_SECTIONS[boardName].includes(currentFeature);
+    UNSUPPORTED_BOARD_SECTIONS[boardKey].includes(currentFeature);
   if (notFound) {
     return <NotFoundPage />;
   }

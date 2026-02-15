@@ -22,31 +22,31 @@ interface BoardImages {
 }
 
 export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
-  'FIRST-SNOW': {
+  'first-snow': {
     category: firstSnow,
     main: firstSnowMain,
   },
-  'LARGE-SNOW': {
+  'large-snow': {
     category: largeSnow,
     main: largeSnowMain,
   },
-  'PERMANENT-SNOW': {
+  'permanent-snow': {
     category: permanentSnow,
     main: permanentSnowMain,
   },
-  BESOOKT: {
+  besookt: {
     category: besookt,
   },
-  'STUDENT-COUNCIL': {
+  'student-council': {
     category: studentCouncil,
   },
-  'GRADUATION-PREPARATION': {
+  'graduation-preparation': {
     category: graduationPreparation,
   },
-  'FINANCE-AUDIT': {
+  'finance-audit': {
     category: financeAudit,
   },
-  EVENT: {
+  event: {
     category: event,
     main: eventMain,
   },
