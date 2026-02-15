@@ -23,8 +23,14 @@ export default function Sidebar() {
   const MENUS =
     status === 'authenticated'
       ? SIDEBAR_MENUS
-      : // NEW_SIDEBAR_MENUS
-        SIDEBAR_MENUS.filter((menu) => NOT_LOGIN_MENUS.includes(menu.title));
+      : SIDEBAR_MENUS.filter((menu) => NOT_LOGIN_MENUS.includes(menu.title));
+
+  // const MENUS =
+  //   status === 'authenticated'
+  //     ? NEW_SIDEBAR_MENUS
+  //     : NEW_SIDEBAR_MENUS.filter((menu) =>
+  //         NOT_LOGIN_MENUS.includes(menu.title)
+  //       );
 
   const handleEventPropagation = (event) => {
     event.stopPropagation();
