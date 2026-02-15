@@ -114,7 +114,7 @@ export const NEW_ROUTES = Object.freeze({
   verify: '/verify',
   attendance: '/attendance',
   faq: '/faq',
-  praivacy: '/privacy',
+  privacy: '/privacy',
   terms: '/terms',
   maintenance: '/maintenance',
 });
