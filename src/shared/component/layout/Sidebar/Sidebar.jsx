@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom';
 import { useSidebarStore } from '@/shared/store';
 import { useAuth } from '@/shared/hook';
 import { Icon } from '@/shared/component';
-import { NOT_LOGIN_MENUS, SIDEBAR_MENUS } from '@/shared/constant';
+import {
+  NEW_SIDEBAR_MENUS,
+  NOT_LOGIN_MENUS,
+  SIDEBAR_MENUS,
+} from '@/shared/constant';
 
 import styles from './Sidebar.module.css';
 
@@ -13,10 +17,20 @@ export default function Sidebar() {
   const close = useSidebarStore((state) => state.close);
   const { status } = useAuth();
 
+  /**
+   * TODO(board): 라우트 개선 작업 완료 후 교체 필요
+   */
   const MENUS =
     status === 'authenticated'
       ? SIDEBAR_MENUS
       : SIDEBAR_MENUS.filter((menu) => NOT_LOGIN_MENUS.includes(menu.title));
+
+  // const MENUS =
+  //   status === 'authenticated'
+  //     ? NEW_SIDEBAR_MENUS
+  //     : NEW_SIDEBAR_MENUS.filter((menu) =>
+  //         NOT_LOGIN_MENUS.includes(menu.title)
+  //       );
 
   const handleEventPropagation = (event) => {
     event.stopPropagation();
