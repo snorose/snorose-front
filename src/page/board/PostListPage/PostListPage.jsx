@@ -79,7 +79,9 @@ export function NewPostListPage() {
 
   const isBesookt = boardKey === 'besookt';
   const isFirstSnow = boardKey === 'first-snow';
-  const isOfficialBoard = BOARD_REGISTRY.officials.includes(boardKey);
+  const isOfficialBoard = BOARD_REGISTRY.officials.some(
+    ({ key }) => key === boardKey
+  );
 
   const isPreUser = userInfo?.userRoleId === ROLE.preUser;
   const isUser = userInfo?.userRoleId === ROLE.user;
