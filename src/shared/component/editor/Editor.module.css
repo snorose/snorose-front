@@ -1,0 +1,127 @@
+/*에디터 initial style*/
+:global(.ProseMirror) {
+  font: var(--text-headline-2-reg);
+  color: var(--grey-4);
+}
+:global(.ProseMirror:focus) {
+  outline: none;
+}
+
+/*에디터 placeholder style*/
+:global(.ProseMirror p.is-editor-empty:first-child::before) {
+  content: attr(data-placeholder);
+  color: var(--grey-placeholder);
+  font: var(--text-headline-2-reg);
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: transparent;
+  border-bottom: 1px solid #ccc;
+}
+
+.toolbar button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  font-size: 2rem;
+}
+
+.divider {
+  width: 1px;
+  background: #ccc;
+  margin: 0 0.5rem;
+}
+
+.editorContent {
+  min-height: 200px;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+}
+
+:global(.ProseMirror) ul {
+  list-style-type: disc;
+  padding-left: 24px;
+  margin: 12px 0;
+}
+
+:global(.ProseMirror) ol {
+  list-style-type: decimal;
+  padding-left: 24px;
+  margin: 12px 0;
+}
+
+:global(.ProseMirror) li {
+  margin: 4px 0;
+}
+
+:global(.ProseMirror) li p {
+  margin: 0;
+}
+
+:global(.ProseMirror) ul ul,
+:global(.ProseMirror) ol ul {
+  list-style-type: circle;
+}
+
+:global(.ProseMirror) ul ol,
+:global(.ProseMirror) ol ol {
+  list-style-type: lower-alpha;
+}
+
+.cancelButton {
+  margin-top: 1rem;
+  color: #0a0a0a;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+.cancelButton:hover {
+  background-color: #d1d5db;
+}
+
+.colorPickerWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.colorPickerPopup {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+}
+
+.bgColorWrapper {
+  position: relative;
+  display: inline-block;
+  margin-left: 0.5rem; /* 지금 inline style marginLeft: 8px 대신 */
+}
+
+.bgColorPopup {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+}
+
+.fontSelect {
+  margin-left: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+

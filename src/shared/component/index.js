@@ -11,6 +11,9 @@ export { default as Dropdown } from './dropdown/Dropdown/Dropdown';
 export { default as DropdownList } from './dropdown/DropdownList/DropdownList';
 export { default as SelectedItem } from './dropdown/SelectedItem/SelectedItem';
 
+//editor
+export { default as Editor } from './editor/Editor';
+
 // form
 export { default as Label } from './form/Label/Label';
 export { default as ErrorMessage } from './form/ErrorMessage/ErrorMessage';
