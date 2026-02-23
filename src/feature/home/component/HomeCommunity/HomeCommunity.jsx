@@ -1,31 +1,31 @@
-import { BOARDS } from '@/shared/constant';
+import { useAuth } from '@/shared/hook';
+import { BOARD_REGISTRY } from '@/shared/lib';
+import { USER_STATUS, NEW_ROUTES } from '@/shared/constant';
 
 import { HomeBoardCard } from '@/feature/home/component';
+import { ACCESS_MESSAGES } from '@/feature/home/constant';
+
+import { BOARD_IMAGES } from '@/assets/map/board-assets';
 
 import styles from './HomeCommunity.module.css';
 
-import { useAuth } from '@/shared/hook';
-import { USER_STATUS } from '@/shared/constant';
-import { ACCESS_MESSAGES } from '@/feature/home/constant';
-
-const order = [21, 22, 23, 14];
-
-const MAIN_BOARDS = BOARDS.filter((board) => order.includes(board.id)).sort(
-  (a, b) => order.indexOf(a.id) - order.indexOf(b.id)
-);
+const COMMUNITIES = BOARD_REGISTRY.communities;
+const EVENT = BOARD_REGISTRY.find('event');
+const MAIN_BOARDS = [...COMMUNITIES, EVENT];
 
 export default function HomeCommunity() {
   const { status } = useAuth();
   const isLogin = status === USER_STATUS.isLogin;
+
   return (
     <div className={styles.commuintyContainer}>
       <div className={`${styles.list}`}>
-        {MAIN_BOARDS.map((board) => (
+        {MAIN_BOARDS.map(({ key, name }) => (
           <HomeBoardCard
-            key={board.id}
-            path={board.path}
-            name={board.name}
-            mainImage={board.mainImage}
+            key={`home-community-${key}`}
+            name={name}
+            path={NEW_ROUTES.post.list(key)}
+            mainImage={BOARD_IMAGES[key].main}
           />
         ))}
       </div>

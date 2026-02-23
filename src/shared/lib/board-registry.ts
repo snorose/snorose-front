@@ -70,7 +70,7 @@ const SNOROSE = [
   {
     key: 'event',
     id: 14,
-    name: '스노로즈 이벤트',
+    name: '이벤트',
     desc: '스노로즈 이벤트 게시판',
   },
   {
