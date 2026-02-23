@@ -1,4 +1,4 @@
-export const INQUIRY_OPTION = [
+export const INQUIRY_OPTIONS = [
   { key: 'EXAM_REVIEW', label: '족보 관련 문의' },
   { key: 'EVENT', label: '이벤트 관련 문의' },
   { key: 'NOTICE', label: '공지 관련 문의' },
