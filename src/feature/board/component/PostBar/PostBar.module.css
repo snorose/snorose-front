@@ -49,8 +49,58 @@
   padding: 0 0.3rem;
 }
 
-.checkCircleIcon {
+.checkCircleWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-left: 0.4rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+  cursor: default;
+}
+
+.checkCircleWrapper:hover {
+  background-color: var(--grey-3);
+}
+
+.checkCircleIcon {
+  flex-shrink: 0;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 0.6rem);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--grey-4);
+  color: #fff;
+  font: var(--text-body-2-reg);
+  font-size: 1.1rem;
+  white-space: nowrap;
+  padding: 0.5rem 0.7rem 0.3rem;
+  border-radius: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 0.8rem;
+  height: 0.8rem;
+  background-color: var(--grey-4);
+  transform: translateX(-50%) rotate(45deg);
+  margin-top: -0.4rem;
+  border-bottom-right-radius: 0.2rem;
+}
+
+.checkCircleWrapper:hover .tooltip {
+  opacity: 1;
 }
 
 .postBarCenter {

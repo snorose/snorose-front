@@ -27,12 +27,15 @@ export default function PostBar({ data, hasComment = true, hasLike = true }) {
             <p>{DateTime.formatAdaptive(data.createdAt)}</p>
             {data.isEdited && <p className={styles.edited}>&nbsp;(수정됨)</p>}
             {data.isConfirmed && (
-              <Icon
-                className={styles.checkCircleIcon}
-                id='check-circle'
-                width={12}
-                height={12}
-              />
+              <div className={styles.checkCircleWrapper}>
+                <Icon
+                  className={styles.checkCircleIcon}
+                  id='check-circle'
+                  width={12}
+                  height={12}
+                />
+                <span className={styles.tooltip}>리자 인증 완료</span>
+              </div>
             )}
             {data.boardName && <Chip type={'board'} label={data.boardName} />}
             {data.progressType && (
