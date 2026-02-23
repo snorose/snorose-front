@@ -10,3 +10,4 @@ export * from './WritePostPage/WritePostPage';
 export * from './PostPage/PostPage';
 export * from './EditPostPage/EditPostPage';
 export * from './BoardCategoryPage/BoardCategoryPage';
+export * from './PostListPage/PostListPage';
