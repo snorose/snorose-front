@@ -82,7 +82,7 @@ export function useReportHandler(modal, setModal, data) {
     submitDisabledRef.current = true;
     try {
       await reportUserMutate({
-        encryptedUserId: data.encryptedUserId,
+        encryptedUserId: data.userId,
         reportType: modal.type,
       });
     } catch (error) {
