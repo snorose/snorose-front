@@ -87,7 +87,7 @@ function AttendanceButton({ setLoading }) {
     setDisabled(true);
     setLoading(true);
     updatePoint({
-      userId: userInfo?.userId,
+      encryptedUserId: userInfo?.encryptedUserId,
       category: POINT_CATEGORY_ENUM.ATTENDANCE,
       source: POINT_SOURCE_ENUM.ATTENDANCE,
     })
