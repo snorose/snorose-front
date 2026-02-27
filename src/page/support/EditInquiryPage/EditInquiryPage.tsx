@@ -4,6 +4,7 @@ import { useLoaderData } from 'react-router-dom';
 import { useAuth } from '@/shared/hook';
 import {
   CloseAppBar,
+  DropdownBlue,
   Icon,
   Profile,
   TextareaFieldBlue,
@@ -17,11 +18,7 @@ import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 import type { InquiryDTO } from '@/feature/board/types';
 
 import styles from './EditInquiryPage.module.css';
-
-const INQUIRY_OPTION_MAP = INQUIRY_OPTIONS.reduce(
-  (acc, cur) => ({ ...acc, [cur.key]: cur.label }),
-  {}
-);
+import { Option } from '@/types';
 
 /**
  * TODO:
@@ -33,11 +30,15 @@ export default function EditInquiryPage() {
 
   const { userInfo } = useAuth();
 
+  const [selectedOption, setSelectedOption] = useState(() =>
+    INQUIRY_OPTIONS.find((option) => option.key === post.category)
+  );
   const [title, setTitle] = useState(post.title);
   const [url, setUrl] = useState(post.link);
   const [content, setContent] = useState(post.content);
   const [files, setFiles] = useState<File[]>([]);
 
+  const updateOption = (option: Option) => setSelectedOption(option);
   const updateFiles = (files: File[]) => setFiles(files);
 
   const disabled = title.trim() === '' || content.trim() === '';
@@ -54,17 +55,24 @@ export default function EditInquiryPage() {
         </SubmitButton>
       </CloseAppBar>
 
-      <div className={styles.category}>
-        <div>
-          <Icon
-            className={styles.icon}
-            id='clip-board-list'
-            width={21}
-            height={22}
-          />
-          <p>{INQUIRY_OPTION_MAP[post.category]}</p>
-        </div>
-      </div>
+      <DropdownBlue className={styles.dropdown}>
+        <DropdownBlue.Trigger>
+          {selectedOption?.label ?? INQUIRY_PLACEHOLDERS.dropdown}
+        </DropdownBlue.Trigger>
+
+        <DropdownBlue.Menu>
+          {INQUIRY_OPTIONS.map((option) => (
+            <DropdownBlue.Item
+              key={option.key}
+              id={option.key}
+              selected={selectedOption?.key === option.key}
+              onClick={() => updateOption(option)}
+            >
+              {option.label}
+            </DropdownBlue.Item>
+          ))}
+        </DropdownBlue.Menu>
+      </DropdownBlue>
 
       <Profile userRoleId={userInfo.userRoleId} nickname={userInfo.nickname} />
 
