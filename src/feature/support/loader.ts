@@ -1,6 +1,6 @@
 import { InquiryDTO } from '@/feature/support/types';
 
-export const fetchPost = async ({ params }) => {
+export const fetchInquiry = async ({ params }) => {
   const { inquiryId } = params;
   // const result = await fetch(`/v1/inquiries/${inquiryId}`);
 
