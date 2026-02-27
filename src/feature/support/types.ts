@@ -1,3 +1,5 @@
+import { REPORT_OPTION } from '@/feature/support/data';
+
 export type InquiryDTO = {
   postId: number;
   userRoleId: number;
@@ -21,6 +23,28 @@ export type InquiryDTO = {
   attachments: any[];
 };
 
+type ReportOptionType = typeof REPORT_OPTION;
+
+type PostType = {
+  reportType: 'POST_REPORT';
+  category: ReportOptionType['post'][number]['key'];
+};
+
+type ExamReviewType = {
+  reportType: 'EXAM_REVIEW_REPORT';
+  category: ReportOptionType['exam'][number]['key'];
+};
+
+type CommentType = {
+  reportType: 'COMMENT_REPORT';
+  category: ReportOptionType['comment'][number]['key'];
+};
+
+type UserType = {
+  reportType: 'USER_REPORT';
+  category: ReportOptionType['user'][number]['key'];
+};
+
 export type ReportDTO = {
   reportId: number;
   userRoleId: number;
@@ -29,16 +53,10 @@ export type ReportDTO = {
   userDisplay: string;
   title: string;
   content: string;
-  reportType:
-    | 'POST_REPORT'
-    | 'EXAM_REVIEW_REPORT'
-    | 'COMMENT_REPORT'
-    | 'USER_REPORT';
-  category: string;
   status: 'PENDING' | 'COMPLETED';
   commentCount: number;
   createdAt: string;
   isEdited: boolean;
   isWriterWithdrawn: boolean;
   attachments: any[];
-};
+} & (PostType | ExamReviewType | CommentType | UserType);
