@@ -23,7 +23,11 @@ const INQUIRY_OPTION_MAP = INQUIRY_OPTIONS.reduce(
   {}
 );
 
-/*  TODO: 답변 완료 후에는 접근 불가 -> 라우트 레벨에서 loader로 처리할 것  */
+/**
+ * TODO:
+ * - 권한이 없는 inquryId로 접근 시 403 처리 (라우트 레벨에서 처리할 것)
+ * - 답변 완료 후에는 접근 불가 (라우트 레벨에서 처리할 것)
+ */
 export default function EditInquiryPage() {
   const post = useLoaderData() as InquiryDTO;
 
