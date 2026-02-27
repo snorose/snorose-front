@@ -5,7 +5,6 @@ import { useAuth } from '@/shared/hook';
 import {
   CloseAppBar,
   DropdownBlue,
-  Icon,
   Profile,
   TextareaFieldBlue,
   TextFieldBlue,
