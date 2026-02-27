@@ -1,29 +1,15 @@
-import { InquiryDTO } from '@/feature/support/types';
+import { InquiryDTO, ReportDTO } from '@/feature/support/types';
+
+/**
+ * TODO:
+ * - 존재하지 않는 inquiryId로 접근 시 404 처리
+ * - 권한이 없는 inquryId로 접근 시 403 처리
+ * - 답변 완료 후에는 접근 불가
+ */
 
 export const fetchInquiry = async ({ params }) => {
   const { inquiryId } = params;
   // const result = await fetch(`/v1/inquiries/${inquiryId}`);
-
-  // if (result.status === 404) {
-  //   throw new Response('게시글을 찾을 수 없습니다.', {
-  //     status: 404,
-  //   });
-  // }
-
-  // if (!result.ok) {
-  //   throw new Response('서버 통신 중 오류가 발생했습니다.', {
-  //     status: 500,
-  //   });
-  // }
-
-  // const post = await result.json();
-
-  // if (post.status === 'finish') {
-  //   // "수정 불가"라는 커스텀 에러를 던져 처리할 수도 있습니다.
-  //   throw new Response('답변 완료된 글은 수정할 수 없습니다.', {
-  //     status: 403,
-  //   });
-  // }
 
   const post: InquiryDTO = {
     postId: 15,
@@ -40,6 +26,39 @@ export const fetchInquiry = async ({ params }) => {
     createdAt: '2025-08-30T22:47:09.234619',
     updatedAt: null,
     isEdited: true,
+    isWriterWithdrawn: false,
+    attachments: [],
+  };
+
+  return post;
+};
+
+/**
+ * TODO:
+ * - 존재하지 않는 reportId로 접근 시 404 처리
+ * - 권한이 없는 reportId로 접근 시 403 처리
+ * - 처리 완료 후에는 접근 불가
+ */
+
+export const fetchReport = async ({ params }) => {
+  const { reportId } = params;
+
+  // const result = await fetch(`/v1/report/${reportId}`);
+
+  const post: ReportDTO = {
+    reportId: 15,
+    userRoleId: 4,
+    isWriter: true,
+    userId: '629j3YCdF2F+NPCBzMf0Rg==',
+    userDisplay: '눈송',
+    title: '댓글 신고',
+    content: '문의 내용',
+    reportType: 'COMMENT_REPORT',
+    category: 'COMMENT_LOW_QUALITY',
+    status: 'PENDING',
+    commentCount: 0,
+    createdAt: '2026-02-16T22:47:09.234619',
+    isEdited: false,
     isWriterWithdrawn: false,
     attachments: [],
   };

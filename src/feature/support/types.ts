@@ -25,7 +25,7 @@ export type ReportDTO = {
   reportId: number;
   userRoleId: number;
   isWriter: boolean;
-  userId: number;
+  userId: string;
   userDisplay: string;
   title: string;
   content: string;

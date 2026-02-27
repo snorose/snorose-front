@@ -65,7 +65,7 @@ import ProtectedRoute from '@/ProtectedRoute';
 import { MaintenancePage } from '@/page/maintenance';
 
 import { CheckExamPeriodRoute } from '@/feature/exam/lib';
-import { fetchInquiry } from '@/feature/support/loader';
+import { fetchInquiry, fetchReport } from '@/feature/support/loader';
 
 const getRolesForReadBoard = (boardPath) => {
   switch (boardPath) {
@@ -518,6 +518,7 @@ export const routeList = [
                 <EditReportPage />
               </ProtectedRoute>
             ),
+            loader: fetchReport,
           },
         ],
       },

@@ -19,11 +19,6 @@ import type { InquiryDTO } from '@/feature/support/types';
 import styles from './EditInquiryPage.module.css';
 import { Option } from '@/types';
 
-/**
- * TODO:
- * - 권한이 없는 inquryId로 접근 시 403 처리 (라우트 레벨에서 처리할 것)
- * - 답변 완료 후에는 접근 불가 (라우트 레벨에서 처리할 것)
- */
 export default function EditInquiryPage() {
   const post = useLoaderData() as InquiryDTO;
 
