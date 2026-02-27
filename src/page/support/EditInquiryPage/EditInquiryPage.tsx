@@ -14,7 +14,7 @@ import { SubmitButton, FileUploadSection } from '@/feature/support/ui';
 import { INQUIRY_OPTIONS } from '@/feature/support/data';
 import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 
-import type { InquiryDTO } from '@/feature/board/types';
+import type { InquiryDTO } from '@/feature/support/types';
 
 import styles from './EditInquiryPage.module.css';
 import { Option } from '@/types';

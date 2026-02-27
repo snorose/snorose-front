@@ -1,4 +1,4 @@
-import { InquiryDTO } from '@/feature/board/types';
+import { InquiryDTO } from '@/feature/support/types';
 
 export const fetchPost = async ({ params }) => {
   const { inquiryId } = params;
