@@ -14,10 +14,10 @@ import { SubmitButton, FileUploadSection } from '@/feature/support/ui';
 import { INQUIRY_OPTIONS } from '@/feature/support/data';
 import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 
+import { Option } from '@/types';
 import type { InquiryDTO } from '@/feature/support/types';
 
 import styles from './EditInquiryPage.module.css';
-import { Option } from '@/types';
 
 export default function EditInquiryPage() {
   const post = useLoaderData() as InquiryDTO;
