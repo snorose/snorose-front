@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import { Placeholder } from '@tiptap/extensions';
 import StarterKit from '@tiptap/starter-kit';
@@ -10,9 +11,8 @@ import {
 } from '@tiptap/extension-text-style';
 import Image from '@tiptap/extension-image';
 import Toolbar from './Toolbar';
-import styles from './Editor.module.css';
 
-export default function Editor({ placeholder, setText }) {
+export default function Editor({ placeholder, text, setText }) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -38,6 +38,13 @@ export default function Editor({ placeholder, setText }) {
       if (setText) setText(editor);
     },
   });
+
+  //EditPostPage처럼 initalText(text)가 존재할 시 세팅해줌
+  useEffect(() => {
+    if (editor && text) {
+      editor.commands.setContent(text);
+    }
+  }, [editor, text]);
 
   return (
     <>
