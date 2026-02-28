@@ -12,7 +12,7 @@ import {
 
 import { FileUploadSection, SubmitButton } from '@/feature/support/ui';
 import { REPORT_PLACEHOLDERS } from '@/feature/support/constant';
-import { REPORT_OPTION } from '@/feature/support/data';
+import { REPORT_OPTIONS } from '@/feature/support/data';
 
 import { Option } from '@/types';
 import { ReportDTO } from '@/feature/support/types';
@@ -41,7 +41,7 @@ export default function EditReportPage() {
   const reportType = REPORT_TYPE_MAP[post.reportType];
 
   const [selectedOption, setSelectedOption] = useState<Option>(() =>
-    REPORT_OPTION[reportType].find((option) => option.key === post.category)
+    REPORT_OPTIONS[reportType].find((option) => option.key === post.category)
   );
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
@@ -51,7 +51,7 @@ export default function EditReportPage() {
   const updateFiles = (files: File[]) => setFiles(files);
 
   const placeholder = REPORT_PLACEHOLDERS[reportType];
-  const options = REPORT_OPTION[reportType];
+  const options = REPORT_OPTIONS[reportType];
 
   const disabled = title.trim() === '' || content.trim() === '';
 

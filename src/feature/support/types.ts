@@ -1,4 +1,4 @@
-import { REPORT_OPTION } from '@/feature/support/data';
+import { REPORT_OPTIONS } from '@/feature/support/data';
 
 export type InquiryDTO = {
   postId: number;
@@ -23,7 +23,7 @@ export type InquiryDTO = {
   attachments: any[];
 };
 
-type ReportOptionType = typeof REPORT_OPTION;
+type ReportOptionType = typeof REPORT_OPTIONS;
 
 type PostType = {
   reportType: 'POST_REPORT';

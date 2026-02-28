@@ -34,7 +34,7 @@ const user = [
   { key: 'USER_ETC', label: '기타' },
 ] as const;
 
-export const REPORT_OPTION = {
+export const REPORT_OPTIONS = {
   post,
   exam,
   comment,
