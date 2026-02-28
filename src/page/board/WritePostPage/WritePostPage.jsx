@@ -375,6 +375,7 @@ export default function WritePostPage() {
                   onChange={(e) => setText(e.target.value)}
                 />*/}
               <Editor
+                placeholder='내용'
                 setText={(editor) => {
                   const htmlContent = editor.getHTML();
                   setText(htmlContent);
