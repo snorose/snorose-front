@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCurrentEditor, useEditorState } from '@tiptap/react';
-import styles from './BubbleMenuButtons.module.css';
+import styles from './BubbleMenuEditor.module.css';
 
 export default function BubbleMenuEditor() {
   const { editor } = useCurrentEditor();
