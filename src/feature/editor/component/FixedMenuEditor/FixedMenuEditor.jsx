@@ -71,8 +71,7 @@ export default function FixedMenuEditor({ editor }) {
         <FaItalic />
       </button>
       <button
-        aria
-        label='밑줄'
+        aria-label='밑줄'
         onClick={() => editor.chain().focus().toggleUnderline().run()}
       >
         <FaUnderline />
