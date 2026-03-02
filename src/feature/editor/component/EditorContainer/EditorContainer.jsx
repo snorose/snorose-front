@@ -9,10 +9,10 @@ import {
   FontFamily,
 } from '@tiptap/extension-text-style';
 import Image from '@tiptap/extension-image';
-import Toolbar from './Toolbar';
-import styles from './Editor.module.css';
 
-export default function Editor({ placeholder, setText }) {
+import FixedMenuEditor from '../FixedMenuEditor/FixedMenuEditor';
+
+export default function EditorContainer({ placeholder, setText }) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -41,11 +41,8 @@ export default function Editor({ placeholder, setText }) {
 
   return (
     <>
-      <Toolbar editor={editor} />
+      <FixedMenuEditor editor={editor} />
       <EditorContent editor={editor} />
-
-      {/*<FloatingMenu editor={editor}>This is the floating menu</FloatingMenu>*/}
-      {/*<BubbleMenu editor={editor}>This is the bubble menu</BubbleMenu>*/}
     </>
   );
 }
