@@ -100,17 +100,13 @@
   border-collapse: collapse;
   width: 100%;
   margin: 1rem 0;
+  position: relative;
 }
-
 :global(.ProseMirror th),
 :global(.ProseMirror td) {
   border: 1px solid #ccc;
   padding: 0.5rem;
   min-width: 5rem;
-}
-
-:global(.ProseMirror table) {
-  position: relative;
 }
 
 .cancelButton {
