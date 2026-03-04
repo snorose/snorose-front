@@ -32,11 +32,12 @@ import {
 } from '@/shared/hook';
 import { DateTime, getBoard } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
-import { Editor } from '@/shared/component';
 
 import { createThumbnail, postPost } from '@/apis';
 import { AttachmentBar } from '@/feature/board/component';
 import { Guideline } from '@/feature/attachment/component';
+import { EditorContainer } from '@/feature/editor/component';
+
 import { useGuide } from '@/feature/attachment/hook';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
@@ -374,7 +375,8 @@ export default function WritePostPage() {
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                 />*/}
-              <Editor
+              <EditorContainer
+                placeholder='내용'
                 setText={(editor) => {
                   const htmlContent = editor.getHTML();
                   setText(htmlContent);

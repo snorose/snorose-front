@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
-import { Placeholder } from '@tiptap/extensions';
+import Placeholder from '@tiptap/extension-placeholder';
 import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
 import {
@@ -9,10 +10,10 @@ import {
   FontFamily,
 } from '@tiptap/extension-text-style';
 import Image from '@tiptap/extension-image';
-import Toolbar from './Toolbar';
-import styles from './Editor.module.css';
 
-export default function Editor({ placeholder, setText }) {
+import FixedMenuEditor from '../FixedMenuEditor/FixedMenuEditor';
+
+export default function EditorContainer({ placeholder, text, setText }) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -39,13 +40,17 @@ export default function Editor({ placeholder, setText }) {
     },
   });
 
+  //EditPostPage처럼 initalText(text)가 존재할 시 세팅해줌
+  useEffect(() => {
+    if (editor && text && editor.isEmpty) {
+      editor.commands.setContent(text);
+    }
+  }, [editor, text]);
+
   return (
     <>
-      <Toolbar editor={editor} />
+      <FixedMenuEditor editor={editor} />
       <EditorContent editor={editor} />
-
-      {/*<FloatingMenu editor={editor}>This is the floating menu</FloatingMenu>*/}
-      {/*<BubbleMenu editor={editor}>This is the bubble menu</BubbleMenu>*/}
     </>
   );
 }
