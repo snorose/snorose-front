@@ -34,6 +34,7 @@ import { ModalContext } from '@/shared/context/ModalContext';
 
 import { createThumbnail } from '@/apis';
 import { getPostContent, patchPost } from '@/apis';
+import { EditorContainer } from '@/feature/editor/component';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
 
@@ -254,11 +255,18 @@ export default function EditPostPage() {
                 value={title}
                 onChange={handleTitleChange}
               />
-              <TextareaAutosize
+              {/*<TextareaAutosize
                 className={styles.text}
                 placeholder='내용'
                 value={text}
                 onChange={(e) => setText(e.target.value)}
+              />*/}
+              <EditorContainer
+                text={text}
+                setText={(editor) => {
+                  const htmlContent = editor.getHTML();
+                  setText(htmlContent);
+                }}
               />
               <AttachmentList
                 attachmentsInfo={attachmentsInfo}
