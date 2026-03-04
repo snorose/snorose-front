@@ -65,20 +65,20 @@ export default function EditorContainer({ placeholder, setText }) {
       <EditorContent editor={editor} />
 
       {isInTable && (
-        <div className={styles.tableControls}>
+        <div type="button" className={styles.tableControls}>
           <button onClick={() => editor.chain().focus().addRowAfter().run()}>
             ➕ 행 추가
           </button>
-          <button onClick={() => editor.chain().focus().addColumnAfter().run()}>
+          <button type="button" onClick={() => editor.chain().focus().addColumnAfter().run()}>
             ➕ 열 추가
           </button>
-          <button onClick={() => editor.chain().focus().deleteRow().run()}>
+          <button type="button" onClick={() => editor.chain().focus().deleteRow().run()}>
             ➖ 행 삭제
           </button>
-          <button onClick={() => editor.chain().focus().deleteColumn().run()}>
+          <button type="button" onClick={() => editor.chain().focus().deleteColumn().run()}>
             ➖ 열 삭제
           </button>
-          <button onClick={() => editor.chain().focus().deleteTable().run()}>
+          <button type="button" onClick={() => editor.chain().focus().deleteTable().run()}>
             🗑️ 표 삭제
           </button>
         </div>
