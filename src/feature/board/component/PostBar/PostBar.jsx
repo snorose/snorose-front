@@ -42,12 +42,9 @@ export default function PostBar({ data, hasComment = true, hasLike = true }) {
           </div>
           <div className={styles.postBarCenter}>
             <p className={styles.title}>{data.title}</p>
-            <div
-              className={styles.text}
-              dangerouslySetInnerHTML={{
-                __html: data.questionDetail ?? htmlToText(data.content),
-              }}
-            />
+            <div className={styles.text}>
+              {data.questionDetail ?? htmlToText(data.content)}
+            </div>
           </div>
         </div>
 
