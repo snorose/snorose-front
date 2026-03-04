@@ -86,6 +86,16 @@
   color: var(--grey-3-1);
 }
 
+:global(.ProseMirror a) {
+  cursor: pointer;
+  color: var(--blue-4);
+  text-decoration: underline;
+}
+
+:global(.ProseMirror a:hover) {
+  opacity: 0.8;
+}
+
 .cancelButton {
   margin-top: 1rem;
   color: #0a0a0a;

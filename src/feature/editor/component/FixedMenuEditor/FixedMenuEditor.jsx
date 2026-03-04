@@ -12,6 +12,7 @@ import {
   FaPalette,
   FaFillDrip,
   FaQuoteRight,
+  FaLink,
 } from 'react-icons/fa';
 import { ChromePicker } from 'react-color';
 import styles from './FixedMenuEditor.module.css';
@@ -202,6 +203,35 @@ export default function FixedMenuEditor({ editor }) {
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
       >
         <FaQuoteRight />
+      </button>
+
+      <button
+        aria-label="링크 삽입"
+        onClick={() => {
+          const url = window.prompt('링크 주소를 입력하세요');
+          if (!url) return;
+
+          const formattedUrl = url.startsWith('http')
+            ? url
+            : `https://${url}`;
+
+          editor
+            .chain()
+            .focus()
+            .insertContent({
+              type: 'text',
+              text: formattedUrl,
+              marks: [
+                {
+                  type: 'link',
+                  attrs: { href: formattedUrl },
+                },
+              ],
+            })
+            .run();
+        }}
+      >
+        <FaLink />
       </button>
 
       <div className={styles.divider} />

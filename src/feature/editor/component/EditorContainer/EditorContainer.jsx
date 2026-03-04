@@ -3,6 +3,7 @@ import { Placeholder } from '@tiptap/extensions';
 import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
 import Blockquote from '@tiptap/extension-blockquote';
+import Link from '@tiptap/extension-link';
 import {
   TextStyle,
   Color,
@@ -17,6 +18,9 @@ export default function EditorContainer({ placeholder, setText }) {
   const editor = useEditor({
     extensions: [
       StarterKit,
+      Link.configure({
+        openOnClick: false,
+      }),
       Blockquote,
       TextAlign.configure({
         types: ['heading', 'paragraph'],
