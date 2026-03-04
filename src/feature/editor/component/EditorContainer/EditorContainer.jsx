@@ -78,7 +78,11 @@ export default function EditorContainer({ placeholder, setText }) {
           <button type="button" onClick={() => editor.chain().focus().deleteColumn().run()}>
             ➖ 열 삭제
           </button>
-          <button type="button" onClick={() => editor.chain().focus().deleteTable().run()}>
+          <button 
+            type="button"
+            className={styles.deleteButton}
+            onClick={() => editor.chain().focus().deleteTable().run()}
+          >
             🗑️ 표 삭제
           </button>
         </div>

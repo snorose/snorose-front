@@ -23,11 +23,11 @@
   background: var(--grey-2);
 }
 
-.tableControls button:last-child {
+.tableControls .deleteButton {
   border-color: var(--pink-2);
   color: var(--pink-3);
 }
 
-.tableControls button:last-child:hover {
+.tableControls .deleteButton:hover {
   background: #fee2e2;
 }
