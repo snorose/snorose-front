@@ -2,6 +2,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import { Placeholder } from '@tiptap/extensions';
 import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
+import Blockquote from '@tiptap/extension-blockquote';
 import {
   TextStyle,
   Color,
@@ -16,6 +17,7 @@ export default function EditorContainer({ placeholder, setText }) {
   const editor = useEditor({
     extensions: [
       StarterKit,
+      Blockquote,
       TextAlign.configure({
         types: ['heading', 'paragraph'],
         alignments: ['left', 'center', 'right'],

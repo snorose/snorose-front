@@ -11,6 +11,7 @@ import {
   FaListOl,
   FaPalette,
   FaFillDrip,
+  FaQuoteRight,
 } from 'react-icons/fa';
 import { ChromePicker } from 'react-color';
 import styles from './FixedMenuEditor.module.css';
@@ -195,6 +196,12 @@ export default function FixedMenuEditor({ editor }) {
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
       >
         <FaListOl />
+      </button>
+      <button
+        aria-label='인용구'
+        onClick={() => editor.chain().focus().toggleBlockquote().run()}
+      >
+        <FaQuoteRight />
       </button>
 
       <div className={styles.divider} />

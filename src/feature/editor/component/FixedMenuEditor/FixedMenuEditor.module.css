@@ -79,6 +79,13 @@
   list-style-type: lower-alpha;
 }
 
+:global(.ProseMirror) blockquote {
+  border-left: 4px solid var(--grey-3);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--grey-3-1);
+}
+
 .cancelButton {
   margin-top: 1rem;
   color: #0a0a0a;
