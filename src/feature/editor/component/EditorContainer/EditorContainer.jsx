@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
-import { Placeholder } from '@tiptap/extensions';
+import Placeholder from '@tiptap/extension-placeholder';
 import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
 import {
