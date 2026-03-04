@@ -34,7 +34,7 @@ import { ModalContext } from '@/shared/context/ModalContext';
 
 import { createThumbnail } from '@/apis';
 import { getPostContent, patchPost } from '@/apis';
-import { Editor } from '@/shared/component';
+import { EditorContainer } from '@/feature/editor/component';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
 
@@ -261,7 +261,7 @@ export default function EditPostPage() {
                 value={text}
                 onChange={(e) => setText(e.target.value)}
               />*/}
-              <Editor
+              <EditorContainer
                 text={text}
                 setText={(editor) => {
                   const htmlContent = editor.getHTML();
