@@ -211,26 +211,19 @@ export default function FixedMenuEditor({ editor }) {
         type="button"
         aria-label="링크 삽입"
         onClick={() => {
-          const url = window.prompt('링크 주소를 입력하세요');
+          let url = window.prompt('링크 주소를 입력하세요');
           if (!url) return;
 
-          const formattedUrl = url.startsWith('http')
-            ? url
-            : `https://${url}`;
+          const protocolRegex = /^(https?:\/\/)/i;
+          if (!protocolRegex.test(url)) {
+            url = `https://${url}`;
+          }
 
           editor
             .chain()
             .focus()
-            .insertContent({
-              type: 'text',
-              text: formattedUrl,
-              marks: [
-                {
-                  type: 'link',
-                  attrs: { href: formattedUrl },
-                },
-              ],
-            })
+            .extendMarkRange('link') 
+            .setLink({ href: url })  
             .run();
         }}
       >
