@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import { useState } from 'react';
-import { Placeholder } from '@tiptap/extensions';
+import Placeholder from '@tiptap/extension-placeholder';
 import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
 import Blockquote from '@tiptap/extension-blockquote';
@@ -18,9 +19,9 @@ import { TableHeader } from '@tiptap/extension-table';
 import FixedMenuEditor from '../FixedMenuEditor/FixedMenuEditor';
 import styles from './EditorContainer.module.css';
 
-export default function EditorContainer({ placeholder, setText }) {
-  const [isInTable, setIsInTable] = useState(false);
 
+export default function EditorContainer({ placeholder, text, setText }) {
+  const [isInTable, setIsInTable] = useState(false);
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -58,6 +59,13 @@ export default function EditorContainer({ placeholder, setText }) {
       setIsInTable(editor.isActive('table'));
     },
   });
+
+  //EditPostPage처럼 initalText(text)가 존재할 시 세팅해줌
+  useEffect(() => {
+    if (editor && text && editor.isEmpty) {
+      editor.commands.setContent(text);
+    }
+  }, [editor, text]);
 
   return (
     <>
