@@ -199,6 +199,7 @@ export default function FixedMenuEditor({ editor }) {
       >
         <FaListOl />
       </button>
+      
       <button
         type="button"
         aria-label='인용구'
@@ -211,20 +212,28 @@ export default function FixedMenuEditor({ editor }) {
         type="button"
         aria-label="링크 삽입"
         onClick={() => {
-          let url = window.prompt('링크 주소를 입력하세요');
+          const url = window.prompt('링크 주소를 입력하세요');
           if (!url) return;
 
+          // https 프로토콜 자동 추가
           const protocolRegex = /^(https?:\/\/)/i;
-          if (!protocolRegex.test(url)) {
-            url = `https://${url}`;
-          }
+          const formattedUrl = protocolRegex.test(url) ? url : `https://${url}`;
 
-          editor
-            .chain()
-            .focus()
-            .extendMarkRange('link') 
-            .setLink({ href: url })  
-            .run();
+          if (editor.state.selection.empty) {
+            // 선택 영역이 없으면 새 텍스트로 삽입
+            editor
+              .chain()
+              .focus()
+              .insertContent({
+                type: 'text',
+                text: formattedUrl,
+                marks: [{ type: 'link', attrs: { href: formattedUrl } }],
+              })
+              .run();
+          } else {
+            // 선택 영역이 있으면 기존 텍스트에 링크 적용
+            editor.chain().focus().extendMarkRange('link').setLink({ href: formattedUrl }).run();
+          }
         }}
       >
         <FaLink />
