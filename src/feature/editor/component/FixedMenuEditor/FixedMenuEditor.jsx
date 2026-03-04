@@ -200,6 +200,7 @@ export default function FixedMenuEditor({ editor }) {
         <FaListOl />
       </button>
       <button
+        type="button"
         aria-label='인용구'
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
       >
@@ -207,6 +208,7 @@ export default function FixedMenuEditor({ editor }) {
       </button>
 
       <button
+        type="button"
         aria-label="링크 삽입"
         onClick={() => {
           const url = window.prompt('링크 주소를 입력하세요');
