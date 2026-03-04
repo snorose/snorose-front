@@ -13,6 +13,7 @@ import {
   FaFillDrip,
   FaQuoteRight,
   FaLink,
+  FaTable,
 } from 'react-icons/fa';
 import { ChromePicker } from 'react-color';
 import styles from './FixedMenuEditor.module.css';
@@ -232,6 +233,20 @@ export default function FixedMenuEditor({ editor }) {
         }}
       >
         <FaLink />
+      </button>
+
+      <button
+        type="button"
+        aria-label="표 삽입"
+        onClick={() =>
+          editor
+            ?.chain()
+            .focus()
+            .insertTable({ rows: 3, cols: 3, withHeaderRow: false })
+            .run()
+        }
+      >
+        <FaTable />
       </button>
 
       <div className={styles.divider} />
