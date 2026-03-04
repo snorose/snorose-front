@@ -42,7 +42,7 @@ export default function EditorContainer({ placeholder, text, setText }) {
 
   //EditPostPage처럼 initalText(text)가 존재할 시 세팅해줌
   useEffect(() => {
-    if (editor && text) {
+    if (editor && text && editor.isEmpty) {
       editor.commands.setContent(text);
     }
   }, [editor, text]);
