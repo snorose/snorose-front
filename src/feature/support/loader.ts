@@ -1,3 +1,5 @@
+import type { LoaderFunctionArgs } from 'react-router-dom';
+
 import { InquiryDTO, ReportDTO } from '@/feature/support/types';
 
 /**
@@ -7,7 +9,7 @@ import { InquiryDTO, ReportDTO } from '@/feature/support/types';
  * - 답변 완료 후에는 접근 불가
  */
 
-export const fetchInquiry = async ({ params }) => {
+export const fetchInquiry = async ({ params }: LoaderFunctionArgs) => {
   const { inquiryId } = params;
   // const result = await fetch(`/v1/inquiries/${inquiryId}`);
 
@@ -40,7 +42,7 @@ export const fetchInquiry = async ({ params }) => {
  * - 처리 완료 후에는 접근 불가
  */
 
-export const fetchReport = async ({ params }) => {
+export const fetchReport = async ({ params }: LoaderFunctionArgs) => {
   const { reportId } = params;
 
   // const result = await fetch(`/v1/report/${reportId}`);
