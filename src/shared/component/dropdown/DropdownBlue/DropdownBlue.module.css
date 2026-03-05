@@ -20,6 +20,10 @@
 
   & p {
     margin-left: 1.4rem;
+
+    display: flex;
+    align-items: center;
+
     font: var(--text-headline-1-med);
   }
 }
