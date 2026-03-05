@@ -2,14 +2,16 @@ import { useId } from 'react';
 
 import { Icon } from '@/shared/component';
 
+import { Attachment } from '@/feature/attachment/types';
+
 import styles from './FileUploadSection.module.css';
 
 export default function FileUploadSection({
   files,
   updateFiles,
 }: {
-  files: File[];
-  updateFiles: (files: File[]) => void;
+  files: (File | Attachment)[];
+  updateFiles: (files: (File | Attachment)[]) => void;
 }) {
   const id = useId();
 
@@ -37,7 +39,15 @@ export default function FileUploadSection({
       <div className={styles.right}>
         {files.length > 0 && (
           <span className={styles.fileName}>
-            {files.map((file) => file.name).join(', ')}
+            {files
+              .map((file) => {
+                if ('url' in file) {
+                  return file.fileName;
+                }
+
+                return file.name;
+              })
+              .join(', ')}
           </span>
         )}
 

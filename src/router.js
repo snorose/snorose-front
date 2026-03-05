@@ -3,6 +3,7 @@ import { attendanceLoader } from '@/shared/loader';
 import { NavbarLayout } from '@/shared/ui';
 
 import { CheckExamPeriodRoute } from '@/feature/exam/lib';
+import { fetchInquiry, fetchReport } from '@/feature/support/loader';
 
 import {
   FindIdPage,
@@ -488,6 +489,7 @@ export const routeList = [
                 <EditInquiryPage />
               </ProtectedRoute>
             ),
+            loader: fetchInquiry,
           },
         ],
       },
@@ -524,6 +526,7 @@ export const routeList = [
                 <EditReportPage />
               </ProtectedRoute>
             ),
+            loader: fetchReport,
           },
         ],
       },
