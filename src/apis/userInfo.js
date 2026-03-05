@@ -50,6 +50,14 @@ export const getDownloadedExamReviews = async (params = {}) => {
   return response?.data.result;
 };
 
+export const getMyInquiriesAndReports = async (params = {}) => {
+  const response = await authAxios.get('/v1/users/mypage/inquiries', {
+    params,
+  });
+
+  return response?.data.result;
+};
+
 export const getScrapedExamReviews = async (params) => {
   const response = await authAxios.get('/v1/scraps/reviews', {
     params,

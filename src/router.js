@@ -592,6 +592,14 @@ export const routeList = [
         ),
       },
       {
+        path: '/my-page/inquiry-report',
+        element: (
+          <ProtectedRoute>
+            <ActivityPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: '/my-page/scrap',
         element: (
           <ProtectedRoute>
