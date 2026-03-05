@@ -10,7 +10,7 @@ import {
 } from '@/shared/component';
 
 import { SubmitButton, FileUploadSection } from '@/feature/support/ui';
-import { INQUIRY_OPTION } from '@/feature/support/data';
+import { INQUIRY_OPTIONS } from '@/feature/support/data';
 import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 
 import { Option } from '@/types';
@@ -49,7 +49,7 @@ export default function WriteInquiryPage() {
         </DropdownBlue.Trigger>
 
         <DropdownBlue.Menu>
-          {INQUIRY_OPTION.map((option) => (
+          {INQUIRY_OPTIONS.map((option) => (
             <DropdownBlue.Item
               key={option.key}
               id={option.key}

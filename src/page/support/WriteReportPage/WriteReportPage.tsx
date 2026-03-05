@@ -13,7 +13,7 @@ import {
 import { NotFoundPage } from '@/page/etc';
 
 import { SubmitButton, FileUploadSection } from '@/feature/support/ui';
-import { REPORT_OPTION } from '@/feature/support/data';
+import { REPORT_OPTIONS } from '@/feature/support/data';
 import { REPORT_PLACEHOLDERS } from '@/feature/support/constant';
 
 import { Option } from '@/types';
@@ -40,7 +40,7 @@ export default function WriteReportPage() {
   const updateFiles = (files: File[]) => setFiles(files);
 
   const placeholder = REPORT_PLACEHOLDERS[reportType];
-  const options = REPORT_OPTION[reportType];
+  const options = REPORT_OPTIONS[reportType];
 
   if (!isValidReportType(reportType)) {
     return <NotFoundPage />;
