@@ -1,5 +1,5 @@
 import styles from './PopUpContents.module.css';
-import accountingReport from './accountingReport.png';
+import calendarImage from './calendar.png';
 import { Link } from 'react-router-dom';
 
 /**
@@ -22,35 +22,36 @@ import { Link } from 'react-router-dom';
 /** @type {PopupContent[]} */
 const POPUP_CONTENTS = [
   {
-    title: '2025년 12월 회계 보고',
-    description:
-      '숙명 메일 계정으로 접속하시면 회계 내역을 확인하실 수 있습니다.',
-    contentList: [
-      // '내용',
-      // '추가 모집 분야: 이벤트기획, 프론트엔드',
-    ],
+    title: '스노로즈 새내기 안내서',
+    description: null,
     link: [
       {
-        title: '스노로즈 회계 장부 (Google Sheets)',
-        url: 'https://docs.google.com/spreadsheets/d/1MzXAHemKqPwVj3PzPJch5cR5z49gFtzABPgJ_FVjCXM',
-      },
-      {
-        title: '스노로즈 공지 바로가기',
-        url: '/board/notice/post/1869660',
+        title: '스노로즈 새내기 안내서 링크 (노션)',
+        url: 'https://snorose.notion.site/1957ef0aa3bf80a68ce3fe67f7a7e230',
       },
     ],
-    image: accountingReport,
-    startDate: '2026-01-12',
-    endDate: '2026-01-20',
+    startDate: '2026-02-28',
+    endDate: '2026-03-15',
   },
-  // {
-  //   title: '1월 스노로즈 일정',
-  //   content: null,
-  //   link: null,
-  //   image: calendar,
-  //   startDate: '2025-12-31',
-  //   endDate: '2026-01-07',
-  // },
+  {
+    title: '스노로즈 새내기&재학생 이벤트',
+    description:
+      '스노로즈에서 새학기를 맞아 새내기와 재학생을 위한 이벤트를 준비했습니다!\n지금 참여하고 포인트와 기프티콘까지 챙겨가세요!',
+    link: [
+      {
+        title: '이벤트 신청 링크 (스노로즈 공지)',
+        url: 'https://www.snorose.com/board/notice/post/1874011',
+      },
+    ],
+    startDate: '2026-02-28',
+    endDate: '2026-03-15',
+  },
+  {
+    title: '2026년 3월 캘린더',
+    image: calendarImage,
+    startDate: '2026-02-28',
+    endDate: '2026-03-15',
+  },
 ];
 
 /** @type {string[]} */
