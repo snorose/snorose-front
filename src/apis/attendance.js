@@ -12,7 +12,7 @@ export const updatePoint = async ({
   sourceId,
   difference,
 }) => {
-  const response = await authAxios.post('/v1/points', {
+  const response = await authAxios.post('/v1/points/attendance', {
     encryptedUserId,
     category,
     source,
