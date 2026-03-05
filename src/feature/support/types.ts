@@ -1,5 +1,7 @@
 import { REPORT_OPTIONS } from '@/feature/support/data';
 
+import { Attachment } from '@/feature/attachment/types';
+
 export type InquiryDTO = {
   postId: number;
   userRoleId: number;
@@ -20,7 +22,7 @@ export type InquiryDTO = {
   updatedAt: string | null;
   isEdited: boolean;
   isWriterWithdrawn: boolean;
-  attachments: any[];
+  attachments: Attachment[];
 };
 
 type ReportOptionType = typeof REPORT_OPTIONS;
@@ -58,5 +60,5 @@ export type ReportDTO = {
   createdAt: string;
   isEdited: boolean;
   isWriterWithdrawn: boolean;
-  attachments: any[];
+  attachments: Attachment[];
 } & (PostType | ExamReviewType | CommentType | UserType);

@@ -14,8 +14,9 @@ import { FileUploadSection, SubmitButton } from '@/feature/support/ui';
 import { REPORT_PLACEHOLDERS } from '@/feature/support/constant';
 import { REPORT_OPTIONS } from '@/feature/support/data';
 
-import { Option } from '@/types';
-import { ReportDTO } from '@/feature/support/types';
+import type { Option } from '@/types';
+import type { ReportDTO } from '@/feature/support/types';
+import type { Attachment } from '@/feature/attachment/types';
 
 import styles from './EditReportPage.module.css';
 
@@ -24,14 +25,14 @@ const REPORT_TYPE_MAP = {
   EXAM_REVIEW_REPORT: 'exam',
   COMMENT_REPORT: 'comment',
   USER_REPORT: 'user',
-};
+} as const;
 
 const REPORT_TYPE_TAG = {
   post: '게시글',
   exam: '시험후기',
   comment: '댓글',
   user: '유저',
-};
+} as const;
 
 export default function EditReportPage() {
   const post = useLoaderData() as ReportDTO;
@@ -40,15 +41,15 @@ export default function EditReportPage() {
 
   const reportType = REPORT_TYPE_MAP[post.reportType];
 
-  const [selectedOption, setSelectedOption] = useState<Option>(() =>
+  const [selectedOption, setSelectedOption] = useState<Option | undefined>(() =>
     REPORT_OPTIONS[reportType].find((option) => option.key === post.category)
   );
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
-  const [files, setFiles] = useState<File[]>(post.attachments);
+  const [files, setFiles] = useState<(File | Attachment)[]>(post.attachments);
 
   const updateOption = (option: Option) => setSelectedOption(option);
-  const updateFiles = (files: File[]) => setFiles(files);
+  const updateFiles = (files: (File | Attachment)[]) => setFiles(files);
 
   const placeholder = REPORT_PLACEHOLDERS[reportType];
   const options = REPORT_OPTIONS[reportType];

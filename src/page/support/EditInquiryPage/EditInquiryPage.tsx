@@ -14,8 +14,9 @@ import { SubmitButton, FileUploadSection } from '@/feature/support/ui';
 import { INQUIRY_OPTIONS } from '@/feature/support/data';
 import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 
-import { Option } from '@/types';
+import type { Option } from '@/types';
 import type { InquiryDTO } from '@/feature/support/types';
+import type { Attachment } from '@/feature/attachment/types';
 
 import styles from './EditInquiryPage.module.css';
 
@@ -30,10 +31,10 @@ export default function EditInquiryPage() {
   const [title, setTitle] = useState(post.title);
   const [url, setUrl] = useState(post.link);
   const [content, setContent] = useState(post.content);
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<(File | Attachment)[]>(post.attachments);
 
   const updateOption = (option: Option) => setSelectedOption(option);
-  const updateFiles = (files: File[]) => setFiles(files);
+  const updateFiles = (files: (File | Attachment)[]) => setFiles(files);
 
   const disabled = title.trim() === '' || content.trim() === '';
 

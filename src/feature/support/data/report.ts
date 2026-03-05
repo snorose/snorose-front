@@ -34,9 +34,14 @@ const user = [
   { key: 'USER_ETC', label: '기타' },
 ] as const;
 
+type ReportOption = {
+  readonly key: string;
+  readonly label: string;
+};
+
 export const REPORT_OPTIONS = {
   post,
   exam,
   comment,
   user,
-} as const;
+} satisfies Record<string, readonly ReportOption[]>;
