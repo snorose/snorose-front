@@ -45,24 +45,24 @@
   min-height: 200px;
   padding: 1rem;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   outline: none;
 }
 
 :global(.ProseMirror) ul {
   list-style-type: disc;
-  padding-left: 24px;
-  margin: 12px 0;
+  padding-left: 1.5rem;
+  margin: 0.75rem 0;
 }
 
 :global(.ProseMirror) ol {
   list-style-type: decimal;
-  padding-left: 24px;
-  margin: 12px 0;
+  padding-left: 1.5rem;
+  margin: 0.75rem 0;
 }
 
 :global(.ProseMirror) li {
-  margin: 4px 0;
+  margin: 0.25rem 0;
 }
 
 :global(.ProseMirror) li p {
@@ -77,6 +77,36 @@
 :global(.ProseMirror) ul ol,
 :global(.ProseMirror) ol ol {
   list-style-type: lower-alpha;
+}
+
+:global(.ProseMirror) blockquote {
+  border-left: 0.25rem solid var(--grey-3);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--grey-3-1);
+}
+
+:global(.ProseMirror a) {
+  cursor: pointer;
+  color: var(--blue-4);
+  text-decoration: underline;
+}
+
+:global(.ProseMirror a:hover) {
+  opacity: 0.8;
+}
+
+:global(.ProseMirror table) {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+  position: relative;
+}
+:global(.ProseMirror th),
+:global(.ProseMirror td) {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  min-width: 5rem;
 }
 
 .cancelButton {
@@ -106,7 +136,7 @@
 .bgColorWrapper {
   position: relative;
   display: inline-block;
-  margin-left: 0.5rem; /* 지금 inline style marginLeft: 8px 대신 */
+  margin-left: 0.5rem;
 }
 
 .bgColorPopup {
