@@ -14,7 +14,7 @@ import {
   FaQuoteRight,
   FaLink,
   FaTable,
-  FaYoutube
+  FaYoutube,
 } from 'react-icons/fa';
 import { ChromePicker } from 'react-color';
 import styles from './FixedMenuEditor.module.css';
@@ -22,9 +22,10 @@ import styles from './FixedMenuEditor.module.css';
 export default function FixedMenuEditor({ editor }) {
   const [textColor, setTextColor] = useState('#000000');
   const [bgColor, setBgColor] = useState('#ffffff');
-
   const [showTextColor, setShowTextColor] = useState(false);
   const [showBgColor, setShowBgColor] = useState(false);
+  const [fontSizeInput, setFontSizeInput] = useState('');
+  const [isSizeInputFocused, setIsSizeInputFocused] = useState(false);
 
   const textColorRef = useRef(null);
   const bgColorRef = useRef(null);
@@ -78,7 +79,40 @@ export default function FixedMenuEditor({ editor }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // 에디터가 아직 준비되지 않았다면 렌더링 안 함
   if (!editor) return null;
+
+  // 1. 에디터에 적용된 현재 폰트 사이즈 가져오기
+  const currentEditorFontSize =
+    editor.getAttributes('textStyle')?.fontSize?.replace('px', '') || '';
+
+  // 2. 입력창 포커스 여부에 따라 보여줄 값 결정 (입력 중이면 내 타이핑, 아니면 에디터 값)
+  const displayFontSize = isSizeInputFocused
+    ? fontSizeInput
+    : currentEditorFontSize;
+
+  // 3. 엔터 키를 눌렀을 때만 폰트 크기 적용하는 함수
+  const handleFontSizeKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // 폼 제출 등 기본 동작 방지
+
+      const val = fontSizeInput.trim();
+      if (val && !isNaN(val)) {
+        // 숫자가 입력되었으면 적용하고 에디터로 포커스 돌려줌
+        editor
+          .chain()
+          .focus()
+          .setMark('textStyle', { fontSize: `${val}px` })
+          .run();
+      } else {
+        // 비워두고 엔터치면 폰트 사이즈 초기화
+        editor.chain().focus().setMark('textStyle', { fontSize: null }).run();
+      }
+      // 입력 완료 후 포커스 상태 해제
+      setIsSizeInputFocused(false);
+      e.target.blur();
+    }
+  };
 
   return (
     <div className={styles.toolbar}>
@@ -213,6 +247,27 @@ export default function FixedMenuEditor({ editor }) {
         ))}
       </select>
 
+      <div className={styles.fontSizeInputWrapper}>
+        <input
+          type='number'
+          value={displayFontSize}
+          placeholder='크기'
+          className={styles.fontSizeInput}
+          onFocus={() => {
+            setIsSizeInputFocused(true);
+            setFontSizeInput(currentEditorFontSize); // 포커스 시 현재 크기로 세팅
+          }}
+          onBlur={() => {
+            setIsSizeInputFocused(false); // 포커스 잃으면 다시 에디터 값으로 원복
+          }}
+          onChange={(e) => {
+            setFontSizeInput(e.target.value); // 타이핑할 때는 State만 변경
+          }}
+          onKeyDown={handleFontSizeKeyDown} // 엔터 키 이벤트
+        />
+        <span className={styles.fontSizeLabel}>px</span>
+      </div>
+
       <div className={styles.divider} />
 
       <button
@@ -245,9 +300,9 @@ export default function FixedMenuEditor({ editor }) {
       >
         <FaListOl />
       </button>
-      
+
       <button
-        type="button"
+        type='button'
         aria-label='인용구'
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
       >
@@ -255,8 +310,8 @@ export default function FixedMenuEditor({ editor }) {
       </button>
 
       <button
-        type="button"
-        aria-label="링크 삽입"
+        type='button'
+        aria-label='링크 삽입'
         onClick={() => {
           const url = window.prompt('링크 주소를 입력하세요');
           if (!url) return;
@@ -278,7 +333,12 @@ export default function FixedMenuEditor({ editor }) {
               .run();
           } else {
             // 선택 영역이 있으면 기존 텍스트에 링크 적용
-            editor.chain().focus().extendMarkRange('link').setLink({ href: formattedUrl }).run();
+            editor
+              .chain()
+              .focus()
+              .extendMarkRange('link')
+              .setLink({ href: formattedUrl })
+              .run();
           }
         }}
       >
@@ -286,8 +346,8 @@ export default function FixedMenuEditor({ editor }) {
       </button>
 
       <button
-        type="button"
-        aria-label="표 삽입"
+        type='button'
+        aria-label='표 삽입'
         onClick={() =>
           editor
             ?.chain()
@@ -300,7 +360,7 @@ export default function FixedMenuEditor({ editor }) {
       </button>
 
       <button
-        type="button"
+        type='button'
         onClick={() => {
           const url = window.prompt('iframe URL 입력');
           if (!url) return;
