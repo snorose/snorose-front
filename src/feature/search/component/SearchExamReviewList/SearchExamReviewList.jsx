@@ -41,7 +41,9 @@ export default function SearchExamReviewList() {
             key={post.postId}
             to={`/board/exam-review/post/${post.postId}`}
           >
-            <PostBar data={post} hasLike={false} />
+            <PostBar {...post}>
+              {post.isConfirmed && <PostBar.ConfirmedIcon />}
+            </PostBar>
           </Link>
         ))}
         {isFetching && <FetchLoading />}

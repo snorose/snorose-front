@@ -73,7 +73,7 @@ export default function PostList() {
               }
               ref={index === postList.length - 1 ? ref : undefined}
             >
-              <PostBar data={{ ...post }} />
+              <PostBar {...post} />
             </Link>
           ))}
           {isFetching && <FetchLoading />}
@@ -85,6 +85,7 @@ export default function PostList() {
 
 /**
  * TODO(board): 라우트 개선 작업 완료 후 교체
+ * TODO: 이벤트와 일반 게시판 분리
  */
 export function NewPostList() {
   const [searchParams] = useSearchParams();
@@ -143,7 +144,7 @@ export function NewPostList() {
               }
               ref={index === postList.length - 1 ? ref : undefined}
             >
-              <PostBar data={{ ...post }} />
+              <PostBar {...post} />
             </Link>
           ))}
           {isFetching && <FetchLoading />}

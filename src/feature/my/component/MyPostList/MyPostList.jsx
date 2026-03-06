@@ -89,7 +89,11 @@ export default function MyPostList({
             isNotice: post.isNotice,
           })}
         >
-          <PostBar data={post} hasLike={hasLike} />
+          <PostBar {...post}>
+            {post.boardName && (
+              <PostBar.Chip name={post.boardName} variant='grey' />
+            )}
+          </PostBar>
         </Link>
       ))}
       {isFetching && <FetchLoading />}
