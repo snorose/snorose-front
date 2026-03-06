@@ -109,6 +109,36 @@
   min-width: 5rem;
 }
 
+:global(.ProseMirror h1) {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+:global(.ProseMirror h2) {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+:global(.ProseMirror h3) {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+:global(.ProseMirror h4) {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+:global(.ProseMirror h5) {
+  font-size: 0.6rem;
+  font-weight: bold;
+}
+
+:global(.ProseMirror h6) {
+  font-size: 0.5rem;
+  font-weight: bold;
+}
+
 .cancelButton {
   margin-top: 1rem;
   color: #0a0a0a;
@@ -153,34 +183,4 @@
   background-color: #fff;
   cursor: pointer;
   font-size: 0.875rem;
-}
-
-:global(.ProseMirror) h1 {
-  font-size: 2em;
-  font-weight: bold;
-}
-
-:global(.ProseMirror) h2 {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
-:global(.ProseMirror) h3 {
-  font-size: 1.17em;
-  font-weight: bold;
-}
-
-:global(.ProseMirror) h4 {
-  font-size: 1em;
-  font-weight: bold;
-}
-
-:global(.ProseMirror) h5 {
-  font-size: 0.83em;
-  font-weight: bold;
-}
-
-:global(.ProseMirror) h6 {
-  font-size: 0.67em;
-  font-weight: bold;
 }
