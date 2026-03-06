@@ -18,7 +18,7 @@ import { TableCell } from '@tiptap/extension-table';
 import { TableHeader } from '@tiptap/extension-table';
 import FixedMenuEditor from '../FixedMenuEditor/FixedMenuEditor';
 import styles from './EditorContainer.module.css';
-
+import { Iframe } from '@/feature/editor/component/extensions/IframeExtension';
 
 export default function EditorContainer({ placeholder, text, setText }) {
   const [isInTable, setIsInTable] = useState(false);
@@ -39,6 +39,7 @@ export default function EditorContainer({ placeholder, text, setText }) {
       Table.configure({
         resizable: true,
       }),
+      Iframe,
       TableRow,
       TableHeader,
       TableCell,

@@ -14,6 +14,7 @@ import {
   FaQuoteRight,
   FaLink,
   FaTable,
+  FaYoutube
 } from 'react-icons/fa';
 import { ChromePicker } from 'react-color';
 import styles from './FixedMenuEditor.module.css';
@@ -251,6 +252,37 @@ export default function FixedMenuEditor({ editor }) {
         }
       >
         <FaTable />
+      </button>
+
+      <button
+        type="button"
+        onClick={() => {
+          const url = window.prompt('iframe URL 입력');
+          if (!url) return;
+
+          let formattedUrl = url;
+
+          // 유튜브 링크 자동 embed 변환
+          const youtubeMatch = url.match(
+            /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/
+          );
+
+          if (youtubeMatch) {
+            const videoId = youtubeMatch[1];
+            formattedUrl = `https://www.youtube.com/embed/${videoId}`;
+          }
+
+          editor
+            .chain()
+            .focus()
+            .insertContent({
+              type: 'iframe',
+              attrs: { src: formattedUrl },
+            })
+            .run();
+        }}
+      >
+        <FaYoutube />
       </button>
 
       <div className={styles.divider} />
