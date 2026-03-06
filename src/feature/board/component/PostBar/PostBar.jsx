@@ -2,6 +2,7 @@ import { Badge, Icon } from '@/shared/component';
 import { ROLE } from '@/shared/constant';
 import { DateTime } from '@/shared/lib';
 import { Chip } from '@/feature/board/component';
+import { htmlToText } from '@/feature/editor/lib';
 import altImage from '@/assets/images/altImage.png';
 import cloudLogo from '@/assets/images/cloudLogo.svg';
 
@@ -41,12 +42,9 @@ export default function PostBar({ data, hasComment = true, hasLike = true }) {
           </div>
           <div className={styles.postBarCenter}>
             <p className={styles.title}>{data.title}</p>
-            <div
-              className={styles.text}
-              dangerouslySetInnerHTML={{
-                __html: data.questionDetail ?? data.content,
-              }}
-            />
+            <div className={styles.text}>
+              {data.questionDetail ?? htmlToText(data.content)}
+            </div>
           </div>
         </div>
 
