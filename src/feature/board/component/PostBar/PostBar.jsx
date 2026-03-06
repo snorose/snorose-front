@@ -54,12 +54,9 @@ export default function PostBar({
           </div>
           <div className={styles.postBarCenter}>
             <p className={styles.title}>{data.title}</p>
-            <div
-              className={styles.text}
-              dangerouslySetInnerHTML={{
-                __html: data.questionDetail ?? data.content,
-              }}
-            />
+            <div className={styles.text}>
+              {data.questionDetail ?? htmlToText(data.content)}
+            </div>
           </div>
         </div>
 
