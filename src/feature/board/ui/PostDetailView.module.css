@@ -104,6 +104,42 @@
   list-style-type: disc;
 }
 
+.contentText h1 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.contentText h2 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.contentText h3 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.contentText h4 {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.contentText h5 {
+  font-size: 0.6rem;
+  font-weight: bold;
+}
+
+.contentText h6 {
+  font-size: 0.5rem;
+  font-weight: bold;
+}
+
+.contentText blockquote {
+  border-left: 4px solid var(--grey-3);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--grey-3-1);
+}
 
 .sponsorBannerWrapper {
   margin: 0.2rem 0 1.7rem;
