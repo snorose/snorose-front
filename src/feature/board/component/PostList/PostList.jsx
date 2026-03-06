@@ -73,7 +73,11 @@ export default function PostList() {
               }
               ref={index === postList.length - 1 ? ref : undefined}
             >
-              <PostBar {...post} />
+              <PostBar {...post}>
+                {post.boardName && (
+                  <PostBar.Chip name={post.boardName} variant='grey' />
+                )}
+              </PostBar>
             </Link>
           ))}
           {isFetching && <FetchLoading />}
@@ -144,7 +148,11 @@ export function NewPostList() {
               }
               ref={index === postList.length - 1 ? ref : undefined}
             >
-              <PostBar {...post} />
+              <PostBar {...post}>
+                {post.boardName && (
+                  <PostBar.Chip name={post.boardName} variant='grey' />
+                )}
+              </PostBar>
             </Link>
           ))}
           {isFetching && <FetchLoading />}
