@@ -11,6 +11,10 @@ import {
   FaListOl,
   FaPalette,
   FaFillDrip,
+  FaQuoteRight,
+  FaLink,
+  FaTable,
+  FaYoutube
 } from 'react-icons/fa';
 import { ChromePicker } from 'react-color';
 import styles from './FixedMenuEditor.module.css';
@@ -195,6 +199,90 @@ export default function FixedMenuEditor({ editor }) {
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
       >
         <FaListOl />
+      </button>
+      
+      <button
+        type="button"
+        aria-label='인용구'
+        onClick={() => editor.chain().focus().toggleBlockquote().run()}
+      >
+        <FaQuoteRight />
+      </button>
+
+      <button
+        type="button"
+        aria-label="링크 삽입"
+        onClick={() => {
+          const url = window.prompt('링크 주소를 입력하세요');
+          if (!url) return;
+
+          // https 프로토콜 자동 추가
+          const protocolRegex = /^(https?:\/\/)/i;
+          const formattedUrl = protocolRegex.test(url) ? url : `https://${url}`;
+
+          if (editor.state.selection.empty) {
+            // 선택 영역이 없으면 새 텍스트로 삽입
+            editor
+              .chain()
+              .focus()
+              .insertContent({
+                type: 'text',
+                text: formattedUrl,
+                marks: [{ type: 'link', attrs: { href: formattedUrl } }],
+              })
+              .run();
+          } else {
+            // 선택 영역이 있으면 기존 텍스트에 링크 적용
+            editor.chain().focus().extendMarkRange('link').setLink({ href: formattedUrl }).run();
+          }
+        }}
+      >
+        <FaLink />
+      </button>
+
+      <button
+        type="button"
+        aria-label="표 삽입"
+        onClick={() =>
+          editor
+            ?.chain()
+            .focus()
+            .insertTable({ rows: 3, cols: 3, withHeaderRow: false })
+            .run()
+        }
+      >
+        <FaTable />
+      </button>
+
+      <button
+        type="button"
+        onClick={() => {
+          const url = window.prompt('iframe URL 입력');
+          if (!url) return;
+
+          let formattedUrl = url;
+
+          // 유튜브 링크 자동 embed 변환
+          const youtubeMatch = url.match(
+            /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/
+          );
+
+          if (youtubeMatch) {
+            const videoId = youtubeMatch[1];
+            formattedUrl = `https://www.youtube.com/embed/${videoId}`;
+          }
+
+          editor
+            .chain()
+            .focus()
+            .insertContent({
+              type: 'iframe',
+              attrs: { src: formattedUrl },
+            })
+            .run();
+        }}
+      >
+        <FaYoutube />
       </button>
 
       <div className={styles.divider} />

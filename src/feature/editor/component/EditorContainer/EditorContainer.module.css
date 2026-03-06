@@ -1,0 +1,33 @@
+.tableControls {
+  margin-top: 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 2rem 2rem;
+  border-radius: 2.5rem;
+  background: var(--white);
+  border: 1px solid var(--grey-1-1);
+}
+
+.tableControls button {
+  padding: 6px 14px;
+  font-size: 14px;
+  border-radius: 20px;
+  border: 1px solid var(--grey-3);
+  background: var(--white);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tableControls button:hover {
+  background: var(--grey-2);
+}
+
+.tableControls .deleteButton {
+  border-color: var(--pink-2);
+  color: var(--pink-3);
+}
+
+.tableControls .deleteButton:hover {
+  background: #fee2e2;
+}

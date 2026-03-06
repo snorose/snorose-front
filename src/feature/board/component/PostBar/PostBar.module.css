@@ -84,6 +84,12 @@
   overflow-wrap: break-word;
 }
 
+.text blockquote {
+  margin: 0;
+  padding: 0;
+  border-left: none;
+}
+
 .thumbnail {
   width: 7.4rem;
   display: flex;

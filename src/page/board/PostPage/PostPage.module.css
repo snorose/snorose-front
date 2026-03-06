@@ -108,6 +108,31 @@
   list-style-type: disc;
 }
 
+.contentText blockquote {
+  border-left: 4px solid var(--grey-3);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--grey-3-1);
+}
+
+/* ===== table (상세보기용) ===== */
+
+.contentText table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  table-layout: fixed;
+}
+
+.contentText th,
+.contentText td {
+  border: 0.05rem solid rgba(var(--grey-3-1-rgb), 0.4);
+  padding: 0.6rem 0.8rem;
+  font: var(--text-body-1-reg);
+  color: var(--grey-4);
+  word-break: break-word;
+}
+
 /* action */
 .actionContainer {
   height: 5.7rem;
