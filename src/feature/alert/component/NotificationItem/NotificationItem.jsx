@@ -1,3 +1,5 @@
+import { Chip } from '@/shared/component';
+
 import style from './NotificationItem.module.css';
 
 export default function NotificationItem({
@@ -19,7 +21,7 @@ export default function NotificationItem({
       <div className={style.top}>
         <div>
           <div className={style.title}>{title}</div>
-          <Chip category={category} />
+          <Chip name={category} variant='gradient' />
         </div>
         <div className={style.createdAt}>{createdAt}</div>
       </div>
@@ -31,8 +33,4 @@ export default function NotificationItem({
       </div>
     </div>
   );
-}
-
-function Chip({ category }) {
-  return <div className={style.category}>{category}</div>;
 }

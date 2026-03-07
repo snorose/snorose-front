@@ -87,6 +87,8 @@
   --text-body-2-med: 500 1.3rem/1.4 'Spoqa Han Sans Neo';
   --text-body-2-reg: 400 1.3rem/1.4 'Spoqa Han Sans Neo';
 
+  --text-caption-1-reg: 400 1.1rem/1.4 'Spoqa Han Sans Neo';
+
   /* z-index */
   --z-index-pull-to-refresh: 100;
   --z-index-mypage-background: 100;

@@ -32,7 +32,9 @@ export default function HomeBesookt({ className }) {
             to={`/board/${board.key}/post/${besookt.postId}`}
             // to={NEW_ROUTES.post.detail(board.key, besookt.postId)}
           >
-            <PostBar data={besookt} />
+            <PostBar {...besookt}>
+              <PostBar.Chip name={besookt.boardName} variant='grey' />
+            </PostBar>
           </Link>
         );
       })}
