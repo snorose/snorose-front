@@ -136,9 +136,29 @@
 
 /* sponsor banner */
 
-.sponsorBanner {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.sponsorBannerWrapper {
   margin: 0.2rem 0 1.7rem;
+  width: 100%;
+  height: auto;
+}
+
+.sponsorBanner {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+/* 모바일: 특정 높이에서 사이드 크롭이 필요한 경우만 */
+@media (max-width: 768px) {
+  .sponsorBannerWrapper {
+    height: 8rem;
+    overflow: hidden;
+  }
+
+  .sponsorBanner {
+    height: 100%;
+    object-position: center;
+  }
 }

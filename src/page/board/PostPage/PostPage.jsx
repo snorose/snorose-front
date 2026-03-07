@@ -168,11 +168,13 @@ export default function PostPage() {
           />
         )}
 
-        <img
-          src={sponsorBanner}
-          alt='스노로즈 후원하기'
-          className={styles.sponsorBanner}
-        />
+        <div className={styles.sponsorBannerWrapper}>
+          <img
+            src={sponsorBanner}
+            alt='스노로즈 후원하기'
+            className={styles.sponsorBanner}
+          />
+        </div>
 
         <ActionContainer
           isNotice={data.isNotice}
