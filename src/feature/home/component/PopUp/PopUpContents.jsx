@@ -27,11 +27,6 @@ const POPUP_CONTENTS = [
     description: null,
     link: [
       {
-        title: '스노로즈 회계 장부 (Google Sheets)',
-        url: 'https://docs.google.com/spreadsheets/d/1MzXAHemKqPwVj3PzPJch5cR5z49gFtzABPgJ_FVjCXM',
-        isExternal: true,
-      },
-      {
         title: '스노로즈 새내기 안내서 링크 (노션)',
         url: 'https://snorose.notion.site/1957ef0aa3bf80a68ce3fe67f7a7e230',
         isExternal: true,
