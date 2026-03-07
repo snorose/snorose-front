@@ -40,7 +40,7 @@ const POPUP_CONTENTS = [
     link: [
       {
         title: '이벤트 신청 링크 (스노로즈 공지)',
-        url: 'https://www.snorose.com/board/notice/post/1874011',
+        url: '/board/notice/post/1874011',
       },
     ],
     startDate: '2026-02-28',
