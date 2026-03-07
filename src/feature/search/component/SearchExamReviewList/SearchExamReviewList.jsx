@@ -41,7 +41,7 @@ export default function SearchExamReviewList() {
             key={post.postId}
             to={`/board/exam-review/post/${post.postId}`}
           >
-            <PostBar {...post}>
+            <PostBar {...post} content={post.questionDetail}>
               {post.isConfirmed && <PostBar.ConfirmedIcon />}
             </PostBar>
           </Link>

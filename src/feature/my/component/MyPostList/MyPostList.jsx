@@ -93,7 +93,7 @@ export default function MyPostList({
           ref={index === list.length - 1 ? ref : undefined}
           to={makePath({ ...post })}
         >
-          <PostBar {...post}>
+          <PostBar {...post} content={post.questionDetail ?? post.content}>
             {post.boardName && (
               <PostBar.Chip name={post.boardName} variant='grey' />
             )}
