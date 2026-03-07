@@ -24,12 +24,12 @@ import {
 } from '@/page/account';
 import { AlertPage, AlertSettingPage, MarketingTermsPage } from '@/page/alert';
 import {
-  BoardCategoryPage,
   EditPostPage,
   NewEditPostPage,
   NewNoticeListPage,
   NewPostPage,
   NewWritePostPage,
+  NewBoardCategoryPage,
   NoticeListPage,
   PostPage,
   WritePostPage,
@@ -115,7 +115,7 @@ export const routeList = [
         path: '/board',
         element: (
           <NavbarLayout>
-            <BoardCategoryPage />
+            <NewBoardCategoryPage />
           </NavbarLayout>
         ),
       },

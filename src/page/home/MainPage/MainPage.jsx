@@ -1,8 +1,10 @@
-import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import { Footer, Header } from '@/shared/component';
+import { NEW_ROUTES } from '@/shared/constant';
+
 import {
   Carousel,
   CarouselErrorFallback,
@@ -56,10 +58,10 @@ export default function MainPage() {
         )}
       </QueryErrorResetBoundary>
 
-      <ListHeader to='/board' title='게시판' />
+      <ListHeader to={NEW_ROUTES.boardHome} title='게시판' />
       <HomeCommunity />
 
-      <ListHeader to='/board/besookt' title='베숙트' />
+      <ListHeader to={NEW_ROUTES.post.list('besookt')} title='베숙트' />
       <QueryErrorResetBoundary>
         {({ reset }) => (
           <ErrorBoundary
