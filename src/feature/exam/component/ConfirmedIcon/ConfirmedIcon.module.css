@@ -29,6 +29,7 @@
   bottom: calc(100% + 0.6rem);
   left: 50%;
   transform: translateX(-50%);
+  z-index: var(--z-index-tooltip);
 
   padding: 0.5rem 0.7rem 0.3rem;
   white-space: nowrap;
