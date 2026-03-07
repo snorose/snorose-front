@@ -65,7 +65,7 @@ function Meta({ userRoleId, userDisplay, createdAt, isEdited, children }) {
   return (
     <div className={styles.meta}>
       <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
-      <div>{userDisplay}</div>
+      <div className={styles.userDisplay}>{userDisplay}</div>
       {showBadge && <Badge className={styles.badge} userRoleId={userRoleId} />}
       <div className={styles.dot}>·</div>
       <div>{DateTime.formatAdaptive(createdAt)}</div>
