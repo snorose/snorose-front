@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
  * @typedef {Object} PopupLink
  * @property {string} title - 링크 텍스트
  * @property {string} url - 링크 URL
+ * @property {boolean} [isExternal=false] - 외부 링크 여부 (true면 새 탭, false면 SPA 내부 이동)
  */
 
 /**
@@ -26,8 +27,14 @@ const POPUP_CONTENTS = [
     description: null,
     link: [
       {
+        title: '스노로즈 회계 장부 (Google Sheets)',
+        url: 'https://docs.google.com/spreadsheets/d/1MzXAHemKqPwVj3PzPJch5cR5z49gFtzABPgJ_FVjCXM',
+        isExternal: true,
+      },
+      {
         title: '스노로즈 새내기 안내서 링크 (노션)',
         url: 'https://snorose.notion.site/1957ef0aa3bf80a68ce3fe67f7a7e230',
+        isExternal: true,
       },
     ],
     startDate: '2026-02-28',
@@ -41,6 +48,7 @@ const POPUP_CONTENTS = [
       {
         title: '이벤트 신청 링크 (스노로즈 공지)',
         url: '/board/notice/post/1874011',
+        isExternal: false,
       },
     ],
     startDate: '2026-02-28',
@@ -119,7 +127,17 @@ export const PopUpContents = ({ filteredContents }) => {
                   key={link.title}
                   className={`${styles.popupSectionListItem} ${styles.popupSectionLink}`}
                 >
-                  <Link to={link.url}>{link.title}</Link>
+                  {link.isExternal ? (
+                    <a
+                      href={link.url}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      {link.title}
+                    </a>
+                  ) : (
+                    <Link to={link.url}>{link.title}</Link>
+                  )}
                 </li>
               ))}
             </ul>
