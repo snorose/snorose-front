@@ -2,6 +2,8 @@ import { Badge, Chip, Icon } from '@/shared/component';
 import { DateTime } from '@/shared/lib';
 import { ROLE } from '@/shared/constant';
 
+import { ConfirmedIcon } from '@/feature/exam/component';
+
 import altImage from '@/assets/images/altImage.png';
 import cloudLogo from '@/assets/images/cloudLogo.svg';
 
@@ -140,20 +142,6 @@ function ActionContainer({
           </div>
         );
       })}
-    </div>
-  );
-}
-
-function ConfirmedIcon() {
-  return (
-    <div className={styles.confirmIconContainer}>
-      <Icon
-        className={styles.confirmIcon}
-        id='check-circle'
-        width={12}
-        height={12}
-      />
-      <span className={styles.tooltip}>리자 인증 완료</span>
     </div>
   );
 }
