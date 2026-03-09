@@ -54,6 +54,7 @@ export { default as ShimmerEffect } from './suspense/ShimmerEffect/ShimmerEffect
 // etc
 export { default as Badge } from './Badge/Badge';
 export { default as CategoryFieldset } from './CategoryFieldset/CategoryFieldset';
+export { default as Chip } from './Chip/Chip';
 export { default as Icon } from './Icon/Icon';
 export { default as List } from './List/List';
 export { default as MenuIcon } from './MenuIcon/MenuIcon';

@@ -26,6 +26,10 @@
   cursor: pointer;
 }
 
+.to {
+  width: 100%;
+}
+
 .writeButton {
   bottom: 1.9rem;
 }

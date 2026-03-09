@@ -67,20 +67,3 @@
   text-overflow: clip;
   word-break: break-word;
 }
-
-/* chip */
-
-.category {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  height: 2rem;
-  padding: 0.1rem 0.4rem;
-
-  border-radius: 0.5rem;
-  background: var(--gradient-2);
-
-  font: var(--text-body-2-reg);
-  color: var(--blue-4);
-}

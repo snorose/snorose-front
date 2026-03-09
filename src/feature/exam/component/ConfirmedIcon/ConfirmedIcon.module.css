@@ -1,0 +1,58 @@
+.container {
+  position: relative;
+
+  width: 1.2rem;
+  height: 1.2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+
+  cursor: default;
+
+  &:hover {
+    background-color: var(--grey-3);
+  }
+
+  &:hover .tooltip {
+    opacity: 1;
+  }
+}
+
+.confirmIcon {
+  flex-shrink: 0;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 0.6rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-index-tooltip);
+
+  padding: 0.5rem 0.7rem 0.3rem;
+  white-space: nowrap;
+  border-radius: 0.5rem;
+
+  background-color: var(--grey-4);
+  color: var(--white);
+  font: var(--text-caption-1-reg);
+
+  opacity: 0;
+  transition: opacity 150ms ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -0.4rem) rotate(45deg);
+
+    width: 0.8rem;
+    height: 0.8rem;
+    border-bottom-right-radius: 0.2rem;
+
+    background-color: var(--grey-4);
+  }
+}
