@@ -58,9 +58,7 @@ export default function PostList() {
 
   return (
     <div>
-      <PullToRefresh
-        onRefresh={() => refetch().then(() => console.log('Refreshed!'))}
-      >
+      <PullToRefresh onRefresh={refetch}>
         <List>
           {postList.map((post, index) => (
             <Link
@@ -130,9 +128,7 @@ export function NewPostList() {
 
   return (
     <div>
-      <PullToRefresh
-        onRefresh={() => refetch().then(() => console.log('Refreshed!'))}
-      >
+      <PullToRefresh onRefresh={refetch}>
         <List>
           {postList.map((post, index) => (
             <Link

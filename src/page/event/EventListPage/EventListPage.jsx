@@ -136,9 +136,7 @@ function PostList({ currentBoardTextId, currentBoard, activeProgress }) {
 
   return (
     <div>
-      <PullToRefresh
-        onRefresh={() => refetch().then(() => console.log('Refreshed!'))}
-      >
+      <PullToRefresh onRefresh={refetch}>
         <List>
           {postList.map((post, index) => (
             <Link

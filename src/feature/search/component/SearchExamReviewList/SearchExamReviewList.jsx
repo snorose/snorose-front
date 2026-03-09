@@ -30,9 +30,7 @@ export default function SearchExamReviewList() {
   const examList = deduplicatePaginatedData(flatPaginationCache(data));
 
   return (
-    <PullToRefresh
-      onRefresh={() => refetch().then(() => console.log('Refreshed!'))}
-    >
+    <PullToRefresh onRefresh={refetch}>
       <List className={styles.examReviewList}>
         {examList.map((post, index) => (
           <Link
