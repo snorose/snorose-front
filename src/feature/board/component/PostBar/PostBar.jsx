@@ -128,7 +128,7 @@ function ActionContainer({
         if (count <= 0) return null;
 
         return (
-          <div className={styles.action}>
+          <div key={iconId} className={styles.action}>
             <Icon
               id={iconId}
               width={width}
