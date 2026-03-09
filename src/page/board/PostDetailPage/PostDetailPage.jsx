@@ -51,21 +51,21 @@ function PostDetailLoader() {
     <PostDetailView
       data={data}
       deletePost={handleDelete}
-      PostActionBar={(props) => (
+      PostActionBar={
         <PostActionBar>
-          <PostActionBar.Comment {...props} />
-          <PostActionBar.Like {...props} />
-          <PostActionBar.Scrap {...props} />
+          <PostActionBar.Comment {...data} />
+          <PostActionBar.Like postId={postId} {...data} />
+          <PostActionBar.Scrap {...data} />
         </PostActionBar>
-      )}
+      }
       CommentSection={CommentSection}
-      BellIcon={(isActive) => (
+      BellIcon={
         <BellIcon
           boardId={currentBoard.id}
           postId={postId}
-          isActive={isActive}
+          isActive={data.isCommentAlertConsent}
         />
-      )}
+      }
     />
   );
 }

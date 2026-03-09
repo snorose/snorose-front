@@ -85,7 +85,7 @@ export default function PostDetailView({
           />
         </div>
 
-        <PostActionBar {...data} />
+        {PostActionBar}
       </div>
 
       <CommentSection
@@ -105,7 +105,6 @@ function MetaContainer({
   isEdited,
   isNotice,
   isWriter,
-  isCommentAlertConsent,
   BellIcon = null,
 }) {
   const { setModal } = useContext(ModalContext);
@@ -141,7 +140,7 @@ function MetaContainer({
       </div>
 
       <div className={styles.actions}>
-        {showBellIcon && BellIcon(isCommentAlertConsent)}
+        {showBellIcon && BellIcon}
 
         {showMeatBallIcon && (
           <div className={styles.meatBall} onClick={onMenuOpen}>

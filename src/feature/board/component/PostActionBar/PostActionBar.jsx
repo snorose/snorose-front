@@ -11,13 +11,13 @@ export default function PostActionBar({ children }) {
   return <div className={styles.container}>{children}</div>;
 }
 
-function CommentActionButton({ isNotice, commentCount }) {
+export function CommentActionButton({ isNotice, commentCount }) {
   const { inputFocus, focusedItem } = useCommentContext();
 
   return (
     <div
       className={styles.count}
-      styles={{
+      style={{
         display: isNotice ? 'none' : 'flex',
         backgroundColor:
           focusedItem === 'post' ? 'var(--blue-1)' : 'transparent',
@@ -28,7 +28,7 @@ function CommentActionButton({ isNotice, commentCount }) {
         id='comment-stroke'
         width={18}
         height={15}
-        styles={{
+        style={{
           paddingTop: '0.1rem',
         }}
         stroke='var(--blue-3)'
