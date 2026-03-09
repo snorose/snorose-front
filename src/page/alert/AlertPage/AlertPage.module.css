@@ -1,5 +1,5 @@
 .container {
-  height: 100%;
+  min-height: 100%;
   padding: 7rem 0 9rem 0;
 
   display: flex;
