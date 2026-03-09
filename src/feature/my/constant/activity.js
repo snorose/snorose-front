@@ -4,6 +4,7 @@ import {
   getMyPosts,
   getMyComments,
   getDownloadedExamReviews,
+  getMyInquiriesAndReports,
   getScrapedExamReviews,
   getScrapedPosts,
 } from '@/apis/userInfo.js';
@@ -33,6 +34,15 @@ export const ACTIVITIES = [
     hasLike: false,
     errorMessage: '아직 다운받은 후기가 없어요',
     emptyStateIllustration: 'noScrapedPostsIllustration',
+  },
+  {
+    path: ROUTE.mypageInquiryReport,
+    title: '내가 작성한 문의 및 신고',
+    queryKey: QUERY_KEY.myInquiriesAndReports,
+    queryFn: getMyInquiriesAndReports,
+    hasLike: false,
+    errorMessage: '아직 작성한 문의 및 신고가 없어요',
+    emptyStateIllustration: 'noPostsIllustration',
   },
   {
     path: ROUTE.mypageExamReviewScrap,
