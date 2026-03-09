@@ -83,26 +83,14 @@ export const SIDEBAR_MENUS = Object.freeze([
     to: '/board/exam-review',
     title: '시험후기',
   },
-  // 추후 "문의" 게시판 완성 전 ver
   {
-    to: '/support/faq',
-    title: '자주 묻는 질문',
+    title: '문의 및 신고',
+    to: '/my-page/inquiry-report',
+    items: [
+      { name: '문의하기', to: '/inquiry/write' },
+      { name: '자주 묻는 질문', to: '/support/faq' },
+    ],
   },
-  // 추후 "문의" 게시판 완성 후 ver
-  // {
-  //   to: '/support',
-  //   title: '문의',
-  //   items: [
-  //     {
-  //       to: '/support/inquiry',
-  //       name: '문의하기',
-  //     },
-  //     {
-  //       to: '/support/faq',
-  //       name: '자주 묻는 질문',
-  //     },
-  //   ],
-  // },
   {
     to: '/',
     title: '숙명여대',
@@ -122,74 +110,57 @@ export const SIDEBAR_MENUS = Object.freeze([
  */
 export const NEW_SIDEBAR_MENUS = Object.freeze([
   {
-    to: NEW_ROUTES.root,
     title: '스노로즈',
+    to: NEW_ROUTES.root,
     items: [
-      { to: NEW_ROUTES.about, name: 'About 스노로즈' },
-      { to: NEW_ROUTES.globalNotice.list, name: '공지사항' },
+      { name: 'About 스노로즈', to: NEW_ROUTES.about },
+      { name: '공지사항', to: NEW_ROUTES.globalNotice.list },
       {
-        to: 'https://snorose.notion.site/1a37ef0aa3bf8071bcd0cb35c035636e?pvs=4',
         name: '스노로즈 블로그',
+        to: 'https://snorose.notion.site/1a37ef0aa3bf8071bcd0cb35c035636e?pvs=4',
       },
     ],
   },
+  { title: '이벤트', to: NEW_ROUTES.post.list('event') },
+  { title: '인증', to: NEW_ROUTES.verify },
   {
-    to: NEW_ROUTES.post.list('event'),
-    title: '이벤트',
-  },
-  {
-    to: NEW_ROUTES.verify,
-    title: '인증',
-  },
-  {
-    to: NEW_ROUTES.boardHome,
     title: '커뮤니티',
-    items: BOARD_REGISTRY.communities.map(({ key, name }) => ({
-      to: NEW_ROUTES.post.list(key),
-      name,
-    })),
-  },
-  {
     to: NEW_ROUTES.boardHome,
-    title: '공식 게시판',
-    items: BOARD_REGISTRY.officials.map(({ key, name }) => ({
-      to: NEW_ROUTES.post.list(key),
+    items: BOARD_REGISTRY.communities.map(({ key, name }) => ({
       name,
+      to: NEW_ROUTES.post.list(key),
     })),
   },
   {
-    to: NEW_ROUTES.post.list('exam-review'),
+    title: '공식 게시판',
+    to: NEW_ROUTES.boardHome,
+    items: BOARD_REGISTRY.officials.map(({ key, name }) => ({
+      name,
+      to: NEW_ROUTES.post.list(key),
+    })),
+  },
+  {
     title: BOARD_REGISTRY.find('exam-review').name,
+    to: NEW_ROUTES.post.list('exam-review'),
   },
   {
-    to: NEW_ROUTES.faq,
-    title: '자주 묻는 질문',
+    title: '문의 및 신고',
+    to: NEW_ROUTES.inquiryReport,
+    items: [
+      { name: '문의하기', to: NEW_ROUTES.inquiryWrite },
+      { name: '자주 묻는 질문', to: NEW_ROUTES.faq },
+    ],
   },
-  // 추후 "문의" 게시판 완성 후 ver
-  // {
-  //   to: '/support',
-  //   title: '문의',
-  //   items: [
-  //     {
-  //       to: '/support/inquiry',
-  //       name: '문의하기',
-  //     },
-  //     {
-  //       to: '/support/faq',
-  //       name: '자주 묻는 질문',
-  //     },
-  //   ],
-  // },
   {
-    to: NEW_ROUTES.root,
     title: '숙명여대',
+    to: NEW_ROUTES.root,
     items: [
       {
-        to: 'https://www.sookmyung.ac.kr/kr/index.do',
         name: '숙명여대 홈페이지',
+        to: 'https://www.sookmyung.ac.kr/kr/index.do',
       },
-      { to: 'https://portal.sookmyung.ac.kr/irj/portal', name: '숙명포털' },
-      { to: 'https://snowe.sookmyung.ac.kr/bbs5/index', name: '스노위' },
+      { name: '숙명포털', to: 'https://portal.sookmyung.ac.kr/irj/portal' },
+      { name: '스노위', to: 'https://snowe.sookmyung.ac.kr/bbs5/index' },
     ],
   },
 ]);
