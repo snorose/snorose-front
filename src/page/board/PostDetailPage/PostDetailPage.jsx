@@ -45,7 +45,7 @@ import { useScrap } from '@/feature/scrap/hook';
 import cloudLogo from '@/assets/images/cloudLogo.svg';
 import sponsorBanner from '@/assets/banners/sponsorBanner.png';
 
-import styles from './PostPage.module.css';
+import styles from './PostDetailPage.module.css';
 
 export default function PostPage() {
   const { postId } = useParams();
