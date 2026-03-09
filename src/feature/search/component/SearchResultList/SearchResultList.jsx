@@ -22,9 +22,7 @@ export default function SearchResultList() {
   const postList = deduplicatePaginatedData(flatPaginationCache(data));
 
   return (
-    <PullToRefresh
-      onRefresh={() => refetch().then(() => console.log('Refreshed!'))}
-    >
+    <PullToRefresh onRefresh={refetch}>
       <List>
         {postList.map((post, index) => (
           <Link
@@ -70,9 +68,7 @@ function NewSearchResultList({ boardId }) {
   const postList = deduplicatePaginatedData(flatPaginationCache(data));
 
   return (
-    <PullToRefresh
-      onRefresh={() => refetch().then(() => console.log('Refreshed!'))}
-    >
+    <PullToRefresh onRefresh={refetch}>
       <List>
         {postList.map((post, index) => (
           <Link
