@@ -25,16 +25,13 @@ import sponsorBanner from '@/assets/banners/sponsorBanner.png';
 import styles from './PostDetailView.module.css';
 
 export default function PostDetailView({
-  usePageData,
-  useDeletePost,
+  data,
+  deletePost,
   PostActionBar,
   CommentSection,
   BellIcon,
 }) {
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
-  const { modal, setModal } = useContext(ModalContext);
-  const { data } = usePageData();
-  const { handleReport } = useReportHandler(modal, setModal, data);
 
   if (!data) {
     return (
@@ -96,7 +93,7 @@ export default function PostDetailView({
         commentCount={data.commentCount}
       />
 
-      <MoreModal useDeletePost={useDeletePost} handleReport={handleReport} />
+      <MoreModal deletePost={deletePost} data={data} />
     </div>
   );
 }
@@ -156,15 +153,16 @@ function MetaContainer({
   );
 }
 
-function MoreModal({ useDeletePost, handleReport }) {
+function MoreModal({ deletePost, data }) {
   const navigate = useNavigate();
 
   const { modal, setModal } = useContext(ModalContext);
-  const { handleDelete } = useDeletePost();
   const { toast } = useToast();
 
   // 페이지 언마운트 시 모달 상태 초기화
   useModalReset();
+
+  const { handleReport } = useReportHandler(modal, setModal, data);
 
   const handleEdit = () => {
     setModal({ id: null, type: null });
@@ -185,7 +183,7 @@ function MoreModal({ useDeletePost, handleReport }) {
     <PostModalRenderer
       modal={modal}
       handleEdit={handleEdit}
-      handleDelete={handleDelete}
+      handleDelete={deletePost}
       handleShare={handleShare}
       handleReport={handleReport}
     />
