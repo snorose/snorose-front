@@ -1,3 +1,4 @@
+export { default as InquiryDetailPage } from './InquiryDetailPage';
 export { default as WriteInquiryPage } from './WriteInquiryPage/WriteInquiryPage';
 export { default as EditInquiryPage } from './EditInquiryPage/EditInquiryPage';
 

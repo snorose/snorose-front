@@ -51,6 +51,7 @@ import {
   WriteReportPage,
   EditReportPage,
   FAQPage,
+  InquiryDetailPage,
 } from '@/page/support';
 import {
   ActivityPage,
@@ -470,7 +471,7 @@ export const routeList = [
             path: ':inquiryId',
             element: (
               <ProtectedRoute>
-                <PostDetailPage />
+                <InquiryDetailPage />
               </ProtectedRoute>
             ),
           },
