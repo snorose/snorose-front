@@ -31,6 +31,12 @@
   color: var(--grey-4);
 }
 
+.userDisplay {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .dot {
   padding: 0;
 
