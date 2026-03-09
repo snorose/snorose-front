@@ -22,6 +22,10 @@ const ActivityTab = () => {
             link: 'download-exam-review',
           },
           {
+            label: '내 문의 및 신고 모아보기',
+            link: 'inquiry-report',
+          },
+          {
             label: '스크랩한 시험 후기 모아보기',
             link: 'scrap-exam-review',
           },

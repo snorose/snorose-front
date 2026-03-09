@@ -41,8 +41,11 @@ export default function EditReportPage() {
 
   const reportType = REPORT_TYPE_MAP[post.reportType];
 
-  const [selectedOption, setSelectedOption] = useState<Option | undefined>(() =>
-    REPORT_OPTIONS[reportType].find((option) => option.key === post.category)
+  const [selectedOption, setSelectedOption] = useState<Option | undefined>(
+    () => {
+      const options = (REPORT_OPTIONS[reportType] ?? []) as readonly Option[];
+      return options.find((option) => option.key === post.category);
+    }
   );
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
