@@ -89,7 +89,7 @@ export default function MyPostList({
             isNotice: post.isNotice,
           })}
         >
-          <PostBar {...post}>
+          <PostBar {...post} content={post.questionDetail ?? post.content}>
             {post.boardName && (
               <PostBar.Chip name={post.boardName} variant='grey' />
             )}
