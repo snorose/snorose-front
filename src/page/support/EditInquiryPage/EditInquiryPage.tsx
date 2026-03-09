@@ -25,7 +25,7 @@ export default function EditInquiryPage() {
 
   const { userInfo } = useAuth();
 
-  const [selectedOption, setSelectedOption] = useState(() =>
+  const [selectedOption, setSelectedOption] = useState<Option | undefined>(() =>
     INQUIRY_OPTIONS.find((option) => option.key === post.category)
   );
   const [title, setTitle] = useState(post.title);

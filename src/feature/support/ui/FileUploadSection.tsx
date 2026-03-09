@@ -26,13 +26,7 @@ export default function FileUploadSection({
       />
 
       <div className={styles.left}>
-        <Icon
-          id='clip-board-list'
-          fill={'#bfd7ec'}
-          stroke={'#5f86bf'}
-          width={24}
-          height={24}
-        />
+        <Icon id='clip-board-list' width={24} height={24} />
         <div>첨부파일</div>
       </div>
 

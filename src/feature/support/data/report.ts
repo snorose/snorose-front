@@ -1,3 +1,5 @@
+import { Option } from '@/types';
+
 const post = [
   { key: 'POST_INSULT_OR_DEFAMATION', label: '특정인에 대한 욕설 및 비하' },
   { key: 'POST_COMMERCIAL_ADVERTISEMENT', label: '상업적 광고 및 판매글' },
@@ -34,14 +36,9 @@ const user = [
   { key: 'USER_ETC', label: '기타' },
 ] as const;
 
-type ReportOption = {
-  readonly key: string;
-  readonly label: string;
-};
-
 export const REPORT_OPTIONS = {
   post,
   exam,
   comment,
   user,
-} satisfies Record<string, readonly ReportOption[]>;
+} satisfies Record<string, readonly Readonly<Option>[]>;
