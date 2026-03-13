@@ -15,6 +15,7 @@ import {
   FaLink,
   FaTable,
   FaYoutube,
+  FaImage,
 } from 'react-icons/fa';
 import { ChromePicker } from 'react-color';
 import styles from './FixedMenuEditor.module.css';
@@ -390,7 +391,7 @@ export default function FixedMenuEditor({ editor }) {
         <FaYoutube />
       </button>
 
-      {/*  
+      
       <button
         onClick={() => {
             const input = document.createElement('input');
@@ -418,7 +419,7 @@ export default function FixedMenuEditor({ editor }) {
         >
         <FaImage />
       </button>
-      */}
+
       {/*
       <div className={styles.divider} />
       <button onClick={() => console.log('주석 기능 구현 필요')}><FaCommentDots /></button> */}

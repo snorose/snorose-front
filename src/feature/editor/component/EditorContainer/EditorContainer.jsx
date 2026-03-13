@@ -19,6 +19,7 @@ import { TableHeader } from '@tiptap/extension-table';
 import FixedMenuEditor from '../FixedMenuEditor/FixedMenuEditor';
 import styles from './EditorContainer.module.css';
 import { Iframe } from '@/feature/editor/component/extensions/IframeExtension';
+import Image from '@tiptap/extension-image';
 
 const FontSize = Extension.create({
   name: 'fontSize',
@@ -53,6 +54,7 @@ export default function EditorContainer({ placeholder, text, setText }) {
         link: false,
         blockquote: false,
       }),
+      Image,
       Link.configure({
         openOnClick: false,
       }),
