@@ -44,8 +44,6 @@ function InquiryDetailLoader() {
       PostActionBar={
         <PostActionBar>
           <PostActionBar.Comment {...data} />
-          <PostActionBar.Like postId={postId} {...data} />
-          <PostActionBar.Scrap {...data} />
         </PostActionBar>
       }
       CommentInputContainer={CommentInputContainer}
