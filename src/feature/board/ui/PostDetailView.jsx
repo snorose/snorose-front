@@ -45,6 +45,9 @@ export default function PostDetailView({
     );
   }
 
+  const isViewCountVisible =
+    data.viewCount !== null && data.viewCount !== undefined;
+
   return (
     <div>
       {clickedImageIndex === 0 ? (
@@ -62,7 +65,7 @@ export default function PostDetailView({
 
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>{data.title}</h1>
-          {data.viewCount && (
+          {isViewCountVisible && (
             <span className={styles.views}>
               &nbsp;&nbsp;{data.viewCount.toLocaleString()} views
             </span>
