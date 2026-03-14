@@ -29,6 +29,7 @@ export default function PostDetailView({
   deletePost,
   PostActionBar,
   CommentInputContainer,
+  Chip,
   BellIcon,
 }) {
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
@@ -57,7 +58,7 @@ export default function PostDetailView({
       )}
 
       <div className={styles.blueContainer}>
-        <MetaContainer {...data} BellIcon={BellIcon} />
+        <MetaContainer {...data} Chip={Chip} BellIcon={BellIcon} />
 
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>{data.title}</h1>
@@ -105,6 +106,7 @@ function MetaContainer({
   isEdited,
   isNotice,
   isWriter,
+  Chip = null,
   BellIcon = null,
 }) {
   const { setModal } = useContext(ModalContext);
@@ -137,6 +139,7 @@ function MetaContainer({
           {DateTime.format(createdAt, 'YMD_HM')}
           {isEdited && ' (수정됨)'}
         </p>
+        {Chip}
       </div>
 
       <div className={styles.actions}>

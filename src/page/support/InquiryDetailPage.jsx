@@ -5,9 +5,10 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { fetchInquiry } from '@/feature/support/api';
 
-import { BackAppBar, FetchLoading } from '@/shared/component';
+import { BackAppBar, Chip, FetchLoading } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
 
+import { INQUIRY_STATUS_MAP } from '@/feature/support/constant';
 import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { PostDetailView } from '@/feature/board/ui';
 import { PostActionBar } from '@/feature/board/component';
@@ -48,6 +49,9 @@ function InquiryDetailLoader() {
         </PostActionBar>
       }
       CommentInputContainer={CommentInputContainer}
+      Chip={
+        <Chip name={INQUIRY_STATUS_MAP[data.status].label} variant='gradient' />
+      }
     />
   );
 }
