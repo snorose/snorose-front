@@ -77,11 +77,7 @@ export function useReportHandler(modal, setModal, data) {
   };
 
   const handleUserReport = async () => {
-<<<<<<< HEAD
     if (!modal.type || submitDisabledRef.current || !data?.encryptedUserId)
-=======
-    if (!modal.type || !data?.encryptedUserId || submitDisabledRef.current)
->>>>>>> 67817b76 ([MODIFY] #1439 회원 신고 훅 내 변수 이름을 encryptedUserId로 변경)
       return;
     submitDisabledRef.current = true;
     try {
