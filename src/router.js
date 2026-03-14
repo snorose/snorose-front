@@ -21,8 +21,8 @@ import {
   BoardCategoryPage,
   EditPostPage,
   NoticeListPage,
+  PostDetailPage,
   PostListPage,
-  PostPage,
   WritePostPage,
 } from '@/page/board';
 import { NotFoundPage } from '@/page/etc';
@@ -159,7 +159,7 @@ const boardRoutes = boardPaths.flatMap((boardPath) => [
         roles={getRolesForReadBoard(boardPath)}
         message={'게시글 접근 권한이 없어요'}
       >
-        <PostPage />
+        <PostDetailPage />
       </ProtectedRoute>
     ),
   },
@@ -263,7 +263,7 @@ export const routeList = [
             roles={[ROLE.user, ROLE.admin, ROLE.advertiser]}
             message={'공지글 접근 권한이 없어요'}
           >
-            <PostPage />
+            <PostDetailPage />
           </ProtectedRoute>
         ),
       },
@@ -368,7 +368,7 @@ export const routeList = [
             roles={[ROLE.user, ROLE.admin]}
             message={'공지글 접근 권한이 없어요'}
           >
-            <PostPage />
+            <PostDetailPage />
           </ProtectedRoute>
         ),
       },
@@ -470,7 +470,7 @@ export const routeList = [
             path: ':inquiryId',
             element: (
               <ProtectedRoute>
-                <PostPage />
+                <PostDetailPage />
               </ProtectedRoute>
             ),
           },
@@ -507,7 +507,7 @@ export const routeList = [
             path: ':reportId',
             element: (
               <ProtectedRoute>
-                <PostPage />
+                <PostDetailPage />
               </ProtectedRoute>
             ),
           },
