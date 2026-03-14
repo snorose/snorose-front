@@ -1,8 +1,8 @@
 import { CommentInput, CommentListSuspense } from '@/feature/comment/component';
 
-import styles from './CommentSection.module.css';
+import styles from './CommentInputContainer.module.css';
 
-export default function CommentSection({ isNotice, commentCount }) {
+export default function CommentInputContainer({ isNotice, commentCount }) {
   return (
     <>
       {isNotice ? (

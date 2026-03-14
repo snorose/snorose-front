@@ -12,7 +12,7 @@ import { QUERY_KEY } from '@/shared/constant';
 import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { PostDetailView } from '@/feature/board/ui';
 import { PostActionBar } from '@/feature/board/component';
-import { CommentSection } from '@/feature/comment/component';
+import { CommentInputContainer } from '@/feature/comment/component';
 import { BellIcon } from '@/feature/alert/component';
 
 import { NotFoundPage } from '@/page/etc';
@@ -58,7 +58,7 @@ function PostDetailLoader() {
           <PostActionBar.Scrap {...data} />
         </PostActionBar>
       }
-      CommentSection={CommentSection}
+      CommentInputContainer={CommentInputContainer}
       BellIcon={
         <BellIcon
           boardId={currentBoard.id}

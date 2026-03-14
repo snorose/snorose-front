@@ -28,7 +28,7 @@ export default function PostDetailView({
   data,
   deletePost,
   PostActionBar,
-  CommentSection,
+  CommentInputContainer,
   BellIcon,
 }) {
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
@@ -88,7 +88,7 @@ export default function PostDetailView({
         {PostActionBar}
       </div>
 
-      <CommentSection
+      <CommentInputContainer
         isNotice={data.isNotice}
         commentCount={data.commentCount}
       />
