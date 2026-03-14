@@ -26,11 +26,11 @@ export default function InquiryDetailPage() {
 }
 
 function InquiryDetailLoader() {
-  const { inquiryId } = useParams();
+  const { postId } = useParams();
 
   const { data } = useSuspenseQuery({
-    queryKey: QUERY_KEY.post(inquiryId),
-    queryFn: () => fetchInquiry(inquiryId),
+    queryKey: QUERY_KEY.post(postId),
+    queryFn: () => fetchInquiry(postId),
     staleTime: 1000 * 60 * 5,
   });
 
@@ -43,7 +43,7 @@ function InquiryDetailLoader() {
       PostActionBar={
         <PostActionBar>
           <PostActionBar.Comment {...data} />
-          <PostActionBar.Like postId={inquiryId} {...data} />
+          <PostActionBar.Like postId={postId} {...data} />
           <PostActionBar.Scrap {...data} />
         </PostActionBar>
       }

@@ -468,7 +468,7 @@ export const routeList = [
             ),
           },
           {
-            path: ':inquiryId',
+            path: ':postId',
             element: (
               <ProtectedRoute>
                 <InquiryDetailPage />
@@ -476,7 +476,7 @@ export const routeList = [
             ),
           },
           {
-            path: ':inquiryId/edit',
+            path: ':postId/edit',
             element: (
               <ProtectedRoute>
                 <EditInquiryPage />
