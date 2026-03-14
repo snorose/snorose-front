@@ -61,7 +61,7 @@ export const getMyInquiriesAndReports = async (params = {}) => {
     hasNext: true,
     data: [
       {
-        postId: 11,
+        postId: 1724829,
         boardId: 13,
         title: '시험후기 신고합니다',
         userDisplay: '정회원test',
