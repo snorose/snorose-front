@@ -43,7 +43,7 @@ export default function EditReportPage() {
 
   const [selectedOption, setSelectedOption] = useState<Option | undefined>(
     () => {
-      const options = (REPORT_OPTIONS[reportType] ?? []) as readonly Option[];
+      const options = REPORT_OPTIONS[reportType] as readonly Option[];
       return options.find((option) => option.key === post.category);
     }
   );
