@@ -12,6 +12,8 @@ export { default as PostListSuspense } from './PostList/PostListSuspense';
 
 export { default as PostModalRenderer } from './PostModalRenderer/PostModalRenderer';
 
+export { default as MeatBallIcon } from './MeatBallIcon/MeatBallIcon';
+
 export * from './BoardBar/BoardBar';
 export * from './PostList/PostList';
 export * from './PostModalRenderer/PostModalRenderer';
