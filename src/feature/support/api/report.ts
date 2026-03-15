@@ -7,7 +7,7 @@ export const fetchReport = async (reportId) => {
 
   return {
     postId: 15,
-    userRoleId: 4,
+    userRoleId: 2,
     isWriter: false,
     userId: '629j3YCdF2F+NPCBzMf0Rg==',
     userDisplay: '눈송',
