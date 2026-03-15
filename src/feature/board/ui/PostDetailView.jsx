@@ -8,7 +8,6 @@ import {
   BackAppBar,
   Badge,
   FetchLoading,
-  Icon,
 } from '@/shared/component';
 import { DateTime, renderTextWithLinks } from '@/shared/lib';
 import { ROLE } from '@/shared/constant';
