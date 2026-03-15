@@ -66,7 +66,7 @@ export default function PostDetailView({
           <h1 className={styles.title}>{data.title}</h1>
           {isViewCountVisible && (
             <span className={styles.views}>
-              &nbsp;&nbsp;{data.viewCount.toLocaleString()} views
+              {data.viewCount.toLocaleString()} views
             </span>
           )}
         </div>
