@@ -30,7 +30,7 @@ export default function PostDetailView({
   PostActionBar,
   CommentInputContainer,
   Chip,
-  BellIcon,
+  Actions,
 }) {
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
 
@@ -45,9 +45,6 @@ export default function PostDetailView({
     );
   }
 
-  const isViewCountVisible =
-    data.viewCount !== null && data.viewCount !== undefined;
-
   return (
     <div>
       {clickedImageIndex === 0 ? (
@@ -61,11 +58,11 @@ export default function PostDetailView({
       )}
 
       <div className={styles.blueContainer}>
-        <MetaContainer {...data} Chip={Chip} BellIcon={BellIcon} />
+        <MetaContainer {...data} Chip={Chip} Actions={Actions} />
 
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>{data.title}</h1>
-          {isViewCountVisible && (
+          {data.viewCount && (
             <span className={styles.views}>
               &nbsp;&nbsp;{data.viewCount.toLocaleString()} views
             </span>
@@ -112,24 +109,11 @@ function MetaContainer({
   isNotice,
   isWriter,
   Chip = null,
-  BellIcon = null,
+  Actions = null,
 }) {
-  const { setModal } = useContext(ModalContext);
-
-  const onMenuOpen = () => {
-    const id = isWriter ? 'my-post-more-options' : 'post-more-options';
-
-    setModal({
-      id,
-      type: null,
-    });
-  };
-
   const showBadge =
     userRoleId === ROLE.official ||
     (userRoleId === ROLE.admin && userDisplay !== '익명송이');
-  const showBellIcon = !isNotice && isWriter && BellIcon;
-  const showMeatBallIcon = !isNotice || isWriter;
 
   return (
     <div className={styles.metaContainer}>
@@ -147,15 +131,7 @@ function MetaContainer({
         {Chip}
       </div>
 
-      <div className={styles.actions}>
-        {showBellIcon && BellIcon}
-
-        {showMeatBallIcon && (
-          <div className={styles.meatBall} onClick={onMenuOpen}>
-            <Icon id='meat-ball' width={18} height={4} stroke='none' />
-          </div>
-        )}
-      </div>
+      {Actions && <div className={styles.actions}>{Actions}</div>}
     </div>
   );
 }
