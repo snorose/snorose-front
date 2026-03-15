@@ -45,8 +45,8 @@ function PostDetailLoader() {
   });
 
   const { handleDelete } = useDeletePostHandler(
-    currentBoard.id,
-    currentBoard.textId
+    currentBoard?.id,
+    currentBoard?.textId
   );
 
   const onMenuOpen = () => {
