@@ -6,10 +6,10 @@ import styles from './NoticeBar.module.css';
 export default function NoticeBar({ data, onClick }) {
   const formattedDate = DateTime.format(data.createdAt, 'YMD');
   const plainText = data.content
-  ?.replace(/<br\s*\/?>/gi, ' ')   // 줄바꿈 → 공백
-  ?.replace(/<\/p>/gi, ' ')        // p 끝 → 공백
-  ?.replace(/<[^>]+>/g, '')        // 나머지 태그 제거
-  ?? '';
+  ?.replace(/<br\s*\/?>|<\/p>|&nbsp;/gi, ' ') // 줄바꿈, p 끝, &nbsp; → 공백
+  ?.replace(/<[^>]+>/g, '')                  // 나머지 HTML 태그 제거
+  ?.replace(/\s+/g, ' ')                     // 연속 공백 → 하나로
+  ?.trim() ?? '';                             // 앞뒤 공백 제거
 
   return (
     <div className={styles.post} onClick={onClick}>
