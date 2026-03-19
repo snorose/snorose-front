@@ -5,6 +5,7 @@ import styles from './NoticeBar.module.css';
 
 export default function NoticeBar({ data, onClick }) {
   const formattedDate = DateTime.format(data.createdAt, 'YMD');
+  const plainText = data.content?.replace(/<[^>]+>/g, '') ?? '';
 
   return (
     <div className={styles.post} onClick={onClick}>
@@ -12,7 +13,7 @@ export default function NoticeBar({ data, onClick }) {
         <p className={styles.title}>{data.title}</p>
       </div>
       <div className={styles.post_center}>
-        <p className={styles.text}>{data.content}</p>
+        <p className={styles.text}>{plainText}</p>
       </div>
       <div className={styles.postBottom}>
         <span>{formattedDate}</span>
