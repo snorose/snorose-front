@@ -100,6 +100,7 @@ export default function EditEventPage() {
     mutationFn: patchEvent,
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY.post(postId));
+      setIsBlock(false);
       navigate(-1);
       toast({ message: TOAST.POST.edit, variant: 'success' });
       setSubmitDisabled(false);
