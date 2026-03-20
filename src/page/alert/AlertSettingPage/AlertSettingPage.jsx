@@ -142,7 +142,7 @@ function NotificationSettings() {
             try {
               await setupNotifications();
             } catch (error) {
-              if (!(error instanceof AppError)) {
+              if (!(error instanceof AppError) && !error.code) {
                 return;
               }
 
