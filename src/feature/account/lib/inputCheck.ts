@@ -66,8 +66,10 @@ export function validatePassword(value: string): ValidationResult {
   return 'error';
 }
 
-export function validateCheckedPassword(inputs: string[]): ValidationResult {
-  const [checkedPassword, password] = inputs;
+export function validateCheckedPassword(
+  password: string,
+  checkedPassword: string
+): ValidationResult {
   if (checkedPassword === '') return 'default';
   return password === checkedPassword ? 'valid' : 'error';
 }

@@ -84,13 +84,14 @@ export default function AccountInfoStep({ formData, setFormData, setStage }) {
       label: '비밀번호 확인',
       id: 'checkedPassword',
       placeholder: '비밀번호를 다시 입력해 주세요',
-      value: [formData.checkedPassword, formData.password],
+      value: formData.checkedPassword,
       onChange: (next) =>
         setFormData((prev) => ({
           ...prev,
           checkedPassword: next,
         })),
-      validate: validateCheckedPassword,
+      validate: (checkedPassword) =>
+        validateCheckedPassword(formData.password, checkedPassword),
       message: '비밀번호가 일치하지 않아요',
     },
   ];
