@@ -38,7 +38,7 @@ export const validateOnSubmit = (data) => {
   }
 
   // 연계링크 검증
-  if (!isUrlValid(data.link)) {
+  if (data.link && !isUrlValid(data.link)) {
     errors.link = '유효한 링크를 넣어주세요';
   }
 
@@ -48,8 +48,8 @@ export const validateOnSubmit = (data) => {
 export const validateRequiredFields = (formType, data, errors) => {
   const required =
     formType === 'etc'
-      ? ['title', 'host', 'content', 'link']
-      : ['title', 'host', 'place', 'content', 'link'];
+      ? ['title', 'host', 'content']
+      : ['title', 'host', 'place', 'content'];
   const isFilled = required.every((field) => data[field]?.trim());
   const hasErrors = Object.keys(errors).length > 0;
 

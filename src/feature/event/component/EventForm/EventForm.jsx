@@ -135,7 +135,7 @@ export default function EventForm({
       </div>
 
       <div className={styles.section}>
-        <RequriedLabel>연계 링크</RequriedLabel>
+        <p>연계 링크</p>
         <TextField
           label='연계 링크'
           name='link'
