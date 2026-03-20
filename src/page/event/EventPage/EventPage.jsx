@@ -216,6 +216,20 @@ export default function EventPage() {
             <p className={styles.data}>{data.drawCount}</p>
           </div>
 
+          {!data.startAt && !data.endAt && !data.announceAt && (
+            <div className={styles.applicationDate}>
+              <Icon
+                id='calendar-stroke'
+                width={20}
+                height={20}
+                fill='none'
+                stroke='#484848'
+              />
+              <p>응모 날짜</p>
+              <p className={styles.data}>상시 진행</p>
+            </div>
+          )}
+
           {(data.startAt != null || data.endAt != null) && (
             <div className={styles.applicationDate}>
               <Icon
@@ -270,37 +284,41 @@ export default function EventPage() {
 
           {/* <div className={styles.iamges}></div> */}
 
-          {beforeOpen && (
-            <PrimaryButton className={styles.button} disabled>
-              응모 시작 전이에요
-            </PrimaryButton>
-          )}
-
-          {opened && (
+          {!!data.link && (
             <>
-              <PrimaryButton
-                className={styles.button}
-                onClick={() => setOpen(true)}
-              >
-                신청하기
-              </PrimaryButton>
+              {beforeOpen && (
+                <PrimaryButton className={styles.button} disabled>
+                  응모 시작 전이에요
+                </PrimaryButton>
+              )}
 
-              {open && (
-                <GuideModal
-                  boardName='event'
-                  options={EVENT_GUIDE_MODAL_OPTIONS}
-                  onConfirm={handleApplyClick}
-                  onClose={() => setOpen(false)}
-                  onIsLast='신청하기'
-                />
+              {opened && (
+                <>
+                  <PrimaryButton
+                    className={styles.button}
+                    onClick={() => setOpen(true)}
+                  >
+                    신청하기
+                  </PrimaryButton>
+
+                  {open && (
+                    <GuideModal
+                      boardName='event'
+                      options={EVENT_GUIDE_MODAL_OPTIONS}
+                      onConfirm={handleApplyClick}
+                      onClose={() => setOpen(false)}
+                      onIsLast='신청하기'
+                    />
+                  )}
+                </>
+              )}
+
+              {closed && (
+                <PrimaryButton className={styles.button} disabled>
+                  응모 마감
+                </PrimaryButton>
               )}
             </>
-          )}
-
-          {closed && (
-            <PrimaryButton className={styles.button} disabled>
-              응모 마감
-            </PrimaryButton>
           )}
         </div>
 
