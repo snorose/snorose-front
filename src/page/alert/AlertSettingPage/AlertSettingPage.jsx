@@ -152,7 +152,7 @@ function NotificationSettings() {
                 }
 
                 default: {
-                  toast(error.message);
+                  toast({ message: error.message, variant: 'info' });
                   return;
                 }
               }
