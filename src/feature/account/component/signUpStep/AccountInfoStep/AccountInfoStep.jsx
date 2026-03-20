@@ -13,17 +13,13 @@ import {
   validateSookmyungEmail,
   validateId,
   validatePassword,
+  validateCheckedPassword,
 } from '@/feature/account/lib';
 
 import styles from './AccountInfoStep.module.css';
 
 export default function AccountInfoStep({ formData, setFormData, setStage }) {
   const { toast } = useToast();
-
-  const validateCheckedPassword = () => {
-    if (formData.checkedPassword === '') return 'default';
-    return formData.password === formData.checkedPassword ? 'valid' : 'error';
-  };
 
   const inputList = [
     {
@@ -88,7 +84,7 @@ export default function AccountInfoStep({ formData, setFormData, setStage }) {
       label: '비밀번호 확인',
       id: 'checkedPassword',
       placeholder: '비밀번호를 다시 입력해 주세요',
-      value: formData.checkedPassword,
+      value: [formData.checkedPassword, formData.password],
       onChange: (next) =>
         setFormData((prev) => ({
           ...prev,
