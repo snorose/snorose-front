@@ -23,7 +23,7 @@ const PRESET_COLORS = [
   { label: '기본', value: 'var(--grey-4)' },
   { label: '회색', value: 'var(--grey-3-1)' },
   { label: '하늘', value: 'var(--blue-3)' },
-  { label: '파랑', value: 'var(--blue-4' },
+  { label: '파랑', value: 'var(--blue-4)' },
   { label: '강조', value: 'var(--pink-3)' },
   { label: '속닥', value: 'var(--blue-2)' },
 ];
