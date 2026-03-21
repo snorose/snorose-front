@@ -184,3 +184,37 @@
   cursor: pointer;
   font-size: 0.875rem;
 }
+
+.colorPalette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 10px;
+  justify-content: flex-start;
+  background-color: var(--white);
+}
+
+.colorSwatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: transform 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.colorSwatch:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.popupDivider {
+  height: 1px;
+  background-color: #e2e8f0;
+  margin: 8px 0;
+  width: 100%;
+}
