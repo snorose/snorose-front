@@ -1,10 +1,11 @@
 import { Icon } from '@/shared/component';
 import { DateTime } from '@/shared/lib';
-
+import { htmlToText } from '@/feature/editor/lib';
 import styles from './NoticeBar.module.css';
 
 export default function NoticeBar({ data, onClick }) {
   const formattedDate = DateTime.format(data.createdAt, 'YMD');
+  const plainText = htmlToText(data.content);
 
   return (
     <div className={styles.post} onClick={onClick}>
@@ -12,7 +13,7 @@ export default function NoticeBar({ data, onClick }) {
         <p className={styles.title}>{data.title}</p>
       </div>
       <div className={styles.post_center}>
-        <p className={styles.text}>{data.content}</p>
+        <p className={styles.text}>{plainText}</p>
       </div>
       <div className={styles.postBottom}>
         <span>{formattedDate}</span>
