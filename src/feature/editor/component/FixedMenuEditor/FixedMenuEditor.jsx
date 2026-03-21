@@ -19,6 +19,21 @@ import {
 import { ChromePicker } from 'react-color';
 import styles from './FixedMenuEditor.module.css';
 
+const PRESET_COLORS = [
+  { label: '기본', value: 'var(--grey-4)' },
+  { label: '회색', value: 'var(--grey-3-1)' },
+  { label: '하늘', value: 'var(--blue-3)' },
+  { label: '파랑', value: 'var(--blue-4' },
+  { label: '강조', value: 'var(--pink-3)' },
+  { label: '속닥', value: 'var(--blue-2)' },
+];
+
+const PRESET_BG_COLORS = [
+  { label: '기본(투명)', value: null }, // 배경색 초기화용
+  { label: '핑크', value: 'var(--pink-2)' },
+  { label: '연두', value: 'var(--green-2)' },
+];
+
 export default function FixedMenuEditor({ editor }) {
   const [textColor, setTextColor] = useState('#000000');
   const [bgColor, setBgColor] = useState('#ffffff');
@@ -79,36 +94,28 @@ export default function FixedMenuEditor({ editor }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // 에디터가 아직 준비되지 않았다면 렌더링 안 함
   if (!editor) return null;
 
-  // 1. 에디터에 적용된 현재 폰트 사이즈 가져오기
   const currentEditorFontSize =
     editor.getAttributes('textStyle')?.fontSize?.replace('px', '') || '';
 
-  // 2. 입력창 포커스 여부에 따라 보여줄 값 결정 (입력 중이면 내 타이핑, 아니면 에디터 값)
   const displayFontSize = isSizeInputFocused
     ? fontSizeInput
     : currentEditorFontSize;
 
-  // 3. 엔터 키를 눌렀을 때만 폰트 크기 적용하는 함수
   const handleFontSizeKeyDown = (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); // 폼 제출 등 기본 동작 방지
-
+      e.preventDefault();
       const val = fontSizeInput.trim();
       if (val && !isNaN(val)) {
-        // 숫자가 입력되었으면 적용하고 에디터로 포커스 돌려줌
         editor
           .chain()
           .focus()
           .setMark('textStyle', { fontSize: `${val}px` })
           .run();
       } else {
-        // 비워두고 엔터치면 폰트 사이즈 초기화
         editor.chain().focus().setMark('textStyle', { fontSize: null }).run();
       }
-      // 입력 완료 후 포커스 상태 해제
       setIsSizeInputFocused(false);
       e.target.blur();
     }
@@ -147,6 +154,24 @@ export default function FixedMenuEditor({ editor }) {
         </button>
         {showTextColor && (
           <div className={styles.colorPickerPopup}>
+            <div className={styles.colorPalette}>
+              {PRESET_COLORS.map((color) => (
+                <button
+                  key={color.label}
+                  className={styles.colorSwatch}
+                  style={{ backgroundColor: color.value }}
+                  title={color.label}
+                  onClick={() => {
+                    setTextColor(color.value);
+                    editor
+                      .chain()
+                      .focus()
+                      .setMark('textStyle', { color: color.value })
+                      .run();
+                  }}
+                />
+              ))}
+            </div>
             <ChromePicker
               color={textColor}
               onChange={(color) => {
@@ -162,14 +187,46 @@ export default function FixedMenuEditor({ editor }) {
           </div>
         )}
       </div>
-
-      {/* 배경색 팔레트 */}
       <div ref={bgColorRef} className={styles.bgColorWrapper}>
         <button onClick={() => setShowBgColor((prev) => !prev)}>
           <FaFillDrip />
         </button>
         {showBgColor && (
           <div className={styles.bgColorPopup}>
+            <div className={styles.colorPalette}>
+              {PRESET_BG_COLORS.map((color) => (
+                <button
+                  key={color.label}
+                  className={styles.colorSwatch}
+                  style={{
+                    backgroundColor: color.value || '#ffffff',
+                    border: color.value ? 'none' : '1px solid #e2e8f0',
+                  }}
+                  title={color.label}
+                  onClick={() => {
+                    if (color.value) {
+                      setBgColor(color.value);
+                      editor
+                        .chain()
+                        .focus()
+                        .setMark('textStyle', { backgroundColor: color.value })
+                        .run();
+                    } else {
+                      setBgColor('#ffffff');
+                      editor
+                        .chain()
+                        .focus()
+                        .setMark('textStyle', { backgroundColor: null })
+                        .run();
+                    }
+                  }}
+                >
+                  {!color.value && (
+                    <span style={{ fontSize: '10px' }}>지움</span>
+                  )}
+                </button>
+              ))}
+            </div>
             <ChromePicker
               color={bgColor}
               onChange={(color) => {
@@ -255,15 +312,11 @@ export default function FixedMenuEditor({ editor }) {
           className={styles.fontSizeInput}
           onFocus={() => {
             setIsSizeInputFocused(true);
-            setFontSizeInput(currentEditorFontSize); // 포커스 시 현재 크기로 세팅
+            setFontSizeInput(currentEditorFontSize);
           }}
-          onBlur={() => {
-            setIsSizeInputFocused(false); // 포커스 잃으면 다시 에디터 값으로 원복
-          }}
-          onChange={(e) => {
-            setFontSizeInput(e.target.value); // 타이핑할 때는 State만 변경
-          }}
-          onKeyDown={handleFontSizeKeyDown} // 엔터 키 이벤트
+          onBlur={() => setIsSizeInputFocused(false)}
+          onChange={(e) => setFontSizeInput(e.target.value)}
+          onKeyDown={handleFontSizeKeyDown}
         />
         <span className={styles.fontSizeLabel}>px</span>
       </div>
@@ -300,7 +353,6 @@ export default function FixedMenuEditor({ editor }) {
       >
         <FaListOl />
       </button>
-
       <button
         type='button'
         aria-label='인용구'
@@ -315,13 +367,10 @@ export default function FixedMenuEditor({ editor }) {
         onClick={() => {
           const url = window.prompt('링크 주소를 입력하세요');
           if (!url) return;
-
-          // https 프로토콜 자동 추가
           const protocolRegex = /^(https?:\/\/)/i;
           const formattedUrl = protocolRegex.test(url) ? url : `https://${url}`;
 
           if (editor.state.selection.empty) {
-            // 선택 영역이 없으면 새 텍스트로 삽입
             editor
               .chain()
               .focus()
@@ -332,7 +381,6 @@ export default function FixedMenuEditor({ editor }) {
               })
               .run();
           } else {
-            // 선택 영역이 있으면 기존 텍스트에 링크 적용
             editor
               .chain()
               .focus()
@@ -364,64 +412,23 @@ export default function FixedMenuEditor({ editor }) {
         onClick={() => {
           const url = window.prompt('iframe URL 입력');
           if (!url) return;
-
           let formattedUrl = url;
-
-          // 유튜브 링크 자동 embed 변환
           const youtubeMatch = url.match(
             /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/
           );
-
           if (youtubeMatch) {
             const videoId = youtubeMatch[1];
             formattedUrl = `https://www.youtube.com/embed/${videoId}`;
           }
-
           editor
             .chain()
             .focus()
-            .insertContent({
-              type: 'iframe',
-              attrs: { src: formattedUrl },
-            })
+            .insertContent({ type: 'iframe', attrs: { src: formattedUrl } })
             .run();
         }}
       >
         <FaYoutube />
       </button>
-
-      {/*  
-      <button
-        onClick={() => {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = () => {
-            const file = input.files && input.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = () => {
-                const src = reader.result;
-                if (typeof src === 'string') {
-                editor.chain().focus().insertContent({
-                    type: 'image',
-                    attrs: { src }
-                }).run();
-                } else {
-                }
-            };
-            reader.readAsDataURL(file);
-            };
-            input.click();
-        }}
-        >
-        <FaImage />
-      </button>
-      */}
-      {/*
-      <div className={styles.divider} />
-      <button onClick={() => console.log('주석 기능 구현 필요')}><FaCommentDots /></button> */}
     </div>
   );
 }
