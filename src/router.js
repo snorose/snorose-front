@@ -51,6 +51,8 @@ import {
   WriteReportPage,
   EditReportPage,
   FAQPage,
+  InquiryDetailPage,
+  ReportDetailPage,
 } from '@/page/support';
 import {
   ActivityPage,
@@ -467,15 +469,15 @@ export const routeList = [
             ),
           },
           {
-            path: ':inquiryId',
+            path: ':postId',
             element: (
               <ProtectedRoute>
-                <PostDetailPage />
+                <InquiryDetailPage />
               </ProtectedRoute>
             ),
           },
           {
-            path: ':inquiryId/edit',
+            path: ':postId/edit',
             element: (
               <ProtectedRoute>
                 <EditInquiryPage />
@@ -504,15 +506,15 @@ export const routeList = [
             ],
           },
           {
-            path: ':reportId',
+            path: ':postId',
             element: (
               <ProtectedRoute>
-                <PostDetailPage />
+                <ReportDetailPage />
               </ProtectedRoute>
             ),
           },
           {
-            path: ':reportId/edit',
+            path: ':postId/edit',
             element: (
               <ProtectedRoute>
                 <EditReportPage />
