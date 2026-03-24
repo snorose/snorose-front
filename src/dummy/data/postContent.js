@@ -1,6 +1,6 @@
 export const POST_CONTENT = Object.freeze({
   postId: 7,
-  userId: 10,
+  encryptedUserId: 10,
   userDisplay: '송이1',
   category: 'testCategory',
   title: '오이소박이',

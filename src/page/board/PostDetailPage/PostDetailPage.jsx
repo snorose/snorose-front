@@ -32,6 +32,7 @@ export default function PostDetailPage() {
 function PostDetailLoader() {
   const { postId } = useParams();
   const { pathname } = useLocation();
+
   const { setModal } = useContext(ModalContext);
 
   const currentBoard = getBoard(pathname.split('/')[2]);
