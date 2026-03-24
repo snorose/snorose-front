@@ -6,7 +6,6 @@ import {
   BackAppBar,
   Badge,
   FetchLoading,
-  Icon,
 } from '@/shared/component';
 import LinkAlertModal from '@/shared/component/modal/LinkAlertModal/LinkAlertModal';
 import { ROLE, TOAST } from '@/shared/constant';
@@ -35,9 +34,9 @@ export default function PostDetailView({
   deletePost,
   PostActionBar,
   CommentInputContainer,
-  BellIcon,
+  Chip,
+  Actions,
 }) {
-
   const { userInfo } = useAuth();
 
   const [linkModalOpen, setLinkModalOpen] = useState(false);
@@ -102,7 +101,7 @@ export default function PostDetailView({
       )}
 
       <div className={styles.blueContainer}>
-        <MetaContainer {...data} BellIcon={BellIcon} />
+        <MetaContainer {...data} Chip={Chip} Actions={Actions} />
 
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>{data.title}</h1>
@@ -170,24 +169,12 @@ function MetaContainer({
   isEdited,
   isNotice,
   isWriter,
-  BellIcon = null,
+  Chip = null,
+  Actions = null,
 }) {
-  const { setModal } = useContext(ModalContext);
-
-  const onMenuOpen = () => {
-    const id = isWriter ? 'my-post-more-options' : 'post-more-options';
-
-    setModal({
-      id,
-      type: null,
-    });
-  };
-
   const showBadge =
     userRoleId === ROLE.official ||
     (userRoleId === ROLE.admin && userDisplay !== '익명송이');
-  const showBellIcon = !isNotice && isWriter && BellIcon;
-  const showMeatBallIcon = !isNotice || isWriter;
 
   return (
     <div className={styles.metaContainer}>
@@ -202,17 +189,10 @@ function MetaContainer({
           {DateTime.format(createdAt, 'YMD_HM')}
           {isEdited && ' (수정됨)'}
         </p>
+        {Chip}
       </div>
 
-      <div className={styles.actions}>
-        {showBellIcon && BellIcon}
-
-        {showMeatBallIcon && (
-          <div className={styles.meatBall} onClick={onMenuOpen}>
-            <Icon id='meat-ball' width={18} height={4} stroke='none' />
-          </div>
-        )}
-      </div>
+      {Actions && <div className={styles.actions}>{Actions}</div>}
     </div>
   );
 }
