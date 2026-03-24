@@ -24,6 +24,13 @@ const VALID_REPORT_TYPES = ['post', 'comment', 'user', 'exam'] as const;
 
 type ReportType = (typeof VALID_REPORT_TYPES)[number];
 
+const REPORT_TYPE_TAG = {
+  post: '게시글',
+  exam: '시험후기',
+  comment: '댓글',
+  user: '유저',
+} as const;
+
 function isValidReportType(x: any): x is ReportType {
   return VALID_REPORT_TYPES.includes(x);
 }
@@ -63,6 +70,9 @@ export default function WriteReportPage() {
 
       <DropdownBlue className={styles.dropdown}>
         <DropdownBlue.Trigger>
+          <span className={styles.reportType}>
+            [{REPORT_TYPE_TAG[reportType]} 신고]
+          </span>
           {selectedOption?.label ?? placeholder.dropdown}
         </DropdownBlue.Trigger>
 
