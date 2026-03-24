@@ -20,3 +20,8 @@ export const REPORT_PLACEHOLDERS = {
     content: '상세 내용을 입력해주세요',
   },
 } as const;
+
+export const REPORT_STATUS_MAP = {
+  PENDING: { label: '답변 전', variant: 'grey' },
+  COMPLETED: { label: '답변 완료', variant: 'gradient' },
+} as const;
