@@ -5,6 +5,12 @@
   background-color: var(--blue-0);
 }
 
+.reportType {
+  margin-right: 1rem;
+  font: var(--text-body-2-reg);
+  color: var(--grey-3-1);
+}
+
 /* line */
 .dropdown {
   border-bottom: 0.5px solid var(--grey-3-1);
