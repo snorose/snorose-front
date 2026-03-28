@@ -77,11 +77,12 @@ export function useReportHandler(modal, setModal, data) {
   };
 
   const handleUserReport = async () => {
-    if (!modal.type || !data?.userId || submitDisabledRef.current) return;
+    if (!modal.type || submitDisabledRef.current || !data?.encryptedUserId)
+      return;
     submitDisabledRef.current = true;
     try {
       await reportUserMutate({
-        encryptedTargetUserId: data.userId,
+        encryptedUserId: data.encryptedUserId,
         reportType: modal.type,
       });
     } catch (error) {

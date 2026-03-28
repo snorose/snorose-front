@@ -1,0 +1,30 @@
+.container {
+  height: 5.7rem;
+  padding: 0.9rem 0;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 1.6rem;
+  border-top: 0.05rem solid rgba(var(--grey-3-1-rgb), 0.7);
+}
+
+.count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.8rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+
+  p {
+    color: var(--grey-3-1);
+    font: var(--text-body-1-reg);
+  }
+
+  &:hover {
+    background-color: var(--blue-1);
+  }
+}
