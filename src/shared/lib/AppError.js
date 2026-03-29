@@ -5,8 +5,8 @@ export class AppError extends Error {
     this.code = code;
 
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, AppError);
+      Error.captureStackTrace(this, this.constructor);
     }
-    Object.setPrototypeOf(this, AppError.prototype);
+    Object.setPrototypeOf(this, new.target.prototype);
   }
 }
