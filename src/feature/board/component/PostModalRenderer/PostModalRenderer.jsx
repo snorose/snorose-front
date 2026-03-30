@@ -92,7 +92,11 @@ export function NewPostModalRenderer({
               <MoreOptionModal
                 title='게시글'
                 optionList={MORE_OPTION_MODAL_TEXT.POST_MORE_OPTION_LIST}
-                functions={[null, null, handleShare]}
+                functions={[
+                  () => handleReport('post'),
+                  () => handleReport('user'),
+                  handleShare,
+                ]}
               />
             );
           // 내 게시글 더보기 모달 (수정, 삭제, 공유하기)
