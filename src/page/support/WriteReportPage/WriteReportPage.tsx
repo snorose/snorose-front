@@ -10,6 +10,8 @@ import {
   TextareaFieldBlue,
 } from '@/shared/component';
 
+import { NotFoundPage } from '@/page/etc';
+
 import { SubmitButton, FileUploadSection } from '@/feature/support/ui';
 import { REPORT_OPTIONS } from '@/feature/support/data';
 import { REPORT_PLACEHOLDERS } from '@/feature/support/constant';
@@ -37,6 +39,11 @@ export default function WriteReportPage() {
   const [files, setFiles] = useState<File[]>([]);
   const updateOption = (option: Option) => setSelectedOption(option);
   const updateFiles = (files: File[]) => setFiles(files);
+
+  const validReportTypes = Object.keys(REPORT_TYPE_TAG);
+  if (!validReportTypes.includes(targetType)) {
+    return <NotFoundPage />;
+  }
 
   const placeholder = REPORT_PLACEHOLDERS[targetType];
   const options = REPORT_OPTIONS[targetType];
