@@ -23,6 +23,7 @@ import cloudLogo from '@/assets/images/cloudLogo.svg';
 import sponsorBanner from '@/assets/banners/sponsorBanner.png';
 
 import styles from './PostDetailView.module.css';
+import DOMPurify from 'dompurify';
 
 export default function PostDetailView({
   data,
@@ -68,7 +69,9 @@ export default function PostDetailView({
 
         <p
           className={styles.contentText}
-          dangerouslySetInnerHTML={{ __html: data.content }}
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(data.content),
+          }}
         />
 
         {data.attachments.length !== 0 && (
