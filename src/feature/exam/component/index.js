@@ -1,5 +1,6 @@
 export { default as CategoryButton } from './CategoryButton/CategoryButton';
 export { default as CategoryFieldset } from './Fieldset/Fieldset';
+export { default as ConfirmedIcon } from './ConfirmedIcon/ConfirmedIcon';
 export { default as Filter } from './Filter/Filter';
 export { default as FilterList } from './FilterList/FilterList';
 export { default as InputItem } from './InputItem/InputItem';

@@ -22,9 +22,7 @@ export default function SearchResultList() {
   const postList = deduplicatePaginatedData(flatPaginationCache(data));
 
   return (
-    <PullToRefresh
-      onRefresh={() => refetch().then(() => console.log('Refreshed!'))}
-    >
+    <PullToRefresh onRefresh={refetch}>
       <List>
         {postList.map((post, index) => (
           <Link
@@ -33,7 +31,9 @@ export default function SearchResultList() {
             key={post.postId}
             to={`/board/${getBoardTitleToTextId(post.boardName)}/post/${post.postId}`}
           >
-            <PostBar data={post} />
+            <PostBar {...post}>
+              <PostBar.Chip name={post.boardName} variant='grey' />
+            </PostBar>
           </Link>
         ))}
         {isFetching && <FetchLoading />}
@@ -68,9 +68,7 @@ function NewSearchResultList({ boardId }) {
   const postList = deduplicatePaginatedData(flatPaginationCache(data));
 
   return (
-    <PullToRefresh
-      onRefresh={() => refetch().then(() => console.log('Refreshed!'))}
-    >
+    <PullToRefresh onRefresh={refetch}>
       <List>
         {postList.map((post, index) => (
           <Link
@@ -79,7 +77,9 @@ function NewSearchResultList({ boardId }) {
             key={post.postId}
             to={`/board/${getBoardTitleToTextId(post.boardName)}/post/${post.postId}`}
           >
-            <PostBar data={post} />
+            <PostBar {...post}>
+              <PostBar.Chip name={post.boardName} variant='grey' />
+            </PostBar>
           </Link>
         ))}
         {isFetching && <FetchLoading />}

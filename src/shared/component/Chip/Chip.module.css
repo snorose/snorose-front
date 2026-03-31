@@ -1,0 +1,20 @@
+.container {
+  height: 2.2rem;
+  padding: 0 0.4rem;
+
+  display: flex;
+  align-items: center;
+
+  border-radius: 0.5rem;
+  font: var(--text-body-2-reg);
+
+  &.grey {
+    background-color: var(--grey-2);
+    color: var(--grey-3-1);
+  }
+
+  &.gradient {
+    background: var(--gradient-2);
+    color: var(--blue-4);
+  }
+}

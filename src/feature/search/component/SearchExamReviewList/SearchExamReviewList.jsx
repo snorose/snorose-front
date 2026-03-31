@@ -30,9 +30,7 @@ export default function SearchExamReviewList() {
   const examList = deduplicatePaginatedData(flatPaginationCache(data));
 
   return (
-    <PullToRefresh
-      onRefresh={() => refetch().then(() => console.log('Refreshed!'))}
-    >
+    <PullToRefresh onRefresh={refetch}>
       <List className={styles.examReviewList}>
         {examList.map((post, index) => (
           <Link
@@ -41,7 +39,9 @@ export default function SearchExamReviewList() {
             key={post.postId}
             to={`/board/exam-review/post/${post.postId}`}
           >
-            <PostBar data={post} hasLike={false} />
+            <PostBar {...post} content={post.questionDetail}>
+              {post.isConfirmed && <PostBar.ConfirmedIcon />}
+            </PostBar>
           </Link>
         ))}
         {isFetching && <FetchLoading />}

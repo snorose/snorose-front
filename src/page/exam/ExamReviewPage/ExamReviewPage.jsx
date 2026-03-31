@@ -4,6 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getReviewDetail } from '@/apis';
 
+import { ModalContext } from '@/shared/context/ModalContext';
+import { useModalReset } from '@/shared/hook/useBlocker';
 import {
   BackAppBar,
   FetchLoading,
@@ -15,8 +17,9 @@ import { QUERY_KEY } from '@/shared/constant';
 
 import { NotFoundPage } from '@/page/etc';
 
-import { CommentInput, CommentListSuspense } from '@/feature/comment/component';
+import { useDeleteExamReviewHandler } from '@/feature/exam/hook/useDeleteExamReviewHandler';
 import {
+  ConfirmedIcon,
   ExamReviewModalRenderer,
   ReviewContentItem,
   ReviewDownload,
@@ -30,14 +33,12 @@ import {
 } from '@/feature/exam/constant';
 import { useScrap } from '@/feature/scrap/hook';
 import { useReportHandler } from '@/feature/report/hook/useReport';
-import { useDeleteExamReviewHandler } from '@/feature/exam/hook/useDeleteExamReviewHandler';
-
-import styles from './ExamReviewPage.module.css';
-import { ModalContext } from '@/shared/context/ModalContext';
-import { useModalReset } from '@/shared/hook/useBlocker';
+import { useCommentContext } from '@/feature/comment/context';
+import { CommentInput, CommentListSuspense } from '@/feature/comment/component';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
-import { useCommentContext } from '@/feature/comment/context';
+
+import styles from './ExamReviewPage.module.css';
 
 const COURSE_TYPE = convertToObject(LECTURE_TYPES);
 const SEMESTER = convertToObject(SEMESTERS);
@@ -126,7 +127,7 @@ export default function ExamReviewPage() {
             <span className={styles.dot}></span>
             <span>{DateTime.format(createdAt, 'YMD')}</span>
             {isEdited && <span>&nbsp;(수정됨)</span>}
-            {isConfirmed && <Icon id='check-circle' width={15} height={15} />}
+            {isConfirmed && <ConfirmedIcon />}
           </div>
 
           <Icon

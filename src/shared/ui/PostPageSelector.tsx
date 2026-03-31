@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 
 import { ExamReviewPage } from '@/page/exam';
 import { EventPage } from '@/page/event';
-import { PostPage } from '@/page/board';
+import { PostDetailPage } from '@/page/board';
 
 export default function PostPageSelector() {
   const { boardKey } = useParams();
@@ -15,7 +15,7 @@ export default function PostPageSelector() {
       return <EventPage />;
     }
     default: {
-      return <PostPage />;
+      return <PostDetailPage />;
     }
   }
 }
