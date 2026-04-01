@@ -37,6 +37,7 @@
     "axios": "^1.7.2",
     "canvas-confetti": "^1.9.3",
     "date-fns": "^3.6.0",
+    "dompurify": "^3.3.3",
     "file-saver": "^2.0.5",
     "firebase": "^11.9.1",
     "jsconfig-paths-webpack-plugin": "^0.1.3",
