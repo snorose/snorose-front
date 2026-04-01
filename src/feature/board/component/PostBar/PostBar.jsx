@@ -3,7 +3,7 @@ import { DateTime } from '@/shared/lib';
 import { ROLE } from '@/shared/constant';
 
 import { ConfirmedIcon } from '@/feature/exam/component';
-
+import { htmlToText } from '@/feature/editor/lib';
 import altImage from '@/assets/images/altImage.png';
 import cloudLogo from '@/assets/images/cloudLogo.svg';
 
@@ -27,37 +27,20 @@ export default function PostBar({
   children,
 }) {
   return (
-    <div className={styles.post}>
-      <div className={styles.thumbnailContainer}>
-        <div className={styles.postBarLeft}>
-          <div className={styles.postBarTop}>
-            <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
-            <p className={styles.author}>{data.userDisplay}</p>
-            {showBadge && (
-              <Badge userRoleId={data.userRoleId} className={styles.badge} />
-            )}
-            <p className={styles.dot}>·</p>
-            <p>{DateTime.formatAdaptive(data.createdAt)}</p>
-            {data.isEdited && <p className={styles.edited}>&nbsp;(수정됨)</p>}
-            {data.isConfirmed && (
-              <Icon
-                className={styles.checkCircleIcon}
-                id='check-circle'
-                width={12}
-                height={12}
-              />
-            )}
-            {data.boardName && <Chip type={'board'} label={data.boardName} />}
-            {data.progressType && (
-              <Chip type={'event'} label={data.progressType} />
-            )}
-          </div>
-          <div className={styles.postBarCenter}>
-            <p className={styles.title}>{data.title}</p>
-            <div className={styles.text}>
-              {data.questionDetail ?? htmlToText(data.content)}
-            </div>
-          </div>
+    <div className={`${styles.container} ${className}`}>
+      <div className={styles.body}>
+        <div>
+          <Meta
+            userRoleId={userRoleId}
+            userDisplay={userDisplay}
+            createdAt={createdAt}
+            isEdited={isEdited}
+          >
+            {children}
+          </Meta>
+
+          <div className={styles.title}>{title}</div>
+          <div className={styles.content}>{htmlToText(content)}</div>
         </div>
 
         {hasMediaAttachment && <Thumbnail thumbnailUrl={thumbnailUrl} />}
