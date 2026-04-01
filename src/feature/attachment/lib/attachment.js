@@ -123,7 +123,7 @@ export const filterUnusableCharNamedAtts = (atts) => {
   //특수문자 regex
   const specialChars = /[^\p{L}\p{N}_]/u;
   //특수문자 허용범위 regex
-  const allowedSpecialChars = /[~!@$^&()\-_=\\[\]{};',.]/;
+  const allowedSpecialChars = /[ ~!@$^&()\-_=\\[\]{};',.]/;
 
   return atts.filter(
     (att) =>
