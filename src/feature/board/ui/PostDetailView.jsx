@@ -66,9 +66,10 @@ export default function PostDetailView({
           </span>
         </div>
 
-        <p className={styles.contentText}>
-          {renderTextWithLinks(data.content)}
-        </p>
+        <p
+          className={styles.contentText}
+          dangerouslySetInnerHTML={{__html: data.content}}
+        />
 
         {data.attachments.length !== 0 && (
           <AttachmentSwiper

@@ -3,7 +3,7 @@ import { DateTime } from '@/shared/lib';
 import { ROLE } from '@/shared/constant';
 
 import { ConfirmedIcon } from '@/feature/exam/component';
-
+import { htmlToText } from '@/feature/editor/lib';
 import altImage from '@/assets/images/altImage.png';
 import cloudLogo from '@/assets/images/cloudLogo.svg';
 
@@ -40,7 +40,7 @@ export default function PostBar({
           </Meta>
 
           <div className={styles.title}>{title}</div>
-          <div className={styles.content}>{content}</div>
+          <div className={styles.content}>{htmlToText(content)}</div>
         </div>
 
         {hasMediaAttachment && <Thumbnail thumbnailUrl={thumbnailUrl} />}
