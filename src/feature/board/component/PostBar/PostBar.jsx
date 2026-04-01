@@ -8,6 +8,7 @@ import altImage from '@/assets/images/altImage.png';
 import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import styles from './PostBar.module.css';
+import { htmlToText } from '@/feature/editor/lib';
 
 export default function PostBar({
   className,
@@ -40,7 +41,7 @@ export default function PostBar({
           </Meta>
 
           <div className={styles.title}>{title}</div>
-          <div className={styles.content}>{content}</div>
+          <div className={styles.content}>{htmlToText(content)}</div>
         </div>
 
         {hasMediaAttachment && <Thumbnail thumbnailUrl={thumbnailUrl} />}
