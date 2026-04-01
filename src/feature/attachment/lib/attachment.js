@@ -120,17 +120,10 @@ export const checkIfVideo = (newAtts) => {
   }
 };
 export const filterUnusableCharNamedAtts = (atts) => {
-  //특수문자 regex
-  const specialChars = /[^\p{L}\p{N}_]/u;
-  //특수문자 허용범위 regex
-  const allowedSpecialChars = /[ ~!@$^&()\-_=\\[\]{};',.]/;
+  // 허용 문자 regex
+  const allowedChars = /^[\p{L}\p{N} ~!@$^&()\-_=\\[\]{};`',.]+$/u;
 
-  return atts.filter(
-    (att) =>
-      ![...att.name].some(
-        (char) => specialChars.test(char) && !allowedSpecialChars.test(char)
-      )
-  );
+  return atts.filter((att) => allowedChars.test(att.name));
 };
 export const checkIfFilesContainUnusableChar = (atts) => {
   const filteredAtts = filterUnusableCharNamedAtts(atts);
