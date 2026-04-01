@@ -62,10 +62,6 @@ export default function BoardCategoryPage() {
           </div>
         </div>
       </div>
-      <div className={styles.moreBoardBox}>
-        <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
-        <p>스노로즈에서 더 다양한 게시판을 준비하고 있어요</p>
-      </div>
     </div>
   );
 }
