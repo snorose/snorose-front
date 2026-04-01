@@ -1,5 +1,6 @@
 import styles from './PopUpContents.module.css';
 import calendarImage from './calendar.png';
+import eventImage from './event.png';
 import { Link } from 'react-router-dom';
 
 /**
@@ -23,37 +24,39 @@ import { Link } from 'react-router-dom';
 /** @type {PopupContent[]} */
 const POPUP_CONTENTS = [
   {
-    title: '스노로즈 새내기 안내서',
-    description: null,
+    title: "[EVENT] 츄구미 X 스노로즈: 시험기간 '듀잇(Dew-it)' 한정 판매 🍇🍋",
+    description: '"시험기간 간식도 챙기고, 스노로즈에 기부까지 함께해요!"',
+    contentList: ['1세트 구매 시 자동 2000원 기부 + 숙명인 한정 특가'],
     link: [
       {
-        title: '스노로즈 새내기 안내서 링크 (노션)',
-        url: 'https://snorose.notion.site/1957ef0aa3bf80a68ce3fe67f7a7e230',
-        isExternal: true,
-      },
-    ],
-    startDate: '2026-02-28',
-    endDate: '2026-03-15',
-  },
-  {
-    title: '스노로즈 새내기&재학생 이벤트',
-    description:
-      '스노로즈에서 새학기를 맞아 새내기와 재학생을 위한 이벤트를 준비했습니다!\n지금 참여하고 포인트와 기프티콘까지 챙겨가세요!',
-    link: [
-      {
-        title: '이벤트 신청 링크 (스노로즈 공지)',
-        url: '/board/notice/post/1874011',
+        title: '이벤트 관련 링크 (스노로즈 공지)',
+        url: '/board/notice/post/1886676',
         isExternal: false,
       },
     ],
-    startDate: '2026-02-28',
-    endDate: '2026-03-15',
+    image: eventImage,
+    startDate: '2026-04-01',
+    endDate: '2026-04-10',
   },
   {
-    title: '2026년 3월 캘린더',
+    title: '[블로그] 스노로즈 수료식과 발대식 현장 포착 📸',
+    description:
+      '스노로즈의 수료식과 발대식 현장을 담은 블로그가 새롭게 업로드되었습니다.',
+    link: [
+      {
+        title: '블로그 링크 (노션)',
+        url: 'https://snorose.notion.site/3347ef0aa3bf809da325e02adaff3758',
+        isExternal: true,
+      },
+    ],
+    startDate: '2026-04-01',
+    endDate: '2026-04-10',
+  },
+  {
+    title: '[캘린더] 4월 스노로즈 일정',
     image: calendarImage,
-    startDate: '2026-02-28',
-    endDate: '2026-03-15',
+    startDate: '2026-04-01',
+    endDate: '2026-04-10',
   },
 ];
 
