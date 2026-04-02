@@ -378,9 +378,10 @@ export default function WritePostPage() {
               <EditorContainer
                 placeholder='내용'
                 setText={(editor) => {
-                  const htmlContent = editor.getHTML();
-                  setText(htmlContent);
-                }}
+                const htmlContent = editor.getHTML();
+                const sanitized = htmlContent.replace(/<p><\/p>/g, '<p>\u00A0</p>');
+                setText(sanitized);
+              }}
               />
               <AttachmentList
                 attachmentsInfo={attachmentsInfo}

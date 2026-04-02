@@ -69,7 +69,9 @@ export default function PostDetailView({
         <div
           className={styles.contentText}
           dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(data.content),
+            __html: DOMPurify.sanitize(
+              data.content.replace(/<p><\/p>/g, '<p>\u00A0</p>')
+            ),
           }}
         />
 
