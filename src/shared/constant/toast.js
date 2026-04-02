@@ -62,7 +62,9 @@ const TOAST = Object.freeze({
   },
   COPY_AND_PASTE: {
     success: '복사되었어요',
+    linkSuccess: '링크가 복사되었어요',
     fail: '복사에 실패했어요',
+    linkFail: '링크 복사에 실패했어요',
   },
   ATTACHMENT: {
     imageFileSizeError: '파일 크기는 최대 7MB까지 업로드할 수 있어요',
