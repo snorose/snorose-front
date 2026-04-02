@@ -43,7 +43,7 @@ import { useGuide } from '@/feature/attachment/hook';
 import cloudLogo from '@/assets/images/cloudLogo.svg';
 import attachmentGuide1 from '@/assets/images/attachmentGuide1.png';
 import attachmentGuide2 from '@/assets/images/attachmentGuide2.png';
-
+import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
 import styles from './WritePostPage.module.css';
 
 export default function WritePostPage() {
@@ -378,8 +378,7 @@ export default function WritePostPage() {
               <EditorContainer
                 placeholder='내용'
                 setText={(editor) => {
-                const htmlContent = editor.getHTML();
-                const sanitized = htmlContent.replace(/<p><\/p>/g, '<p>\u00A0</p>');
+                const sanitized = preserveEmptyParagraphs(editor.getHTML());
                 setText(sanitized);
               }}
               />
