@@ -1,4 +1,6 @@
-import { FetchLoading, ServerErrorFallback } from '@/shared/component';
+import { ServerErrorFallback } from '@/shared/component';
+
+import styles from './SearchExamReviewList.module.css';
 
 export default function SearchExamReviewListErrorFallback({
   error,
@@ -7,7 +9,7 @@ export default function SearchExamReviewListErrorFallback({
   const { status } = error;
 
   if (status === 404) {
-    return <FetchLoading animation={false}>검색 결과가 없습니다</FetchLoading>;
+    return <p className={styles.emptyContainer}>검색 결과가 없어요</p>;
   }
 
   return <ServerErrorFallback reset={resetErrorBoundary} />;

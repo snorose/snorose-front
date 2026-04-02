@@ -1,3 +1,12 @@
 .to {
   width: 100%;
 }
+
+.emptyContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  color: var(--grey-4);
+  font: var(--text-headline-2-reg);
+}
