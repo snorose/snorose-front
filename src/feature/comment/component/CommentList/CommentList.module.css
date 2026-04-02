@@ -1,15 +1,15 @@
 .comments {
   width: 100%;
   font: var(--text-body-1-reg);
-  padding: 0 var(--default-margin) 10rem;
+  padding: 0 var(--default-margin) 10.4rem;
   display: flex;
   flex-direction: column;
-  row-gap: 1.4rem;
+  row-gap: 0.8rem;
   min-height: 30rem;
 }
 
 .commentsTitle {
-  padding: 1.8rem 0 0.2rem 0;
+  padding: 2rem 0 1.2rem 0;
 }
 
 .failComment {
