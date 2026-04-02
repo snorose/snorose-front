@@ -18,6 +18,7 @@ import {
 } from 'react-icons/fa';
 import { ChromePicker } from 'react-color';
 import styles from './FixedMenuEditor.module.css';
+import { Plugin } from 'prosemirror-state';
 
 const PRESET_COLORS = [
   { label: '기본', value: 'var(--grey-4)' },
@@ -92,7 +93,37 @@ export default function FixedMenuEditor({ editor }) {
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
+    
   }, []);
+
+  useEffect(() => {
+  if (!editor) return;
+
+  const plugin = new Plugin({
+    props: {
+      handleKeyDown(view, event) {
+        if (event.key === 'Enter') {
+          const { state, dispatch } = view;
+          const { $from } = state.selection;
+          const isEmpty = $from.parent.textContent.length === 0;
+
+          if (isEmpty) {
+            // 하나의 트랜잭션에서 처리
+            const tr = state.tr
+              .insertText('\u00A0', $from.pos)
+              .split($from.pos + 1); // \u00A0 삽입 후 그 뒤에서 split
+            dispatch(tr);
+            return true;
+          }
+        }
+        return false;
+      }
+    }
+  });
+
+  editor.registerPlugin(plugin);
+  return () => editor.unregisterPlugin(plugin);
+}, [editor]);
 
   if (!editor) return null;
 
