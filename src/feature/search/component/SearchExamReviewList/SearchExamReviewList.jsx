@@ -24,10 +24,13 @@ export default function SearchExamReviewList() {
         params,
       }),
     staleTime: STALE_TIME.searchList,
-    enabled: paramsLength > 0,
   });
 
   const examList = deduplicatePaginatedData(flatPaginationCache(data));
+
+  if (examList.length === 0 && !isFetching) {
+    throw { status: 404 };
+  }
 
   return (
     <PullToRefresh onRefresh={refetch}>
