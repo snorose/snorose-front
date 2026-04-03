@@ -8,7 +8,6 @@ import { BoardBar, NewBoardBar } from '@/feature/board/component';
 import { Search } from '@/feature/search/component';
 
 import { BOARD_IMAGES } from '@/assets/map/board-assets';
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import styles from './BoardCategoryPage.module.css';
 
@@ -117,10 +116,6 @@ export function NewBoardCategoryPage() {
         ))}
       </div>
 
-      <div className={styles.moreBoardBox}>
-        <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
-        <p>스노로즈에서 더 다양한 게시판을 준비하고 있어요</p>
-      </div>
     </div>
   );
 }
