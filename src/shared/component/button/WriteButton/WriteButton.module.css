@@ -1,21 +1,22 @@
 .button {
   position: fixed;
   right: 1.5rem;
-  bottom: 9rem;
+  bottom: 11.1rem;
   z-index: var(--z-index-write-button);
 
-  width: 6.5rem;
-  height: 6.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
 
+  width: 6.5rem;
+  height: 6.5rem;
+
   border-radius: 100%;
 
   background-color: rgba(var(--white-rgb), 0.7);
-  -webkit-backdrop-filter: blur(0.7rem);
-  backdrop-filter: blur(0.7rem);
   box-shadow: 0.4rem 0.4rem 1.9rem rgba(var(--black-rgb), 0.15);
+  backdrop-filter: blur(0.7rem);
+  -webkit-backdrop-filter: blur(0.7rem);
 }
 
 @media only screen and (min-width: 60rem) {

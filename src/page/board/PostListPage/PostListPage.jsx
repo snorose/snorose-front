@@ -63,7 +63,6 @@ export default function PostListPage() {
       {showWriteButton && (
         <WriteButton
           to={`/board/${currentBoardTextId}/post-write`}
-          className={styles.writeButton}
         />
       )}
     </section>
@@ -123,7 +122,6 @@ export function NewPostListPage() {
       {showWriteButton && (
         <WriteButton
           to={NEW_ROUTES.post.write(boardKey)}
-          className={styles.writeButton}
         />
       )}
     </section>
