@@ -25,6 +25,7 @@ export default function FindPwPage() {
 
   const [allowSubmit, setAllowSubmit] = useState(true);
   const [loading, setLoading] = useState();
+  const [showAlert, setShowAlert] = useState(false);
   const [formData, setFormData] = useState({
     loginId: '',
     email: '',
@@ -97,33 +98,49 @@ export default function FindPwPage() {
               })}
             </div>
 
-            <div className={styles.alert}>
-              <ul>
-                <li>
-                  기존 이메일을 알 수 없는 경우,
-                  <span className={styles.highlight}> 아이디 찾기</span> 기능을
-                  통해 확인할 수 있어요
-                </li>
-                <li>
-                  <span className={styles.highlight}>아이디 찾기</span>에서
-                  이름과 학번을 입력하면,
+            <button
+              className={`${styles.idInfoBtn} ${showAlert ? styles.active : ''}`}
+              onClick={() => setShowAlert((prev) => !prev)}
+              type='button'
+            >
+              <Icon
+                id='info-circle'
+                width='1.6rem'
+                height='1.6rem'
+                viewBox='0 0 20 20'
+              />
+              <p>비밀번호 찾기</p>
+            </button>
+
+            {showAlert && (
+              <div className={styles.alert}>
+                <ol>
+                  <li>
+                    기존 이메일을 알 수 없는 경우,
+                    <span className={styles.highlight}> 아이디 찾기</span>{' '}
+                    기능을 통해 확인할 수 있어요
+                  </li>
+                  <li>
+                    <span className={styles.highlight}>아이디 찾기</span>에서
+                    이름과 학번을 입력하면,
+                    <br />
+                    <span className={styles.highlight}>
+                      다음 이메일로 아이디가 발송되었어요
+                    </span>
+                    라는 안내를 통해 이메일 주소를 확인할 수 있어요
+                  </li>
+                </ol>
+                <p className={styles.note} style={{ marginTop: '1.3rem' }}>
+                  만약 이메일이 존재하지 않거나 유효하지 않을 경우,
                   <br />
-                  <span className={styles.highlight}>
-                    다음 이메일로 아이디가 발송되었어요
-                  </span>
-                  라는 안내를 통해 이메일 주소를 확인할 수 있어요
-                </li>
-              </ul>
-              <p className={styles.highlight} style={{ marginTop: '1.3rem' }}>
-                만약 이메일이 존재하지 않거나 유효하지 않을 경우,
-                <br />
-                아래 구글 폼을 작성해주시면 신속히 해결해드릴게요.
-              </p>
-              <button className={styles.googleFormBtn}>
-                <Icon id='google-form' width={'1.6rem'} height={'1.6rem'} />
-                <a href='https://forms.gle/PDmKuPUuUzKXTh8BA'>구글 폼</a>
-              </button>
-            </div>
+                  아래 구글 폼을 작성해주시면 신속히 해결해드릴게요
+                </p>
+                <button className={styles.googleFormBtn}>
+                  <Icon id='google-form' width={'1.6rem'} height={'1.6rem'} />
+                  <a href='https://forms.gle/PDmKuPUuUzKXTh8BA'>구글 폼</a>
+                </button>
+              </div>
+            )}
           </div>
 
           <div className={styles.buttonFrame}>
