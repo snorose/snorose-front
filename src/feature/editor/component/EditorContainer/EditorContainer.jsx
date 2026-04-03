@@ -6,6 +6,7 @@ import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
 import Blockquote from '@tiptap/extension-blockquote';
 import Link from '@tiptap/extension-link';
+import { EnterKeyHandler } from '@/feature/editor/component/extensions/EnterKeyHandler';
 import {
   TextStyle,
   Color,
@@ -57,6 +58,7 @@ export default function EditorContainer({ placeholder, text, setText }) {
         openOnClick: false,
       }),
       Blockquote,
+      EnterKeyHandler,
       TextAlign.configure({
         types: ['heading', 'paragraph'],
         alignments: ['left', 'center', 'right'],
