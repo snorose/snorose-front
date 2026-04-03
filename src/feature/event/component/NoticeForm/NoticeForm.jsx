@@ -13,13 +13,13 @@ export default function NoticeForm({ data, onChange, onValid }) {
     <div className={styles.noticeArea}>
       <TextareaAutosize
         className={styles.title}
-        placeholder='제목'
+        placeholder='제목을 입력해주세요'
         value={data.title}
         onChange={(e) => onChange('title', e.target.value)}
       />
       <TextareaAutosize
         className={styles.content}
-        placeholder='내용'
+        placeholder='내용을 작성해주세요'
         value={data.content}
         onChange={(e) => onChange('content', e.target.value)}
       />

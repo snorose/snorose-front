@@ -369,13 +369,13 @@ export default function WritePostPage() {
             <div className={styles.content}>
               <TextareaAutosize
                 className={styles.title}
-                placeholder='제목'
+                placeholder='제목을 입력해주세요'
                 value={title}
                 onChange={handleTitleChange}
               />
               <TextareaAutosize
                 className={styles.text}
-                placeholder='내용'
+                placeholder='내용을 작성해주세요'
                 value={text}
                 onChange={(e) => setText(e.target.value)}
               />
@@ -686,13 +686,13 @@ export function NewWritePostPage({ isNotice = false }) {
             <div className={styles.content}>
               <TextareaAutosize
                 className={styles.title}
-                placeholder='제목'
+                placeholder='제목을 입력해주세요'
                 value={title}
                 onChange={handleTitleChange}
               />
               <TextareaAutosize
                 className={styles.text}
-                placeholder='내용'
+                placeholder='내용을 작성해주세요'
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
               />
