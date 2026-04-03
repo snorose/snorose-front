@@ -102,6 +102,8 @@ export default function FindIdPage() {
               className={`${styles.idInfoBtn} ${showAlert ? styles.active : ''}`}
               onClick={() => setShowAlert((prev) => !prev)}
               type='button'
+              aria-expanded={showAlert}
+              aria-controls='find-id-notice'
             >
               <Icon
                 id='info-circle'
@@ -112,7 +114,7 @@ export default function FindIdPage() {
               <p>아이디 찾기</p>
             </button>
 
-            {showAlert && <div className={styles.alert}>
+            {showAlert && <div id='find-id-notice' className={styles.alert}>
               <ol>
                 <li>
                   아이디 찾기를 해도 입력한 정보와 일치하는 정보가 없다고 떠요.
@@ -147,10 +149,10 @@ export default function FindIdPage() {
                 필요하다면, 아래 구글 폼을 통해 학번 변경 문의를 남겨주시면
                 신속히 해결해드릴게요
               </div>
-              <button className={styles.googleFormBtn}>
+                <a className={styles.googleFormBtn} href='https://forms.gle/xwi7q47Dz59UNeEW7' target='_blank' rel='noopener noreferrer'>                
                 <Icon id='google-form' width='1.6rem' height='1.6rem' />
-                <a href='https://forms.gle/xwi7q47Dz59UNeEW7'>구글 폼</a>
-              </button>
+                구글 폼
+                </a>
             </div>}
           </div>
 

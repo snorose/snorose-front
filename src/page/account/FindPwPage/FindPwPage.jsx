@@ -102,6 +102,8 @@ export default function FindPwPage() {
               className={`${styles.idInfoBtn} ${showAlert ? styles.active : ''}`}
               onClick={() => setShowAlert((prev) => !prev)}
               type='button'
+              aria-expanded={showAlert}
+              aria-controls='find-pw-notice'
             >
               <Icon
                 id='info-circle'
@@ -113,7 +115,7 @@ export default function FindPwPage() {
             </button>
 
             {showAlert && (
-              <div className={styles.alert}>
+              <div id='find-pw-notice' className={styles.alert}>
                 <ol>
                   <li>
                     기존 이메일을 알 수 없는 경우,
@@ -135,10 +137,8 @@ export default function FindPwPage() {
                   <br />
                   아래 구글 폼을 작성해주시면 신속히 해결해드릴게요
                 </p>
-                <button className={styles.googleFormBtn}>
-                  <Icon id='google-form' width={'1.6rem'} height={'1.6rem'} />
-                  <a href='https://forms.gle/PDmKuPUuUzKXTh8BA'>구글 폼</a>
-                </button>
+                  <a className={styles.googleFormBtn} href='https://forms.gle/PDmKuPUuUzKXTh8BA' target='_blank' rel='noopener noreferrer'>                  <Icon id='google-form' width={'1.6rem'} height={'1.6rem'} />
+구글 폼</a>
               </div>
             )}
           </div>

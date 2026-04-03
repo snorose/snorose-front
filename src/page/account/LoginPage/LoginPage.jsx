@@ -91,7 +91,7 @@ export default function Login() {
         </div>
 
         {errorMessage && (
-          <p className={styles.errorMessage}>{errorMessage}</p>
+          <p role='alert' className={styles.errorMessage}>{errorMessage}</p>
         )}
 
         <div className={styles.rememberIdCheckbox} onClick={toggleRememberId}>
