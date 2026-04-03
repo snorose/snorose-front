@@ -3,9 +3,13 @@ import { defaultAxios } from '@/axios';
 import { useToast } from '@/shared/hook';
 import { TOAST } from '@/shared/constant';
 
+const LOGIN_ERROR_MAP = {
+  '아이디 또는 비밀번호가 틀립니다': '아이디 혹은 비밀번호가 일치하지 않아요',
+};
+
 export const useLogin = () => {
   const { toast } = useToast();
-  const login = async (e, setIsError, formData, navigate) => {
+  const login = async (e, setIsError, formData, navigate, setErrorMessage) => {
     e.preventDefault();
     const endpoint = '/v1/users/login';
 
@@ -23,13 +27,15 @@ export const useLogin = () => {
         localStorage.setItem('refreshToken', refreshToken);
 
         setIsError(false);
+        setErrorMessage('');
         navigate('/');
         window.location.reload();
       } catch (e) {
         if (e.response.status === 500) {
           toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
         } else {
-          toast({ message: e.response.data.message, variant: 'error' });
+          const serverMsg = e.response.data.message;
+          setErrorMessage(LOGIN_ERROR_MAP[serverMsg] ?? serverMsg);
         }
         setIsError(true);
       }
