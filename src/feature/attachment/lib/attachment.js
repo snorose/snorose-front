@@ -121,7 +121,7 @@ export const checkIfVideo = (newAtts) => {
 };
 export const filterUnusableCharNamedAtts = (atts) => {
   // 허용 문자 regex
-  const allowedChars = /^[\p{L}\p{N} ~!@$^&()\-_=\\[\]{};`',.]+$/u;
+  const allowedChars = /^[\p{L}\p{N} ~!@$^&()\-_=\[\]{};`',.]+$/u;
 
   return atts.filter((att) => allowedChars.test(att.name));
 };
