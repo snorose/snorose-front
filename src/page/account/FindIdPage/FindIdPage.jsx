@@ -24,6 +24,7 @@ export default function FindIdPage() {
   const navigate = useNavigate();
   const [allowSubmit, setAllowSubmit] = useState(true);
   const [loading, setLoading] = useState();
+  const [showAlert, setShowAlert] = useState(false);
   const [formData, setFormData] = useState({
     userName: '',
     studentNumber: '',
@@ -97,7 +98,21 @@ export default function FindIdPage() {
               })}
             </div>
 
-            <div className={styles.alert}>
+            <button
+              className={`${styles.idInfoBtn} ${showAlert ? styles.active : ''}`}
+              onClick={() => setShowAlert((prev) => !prev)}
+              type='button'
+            >
+              <Icon
+                id='info-circle'
+                width='1.6rem'
+                height='1.6rem'
+                viewBox='0 0 20 20'
+              />
+              <p>아이디 찾기</p>
+            </button>
+
+            {showAlert && <div className={styles.alert}>
               <ol>
                 <li>
                   아이디 찾기를 해도 입력한 정보와 일치하는 정보가 없다고 떠요.
@@ -136,7 +151,7 @@ export default function FindIdPage() {
                 <Icon id='google-form' width='1.6rem' height='1.6rem' />
                 <a href='https://forms.gle/xwi7q47Dz59UNeEW7'>구글 폼</a>
               </button>
-            </div>
+            </div>}
           </div>
 
           <div className={styles.buttonFrame}>

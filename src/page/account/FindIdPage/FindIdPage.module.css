@@ -40,7 +40,29 @@
   margin-bottom: 4rem;
 }
 
+.idInfoBtn.active {
+  background-color: var(--grey-3);
+}
+
+.idInfoBtn {
+  width: 11rem;
+  height: 3.6rem;
+  border-radius: 0.5rem;
+  border: solid 0.1rem var(--grey-3);
+  margin-top: 1.8rem;
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  & p {
+    font: var(--text-body-1-reg);
+    color: var(--blue-3);
+  }
+}
+
 .alert {
+  margin-top: 1.4rem;
   font: var(--text-body-1-reg);
   color: grey;
   word-break: keep-all;
