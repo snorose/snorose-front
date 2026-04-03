@@ -208,6 +208,11 @@ export default function WritePostPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!boardId) {
+      toast({ message: TOAST.POST.selectBoard, variant: 'info' });
+      return;
+    }
+
     if (!title.trim()) {
       toast({ message: TOAST.POST.emptyTitle, variant: 'info' });
       return;
@@ -572,6 +577,11 @@ export function NewWritePostPage({ isNotice = false }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!boardId) {
+      toast({ message: TOAST.POST.selectBoard, variant: 'info' });
+      return;
+    }
 
     if (!title.trim()) {
       toast({ message: TOAST.POST.emptyTitle, variant: 'info' });

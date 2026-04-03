@@ -25,6 +25,7 @@ const TOAST = Object.freeze({
     edit: '게시글이 수정되었어요',
     emptyTitle: '게시글 제목을 작성해주세요',
     emptyContent: '게시글 본문을 작성해주세요',
+    selectBoard: '게시판을 선택해주세요',
   },
   COMMENT: {
     create: '댓글을 등록했어요 (+1P)',
