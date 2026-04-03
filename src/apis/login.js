@@ -4,7 +4,7 @@ import { useToast } from '@/shared/hook';
 import { TOAST } from '@/shared/constant';
 
 const LOGIN_ERROR_MAP = {
-  '아이디 또는 비밀번호가 틀립니다': '아이디 혹은 비밀번호가 일치하지 않아요',
+  '아이디 또는 비밀번호가 틀립니다.': '아이디 혹은 비밀번호가 일치하지 않아요',
 };
 
 export const useLogin = () => {
