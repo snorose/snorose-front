@@ -221,7 +221,7 @@ const CONFIRM_MODAL = {
   DISABLE_NOTIFICATION: {
     title: '알림을 끌까요?',
     description:
-      '알림을 끄시면 강등, 무통보 삭제 등의\n중요한 안내를 받지 못해요.',
+      '알림을 끄시면 강등, 무통보 삭제 등의\n중요한 안내를 받지 못해요',
     confirmText: '끄기',
     cancelText: '취소',
   },
