@@ -10,7 +10,7 @@ import {
   PointLogListErrorFallback,
 } from '@/feature/my/component';
 
-import pointCircleBlue from '@/assets/images/pointCircleBlue.svg';
+import { ReactComponent as PointCircleBlue } from '@/assets/images/pointCircleBlue.svg';
 
 import styles from './PointLogListPage.module.css';
 
@@ -27,7 +27,7 @@ export default function PointLogListPage() {
         <div className={styles.topContainer}>
           <h1 className={styles.title}>보유 포인트</h1>
           <div className={styles.totalPointWrapper}>
-            <img src={pointCircleBlue} alt='총 포인트' />
+            <PointCircleBlue aria-label='총 포인트' />
             <span className={styles.totalPoints}>
               {userInfo?.balance.toLocaleString()}
             </span>
