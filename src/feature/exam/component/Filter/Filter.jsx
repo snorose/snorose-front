@@ -53,13 +53,16 @@ export default function Filter({ filterKey, options, placeholder }) {
           {selectedOptionName ?? placeholder}
         </span>
         {selectedOption && (
-          <Icon
-            id='x'
-            width={10}
-            height={10}
+          <button
             className={styles.clearIcon}
-            onClick={(e) => { e.stopPropagation(); deleteOption(); }}
-          />
+            aria-label='선택한 필터 해제'
+            onClick={(e) => {
+              e.stopPropagation();
+              deleteOption();
+            }}
+          >
+            <Icon id='x' width={10} height={10} />
+          </button>
         )}
       </div>
       <ul className={styles.list}>

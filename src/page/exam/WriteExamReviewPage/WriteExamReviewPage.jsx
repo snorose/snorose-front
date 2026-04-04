@@ -181,7 +181,7 @@ export default function WriteExamReviewPage() {
       toast({ message: TOAST.EXAM_REVIEW.emptyProfessor, variant: 'info' });
       return;
     }
-    if (!classNumber) {
+    if (!classNumber.trim()) {
       toast({ message: TOAST.EXAM_REVIEW.emptyClassNumber, variant: 'info' });
       return;
     }
@@ -202,7 +202,10 @@ export default function WriteExamReviewPage() {
       return;
     }
     if (!questionDetail.trim()) {
-      toast({ message: TOAST.EXAM_REVIEW.emptyQuestionDetail, variant: 'info' });
+      toast({
+        message: TOAST.EXAM_REVIEW.emptyQuestionDetail,
+        variant: 'info',
+      });
       return;
     }
     if (!file) {
@@ -231,9 +234,7 @@ export default function WriteExamReviewPage() {
   return (
     <section className={styles.container}>
       <CloseAppBar>
-        <ActionButton onClick={handleSubmit}>
-          게시
-        </ActionButton>
+        <ActionButton onClick={handleSubmit}>게시</ActionButton>
       </CloseAppBar>
 
       <div className={styles.top}>
