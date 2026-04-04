@@ -43,7 +43,6 @@ export { default as ConfirmModal } from './modal/ConfirmModal/ConfirmModal';
 export { default as DimModalLayout } from './modal/DimModalLayout/DimModalLayout';
 export { default as MoreOptionModal } from './modal/MoreOptionModal/MoreOptionModal';
 export { default as NoticeModal } from './modal/NoticeModal/NoticeModal';
-export { default as OptionModal } from './modal/OptionModal/OptionModal';
 
 // suspense
 export { default as ServerErrorFallback } from './suspense/ServerErrorFallback/ServerErrorFallback';
