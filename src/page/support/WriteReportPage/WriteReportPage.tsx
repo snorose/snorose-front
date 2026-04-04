@@ -14,18 +14,14 @@ import { NotFoundPage } from '@/page/etc';
 
 import { SubmitButton, FileUploadSection } from '@/feature/support/ui';
 import { REPORT_OPTIONS } from '@/feature/support/data';
-import { REPORT_PLACEHOLDERS } from '@/feature/support/constant';
+import {
+  REPORT_PLACEHOLDERS,
+  REPORT_TYPE_TAG,
+} from '@/feature/support/constant';
 
 import { Option } from '@/types';
 
 import styles from './WriteReportPage.module.css';
-
-const REPORT_TYPE_TAG = {
-  post: '게시글',
-  exam: '시험후기',
-  comment: '댓글',
-  user: '유저',
-} as const;
 
 export default function WriteReportPage() {
   const [searchParams] = useSearchParams();
