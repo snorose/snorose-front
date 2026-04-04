@@ -52,15 +52,17 @@ export default function Filter({ filterKey, options, placeholder }) {
         <span className={styles.displayOption}>
           {selectedOptionName ?? placeholder}
         </span>
+        {selectedOption && (
+          <Icon
+            id='x'
+            width={10}
+            height={10}
+            className={styles.clearIcon}
+            onClick={(e) => { e.stopPropagation(); deleteOption(); }}
+          />
+        )}
       </div>
       <ul className={styles.list}>
-        <li
-          className={styles.option}
-          key={placeholder}
-          onClick={() => deleteOption()}
-        >
-          {placeholder}
-        </li>
         {options.map(({ id, name }) => (
           <li
             className={styles.option}
