@@ -1,24 +1,23 @@
-import { MoreOptionModal, ConfirmModal, OptionModal } from '@/shared/component';
+import { MoreOptionModal, ConfirmModal } from '@/shared/component';
 import { ModalContext } from '@/shared/context/ModalContext';
-import {
-  CONFIRM_MODAL_TEXT,
-  MORE_OPTION_MODAL_TEXT,
-  OPTION_MODAL_TEXT,
-} from '@/shared/constant';
+import { CONFIRM_MODAL_TEXT, MORE_OPTION_MODAL_TEXT } from '@/shared/constant';
 
 import { useLocation } from 'react-router-dom';
 import { useCommentContext } from '../../context';
-import { useReportHandler } from '@/feature/report/hook/useReport';
+import { useReport } from '@/feature/report/hook';
 import { useComment } from '../../hook';
 import { useContext } from 'react';
+import { getBoard } from '@/shared/lib';
 
 export default function CommentModalRenderer({ data, moreOptionTop }) {
   const { pathname } = useLocation();
   const { modal, setModal } = useContext(ModalContext);
-  const { handleReport } = useReportHandler(modal, setModal, data);
+  const { navigateReportPage } = useReport();
   const { deleteComment } = useComment();
 
   const { commentId, resetCommentState } = useCommentContext();
+
+  const currentBoard = getBoard(pathname.split('/')[2]);
 
   return (
     <>
@@ -31,25 +30,21 @@ export default function CommentModalRenderer({ data, moreOptionTop }) {
               <MoreOptionModal
                 title='댓글'
                 optionList={MORE_OPTION_MODAL_TEXT.COMMENT_MORE_OPTION_LIST}
+                functions={[
+                  () =>
+                    navigateReportPage('comment', {
+                      boardId: currentBoard.id,
+                      postId: data.postId,
+                      commentId: data.id,
+                    }),
+                  () =>
+                    navigateReportPage('user', {
+                      userId: data.encryptedUserId,
+                    }),
+                ]}
                 top={moreOptionTop}
               />
             ) : null;
-          // 댓글 신고하기 옵션 모달
-          case 'report-comment-types':
-            return (
-              <OptionModal
-                title='댓글 신고'
-                optionList={OPTION_MODAL_TEXT.REPORT_COMMENT_TYPE_LIST}
-              />
-            );
-          // 댓글 신고 확인 모달
-          case 'confirm-comment-report':
-            return (
-              <ConfirmModal
-                modalText={CONFIRM_MODAL_TEXT.REPORT_COMMENT}
-                onConfirm={handleReport}
-              />
-            );
           // 댓글 삭제 확인 모달
           case 'confirm-comment-delete':
             return (

@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useModalReset, useToast } from '@/shared/hook';
@@ -9,10 +9,10 @@ import {
   Badge,
   FetchLoading,
 } from '@/shared/component';
-import { DateTime, renderTextWithLinks } from '@/shared/lib';
+import { DateTime, getBoard, renderTextWithLinks } from '@/shared/lib';
 import { ROLE } from '@/shared/constant';
 
-import { useReportHandler } from '@/feature/report/hook/useReport';
+import { useReport } from '@/feature/report/hook/useReport';
 import {
   FullScreenAttachment,
   PostModalRenderer,
@@ -140,14 +140,28 @@ function MetaContainer({
 
 function MoreModal({ deletePost, data }) {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const { modal, setModal } = useContext(ModalContext);
+
+  const { navigateReportPage } = useReport();
   const { toast } = useToast();
 
   // 페이지 언마운트 시 모달 상태 초기화
   useModalReset();
 
-  const { handleReport } = useReportHandler(modal, setModal, data);
+  const handleReport = (targetType) => {
+    const currentBoard = getBoard(pathname.split('/')[2]);
+
+    if (targetType === 'user') {
+      navigateReportPage(targetType, { userId: data.encryptedUserId });
+    } else if (targetType === 'post') {
+      navigateReportPage(targetType, {
+        postId: data.postId,
+        boardId: currentBoard.id,
+      });
+    }
+  };
 
   const handleEdit = () => {
     setModal({ id: null, type: null });
