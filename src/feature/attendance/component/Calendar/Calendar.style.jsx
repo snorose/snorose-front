@@ -7,7 +7,7 @@ import 'react-calendar/dist/Calendar.css';
 export const StyledCalendar = styled(Calendar)`
   .react-calendar__navigation {
     margin: 0;
-    background: #ffffff1a;
+    background: rgba(var(--white-rgb), 0.1);
     border-radius: 0.5rem 0.5rem 0 0;
   }
 
@@ -44,7 +44,7 @@ export const StyledCalendar = styled(Calendar)`
   .react-calendar__viewContainer {
     padding-top: 1.6rem;
     border-radius: 0 0 0.5rem 0.5rem;
-    background: #ffffff1a;
+    background: rgba(var(--white-rgb), 0.1);
   }
 
   // weekday

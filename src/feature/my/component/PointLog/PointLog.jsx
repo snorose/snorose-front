@@ -17,9 +17,19 @@ const PointLog = forwardRef((props, ref) => {
     <li ref={ref} className={styles.pointBox}>
       <div className={styles.pointIconContentWrapper}>
         {difference > 0 ? (
-          <HeartPlus className={styles.pointIcon} aria-label='포인트 증가' />
+          <HeartPlus
+            className={styles.pointIcon}
+            role='img'
+            focusable='false'
+            aria-label='포인트 증가'
+          />
         ) : (
-          <HeartMinus className={styles.pointIcon} aria-label='포인트 감소' />
+          <HeartMinus
+            className={styles.pointIcon}
+            role='img'
+            focusable='false'
+            aria-label='포인트 감소'
+          />
         )}
         <div className={styles.pointContent}>
           <h2

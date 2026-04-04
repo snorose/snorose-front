@@ -27,7 +27,11 @@ export default function PointLogListPage() {
         <div className={styles.topContainer}>
           <h1 className={styles.title}>보유 포인트</h1>
           <div className={styles.totalPointWrapper}>
-            <PointCircleBlue aria-label='총 포인트' />
+            <PointCircleBlue
+              role='img'
+              aria-label='총 포인트'
+              focusable='false'
+            />
             <span className={styles.totalPoints}>
               {userInfo?.balance.toLocaleString()}
             </span>
