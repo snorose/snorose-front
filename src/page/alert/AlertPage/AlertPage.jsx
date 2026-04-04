@@ -151,7 +151,7 @@ function NotificationList({ category }) {
           src={noAlertIllustration}
           alt='새로운 알림이 없어요'
         />
-        <div>새로운 알림이 없어요</div>
+        <div className={style.noAlertText}>새로운 알림이 없어요</div>
       </div>
     );
   }
