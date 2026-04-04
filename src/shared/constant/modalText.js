@@ -1,14 +1,14 @@
 // =================== More Option Modal ===================
 const POST_MORE_OPTION_LIST = [
   {
-    modalId: 'report-post-types',
+    modalId: null,
     iconId: 'flag-pink',
     label: '게시글 신고',
     width: 19,
     height: 22,
   },
   {
-    modalId: 'report-user-types',
+    modalId: null,
     iconId: 'report-user',
     label: '이용자 신고하기',
     width: 17,
@@ -22,6 +22,7 @@ const POST_MORE_OPTION_LIST = [
     height: 19,
   },
 ];
+
 const MY_POST_MORE_OPTION_LIST = [
   {
     modalId: null,
@@ -48,20 +49,21 @@ const MY_POST_MORE_OPTION_LIST = [
 
 const EXAM_REVIEW_MORE_OPTION_LIST = [
   {
-    modalId: 'report-exam-review-types',
+    modalId: null,
     iconId: 'flag-pink',
     label: '시험후기 신고',
     width: 19,
     height: 22,
   },
   {
-    modalId: 'report-user-types',
+    modalId: null,
     iconId: 'report-user',
     label: '이용자 신고하기',
     width: 17,
     height: 17,
   },
 ];
+
 const MY_EXAM_REVIEW_MORE_OPTION_LIST = [
   {
     modalId: null,
@@ -81,20 +83,21 @@ const MY_EXAM_REVIEW_MORE_OPTION_LIST = [
 
 const COMMENT_MORE_OPTION_LIST = [
   {
-    modalId: 'report-comment-types',
+    modalId: null,
     iconId: 'report-comment',
     label: '댓글 신고',
     width: 21,
     height: 22,
   },
   {
-    modalId: 'report-user-types',
+    modalId: null,
     iconId: 'report-user',
     label: '이용자 신고하기',
     width: 17,
     height: 17,
   },
 ];
+
 const MY_COMMENT_MORE_OPTION_LIST = [
   {
     modalId: null,
@@ -111,6 +114,7 @@ const MY_COMMENT_MORE_OPTION_LIST = [
     height: 20,
   },
 ];
+
 const EVENT_MORE_OPTION_LIST = [
   {
     modalId: 'share',
@@ -136,23 +140,12 @@ const CONFIRM_MODAL = {
     confirmText: '삭제',
     cancelText: '취소',
   },
-  REPORT_POST: {
-    title: '게시글을 신고할까요?',
-    description: null,
-    confirmText: '신고',
-    cancelText: '취소',
-  },
+
   // 시험후기 관련 확인 모달
   DELETE_EXAM_REVIEW: {
     title: '시험후기를 삭제할까요?',
     description: '삭제 시 포인트가 차감돼요',
     confirmText: '삭제',
-    cancelText: '취소',
-  },
-  REPORT_EXAM_REVIEW: {
-    title: '시험후기를 신고할까요?',
-    description: null,
-    confirmText: '신고',
     cancelText: '취소',
   },
   EXAM_REVIEW_DUPLICATION: {
@@ -182,20 +175,7 @@ const CONFIRM_MODAL = {
     cancelText: '취소',
   },
 
-  REPORT_COMMENT: {
-    title: '댓글을 신고할까요?',
-    description: null,
-    confirmText: '신고',
-    cancelText: '취소',
-  },
-
   // 유저 관련 확인 모달
-  REPORT_USER: {
-    title: '이용자를 신고할까요?',
-    description: null,
-    confirmText: '신고',
-    cancelText: '취소',
-  },
   WITHDRAW_ACCOUNT: {
     title: '정말 탈퇴하시겠습니까?',
     description: null,
@@ -256,220 +236,7 @@ const NOTICE_MODAL = {
   },
 };
 
-// =================== Option Modal ===================
-// 게시글 신고 모달
-const REPORT_POST_TYPE_LIST = [
-  {
-    type: 'POST_PERSONAL_ABUSE',
-    iconId: 'comment-exclamation-question-mark',
-    label: '특정인에 대한 욕설 및 비하',
-    width: 20,
-    height: 20,
-  },
-  {
-    type: 'POST_COMMERCIAL_AD',
-    iconId: 'dollar-circle',
-    label: '상업적 광고 및 판매',
-    width: 20,
-    height: 20,
-  },
-  {
-    type: 'POST_ILLEGAL_DISTRIBUTION',
-    iconId: 'camera-blue-stroke',
-    label: '불법촬영물 등의 유통',
-    width: 20,
-    height: 19,
-  },
-  {
-    type: 'POST_PRIVACY_VIOLATION',
-    iconId: 'x-shield',
-    label: '개인정보 유출',
-    width: 18,
-    height: 20,
-  },
-  {
-    type: 'POST_INCITEMENT_DIVISION',
-    iconId: 'traffic-cone',
-    label: '선동 및 분란 유발',
-    width: 20,
-    height: 20,
-  },
-  {
-    type: 'POST_ADULT_CONTENT',
-    iconId: 'hand-stop',
-    label: '음란물 / 불건전한 만남 및 대화',
-    width: 20,
-    height: 22,
-  },
-  {
-    type: 'POST_INSINCERE_CONTENT',
-    iconId: 'list-x-circle',
-    label: '무성의한 게시글',
-    width: 20,
-    height: 16,
-  },
-  {
-    type: 'POST_HATEFUL_CONTENT',
-    iconId: 'sad-face',
-    label: '타인에게 혐오감 선사',
-    width: 20,
-    height: 20,
-  },
-];
-
-// 시험후기 신고 모달
-const REPORT_EXAM_REVIEW_TYPE_LIST = [
-  {
-    type: 'POST_PERSONAL_ABUSE',
-    iconId: 'comment-exclamation-question-mark',
-    label: '특정인에 대한 욕설 및 비하',
-    width: 20,
-    height: 20,
-  },
-  {
-    type: 'POST_COMMERCIAL_AD',
-    iconId: 'dollar-circle',
-    label: '상업적 광고 및 판매',
-    width: 20,
-    height: 20,
-  },
-  {
-    type: 'POST_ILLEGAL_DISTRIBUTION',
-    iconId: 'camera-blue-stroke',
-    label: '불법촬영물 등의 유통',
-    width: 20,
-    height: 19,
-  },
-  {
-    type: 'POST_PRIVACY_VIOLATION',
-    iconId: 'x-shield',
-    label: '개인정보 유출',
-    width: 18,
-    height: 20,
-  },
-  {
-    type: 'POST_INCITEMENT_DIVISION',
-    iconId: 'traffic-cone',
-    label: '선동 및 분란 유발',
-    width: 20,
-    height: 20,
-  },
-  {
-    type: 'POST_ADULT_CONTENT',
-    iconId: 'hand-stop',
-    label: '음란물 / 불건전한 만남 및 대화',
-    width: 20,
-    height: 22,
-  },
-  {
-    type: 'POST_INSINCERE_CONTENT',
-    iconId: 'list-x-circle',
-    label: '무성의한 게시글',
-    width: 20,
-    height: 16,
-  },
-  {
-    type: 'POST_HATEFUL_CONTENT',
-    iconId: 'sad-face',
-    label: '타인에게 혐오감 선사',
-    width: 20,
-    height: 20,
-  },
-];
-
-// 유저 신고 모달
-const REPORT_USER_TYPE_LIST = [
-  {
-    type: 'USER_IMPERSONATION',
-    iconId: 'user-question-mark',
-    label: '타인 사칭',
-    width: 20,
-    height: 18,
-  },
-  {
-    type: 'USER_FRAUD',
-    iconId: 'dollar-circle',
-    label: '사기',
-    width: 20,
-    height: 20,
-  },
-  {
-    type: 'USER_EXTERNAL_PARTY',
-    iconId: 'question-mark-circle',
-    label: '외부인 의심',
-    width: 20,
-    height: 20,
-  },
-  {
-    type: 'USER_HARASSMENT',
-    iconId: 'skull-face',
-    label: '괴롭힘 / 사이버폭력',
-    width: 20,
-    height: 20,
-  },
-  {
-    type: 'USER_OTHER',
-    iconId: 'null',
-    label: '기타',
-    width: 20,
-    height: 20,
-  },
-];
-
-// 댓글 신고 모달
-const REPORT_COMMENT_TYPE_LIST = [
-  {
-    type: 'COMMENT_PERSONAL_ABUSE',
-    iconId: 'comment-exclamation-question-mark',
-    label: '특정인에 대한 욕설 및 비하',
-    width: 20,
-    height: 20,
-  },
-  {
-    type: 'COMMENT_COMMERCIAL_AD',
-    iconId: 'dollar-circle',
-    label: '상업적 광고 및 판매',
-    width: 20,
-    height: 20,
-  },
-  {
-    type: 'COMMENT_PRIVACY_VIOLATION',
-    iconId: 'x-shield',
-    label: '개인정보 유출',
-    width: 18,
-    height: 20,
-  },
-  {
-    type: 'COMMENT_INCITEMENT_DIVISION',
-    iconId: 'traffic-cone',
-    label: '선동 및 분란 유발',
-    width: 20,
-    height: 20,
-  },
-  {
-    type: 'COMMENT_ADULT_CONTENT',
-    iconId: 'hand-stop',
-    label: '음란물 / 불건전한 만남 및 대화',
-    width: 20,
-    height: 22,
-  },
-  {
-    type: 'COMMENT_SPAM',
-    iconId: 'list-x-circle',
-    label: '스팸 / 무성의한 댓글',
-    width: 20,
-    height: 16,
-  },
-  {
-    type: 'COMMENT_OTHER',
-    iconId: 'null',
-    label: '기타',
-    width: 20,
-    height: 20,
-  },
-];
-
-//첨부파일 모달
+// 첨부파일 모달
 const ATTACHMENT_MODAL = {
   DELETE_ATTACHMENT: {
     title: '삭제하시겠습니까?',
@@ -489,14 +256,5 @@ export const MORE_OPTION_MODAL_TEXT = {
 };
 
 export const CONFIRM_MODAL_TEXT = CONFIRM_MODAL;
-
 export const NOTICE_MODAL_TEXT = NOTICE_MODAL;
-
-export const OPTION_MODAL_TEXT = {
-  REPORT_POST_TYPE_LIST,
-  REPORT_EXAM_REVIEW_TYPE_LIST,
-  REPORT_USER_TYPE_LIST,
-  REPORT_COMMENT_TYPE_LIST,
-};
-
 export const ATTACHMENT_MODAL_TEXT = ATTACHMENT_MODAL;

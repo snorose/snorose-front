@@ -493,17 +493,11 @@ export const routeList = [
           { index: true, element: <NotFoundPage /> },
           {
             path: 'write',
-            children: [
-              { index: true, element: <NotFoundPage /> },
-              {
-                path: ':reportType',
-                element: (
-                  <ProtectedRoute>
-                    <WriteReportPage />
-                  </ProtectedRoute>
-                ),
-              },
-            ],
+            element: (
+              <ProtectedRoute>
+                <WriteReportPage />
+              </ProtectedRoute>
+            ),
           },
           {
             path: ':postId',

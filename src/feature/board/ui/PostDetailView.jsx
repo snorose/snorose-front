@@ -1,25 +1,25 @@
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { ModalContext } from '@/shared/context/ModalContext';
-import { useModalReset, useToast } from '@/shared/hook';
 import {
   AttachmentSwiper,
   BackAppBar,
   Badge,
   FetchLoading,
 } from '@/shared/component';
-import { DateTime, renderTextWithLinks } from '@/shared/lib';
 import { ROLE, TOAST } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
+import { useModalReset, useToast } from '@/shared/hook';
+import { DateTime, getBoard, renderTextWithLinks } from '@/shared/lib';
 
-import { useReportHandler } from '@/feature/report/hook/useReport';
 import {
   FullScreenAttachment,
   PostModalRenderer,
 } from '@/feature/board/component';
+import { useReport } from '@/feature/report/hook/useReport';
 
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 import sponsorBanner from '@/assets/banners/sponsorBanner.png';
+import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import styles from './PostDetailView.module.css';
 
@@ -140,14 +140,28 @@ function MetaContainer({
 
 function MoreModal({ deletePost, data }) {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const { modal, setModal } = useContext(ModalContext);
+
+  const { navigateReportPage } = useReport();
   const { toast } = useToast();
 
   // 페이지 언마운트 시 모달 상태 초기화
   useModalReset();
 
-  const { handleReport } = useReportHandler(modal, setModal, data);
+  const handleReport = (targetType) => {
+    const currentBoard = getBoard(pathname.split('/')[2]);
+
+    if (targetType === 'user') {
+      navigateReportPage(targetType, { userId: data.encryptedUserId });
+    } else if (targetType === 'post') {
+      navigateReportPage(targetType, {
+        postId: data.postId,
+        boardId: currentBoard.id,
+      });
+    }
+  };
 
   const handleEdit = () => {
     setModal({ id: null, type: null });
