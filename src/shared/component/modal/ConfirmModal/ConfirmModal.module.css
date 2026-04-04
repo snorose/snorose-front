@@ -21,7 +21,7 @@
 .description {
   text-align: center;
   color: var(--grey-4);
-  font: var(--text-headline-2-reg);
+  font: var(--text-body-1-reg);
   white-space: pre-line;
 }
 
@@ -31,11 +31,11 @@
 
   button:first-child {
     color: var(--grey-3-1);
-    font: var(--text-body-1-reg);
+    font: var(--text-headline-2-reg);
   }
   button:last-child {
     color: var(--pink-3);
-    font: var(--text-body-1-med);
+    font: var(--text-headline-2-med);
   }
 }
 

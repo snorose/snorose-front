@@ -1,4 +1,4 @@
-.contianer {
+.container {
   --marketing-title-height: 6.9rem;
   padding-top: var(--default-appbar-height);
 
@@ -9,6 +9,9 @@
 .title {
   position: fixed;
   top: var(--default-appbar-height);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   height: var(--marketing-title-height);
   width: 100%;
   max-width: var(--default-width);
