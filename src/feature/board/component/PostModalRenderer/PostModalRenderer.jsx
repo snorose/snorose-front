@@ -1,13 +1,9 @@
 import { useLocation } from 'react-router-dom';
 
 import { useBoard } from '@/shared/hook';
-import { MoreOptionModal, ConfirmModal, OptionModal } from '@/shared/component';
+import { MoreOptionModal, ConfirmModal } from '@/shared/component';
 import { getBoard } from '@/shared/lib';
-import {
-  MORE_OPTION_MODAL_TEXT,
-  CONFIRM_MODAL_TEXT,
-  OPTION_MODAL_TEXT,
-} from '@/shared/constant';
+import { MORE_OPTION_MODAL_TEXT, CONFIRM_MODAL_TEXT } from '@/shared/constant';
 
 export default function PostModalRenderer({
   modal,
@@ -29,7 +25,11 @@ export default function PostModalRenderer({
               <MoreOptionModal
                 title='게시글'
                 optionList={MORE_OPTION_MODAL_TEXT.POST_MORE_OPTION_LIST}
-                functions={[null, null, handleShare]}
+                functions={[
+                  () => handleReport('post'),
+                  () => handleReport('user'),
+                  handleShare,
+                ]}
               />
             );
           // 내 게시글 더보기 모달 (수정, 삭제, 공유하기)
@@ -48,38 +48,6 @@ export default function PostModalRenderer({
                 title='이벤트'
                 optionList={MORE_OPTION_MODAL_TEXT.EVENT_MORE_OPTION_LIST}
                 functions={[handleShare]}
-              />
-            );
-          // 게시글 신고하기 옵션 리스트 모달
-          case 'report-post-types':
-            return (
-              <OptionModal
-                title='게시글 신고'
-                optionList={OPTION_MODAL_TEXT.REPORT_POST_TYPE_LIST}
-              />
-            );
-          // 유저 신고하기 옵션 리스트 모달
-          case 'report-user-types':
-            return (
-              <OptionModal
-                title='이용자 신고'
-                optionList={OPTION_MODAL_TEXT.REPORT_USER_TYPE_LIST}
-              />
-            );
-          // 게시글 신고 최종 확인 모달
-          case 'confirm-post-report':
-            return (
-              <ConfirmModal
-                modalText={CONFIRM_MODAL_TEXT.REPORT_POST}
-                onConfirm={handleReport}
-              />
-            );
-          // 유저 신고 최종 확인 모달
-          case 'confirm-user-report':
-            return (
-              <ConfirmModal
-                modalText={CONFIRM_MODAL_TEXT.REPORT_USER}
-                onConfirm={handleReport}
               />
             );
           // 게시글 삭제 최종 확인 모달
@@ -124,7 +92,11 @@ export function NewPostModalRenderer({
               <MoreOptionModal
                 title='게시글'
                 optionList={MORE_OPTION_MODAL_TEXT.POST_MORE_OPTION_LIST}
-                functions={[null, null, handleShare]}
+                functions={[
+                  () => handleReport('post'),
+                  () => handleReport('user'),
+                  handleShare,
+                ]}
               />
             );
           // 내 게시글 더보기 모달 (수정, 삭제, 공유하기)
@@ -143,38 +115,6 @@ export function NewPostModalRenderer({
                 title='이벤트'
                 optionList={MORE_OPTION_MODAL_TEXT.EVENT_MORE_OPTION_LIST}
                 functions={[handleShare]}
-              />
-            );
-          // 게시글 신고하기 옵션 리스트 모달
-          case 'report-post-types':
-            return (
-              <OptionModal
-                title='게시글 신고'
-                optionList={OPTION_MODAL_TEXT.REPORT_POST_TYPE_LIST}
-              />
-            );
-          // 유저 신고하기 옵션 리스트 모달
-          case 'report-user-types':
-            return (
-              <OptionModal
-                title='이용자 신고'
-                optionList={OPTION_MODAL_TEXT.REPORT_USER_TYPE_LIST}
-              />
-            );
-          // 게시글 신고 최종 확인 모달
-          case 'confirm-post-report':
-            return (
-              <ConfirmModal
-                modalText={CONFIRM_MODAL_TEXT.REPORT_POST}
-                onConfirm={handleReport}
-              />
-            );
-          // 유저 신고 최종 확인 모달
-          case 'confirm-user-report':
-            return (
-              <ConfirmModal
-                modalText={CONFIRM_MODAL_TEXT.REPORT_USER}
-                onConfirm={handleReport}
               />
             );
           // 게시글 삭제 최종 확인 모달
