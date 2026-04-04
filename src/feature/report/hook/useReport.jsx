@@ -1,7 +1,6 @@
-import { useMutation } from '@tanstack/react-query';
-import { useLocation, useParams } from 'react-router-dom';
 import { useRef } from 'react';
-
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import { reportPost, reportUser, reportComment } from '@/apis';
 
 import { MUTATION_KEY } from '@/shared/constant';
@@ -130,4 +129,15 @@ export function useReportHandler(modal, setModal, data) {
   return {
     handleReport,
   };
+}
+
+export function useReport() {
+  const navigate = useNavigate();
+
+  const navigateReportPage = (type, ids) => {
+    const queryString = new URLSearchParams({ type, ...ids }).toString();
+    navigate(`/report/write?${queryString}`);
+  };
+
+  return { navigateReportPage };
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import { useAuth } from '@/shared/hook';
 import {
@@ -14,29 +14,19 @@ import { NotFoundPage } from '@/page/etc';
 
 import { SubmitButton, FileUploadSection } from '@/feature/support/ui';
 import { REPORT_OPTIONS } from '@/feature/support/data';
-import { REPORT_PLACEHOLDERS } from '@/feature/support/constant';
+import {
+  REPORT_PLACEHOLDERS,
+  REPORT_TYPE_TAG,
+} from '@/feature/support/constant';
 
 import { Option } from '@/types';
 
 import styles from './WriteReportPage.module.css';
 
-const VALID_REPORT_TYPES = ['post', 'comment', 'user', 'exam'] as const;
-
-type ReportType = (typeof VALID_REPORT_TYPES)[number];
-
-const REPORT_TYPE_TAG = {
-  post: '게시글',
-  exam: '시험후기',
-  comment: '댓글',
-  user: '유저',
-} as const;
-
-function isValidReportType(x: any): x is ReportType {
-  return VALID_REPORT_TYPES.includes(x);
-}
-
 export default function WriteReportPage() {
-  const { reportType } = useParams();
+  const [searchParams] = useSearchParams();
+  const { type: targetType, ...targetIds } = Object.fromEntries(searchParams);
+
   const { userInfo } = useAuth();
 
   const [selectedOption, setSelectedOption] = useState<Option | undefined>();
@@ -46,12 +36,13 @@ export default function WriteReportPage() {
   const updateOption = (option: Option) => setSelectedOption(option);
   const updateFiles = (files: File[]) => setFiles(files);
 
-  const placeholder = REPORT_PLACEHOLDERS[reportType];
-  const options = REPORT_OPTIONS[reportType];
-
-  if (!isValidReportType(reportType)) {
+  const validReportTypes = Object.keys(REPORT_TYPE_TAG);
+  if (!validReportTypes.includes(targetType)) {
     return <NotFoundPage />;
   }
+
+  const placeholder = REPORT_PLACEHOLDERS[targetType];
+  const options = REPORT_OPTIONS[targetType];
 
   if (!userInfo) {
     return null;
@@ -71,7 +62,7 @@ export default function WriteReportPage() {
       <DropdownBlue className={styles.dropdown}>
         <DropdownBlue.Trigger>
           <span className={styles.reportType}>
-            [{REPORT_TYPE_TAG[reportType]} 신고]
+            [{REPORT_TYPE_TAG[targetType]} 신고]
           </span>
           {selectedOption?.label ?? placeholder.dropdown}
         </DropdownBlue.Trigger>
