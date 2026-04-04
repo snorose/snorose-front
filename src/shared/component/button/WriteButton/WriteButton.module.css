@@ -1,8 +1,21 @@
-.button {
+.fixedWrapper {
   position: fixed;
-  right: 1.5rem;
-  bottom: 11.1rem;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: var(--z-index-write-button);
+
+  width: 100%;
+  max-width: var(--default-width);
+  height: 0;
+
+  pointer-events: none;
+}
+
+.button {
+  position: absolute;
+  right: 1.5rem;
+  bottom: calc(11.1rem + env(safe-area-inset-bottom));
 
   display: flex;
   justify-content: center;
@@ -17,10 +30,7 @@
   box-shadow: 0.4rem 0.4rem 1.9rem rgba(var(--black-rgb), 0.15);
   backdrop-filter: blur(0.7rem);
   -webkit-backdrop-filter: blur(0.7rem);
+
+  pointer-events: auto;
 }
 
-@media only screen and (min-width: 60rem) {
-  .button {
-    right: calc(100vw / 2 - 60rem / 2 + 1.5rem);
-  }
-}
