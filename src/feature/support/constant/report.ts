@@ -25,3 +25,10 @@ export const REPORT_STATUS_MAP = {
   PENDING: { label: '답변 전', variant: 'grey' },
   COMPLETED: { label: '답변 완료', variant: 'gradient' },
 } as const;
+
+export const REPORT_TYPE_TAG = {
+  post: '게시글',
+  exam: '시험후기',
+  comment: '댓글',
+  user: '유저',
+} as const;
