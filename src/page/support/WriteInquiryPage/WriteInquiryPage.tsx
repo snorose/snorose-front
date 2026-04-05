@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { useAuth } from '@/shared/hook';
 import {
   CloseAppBar,
   DropdownBlue,
@@ -8,10 +7,11 @@ import {
   TextareaFieldBlue,
   TextFieldBlue,
 } from '@/shared/component';
+import { useAuth } from '@/shared/hook';
 
-import { SubmitButton, FileUploadSection } from '@/feature/support/ui';
-import { INQUIRY_OPTIONS } from '@/feature/support/data';
 import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
+import { INQUIRY_OPTIONS } from '@/feature/support/data';
+import { FileUploadSection, SubmitButton } from '@/feature/support/ui';
 
 import { Option } from '@/types';
 
