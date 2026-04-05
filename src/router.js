@@ -1,9 +1,13 @@
 import { ROLE } from '@/shared/constant';
 import { attendanceLoader } from '@/shared/loader';
-import { NavbarLayout } from '@/shared/ui';
+import { AppLayout, NavbarLayout } from '@/shared/ui';
 
 import { CheckExamPeriodRoute } from '@/feature/exam/lib';
-import { fetchInquiry, fetchReport } from '@/feature/support/loader';
+import {
+  inquiryEditLoader,
+  reportEditLoader,
+  validateReportWriteLoader,
+} from '@/feature/support/loader';
 
 import {
   FindIdPage,
@@ -27,7 +31,7 @@ import {
   PostListPage,
   WritePostPage,
 } from '@/page/board';
-import { NotFoundPage } from '@/page/etc';
+import { ErrorPage, NotFoundPage } from '@/page/etc';
 import {
   EditEventPage,
   EventListPage,
@@ -212,6 +216,11 @@ export const routeList = [
   {
     path: '/',
     element: <App />,
+    errorElement: (
+      <AppLayout>
+        <ErrorPage />
+      </AppLayout>
+    ),
     children: [
       {
         index: true,
@@ -491,7 +500,7 @@ export const routeList = [
                 <EditInquiryPage />
               </ProtectedRoute>
             ),
-            loader: fetchInquiry,
+            loader: inquiryEditLoader,
           },
         ],
       },
@@ -500,12 +509,13 @@ export const routeList = [
         children: [
           { index: true, element: <NotFoundPage /> },
           {
-            path: 'write',
+            path: 'write/:reportType',
             element: (
               <ProtectedRoute>
                 <WriteReportPage />
               </ProtectedRoute>
             ),
+            loader: validateReportWriteLoader,
           },
           {
             path: ':postId',
@@ -522,7 +532,7 @@ export const routeList = [
                 <EditReportPage />
               </ProtectedRoute>
             ),
-            loader: fetchReport,
+            loader: reportEditLoader,
           },
         ],
       },

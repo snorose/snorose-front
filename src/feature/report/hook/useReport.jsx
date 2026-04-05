@@ -1,14 +1,16 @@
 import { useRef } from 'react';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+
 import { useMutation } from '@tanstack/react-query';
-import { reportPost, reportUser, reportComment } from '@/apis';
 
 import { MUTATION_KEY } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 import { getBoard } from '@/shared/lib';
 
-import { parseReportType } from '@/feature/report/lib/parseReportType';
 import { useCommentContext } from '@/feature/comment/context';
+import { parseReportType } from '@/feature/report/lib/parseReportType';
+
+import { reportComment, reportPost, reportUser } from '@/apis';
 
 // 공통 신고 뮤테이션 훅
 function useReportMutation(mutationKey, mutationFn) {
@@ -135,8 +137,8 @@ export function useReport() {
   const navigate = useNavigate();
 
   const navigateReportPage = (type, ids) => {
-    const queryString = new URLSearchParams({ type, ...ids }).toString();
-    navigate(`/report/write?${queryString}`);
+    const queryString = new URLSearchParams({ ...ids }).toString();
+    navigate(`/report/write/${type}?${queryString}`);
   };
 
   return { navigateReportPage };
