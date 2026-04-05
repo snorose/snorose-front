@@ -1,11 +1,8 @@
 .app {
-  width: 100vw;
-  /* min-height: 100dvh; */
   height: 100%;
-  max-width: var(--default-width);
-  margin: 0 auto;
-  position: relative;
-  background-color: var(--white);
+
   overflow-x: hidden;
   overflow-y: auto;
+
+  background-color: var(--white);
 }
