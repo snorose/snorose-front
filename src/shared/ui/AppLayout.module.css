@@ -2,7 +2,7 @@
   margin: 0 auto;
 
   max-width: var(--default-width);
-  width: 100vw;
+  width: 100%;
   height: 100%;
 
   position: relative;
