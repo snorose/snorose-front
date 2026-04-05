@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
 
+import Layout from '@/shared/ui/AppLayout';
 import { useScrollRestoration } from '@/shared/hook';
 import { Sidebar } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
@@ -49,10 +50,12 @@ function App() {
   }
 
   return (
-    <div className={styles.app} ref={appRef}>
-      <Outlet />
-      <Sidebar />
-    </div>
+    <Layout>
+      <div className={styles.app} ref={appRef}>
+        <Outlet />
+        <Sidebar />
+      </div>
+    </Layout>
   );
 }
 
