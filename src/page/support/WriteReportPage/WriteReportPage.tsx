@@ -1,31 +1,30 @@
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 
-import { useAuth } from '@/shared/hook';
 import {
   CloseAppBar,
   DropdownBlue,
   Profile,
-  TextFieldBlue,
   TextareaFieldBlue,
+  TextFieldBlue,
 } from '@/shared/component';
+import { useAuth } from '@/shared/hook';
 
-import { NotFoundPage } from '@/page/etc';
-
-import { SubmitButton, FileUploadSection } from '@/feature/support/ui';
-import { REPORT_OPTIONS } from '@/feature/support/data';
 import {
   REPORT_PLACEHOLDERS,
   REPORT_TYPE_TAG,
 } from '@/feature/support/constant';
+import { REPORT_OPTIONS } from '@/feature/support/data';
+import type { ReportParamsLoaderData } from '@/feature/support/loader';
+import { FileUploadSection, SubmitButton } from '@/feature/support/ui';
 
-import { Option } from '@/types';
+import type { Option } from '@/types';
 
 import styles from './WriteReportPage.module.css';
 
 export default function WriteReportPage() {
-  const [searchParams] = useSearchParams();
-  const { type: targetType, ...targetIds } = Object.fromEntries(searchParams);
+  const { reportType, reportParams } =
+    useLoaderData() as ReportParamsLoaderData;
 
   const { userInfo } = useAuth();
 
@@ -36,13 +35,8 @@ export default function WriteReportPage() {
   const updateOption = (option: Option) => setSelectedOption(option);
   const updateFiles = (files: File[]) => setFiles(files);
 
-  const validReportTypes = Object.keys(REPORT_TYPE_TAG);
-  if (!validReportTypes.includes(targetType)) {
-    return <NotFoundPage />;
-  }
-
-  const placeholder = REPORT_PLACEHOLDERS[targetType];
-  const options = REPORT_OPTIONS[targetType];
+  const placeholder = REPORT_PLACEHOLDERS[reportType];
+  const options = REPORT_OPTIONS[reportType];
 
   if (!userInfo) {
     return null;
@@ -62,7 +56,7 @@ export default function WriteReportPage() {
       <DropdownBlue className={styles.dropdown}>
         <DropdownBlue.Trigger>
           <span className={styles.reportType}>
-            [{REPORT_TYPE_TAG[targetType]} 신고]
+            [{REPORT_TYPE_TAG[reportType]} 신고]
           </span>
           {selectedOption?.label ?? placeholder.dropdown}
         </DropdownBlue.Trigger>

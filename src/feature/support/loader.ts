@@ -1,6 +1,39 @@
-import type { LoaderFunctionArgs } from 'react-router-dom';
+import { LoaderFunctionArgs, redirect } from 'react-router-dom';
 
-import { InquiryDTO, ReportDTO } from '@/feature/support/types';
+import { REPORT_PARAMS_SCHEMA, ReportType } from '@/feature/support/data';
+import type { InquiryDTO, ReportDTO } from '@/feature/support/types';
+
+export type ReportParamsLoaderData = Awaited<
+  ReturnType<typeof validateReportWriteLoader>
+>;
+
+export function validateReportWriteLoader({
+  params,
+  request,
+}: LoaderFunctionArgs) {
+  const { reportType } = params;
+  const url = new URL(request.url);
+
+  validateReportWriteParams(reportType, url.searchParams);
+
+  return {
+    reportType: reportType as ReportType,
+    reportParams: Object.fromEntries(url.searchParams),
+  };
+}
+
+function validateReportWriteParams(type: string, params: URLSearchParams) {
+  if (!(type in REPORT_PARAMS_SCHEMA)) {
+    throw new Response('Not Found', { status: 404 });
+  }
+
+  const schema = REPORT_PARAMS_SCHEMA[type as ReportType];
+  const missing = [...schema].filter((key) => !params.get(key));
+
+  if (missing.length > 0) {
+    throw redirect('/');
+  }
+}
 
 /**
  * TODO:
@@ -9,7 +42,7 @@ import { InquiryDTO, ReportDTO } from '@/feature/support/types';
  * - 답변 완료 후에는 접근 불가
  */
 
-export const fetchInquiry = async ({ params }: LoaderFunctionArgs) => {
+export const inquiryEditLoader = async ({ params }: LoaderFunctionArgs) => {
   const { inquiryId } = params;
   // const result = await fetch(`/v1/inquiries/${inquiryId}`);
 
@@ -42,7 +75,7 @@ export const fetchInquiry = async ({ params }: LoaderFunctionArgs) => {
  * - 처리 완료 후에는 접근 불가
  */
 
-export const fetchReport = async ({ params }: LoaderFunctionArgs) => {
+export const reportEditLoader = async ({ params }: LoaderFunctionArgs) => {
   const { reportId } = params;
 
   // const result = await fetch(`/v1/report/${reportId}`);
