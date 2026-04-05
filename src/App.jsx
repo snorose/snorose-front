@@ -4,8 +4,8 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
 
-import Layout from '@/shared/ui/AppLayout';
 import { useScrollRestoration } from '@/shared/hook';
+import { Layout } from '@/shared/ui';
 import { Sidebar } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
 
