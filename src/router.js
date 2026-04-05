@@ -1,19 +1,25 @@
-import { attendanceLoader } from '@/shared/loader';
-import { NavbarLayout } from '@/shared/ui';
 import { ROLE } from '@/shared/constant';
+import { attendanceLoader } from '@/shared/loader';
+import { AppLayout, NavbarLayout } from '@/shared/ui';
 
-import App from '@/App';
+import { CheckExamPeriodRoute } from '@/feature/exam/lib';
 import {
-  LoginPage,
+  inquiryEditLoader,
+  reportEditLoader,
+  validateReportWriteLoader,
+} from '@/feature/support/loader';
+
+import {
   FindIdPage,
   FindPwPage,
   FoundIdPage,
   FoundPwPage,
+  LoginPage,
   NotFoundIdPage,
   NotFoundPwPage,
+  SignUpFailurePage,
   SignUpPage,
   SignUpSuccessPage,
-  SignUpFailurePage,
   SnoroseVerifyPage,
 } from '@/page/account';
 import { AlertPage, AlertSettingPage, MarketingTermsPage } from '@/page/alert';
@@ -25,12 +31,12 @@ import {
   PostListPage,
   WritePostPage,
 } from '@/page/board';
-import { NotFoundPage } from '@/page/etc';
+import { ErrorPage, NotFoundPage } from '@/page/etc';
 import {
-  WriteEventPage,
   EditEventPage,
   EventListPage,
   EventPage,
+  WriteEventPage,
 } from '@/page/event';
 import {
   EditExamReviewPage,
@@ -39,6 +45,7 @@ import {
   WriteExamReviewPage,
 } from '@/page/exam';
 import { AttendancePage, MainPage } from '@/page/home';
+import { MaintenancePage } from '@/page/maintenance';
 import { SearchPage } from '@/page/search';
 import {
   AboutPage,
@@ -46,13 +53,13 @@ import {
   ServicePolicyPage,
 } from '@/page/snorose';
 import {
-  WriteInquiryPage,
   EditInquiryPage,
-  WriteReportPage,
   EditReportPage,
   FAQPage,
   InquiryDetailPage,
   ReportDetailPage,
+  WriteInquiryPage,
+  WriteReportPage,
 } from '@/page/support';
 import {
   ActivityPage,
@@ -63,11 +70,8 @@ import {
   PointLogListPage,
 } from '@/page/user';
 
+import App from '@/App';
 import ProtectedRoute from '@/ProtectedRoute';
-import { MaintenancePage } from '@/page/maintenance';
-
-import { CheckExamPeriodRoute } from '@/feature/exam/lib';
-import { fetchInquiry, fetchReport } from '@/feature/support/loader';
 
 const getRolesForReadBoard = (boardPath) => {
   switch (boardPath) {
@@ -204,6 +208,11 @@ export const routeList = [
   {
     path: '/',
     element: <App />,
+    errorElement: (
+      <AppLayout>
+        <ErrorPage />
+      </AppLayout>
+    ),
     children: [
       {
         index: true,
@@ -483,7 +492,7 @@ export const routeList = [
                 <EditInquiryPage />
               </ProtectedRoute>
             ),
-            loader: fetchInquiry,
+            loader: inquiryEditLoader,
           },
         ],
       },
@@ -492,12 +501,13 @@ export const routeList = [
         children: [
           { index: true, element: <NotFoundPage /> },
           {
-            path: 'write',
+            path: 'write/:reportType',
             element: (
               <ProtectedRoute>
                 <WriteReportPage />
               </ProtectedRoute>
             ),
+            loader: validateReportWriteLoader,
           },
           {
             path: ':postId',
@@ -514,7 +524,7 @@ export const routeList = [
                 <EditReportPage />
               </ProtectedRoute>
             ),
-            loader: fetchReport,
+            loader: reportEditLoader,
           },
         ],
       },
