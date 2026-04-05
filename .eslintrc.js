@@ -1,6 +1,6 @@
 module.exports = {
   ignorePatterns: ['node_modules', 'build', 'dist'],
-  extends: ['react-app', 'prettier'],
+  extends: ['react-app', 'react-app/jest', 'prettier'],
   plugins: ['simple-import-sort'],
   rules: {
     'simple-import-sort/imports': [
