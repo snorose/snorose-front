@@ -9,9 +9,9 @@ module.exports = {
         groups: [
           ['^react(-.*)?$'],
           ['^@?\\w'],
+          ['^@/axios/(.*)$'],
           ['^@/apis/(.*)$'],
           ['^@/shared/(.*)$'],
-          ['^@/axios/(.*)$'],
           ['^@/feature/(.*)$'],
           ['^@/page/(.*)$'],
           ['^@/assets/(.*)$'],
