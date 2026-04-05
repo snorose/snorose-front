@@ -1,1 +1,2 @@
-export { default as NotFoundPage } from './NotFoundPage/NotFoundPage.jsx';
+export { default as ErrorPage } from './ErrorPage';
+export { default as NotFoundPage } from './NotFoundPage/NotFoundPage';
