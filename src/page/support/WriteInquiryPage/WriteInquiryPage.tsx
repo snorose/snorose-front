@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { useMutation } from '@tanstack/react-query';
 
 import {
   CloseAppBar,
@@ -9,6 +12,8 @@ import {
 } from '@/shared/component';
 import { useAuth } from '@/shared/hook';
 
+import { mapFilesToAttachments } from '@/feature/attachment/lib';
+import { createInquiry } from '@/feature/support/api';
 import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 import { INQUIRY_OPTIONS } from '@/feature/support/data';
 import { FileUploadSection, SubmitButton } from '@/feature/support/ui';
@@ -18,6 +23,16 @@ import { Option } from '@/types';
 import styles from './WriteInquiryPage.module.css';
 
 export default function WriteInquiryPage() {
+  const navigate = useNavigate();
+
+  const { mutate: submitInquiry } = useMutation({
+    mutationFn: createInquiry,
+    onSuccess: async (data, variables, context) => {
+      const { postId } = data;
+      navigate(`/inquiry/${postId}`, { replace: true });
+    },
+  });
+
   const { userInfo } = useAuth();
 
   const [selectedOption, setSelectedOption] = useState<Option | undefined>();
@@ -38,7 +53,18 @@ export default function WriteInquiryPage() {
   return (
     <div className={styles.container}>
       <CloseAppBar backgroundColor={'#eaf5fd'}>
-        <SubmitButton onClick={() => alert('submit!')} disabled={disabled}>
+        <SubmitButton
+          onClick={() =>
+            submitInquiry({
+              title,
+              content,
+              inquiryCategory: selectedOption.key,
+              target: url,
+              attachments: mapFilesToAttachments(files),
+            })
+          }
+          disabled={disabled}
+        >
           등록
         </SubmitButton>
       </CloseAppBar>
