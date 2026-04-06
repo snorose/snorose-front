@@ -49,22 +49,31 @@ const queryClient = new QueryClient({
   },
 });
 
+async function enableMocking() {
+  if (process.env.NODE_ENV !== 'development') return;
+
+  const { worker } = await import('@/mock/browser');
+  return worker.start();
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <GrowthBookProvider growthbook={growthbook}>
-      <QueryClientProvider client={queryClient}>
-        <ToastProvider>
-          <ModalProvider>
-            <CommentContextProvider>
-              <RouterProvider router={router} />
-            </CommentContextProvider>
-          </ModalProvider>
-        </ToastProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </GrowthBookProvider>
-  </React.StrictMode>
-);
+enableMocking().then(() => {
+  root.render(
+    <React.StrictMode>
+      <GrowthBookProvider growthbook={growthbook}>
+        <QueryClientProvider client={queryClient}>
+          <ToastProvider>
+            <ModalProvider>
+              <CommentContextProvider>
+                <RouterProvider router={router} />
+              </CommentContextProvider>
+            </ModalProvider>
+          </ToastProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </GrowthBookProvider>
+    </React.StrictMode>
+  );
+});
 
 reportWebVitals();
