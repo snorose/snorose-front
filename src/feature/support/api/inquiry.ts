@@ -1,4 +1,42 @@
+import type { Attachment } from '@/feature/attachment/types';
+
+import { putFileInBucket } from '@/apis';
 import { authAxios } from '@/axios';
+
+export type InquiryWriteRequest = {
+  title: string;
+  content: string;
+  inquiryCategory: string;
+  target?: string;
+  attachments?: (Pick<Attachment, 'fileName' | 'fileComment' | 'type'> & {
+    file: File;
+  })[];
+};
+
+export const createInquiry = async ({
+  title,
+  content,
+  inquiryCategory,
+  target,
+  attachments = [],
+}: InquiryWriteRequest) => {
+  const response = await authAxios.post('/v1/inquiries/inquiry', {
+    title,
+    target,
+    content,
+    inquiryCategory,
+    attachments,
+  });
+
+  const { postId, attachementUrlList } = response.data.result;
+
+  if (attachments.length > 0) {
+    const files = attachments.map(({ file }) => file);
+    await putFileInBucket(attachementUrlList, files);
+  }
+
+  return { postId };
+};
 
 export const fetchInquiry = async (inquiryId) => {
   // const response = await authAxios.get(`/v1/inquiries/${inquiryId}`);
