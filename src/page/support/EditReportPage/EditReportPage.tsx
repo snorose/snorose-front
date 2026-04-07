@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 
-import { useAuth } from '@/shared/hook';
 import {
   CloseAppBar,
   DropdownBlue,
@@ -9,14 +8,15 @@ import {
   TextareaFieldBlue,
   TextFieldBlue,
 } from '@/shared/component';
+import { useAuth } from '@/shared/hook';
 
-import { FileUploadSection, SubmitButton } from '@/feature/support/ui';
+import type { Attachment } from '@/feature/attachment/types';
 import { REPORT_PLACEHOLDERS } from '@/feature/support/constant';
 import { REPORT_OPTIONS } from '@/feature/support/data';
+import type { ReportDTO } from '@/feature/support/types';
+import { FileUploadSection, SubmitButton } from '@/feature/support/ui';
 
 import type { Option } from '@/types';
-import type { ReportDTO } from '@/feature/support/types';
-import type { Attachment } from '@/feature/attachment/types';
 
 import styles from './EditReportPage.module.css';
 
@@ -49,10 +49,13 @@ export default function EditReportPage() {
   );
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
-  const [files, setFiles] = useState<(File | Attachment)[]>(post.attachments);
+  const [attachments, setAttachments] = useState<Attachment[]>(
+    post.attachments
+  );
+  const [files, setFiles] = useState<File[]>([]);
 
   const updateOption = (option: Option) => setSelectedOption(option);
-  const updateFiles = (files: (File | Attachment)[]) => setFiles(files);
+  const updateFiles = (files: File[]) => setFiles(files);
 
   const placeholder = REPORT_PLACEHOLDERS[reportType];
   const options = REPORT_OPTIONS[reportType];
@@ -116,7 +119,10 @@ export default function EditReportPage() {
           />
         </TextareaFieldBlue>
 
-        <FileUploadSection files={files} updateFiles={updateFiles} />
+        <FileUploadSection
+          fileNames={files.map((file) => file.name)}
+          updateFiles={updateFiles}
+        />
       </div>
     </div>
   );
