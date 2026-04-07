@@ -30,6 +30,14 @@ export default function FileUploadSection({
             return;
           }
 
+          if (fileNames.length + files.length > 3) {
+            toast({
+              message: '이미지는 3개까지 업로드할 수 있어요',
+              variant: 'info',
+            });
+            return;
+          }
+
           updateFiles(files);
         }}
         multiple
