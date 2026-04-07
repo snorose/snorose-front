@@ -99,7 +99,14 @@ export default function WriteReportPage() {
           />
         </TextareaFieldBlue>
 
-        <FileUploadSection fileCount={files.length} updateFiles={updateFiles} />
+        <FileUploadSection
+          currentFileCount={files.length}
+          curruentTotalFileSize={files.reduce(
+            (total, { file }) => total + file.size,
+            0
+          )}
+          updateFiles={updateFiles}
+        />
       </div>
     </div>
   );
