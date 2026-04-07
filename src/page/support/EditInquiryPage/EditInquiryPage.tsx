@@ -10,7 +10,7 @@ import {
 } from '@/shared/component';
 import { useAuth } from '@/shared/hook';
 
-import type { Attachment } from '@/feature/attachment/types';
+import type { Attachment, UploadFile } from '@/feature/attachment/types';
 import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 import { INQUIRY_OPTIONS } from '@/feature/support/data';
 import type { InquiryDTO } from '@/feature/support/types';
@@ -34,10 +34,10 @@ export default function EditInquiryPage() {
   const [attachments, setAttachments] = useState<Attachment[]>(
     post.attachments
   );
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<UploadFile[]>([]);
 
   const updateOption = (option: Option) => setSelectedOption(option);
-  const updateFiles = (files: File[]) => setFiles(files);
+  const updateFiles = (files: UploadFile[]) => setFiles(files);
 
   const disabled = title.trim() === '' || content.trim() === '';
 
@@ -105,7 +105,7 @@ export default function EditInquiryPage() {
         </TextareaFieldBlue>
 
         <FileUploadSection
-          fileNames={files.map((file) => file.name)}
+          fileCount={attachments.length + files.length}
           updateFiles={updateFiles}
         />
       </div>

@@ -10,6 +10,7 @@ import {
 } from '@/shared/component';
 import { useAuth } from '@/shared/hook';
 
+import type { UploadFile } from '@/feature/attachment/types';
 import {
   REPORT_PLACEHOLDERS,
   REPORT_TYPE_TAG,
@@ -31,9 +32,9 @@ export default function WriteReportPage() {
   const [selectedOption, setSelectedOption] = useState<Option | undefined>();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<UploadFile[]>([]);
   const updateOption = (option: Option) => setSelectedOption(option);
-  const updateFiles = (files: File[]) => setFiles(files);
+  const updateFiles = (files: UploadFile[]) => setFiles(files);
 
   const placeholder = REPORT_PLACEHOLDERS[reportType];
   const options = REPORT_OPTIONS[reportType];
@@ -98,10 +99,7 @@ export default function WriteReportPage() {
           />
         </TextareaFieldBlue>
 
-        <FileUploadSection
-          fileNames={files.map((file) => file.name)}
-          updateFiles={updateFiles}
-        />
+        <FileUploadSection fileCount={files.length} updateFiles={updateFiles} />
       </div>
     </div>
   );
