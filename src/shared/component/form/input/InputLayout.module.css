@@ -48,7 +48,9 @@
 }
 .container.valid input:-webkit-autofill {
   box-shadow: 0 0 0px 1000px var(--blue-0) inset;
+  -webkit-text-fill-color: var(--blue-4);
 }
 .container.error input:-webkit-autofill {
   box-shadow: 0 0 0px 1000px var(--pink-1) inset;
+  -webkit-text-fill-color: var(--pink-3);
 }
