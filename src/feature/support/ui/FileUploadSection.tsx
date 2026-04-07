@@ -1,6 +1,7 @@
 import { useId } from 'react';
 
 import { Icon } from '@/shared/component';
+import { useToast } from '@/shared/hook';
 
 import styles from './FileUploadSection.module.css';
 
@@ -12,6 +13,7 @@ export default function FileUploadSection({
   updateFiles: (file: File[]) => void;
 }) {
   const id = useId();
+  const { toast } = useToast();
 
   return (
     <label htmlFor={id} className={styles.container}>
@@ -19,7 +21,17 @@ export default function FileUploadSection({
         className={styles.srOnly}
         id={id}
         type='file'
-        onChange={(e) => updateFiles(Array.from(e.target.files))}
+        accept='image/*'
+        onChange={(e) => {
+          const files = Array.from(e.target.files);
+
+          if (files.some((file) => !file.type.startsWith('image/'))) {
+            toast({ message: '이미지만 업로드할 수 있어요', variant: 'info' });
+            return;
+          }
+
+          updateFiles(files);
+        }}
         multiple
       />
 
