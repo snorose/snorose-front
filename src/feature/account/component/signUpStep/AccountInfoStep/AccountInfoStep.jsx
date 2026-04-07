@@ -42,9 +42,9 @@ export default function AccountInfoStep({ formData, setFormData, setStage }) {
     },
     {
       type: 'email',
-      label: '숙명 구글 이메일',
+      label: '숙명 이메일',
       id: 'email',
-      placeholder: 'example@sookmyung.ac.kr',
+      placeholder: 'sample@sookmyung.ac.kr',
       value: formData.email,
       onChange: (next) =>
         setFormData((prev) => ({
@@ -72,7 +72,7 @@ export default function AccountInfoStep({ formData, setFormData, setStage }) {
       type: 'password',
       label: '비밀번호',
       id: 'password',
-      placeholder: '비밀번호를 입력해 주세요',
+      placeholder: '비밀번호를 입력해주세요',
       value: formData.password,
       onChange: (next) =>
         setFormData((prev) => ({
