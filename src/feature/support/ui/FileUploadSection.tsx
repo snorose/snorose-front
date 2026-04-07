@@ -7,11 +7,15 @@ import type { UploadFile } from '@/feature/attachment/types';
 
 import styles from './FileUploadSection.module.css';
 
+const LIMIT_SIZE = 10 * 1024 * 1024;
+
 export default function FileUploadSection({
-  fileCount,
+  currentFileCount,
+  curruentTotalFileSize,
   updateFiles,
 }: {
-  fileCount: number;
+  currentFileCount: number;
+  curruentTotalFileSize: number;
   updateFiles: (file: UploadFile[]) => void;
 }) {
   const id = useId();
@@ -25,14 +29,14 @@ export default function FileUploadSection({
         type='file'
         accept='image/*'
         onChange={(e) => {
-          const files = Array.from(e.target.files);
+          const selectedFiles = Array.from(e.target.files);
 
-          if (files.some((file) => !file.type.startsWith('image/'))) {
+          if (selectedFiles.some((file) => !file.type.startsWith('image/'))) {
             toast({ message: '이미지만 업로드할 수 있어요', variant: 'info' });
             return;
           }
 
-          if (fileCount + files.length > 3) {
+          if (currentFileCount + selectedFiles.length > 3) {
             toast({
               message: '이미지는 3개까지 업로드할 수 있어요',
               variant: 'info',
@@ -40,7 +44,21 @@ export default function FileUploadSection({
             return;
           }
 
-          updateFiles(files.map((file) => ({ file, id: crypto.randomUUID() })));
+          const selectedFilesSize = selectedFiles.reduce(
+            (total, { size }) => total + size,
+            0
+          );
+          if (curruentTotalFileSize + selectedFilesSize > LIMIT_SIZE) {
+            toast({
+              message: '10MB까지 올릴 수 있어요',
+              variant: 'info',
+            });
+            return;
+          }
+
+          updateFiles(
+            selectedFiles.map((file) => ({ file, id: crypto.randomUUID() }))
+          );
         }}
         multiple
       />
