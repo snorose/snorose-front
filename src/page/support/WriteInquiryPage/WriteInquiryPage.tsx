@@ -6,6 +6,7 @@ import { useMutation } from '@tanstack/react-query';
 import {
   CloseAppBar,
   DropdownBlue,
+  Icon,
   Profile,
   TextareaFieldBlue,
   TextFieldBlue,
@@ -13,6 +14,7 @@ import {
 import { useAuth } from '@/shared/hook';
 
 import { mapFileToAttachment } from '@/feature/attachment/lib';
+import type { UploadFile } from '@/feature/attachment/types';
 import { createInquiry } from '@/feature/support/api';
 import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 import { INQUIRY_OPTIONS } from '@/feature/support/data';
@@ -39,9 +41,12 @@ export default function WriteInquiryPage() {
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
   const [content, setContent] = useState('');
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<UploadFile[]>([]);
+
   const updateOption = (option: Option) => setSelectedOption(option);
-  const updateFiles = (files: File[]) => setFiles(files);
+  const updateFiles = (files: UploadFile[]) => setFiles(files);
+  const handleRemoveFile = (targetId: string) =>
+    setFiles((prev) => prev.filter((file) => file.id !== targetId));
 
   const disabled =
     !selectedOption || title.trim() === '' || content.trim() === '';
@@ -120,11 +125,29 @@ export default function WriteInquiryPage() {
           />
         </TextareaFieldBlue>
 
-        <FileUploadSection
-          fileNames={files.map((file) => file.name)}
-          updateFiles={updateFiles}
-        />
+        <FileUploadSection fileCount={files.length} updateFiles={updateFiles} />
+
+        <div className={styles.fileList}>
+          {files.map(({ id, file }) => (
+            <Item
+              key={id}
+              name={file.name}
+              onClick={() => handleRemoveFile(id)}
+            />
+          ))}
+        </div>
       </div>
+    </div>
+  );
+}
+
+function Item({ name, onClick }: { name: string; onClick: () => void }) {
+  return (
+    <div className={styles.fileItem}>
+      <div>{name}</div>
+      <span onClick={onClick}>
+        <Icon id='x' width={12} height={12} />
+      </span>
     </div>
   );
 }
