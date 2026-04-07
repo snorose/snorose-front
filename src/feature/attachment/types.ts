@@ -5,3 +5,8 @@ export type Attachment = {
   fileName: string;
   fileComment: string;
 };
+
+export type UploadFile = {
+  id: string;
+  file: File;
+};

@@ -3,14 +3,16 @@ import { useId } from 'react';
 import { Icon } from '@/shared/component';
 import { useToast } from '@/shared/hook';
 
+import type { UploadFile } from '@/feature/attachment/types';
+
 import styles from './FileUploadSection.module.css';
 
 export default function FileUploadSection({
-  fileNames,
+  fileCount,
   updateFiles,
 }: {
-  fileNames: string[];
-  updateFiles: (file: File[]) => void;
+  fileCount: number;
+  updateFiles: (file: UploadFile[]) => void;
 }) {
   const id = useId();
   const { toast } = useToast();
@@ -30,7 +32,7 @@ export default function FileUploadSection({
             return;
           }
 
-          if (fileNames.length + files.length > 3) {
+          if (fileCount + files.length > 3) {
             toast({
               message: '이미지는 3개까지 업로드할 수 있어요',
               variant: 'info',
@@ -38,7 +40,7 @@ export default function FileUploadSection({
             return;
           }
 
-          updateFiles(files);
+          updateFiles(files.map((file) => ({ file, id: crypto.randomUUID() })));
         }}
         multiple
       />
@@ -49,13 +51,7 @@ export default function FileUploadSection({
       </div>
 
       <div className={styles.right}>
-        {fileNames.length > 0 && (
-          <span className={styles.fileName}>{fileNames.join(', ')}</span>
-        )}
-
-        {fileNames.length === 0 && (
-          <span className={styles.placeholder}>파일을 첨부하세요</span>
-        )}
+        <span className={styles.placeholder}>파일을 첨부하세요</span>
       </div>
     </label>
   );

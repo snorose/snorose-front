@@ -1,7 +1,9 @@
+import type { UploadFile } from '@/feature/attachment/types';
+
 const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
 const VIDEO_EXTENSIONS = ['mp4', 'mov', 'avi', 'webm', 'wmv'];
 
-export const mapFileToAttachment = (file: File) => ({
+export const mapFileToAttachment = ({ file }: UploadFile) => ({
   file,
   id: null,
   url: '',
