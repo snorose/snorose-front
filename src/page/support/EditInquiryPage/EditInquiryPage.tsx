@@ -105,7 +105,11 @@ export default function EditInquiryPage() {
         </TextareaFieldBlue>
 
         <FileUploadSection
-          fileCount={attachments.length + files.length}
+          currentFileCount={attachments.length + files.length}
+          curruentTotalFileSize={files.reduce(
+            (total, { file }) => total + file.size,
+            0
+          )}
           updateFiles={updateFiles}
         />
       </div>
