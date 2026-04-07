@@ -10,7 +10,7 @@ import {
 } from '@/shared/component';
 import { useAuth } from '@/shared/hook';
 
-import type { Attachment } from '@/feature/attachment/types';
+import type { Attachment, UploadFile } from '@/feature/attachment/types';
 import { REPORT_PLACEHOLDERS } from '@/feature/support/constant';
 import { REPORT_OPTIONS } from '@/feature/support/data';
 import type { ReportDTO } from '@/feature/support/types';
@@ -52,10 +52,10 @@ export default function EditReportPage() {
   const [attachments, setAttachments] = useState<Attachment[]>(
     post.attachments
   );
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<UploadFile[]>([]);
 
   const updateOption = (option: Option) => setSelectedOption(option);
-  const updateFiles = (files: File[]) => setFiles(files);
+  const updateFiles = (files: UploadFile[]) => setFiles(files);
 
   const placeholder = REPORT_PLACEHOLDERS[reportType];
   const options = REPORT_OPTIONS[reportType];
@@ -120,7 +120,7 @@ export default function EditReportPage() {
         </TextareaFieldBlue>
 
         <FileUploadSection
-          fileNames={files.map((file) => file.name)}
+          fileCount={attachments.length + files.length}
           updateFiles={updateFiles}
         />
       </div>
