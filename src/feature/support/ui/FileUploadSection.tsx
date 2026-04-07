@@ -2,16 +2,14 @@ import { useId } from 'react';
 
 import { Icon } from '@/shared/component';
 
-import { Attachment } from '@/feature/attachment/types';
-
 import styles from './FileUploadSection.module.css';
 
 export default function FileUploadSection({
-  files,
+  fileNames,
   updateFiles,
 }: {
-  files: (File | Attachment)[];
-  updateFiles: (files: (File | Attachment)[]) => void;
+  fileNames: string[];
+  updateFiles: (file: File[]) => void;
 }) {
   const id = useId();
 
@@ -31,21 +29,11 @@ export default function FileUploadSection({
       </div>
 
       <div className={styles.right}>
-        {files.length > 0 && (
-          <span className={styles.fileName}>
-            {files
-              .map((file) => {
-                if ('url' in file) {
-                  return file.fileName;
-                }
-
-                return file.name;
-              })
-              .join(', ')}
-          </span>
+        {fileNames.length > 0 && (
+          <span className={styles.fileName}>{fileNames.join(', ')}</span>
         )}
 
-        {files.length === 0 && (
+        {fileNames.length === 0 && (
           <span className={styles.placeholder}>파일을 첨부하세요</span>
         )}
       </div>
