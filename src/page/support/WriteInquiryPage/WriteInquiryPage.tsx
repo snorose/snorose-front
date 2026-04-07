@@ -44,7 +44,8 @@ export default function WriteInquiryPage() {
   const [files, setFiles] = useState<UploadFile[]>([]);
 
   const updateOption = (option: Option) => setSelectedOption(option);
-  const updateFiles = (files: UploadFile[]) => setFiles(files);
+  const updateFiles = (files: UploadFile[]) =>
+    setFiles((prev) => [...prev, ...files]);
   const handleRemoveFile = (targetId: string) =>
     setFiles((prev) => prev.filter((file) => file.id !== targetId));
 
@@ -125,7 +126,14 @@ export default function WriteInquiryPage() {
           />
         </TextareaFieldBlue>
 
-        <FileUploadSection fileCount={files.length} updateFiles={updateFiles} />
+        <FileUploadSection
+          currentFileCount={files.length}
+          curruentTotalFileSize={files.reduce(
+            (total, { file }) => total + file.size,
+            0
+          )}
+          updateFiles={updateFiles}
+        />
 
         <div className={styles.fileList}>
           {files.map(({ id, file }) => (
