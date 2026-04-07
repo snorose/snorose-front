@@ -12,7 +12,7 @@ import {
 } from '@/shared/component';
 import { useAuth } from '@/shared/hook';
 
-import { mapFilesToAttachments } from '@/feature/attachment/lib';
+import { mapFileToAttachment } from '@/feature/attachment/lib';
 import { createInquiry } from '@/feature/support/api';
 import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 import { INQUIRY_OPTIONS } from '@/feature/support/data';
@@ -27,7 +27,7 @@ export default function WriteInquiryPage() {
 
   const { mutate: submitInquiry } = useMutation({
     mutationFn: createInquiry,
-    onSuccess: async (data, variables, context) => {
+    onSuccess: async (data) => {
       const { postId } = data;
       navigate(`/inquiry/${postId}`, { replace: true });
     },
@@ -60,7 +60,7 @@ export default function WriteInquiryPage() {
               content,
               inquiryCategory: selectedOption.key,
               target: url,
-              attachments: mapFilesToAttachments(files),
+              attachments: files.map(mapFileToAttachment),
             })
           }
           disabled={disabled}
@@ -120,7 +120,10 @@ export default function WriteInquiryPage() {
           />
         </TextareaFieldBlue>
 
-        <FileUploadSection files={files} updateFiles={updateFiles} />
+        <FileUploadSection
+          fileNames={files.map((file) => file.name)}
+          updateFiles={updateFiles}
+        />
       </div>
     </div>
   );
