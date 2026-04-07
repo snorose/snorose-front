@@ -98,7 +98,10 @@ export default function WriteReportPage() {
           />
         </TextareaFieldBlue>
 
-        <FileUploadSection files={files} updateFiles={updateFiles} />
+        <FileUploadSection
+          fileNames={files.map((file) => file.name)}
+          updateFiles={updateFiles}
+        />
       </div>
     </div>
   );
