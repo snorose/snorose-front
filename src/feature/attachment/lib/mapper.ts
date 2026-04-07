@@ -1,13 +1,14 @@
 const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
 const VIDEO_EXTENSIONS = ['mp4', 'mov', 'avi', 'webm', 'wmv'];
 
-export const mapFilesToAttachments = (files: File[]) =>
-  files.map((file) => ({
-    file,
-    fileName: file.name,
-    fileComment: '',
-    type: getMediaType(file),
-  }));
+export const mapFileToAttachment = (file: File) => ({
+  file,
+  id: null,
+  url: '',
+  fileName: file.name,
+  fileComment: '',
+  type: getMediaType(file),
+});
 
 const getMediaType = (file: File): 'PHOTO' | 'VIDEO' => {
   const { type: mimeType, name: fileName } = file;
