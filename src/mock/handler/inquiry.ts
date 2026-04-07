@@ -9,7 +9,7 @@ export const inquiryHandlers = [
     const attachments = body.attachments || [];
 
     // 첨부파일 개수 초과
-    if (attachments.length > 5) {
+    if (attachments.length > 3) {
       return HttpResponse.json(
         {
           isSuccess: false,
