@@ -8,9 +8,7 @@ export type InquiryWriteRequest = {
   content: string;
   inquiryCategory: string;
   target?: string;
-  attachments?: (Pick<Attachment, 'fileName' | 'fileComment' | 'type'> & {
-    file: File;
-  })[];
+  attachments?: (Attachment & { file: File })[];
 };
 
 export const createInquiry = async ({
@@ -25,14 +23,18 @@ export const createInquiry = async ({
     target,
     content,
     inquiryCategory,
-    attachments,
+    attachments: attachments.map(({ fileName, fileComment, type }) => ({
+      fileName,
+      fileComment,
+      type,
+    })),
   });
 
-  const { postId, attachementUrlList } = response.data.result;
+  const { postId, attachmentUrlList } = response.data.result;
 
-  if (attachments.length > 0) {
+  if (attachmentUrlList.length > 0) {
     const files = attachments.map(({ file }) => file);
-    await putFileInBucket(attachementUrlList, files);
+    await putFileInBucket(attachmentUrlList, files);
   }
 
   return { postId };
