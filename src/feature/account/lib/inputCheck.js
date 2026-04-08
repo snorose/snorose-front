@@ -37,14 +37,14 @@ export function validateId(value = '') {
     return 'default';
   }
 
-  if (pathname === 'signup') {
-    //회원가입에서는 문자 개수 제한 validate 적용
-    if (format.test(value) && value.length >= 5 && value.length <= 30) {
-      return 'valid';
-    }
-  } else if (pathname === 'find-pw') {
+  if (pathname === 'find-pw') {
     //비밀번호찾기에서는 문자 개수 제한 validate 적용 안 함 (과거 회원 고려)
     if (format.test(value)) {
+      return 'valid';
+    }
+  } else {
+    if (format.test(value) && value.length >= 5 && value.length <= 30) {
+      //그 외 페이지에서는 문자 개수 제한 validate 적용
       return 'valid';
     }
   }
