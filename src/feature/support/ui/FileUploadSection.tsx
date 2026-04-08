@@ -32,15 +32,21 @@ export default function FileUploadSection({
           const selectedFiles = Array.from(e.target.files);
 
           if (selectedFiles.some((file) => !file.type.startsWith('image/'))) {
+            e.target.value = '';
+
             toast({ message: '이미지만 업로드할 수 있어요', variant: 'info' });
+
             return;
           }
 
           if (currentFileCount + selectedFiles.length > 3) {
+            e.target.value = '';
+
             toast({
               message: '이미지는 3개까지 업로드할 수 있어요',
               variant: 'info',
             });
+
             return;
           }
 
@@ -49,10 +55,36 @@ export default function FileUploadSection({
             0
           );
           if (curruentTotalFileSize + selectedFilesSize > LIMIT_SIZE) {
+            e.target.value = '';
+
             toast({
               message: '10MB까지 올릴 수 있어요',
               variant: 'info',
             });
+
+            return;
+          }
+
+          const invalidCharsRegex = /[^\p{L}\p{N} ~!@$^&()\-_=\[\]{};`',.]/gu;
+          const invalidCharsFound = new Set();
+
+          selectedFiles.forEach(({ name }) => {
+            const matches = name.match(invalidCharsRegex);
+            if (matches) {
+              matches.forEach((char) => invalidCharsFound.add(char));
+            }
+          });
+
+          if (invalidCharsFound.size > 0) {
+            e.target.value = '';
+
+            const invalidCharsString = Array.from(invalidCharsFound).join(', ');
+
+            toast({
+              message: `앗! 파일 이름에서 다음 문자를 지워주세요 ${invalidCharsString} `,
+              variant: 'info',
+            });
+
             return;
           }
 
