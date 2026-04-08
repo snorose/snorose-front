@@ -29,7 +29,7 @@ export default function WriteInquiryPage() {
 
   const { mutate: submitInquiry } = useMutation({
     mutationFn: createInquiry,
-    onSuccess: async (data) => {
+    onSuccess: (data) => {
       const { postId } = data;
       navigate(`/inquiry/${postId}`, { replace: true });
     },
