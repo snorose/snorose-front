@@ -225,7 +225,7 @@ export default function WriteExamReviewPage() {
           <TextInput
             id='lectureName'
             value={lectureName}
-            onChange={(next) => setLectureName(next.replace(/ /g, ''))}
+            onChange={(next) => setLectureName(next.replace(/\s/g, ''))}
             placeholder='강의명을 입력해주세요'
           />
         </div>
