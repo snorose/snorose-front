@@ -1,7 +1,8 @@
 .container {
   padding-top: var(--default-appbar-height);
 
-  height: 100dvh;
+  min-height: 100dvh;
+
   background-color: var(--blue-0);
 }
 
