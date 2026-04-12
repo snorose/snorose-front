@@ -3,11 +3,13 @@ import { useId } from 'react';
 import { Icon } from '@/shared/component';
 import { useToast } from '@/shared/hook';
 
+import { INVALID_NAME_REGEX } from '@/feature/attachment/lib/attachment';
 import type { UploadFile } from '@/feature/attachment/types';
 
 import styles from './FileUploadSection.module.css';
 
-const LIMIT_SIZE = 10 * 1024 * 1024;
+const MAX_FILE_COUNT = 3;
+const MAX_TOTAL_FILE_SIZE = 10 * 1024 * 1024;
 
 export default function FileUploadSection({
   currentFileCount,
@@ -39,11 +41,11 @@ export default function FileUploadSection({
             return;
           }
 
-          if (currentFileCount + selectedFiles.length > 3) {
+          if (currentFileCount + selectedFiles.length > MAX_FILE_COUNT) {
             e.target.value = '';
 
             toast({
-              message: '이미지는 3개까지 업로드할 수 있어요',
+              message: `이미지는 ${MAX_FILE_COUNT}개까지 업로드할 수 있어요`,
               variant: 'info',
             });
 
@@ -54,7 +56,7 @@ export default function FileUploadSection({
             (total, { size }) => total + size,
             0
           );
-          if (curruentTotalFileSize + selectedFilesSize > LIMIT_SIZE) {
+          if (curruentTotalFileSize + selectedFilesSize > MAX_TOTAL_FILE_SIZE) {
             e.target.value = '';
 
             toast({
@@ -65,11 +67,10 @@ export default function FileUploadSection({
             return;
           }
 
-          const invalidCharsRegex = /[^\p{L}\p{N} ~!@$^&()\-_=\[\]{};`',.]/gu;
           const invalidCharsFound = new Set();
 
           selectedFiles.forEach(({ name }) => {
-            const matches = name.match(invalidCharsRegex);
+            const matches = name.match(INVALID_NAME_REGEX);
             if (matches) {
               matches.forEach((char) => invalidCharsFound.add(char));
             }
