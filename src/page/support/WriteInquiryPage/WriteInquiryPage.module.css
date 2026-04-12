@@ -1,7 +1,8 @@
 .container {
   padding-top: var(--default-appbar-height);
 
-  height: 100dvh;
+  min-height: 100dvh;
+
   background-color: var(--blue-0);
 }
 
@@ -18,7 +19,7 @@
 }
 
 .fileList {
-  margin-right: var(--default-margin);
+  margin: 0 var(--default-margin) 5rem var(--default-margin);
 
   display: flex;
   flex-direction: column;
