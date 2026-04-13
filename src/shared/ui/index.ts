@@ -1,3 +1,4 @@
+export { default as AppLayout } from './AppLayout';
 export { default as NavbarLayout } from './NavbarLayout';
 export { default as PostListPageSelector } from './PostListPageSelector';
 export { default as PostPageSelector } from './PostPageSelector';

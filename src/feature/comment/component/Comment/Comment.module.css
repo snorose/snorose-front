@@ -4,6 +4,8 @@
   flex-direction: column;
   border-radius: 0.5rem;
   background: var(--grey-1);
+
+  position: relative;
 }
 
 .comment.focused {
@@ -56,7 +58,7 @@
 
 .dot3 {
   position: absolute;
-  right: 2.6rem;
+  right: 0.6rem;
   display: flex;
   justify-content: center;
   align-items: center;
