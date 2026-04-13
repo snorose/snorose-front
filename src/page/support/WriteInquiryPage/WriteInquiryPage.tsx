@@ -11,7 +11,7 @@ import {
   TextareaFieldBlue,
   TextFieldBlue,
 } from '@/shared/component';
-import { useAuth } from '@/shared/hook';
+import { useAuth, useToast } from '@/shared/hook';
 
 import { mapFileToAttachment } from '@/feature/attachment/lib';
 import type { UploadFile } from '@/feature/attachment/types';
@@ -26,12 +26,16 @@ import styles from './WriteInquiryPage.module.css';
 
 export default function WriteInquiryPage() {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const { mutate: submitInquiry } = useMutation({
     mutationFn: createInquiry,
     onSuccess: (data) => {
       const { postId } = data;
       navigate(`/inquiry/${postId}`, { replace: true });
+    },
+    onError: (error) => {
+      toast({ message: error.message, variant: 'error' });
     },
   });
 
