@@ -18,6 +18,7 @@ import {
 } from 'react-icons/fa';
 import { ChromePicker } from 'react-color';
 import styles from './FixedMenuEditor.module.css';
+import { Plugin } from 'prosemirror-state';
 
 const PRESET_COLORS = [
   { label: '기본', value: 'var(--grey-4)' },
@@ -92,6 +93,7 @@ export default function FixedMenuEditor({ editor }) {
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
+    
   }, []);
 
   if (!editor) return null;
