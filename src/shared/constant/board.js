@@ -1,19 +1,19 @@
 import besookt from '@/assets/images/besookt-board-page.svg';
+import event from '@/assets/images/event-board-page.svg';
+import eventMain from '@/assets/images/event-main.svg';
 import financeAudit from '@/assets/images/financeAudit-board-page.svg';
 import firstSnow from '@/assets/images/firstSnow-board-page.svg';
+import firstSnowMain from '@/assets/images/firstSnow-main.svg';
 import graduationPreparation from '@/assets/images/graduationPreparation-board-page.svg';
 import largeSnow from '@/assets/images/largeSnow-board-page.svg';
-import permanentSnow from '@/assets/images/permanentSnow-board-page.svg';
-import studentCouncil from '@/assets/images/studentCouncil-board-page.svg';
-import event from '@/assets/images/event-board-page.svg';
-
-import firstSnowMain from '@/assets/images/firstSnow-main.svg';
 import largeSnowMain from '@/assets/images/largeSnow-main.svg';
+import permanentSnow from '@/assets/images/permanentSnow-board-page.svg';
 import permanentSnowMain from '@/assets/images/permanentSnow-main.svg';
-import eventMain from '@/assets/images/event-main.svg';
+import studentCouncil from '@/assets/images/studentCouncil-board-page.svg';
 
 export const BOARD_ID = Object.freeze({
   all: 0, // 프론트에서만 사용하는 보드 ID
+  inquiryAndReport: 13,
   event: 14,
   besookt: 20,
   'first-snow': 21,
