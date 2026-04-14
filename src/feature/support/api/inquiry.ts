@@ -42,13 +42,15 @@ export const createInquiry = async ({
 
     return { postId };
   } catch (error) {
-    const { response } = error;
+    const response = error?.response;
 
     if (!response) {
       throw new Error('네트워크 통신 중 오류가 발생했어요');
     }
 
     switch (response.status) {
+      case 400:
+        throw new Error('첨부파일은 최대 3개까지 업로드할 수 있어요');
       case 403:
         throw new Error('문의 작성 권한이 없어요');
       default:
