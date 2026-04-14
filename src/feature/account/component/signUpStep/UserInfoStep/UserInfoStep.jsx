@@ -68,20 +68,6 @@ export default function UserInfoStep({ setFormData, formData }) {
       message: '학번은 7자리 숫자예요',
     },
     {
-      type: 'text',
-      label: '생년월일',
-      id: 'birthday',
-      placeholder: 'YYYY-MM-DD',
-      value: formData.birthday,
-      onChange: (next) =>
-        setFormData((prev) => ({
-          ...prev,
-          birthday: next,
-        })),
-      validate: validateBirthday,
-      message: '입력 형식을 확인해 주세요',
-    },
-    {
       type: 'dropdown',
       label: '전공',
       id: 'major',
@@ -94,6 +80,25 @@ export default function UserInfoStep({ setFormData, formData }) {
           major: option.name,
         }));
       },
+    },
+    {
+      type: 'text',
+      label: '생년월일',
+      id: 'birthday',
+      placeholder: 'YYYY-MM-DD',
+      value: formData.birthday,
+      onChange: (next) => {
+        const digits = next.replace(/\D/g, '').slice(0, 8);
+        const formatted =
+          digits.length <= 4
+            ? digits
+            : digits.length <= 6
+              ? `${digits.slice(0, 4)}-${digits.slice(4)}`
+              : `${digits.slice(0, 4)}-${digits.slice(4, 6)}-${digits.slice(6)}`;
+        setFormData((prev) => ({ ...prev, birthday: formatted }));
+      },
+      validate: validateBirthday,
+      message: '입력 형식을 확인해 주세요',
     },
   ];
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { BackAppBar, Button } from '@/shared/component';
+import { BackAppBar, Button, NewButton } from '@/shared/component';
 
 import { emailSendIllustration } from '@/assets/illustrations';
 
@@ -51,16 +51,13 @@ export default function FoundPwPage() {
         />
       </div>
       <div className={styles.pageBottomFrame}>
-        <Link to='/login'>
-          <div className={styles.loginButton}>
-            <Button btnName='로그인하기' className='right' />
-          </div>
-        </Link>
-        <Link to='/find-id'>
-          <div className={styles.findIdButton}>
-            <Button btnName='아이디를 잊어버렸어요' className='ready' />
-          </div>
-        </Link>
+        <NewButton onClick={() => navigate('/login')}>완료</NewButton>
+        <NewButton
+          onClick={() => navigate('/find-id')}
+          variant='outlinedSecondary'
+        >
+          아이디를 잊어버렸어요
+        </NewButton>
       </div>
     </div>
   );

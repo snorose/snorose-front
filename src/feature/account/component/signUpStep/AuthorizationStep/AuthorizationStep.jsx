@@ -40,7 +40,7 @@ export default function AuthorizationStep({ email, setStage }) {
       <div>
         <p className={styles.title}>
           이메일 인증을 <br />
-          완료해 주세요
+          완료해주세요
         </p>
         <p className={styles.text}>
           숙명 구글 이메일로 확인 코드를 보내드렸어요
@@ -50,7 +50,7 @@ export default function AuthorizationStep({ email, setStage }) {
           <Label htmlFor='authNum'>확인 코드</Label>
           <TextInput
             id='authNum'
-            placeholder='확인 코드를 입력해 주세요'
+            placeholder='확인 코드를 입력해주세요'
             value={authNum}
             onChange={(next) => setAuthNum(next)}
           />

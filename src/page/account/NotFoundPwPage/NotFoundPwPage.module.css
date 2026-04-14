@@ -2,6 +2,7 @@
   height: 100vh;
 
   padding-top: var(--default-appbar-height);
+  padding-bottom: 4rem;
 
   display: flex;
   flex-direction: column;
@@ -39,6 +40,7 @@
 .pageBottomFrame {
   display: flex;
   flex-direction: column;
+  gap: 1.2rem;
 }
 
 .img {
@@ -46,13 +48,4 @@
   height: 23.2rem;
   margin-bottom: 3rem;
   margin-left: auto;
-}
-
-.goBackButton {
-  display: block;
-  margin-bottom: 1.2rem;
-}
-
-.loginButton {
-  margin-bottom: 4rem;
 }

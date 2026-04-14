@@ -32,6 +32,12 @@
   gap: 1.2rem;
 }
 
+.errorMessage {
+  margin-top: 0.6rem;
+  font: var(--text-body-1-reg);
+  color: var(--pink-3);
+}
+
 .rememberIdCheckbox {
   display: flex;
   align-items: center;
