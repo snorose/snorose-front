@@ -11,6 +11,7 @@ import {
   TextareaFieldBlue,
   TextFieldBlue,
 } from '@/shared/component';
+import { BOARD_ID } from '@/shared/constant';
 import { useAuth, useToast } from '@/shared/hook';
 
 import { mapFileToAttachment } from '@/feature/attachment/lib';
@@ -20,6 +21,7 @@ import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 import { INQUIRY_OPTIONS } from '@/feature/support/data';
 import { FileUploadSection, SubmitButton } from '@/feature/support/ui';
 
+import { createThumbnail } from '@/apis';
 import { Option } from '@/types';
 
 import styles from './WriteInquiryPage.module.css';
@@ -32,7 +34,14 @@ export default function WriteInquiryPage() {
     mutationFn: createInquiry,
     onSuccess: (data) => {
       const { postId } = data;
+
       navigate(`/inquiry/${postId}`, { replace: true });
+
+      createThumbnail(BOARD_ID.inquiryAndReport, postId) //
+        .catch((error) => {
+          // 썸네일 생성 실패는 치명적이지 않으므로, 에러를 사용자에게 알리지 않고 조용히 실패 처리합니다.
+          // 에러 로그 수집 (모니터링: sentry)
+        });
     },
     onError: (error) => {
       toast({ message: error.message, variant: 'error' });
