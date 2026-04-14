@@ -21,7 +21,7 @@ export const Iframe = Node.create({
       {
         ...HTMLAttributes,
         width: '100%',
-        height: '400',
+        height: '336px',
         frameborder: '0',
         allowfullscreen: 'true',
       },
