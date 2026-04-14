@@ -39,8 +39,10 @@ export default function WriteInquiryPage() {
 
       createThumbnail(BOARD_ID.inquiryAndReport, postId) //
         .catch((error) => {
-          // 썸네일 생성 실패는 치명적이지 않으므로, 에러를 사용자에게 알리지 않고 조용히 실패 처리합니다.
-          // 에러 로그 수집 (모니터링: sentry)
+          /**
+           * TODO: 썸네일 생성 실패는 치명적이지 않으므로, 에러를 사용자에게 알리지 않고 조용히 실패 처리합니다.
+           * 에러 로그 수집 (모니터링: sentry)
+           */
         });
     },
     onError: (error) => {
