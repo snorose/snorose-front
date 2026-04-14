@@ -278,16 +278,59 @@ export default function FixedMenuEditor({ editor }) {
       <button
         type='button'
         onClick={() => {
-          const url = window.prompt('iframe URL 입력');
+          const url = window.prompt('iframe URL 입력:');
           if (!url) return;
           let formattedUrl = url;
+
+          // YouTube 일반 + Shorts
           const youtubeMatch = url.match(
-            /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/
+            /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]+)/
           );
           if (youtubeMatch) {
-            const videoId = youtubeMatch[1];
-            formattedUrl = `https://www.youtube.com/embed/${videoId}`;
+            formattedUrl = `https://www.youtube.com/embed/${youtubeMatch[1]}`;
           }
+
+          // Instagram 일반 게시물 + Reels
+          const instagramMatch = url.match(/instagram\.com\/(?:p|reel)\/([a-zA-Z0-9_-]+)/);
+          if (instagramMatch) {
+            formattedUrl = `https://www.instagram.com/p/${instagramMatch[1]}/embed/`;
+          }
+
+          const instagramReelsMatch = url.match(/instagram\.com\/reel\/([a-zA-Z0-9_-]+)/);
+          if (instagramReelsMatch) {
+            formattedUrl = `https://www.instagram.com/reel/${instagramReelsMatch[1]}/embed/`;
+          }
+
+          // TikTok
+          const tiktokMatch = url.match(/tiktok\.com\/@[^/]+\/video\/(\d+)/);
+          if (tiktokMatch) {
+            formattedUrl = `https://www.tiktok.com/embed/v2/${tiktokMatch[1]}`;
+          }
+
+          // X (Twitter)
+          const twitterMatch = url.match(/(?:twitter\.com|x\.com)\/([^/]+)\/status\/(\d+)/);
+          if (twitterMatch) {
+            formattedUrl = `https://platform.twitter.com/embed/Tweet.html?id=${twitterMatch[2]}`;
+          }
+
+          // 네이버 TV
+          const naverTvMatch = url.match(/tv\.naver\.com\/v\/(\d+)/);
+          if (naverTvMatch) {
+            formattedUrl = `https://tv.naver.com/embed/${naverTvMatch[1]}`;
+          }
+
+          // Google Maps embed URL 그대로
+          const googleMapsEmbedMatch = url.match(/google\.com\/maps\/embed/);
+          if (googleMapsEmbedMatch) {
+            formattedUrl = url;
+          }
+
+          // Google Maps 일반 URL
+          const googleMapsMatch = url.match(/google\.com\/maps\/(?:place\/[^/]+\/)?\@([\d.-]+),([\d.-]+)/);
+          if (googleMapsMatch) {
+            formattedUrl = `https://maps.google.com/maps?q=${googleMapsMatch[1]},${googleMapsMatch[2]}&output=embed`;
+          }
+
           editor
             .chain()
             .focus()
