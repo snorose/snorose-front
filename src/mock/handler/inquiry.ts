@@ -21,15 +21,15 @@ export const inquiryHandlers = [
     }
 
     // 성공
-    // return HttpResponse.json({
-    //   isSuccess: true,
-    //   code: 1000,
-    //   message: '요청에 성공하였습니다.',
-    //   result: {
-    //     postId: 11368,
-    //     attachmentUrlList: [],
-    //   },
-    // });
+    return HttpResponse.json({
+      isSuccess: true,
+      code: 1000,
+      message: '요청에 성공하였습니다.',
+      result: {
+        postId: 11368,
+        attachmentUrlList: [],
+      },
+    });
 
     // 실패 - 권한 없음
     // return HttpResponse.json(
@@ -42,6 +42,6 @@ export const inquiryHandlers = [
     // );
 
     // 실패 - 네트워크 오류
-    return HttpResponse.error();
+    // return HttpResponse.error();
   }),
 ];
