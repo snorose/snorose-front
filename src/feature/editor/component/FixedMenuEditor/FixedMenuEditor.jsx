@@ -282,53 +282,55 @@ export default function FixedMenuEditor({ editor }) {
           if (!url) return;
           let formattedUrl = url;
 
-          // YouTube 일반 + Shorts
-          const youtubeMatch = url.match(
-            /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]+)/
-          );
-          if (youtubeMatch) {
-            formattedUrl = `https://www.youtube.com/embed/${youtubeMatch[1]}`;
-          }
+          const patterns = [
+            {
+              // YouTube 일반 + Shorts
+              regex: /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]+)/,
+              format: (match) => `https://www.youtube.com/embed/${match[1]}`,
+            },
+            {
+              // Instagram Reels
+              regex: /instagram\.com\/reel\/([a-zA-Z0-9_-]+)/,
+              format: (match) => `https://www.instagram.com/reel/${match[1]}/embed/`,
+            },
+            {
+              // Instagram Posts
+              regex: /instagram\.com\/p\/([a-zA-Z0-9_-]+)/,
+              format: (match) => `https://www.instagram.com/p/${match[1]}/embed/`,
+            },
+            {
+              // TikTok
+              regex: /tiktok\.com\/@[^/]+\/video\/(\d+)/,
+              format: (match) => `https://www.tiktok.com/embed/v2/${match[1]}`,
+            },
+            {
+              // X (Twitter)
+              regex: /(?:twitter\.com|x\.com)\/[^/]+\/status\/(\d+)/,
+              format: (match) => `https://platform.twitter.com/embed/Tweet.html?id=${match[1]}`,
+            },
+            {
+              // 네이버 TV
+              regex: /tv\.naver\.com\/v\/(\d+)/,
+              format: (match) => `https://tv.naver.com/embed/${match[1]}`,
+            },
+            {
+              // Google Maps embed URL
+              regex: /google\.com\/maps\/embed/,
+              format: () => url,
+            },
+            {
+              // Google Maps 일반 URL
+              regex: /google\.com\/maps\/(?:place\/[^/]+\/)?\@([\d.-]+),([\d.-]+)/,
+              format: (match) => `https://maps.google.com/maps?q=${match[1]},${match[2]}&output=embed`,
+            },
+          ];
 
-          // Instagram 일반 게시물 + Reels
-          const instagramMatch = url.match(/instagram\.com\/(?:p|reel)\/([a-zA-Z0-9_-]+)/);
-          if (instagramMatch) {
-            formattedUrl = `https://www.instagram.com/p/${instagramMatch[1]}/embed/`;
-          }
-
-          const instagramReelsMatch = url.match(/instagram\.com\/reel\/([a-zA-Z0-9_-]+)/);
-          if (instagramReelsMatch) {
-            formattedUrl = `https://www.instagram.com/reel/${instagramReelsMatch[1]}/embed/`;
-          }
-
-          // TikTok
-          const tiktokMatch = url.match(/tiktok\.com\/@[^/]+\/video\/(\d+)/);
-          if (tiktokMatch) {
-            formattedUrl = `https://www.tiktok.com/embed/v2/${tiktokMatch[1]}`;
-          }
-
-          // X (Twitter)
-          const twitterMatch = url.match(/(?:twitter\.com|x\.com)\/([^/]+)\/status\/(\d+)/);
-          if (twitterMatch) {
-            formattedUrl = `https://platform.twitter.com/embed/Tweet.html?id=${twitterMatch[2]}`;
-          }
-
-          // 네이버 TV
-          const naverTvMatch = url.match(/tv\.naver\.com\/v\/(\d+)/);
-          if (naverTvMatch) {
-            formattedUrl = `https://tv.naver.com/embed/${naverTvMatch[1]}`;
-          }
-
-          // Google Maps embed URL 그대로
-          const googleMapsEmbedMatch = url.match(/google\.com\/maps\/embed/);
-          if (googleMapsEmbedMatch) {
-            formattedUrl = url;
-          }
-
-          // Google Maps 일반 URL
-          const googleMapsMatch = url.match(/google\.com\/maps\/(?:place\/[^/]+\/)?\@([\d.-]+),([\d.-]+)/);
-          if (googleMapsMatch) {
-            formattedUrl = `https://maps.google.com/maps?q=${googleMapsMatch[1]},${googleMapsMatch[2]}&output=embed`;
+          for (const pattern of patterns) {
+            const match = url.match(pattern.regex);
+            if (match) {
+              formattedUrl = pattern.format(match);
+              break;
+            }
           }
 
           editor
