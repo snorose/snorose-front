@@ -14,6 +14,6 @@ export const sanitizeHtml = (html) => {
       'height',
     ],
     ALLOWED_URI_REGEXP:
-  /^(https?:\/\/((www\.)?youtube\.com\/embed\/|(www\.)?youtube\.com\/shorts\/|youtu\.be\/|(www\.)?instagram\.com\/(p|reel)\/.*\/embed|(www\.)?tiktok\.com\/embed\/v2\/|platform\.twitter\.com\/embed\/|(www\.)?tv\.naver\.com\/embed\/|maps\.google\.com\/maps|(www\.)?google\.com\/maps\/embed|(map\.)?naver\.com\/|naver\.me\/))/,
+    /^(https?:\/\/((www\.)?youtube\.com\/embed\/|(www\.)?instagram\.com\/(p|reel)\/[a-zA-Z0-9_-]+\/embed\/|(www\.)?tiktok\.com\/embed\/v2\/|platform\.twitter\.com\/embed\/Tweet\.html\?id=|(www\.)?tv\.naver\.com\/embed\/|maps\.google\.com\/maps\?.*output=embed|(www\.)?google\.com\/maps\/embed|(map\.)?naver\.com\/|naver\.me\/))/
   });
 }
