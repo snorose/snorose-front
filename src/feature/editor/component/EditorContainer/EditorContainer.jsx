@@ -46,7 +46,7 @@ const FontSize = Extension.create({
   },
 });
 
-export default function EditorContainer({ placeholder, text, setText }) {
+export default function EditorContainer({ placeholder, text, setText, onEditorReady }) {
   const [isInTable, setIsInTable] = useState(false);
   const editor = useEditor({
     extensions: [
@@ -87,6 +87,9 @@ export default function EditorContainer({ placeholder, text, setText }) {
     onSelectionUpdate: ({ editor }) => {
       setIsInTable(editor.isActive('table'));
     },
+    onCreate: ({ editor }) => {
+      if (onEditorReady) onEditorReady(editor);
+    },
   });
 
   //EditPostPage처럼 initalText(text)가 존재할 시 세팅해줌
@@ -98,7 +101,7 @@ export default function EditorContainer({ placeholder, text, setText }) {
 
   return (
     <>
-      <FixedMenuEditor editor={editor} />
+
       <EditorContent editor={editor} />
 
       {isInTable && (

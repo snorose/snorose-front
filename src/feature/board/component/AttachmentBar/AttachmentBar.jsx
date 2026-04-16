@@ -4,9 +4,10 @@ import { Icon } from '@/shared/component';
 import { ATTACHMENT_EXTENSION_LIMIT } from '@/shared/constant';
 import { useAttachmentUpload } from '@/feature/attachment/hook';
 
+import { FixedMenuEditor } from '@/feature/editor/component';
 import styles from './AttachmentBar.module.css';
 
-export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
+export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo, editor }) {
   const img = useRef();
   const vid = useRef();
 
@@ -22,6 +23,9 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
 
   return (
     <div className={styles.bar}>
+      {isEditorOpen && editor && (
+        <FixedMenuEditor editor={editor} />
+      )}
       <div className={styles.attachmentBar}>
         <Icon
           id={isImageIconHighlighted ? 'image-fill' : 'image'}
