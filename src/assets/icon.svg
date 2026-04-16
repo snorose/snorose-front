@@ -822,5 +822,23 @@
     <path d="M12 3V16M12 16L6 10.3478M12 16L18 10.3478" stroke="black" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M3 17V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V17" stroke="black" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
-</svg>
+  <svg>
+    <symbol id="open-editor" viewBox="0 0 26 20" fill="none">
+      <path d="M3.6709 12.6387L14.3633 12.6387" stroke="var(--blue-3)" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M15.7344 2.55859L25.0191 2.55859" stroke="var(--blue-3)" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M17.8135 9.42383L25.0195 9.42383" stroke="var(--blue-3)" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M20.0488 16.3926L25.0195 16.3926" stroke="var(--blue-3)" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M9.16211 0.972656L0.828775 18.6503" stroke="var(--blue-3)" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M9.16211 0.966797L17.4954 18.6445" stroke="var(--blue-3)" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol> 
 
+    <symbol id="open-editor-fill" viewBox="0 0 27 21" fill="none">
+      <path d="M4.04102 13.0664L14.7334 13.0664" stroke="var(--blue-3)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M16.1045 2.98633L25.3892 2.98633" stroke="var(--blue-3)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M18.1826 9.85156L25.3887 9.85156" stroke="var(--blue-3)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M20.418 16.8203L25.3887 16.8203" stroke="var(--blue-3)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M9.53125 1.40039L1.19792 19.0781" stroke="var(--blue-3)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M9.53125 1.39453L17.8646 19.0722" stroke="var(--blue-3)" stroke-width="2.6" stroke-linecap="round"/>
+    </symbol>  
+  </svg>
+</svg>

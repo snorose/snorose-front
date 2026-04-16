@@ -15,9 +15,10 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
     setAttachmentsInfo,
   });
 
-  //이미지*영상 첨부 버튼의 UI 상태를 좌우함
+  //이미지*영상* 에디터 첨부 버튼의 UI 상태를 좌우함
   const [isImageIconHighlighted, setIsImageIconHighlighted] = useState(false);
   const [isVideoIconHighlighted, setIsVideoIconHighlighted] = useState(false);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   return (
     <div className={styles.bar}>
@@ -60,6 +61,15 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
           onChange={changeVideoUpload}
           multiple
         />
+
+        <Icon
+          id={isEditorOpen ? 'open-editor-fill' : 'open-editor'}
+          width={27}
+          height={21}
+          className={styles.image}
+          onClick={() => setIsEditorOpen(prev => !prev)}
+        />
+        
       </div>
     </div>
   );
