@@ -1,16 +1,11 @@
-import React, { useEffect,useRef, useState } from 'react';
-import {
-  FaLink,
-  FaQuoteRight,
-  FaYoutube,
-} from 'react-icons/fa';
+import React, { useEffect, useRef, useState } from 'react';
+import { FaLink, FaQuoteRight, FaYoutube } from 'react-icons/fa';
 
 import { useEditorState } from '@tiptap/react';
 
-import { Icon } from '@/shared/component';  
+import { Icon } from '@/shared/component';
 
 import styles from './FixedMenuEditor.module.css';
-
 
 const PRESET_COLORS = [
   { label: '회색', value: 'var(--grey-4)' },
@@ -27,7 +22,6 @@ const PRESET_BG_COLORS = [
 ];
 
 export default function FixedMenuEditor({ editor }) {
-
   const editorState = useEditorState({
     editor,
     selector: (ctx) => ({
@@ -63,7 +57,7 @@ export default function FixedMenuEditor({ editor }) {
       [
         { ref: textColorRef, setter: setShowTextColor },
         { ref: bgColorRef, setter: setShowBgColor },
-        { ref: headingRef, setter: setHeadingOpen}
+        { ref: headingRef, setter: setHeadingOpen },
       ].forEach(({ ref, setter }) => {
         if (ref.current && !ref.current.contains(event.target)) {
           setter(false);
@@ -73,27 +67,26 @@ export default function FixedMenuEditor({ editor }) {
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-    
   }, []);
 
   if (!editor) return null;
 
   return (
     <div className={styles.toolbar}>
-
       <div ref={headingRef} className={styles.headingWrapper}>
         <button
           className={styles.headingButton}
-          onClick={() => setHeadingOpen(prev => !prev)}
+          onClick={() => setHeadingOpen((prev) => !prev)}
         >
-          {HEADING_OPTIONS.find(o => o.value === getCurrentHeading())?.label ?? '본문'}
+          {HEADING_OPTIONS.find((o) => o.value === getCurrentHeading())
+            ?.label ?? '본문'}
 
           <Icon
-            id="arrow-down"
+            id='arrow-down'
             width={12}
             height={6.75}
             className={styles.headingArrow}
-            />
+          />
         </button>
 
         {headingOpen && (
@@ -106,7 +99,11 @@ export default function FixedMenuEditor({ editor }) {
                   if (option.value === 'paragraph') {
                     editor.chain().focus().setParagraph().run();
                   } else {
-                    editor.chain().focus().setHeading({ level: parseInt(option.value, 10) }).run();
+                    editor
+                      .chain()
+                      .focus()
+                      .setHeading({ level: parseInt(option.value, 10) })
+                      .run();
                   }
                   setHeadingOpen(false);
                 }}
@@ -117,30 +114,29 @@ export default function FixedMenuEditor({ editor }) {
           </div>
         )}
       </div>
-      
-  
-      <div ref={textColorRef} className={styles.colorPickerWrapper}>
 
+      <div ref={textColorRef} className={styles.colorPickerWrapper}>
         {/* 폰트 색상 토글 버튼 */}
         <button
           onClick={() => setShowTextColor((prev) => !prev)}
           style={{ color: textColor || 'var(--grey-4)' }}
         >
-          <Icon id="font-color" width={24} height={24} />
+          <Icon id='font-color' width={24} height={24} />
         </button>
 
-        <div className={`${styles.colorPaletteInline} ${showTextColor ? styles.open : ''}`}>
-
+        <div
+          className={`${styles.colorPaletteInline} ${showTextColor ? styles.open : ''}`}
+        >
           {/* 색상 없음 */}
           <button
             className={styles.colorSwatchNone}
-            title="색상 없음"
+            title='색상 없음'
             onClick={() => {
               setTextColor('');
               editor.chain().focus().unsetColor().run();
             }}
           >
-            <Icon id="no-color" width={28} height={28} />
+            <Icon id='no-color' width={28} height={28} />
           </button>
 
           {/* 고정 색상 */}
@@ -160,12 +156,10 @@ export default function FixedMenuEditor({ editor }) {
               }}
             />
           ))}
-
         </div>
       </div>
 
       <div ref={bgColorRef} className={styles.colorPickerWrapper}>
-  
         <button
           onClick={() => setShowBgColor((prev) => !prev)}
           style={{
@@ -173,20 +167,25 @@ export default function FixedMenuEditor({ editor }) {
             '--bg-icon-stroke': bgColor || '#AAD916',
           }}
         >
-          <Icon id="bg-color" width={24} height={24} />
+          <Icon id='bg-color' width={24} height={24} />
         </button>
 
-        <div className={`${styles.colorPaletteInline} ${showBgColor ? styles.open : ''}`}>
-
+        <div
+          className={`${styles.colorPaletteInline} ${showBgColor ? styles.open : ''}`}
+        >
           <button
             className={styles.colorSwatchNone}
-            title="배경색 없음"
+            title='배경색 없음'
             onClick={() => {
               setBgColor('');
-              editor.chain().focus().setMark('textStyle', { backgroundColor: null }).run();
+              editor
+                .chain()
+                .focus()
+                .setMark('textStyle', { backgroundColor: null })
+                .run();
             }}
           >
-            <Icon id="no-color" width={28} height={28} />
+            <Icon id='no-color' width={28} height={28} />
           </button>
 
           {/* 고정 색상 */}
@@ -206,7 +205,6 @@ export default function FixedMenuEditor({ editor }) {
               }}
             />
           ))}
-
         </div>
       </div>
 
@@ -215,15 +213,17 @@ export default function FixedMenuEditor({ editor }) {
         onClick={() => editor.chain().focus().toggleBold().run()}
         style={editorState.isBold ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
-        <Icon id="bold" width={24} height={24} />
+        <Icon id='bold' width={24} height={24} />
       </button>
 
       <button
         aria-label='밑줄'
         onClick={() => editor.chain().focus().toggleUnderline().run()}
-        style={editorState.isUnderline ? { '--icon-stroke': 'var(--blue-4)' } : {}}
+        style={
+          editorState.isUnderline ? { '--icon-stroke': 'var(--blue-4)' } : {}
+        }
       >
-        <Icon id="underline" width={24} height={24} />
+        <Icon id='underline' width={24} height={24} />
       </button>
 
       <button
@@ -231,9 +231,8 @@ export default function FixedMenuEditor({ editor }) {
         onClick={() => editor.chain().focus().toggleStrike().run()}
         style={editorState.isStrike ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
-        <Icon id="strikethrough" width={24} height={24} />
+        <Icon id='strikethrough' width={24} height={24} />
       </button>
-
 
       <button
         type='button'
@@ -285,18 +284,21 @@ export default function FixedMenuEditor({ editor }) {
           const patterns = [
             {
               // YouTube 일반 + Shorts
-              regex: /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]+)/,
+              regex:
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]+)/,
               format: (match) => `https://www.youtube.com/embed/${match[1]}`,
             },
             {
               // Instagram Reels
               regex: /instagram\.com\/reel\/([a-zA-Z0-9_-]+)/,
-              format: (match) => `https://www.instagram.com/reel/${match[1]}/embed/`,
+              format: (match) =>
+                `https://www.instagram.com/reel/${match[1]}/embed/`,
             },
             {
               // Instagram Posts
               regex: /instagram\.com\/p\/([a-zA-Z0-9_-]+)/,
-              format: (match) => `https://www.instagram.com/p/${match[1]}/embed/`,
+              format: (match) =>
+                `https://www.instagram.com/p/${match[1]}/embed/`,
             },
             {
               // TikTok
@@ -306,7 +308,8 @@ export default function FixedMenuEditor({ editor }) {
             {
               // X (Twitter)
               regex: /(?:twitter\.com|x\.com)\/[^/]+\/status\/(\d+)/,
-              format: (match) => `https://platform.twitter.com/embed/Tweet.html?id=${match[1]}`,
+              format: (match) =>
+                `https://platform.twitter.com/embed/Tweet.html?id=${match[1]}`,
             },
             {
               // 네이버 TV
@@ -320,8 +323,10 @@ export default function FixedMenuEditor({ editor }) {
             },
             {
               // Google Maps 일반 URL
-              regex: /google\.com\/maps\/(?:place\/[^/]+\/)?\@([\d.-]+),([\d.-]+)/,
-              format: (match) => `https://maps.google.com/maps?q=${match[1]},${match[2]}&output=embed`,
+              regex:
+                /google\.com\/maps\/(?:place\/[^/]+\/)?\@([\d.-]+),([\d.-]+)/,
+              format: (match) =>
+                `https://maps.google.com/maps?q=${match[1]},${match[2]}&output=embed`,
             },
           ];
 
