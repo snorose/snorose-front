@@ -1,14 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Icon } from '@/shared/component';  
 import {
   FaBold,
-  FaItalic,
   FaUnderline,
   FaStrikethrough,
-  FaAlignLeft,
-  FaAlignCenter,
-  FaAlignRight,
-  FaListUl,
-  FaListOl,
   FaPalette,
   FaFillDrip,
   FaQuoteRight,
@@ -45,6 +40,9 @@ export default function FixedMenuEditor({ editor }) {
 
   const textColorRef = useRef(null);
   const bgColorRef = useRef(null);
+
+  const [headingOpen, setHeadingOpen] = useState(false);
+  const headingRef = useRef(null);
 
   const FONT_OPTIONS = [
     { value: 'Arial', label: 'Arial' },
@@ -84,6 +82,7 @@ export default function FixedMenuEditor({ editor }) {
       [
         { ref: textColorRef, setter: setShowTextColor },
         { ref: bgColorRef, setter: setShowBgColor },
+        { ref: headingRef, setter: setHeadingOpen}
       ].forEach(({ ref, setter }) => {
         if (ref.current && !ref.current.contains(event.target)) {
           setter(false);
@@ -125,34 +124,47 @@ export default function FixedMenuEditor({ editor }) {
 
   return (
     <div className={styles.toolbar}>
-      <button
-        aria-label='굵게'
-        onClick={() => editor.chain().focus().toggleBold().run()}
-      >
-        <FaBold />
-      </button>
-      <button
-        aria-label='기울임체'
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-      >
-        <FaItalic />
-      </button>
-      <button
-        aria-label='밑줄'
-        onClick={() => editor.chain().focus().toggleUnderline().run()}
-      >
-        <FaUnderline />
-      </button>
-      <button
-        aria-label='취소선'
-        onClick={() => editor.chain().focus().toggleStrike().run()}
-      >
-        <FaStrikethrough />
-      </button>
 
+      <div ref={headingRef} className={styles.headingWrapper}>
+        <button
+          className={styles.headingButton}
+          onClick={() => setHeadingOpen(prev => !prev)}
+        >
+          {HEADING_OPTIONS.find(o => o.value === getCurrentHeading())?.label ?? '본문'}
+
+          <Icon
+            id="arrow-down"
+            width={12}
+            height={6.75}
+            className={styles.headingArrow}
+            />
+        </button>
+
+        {headingOpen && (
+          <div className={styles.headingDropdown}>
+            {HEADING_OPTIONS.map((option) => (
+              <button
+                key={option.value}
+                className={`${styles.headingOption} ${getCurrentHeading() === option.value ? styles.headingOptionActive : ''}`}
+                onClick={() => {
+                  if (option.value === 'paragraph') {
+                    editor.chain().focus().setParagraph().run();
+                  } else {
+                    editor.chain().focus().setHeading({ level: parseInt(option.value, 10) }).run();
+                  }
+                  setHeadingOpen(false);
+                }}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+      
       <div ref={textColorRef} className={styles.colorPickerWrapper}>
         <button onClick={() => setShowTextColor((prev) => !prev)}>
-          <FaPalette />
+          <Icon id="font-color" width={24} height={24} />
         </button>
         {showTextColor && (
           <div className={styles.colorPickerPopup}>
@@ -189,9 +201,10 @@ export default function FixedMenuEditor({ editor }) {
           </div>
         )}
       </div>
+
       <div ref={bgColorRef} className={styles.bgColorWrapper}>
         <button onClick={() => setShowBgColor((prev) => !prev)}>
-          <FaFillDrip />
+          <Icon id="bg-color" width={24} height={24} />
         </button>
         {showBgColor && (
           <div className={styles.bgColorPopup}>
@@ -259,102 +272,26 @@ export default function FixedMenuEditor({ editor }) {
         )}
       </div>
 
-      <select
-        onChange={(e) => {
-          const font = e.target.value;
-          editor
-            .chain()
-            .focus()
-            .setMark('textStyle', { fontFamily: font })
-            .run();
-        }}
-        defaultValue='default'
-        className={styles.selectBox}
-      >
-        <option value='default' disabled>
-          폰트 선택
-        </option>
-        {FONT_OPTIONS.map((font) => (
-          <option key={font.value} value={font.value}>
-            {font.label}
-          </option>
-        ))}
-      </select>
-
-      <div className={styles.divider} />
-
-      <select
-        value={getCurrentHeading()}
-        onChange={(e) => {
-          const value = e.target.value;
-          if (value === 'paragraph') {
-            editor.chain().focus().setParagraph().run();
-          } else {
-            editor
-              .chain()
-              .focus()
-              .setHeading({ level: parseInt(value, 10) })
-              .run();
-          }
-        }}
-        className={styles.selectBox}
-      >
-        {HEADING_OPTIONS.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-
-      <div className={styles.fontSizeInputWrapper}>
-        <input
-          type='number'
-          value={displayFontSize}
-          placeholder='크기'
-          className={styles.fontSizeInput}
-          onFocus={() => {
-            setIsSizeInputFocused(true);
-            setFontSizeInput(currentEditorFontSize);
-          }}
-          onBlur={() => setIsSizeInputFocused(false)}
-          onChange={(e) => setFontSizeInput(e.target.value)}
-          onKeyDown={handleFontSizeKeyDown}
-        />
-        <span className={styles.fontSizeLabel}>px</span>
-      </div>
-
-      <div className={styles.divider} />
-
       <button
-        aria-label='왼쪽 정렬'
-        onClick={() => editor.chain().focus().setTextAlign('left').run()}
+        aria-label='굵게'
+        onClick={() => editor.chain().focus().toggleBold().run()}
       >
-        <FaAlignLeft />
+        <Icon id="bold" width={24} height={24} />
       </button>
       <button
-        aria-label='가운데 정렬'
-        onClick={() => editor.chain().focus().setTextAlign('center').run()}
+        aria-label='밑줄'
+        onClick={() => editor.chain().focus().toggleUnderline().run()}
       >
-        <FaAlignCenter />
+        <Icon id="underline" width={24} height={24} />
       </button>
       <button
-        aria-label='오른쪽 정렬'
-        onClick={() => editor.chain().focus().setTextAlign('right').run()}
+        aria-label='취소선'
+        onClick={() => editor.chain().focus().toggleStrike().run()}
       >
-        <FaAlignRight />
+        <Icon id="strikethrough" width={24} height={24} />
       </button>
-      <button
-        aria-label='토글 정렬'
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
-      >
-        <FaListUl />
-      </button>
-      <button
-        aria-label='순서 정렬'
-        onClick={() => editor.chain().focus().toggleOrderedList().run()}
-      >
-        <FaListOl />
-      </button>
+
+
       <button
         type='button'
         aria-label='인용구'
@@ -393,20 +330,6 @@ export default function FixedMenuEditor({ editor }) {
         }}
       >
         <FaLink />
-      </button>
-
-      <button
-        type='button'
-        aria-label='표 삽입'
-        onClick={() =>
-          editor
-            ?.chain()
-            .focus()
-            .insertTable({ rows: 3, cols: 3, withHeaderRow: false })
-            .run()
-        }
-      >
-        <FaTable />
       </button>
 
       <button
