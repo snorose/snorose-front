@@ -118,7 +118,10 @@ export default function FixedMenuEditor({ editor }) {
       <div ref={textColorRef} className={styles.colorPickerWrapper}>
 
         {/* 폰트 색상 토글 버튼 */}
-        <button onClick={() => setShowTextColor((prev) => !prev)}>
+        <button
+          onClick={() => setShowTextColor((prev) => !prev)}
+          style={{ color: textColor || 'var(--grey-4)' }}
+        >
           <Icon id="font-color" width={24} height={24} />
         </button>
 
