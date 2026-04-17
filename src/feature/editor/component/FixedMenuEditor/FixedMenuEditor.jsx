@@ -48,21 +48,11 @@ export default function FixedMenuEditor({ editor }) {
 
   const HEADING_OPTIONS = [
     { value: 'paragraph', label: '본문' },
-    { value: '1', label: '제목 1 (H1)' },
-    { value: '2', label: '제목 2 (H2)' },
-    { value: '3', label: '제목 3 (H3)' },
-    { value: '4', label: '제목 4 (H4)' },
-    { value: '5', label: '제목 5 (H5)' },
-    { value: '6', label: '제목 6 (H6)' },
+    { value: '1', label: '소제목' },
   ];
 
   const getCurrentHeading = () => {
     if (editor.isActive('heading', { level: 1 })) return '1';
-    if (editor.isActive('heading', { level: 2 })) return '2';
-    if (editor.isActive('heading', { level: 3 })) return '3';
-    if (editor.isActive('heading', { level: 4 })) return '4';
-    if (editor.isActive('heading', { level: 5 })) return '5';
-    if (editor.isActive('heading', { level: 6 })) return '6';
     return 'paragraph';
   };
 
