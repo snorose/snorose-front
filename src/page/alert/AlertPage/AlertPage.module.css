@@ -86,9 +86,11 @@
 
   box-sizing: border-box;
 
-  & div {
-    font: var(--text-headline-2-reg);
-  }
+}
+
+.noAlertText {
+  font: var(--text-headline-2-reg);
+  color: var(--grey-4);
 }
 
 .noAlertIllustration {
