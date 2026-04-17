@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useEditorState } from '@tiptap/react';
 import { Icon } from '@/shared/component';  
 import {
   FaQuoteRight,
@@ -24,6 +25,16 @@ const PRESET_BG_COLORS = [
 ];
 
 export default function FixedMenuEditor({ editor }) {
+
+  const editorState = useEditorState({
+    editor,
+    selector: (ctx) => ({
+      isBold: ctx.editor.isActive('bold'),
+      isUnderline: ctx.editor.isActive('underline'),
+      isStrike: ctx.editor.isActive('strike'),
+    }),
+  });
+
   const [textColor, setTextColor] = useState('var(--grey-4)');
   const [bgColor, setBgColor] = useState('');
   const [showTextColor, setShowTextColor] = useState(false);
@@ -210,18 +221,23 @@ export default function FixedMenuEditor({ editor }) {
       <button
         aria-label='굵게'
         onClick={() => editor.chain().focus().toggleBold().run()}
+        style={editorState.isBold ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
         <Icon id="bold" width={24} height={24} />
       </button>
+
       <button
         aria-label='밑줄'
         onClick={() => editor.chain().focus().toggleUnderline().run()}
+        style={editorState.isUnderline ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
         <Icon id="underline" width={24} height={24} />
       </button>
+
       <button
         aria-label='취소선'
         onClick={() => editor.chain().focus().toggleStrike().run()}
+        style={editorState.isStrike ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
         <Icon id="strikethrough" width={24} height={24} />
       </button>
