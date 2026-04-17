@@ -2,9 +2,10 @@ import { React, useRef, useState } from 'react';
 
 import { Icon } from '@/shared/component';
 import { ATTACHMENT_EXTENSION_LIMIT } from '@/shared/constant';
-import { useAttachmentUpload } from '@/feature/attachment/hook';
 
+import { useAttachmentUpload } from '@/feature/attachment/hook';
 import { FixedMenuEditor } from '@/feature/editor/component';
+
 import styles from './AttachmentBar.module.css';
 
 export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo, editor }) {

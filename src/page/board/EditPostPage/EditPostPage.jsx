@@ -31,6 +31,7 @@ import {
 } from '@/shared/hook';
 import { DateTime } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
+import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
 
 import { createThumbnail } from '@/apis';
 import { getPostContent, patchPost } from '@/apis';
@@ -69,6 +70,8 @@ export default function EditPostPage() {
   const [trashImageIndex, setTrashImageIndex] = useState(null);
   const trashImageConfirmModal = useModal();
 
+  const [editor, setEditor] = useState(null);
+
   // 페이지 이탈 방지 모달 노출
   useBlocker(isBlock);
 
@@ -79,6 +82,12 @@ export default function EditPostPage() {
     enabled: !!currentBoard?.id && !!postId,
     placeholderData: {},
   });
+
+  useEffect(() => {
+    if (!editor || !data?.content) return;
+
+    editor.commands.setContent(data.content);
+  }, [editor, data]);
 
   // 데이터 화면 표시
   useEffect(() => {
@@ -97,7 +106,7 @@ export default function EditPostPage() {
 
     setIsBlock(
       data.title !== title.trim() ||
-        data.content !== text.trim() ||
+        data.content !== editor?.getHTML() ||
         data.isNotice !== isNotice ||
         data.attachments !== attachmentsInfo
     );
@@ -167,7 +176,7 @@ export default function EditPostPage() {
       boardId: currentBoard?.id,
       postId,
       title,
-      content: text,
+      content: editor?.getHTML(),
       isNotice,
       attachmentsInfo,
       deleteAttachments,
@@ -262,10 +271,11 @@ export default function EditPostPage() {
                 onChange={(e) => setText(e.target.value)}
               />*/}
               <EditorContainer
-                text={text}
-                setText={(editor) => {
-                  const htmlContent = editor.getHTML();
-                  setText(htmlContent);
+                placeholder="내용"
+                onEditorReady={setEditor}
+                onChangeEditor={(editor) => {
+                  const sanitized = preserveEmptyParagraphs(editor.getHTML());
+                  setText(sanitized);
                 }}
               />
               <AttachmentList
@@ -315,6 +325,7 @@ export default function EditPostPage() {
         <AttachmentBar
           attachmentsInfo={attachmentsInfo}
           setAttachmentsInfo={setAttachmentsInfo}
+          editor={editor}
         />
       </div>
 
