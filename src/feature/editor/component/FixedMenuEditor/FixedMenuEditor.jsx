@@ -1,81 +1,60 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect,useRef, useState } from 'react';
 import {
-  FaBold,
-  FaItalic,
-  FaUnderline,
-  FaStrikethrough,
-  FaAlignLeft,
-  FaAlignCenter,
-  FaAlignRight,
-  FaListUl,
-  FaListOl,
-  FaPalette,
-  FaFillDrip,
-  FaQuoteRight,
   FaLink,
-  FaTable,
+  FaQuoteRight,
   FaYoutube,
 } from 'react-icons/fa';
-import { ChromePicker } from 'react-color';
+
+import { useEditorState } from '@tiptap/react';
+
+import { Icon } from '@/shared/component';  
+
 import styles from './FixedMenuEditor.module.css';
-import { Plugin } from 'prosemirror-state';
+
 
 const PRESET_COLORS = [
-  { label: '기본', value: 'var(--grey-4)' },
-  { label: '회색', value: 'var(--grey-3-1)' },
-  { label: '하늘', value: 'var(--blue-3)' },
+  { label: '회색', value: 'var(--grey-4)' },
+  { label: '검정', value: 'black' },
   { label: '파랑', value: 'var(--blue-4)' },
-  { label: '강조', value: 'var(--pink-3)' },
-  { label: '속닥', value: 'var(--blue-2)' },
+  { label: '핑크', value: 'var(--pink-3)' },
 ];
 
 const PRESET_BG_COLORS = [
-  { label: '기본(투명)', value: null }, // 배경색 초기화용
-  { label: '핑크', value: 'var(--pink-2)' },
+  { label: '핑크', value: 'var(--pink-1)' },
+  { label: '노랑', value: '#FDFF6C' },
   { label: '연두', value: 'var(--green-2)' },
+  { label: '파랑', value: 'var(--blue-2)' },
 ];
 
 export default function FixedMenuEditor({ editor }) {
-  const [textColor, setTextColor] = useState('#000000');
-  const [bgColor, setBgColor] = useState('#ffffff');
+
+  const editorState = useEditorState({
+    editor,
+    selector: (ctx) => ({
+      isBold: ctx.editor.isActive('bold'),
+      isUnderline: ctx.editor.isActive('underline'),
+      isStrike: ctx.editor.isActive('strike'),
+    }),
+  });
+
+  const [textColor, setTextColor] = useState('var(--grey-4)');
+  const [bgColor, setBgColor] = useState('');
   const [showTextColor, setShowTextColor] = useState(false);
   const [showBgColor, setShowBgColor] = useState(false);
-  const [fontSizeInput, setFontSizeInput] = useState('');
-  const [isSizeInputFocused, setIsSizeInputFocused] = useState(false);
 
   const textColorRef = useRef(null);
   const bgColorRef = useRef(null);
 
-  const FONT_OPTIONS = [
-    { value: 'Arial', label: 'Arial' },
-    {
-      value: "'Apple SD Gothic Neo', '애플 SD 고딕 Neo'",
-      label: 'Apple SD Gothic Neo',
-    },
-    { value: 'Courier New', label: 'Courier New' },
-    { value: 'Times New Roman', label: 'Times New Roman' },
-    { value: 'Verdana', label: 'Verdana' },
-    { value: "'Malgun Gothic', '맑은 고딕'", label: '맑은 고딕' },
-    { value: "'Nanum Gothic', '나눔고딕'", label: '나눔고딕' },
-  ];
+  const [headingOpen, setHeadingOpen] = useState(false);
+  const headingRef = useRef(null);
 
   const HEADING_OPTIONS = [
     { value: 'paragraph', label: '본문' },
-    { value: '1', label: '제목 1 (H1)' },
-    { value: '2', label: '제목 2 (H2)' },
-    { value: '3', label: '제목 3 (H3)' },
-    { value: '4', label: '제목 4 (H4)' },
-    { value: '5', label: '제목 5 (H5)' },
-    { value: '6', label: '제목 6 (H6)' },
+    { value: '1', label: '소제목' },
   ];
 
   const getCurrentHeading = () => {
     if (editor.isActive('heading', { level: 1 })) return '1';
-    if (editor.isActive('heading', { level: 2 })) return '2';
-    if (editor.isActive('heading', { level: 3 })) return '3';
-    if (editor.isActive('heading', { level: 4 })) return '4';
-    if (editor.isActive('heading', { level: 5 })) return '5';
-    if (editor.isActive('heading', { level: 6 })) return '6';
     return 'paragraph';
   };
 
@@ -84,6 +63,7 @@ export default function FixedMenuEditor({ editor }) {
       [
         { ref: textColorRef, setter: setShowTextColor },
         { ref: bgColorRef, setter: setShowBgColor },
+        { ref: headingRef, setter: setHeadingOpen}
       ].forEach(({ ref, setter }) => {
         if (ref.current && !ref.current.contains(event.target)) {
           setter(false);
@@ -98,263 +78,163 @@ export default function FixedMenuEditor({ editor }) {
 
   if (!editor) return null;
 
-  const currentEditorFontSize =
-    editor.getAttributes('textStyle')?.fontSize?.replace('px', '') || '';
-
-  const displayFontSize = isSizeInputFocused
-    ? fontSizeInput
-    : currentEditorFontSize;
-
-  const handleFontSizeKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      const val = fontSizeInput.trim();
-      if (val && !isNaN(val)) {
-        editor
-          .chain()
-          .focus()
-          .setMark('textStyle', { fontSize: `${val}px` })
-          .run();
-      } else {
-        editor.chain().focus().setMark('textStyle', { fontSize: null }).run();
-      }
-      setIsSizeInputFocused(false);
-      e.target.blur();
-    }
-  };
-
   return (
     <div className={styles.toolbar}>
+
+      <div ref={headingRef} className={styles.headingWrapper}>
+        <button
+          className={styles.headingButton}
+          onClick={() => setHeadingOpen(prev => !prev)}
+        >
+          {HEADING_OPTIONS.find(o => o.value === getCurrentHeading())?.label ?? '본문'}
+
+          <Icon
+            id="arrow-down"
+            width={12}
+            height={6.75}
+            className={styles.headingArrow}
+            />
+        </button>
+
+        {headingOpen && (
+          <div className={styles.headingDropdown}>
+            {HEADING_OPTIONS.map((option) => (
+              <button
+                key={option.value}
+                className={`${styles.headingOption} ${getCurrentHeading() === option.value ? styles.headingOptionActive : ''}`}
+                onClick={() => {
+                  if (option.value === 'paragraph') {
+                    editor.chain().focus().setParagraph().run();
+                  } else {
+                    editor.chain().focus().setHeading({ level: parseInt(option.value, 10) }).run();
+                  }
+                  setHeadingOpen(false);
+                }}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+      
+  
+      <div ref={textColorRef} className={styles.colorPickerWrapper}>
+
+        {/* 폰트 색상 토글 버튼 */}
+        <button
+          onClick={() => setShowTextColor((prev) => !prev)}
+          style={{ color: textColor || 'var(--grey-4)' }}
+        >
+          <Icon id="font-color" width={24} height={24} />
+        </button>
+
+        <div className={`${styles.colorPaletteInline} ${showTextColor ? styles.open : ''}`}>
+
+          {/* 색상 없음 */}
+          <button
+            className={styles.colorSwatchNone}
+            title="색상 없음"
+            onClick={() => {
+              setTextColor('');
+              editor.chain().focus().unsetColor().run();
+            }}
+          >
+            <Icon id="no-color" width={28} height={28} />
+          </button>
+
+          {/* 고정 색상 */}
+          {PRESET_COLORS.map((color) => (
+            <button
+              key={color.label}
+              className={`${styles.colorSwatch} ${textColor === color.value ? styles.selected : ''}`}
+              style={{ backgroundColor: color.value }}
+              title={color.label}
+              onClick={() => {
+                setTextColor(color.value);
+                editor
+                  .chain()
+                  .focus()
+                  .setMark('textStyle', { color: color.value })
+                  .run();
+              }}
+            />
+          ))}
+
+        </div>
+      </div>
+
+      <div ref={bgColorRef} className={styles.colorPickerWrapper}>
+  
+        <button
+          onClick={() => setShowBgColor((prev) => !prev)}
+          style={{
+            '--bg-icon-fill': bgColor || '#E6F7B1',
+            '--bg-icon-stroke': bgColor || '#AAD916',
+          }}
+        >
+          <Icon id="bg-color" width={24} height={24} />
+        </button>
+
+        <div className={`${styles.colorPaletteInline} ${showBgColor ? styles.open : ''}`}>
+
+          <button
+            className={styles.colorSwatchNone}
+            title="배경색 없음"
+            onClick={() => {
+              setBgColor('');
+              editor.chain().focus().setMark('textStyle', { backgroundColor: null }).run();
+            }}
+          >
+            <Icon id="no-color" width={28} height={28} />
+          </button>
+
+          {/* 고정 색상 */}
+          {PRESET_BG_COLORS.map((color) => (
+            <button
+              key={color.label}
+              className={`${styles.colorSwatch} ${bgColor === color.value ? styles.selected : ''}`}
+              style={{ backgroundColor: color.value }}
+              title={color.label}
+              onClick={() => {
+                setBgColor(color.value);
+                editor
+                  .chain()
+                  .focus()
+                  .setMark('textStyle', { backgroundColor: color.value })
+                  .run();
+              }}
+            />
+          ))}
+
+        </div>
+      </div>
+
       <button
         aria-label='굵게'
         onClick={() => editor.chain().focus().toggleBold().run()}
+        style={editorState.isBold ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
-        <FaBold />
+        <Icon id="bold" width={24} height={24} />
       </button>
-      <button
-        aria-label='기울임체'
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-      >
-        <FaItalic />
-      </button>
+
       <button
         aria-label='밑줄'
         onClick={() => editor.chain().focus().toggleUnderline().run()}
+        style={editorState.isUnderline ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
-        <FaUnderline />
+        <Icon id="underline" width={24} height={24} />
       </button>
+
       <button
         aria-label='취소선'
         onClick={() => editor.chain().focus().toggleStrike().run()}
+        style={editorState.isStrike ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
-        <FaStrikethrough />
+        <Icon id="strikethrough" width={24} height={24} />
       </button>
 
-      <div ref={textColorRef} className={styles.colorPickerWrapper}>
-        <button onClick={() => setShowTextColor((prev) => !prev)}>
-          <FaPalette />
-        </button>
-        {showTextColor && (
-          <div className={styles.colorPickerPopup}>
-            <div className={styles.colorPalette}>
-              {PRESET_COLORS.map((color) => (
-                <button
-                  key={color.label}
-                  className={styles.colorSwatch}
-                  style={{ backgroundColor: color.value }}
-                  title={color.label}
-                  onClick={() => {
-                    setTextColor(color.value);
-                    editor
-                      .chain()
-                      .focus()
-                      .setMark('textStyle', { color: color.value })
-                      .run();
-                  }}
-                />
-              ))}
-            </div>
-            <ChromePicker
-              color={textColor}
-              onChange={(color) => {
-                setTextColor(color.hex);
-                editor
-                  .chain()
-                  .focus()
-                  .setMark('textStyle', { color: color.hex })
-                  .run();
-              }}
-              disableAlpha
-            />
-          </div>
-        )}
-      </div>
-      <div ref={bgColorRef} className={styles.bgColorWrapper}>
-        <button onClick={() => setShowBgColor((prev) => !prev)}>
-          <FaFillDrip />
-        </button>
-        {showBgColor && (
-          <div className={styles.bgColorPopup}>
-            <div className={styles.colorPalette}>
-              {PRESET_BG_COLORS.map((color) => (
-                <button
-                  key={color.label}
-                  className={styles.colorSwatch}
-                  style={{
-                    backgroundColor: color.value || '#ffffff',
-                    border: color.value ? 'none' : '1px solid #e2e8f0',
-                  }}
-                  title={color.label}
-                  onClick={() => {
-                    if (color.value) {
-                      setBgColor(color.value);
-                      editor
-                        .chain()
-                        .focus()
-                        .setMark('textStyle', { backgroundColor: color.value })
-                        .run();
-                    } else {
-                      setBgColor('#ffffff');
-                      editor
-                        .chain()
-                        .focus()
-                        .setMark('textStyle', { backgroundColor: null })
-                        .run();
-                    }
-                  }}
-                >
-                  {!color.value && (
-                    <span style={{ fontSize: '10px' }}>지움</span>
-                  )}
-                </button>
-              ))}
-            </div>
-            <ChromePicker
-              color={bgColor}
-              onChange={(color) => {
-                setBgColor(color.hex);
-                editor
-                  .chain()
-                  .focus()
-                  .setMark('textStyle', { backgroundColor: color.hex })
-                  .run();
-              }}
-              disableAlpha
-            />
-            <button
-              className={styles.cancelButton}
-              onClick={() => {
-                setBgColor('#ffffff');
-                editor
-                  .chain()
-                  .focus()
-                  .setMark('textStyle', { backgroundColor: null })
-                  .run();
-                setShowBgColor(false);
-              }}
-            >
-              배경색 취소
-            </button>
-          </div>
-        )}
-      </div>
 
-      <select
-        onChange={(e) => {
-          const font = e.target.value;
-          editor
-            .chain()
-            .focus()
-            .setMark('textStyle', { fontFamily: font })
-            .run();
-        }}
-        defaultValue='default'
-        className={styles.selectBox}
-      >
-        <option value='default' disabled>
-          폰트 선택
-        </option>
-        {FONT_OPTIONS.map((font) => (
-          <option key={font.value} value={font.value}>
-            {font.label}
-          </option>
-        ))}
-      </select>
-
-      <div className={styles.divider} />
-
-      <select
-        value={getCurrentHeading()}
-        onChange={(e) => {
-          const value = e.target.value;
-          if (value === 'paragraph') {
-            editor.chain().focus().setParagraph().run();
-          } else {
-            editor
-              .chain()
-              .focus()
-              .setHeading({ level: parseInt(value, 10) })
-              .run();
-          }
-        }}
-        className={styles.selectBox}
-      >
-        {HEADING_OPTIONS.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-
-      <div className={styles.fontSizeInputWrapper}>
-        <input
-          type='number'
-          value={displayFontSize}
-          placeholder='크기'
-          className={styles.fontSizeInput}
-          onFocus={() => {
-            setIsSizeInputFocused(true);
-            setFontSizeInput(currentEditorFontSize);
-          }}
-          onBlur={() => setIsSizeInputFocused(false)}
-          onChange={(e) => setFontSizeInput(e.target.value)}
-          onKeyDown={handleFontSizeKeyDown}
-        />
-        <span className={styles.fontSizeLabel}>px</span>
-      </div>
-
-      <div className={styles.divider} />
-
-      <button
-        aria-label='왼쪽 정렬'
-        onClick={() => editor.chain().focus().setTextAlign('left').run()}
-      >
-        <FaAlignLeft />
-      </button>
-      <button
-        aria-label='가운데 정렬'
-        onClick={() => editor.chain().focus().setTextAlign('center').run()}
-      >
-        <FaAlignCenter />
-      </button>
-      <button
-        aria-label='오른쪽 정렬'
-        onClick={() => editor.chain().focus().setTextAlign('right').run()}
-      >
-        <FaAlignRight />
-      </button>
-      <button
-        aria-label='토글 정렬'
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
-      >
-        <FaListUl />
-      </button>
-      <button
-        aria-label='순서 정렬'
-        onClick={() => editor.chain().focus().toggleOrderedList().run()}
-      >
-        <FaListOl />
-      </button>
       <button
         type='button'
         aria-label='인용구'
@@ -393,20 +273,6 @@ export default function FixedMenuEditor({ editor }) {
         }}
       >
         <FaLink />
-      </button>
-
-      <button
-        type='button'
-        aria-label='표 삽입'
-        onClick={() =>
-          editor
-            ?.chain()
-            .focus()
-            .insertTable({ rows: 3, cols: 3, withHeaderRow: false })
-            .run()
-        }
-      >
-        <FaTable />
       </button>
 
       <button

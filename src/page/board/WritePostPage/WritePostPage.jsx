@@ -230,6 +230,9 @@ export default function WritePostPage() {
     }
   };
 
+  //에디터 컴포넌트
+  const [editor, setEditor] = useState(null);
+
   return (
     <>
       {isGuideOpened && (
@@ -377,6 +380,7 @@ export default function WritePostPage() {
                 />*/}
               <EditorContainer
                 placeholder='내용'
+                onEditorReady={(editorInstance) => setEditor(editorInstance)}
                 setText={(editor) => {
                 const sanitized = preserveEmptyParagraphs(editor.getHTML());
                 setText(sanitized);
@@ -428,6 +432,7 @@ export default function WritePostPage() {
         <AttachmentBar
           attachmentsInfo={attachmentsInfo}
           setAttachmentsInfo={setAttachmentsInfo}
+          editor={editor}
         />
       </div>
 

@@ -7,6 +7,11 @@
   outline: none;
 }
 
+:global(.ProseMirror h1) {
+  font: var(--text-body-1-med); /* Heading 1/Med */
+  margin: 0;
+}
+
 /*에디터 placeholder style*/
 :global(.ProseMirror p.is-editor-empty:first-child::before) {
   content: attr(data-placeholder);
@@ -18,27 +23,38 @@
 }
 
 .toolbar {
+  height: 60px;
+  gap: 20px;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  background: transparent;
-  border-bottom: 1px solid #ccc;
+  padding: 0 20px;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: var(--blue-1);
+  border-bottom: 1px solid var(--blue-2);
+}
+
+.toolbar > * {
+  flex-shrink: 0;
+}
+.toolbar > div, 
+.toolbar > button {
+  flex-shrink: 0
+}
+
+.toolbar svg {
+  vertical-align: middle;
 }
 
 .toolbar button {
-  border: none;
-  background: none;
   cursor: pointer;
   padding: 0.3rem;
-  font-size: 2rem;
-}
-
-.divider {
-  width: 1px;
-  background: #ccc;
-  margin: 0 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
 }
 
 .editorContent {
@@ -49,34 +65,120 @@
   outline: none;
 }
 
-:global(.ProseMirror) ul {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin: 0.75rem 0;
+.headingWrapper {
+  position: relative;
+  display: flex;
 }
 
-:global(.ProseMirror) ol {
-  list-style-type: decimal;
-  padding-left: 1.5rem;
-  margin: 0.75rem 0;
+button.headingButton {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 36px;
+    padding: 9px 9px 9px 12px;
+    background-color: var(--blue-0); 
+    border-radius: 5px;
+    color: var(--grey-4);
+    font-size: 13px;
+    cursor: pointer;
+    gap: 8px;
 }
 
-:global(.ProseMirror) li {
-  margin: 0.25rem 0;
+.headingArrow {
+  color: var(--grey-3-1);
 }
 
-:global(.ProseMirror) li p {
-  margin: 0;
+.headingDropdown {
+  position: fixed;
+  transform: translateY(-100%);
+  margin-top: -10px;
+  z-index: 9999;
+  background: #FFFFFF;
+  border-radius: 4px;
+  min-width: 8rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
 }
 
-:global(.ProseMirror) ul ul,
-:global(.ProseMirror) ol ul {
-  list-style-type: circle;
+.headingOption {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 157px;
+  height: 35px;
+  padding-left: 14px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--grey-3-1);
+  transition: all 0.2s;
+  text-align: left;
 }
 
-:global(.ProseMirror) ul ol,
-:global(.ProseMirror) ol ol {
-  list-style-type: lower-alpha;
+.toolbar .headingOption {
+  justify-content: flex-start;
+  text-align: left;
+  padding-left: 14px;
+}
+
+.headingOption:first-child.headingOptionActive {
+  background-color: var(--blue-0);
+  color: var(--blue-4);
+  border-radius: 2px 2px 0 0;
+  border-bottom: 0.5px solid var(--blue-2); 
+}
+
+.headingOption:last-child.headingOptionActive {
+  background-color: var(--blue-0);
+  color: var(--blue-4);
+  border-radius: 0 0 2px 2px;
+  border-top: 0.5px solid var(--blue-2); 
+}
+
+
+.colorPaletteInline {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 0;
+  opacity: 0;
+  transition: max-width 0.25s ease, opacity 0.2s ease, padding 0.25s ease;
+  flex-shrink: 0;
+  height: 60px;
+  background-color: var(--blue-0);
+}
+
+.colorPaletteInline.open {
+  max-width: 300px;
+  opacity: 1;
+  padding: 6px 14px 6px 11px; /* 좌우 14px */
+  margin-left: 20px;
+  background-color: var(--blue-0);
+}
+
+.colorSwatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  box-shadow:
+    0 0 0 3px #FFFFFF;
+  margin: 3px;
+  cursor: pointer;
+}
+
+.colorSwatch.selected {
+  box-shadow: 
+    0 0 0 3px var(--grey-3);
+}
+
+.colorSwatchNone svg {
+  display: block;
 }
 
 :global(.ProseMirror) blockquote {
@@ -96,48 +198,6 @@
   opacity: 0.8;
 }
 
-:global(.ProseMirror table) {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 1rem 0;
-  position: relative;
-}
-:global(.ProseMirror th),
-:global(.ProseMirror td) {
-  border: 1px solid #ccc;
-  padding: 0.5rem;
-  min-width: 5rem;
-}
-
-:global(.ProseMirror h1) {
-  font-size: 3rem;
-  font-weight: bold;
-}
-
-:global(.ProseMirror h2) {
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-:global(.ProseMirror h3) {
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-:global(.ProseMirror h4) {
-  font-size: 0.8rem;
-  font-weight: bold;
-}
-
-:global(.ProseMirror h5) {
-  font-size: 0.6rem;
-  font-weight: bold;
-}
-
-:global(.ProseMirror h6) {
-  font-size: 0.5rem;
-  font-weight: bold;
-}
 
 .cancelButton {
   margin-top: 1rem;
@@ -154,35 +214,15 @@
 
 .colorPickerWrapper {
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .colorPickerPopup {
   position: absolute;
   z-index: 10;
   top: 100%;
-}
-
-.bgColorWrapper {
-  position: relative;
-  display: inline-block;
-  margin-left: 0.5rem;
-}
-
-.bgColorPopup {
-  position: absolute;
-  z-index: 10;
-  top: 100%;
-}
-
-.selectBox {
-  margin-left: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  cursor: pointer;
-  font-size: 0.875rem;
 }
 
 .colorPalette {
@@ -194,27 +234,3 @@
   background-color: var(--white);
 }
 
-.colorSwatch {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  transition: transform 0.1s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-
-.colorSwatch:hover {
-  transform: scale(1.15);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.popupDivider {
-  height: 1px;
-  background-color: #e2e8f0;
-  margin: 8px 0;
-  width: 100%;
-}

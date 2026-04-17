@@ -822,5 +822,64 @@
     <path d="M12 3V16M12 16L6 10.3478M12 16L18 10.3478" stroke="black" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M3 17V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V17" stroke="black" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
-</svg>
+  <svg>
+    <symbol id="open-editor" viewBox="0 0 26 20" fill="none">
+      <path d="M3.6709 12.6387L14.3633 12.6387" stroke="var(--blue-3)" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M15.7344 2.55859L25.0191 2.55859" stroke="var(--blue-3)" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M17.8135 9.42383L25.0195 9.42383" stroke="var(--blue-3)" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M20.0488 16.3926L25.0195 16.3926" stroke="var(--blue-3)" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M9.16211 0.972656L0.828775 18.6503" stroke="var(--blue-3)" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M9.16211 0.966797L17.4954 18.6445" stroke="var(--blue-3)" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol> 
 
+    <symbol id="open-editor-fill" viewBox="0 0 27 21" fill="none">
+      <path d="M4.04102 13.0664L14.7334 13.0664" stroke="var(--blue-3)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M16.1045 2.98633L25.3892 2.98633" stroke="var(--blue-3)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M18.1826 9.85156L25.3887 9.85156" stroke="var(--blue-3)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M20.418 16.8203L25.3887 16.8203" stroke="var(--blue-3)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M9.53125 1.40039L1.19792 19.0781" stroke="var(--blue-3)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M9.53125 1.39453L17.8646 19.0722" stroke="var(--blue-3)" stroke-width="2.6" stroke-linecap="round"/>
+    </symbol>  
+  </svg>
+  <svg>
+    <symbol id = "font-color" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1 3H19" stroke="#898989" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M10 3L10 21" stroke="#898989" stroke-width="1.8" stroke-linecap="round"/>
+      <rect x="17" y="14" width="7" height="7" fill="currentColor" stroke="none"/>
+    </symbol>
+
+    <symbol id="bg-color" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0.5" y="0.5" width="23" height="23" 
+        fill="var(--bg-icon-fill, #E6F7B1)" 
+        stroke="var(--bg-icon-stroke, #AAD916)" 
+        stroke-width="1"/>
+      <path d="M3.44043 3.43945H21.132" stroke="#898989" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M12.2861 3.43945L12.2861 21.131" stroke="#898989" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+
+    <symbol id="bold" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6.01758 3L6.01758 21" stroke="var(--icon-stroke, #898989)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M6 3H13.1506C15.389 3 17.2036 4.81458 17.2036 7.05298C17.2036 9.29138 15.389 11.106 13.1506 11.106H6" stroke="var(--icon-stroke, #898989)" stroke-width="2.6"/>
+      <path d="M6 11.1055H13.2722C16.0044 11.1055 18.2192 13.3203 18.2192 16.0525C18.2192 18.7847 16.0044 20.9995 13.2722 20.9995H6" stroke="var(--icon-stroke, #898989)" stroke-width="2.6"/>
+    </symbol>
+
+    <symbol id="underline" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M22 21L2 21" stroke="var(--icon-stroke, #484848)" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M7 3L7 11C7 13.7614 9.23858 16 12 16C14.7614 16 17 13.7614 17 11L17 3" stroke="var(--icon-stroke, #898989)" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+
+    <symbol id="strikethrough" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 3H21" stroke="var(--icon-stroke, #898989)" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M12 3L12 21" stroke="var(--icon-stroke, #898989)" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M22 11L2 11" stroke="var(--icon-stroke, #484848)" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+
+    <symbol id = 'no-color' viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="14" r="12.5" fill="#EAF5FD" stroke="white" stroke-width="3"/>
+      <path d="M21 7L7 21" stroke="#FF4B6C" stroke-width="0.8"/>
+      <circle cx="14" cy="14" r="12.5" stroke="white" stroke-width="3"/>
+    </symbol>
+
+  </svg>
+
+</svg>
