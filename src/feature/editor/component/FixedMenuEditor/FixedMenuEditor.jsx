@@ -135,7 +135,7 @@ export default function FixedMenuEditor({ editor }) {
             title="색상 없음"
             onClick={() => {
               setTextColor('');
-              editor.chain().focus().unsetMark('textStyle').run();
+              editor.chain().focus().unsetColor().run();
             }}
           >
             <Icon id="no-color" width={28} height={28} />
