@@ -1,12 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useEditorState } from '@tiptap/react';
-import { Icon } from '@/shared/component';  
+import React, { useEffect,useRef, useState } from 'react';
 import {
-  FaQuoteRight,
   FaLink,
+  FaQuoteRight,
   FaYoutube,
 } from 'react-icons/fa';
-import { ChromePicker } from 'react-color';
+
+import { useEditorState } from '@tiptap/react';
+
+import { Icon } from '@/shared/component';  
+
 import styles from './FixedMenuEditor.module.css';
 
 

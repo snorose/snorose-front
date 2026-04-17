@@ -169,6 +169,7 @@ button.headingButton {
   box-shadow:
     0 0 0 3px #FFFFFF;
   margin: 3px;
+  cursor: pointer;
 }
 
 .colorSwatch.selected {
@@ -197,18 +198,6 @@ button.headingButton {
   opacity: 0.8;
 }
 
-:global(.ProseMirror table) {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 1rem 0;
-  position: relative;
-}
-:global(.ProseMirror th),
-:global(.ProseMirror td) {
-  border: 1px solid #ccc;
-  padding: 0.5rem;
-  min-width: 5rem;
-}
 
 .cancelButton {
   margin-top: 1rem;
@@ -236,28 +225,6 @@ button.headingButton {
   top: 100%;
 }
 
-.bgColorWrapper {
-  position: relative;
-  display: inline-block;
-  margin-left: 0.5rem;
-}
-
-.bgColorPopup {
-  position: absolute;
-  z-index: 10;
-  top: 100%;
-}
-
-.selectBox {
-  margin-left: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  cursor: pointer;
-  font-size: 0.875rem;
-}
-
 .colorPalette {
   display: flex;
   flex-wrap: wrap;
@@ -267,27 +234,3 @@ button.headingButton {
   background-color: var(--white);
 }
 
-.colorSwatch {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  transition: transform 0.1s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-
-.colorSwatch:hover {
-  transform: scale(1.15);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.popupDivider {
-  height: 1px;
-  background-color: #e2e8f0;
-  margin: 8px 0;
-  width: 100%;
-}

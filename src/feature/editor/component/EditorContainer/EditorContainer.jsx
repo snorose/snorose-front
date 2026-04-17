@@ -1,25 +1,25 @@
 import { useEffect } from 'react';
-import { useEditor, EditorContent, Extension } from '@tiptap/react';
-import { useState } from 'react';
-import Placeholder from '@tiptap/extension-placeholder';
-import StarterKit from '@tiptap/starter-kit';
-import TextAlign from '@tiptap/extension-text-align';
+
 import Blockquote from '@tiptap/extension-blockquote';
 import Link from '@tiptap/extension-link';
-import { EnterKeyHandler } from '@/feature/editor/component/extensions/EnterKeyHandler';
-import {
-  TextStyle,
-  Color,
-  BackgroundColor,
-  FontFamily,
-} from '@tiptap/extension-text-style';
+import Placeholder from '@tiptap/extension-placeholder';
 import { Table } from '@tiptap/extension-table';
 import { TableRow } from '@tiptap/extension-table';
 import { TableCell } from '@tiptap/extension-table';
 import { TableHeader } from '@tiptap/extension-table';
-import FixedMenuEditor from '../FixedMenuEditor/FixedMenuEditor';
-import styles from './EditorContainer.module.css';
+import TextAlign from '@tiptap/extension-text-align';
+import {
+  BackgroundColor,
+  Color,
+  FontFamily,
+  TextStyle,
+} from '@tiptap/extension-text-style';
+import { EditorContent, Extension,useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+
+import { EnterKeyHandler } from '@/feature/editor/component/extensions/EnterKeyHandler';
 import { Iframe } from '@/feature/editor/component/extensions/IframeExtension';
+
 
 const FontSize = Extension.create({
   name: 'fontSize',
@@ -47,7 +47,6 @@ const FontSize = Extension.create({
 });
 
 export default function EditorContainer({ placeholder, text, setText, onEditorReady }) {
-  const [isInTable, setIsInTable] = useState(false);
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -84,9 +83,6 @@ export default function EditorContainer({ placeholder, text, setText, onEditorRe
     onUpdate: ({ editor }) => {
       if (setText) setText(editor);
     },
-    onSelectionUpdate: ({ editor }) => {
-      setIsInTable(editor.isActive('table'));
-    },
     onCreate: ({ editor }) => {
       if (onEditorReady) onEditorReady(editor);
     },
@@ -104,38 +100,6 @@ export default function EditorContainer({ placeholder, text, setText, onEditorRe
 
       <EditorContent editor={editor} />
 
-      {isInTable && (
-        <div type='button' className={styles.tableControls}>
-          <button onClick={() => editor.chain().focus().addRowAfter().run()}>
-            ➕ 행 추가
-          </button>
-          <button
-            type='button'
-            onClick={() => editor.chain().focus().addColumnAfter().run()}
-          >
-            ➕ 열 추가
-          </button>
-          <button
-            type='button'
-            onClick={() => editor.chain().focus().deleteRow().run()}
-          >
-            ➖ 행 삭제
-          </button>
-          <button
-            type='button'
-            onClick={() => editor.chain().focus().deleteColumn().run()}
-          >
-            ➖ 열 삭제
-          </button>
-          <button
-            type='button'
-            className={styles.deleteButton}
-            onClick={() => editor.chain().focus().deleteTable().run()}
-          >
-            🗑️ 표 삭제
-          </button>
-        </div>
-      )}
     </>
   );
 }
