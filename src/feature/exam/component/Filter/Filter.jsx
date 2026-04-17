@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { Icon } from '@/shared/component';
+import { ReactComponent as XIconsmall } from '@/assets/icons/Xsmall.svg';
 
 import styles from './Filter.module.css';
 
@@ -61,7 +62,7 @@ export default function Filter({ filterKey, options, placeholder }) {
               deleteOption();
             }}
           >
-            <Icon id='x' width={10} height={10} />
+            <XIconsmall width={8} height={8} />
           </button>
         )}
       </div>
