@@ -128,9 +128,6 @@ button.headingButton {
   background-color: var(--blue-0);
   color: var(--blue-4);
   border-radius: 2px 2px 0 0;
-}
-
-.headingOption:first-child:not(.heading OptionActive) {
   border-bottom: 0.5px solid var(--blue-2); 
 }
 
@@ -138,6 +135,7 @@ button.headingButton {
   background-color: var(--blue-0);
   color: var(--blue-4);
   border-radius: 0 0 2px 2px;
+  border-top: 0.5px solid var(--blue-2); 
 }
 
 
