@@ -92,17 +92,6 @@ export default function WriteExamReviewPage() {
   const [isCalled, setIsCalled] = useState();
   const [loading, setLoading] = useState();
 
-  const pass =
-    lectureName.trim() &&
-    professor.trim() &&
-    Object.keys(lectureType).length > 0 &&
-    Object.keys(examType).length > 0 &&
-    Object.keys(lectureYear).length > 0 &&
-    Object.keys(semester).length > 0 &&
-    classNumber &&
-    questionDetail.trim() &&
-    file;
-
   // navigation guard
 
   const [isBlock, setIsBlock] = useState(false);
@@ -183,38 +172,69 @@ export default function WriteExamReviewPage() {
     isOnline,
   };
 
+  const handleSubmit = async () => {
+    if (!lectureName.trim()) {
+      toast({ message: TOAST.EXAM_REVIEW.emptyLectureName, variant: 'info' });
+      return;
+    }
+    if (!professor.trim()) {
+      toast({ message: TOAST.EXAM_REVIEW.emptyProfessor, variant: 'info' });
+      return;
+    }
+    if (!classNumber.trim()) {
+      toast({ message: TOAST.EXAM_REVIEW.emptyClassNumber, variant: 'info' });
+      return;
+    }
+    if (Object.keys(lectureYear).length === 0) {
+      toast({ message: TOAST.EXAM_REVIEW.emptyLectureYear, variant: 'info' });
+      return;
+    }
+    if (Object.keys(semester).length === 0) {
+      toast({ message: TOAST.EXAM_REVIEW.emptySemester, variant: 'info' });
+      return;
+    }
+    if (Object.keys(lectureType).length === 0) {
+      toast({ message: TOAST.EXAM_REVIEW.emptyLectureType, variant: 'info' });
+      return;
+    }
+    if (Object.keys(examType).length === 0) {
+      toast({ message: TOAST.EXAM_REVIEW.emptyExamType, variant: 'info' });
+      return;
+    }
+    if (!questionDetail.trim()) {
+      toast({
+        message: TOAST.EXAM_REVIEW.emptyQuestionDetail,
+        variant: 'info',
+      });
+      return;
+    }
+    if (!file) {
+      toast({ message: TOAST.EXAM_REVIEW.emptyFile, variant: 'info' });
+      return;
+    }
+
+    if (isCalled) return;
+    setIsCalled(true);
+
+    try {
+      const response = await checkDuplication();
+
+      if (response?.data.result.isDuplicated) {
+        setModal({ id: 'exam-review-duplication', type: null });
+        return;
+      }
+    } catch (error) {
+      return;
+    }
+
+    setLoading(true);
+    createExamReview.mutate({ data: formBody, file });
+  };
+
   return (
     <section className={styles.container}>
       <CloseAppBar>
-        <ActionButton
-          onClick={async () => {
-            if (isCalled) {
-              return;
-            }
-
-            setIsCalled(true);
-
-            try {
-              const response = await checkDuplication();
-
-              if (response?.data.result.isDuplicated) {
-                setModal({ id: 'exam-review-duplication', type: null });
-                return;
-              }
-            } catch (error) {
-              return;
-            }
-
-            setLoading(true);
-            createExamReview.mutate({
-              data: formBody,
-              file,
-            });
-          }}
-          disabled={!pass}
-        >
-          게시
-        </ActionButton>
+        <ActionButton onClick={handleSubmit}>게시</ActionButton>
       </CloseAppBar>
 
       <div className={styles.top}>
@@ -389,7 +409,7 @@ export default function WriteExamReviewPage() {
       {/* 페이지 이탈 방지 모달 */}
       {modal.id === 'exit-page' && (
         <ConfirmModal
-          modalText={CONFIRM_MODAL_TEXT.EXIT_PAGE}
+          modalText={CONFIRM_MODAL_TEXT.EXAM_EXIT_PAGE}
           onConfirm={handleExitPage}
         />
       )}

@@ -5,7 +5,7 @@
   align-items: center;
   gap: 0.8rem;
   width: 100%;
-  padding: 2.3rem 3.6rem;
+  padding: 2.3rem 0;
   box-sizing: border-box;
   border-bottom: 0.1rem solid var(--grey-2);
 }
@@ -16,6 +16,7 @@
   text-align: center;
   color: var(--black);
   font: var(--text-headline-1-med);
+  padding-inline: 2rem;
 }
 
 .description {
@@ -23,6 +24,7 @@
   color: var(--grey-4);
   font: var(--text-headline-2-reg);
   white-space: pre-line;
+  padding-inline: 3.6rem;
 }
 
 .bottom {
