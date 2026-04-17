@@ -24,8 +24,15 @@
   padding: 0 20px;
   align-items: center;
   flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
   background: var(--blue-1);
   border-bottom: 1px solid var(--blue-2);
+}
+
+.toolbar > div, 
+.toolbar > button {
+  flex-shrink: 0
 }
 
 .toolbar svg {
@@ -35,6 +42,11 @@
 .toolbar button {
   cursor: pointer;
   padding: 0.3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
 }
 
 .editorContent {
@@ -50,7 +62,6 @@
   display: flex;
 }
 
-/* 1. 더 구체적인 선택자를 사용하여 우선순위를 높입니다 (태그+클래스 결합) */
 button.headingButton {
     display: inline-flex;
     align-items: center;
@@ -94,13 +105,45 @@ button.headingButton {
   font-size: 0.875rem;
 }
 
-.headingOption:hover {
-  background: #f1f5f9;
+.colorPaletteInline {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 0;
+  opacity: 0;
+  transition: max-width 0.25s ease, opacity 0.2s ease, padding 0.25s ease;
+  flex-shrink: 0;
+  height: 60px;
+  background-color: var(--blue-0);
 }
 
-.headingOptionActive {
-  background: #e8f0fe;
-  color: var(--blue-4);
+.colorPaletteInline.open {
+  max-width: 300px;
+  opacity: 1;
+  padding: 6px 14px 6px 11px; /* 좌우 14px */
+  margin-left: 20px;
+  background-color: var(--blue-0);
+}
+
+.colorSwatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  box-shadow:
+    0 0 0 3px #FFFFFF;
+  margin: 3px;
+}
+
+.colorSwatch.selected {
+  box-shadow: 
+    0 0 0 3px var(--grey-3);
+}
+
+.colorSwatchNone svg {
+  display: block;
 }
 
 :global(.ProseMirror) blockquote {
@@ -178,7 +221,9 @@ button.headingButton {
 
 .colorPickerWrapper {
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .colorPickerPopup {

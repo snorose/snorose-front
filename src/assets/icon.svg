@@ -871,6 +871,12 @@
       <path d="M22 11L2 11" stroke="#484848" stroke-width="1.8" stroke-linecap="round"/>
     </symbol>
 
+    <symbol id = 'no-color' viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="14" r="12.5" fill="#EAF5FD" stroke="white" stroke-width="3"/>
+      <path d="M21 7L7 21" stroke="#FF4B6C" stroke-width="0.8"/>
+      <circle cx="14" cy="14" r="12.5" stroke="white" stroke-width="3"/>
+    </symbol>
 
   </svg>
+
 </svg>

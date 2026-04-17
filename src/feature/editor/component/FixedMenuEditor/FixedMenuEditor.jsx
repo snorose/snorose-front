@@ -1,27 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Icon } from '@/shared/component';  
 import {
-  FaBold,
-  FaUnderline,
-  FaStrikethrough,
-  FaPalette,
-  FaFillDrip,
   FaQuoteRight,
   FaLink,
-  FaTable,
   FaYoutube,
 } from 'react-icons/fa';
 import { ChromePicker } from 'react-color';
 import styles from './FixedMenuEditor.module.css';
-import { Plugin } from 'prosemirror-state';
+
 
 const PRESET_COLORS = [
-  { label: '기본', value: 'var(--grey-4)' },
-  { label: '회색', value: 'var(--grey-3-1)' },
-  { label: '하늘', value: 'var(--blue-3)' },
+  { label: '회색', value: 'var(--grey-4)' },
+  { label: '검정', value: 'black' },
   { label: '파랑', value: 'var(--blue-4)' },
-  { label: '강조', value: 'var(--pink-3)' },
-  { label: '속닥', value: 'var(--blue-2)' },
+  { label: '핑크', value: 'var(--pink-3)' },
 ];
 
 const PRESET_BG_COLORS = [
@@ -31,31 +23,16 @@ const PRESET_BG_COLORS = [
 ];
 
 export default function FixedMenuEditor({ editor }) {
-  const [textColor, setTextColor] = useState('#000000');
-  const [bgColor, setBgColor] = useState('#ffffff');
+  const [textColor, setTextColor] = useState('var(--grey-4)');
+  const [bgColor, setBgColor] = useState('var(--white)');
   const [showTextColor, setShowTextColor] = useState(false);
   const [showBgColor, setShowBgColor] = useState(false);
-  const [fontSizeInput, setFontSizeInput] = useState('');
-  const [isSizeInputFocused, setIsSizeInputFocused] = useState(false);
 
   const textColorRef = useRef(null);
   const bgColorRef = useRef(null);
 
   const [headingOpen, setHeadingOpen] = useState(false);
   const headingRef = useRef(null);
-
-  const FONT_OPTIONS = [
-    { value: 'Arial', label: 'Arial' },
-    {
-      value: "'Apple SD Gothic Neo', '애플 SD 고딕 Neo'",
-      label: 'Apple SD Gothic Neo',
-    },
-    { value: 'Courier New', label: 'Courier New' },
-    { value: 'Times New Roman', label: 'Times New Roman' },
-    { value: 'Verdana', label: 'Verdana' },
-    { value: "'Malgun Gothic', '맑은 고딕'", label: '맑은 고딕' },
-    { value: "'Nanum Gothic', '나눔고딕'", label: '나눔고딕' },
-  ];
 
   const HEADING_OPTIONS = [
     { value: 'paragraph', label: '본문' },
@@ -97,31 +74,6 @@ export default function FixedMenuEditor({ editor }) {
 
   if (!editor) return null;
 
-  const currentEditorFontSize =
-    editor.getAttributes('textStyle')?.fontSize?.replace('px', '') || '';
-
-  const displayFontSize = isSizeInputFocused
-    ? fontSizeInput
-    : currentEditorFontSize;
-
-  const handleFontSizeKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      const val = fontSizeInput.trim();
-      if (val && !isNaN(val)) {
-        editor
-          .chain()
-          .focus()
-          .setMark('textStyle', { fontSize: `${val}px` })
-          .run();
-      } else {
-        editor.chain().focus().setMark('textStyle', { fontSize: null }).run();
-      }
-      setIsSizeInputFocused(false);
-      e.target.blur();
-    }
-  };
-
   return (
     <div className={styles.toolbar}>
 
@@ -162,44 +114,47 @@ export default function FixedMenuEditor({ editor }) {
         )}
       </div>
       
+  
       <div ref={textColorRef} className={styles.colorPickerWrapper}>
+
+        {/* 폰트 색상 토글 버튼 */}
         <button onClick={() => setShowTextColor((prev) => !prev)}>
           <Icon id="font-color" width={24} height={24} />
         </button>
-        {showTextColor && (
-          <div className={styles.colorPickerPopup}>
-            <div className={styles.colorPalette}>
-              {PRESET_COLORS.map((color) => (
-                <button
-                  key={color.label}
-                  className={styles.colorSwatch}
-                  style={{ backgroundColor: color.value }}
-                  title={color.label}
-                  onClick={() => {
-                    setTextColor(color.value);
-                    editor
-                      .chain()
-                      .focus()
-                      .setMark('textStyle', { color: color.value })
-                      .run();
-                  }}
-                />
-              ))}
-            </div>
-            <ChromePicker
-              color={textColor}
-              onChange={(color) => {
-                setTextColor(color.hex);
+
+        <div className={`${styles.colorPaletteInline} ${showTextColor ? styles.open : ''}`}>
+
+          {/* 색상 없음 */}
+          <button
+            className={styles.colorSwatchNone}
+            title="색상 없음"
+            onClick={() => {
+              setTextColor('');
+              editor.chain().focus().unsetMark('textStyle').run();
+            }}
+          >
+            <Icon id="no-color" width={28} height={28} />
+          </button>
+
+          {/* 고정 색상 */}
+          {PRESET_COLORS.map((color) => (
+            <button
+              key={color.label}
+              className={`${styles.colorSwatch} ${textColor === color.value ? styles.selected : ''}`}
+              style={{ backgroundColor: color.value }}
+              title={color.label}
+              onClick={() => {
+                setTextColor(color.value);
                 editor
                   .chain()
                   .focus()
-                  .setMark('textStyle', { color: color.hex })
+                  .setMark('textStyle', { color: color.value })
                   .run();
               }}
-              disableAlpha
             />
-          </div>
-        )}
+          ))}
+
+        </div>
       </div>
 
       <div ref={bgColorRef} className={styles.bgColorWrapper}>
