@@ -17,14 +17,15 @@ const PRESET_COLORS = [
 ];
 
 const PRESET_BG_COLORS = [
-  { label: '기본(투명)', value: null }, // 배경색 초기화용
-  { label: '핑크', value: 'var(--pink-2)' },
+  { label: '핑크', value: 'var(--pink-1)' },
+  { label: '노랑', value: '#FDFF6C' },
   { label: '연두', value: 'var(--green-2)' },
+  { label: '파랑', value: 'var(--blue-2)' },
 ];
 
 export default function FixedMenuEditor({ editor }) {
   const [textColor, setTextColor] = useState('var(--grey-4)');
-  const [bgColor, setBgColor] = useState('var(--white)');
+  const [bgColor, setBgColor] = useState('');
   const [showTextColor, setShowTextColor] = useState(false);
   const [showBgColor, setShowBgColor] = useState(false);
 
@@ -160,74 +161,50 @@ export default function FixedMenuEditor({ editor }) {
         </div>
       </div>
 
-      <div ref={bgColorRef} className={styles.bgColorWrapper}>
-        <button onClick={() => setShowBgColor((prev) => !prev)}>
+      <div ref={bgColorRef} className={styles.colorPickerWrapper}>
+  
+        <button
+          onClick={() => setShowBgColor((prev) => !prev)}
+          style={{
+            '--bg-icon-fill': bgColor || '#E6F7B1',
+            '--bg-icon-stroke': bgColor || '#AAD916',
+          }}
+        >
           <Icon id="bg-color" width={24} height={24} />
         </button>
-        {showBgColor && (
-          <div className={styles.bgColorPopup}>
-            <div className={styles.colorPalette}>
-              {PRESET_BG_COLORS.map((color) => (
-                <button
-                  key={color.label}
-                  className={styles.colorSwatch}
-                  style={{
-                    backgroundColor: color.value || '#ffffff',
-                    border: color.value ? 'none' : '1px solid #e2e8f0',
-                  }}
-                  title={color.label}
-                  onClick={() => {
-                    if (color.value) {
-                      setBgColor(color.value);
-                      editor
-                        .chain()
-                        .focus()
-                        .setMark('textStyle', { backgroundColor: color.value })
-                        .run();
-                    } else {
-                      setBgColor('#ffffff');
-                      editor
-                        .chain()
-                        .focus()
-                        .setMark('textStyle', { backgroundColor: null })
-                        .run();
-                    }
-                  }}
-                >
-                  {!color.value && (
-                    <span style={{ fontSize: '10px' }}>지움</span>
-                  )}
-                </button>
-              ))}
-            </div>
-            <ChromePicker
-              color={bgColor}
-              onChange={(color) => {
-                setBgColor(color.hex);
-                editor
-                  .chain()
-                  .focus()
-                  .setMark('textStyle', { backgroundColor: color.hex })
-                  .run();
-              }}
-              disableAlpha
-            />
+
+        <div className={`${styles.colorPaletteInline} ${showBgColor ? styles.open : ''}`}>
+
+          <button
+            className={styles.colorSwatchNone}
+            title="배경색 없음"
+            onClick={() => {
+              setBgColor('');
+              editor.chain().focus().setMark('textStyle', { backgroundColor: null }).run();
+            }}
+          >
+            <Icon id="no-color" width={28} height={28} />
+          </button>
+
+          {/* 고정 색상 */}
+          {PRESET_BG_COLORS.map((color) => (
             <button
-              className={styles.cancelButton}
+              key={color.label}
+              className={`${styles.colorSwatch} ${bgColor === color.value ? styles.selected : ''}`}
+              style={{ backgroundColor: color.value }}
+              title={color.label}
               onClick={() => {
-                setBgColor('#ffffff');
+                setBgColor(color.value);
                 editor
                   .chain()
                   .focus()
-                  .setMark('textStyle', { backgroundColor: null })
+                  .setMark('textStyle', { backgroundColor: color.value })
                   .run();
-                setShowBgColor(false);
               }}
-            >
-              배경색 취소
-            </button>
-          </div>
-        )}
+            />
+          ))}
+
+        </div>
       </div>
 
       <button

@@ -848,8 +848,11 @@
       <rect x="17" y="14" width="7" height="7" fill="currentColor" stroke="none"/>
     </symbol>
 
-    <symbol id="bg-color" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0.5" y="0.5" width="23" height="23" fill="#E6F7B1" stroke="#AAD916"/>
+    <symbol id="bg-color" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0.5" y="0.5" width="23" height="23" 
+        fill="var(--bg-icon-fill, #E6F7B1)" 
+        stroke="var(--bg-icon-stroke, #AAD916)" 
+        stroke-width="1"/>
       <path d="M3.44043 3.43945H21.132" stroke="#898989" stroke-width="1.8" stroke-linecap="round"/>
       <path d="M12.2861 3.43945L12.2861 21.131" stroke="#898989" stroke-width="1.8" stroke-linecap="round"/>
     </symbol>
