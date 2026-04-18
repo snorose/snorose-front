@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FaLink, FaYoutube } from 'react-icons/fa';
+import { FaLink } from 'react-icons/fa';
 
 import { useEditorState } from '@tiptap/react';
 
@@ -264,80 +264,6 @@ export default function FixedMenuEditor({ editor }) {
         }}
       >
         <FaLink />
-      </button>
-
-      <button
-        type='button'
-        onClick={() => {
-          const url = window.prompt('iframe URL 입력:');
-          if (!url) return;
-          let formattedUrl = url;
-
-          const patterns = [
-            {
-              // YouTube 일반 + Shorts
-              regex:
-                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]+)/,
-              format: (match) => `https://www.youtube.com/embed/${match[1]}`,
-            },
-            {
-              // Instagram Reels
-              regex: /instagram\.com\/reel\/([a-zA-Z0-9_-]+)/,
-              format: (match) =>
-                `https://www.instagram.com/reel/${match[1]}/embed/`,
-            },
-            {
-              // Instagram Posts
-              regex: /instagram\.com\/p\/([a-zA-Z0-9_-]+)/,
-              format: (match) =>
-                `https://www.instagram.com/p/${match[1]}/embed/`,
-            },
-            {
-              // TikTok
-              regex: /tiktok\.com\/@[^/]+\/video\/(\d+)/,
-              format: (match) => `https://www.tiktok.com/embed/v2/${match[1]}`,
-            },
-            {
-              // X (Twitter)
-              regex: /(?:twitter\.com|x\.com)\/[^/]+\/status\/(\d+)/,
-              format: (match) =>
-                `https://platform.twitter.com/embed/Tweet.html?id=${match[1]}`,
-            },
-            {
-              // 네이버 TV
-              regex: /tv\.naver\.com\/v\/(\d+)/,
-              format: (match) => `https://tv.naver.com/embed/${match[1]}`,
-            },
-            {
-              // Google Maps embed URL
-              regex: /google\.com\/maps\/embed/,
-              format: () => url,
-            },
-            {
-              // Google Maps 일반 URL
-              regex:
-                /google\.com\/maps\/(?:place\/[^/]+\/)?\@([\d.-]+),([\d.-]+)/,
-              format: (match) =>
-                `https://maps.google.com/maps?q=${match[1]},${match[2]}&output=embed`,
-            },
-          ];
-
-          for (const pattern of patterns) {
-            const match = url.match(pattern.regex);
-            if (match) {
-              formattedUrl = pattern.format(match);
-              break;
-            }
-          }
-
-          editor
-            .chain()
-            .focus()
-            .insertContent({ type: 'iframe', attrs: { src: formattedUrl } })
-            .run();
-        }}
-      >
-        <FaYoutube />
       </button>
     </div>
   );
