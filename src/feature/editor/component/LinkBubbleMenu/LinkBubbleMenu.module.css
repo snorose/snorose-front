@@ -3,7 +3,7 @@
   position: fixed;
   z-index: var(--z-index-dropdown);
   background-color: var(--white);
-  border: 0.1rem solid var(--blue-2);
+  /* border: 0.1rem solid var(--blue-2); */
   box-shadow: 0 0 2rem var(--grey-3);
   border-radius: 0.5rem;
   display: flex;
@@ -11,6 +11,7 @@
 }
 
 .header {
+  color: var(--grey-3-1);
   font-size: var(--text-body-2-reg);
   text-align: center;
   user-select: none;
@@ -29,6 +30,7 @@
 }
 
 .button:hover {
+  color: var(--blue-4);
   background-color: var(--blue-0);
 }
 
