@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import Blockquote from '@tiptap/extension-blockquote';
-import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
 import { Table } from '@tiptap/extension-table';
 import { TableRow } from '@tiptap/extension-table';
@@ -47,7 +45,6 @@ export default function EditorContainer({
         openOnClick: false,
         autolink: true,
       }),
-      Blockquote,
       EnterKeyHandler,
       TextAlign.configure({
         types: ['heading', 'paragraph'],

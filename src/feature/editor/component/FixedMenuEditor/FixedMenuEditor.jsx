@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FaLink, FaQuoteRight, FaYoutube } from 'react-icons/fa';
+import { FaLink, FaYoutube } from 'react-icons/fa';
 
 import { useEditorState } from '@tiptap/react';
 
@@ -232,14 +232,6 @@ export default function FixedMenuEditor({ editor }) {
         style={editorState.isStrike ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
         <Icon id='strikethrough' width={24} height={24} />
-      </button>
-
-      <button
-        type='button'
-        aria-label='인용구'
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-      >
-        <FaQuoteRight />
       </button>
 
       <button
