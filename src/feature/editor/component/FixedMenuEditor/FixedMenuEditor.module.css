@@ -12,6 +12,11 @@
   margin: 0;
 }
 
+:global(.ProseMirror iframe) {
+  display: block;
+  margin: 1.5rem 0;
+}
+
 /*에디터 placeholder style*/
 :global(.ProseMirror p.is-editor-empty:first-child::before) {
   content: attr(data-placeholder);
@@ -38,9 +43,9 @@
 .toolbar > * {
   flex-shrink: 0;
 }
-.toolbar > div, 
+.toolbar > div,
 .toolbar > button {
-  flex-shrink: 0
+  flex-shrink: 0;
 }
 
 .toolbar svg {
@@ -71,17 +76,17 @@
 }
 
 button.headingButton {
-    display: inline-flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 36px;
-    padding: 9px 9px 9px 12px;
-    background-color: var(--blue-0); 
-    border-radius: 5px;
-    color: var(--grey-4);
-    font-size: 13px;
-    cursor: pointer;
-    gap: 8px;
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 36px;
+  padding: 9px 9px 9px 12px;
+  background-color: var(--blue-0);
+  border-radius: 5px;
+  color: var(--grey-4);
+  font-size: 13px;
+  cursor: pointer;
+  gap: 8px;
 }
 
 .headingArrow {
@@ -93,7 +98,7 @@ button.headingButton {
   transform: translateY(-100%);
   margin-top: -10px;
   z-index: 9999;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 4px;
   min-width: 8rem;
   display: flex;
@@ -128,16 +133,15 @@ button.headingButton {
   background-color: var(--blue-0);
   color: var(--blue-4);
   border-radius: 2px 2px 0 0;
-  border-bottom: 0.5px solid var(--blue-2); 
+  border-bottom: 0.5px solid var(--blue-2);
 }
 
 .headingOption:last-child.headingOptionActive {
   background-color: var(--blue-0);
   color: var(--blue-4);
   border-radius: 0 0 2px 2px;
-  border-top: 0.5px solid var(--blue-2); 
+  border-top: 0.5px solid var(--blue-2);
 }
-
 
 .colorPaletteInline {
   display: flex;
@@ -147,7 +151,10 @@ button.headingButton {
   white-space: nowrap;
   max-width: 0;
   opacity: 0;
-  transition: max-width 0.25s ease, opacity 0.2s ease, padding 0.25s ease;
+  transition:
+    max-width 0.25s ease,
+    opacity 0.2s ease,
+    padding 0.25s ease;
   flex-shrink: 0;
   height: 60px;
   background-color: var(--blue-0);
@@ -166,15 +173,13 @@ button.headingButton {
   height: 24px;
   border-radius: 50%;
   border: none;
-  box-shadow:
-    0 0 0 3px #FFFFFF;
+  box-shadow: 0 0 0 3px #ffffff;
   margin: 3px;
   cursor: pointer;
 }
 
 .colorSwatch.selected {
-  box-shadow: 
-    0 0 0 3px var(--grey-3);
+  box-shadow: 0 0 0 3px var(--grey-3);
 }
 
 .colorSwatchNone svg {
@@ -197,7 +202,6 @@ button.headingButton {
 :global(.ProseMirror a:hover) {
   opacity: 0.8;
 }
-
 
 .cancelButton {
   margin-top: 1rem;
@@ -233,4 +237,3 @@ button.headingButton {
   justify-content: flex-start;
   background-color: var(--white);
 }
-

@@ -22,6 +22,7 @@ import {
 import cloudLogo from '@/assets/images/cloudLogo.svg';
 import sponsorBanner from '@/assets/banners/sponsorBanner.png';
 import DOMPurify from 'dompurify';
+import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
 import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
 import styles from './PostDetailView.module.css';
 
@@ -70,7 +71,7 @@ export default function PostDetailView({
         <div
           className={styles.contentText}
           dangerouslySetInnerHTML={{
-           __html: DOMPurify.sanitize(preserveEmptyParagraphs(data.content)),
+            __html: sanitizeHtml(preserveEmptyParagraphs(data.content)),
           }}
         />
 
