@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import Placeholder from '@tiptap/extension-placeholder';
-import { Table } from '@tiptap/extension-table';
-import { TableRow } from '@tiptap/extension-table';
-import { TableCell } from '@tiptap/extension-table';
-import { TableHeader } from '@tiptap/extension-table';
 import TextAlign from '@tiptap/extension-text-align';
 import {
   BackgroundColor,
@@ -50,13 +46,7 @@ export default function EditorContainer({
         types: ['heading', 'paragraph'],
         alignments: ['left', 'center', 'right'],
       }),
-      Table.configure({
-        resizable: true,
-      }),
       Iframe,
-      TableRow,
-      TableHeader,
-      TableCell,
       TextStyle,
       Color,
       BackgroundColor,
