@@ -12,6 +12,11 @@
   margin: 0;
 }
 
+:global(.ProseMirror iframe) {
+  display: block;
+  margin: 1.5rem 0;
+}
+
 /*에디터 placeholder style*/
 :global(.ProseMirror p.is-editor-empty:first-child::before) {
   content: attr(data-placeholder);
