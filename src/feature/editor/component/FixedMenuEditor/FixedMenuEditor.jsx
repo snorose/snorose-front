@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FaLink } from 'react-icons/fa';
 
 import { useEditorState } from '@tiptap/react';
 
@@ -232,38 +231,6 @@ export default function FixedMenuEditor({ editor }) {
         style={editorState.isStrike ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
         <Icon id='strikethrough' width={24} height={24} />
-      </button>
-
-      <button
-        type='button'
-        aria-label='링크 삽입'
-        onClick={() => {
-          const url = window.prompt('링크 주소를 입력하세요');
-          if (!url) return;
-          const protocolRegex = /^(https?:\/\/)/i;
-          const formattedUrl = protocolRegex.test(url) ? url : `https://${url}`;
-
-          if (editor.state.selection.empty) {
-            editor
-              .chain()
-              .focus()
-              .insertContent({
-                type: 'text',
-                text: formattedUrl,
-                marks: [{ type: 'link', attrs: { href: formattedUrl } }],
-              })
-              .run();
-          } else {
-            editor
-              .chain()
-              .focus()
-              .extendMarkRange('link')
-              .setLink({ href: formattedUrl })
-              .run();
-          }
-        }}
-      >
-        <FaLink />
       </button>
     </div>
   );
