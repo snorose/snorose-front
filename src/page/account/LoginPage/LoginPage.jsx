@@ -20,6 +20,7 @@ export default function Login() {
   const login = useLogin();
   const [formData, setFormData] = useState({ loginId: '', password: '' });
   const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -34,7 +35,7 @@ export default function Login() {
       localStorage.removeItem('rememberedLoginId');
     }
 
-    login(e, setIsError, formData, navigate);
+    login(e, setIsError, formData, navigate, setErrorMessage);
   };
 
   useEffect(() => {
@@ -88,6 +89,10 @@ export default function Login() {
             return <Input status={status} {...props} />;
           })}
         </div>
+
+        {errorMessage && (
+          <p role='alert' className={styles.errorMessage}>{errorMessage}</p>
+        )}
 
         <div className={styles.rememberIdCheckbox} onClick={toggleRememberId}>
           <Icon

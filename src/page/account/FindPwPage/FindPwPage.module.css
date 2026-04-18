@@ -22,6 +22,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 4rem;
 }
 
 .pageTitle {
@@ -38,22 +39,63 @@
   gap: 1.8rem;
 }
 
+.idInfoBtn.active {
+  background-color: var(--grey-3);
+}
+
+.idInfoBtn {
+  width: 12.2rem;
+  height: 3.6rem;
+  border-radius: 0.5rem;
+  border: solid 0.1rem var(--grey-3);
+  margin-top: 1.8rem;
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  & p {
+    font: var(--text-body-1-reg);
+    color: var(--blue-3);
+  }
+}
+
 .alert {
+  margin-top: 1.4rem;
   font: var(--text-body-1-reg);
   color: grey;
   word-break: keep-all;
 
-  & ul {
-    list-style-type: circle;
-    padding-left: 2rem;
+  & ol {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  & li {
+    list-style: none;
+    position: relative;
+    padding-left: 1.6rem;
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: calc((1lh - 0.8rem) / 2);
+      width: 0.8rem;
+      height: 0.8rem;
+      border-radius: 50%;
+      background-color: var(--grey-3);
+    }
   }
 
   & a {
     color: var(--blue-3);
   }
 }
-
 .highlight {
+  color: var(--blue-3);
+}
+
+.note {
   color: var(--blue-3);
 }
 

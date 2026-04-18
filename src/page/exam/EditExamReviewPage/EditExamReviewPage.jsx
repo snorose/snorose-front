@@ -289,7 +289,7 @@ export default function EditExamReviewPage() {
       {/* 페이지 이탈 방지 모달 */}
       {modal.id === 'exit-page' && (
         <ConfirmModal
-          modalText={CONFIRM_MODAL_TEXT.EXIT_PAGE}
+          modalText={CONFIRM_MODAL_TEXT.EXAM_EXIT_PAGE}
           onConfirm={handleExitPage}
         />
       )}

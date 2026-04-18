@@ -1,15 +1,29 @@
-.contianer {
-  margin-bottom: 5rem;
+.container {
+  --marketing-title-height: 6.9rem;
+  padding-top: var(--default-appbar-height);
+
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
-  margin: 1rem var(--default-margin) 0;
+  position: fixed;
+  top: var(--default-appbar-height);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  height: var(--marketing-title-height);
+  width: 100%;
+  max-width: var(--default-width);
+  background: #fff;
+  z-index: var(--z-index-appbar);
+  padding: 1.4rem var(--default-margin) 2.1rem;
 
   font: var(--text-title-1-bold);
 }
 
 .body {
-  margin: 2rem var(--default-margin) 0;
+  margin: var(--marketing-title-height) var(--default-margin) 5rem;
   padding: 1.4rem;
 
   background: var(--grey-1-1);
