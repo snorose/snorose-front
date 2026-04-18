@@ -208,7 +208,7 @@ export default function EditPostPage() {
           <div className={styles.top}>
             <CloseAppBar
               children={<p onClick={handleSubmit}>수정</p>}
-              backgroundColor={'#eaf5fd'}
+              backgroundColor={'#fbfdff'}
             />
           </div>
           <div className={styles.center}>
@@ -504,7 +504,7 @@ export function NewEditPostPage({ isNotice = false }) {
           <div className={styles.top}>
             <CloseAppBar
               children={<p onClick={handleSubmit}>수정</p>}
-              backgroundColor={'#eaf5fd'}
+              backgroundColor={'#fbfdff'}
             />
           </div>
 
