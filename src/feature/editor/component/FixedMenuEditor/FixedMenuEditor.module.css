@@ -97,7 +97,7 @@ button.headingButton {
   position: fixed;
   transform: translateY(-100%);
   margin-top: -10px;
-  z-index: 9999;
+  z-index: var(--z-index-dropdown);
   background: #ffffff;
   border-radius: 4px;
   min-width: 8rem;
