@@ -24,7 +24,9 @@ import sponsorBanner from '@/assets/banners/sponsorBanner.png';
 import DOMPurify from 'dompurify';
 import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
 import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
+
 import styles from './PostDetailView.module.css';
+import editorStyles from '../../editor/component/EditorContainer/EditorContainer.module.css';
 
 export default function PostDetailView({
   data,
@@ -69,7 +71,7 @@ export default function PostDetailView({
         </div>
 
         <div
-          className={styles.contentText}
+          className={editorStyles.editor}
           dangerouslySetInnerHTML={{
             __html: sanitizeHtml(preserveEmptyParagraphs(data.content)),
           }}
