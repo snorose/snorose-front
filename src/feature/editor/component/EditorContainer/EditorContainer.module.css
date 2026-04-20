@@ -1,0 +1,7 @@
+.editor h1 {
+  font-size: 2rem;
+  padding: 12px 0;
+}
+.editor h1:first-child {
+  padding: 0 0 12px 0;
+}

@@ -19,6 +19,8 @@ import { formatEmbedUrl } from '../../utils/format-embed-url';
 import { FontSize } from '../extensions/font-size-extension';
 import LinkBubbleMenu from '../LinkBubbleMenu/LinkBubbleMenu';
 
+import styles from './EditorContainer.module.css';
+
 export default function EditorContainer({
   placeholder,
   text,
@@ -150,7 +152,10 @@ export default function EditorContainer({
 
   return (
     <>
-      <EditorContent editor={editor} />
+      <div className={styles.editor}>
+        <EditorContent editor={editor} />
+      </div>
+
       {isLinkMenuOpen && linkMenuData.coords && (
         <LinkBubbleMenu
           coords={linkMenuData.coords}
