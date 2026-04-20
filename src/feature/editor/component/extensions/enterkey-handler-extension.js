@@ -18,10 +18,10 @@ export const EnterKeyHandler = Extension.create({
                   .insertText('\u00A0', $from.pos)
                   .split($from.pos + 1);
                 dispatch(tr);
-                return true; 
+                return true;
               }
             }
-            return false; 
+            return false;
           },
         },
       }),
