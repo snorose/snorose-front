@@ -73,7 +73,7 @@
 }
 
 /* content */
-
+/* 에디터 내의 css 규칙입니다 */
 .contentText {
   font: var(--text-headline-2-reg);
   color: var(--grey-4);
@@ -89,7 +89,6 @@
     text-decoration: underline;
   }
 }
-
 .contentText ol,
 .contentText ul {
   padding-left: 2.4rem;
@@ -105,33 +104,11 @@
 }
 
 .contentText h1 {
-  font-size: 3rem;
-  font-weight: bold;
-}
-
-.contentText h2 {
   font-size: 2rem;
-  font-weight: bold;
+  padding: 12px 0;
 }
-
-.contentText h3 {
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.contentText h4 {
-  font-size: 0.8rem;
-  font-weight: bold;
-}
-
-.contentText h5 {
-  font-size: 0.6rem;
-  font-weight: bold;
-}
-
-.contentText h6 {
-  font-size: 0.5rem;
-  font-weight: bold;
+.contentText h1:first-child {
+  padding: 0 0 12px 0;
 }
 
 .contentText blockquote {
