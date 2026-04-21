@@ -3,7 +3,7 @@ import type { Attachment } from '@/feature/attachment/types';
 import { putFileInBucket } from '@/apis';
 import { authAxios } from '@/axios';
 
-export const readInquiry = async (inquiryId: number) => {
+export const readInquiry = async (inquiryId: string) => {
   const response = await authAxios.get(`/v1/inquiries/${inquiryId}`);
 
   return response.data.result;
