@@ -12,7 +12,7 @@ import { MeatBallIcon, PostActionBar } from '@/feature/board/component';
 import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { PostDetailView } from '@/feature/board/ui';
 import { CommentInputContainer } from '@/feature/comment/component';
-import { fetchInquiry } from '@/feature/support/api';
+import { readInquiry } from '@/feature/support/api';
 import { INQUIRY_STATUS_MAP } from '@/feature/support/constant';
 
 import { NotFoundPage } from '@/page/etc';
@@ -33,7 +33,7 @@ function InquiryDetailLoader() {
 
   const { data } = useSuspenseQuery({
     queryKey: QUERY_KEY.post(postId),
-    queryFn: () => fetchInquiry(postId),
+    queryFn: () => readInquiry(postId),
     staleTime: 1000 * 60 * 5,
   });
 
