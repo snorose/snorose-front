@@ -1,10 +1,16 @@
 import { Suspense, useContext } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { BackAppBar, Chip, FetchLoading } from '@/shared/component';
+import {
+  BackAppBar,
+  Chip,
+  FetchLoading,
+  NoticeModal,
+  ServerErrorFallback,
+} from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 
@@ -69,8 +75,28 @@ function InquiryDetailLoader() {
 }
 
 function ErrorFallback({ error, resetErrorBoundary }) {
-  if (error?.response.status === 404) {
-    return <NotFoundPage />;
+  const navigate = useNavigate();
+
+  if (error.response?.status >= 500) {
+    return <ServerErrorFallback reset={resetErrorBoundary} />;
+  }
+
+  switch (error.response?.status) {
+    case 403:
+      return (
+        <NoticeModal
+          modalText={{
+            title: '권한 없음',
+            description: '내가 작성한 글이 아니에요',
+            confirmText: '돌아가기',
+          }}
+          onConfirm={() => navigate('/', { replace: true })}
+        />
+      );
+    case 404:
+      return <NotFoundPage />;
+    default:
+      return <ServerErrorFallback reset={resetErrorBoundary} />;
   }
 }
 
