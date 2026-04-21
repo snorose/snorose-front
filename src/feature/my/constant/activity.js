@@ -1,13 +1,13 @@
-import { QUERY_KEY, ROUTE } from '@/shared/constant';
-
 import {
-  getMyPosts,
-  getMyComments,
   getDownloadedExamReviews,
-  getMyInquiriesAndReports,
+  getMyComments,
+  getMyPosts,
   getScrapedExamReviews,
   getScrapedPosts,
+  readInquiryAndReportList,
 } from '@/apis/userInfo.js';
+
+import { QUERY_KEY, ROUTE } from '@/shared/constant';
 
 export const ACTIVITIES = [
   {
@@ -39,7 +39,7 @@ export const ACTIVITIES = [
     path: ROUTE.mypageInquiryReport,
     title: '내가 작성한 문의 및 신고',
     queryKey: QUERY_KEY.myInquiriesAndReports,
-    queryFn: getMyInquiriesAndReports,
+    queryFn: readInquiryAndReportList,
     hasLike: false,
     errorMessage: '아직 작성한 문의 및 신고가 없어요',
     emptyStateIllustration: 'noPostsIllustration',
