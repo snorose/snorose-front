@@ -3,7 +3,7 @@ import { http, HttpResponse } from 'msw';
 import type { InquiryCreateRequest } from '@/feature/support/api';
 
 export const inquiryHandlers = [
-  http.get('*/v1/inquiries/111', async () => {
+  http.get('*/v1/inquiries/:inquiryId', async () => {
     // 성공
     return HttpResponse.json({
       isSuccess: true,
