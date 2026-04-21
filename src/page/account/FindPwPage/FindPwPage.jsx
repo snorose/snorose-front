@@ -40,7 +40,7 @@ export default function FindPwPage() {
       value: formData.loginId,
       onChange: (next) => setFormData((prev) => ({ ...prev, loginId: next })),
       validate: validateId,
-      message: '아이디는 영어, 숫자만 가능합니다',
+      message: '아이디를 입력해주세요',
     },
     {
       type: 'email',
