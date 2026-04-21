@@ -59,7 +59,7 @@ export const createInquiry = async ({
   }
 };
 
-export const fetchInquiry = async (inquiryId) => {
+export const readInquiry = async (inquiryId) => {
   // const response = await authAxios.get(`/v1/inquiries/${inquiryId}`);
 
   // return response?.data.result;
