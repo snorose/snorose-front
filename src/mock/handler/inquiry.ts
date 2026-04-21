@@ -1,11 +1,11 @@
 import { http, HttpResponse } from 'msw';
 
-import type { InquiryWriteRequest } from '@/feature/support/api';
+import type { InquiryCreateRequest } from '@/feature/support/api';
 
 export const inquiryHandlers = [
   http.post('*/v1/inquiries/inquiry', async ({ request }) => {
     const data = await request.json();
-    const body = data as InquiryWriteRequest;
+    const body = data as InquiryCreateRequest;
     const attachments = body.attachments || [];
 
     // 첨부파일 개수 초과
