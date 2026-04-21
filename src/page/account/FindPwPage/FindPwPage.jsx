@@ -137,8 +137,15 @@ export default function FindPwPage() {
                   <br />
                   아래 구글 폼을 작성해주시면 신속히 해결해드릴게요
                 </p>
-                  <a className={styles.googleFormBtn} href='https://forms.gle/PDmKuPUuUzKXTh8BA' target='_blank' rel='noopener noreferrer'>                  <Icon id='google-form' width={'1.6rem'} height={'1.6rem'} />
-구글 폼</a>
+                <a
+                  className={styles.googleFormBtn}
+                  href='https://forms.gle/PDmKuPUuUzKXTh8BA'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  <Icon id='google-form' width={'1.6rem'} height={'1.6rem'} />
+                  구글 폼
+                </a>
               </div>
             )}
           </div>
