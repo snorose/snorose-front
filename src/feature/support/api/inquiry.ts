@@ -3,7 +3,7 @@ import type { Attachment } from '@/feature/attachment/types';
 import { putFileInBucket } from '@/apis';
 import { authAxios } from '@/axios';
 
-export type InquiryWriteRequest = {
+export type InquiryCreateRequest = {
   title: string;
   content: string;
   inquiryCategory: string;
@@ -17,7 +17,7 @@ export const createInquiry = async ({
   inquiryCategory,
   target,
   attachments = [],
-}: InquiryWriteRequest) => {
+}: InquiryCreateRequest) => {
   try {
     const response = await authAxios.post('/v1/inquiries/inquiry', {
       title,
