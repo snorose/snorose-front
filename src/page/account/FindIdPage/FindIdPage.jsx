@@ -24,6 +24,7 @@ export default function FindIdPage() {
   const navigate = useNavigate();
   const [allowSubmit, setAllowSubmit] = useState(true);
   const [loading, setLoading] = useState();
+  const [showAlert, setShowAlert] = useState(false);
   const [formData, setFormData] = useState({
     userName: '',
     studentNumber: '',
@@ -97,7 +98,23 @@ export default function FindIdPage() {
               })}
             </div>
 
-            <div className={styles.alert}>
+            <button
+              className={`${styles.idInfoBtn} ${showAlert ? styles.active : ''}`}
+              onClick={() => setShowAlert((prev) => !prev)}
+              type='button'
+              aria-expanded={showAlert}
+              aria-controls='find-id-notice'
+            >
+              <Icon
+                id='info-circle'
+                width='1.6rem'
+                height='1.6rem'
+                viewBox='0 0 20 20'
+              />
+              <p>아이디 찾기</p>
+            </button>
+
+            {showAlert && <div id='find-id-notice' className={styles.alert}>
               <ol>
                 <li>
                   아이디 찾기를 해도 입력한 정보와 일치하는 정보가 없다고 떠요.
@@ -105,31 +122,38 @@ export default function FindIdPage() {
                 <li>
                   마이페이지에서 학번이 ‘학번+숫자’형식이에요. 변경하고 싶어요.
                 </li>
-                <div className={`${styles.highlight} ${styles.alertArrow}`}>
-                  → 구 스노로즈에 저장된 학번이 아래와 같은 경우,
-                  <br /> 데이터 정합성을 위하여 임의로 '학번+숫자'로
+              </ol>
+              <div className={styles.highlight}>
+                <Icon id='chevron-right' width={20} height={20} />
+                <span>
+                  구 스노로즈에 저장된 학번이 아래와 같은 경우,
+                  <br /> 데이터 정합성을 위하여 임의로 ‘학번+숫자’로
                   수정되었어요.
-                </div>
+                </span>
+              </div>
+              <ol>
                 <li>
                   가입 시 입력한 학번이 정확하지 않은 경우(ex 111111111111 등)
                 </li>
                 <li>다른 유저가 같은 학번으로 입학한 경우</li>
-                <div className={`${styles.highlight} ${styles.alertArrow}`}>
-                  → 하나의 학번 당 한 유저만 가입 가능하므로 리자가 임의로 다른
-                  학번으로 변경했어요.
-                </div>
-
-                <div className={styles.highlight}>
-                  따라서, 위의 경우에 해당하거나 학번이 잘못되어 수정이
-                  필요하다면, 아래 구글 폼을 통해 학번 변경 문의를 남겨주시면
-                  신속히 해결해드릴게요
-                </div>
-                <button className={styles.googleFormBtn}>
-                  <Icon id='google-form' width={'1.6rem'} height={'1.6rem'} />
-                  <a href='https://forms.gle/xwi7q47Dz59UNeEW7'>구글 폼</a>
-                </button>
               </ol>
-            </div>
+              <div className={styles.highlight}>
+                <Icon id='chevron-right' width={20} height={20} />
+                <span>
+                  하나의 학번 당 한 유저만 가입 가능하므로 리자가 임의로 다른
+                  학번으로 변경했어요.
+                </span>
+              </div>
+              <div className={styles.note}>
+                따라서, 위의 경우에 해당하거나 학번이 잘못되어 수정이
+                필요하다면, 아래 구글 폼을 통해 학번 변경 문의를 남겨주시면
+                신속히 해결해드릴게요
+              </div>
+                <a className={styles.googleFormBtn} href='https://forms.gle/xwi7q47Dz59UNeEW7' target='_blank' rel='noopener noreferrer'>                
+                <Icon id='google-form' width='1.6rem' height='1.6rem' />
+                구글 폼
+                </a>
+            </div>}
           </div>
 
           <div className={styles.buttonFrame}>

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { BackAppBar, Button } from '@/shared/component';
+import { BackAppBar, NewButton } from '@/shared/component';
 
 import styles from './NotFoundIdPage.module.css';
 
@@ -39,16 +39,10 @@ export default function NotFoundIdPage() {
       </div>
 
       <div className={styles.pageBottomFrame}>
-        <Link to='/find-id'>
-          <div className={styles.goBackButton}>
-            <Button btnName='뒤로가기' className='wrong' />
-          </div>
-        </Link>
-        <Link to='/login'>
-          <div className={styles.loginButton}>
-            <Button btnName='로그인하기' className='right' />
-          </div>
-        </Link>
+        <NewButton variant='outlined' onClick={() => navigate('/find-id')}>
+          뒤로가기
+        </NewButton>
+        <NewButton onClick={() => navigate('/login')}>로그인하기</NewButton>
       </div>
     </div>
   );

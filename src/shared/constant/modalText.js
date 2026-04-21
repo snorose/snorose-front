@@ -217,11 +217,19 @@ const CONFIRM_MODAL = {
     cancelText: '아니요',
   },
 
+  // 시험 후기 확인 모달
+  EXAM_EXIT_PAGE: {
+    title: '작성 중인 시험후기를 삭제할까요?',
+    description: '지금까지 작성한 내용은\n저장되지 않아요',
+    confirmText: '삭제',
+    cancelText: '취소',
+  },
+
   // 알림 해제 모달
   DISABLE_NOTIFICATION: {
     title: '알림을 끌까요?',
     description:
-      '알림을 끄시면 강등, 무통보 삭제 등의\n중요한 안내를 받지 못해요.',
+      '알림을 끄시면 강등, 무통보 삭제 등의\n중요한 안내를 받지 못해요',
     confirmText: '끄기',
     cancelText: '취소',
   },

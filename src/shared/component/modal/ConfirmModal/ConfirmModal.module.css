@@ -5,7 +5,7 @@
   align-items: center;
   gap: 0.8rem;
   width: 100%;
-  padding: 2.3rem 3.6rem;
+  padding: 2.3rem 0;
   box-sizing: border-box;
   border-bottom: 0.1rem solid var(--grey-2);
 }
@@ -16,13 +16,15 @@
   text-align: center;
   color: var(--black);
   font: var(--text-headline-1-med);
+  padding-inline: 2rem;
 }
 
 .description {
   text-align: center;
   color: var(--grey-4);
-  font: var(--text-headline-2-reg);
+  font: var(--text-body-1-reg);
   white-space: pre-line;
+  padding-inline: 3.6rem;
 }
 
 .bottom {
@@ -31,9 +33,11 @@
 
   button:first-child {
     color: var(--grey-3-1);
+    font: var(--text-headline-2-reg);
   }
   button:last-child {
     color: var(--pink-3);
+    font: var(--text-headline-2-med);
   }
 }
 
@@ -49,7 +53,6 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  font: var(--text-headline-2-med);
   cursor: pointer;
   transition: all 200ms ease-in-out;
 

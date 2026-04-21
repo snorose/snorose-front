@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { Icon } from '@/shared/component';
+import { ReactComponent as XIconsmall } from '@/assets/icons/Xsmall.svg';
 
 import styles from './Filter.module.css';
 
@@ -52,15 +53,20 @@ export default function Filter({ filterKey, options, placeholder }) {
         <span className={styles.displayOption}>
           {selectedOptionName ?? placeholder}
         </span>
+        {selectedOption && (
+          <button
+            className={styles.clearIcon}
+            aria-label='선택한 필터 해제'
+            onClick={(e) => {
+              e.stopPropagation();
+              deleteOption();
+            }}
+          >
+            <XIconsmall width={8} height={8} />
+          </button>
+        )}
       </div>
       <ul className={styles.list}>
-        <li
-          className={styles.option}
-          key={placeholder}
-          onClick={() => deleteOption()}
-        >
-          {placeholder}
-        </li>
         {options.map(({ id, name }) => (
           <li
             className={styles.option}

@@ -38,7 +38,7 @@
 }
 
 .option {
-  padding: 0.8rem 0 0.8rem 1.2rem;
+  padding: 0.85rem 0 0.85rem 1.2rem;
   border-radius: 0.5rem;
   font-size: 1.3rem;
   color: var(--grey-3-1);
@@ -48,4 +48,9 @@
 .option:hover {
   background: var(--blue-2);
   color: var(--blue-4);
+}
+
+.clearIcon {
+  padding: 0.4rem;
+  cursor: pointer;
 }
