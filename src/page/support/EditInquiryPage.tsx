@@ -13,6 +13,8 @@ export default function EditInquiryPage() {
   return (
     <SupportFormView
       post={post}
+      initialOption={INQUIRY_OPTIONS[post.category]}
+      initialLink={post.link}
       submit={() => alert('submit!')}
       options={INQUIRY_OPTIONS}
       contentLabel={'문의 내용'}

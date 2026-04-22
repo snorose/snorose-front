@@ -29,6 +29,8 @@ type SupportFormViewProps = {
     content: string;
   };
   post?: InquiryDTO | ReportDTO;
+  initialOption?: Option;
+  initialLink?: string;
   showLinkFiled?: boolean;
   tag?: string;
 };
@@ -48,15 +50,19 @@ export default function SupportFormView({
   options,
   contentLabel,
   placeholders,
+  initialOption,
+  initialLink,
   tag,
   showLinkFiled = false,
 }: SupportFormViewProps) {
   const { userInfo } = useAuth();
 
-  const [selectedOption, setSelectedOption] = useState<Option | undefined>();
-  const [title, setTitle] = useState('');
-  const [url, setUrl] = useState('');
-  const [content, setContent] = useState('');
+  const [selectedOption, setSelectedOption] = useState<Option | undefined>(
+    initialOption
+  );
+  const [title, setTitle] = useState(post?.title ?? '');
+  const [url, setUrl] = useState(initialLink ?? '');
+  const [content, setContent] = useState(post?.content ?? '');
   const [attachments, setAttachments] = useState<Attachment[]>(
     post?.attachments ?? []
   );

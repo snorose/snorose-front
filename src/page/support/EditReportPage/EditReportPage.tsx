@@ -19,6 +19,7 @@ export default function EditReportPage() {
   return (
     <SupportFormView
       post={post}
+      initialOption={REPORT_OPTIONS[reportType][post.category]}
       submit={() => alert('submit!')}
       options={REPORT_OPTIONS[reportType]}
       contentLabel={'신고 내용'}
