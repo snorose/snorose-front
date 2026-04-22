@@ -1,3 +1,6 @@
+:global(.ProseMirror:focus) {
+  outline: none;
+}
 .editor {
   font: var(--text-headline-2-reg);
   color: var(--grey-4);
