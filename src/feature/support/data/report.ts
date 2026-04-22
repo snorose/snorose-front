@@ -10,13 +10,13 @@ const post = [
   { key: 'POST_LOW_QUALITY', label: '무성의한 게시' },
   { key: 'POST_OFFENSIVE_CONTENT', label: '타인에게 혐오감을 주는 게시물' },
   { key: 'POST_ETC', label: '기타' },
-] as const;
+] as const satisfies readonly Option[];
 
 const exam = [
   { key: 'EXAM_FALSE_REVIEW', label: '허위 족보' },
   { key: 'EXAM_COMMERCIAL_SELLING', label: '상업적 판매' },
   { key: 'EXAM_ETC', label: '기타' },
-] as const;
+] as const satisfies readonly Option[];
 
 const comment = [
   { key: 'COMMENT_INSULT_OR_DEFAMATION', label: '특정인에 대한 욕설 및 비하' },
@@ -26,7 +26,7 @@ const comment = [
   { key: 'COMMENT_OBSCENE_OR_IMMORAL', label: '음란물/불건전한 만남 및 대화' },
   { key: 'COMMENT_LOW_QUALITY', label: '스팸/무성의한 댓글' },
   { key: 'COMMENT_ETC', label: '기타' },
-] as const;
+] as const satisfies readonly Option[];
 
 const user = [
   { key: 'USER_IMPERSONATION', label: '타인 사칭' },
@@ -34,7 +34,7 @@ const user = [
   { key: 'USER_OUTSIDER', label: '외부인' },
   { key: 'USER_HARASSMENT', label: '괴롭힘/사이버폭력' },
   { key: 'USER_ETC', label: '기타' },
-] as const;
+] as const satisfies readonly Option[];
 
 export const REPORT_OPTIONS = {
   post,
