@@ -1,22 +1,3 @@
-/*에디터 initial style*/
-:global(.ProseMirror) {
-  font: var(--text-headline-2-reg);
-  color: var(--grey-4);
-}
-:global(.ProseMirror:focus) {
-  outline: none;
-}
-
-:global(.ProseMirror h1) {
-  font: var(--text-body-1-med); /* Heading 1/Med */
-  margin: 0;
-}
-
-:global(.ProseMirror iframe) {
-  display: block;
-  margin: 1.5rem 0;
-}
-
 /*에디터 placeholder style*/
 :global(.ProseMirror p.is-editor-empty:first-child::before) {
   content: attr(data-placeholder);
