@@ -142,7 +142,7 @@ export default function SupportFormView({
           <TextFieldBlue>
             <TextFieldBlue.Label>게시글 링크</TextFieldBlue.Label>
             <TextFieldBlue.Input
-              placeholder={INQUIRY_PLACEHOLDERS.url}
+              placeholder={'게시글 링크를 입력해주세요'}
               value={url}
               onChange={(next) => setUrl(next)}
             />
