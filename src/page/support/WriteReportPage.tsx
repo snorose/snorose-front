@@ -2,23 +2,20 @@ import { useLoaderData } from 'react-router-dom';
 
 import {
   REPORT_PLACEHOLDERS,
-  REPORT_TYPE_MAP,
   REPORT_TYPE_TAG,
 } from '@/feature/support/constant';
 import { REPORT_OPTIONS } from '@/feature/support/data';
-import type { ReportDTO } from '@/feature/support/types';
+import type { ReportParamsLoaderData } from '@/feature/support/loader';
 import { SupportFormView } from '@/feature/support/ui';
 
-export default function EditReportPage() {
-  const post = useLoaderData() as ReportDTO;
-
-  const reportType = REPORT_TYPE_MAP[post.reportType];
+export default function WriteReportPage() {
+  const { reportType, reportParams } =
+    useLoaderData() as ReportParamsLoaderData;
 
   const { dropdown, title, content } = REPORT_PLACEHOLDERS[reportType];
 
   return (
     <SupportFormView
-      post={post}
       submit={() => alert('submit!')}
       options={REPORT_OPTIONS[reportType]}
       contentLabel={'신고 내용'}
