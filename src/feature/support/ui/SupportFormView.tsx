@@ -170,24 +170,28 @@ export default function SupportFormView({
         />
 
         <div className={styles.fileContainer}>
-          <div className={styles.fileList}>
-            {attachments.map(({ id, fileName }) => (
-              <Item
-                key={id}
-                name={fileName}
-                onClick={() => handleRemoveAttachment(id)}
-              />
-            ))}
-          </div>
-          <div className={styles.fileList}>
-            {files.map(({ id, file }) => (
-              <Item
-                key={id}
-                name={file.name}
-                onClick={() => handleRemoveFile(id)}
-              />
-            ))}
-          </div>
+          {attachments.length > 0 && (
+            <div className={styles.fileList}>
+              {attachments.map(({ id, fileName }) => (
+                <Item
+                  key={id}
+                  name={fileName}
+                  onClick={() => handleRemoveAttachment(id)}
+                />
+              ))}
+            </div>
+          )}
+          {files.length > 0 && (
+            <div className={styles.fileList}>
+              {files.map(({ id, file }) => (
+                <Item
+                  key={id}
+                  name={file.name}
+                  onClick={() => handleRemoveFile(id)}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
