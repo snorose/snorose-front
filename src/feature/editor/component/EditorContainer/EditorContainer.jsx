@@ -21,6 +21,15 @@ import { FontSize } from '../extensions/font-size-extension';
 import LinkBubbleMenu from '../LinkBubbleMenu/LinkBubbleMenu';
 import styles from './EditorContainer.module.css';
 
+const isImageUrl = (url) => {
+  if (!url) return false;
+
+  const hasImageExtension = /\.(jpeg|jpg|gif|png|bmp|webp|svg)(\?.*)?$/i.test(url);
+  const trustedDomains = ['imgur.com', 'flickr.com', 'postimages.org', 'picsum.photos'];
+  const isTrustedHost = trustedDomains.some((domain) => url.startsWith(domain));
+  return hasImageExtension || isTrustedHost;
+};
+
 export default function EditorContainer({
   placeholder,
   text,
@@ -69,14 +78,6 @@ export default function EditorContainer({
 
       const { $from, empty } = editor.state.selection;
 
-      const isImageUrl = (url) => {
-        return (
-          /\.(jpeg|jpg|gif|png|bmp|webp|svg)(\?.*)?$/i.test(url) ||
-          url.startsWith('https://picsum.photos') ||
-          url.startsWith('https://images.') ||
-          url.includes('/image')
-        );
-      };
       // 텍스트를 드래그한 상태면 메뉴 숨김
       if (!empty) {
         if (isLinkMenuOpen) setIsLinkMenuOpen(false);
