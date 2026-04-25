@@ -126,7 +126,7 @@ const CONFIRM_MODAL = {
   // 게시글 관련 확인 모달
   DELETE_POST: {
     title: '게시글을 삭제할까요?',
-    description: '작성 시 포인트를 받았을 경우 <br />삭제 시 차감돼요',
+    description: '글을 삭제하면 지급된<br />포인트가 차감돼요',
     confirmText: '삭제',
     cancelText: '취소',
   },
@@ -171,7 +171,7 @@ const CONFIRM_MODAL = {
   // 댓글 관련 확인 모달
   DELETE_COMMENT: {
     title: '댓글을 삭제할까요?',
-    description: '작성 시 포인트를 받았을 경우 <br />삭제 시 차감돼요',
+    description: '댓글을 삭제하면 지급된<br />포인트가 차감돼요',
     confirmText: '삭제',
     cancelText: '취소',
   },
