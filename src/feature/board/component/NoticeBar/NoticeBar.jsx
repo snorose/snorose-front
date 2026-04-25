@@ -5,6 +5,8 @@ import styles from './NoticeBar.module.css';
 
 export default function NoticeBar({ data, onClick }) {
   const formattedDate = DateTime.format(data.createdAt, 'YMD');
+  const isLiked = data.isLiked ?? false;
+  const isScrapped = data.isScrapped ?? false;
 
   return (
     <div className={styles.post} onClick={onClick}>
@@ -18,13 +20,23 @@ export default function NoticeBar({ data, onClick }) {
         <span>{formattedDate}</span>
         <div className={styles.postBottomRight}>
           <div className={styles.iconContainer}>
-            <Icon id='like' width={14} height={13} fill='#D9D9D9' />
+            <Icon
+              id='like'
+              width={14}
+              height={13}
+              fill={isLiked ? 'var(--pink-2)' : '#D9D9D9'}
+            />
             <span className={styles.like_cnt}>
               {(data.likeCount ?? 0).toLocaleString()}
             </span>
           </div>
           <div className={styles.iconContainer}>
-            <Icon id='bookmark-fill' width={11} height={13} fill='#D9D9D9' />
+            <Icon
+              id='bookmark-fill'
+              width={11}
+              height={13}
+              fill={isScrapped ? 'var(--green-2)' : '#D9D9D9'}
+            />
             <span className={styles.like_cnt}>
               {(data.scrapCount ?? 0).toLocaleString()}
             </span>
