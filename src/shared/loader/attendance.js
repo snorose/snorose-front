@@ -16,6 +16,7 @@ export const attendanceLoader = async () => {
   } catch (error) {
     if (error.response?.status === 401) {
       localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
     }
 
     return null;
