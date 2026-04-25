@@ -14,7 +14,6 @@ export default function PostBar({
   userRoleId,
   userDisplay,
   createdAt,
-  isEdited,
   title,
   content,
   hasMediaAttachment,
@@ -28,21 +27,19 @@ export default function PostBar({
 }) {
   return (
     <div className={`${styles.container} ${className}`}>
-      <div className={styles.body}>
-        <div>
-          <Meta
-            userRoleId={userRoleId}
-            userDisplay={userDisplay}
-            createdAt={createdAt}
-            isEdited={isEdited}
-          >
-            {children}
-          </Meta>
+      <Meta
+        userRoleId={userRoleId}
+        userDisplay={userDisplay}
+        createdAt={createdAt}
+      >
+        {children}
+      </Meta>
 
+      <div className={styles.body}>
+        <div className={styles.text}>
           <div className={styles.title}>{title}</div>
           <div className={styles.content}>{content}</div>
         </div>
-
         {hasMediaAttachment && <Thumbnail thumbnailUrl={thumbnailUrl} />}
       </div>
 
@@ -57,19 +54,20 @@ export default function PostBar({
   );
 }
 
-function Meta({ userRoleId, userDisplay, createdAt, isEdited, children }) {
+function Meta({ userRoleId, userDisplay, createdAt, children }) {
   const showBadge =
     userRoleId === ROLE.official ||
     (userRoleId === ROLE.admin && userDisplay !== '익명송이');
+  const truncatedUserDisplay =
+    userDisplay?.length > 6 ? `${userDisplay.slice(0, 6)}...` : userDisplay;
 
   return (
     <div className={styles.meta}>
       <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
-      <div>{userDisplay}</div>
+      <div>{truncatedUserDisplay}</div>
       {showBadge && <Badge className={styles.badge} userRoleId={userRoleId} />}
       <div className={styles.dot}>·</div>
       <div>{DateTime.formatAdaptive(createdAt)}</div>
-      {isEdited && <div>(수정됨)</div>}
       {children}
     </div>
   );
