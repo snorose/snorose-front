@@ -24,7 +24,7 @@ export default function NoticeBar({ data, onClick }) {
               id='like'
               width={14}
               height={13}
-              fill={isLiked ? 'var(--pink-2)' : '#D9D9D9'}
+              fill={isLiked ? 'var(--pink-2)' : 'var(--grey-3)'}
             />
             <span className={styles.like_cnt}>
               {(data.likeCount ?? 0).toLocaleString()}
@@ -35,7 +35,7 @@ export default function NoticeBar({ data, onClick }) {
               id='bookmark-fill'
               width={11}
               height={13}
-              fill={isScrapped ? 'var(--green-2)' : '#D9D9D9'}
+              fill={isScrapped ? 'var(--green-2)' : 'var(--grey-3)'}
             />
             <span className={styles.like_cnt}>
               {(data.scrapCount ?? 0).toLocaleString()}
