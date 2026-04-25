@@ -24,6 +24,7 @@ export default function NoticeBar({ data, onClick }) {
               width={14}
               height={13}
               fill={isLiked ? 'var(--pink-2)' : 'var(--grey-3)'}
+              stroke={isLiked ? 'var(--pink-2)' : 'var(--grey-3)'}
             />
             <span className={styles.like_cnt}>
               {(data.likeCount ?? 0).toLocaleString()}
@@ -35,6 +36,7 @@ export default function NoticeBar({ data, onClick }) {
               width={11}
               height={13}
               fill={isScrapped ? 'var(--green-2)' : 'var(--grey-3)'}
+              stroke={isScrapped ? 'var(--green-2)' : 'var(--grey-3)'}
             />
             <span className={styles.like_cnt}>
               {(data.scrapCount ?? 0).toLocaleString()}
