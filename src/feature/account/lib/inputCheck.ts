@@ -1,6 +1,8 @@
 import { isNumber } from '@/shared/lib';
 
-export function validateUserName(value = '') {
+type ValidationResult = 'default' | 'valid' | 'error';
+
+export function validateUserName(value: string): ValidationResult {
   const format = /^[A-Za-z가-힣ㄱ-ㅎ]+$/;
 
   if (value.length === 0) {
@@ -14,7 +16,7 @@ export function validateUserName(value = '') {
   return 'error';
 }
 
-export function validateSookmyungEmail(value = '') {
+export function validateSookmyungEmail(value: string): ValidationResult {
   const domain = value.split('@')[1];
 
   if (value.length === 0) {
@@ -28,7 +30,7 @@ export function validateSookmyungEmail(value = '') {
   return 'error';
 }
 
-export function validateId(value = '') {
+export function validateId(value: string): ValidationResult {
   const pathname = window.location.pathname.split('/')[1];
 
   const format = /^[A-Za-z0-9]+$/;
@@ -50,7 +52,7 @@ export function validateId(value = '') {
   return 'error';
 }
 
-export function validatePassword(value = '') {
+export function validatePassword(value: string): ValidationResult {
   const format = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#%^&*])[A-Za-z\d!@#%^&*]+$/;
 
   if (value.length === 0) {
@@ -64,7 +66,15 @@ export function validatePassword(value = '') {
   return 'error';
 }
 
-export function validateNickname(value = '') {
+export function validateCheckedPassword(
+  password: string,
+  checkedPassword: string
+): ValidationResult {
+  if (checkedPassword === '') return 'default';
+  return password === checkedPassword ? 'valid' : 'error';
+}
+
+export function validateNickname(value: string): ValidationResult {
   const format = /^[A-Za-z가-힣ㄱ-ㅎ0-9]+$/;
 
   if (value.length === 0) {
@@ -78,7 +88,7 @@ export function validateNickname(value = '') {
   return 'error';
 }
 
-export function validateStudentNumber(value = '') {
+export function validateStudentNumber(value: string): ValidationResult {
   if (value.length === 0) {
     return 'default';
   }
@@ -90,7 +100,7 @@ export function validateStudentNumber(value = '') {
   return 'error';
 }
 
-export function validateBirthday(value) {
+export function validateBirthday(value: string): ValidationResult {
   const format = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
   if (value.length === 0) {
@@ -119,7 +129,7 @@ export function validateBirthday(value) {
   return 'valid';
 }
 
-export function validateEmail(value) {
+export function validateEmail(value: string): ValidationResult {
   const format = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
   if (value.length === 0) {

@@ -13,17 +13,13 @@ import {
   validateSookmyungEmail,
   validateId,
   validatePassword,
+  validateCheckedPassword,
 } from '@/feature/account/lib';
 
 import styles from './AccountInfoStep.module.css';
 
 export default function AccountInfoStep({ formData, setFormData, setStage }) {
   const { toast } = useToast();
-
-  const validateCheckedPassword = () => {
-    if (formData.checkedPassword === '') return 'default';
-    return formData.password === formData.checkedPassword ? 'valid' : 'error';
-  };
 
   const inputList = [
     {
@@ -94,7 +90,8 @@ export default function AccountInfoStep({ formData, setFormData, setStage }) {
           ...prev,
           checkedPassword: next,
         })),
-      validate: validateCheckedPassword,
+      validate: (checkedPassword) =>
+        validateCheckedPassword(formData.password, checkedPassword),
       message: '비밀번호가 일치하지 않아요',
     },
   ];
