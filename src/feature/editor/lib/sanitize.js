@@ -1,24 +1,32 @@
 import DOMPurify from 'dompurify';
 
-export const sanitizeHtml = (html) => {
-  DOMPurify.addHook('afterSanitizeAttributes', (node) => {
-    if (node.tagName === 'IFRAME') {
-      const src = node.getAttribute('src') || '';
+const ALLOWED_IFRAME_SOURCES = [
+  /^https?:\/\/(www\.)?youtube\.com\/embed\//,
+  /^https?:\/\/(www\.)?instagram\.com\/(p|reel)\/[a-zA-Z0-9_-]+\/embed\//,
+  /^https?:\/\/(www\.)?tiktok\.com\/embed\/v2\//,
+  /^https?:\/\/platform\.twitter\.com\/embed\/Tweet\.html\?id=/,
+  /^https?:\/\/(www\.)?tv\.naver\.com\/embed\//,
+  /^https?:\/\/maps\.google\.com\/maps\?.*output=embed/,
+  /^https?:\/\/(www\.)?google\.com\/maps\/embed/,
+  /^https?:\/\/(map\.)?naver\.com\//,
+  /^https?:\/\/naver\.me\//,
+  /^https?:\/\/kko\.to\//
+];
 
-      const iframeAllowed = /^https?:\/\/((www\.)?youtube\.com\/embed\/|(www\.)?instagram\.com\/(p|reel)\/[a-zA-Z0-9_-]+\/embed\/|(www\.)?tiktok\.com\/embed\/v2\/|platform\.twitter\.com\/embed\/Tweet\.html\?id=|(www\.)?tv\.naver\.com\/embed\/|maps\.google\.com\/maps\?.*output=embed|(www\.)?google\.com\/maps\/embed|(map\.)?naver\.com\/|naver\.me\/|kko\.to\/)/.test(src);
-      
-      if (!iframeAllowed) {
-        node.setAttribute('src', '');
+DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+  if (node.tagName === 'IFRAME') {
+    const src = node.getAttribute('src') || '';
+
+    const isAllowed = ALLOWED_IFRAME_SOURCES.some((pattern) => pattern.test(src));
+      if (!isAllowed) {
+        node.removeAttribute('src');
       }
-    }
-  });
+  }
+})
 
-  const result = DOMPurify.sanitize(html, {
+export const sanitizeHtml = (html) => {
+  return DOMPurify.sanitize(html, {
     ADD_TAGS: ['iframe'],
     ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'src', 'width', 'height'],
   });
-
-  DOMPurify.removeHooks('afterSanitizeAttributes');
-
-  return result;
 };
