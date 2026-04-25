@@ -5,8 +5,7 @@ import styles from './NoticeBar.module.css';
 
 export default function NoticeBar({ data, onClick }) {
   const formattedDate = DateTime.format(data.createdAt, 'YMD');
-  const isLiked = data.isLiked ?? false;
-  const isScrapped = data.isScrapped ?? false;
+  const { isLiked = false, isScrapped = false } = data;
 
   return (
     <div className={styles.post} onClick={onClick}>
