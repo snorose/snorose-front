@@ -14,7 +14,6 @@ export default function PostBar({
   userRoleId,
   userDisplay,
   createdAt,
-  isEdited,
   title,
   content,
   hasMediaAttachment,
@@ -32,7 +31,6 @@ export default function PostBar({
         userRoleId={userRoleId}
         userDisplay={userDisplay}
         createdAt={createdAt}
-        isEdited={isEdited}
       >
         {children}
       </Meta>
@@ -56,7 +54,7 @@ export default function PostBar({
   );
 }
 
-function Meta({ userRoleId, userDisplay, createdAt, isEdited, children }) {
+function Meta({ userRoleId, userDisplay, createdAt, children }) {
   const showBadge =
     userRoleId === ROLE.official ||
     (userRoleId === ROLE.admin && userDisplay !== '익명송이');
