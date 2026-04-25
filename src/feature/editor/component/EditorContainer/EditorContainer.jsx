@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
 import TextAlign from '@tiptap/extension-text-align';
@@ -18,7 +19,6 @@ import { Iframe } from '@/feature/editor/component/extensions/iframe-extension';
 import { formatEmbedUrl } from '../../utils/format-embed-url';
 import { FontSize } from '../extensions/font-size-extension';
 import LinkBubbleMenu from '../LinkBubbleMenu/LinkBubbleMenu';
-
 import styles from './EditorContainer.module.css';
 
 export default function EditorContainer({
@@ -52,6 +52,7 @@ export default function EditorContainer({
         alignments: ['left', 'center', 'right'],
       }),
       Iframe,
+      Image,
       TextStyle,
       Color,
       BackgroundColor,
@@ -68,6 +69,14 @@ export default function EditorContainer({
 
       const { $from, empty } = editor.state.selection;
 
+      const isImageUrl = (url) => {
+        return (
+          /\.(jpeg|jpg|gif|png|bmp|webp|svg)(\?.*)?$/i.test(url) ||
+          url.startsWith('https://picsum.photos') ||
+          url.startsWith('https://images.') ||
+          url.includes('/image')
+        );
+      };
       // 텍스트를 드래그한 상태면 메뉴 숨김
       if (!empty) {
         if (isLinkMenuOpen) setIsLinkMenuOpen(false);
@@ -91,10 +100,24 @@ export default function EditorContainer({
         const linkMark = nodeBefore.marks.find((m) => m.type.name === 'link');
 
         if (linkMark) {
+          const url = linkMark.attrs.href;
+
+          if (isImageUrl(url)) {
+            setTimeout(() => {
+                editor
+                  .chain()
+                  .focus()
+                  .extendMarkRange('link')
+                  .deleteSelection()
+                  .setImage({ src: url })
+                  .run();
+              }, 0);
+              return;
+          }
           // 화면상의 절대 좌표(픽셀)를 계산하여 팝업 띄울 위치 결정
           const coords = editor.view.coordsAtPos(checkPos);
 
-          if (!isLinkMenuOpen || linkMenuData.url !== linkMark.attrs.href) {
+          if (!isLinkMenuOpen || linkMenuData.url !== url) {
             setLinkMenuData({
               url: linkMark.attrs.href,
               pos: checkPos,
