@@ -16,7 +16,7 @@ const COMMUNITY = [
     key: 'large-snow',
     id: 22,
     name: '함박눈방',
-    desc: '눈송이 모두의 커뮤니티',
+    desc: '눈송이 모두의\n커뮤니티',
   },
   {
     key: 'permanent-snow',
