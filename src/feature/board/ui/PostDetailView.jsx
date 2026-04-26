@@ -11,7 +11,7 @@ import {
   Icon,
 } from '@/shared/component';
 import { DateTime, renderTextWithLinks } from '@/shared/lib';
-import { ROLE } from '@/shared/constant';
+import { ROLE, TOAST } from '@/shared/constant';
 
 import { useReportHandler } from '@/feature/report/hook/useReport';
 import {
@@ -172,9 +172,9 @@ function MoreModal({ deletePost, data }) {
     try {
       const url = window.location.href;
       await navigator.clipboard.writeText(url);
-      toast({ message: '링크가 복사되었어요', variant: 'success' });
+      toast({ message: TOAST.COPY_AND_PASTE.linkSuccess, variant: 'success' });
     } catch (error) {
-      toast({ message: '링크 복사에 실패했어요', variant: 'error' });
+      toast({ message: TOAST.COPY_AND_PASTE.linkFail, variant: 'error' });
     }
   };
 

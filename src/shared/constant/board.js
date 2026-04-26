@@ -109,7 +109,7 @@ export const BOARD_MENUS = [
     to: '/board/large-snow',
     textId: 'large-snow',
     title: '함박눈방',
-    desc: '눈송이 모두의 커뮤니티',
+    desc: '눈송이 모두의\n커뮤니티',
     image: largeSnow,
   },
   {
