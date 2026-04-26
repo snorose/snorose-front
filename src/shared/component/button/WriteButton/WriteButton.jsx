@@ -6,10 +6,13 @@ import styles from './WriteButton.module.css';
 
 export default function WriteButton({ to, className }) {
   return (
-    <Link to={to}>
-      <button className={`${styles.button} ${className}`}>
-        <Icon id='pencil' width={30} height={30} fill="#BFD7EC"/>
-      </button>
-    </Link>
+    <div className={styles.fixedWrapper}>
+      <Link to={to}>
+        <button className={`${styles.button} ${className}`}>
+          <Icon id='pencil' width={30} height={30} fill='#BFD7EC' />
+        </button>
+      </Link>
+    </div>
   );
 }
+

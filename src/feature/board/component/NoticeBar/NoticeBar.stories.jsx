@@ -16,7 +16,7 @@ const meta = {
   argTypes: {
     data: {
       description:
-        '공지사항 데이터 객체 (title, content, createdAt, likeCount, scrapCount)',
+        '공지사항 데이터 객체 (title, content, createdAt, likeCount, scrapCount, isLiked, isScrapped)',
       control: 'object',
     },
     onClick: {
@@ -39,6 +39,8 @@ Default.args = {
     createdAt: '2025-01-15T10:30:00Z',
     likeCount: 45,
     scrapCount: 12,
+    isLiked: true,
+    isScrapped: true,
   },
   onClick: action('NoticeBar clicked'),
 };

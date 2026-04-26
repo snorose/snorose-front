@@ -186,8 +186,8 @@ const Comment = forwardRef((props, ref) => {
                   id='like-stroke'
                   width={16}
                   height={18}
-                  stroke='var(--blue-3)'
-                  fill={isLiked ? 'var(--blue-3)' : 'none'}
+                  stroke='var(--pink-2)'
+                  fill={isLiked ? 'var(--pink-2)' : 'none'}
                 />
                 <span>{likeCount.toLocaleString()}</span>
               </button>
