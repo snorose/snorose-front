@@ -100,16 +100,6 @@ export default function EditExamReviewPage() {
     navigate(-1);
   };
 
-  const pass =
-    lectureName.trim() &&
-    professor.trim() &&
-    lectureType &&
-    examType &&
-    lectureYear &&
-    semester &&
-    classNumber &&
-    questionDetail.trim();
-
   const data = {
     isPF,
     classNumber: Number(classNumber),
@@ -139,19 +129,52 @@ export default function EditExamReviewPage() {
     },
   });
 
+  const handleSubmit = async () => {
+    if (!lectureName.trim()) {
+      toast({ message: TOAST.EXAM_REVIEW.emptyLectureName, variant: 'info' });
+      return;
+    }
+    if (!professor.trim()) {
+      toast({ message: TOAST.EXAM_REVIEW.emptyProfessor, variant: 'info' });
+      return;
+    }
+    if (!classNumber.trim()) {
+      toast({ message: TOAST.EXAM_REVIEW.emptyClassNumber, variant: 'info' });
+      return;
+    }
+    if (Object.keys(lectureYear).length === 0) {
+      toast({ message: TOAST.EXAM_REVIEW.emptyLectureYear, variant: 'info' });
+      return;
+    }
+    if (Object.keys(semester).length === 0) {
+      toast({ message: TOAST.EXAM_REVIEW.emptySemester, variant: 'info' });
+      return;
+    }
+    if (Object.keys(lectureType).length === 0) {
+      toast({ message: TOAST.EXAM_REVIEW.emptyLectureType, variant: 'info' });
+      return;
+    }
+    if (Object.keys(examType).length === 0) {
+      toast({ message: TOAST.EXAM_REVIEW.emptyExamType, variant: 'info' });
+      return;
+    }
+    if (!questionDetail.trim()) {
+      toast({
+        message: TOAST.EXAM_REVIEW.emptyQuestionDetail,
+        variant: 'info',
+      });
+      return;
+    }
+
+    setLoading(true);
+    setIsBlock(false);
+    editReview.mutate(data);
+  };
+
   return (
     <main className={styles.container}>
       <CloseAppBar>
-        <ActionButton
-          onClick={() => {
-            setLoading(true);
-            setIsBlock(false);
-            editReview.mutate(data);
-          }}
-          disabled={!pass}
-        >
-          수정
-        </ActionButton>
+        <ActionButton onClick={handleSubmit}>수정</ActionButton>
       </CloseAppBar>
 
       <div className={styles.top}>

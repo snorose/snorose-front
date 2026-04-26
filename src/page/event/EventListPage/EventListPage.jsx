@@ -104,7 +104,6 @@ export default function EventListPage() {
       {isAdmin && (
         <WriteButton
           to={`/board/event/event-post-write`}
-          className={styles.writeButton}
         />
       )}
     </section>

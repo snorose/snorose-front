@@ -25,6 +25,7 @@ const TOAST = Object.freeze({
     edit: '게시글이 수정되었어요',
     emptyTitle: '게시글 제목을 작성해주세요',
     emptyContent: '게시글 본문을 작성해주세요',
+    selectBoard: '게시판을 선택해주세요',
   },
   COMMENT: {
     create: '댓글을 등록했어요 (+1P)',
@@ -62,7 +63,9 @@ const TOAST = Object.freeze({
   },
   COPY_AND_PASTE: {
     success: '복사되었어요',
+    linkSuccess: '링크가 복사되었어요',
     fail: '복사에 실패했어요',
+    linkFail: '링크 복사에 실패했어요',
   },
   ATTACHMENT: {
     imageFileSizeError: '파일 크기는 최대 7MB까지 업로드할 수 있어요',

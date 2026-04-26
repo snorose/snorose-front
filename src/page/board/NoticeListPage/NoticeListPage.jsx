@@ -93,7 +93,6 @@ export default function NoticeListPage() {
         currentBoardTextId === 'notice' && (
           <WriteButton
             to={`/board/${currentBoardTextId}/post-write`}
-            className={styles.writeButton}
           />
         )}
     </div>
@@ -172,7 +171,6 @@ export function NewNoticeListPage() {
       {isGlobalNotice && isAdmin && (
         <WriteButton
           to={toNoticeWrite(boardKey)}
-          className={styles.writeButton}
         />
       )}
     </div>
