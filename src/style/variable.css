@@ -41,6 +41,7 @@
     #c5d2ff 29.14%,
     #82b5ff 100%
   );
+  --gradient-3: radial-gradient(#0046b9 0%, var(--blue-4) 100%);
   --gradient-4: radial-gradient(
     90.86% 179.08% at 81.32% 31.28%,
     var(--blue-1) 37.32%,
