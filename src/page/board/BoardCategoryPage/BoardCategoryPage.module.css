@@ -1,6 +1,7 @@
 .container {
   width: 100%;
   min-height: 100%;
+  padding-bottom: calc(7.5rem + env(safe-area-inset-bottom) + 2rem);
 }
 
 .searchbarBox {
@@ -10,7 +11,7 @@
 }
 
 .paddingContainer {
-  padding: 0 2rem 7.5rem;
+  padding: 0 2rem;
   display: flex;
   flex-direction: column;
   align-items: baseline;
@@ -66,4 +67,3 @@
   grid-column-gap: 1rem;
   grid-row-gap: 1rem;
 }
-
