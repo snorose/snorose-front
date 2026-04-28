@@ -25,39 +25,29 @@ import styles from './PopUpContents.module.css';
 /** @type {PopupContent[]} */
 const POPUP_CONTENTS = [
   {
-    title: "[EVENT] 츄구미 X 스노로즈: 시험기간 '듀잇(Dew-it)' 한정 판매 🍇🍋",
-    description: '"시험기간 간식도 챙기고, 스노로즈에 기부까지 함께해요!"',
-    contentList: ['1세트 구매 시 자동 2000원 기부 + 숙명인 한정 특가'],
+    title: '[EVENT] 스노로즈 X 웰라쥬 체험단 이벤트 🎁✨',
+    description: '무너진 피부에 #속수분텐션업할 시간!',
+    contentList: [
+      '모집 인원: 스노로즈 가입자 중 숙명여대 재학생, 휴학생, 졸업생 포함 총 50인',
+      '체험 제품: 웰라쥬 리얼 히알루로닉 수딩 크림 본품(80ml)',
+      '모집 기간: 4월 27일(월) ~ 5월 4일(월)',
+    ],
     link: [
       {
         title: '이벤트 관련 링크 (스노로즈 공지)',
-        url: '/board/notice/post/1886676',
+        url: '/board/notice/post/1895414',
         isExternal: false,
       },
     ],
     image: eventImage,
-    startDate: '2026-04-01',
-    endDate: '2026-04-10',
+    startDate: '2026-04-28',
+    endDate: '2026-05-04',
   },
   {
-    title: '[블로그] 스노로즈 수료식과 발대식 현장 포착 📸',
-    description:
-      '스노로즈의 수료식과 발대식 현장을 담은 블로그가 새롭게 업로드되었습니다.',
-    link: [
-      {
-        title: '블로그 링크 (노션)',
-        url: 'https://snorose.notion.site/3347ef0aa3bf809da325e02adaff3758',
-        isExternal: true,
-      },
-    ],
-    startDate: '2026-04-01',
-    endDate: '2026-04-10',
-  },
-  {
-    title: '[캘린더] 4월 스노로즈 일정',
+    title: '[캘린더] 5월 스노로즈 일정',
     image: calendarImage,
-    startDate: '2026-04-01',
-    endDate: '2026-04-10',
+    startDate: '2026-04-28',
+    endDate: '2026-05-10',
   },
 ];
 
@@ -79,8 +69,11 @@ const getTodayInKorea = () => {
 
 // 날짜 범위 내에 오늘이 있는지 확인
 const isDateInRange = (today, startDate, endDate) => {
-  const start = new Date(`${startDate}T00:00:00`);
-  const end = new Date(`${endDate}T23:59:59`);
+  const startStr = startDate?.trim?.() ?? startDate;
+  const endStr = endDate?.trim?.() ?? endDate;
+
+  const start = new Date(`${startStr}T00:00:00`);
+  const end = new Date(`${endStr}T23:59:59`);
 
   return start <= today && today <= end;
 };
