@@ -1,7 +1,8 @@
-import styles from './PopUpContents.module.css';
+import { Link } from 'react-router-dom';
+
 import calendarImage from './calendar.png';
 import eventImage from './event.png';
-import { Link } from 'react-router-dom';
+import styles from './PopUpContents.module.css';
 
 /**
  * @typedef {Object} PopupLink
