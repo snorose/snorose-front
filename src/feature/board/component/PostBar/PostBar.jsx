@@ -1,6 +1,6 @@
 import { Badge, Chip, Icon } from '@/shared/component';
-import { DateTime } from '@/shared/lib';
 import { ROLE } from '@/shared/constant';
+import { DateTime } from '@/shared/lib';
 
 import { ConfirmedIcon } from '@/feature/exam/component';
 
@@ -58,13 +58,17 @@ function Meta({ userRoleId, userDisplay, createdAt, children }) {
   const showBadge =
     userRoleId === ROLE.official ||
     (userRoleId === ROLE.admin && userDisplay !== '익명송이');
-  const truncatedUserDisplay =
-    userDisplay?.length > 6 ? `${userDisplay.slice(0, 6)}...` : userDisplay;
 
   return (
     <div className={styles.meta}>
       <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
-      <div>{truncatedUserDisplay}</div>
+      <div
+        className={styles.userDisplay}
+        title={userDisplay ?? ''}
+        aria-label={userDisplay ?? ''}
+      >
+        {userDisplay}
+      </div>
       {showBadge && <Badge className={styles.badge} userRoleId={userRoleId} />}
       <div className={styles.dot}>·</div>
       <div>{DateTime.formatAdaptive(createdAt)}</div>
