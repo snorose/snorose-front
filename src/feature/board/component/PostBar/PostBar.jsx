@@ -62,11 +62,7 @@ function Meta({ userRoleId, userDisplay, createdAt, children }) {
   return (
     <div className={styles.meta}>
       <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
-      <div
-        className={styles.userDisplay}
-        title={userDisplay ?? ''}
-        aria-label={userDisplay ?? ''}
-      >
+      <div className={styles.userDisplay} title={userDisplay || undefined}>
         {userDisplay}
       </div>
       {showBadge && <Badge className={styles.badge} userRoleId={userRoleId} />}
