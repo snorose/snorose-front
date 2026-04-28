@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
-import { Accordion } from '@/feature/home/component';
-
-import style from './FAQPage.module.css';
 import { BackAppBar } from '@/shared/component';
 import { renderTextWithLinks } from '@/shared/lib/hyperlink';
+
+import { Accordion } from '@/feature/home/component';
 import { faqList } from '@/feature/support/constant/faqList';
+
+import style from './FAQPage.module.css';
 
 export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState(null);
@@ -23,7 +24,30 @@ export default function FAQPage() {
         <div>
           <p>[공식 문의 창구]</p>
           <p>- 이메일: snorose1906@gmail.com</p>
-          <p>- 카카오톡: 1:1 문의</p>
+          <p>
+            - 카카오톡: 1:1 문의 (
+            <a
+              className={style.link}
+              href='http://pf.kakao.com/_Xmhxhn'
+              target='_blank'
+              rel='noreferrer noopener'
+            >
+              <span className={style.linkText}>링크</span>
+            </a>
+            )
+          </p>
+          <p>
+            - 스노로즈 안내서 (
+            <a
+              className={style.link}
+              href='https://www.notion.so/snorose/1957ef0aa3bf80a68ce3fe67f7a7e230'
+              target='_blank'
+              rel='noreferrer noopener'
+            >
+              <span className={style.linkText}>링크</span>
+            </a>
+            )
+          </p>
         </div>
       </div>
 
