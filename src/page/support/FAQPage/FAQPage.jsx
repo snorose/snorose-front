@@ -25,19 +25,19 @@ export default function FAQPage() {
           <p>[공식 문의 창구]</p>
           <p>- 이메일: snorose1906@gmail.com</p>
           <p>
-            - 카카오톡: 1:1 문의 (
+            - 카카오톡: 1:1 문의{' ('}
             <a
               className={style.link}
-              href='http://pf.kakao.com/_Xmhxhn'
+              href='https://pf.kakao.com/_Xmhxhn'
               target='_blank'
               rel='noreferrer noopener'
             >
               <span className={style.linkText}>링크</span>
             </a>
-            )
+            {')'}
           </p>
           <p>
-            - 스노로즈 안내서 (
+            - 스노로즈 안내서{' ('}
             <a
               className={style.link}
               href='https://www.notion.so/snorose/1957ef0aa3bf80a68ce3fe67f7a7e230'
@@ -46,7 +46,7 @@ export default function FAQPage() {
             >
               <span className={style.linkText}>링크</span>
             </a>
-            )
+            {')'}
           </p>
         </div>
       </div>
