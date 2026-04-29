@@ -11,7 +11,6 @@ import {
 import { useAuth } from '@/shared/hook';
 
 import type { Attachment, UploadFile } from '@/feature/attachment/types';
-import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 import type { InquiryDTO, ReportDTO } from '@/feature/support/types';
 import { FileUploadSection, SubmitButton } from '@/feature/support/ui';
 
@@ -31,7 +30,7 @@ type SupportFormViewProps = {
   post?: InquiryDTO | ReportDTO;
   initialOption?: Option;
   initialLink?: string;
-  showLinkFiled?: boolean;
+  showLinkField?: boolean;
   tag?: string;
 };
 
@@ -53,7 +52,7 @@ export default function SupportFormView({
   initialOption,
   initialLink,
   tag,
-  showLinkFiled = false,
+  showLinkField = false,
 }: SupportFormViewProps) {
   const { userInfo } = useAuth();
 
@@ -138,7 +137,7 @@ export default function SupportFormView({
           />
         </TextFieldBlue>
 
-        {showLinkFiled && (
+        {showLinkField && (
           <TextFieldBlue>
             <TextFieldBlue.Label>게시글 링크</TextFieldBlue.Label>
             <TextFieldBlue.Input
