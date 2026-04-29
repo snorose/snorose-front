@@ -1,19 +1,25 @@
 import { Suspense, useContext } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { fetchInquiry } from '@/feature/support/api';
-
-import { ModalContext } from '@/shared/context/ModalContext';
-import { BackAppBar, Chip, FetchLoading } from '@/shared/component';
+import {
+  BackAppBar,
+  Chip,
+  FetchLoading,
+  NoticeModal,
+  ServerErrorFallback,
+} from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
 
-import { INQUIRY_STATUS_MAP } from '@/feature/support/constant';
+import { MeatBallIcon, PostActionBar } from '@/feature/board/component';
 import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { PostDetailView } from '@/feature/board/ui';
-import { MeatBallIcon, PostActionBar } from '@/feature/board/component';
 import { CommentInputContainer } from '@/feature/comment/component';
+import { readInquiry } from '@/feature/support/api';
+import { INQUIRY_STATUS_MAP } from '@/feature/support/constant';
 
 import { NotFoundPage } from '@/page/etc';
 
@@ -33,7 +39,7 @@ function InquiryDetailLoader() {
 
   const { data } = useSuspenseQuery({
     queryKey: QUERY_KEY.post(postId),
-    queryFn: () => fetchInquiry(postId),
+    queryFn: () => readInquiry(postId),
     staleTime: 1000 * 60 * 5,
   });
 
@@ -69,8 +75,28 @@ function InquiryDetailLoader() {
 }
 
 function ErrorFallback({ error, resetErrorBoundary }) {
-  if (error?.response.status === 404) {
-    return <NotFoundPage />;
+  const navigate = useNavigate();
+
+  if (error.response?.status >= 500) {
+    return <ServerErrorFallback reset={resetErrorBoundary} />;
+  }
+
+  switch (error.response?.status) {
+    case 403:
+      return (
+        <NoticeModal
+          modalText={{
+            title: '권한 없음',
+            description: '내가 작성한 글이 아니에요',
+            confirmText: '돌아가기',
+          }}
+          onConfirm={() => navigate('/', { replace: true })}
+        />
+      );
+    case 404:
+      return <NotFoundPage />;
+    default:
+      return <ServerErrorFallback reset={resetErrorBoundary} />;
   }
 }
 

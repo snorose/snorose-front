@@ -1,6 +1,7 @@
 .serverError {
   margin: 0 var(--default-margin);
   padding: 3.2rem;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
