@@ -1,5 +1,5 @@
 export type Attachment = {
-  id: number | null;
+  id: number;
   url: string;
   type: 'PHOTO' | 'VIDEO' | 'FILE';
   fileName: string;
