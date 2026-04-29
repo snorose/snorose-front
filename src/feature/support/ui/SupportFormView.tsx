@@ -91,7 +91,7 @@ export default function SupportFormView({
         <SubmitButton
           onClick={() =>
             submit({
-              selectedOption,
+              selectedOption: selectedOption!,
               title,
               url,
               content,
