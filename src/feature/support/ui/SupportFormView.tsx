@@ -201,7 +201,12 @@ function Item({ name, onClick }: { name: string; onClick: () => void }) {
   return (
     <div className={styles.fileItem}>
       <div>{name}</div>
-      <span onClick={onClick}>
+      <span
+        role='button'
+        tabIndex={0}
+        onClick={onClick}
+        onKeyDown={(e) => e.key === 'Enter' && onClick()}
+      >
         <Icon id='x' width={12} height={12} />
       </span>
     </div>
