@@ -92,6 +92,8 @@ export default function FileUploadSection({
           updateFiles(
             selectedFiles.map((file) => ({ file, id: crypto.randomUUID() }))
           );
+
+          e.target.value = '';
         }}
         multiple
       />
