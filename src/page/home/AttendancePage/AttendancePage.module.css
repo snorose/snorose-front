@@ -3,7 +3,7 @@
 .top {
   display: flex;
   flex-direction: column;
-  background-color: var(--blue-4);
+  background: var(--gradient-3);
   border-radius: 0 0 1.5rem 1.5rem;
 }
 
@@ -23,11 +23,11 @@
 
 .attendanceButton {
   margin: 2.6rem var(--default-margin);
-  padding: 1.3rem 0;
+  padding: 1.6rem 0;
   background: var(--blue-0);
   border-radius: 0.5rem;
-  font-weight: 500;
-  font-size: 1.4rem;
+  font: var(--text-headline-2-med);
+  letter-spacing: -0.05rem;
   text-align: center;
   color: var(--blue-4);
 

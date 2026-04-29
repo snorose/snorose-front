@@ -1,25 +1,25 @@
 import { useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { ModalContext } from '@/shared/context/ModalContext';
-import { useModalReset, useToast } from '@/shared/hook';
 import {
   AttachmentSwiper,
   BackAppBar,
   Badge,
   FetchLoading,
 } from '@/shared/component';
+import { ROLE, TOAST } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
+import { useModalReset, useToast } from '@/shared/hook';
 import { DateTime, getBoard, renderTextWithLinks } from '@/shared/lib';
-import { ROLE } from '@/shared/constant';
 
-import { useReport } from '@/feature/report/hook/useReport';
 import {
   FullScreenAttachment,
   PostModalRenderer,
 } from '@/feature/board/component';
+import { useReport } from '@/feature/report/hook/useReport';
 
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 import sponsorBanner from '@/assets/banners/sponsorBanner.png';
+import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import styles from './PostDetailView.module.css';
 
@@ -172,9 +172,9 @@ function MoreModal({ deletePost, data }) {
     try {
       const url = window.location.href;
       await navigator.clipboard.writeText(url);
-      toast({ message: '링크가 복사되었어요', variant: 'success' });
+      toast({ message: TOAST.COPY_AND_PASTE.linkSuccess, variant: 'success' });
     } catch (error) {
-      toast({ message: '링크 복사에 실패했어요', variant: 'error' });
+      toast({ message: TOAST.COPY_AND_PASTE.linkFail, variant: 'error' });
     }
   };
 

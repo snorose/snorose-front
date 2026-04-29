@@ -40,7 +40,7 @@ export default function FindPwPage() {
       value: formData.loginId,
       onChange: (next) => setFormData((prev) => ({ ...prev, loginId: next })),
       validate: validateId,
-      message: '아이디는 영어, 숫자만 가능합니다',
+      message: '아이디를 입력해주세요',
     },
     {
       type: 'email',
@@ -137,8 +137,15 @@ export default function FindPwPage() {
                   <br />
                   아래 구글 폼을 작성해주시면 신속히 해결해드릴게요
                 </p>
-                  <a className={styles.googleFormBtn} href='https://forms.gle/PDmKuPUuUzKXTh8BA' target='_blank' rel='noopener noreferrer'>                  <Icon id='google-form' width={'1.6rem'} height={'1.6rem'} />
-구글 폼</a>
+                <a
+                  className={styles.googleFormBtn}
+                  href='https://forms.gle/PDmKuPUuUzKXTh8BA'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  <Icon id='google-form' width={'1.6rem'} height={'1.6rem'} />
+                  구글 폼
+                </a>
               </div>
             )}
           </div>

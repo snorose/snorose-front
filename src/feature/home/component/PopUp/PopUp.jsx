@@ -1,6 +1,7 @@
 import { usePopUp } from '@/feature/home/hook';
+
 import styles from './PopUp.module.css';
-import { PopUpContents, getFilteredContents } from './PopUpContents';
+import { getFilteredContents, PopUpContents } from './PopUpContents';
 
 const POPUP_FOOTER_BUTTONS = [
   { label: '오늘 하루 보지 않기', duration: 0, className: 'hideButton' },

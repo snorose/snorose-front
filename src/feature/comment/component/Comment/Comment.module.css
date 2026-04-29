@@ -104,9 +104,11 @@
   background-color: transparent;
   font: var(--text-body-1-reg);
 
-  &:hover {
-    background-color: var(--white);
-    box-shadow: inset 0 0 0 0.03rem var(--blue-3);
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--white);
+      box-shadow: inset 0 0 0 0.03rem var(--blue-3);
+    }
   }
 }
 
@@ -121,9 +123,11 @@
   background-color: transparent;
   font: var(--text-body-1-reg);
 
-  &:hover {
-    background-color: var(--white, #fff);
-    box-shadow: inset 0 0 0 0.03rem var(--blue-3);
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--white, #fff);
+      box-shadow: inset 0 0 0 0.03rem var(--blue-3);
+    }
   }
 }
 

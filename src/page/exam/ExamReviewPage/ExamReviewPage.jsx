@@ -240,8 +240,8 @@ function ActionContainer({ commentCount, isScrapped, scrapCount }) {
           id='scrap-stroke'
           width={13}
           height={17}
-          stroke={'var(--green-1)'}
-          fill={isScrapped ? 'var(--green-1)' : 'none'}
+          stroke={'var(--green-2)'}
+          fill={isScrapped ? 'var(--green-2)' : 'none'}
         />
         <p>스크랩 {scrapCount.toLocaleString()}</p>
       </div>

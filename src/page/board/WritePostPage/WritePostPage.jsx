@@ -79,8 +79,6 @@ export default function WritePostPage() {
   );
   const [boardId, setBoardId] = useState(currentBoard?.id ?? '');
 
-  const pass = boardId && title.trim() && text.trim();
-
   const boardTitles = BOARD_MENUS.filter((menu) =>
     [21, 22, 23].includes(menu.id)
   ).map((menu) => menu.title);
@@ -210,6 +208,20 @@ export default function WritePostPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!boardId) {
+      toast({ message: TOAST.POST.selectBoard, variant: 'info' });
+      return;
+    }
+
+    if (!title.trim()) {
+      toast({ message: TOAST.POST.emptyTitle, variant: 'info' });
+      return;
+    }
+    if (!text.trim()) {
+      toast({ message: TOAST.POST.emptyContent, variant: 'info' });
+      return;
+    }
+
     if (submitLockRef.current) return;
     submitLockRef.current = true;
 
@@ -276,7 +288,6 @@ export default function WritePostPage() {
               <ActionButton
                 onClick={handleSubmit}
                 disabled={
-                  !pass ||
                   createPostMutation.isPending ||
                   createThumbnailMutation.isPending
                 }
@@ -363,13 +374,13 @@ export default function WritePostPage() {
             <div className={styles.content}>
               <TextareaAutosize
                 className={styles.title}
-                placeholder='제목'
+                placeholder='제목을 입력해주세요'
                 value={title}
                 onChange={handleTitleChange}
               />
               <TextareaAutosize
                 className={styles.text}
-                placeholder='내용'
+                placeholder='내용을 작성해주세요'
                 value={text}
                 onChange={(e) => setText(e.target.value)}
               />
@@ -481,8 +492,6 @@ export function NewWritePostPage({ isNotice = false }) {
   const [trashImageIndex, setTrashImageIndex] = useState(null); //지우는 이미지 index
   const trashImageConfirmModal = useModal();
 
-  const pass = boardId && title.trim() && content.trim();
-
   // 페이지 이탈 방지 모달 노출
   useEffect(() => {
     setIsBlock(
@@ -569,6 +578,20 @@ export function NewWritePostPage({ isNotice = false }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!boardId) {
+      toast({ message: TOAST.POST.selectBoard, variant: 'info' });
+      return;
+    }
+
+    if (!title.trim()) {
+      toast({ message: TOAST.POST.emptyTitle, variant: 'info' });
+      return;
+    }
+    if (!content.trim()) {
+      toast({ message: TOAST.POST.emptyContent, variant: 'info' });
+      return;
+    }
+
     if (submitLockRef.current) return;
     submitLockRef.current = true;
 
@@ -628,7 +651,6 @@ export function NewWritePostPage({ isNotice = false }) {
               <ActionButton
                 onClick={handleSubmit}
                 disabled={
-                  !pass ||
                   createPostMutation.isPending ||
                   createThumbnailMutation.isPending
                 }
@@ -674,13 +696,13 @@ export function NewWritePostPage({ isNotice = false }) {
             <div className={styles.content}>
               <TextareaAutosize
                 className={styles.title}
-                placeholder='제목'
+                placeholder='제목을 입력해주세요'
                 value={title}
                 onChange={handleTitleChange}
               />
               <TextareaAutosize
                 className={styles.text}
-                placeholder='내용'
+                placeholder='내용을 작성해주세요'
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
               />
