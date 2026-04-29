@@ -36,12 +36,12 @@ const user = [
   { key: 'USER_ETC', label: '기타' },
 ] as const satisfies readonly Option[];
 
-export const REPORT_OPTIONS = {
+export const REPORT_OPTIONS: Record<ReportType, readonly Option[]> = {
   post,
   exam,
   comment,
   user,
-} satisfies Record<string, readonly Readonly<Option>[]>;
+};
 
 export const REPORT_PARAMS_SCHEMA = {
   post: ['postId', 'boardId'],
