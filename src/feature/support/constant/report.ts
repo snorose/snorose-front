@@ -32,3 +32,10 @@ export const REPORT_TYPE_TAG = {
   comment: '댓글',
   user: '유저',
 } as const;
+
+export const REPORT_TYPE_MAP = {
+  POST_REPORT: 'post',
+  EXAM_REVIEW_REPORT: 'exam',
+  COMMENT_REPORT: 'comment',
+  USER_REPORT: 'user',
+} as const;
