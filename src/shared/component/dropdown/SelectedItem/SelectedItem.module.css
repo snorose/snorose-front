@@ -42,3 +42,8 @@
 .rotated {
   transform: rotate(180deg);
 }
+
+.valid {
+  background-color: var(--blue-0) !important;
+  color: var(--blue-4) !important;
+}
