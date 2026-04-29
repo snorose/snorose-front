@@ -21,7 +21,7 @@ export default function EditInquiryPage() {
       options={INQUIRY_OPTIONS}
       contentLabel={'문의 내용'}
       placeholders={{ dropdown, title, content }}
-      showLinkFiled
+      showLinkField
     />
   );
 }
