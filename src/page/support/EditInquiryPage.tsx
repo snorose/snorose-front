@@ -13,7 +13,9 @@ export default function EditInquiryPage() {
   return (
     <SupportFormView
       post={post}
-      initialOption={INQUIRY_OPTIONS[post.category]}
+      initialOption={INQUIRY_OPTIONS.find(
+        (option) => option.key === post.category
+      )}
       initialLink={post.link}
       submit={() => alert('submit!')}
       options={INQUIRY_OPTIONS}
