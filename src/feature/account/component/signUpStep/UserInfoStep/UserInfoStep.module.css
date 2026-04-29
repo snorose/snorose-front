@@ -12,17 +12,24 @@
 .inputList {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.8rem;
+  margin-bottom: 2.5rem;
 }
 
 .field {
-  height: 10.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 /* checkbox */
+.terms {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  margin-bottom: 3.4rem;
+}
 .checkTerms {
-  margin-bottom: 7rem;
-
   display: flex;
   justify-content: space-between;
   align-items: center;

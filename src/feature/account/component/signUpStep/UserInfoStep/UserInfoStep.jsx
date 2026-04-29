@@ -1,26 +1,26 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { useRegister } from '@/apis';
 
 import {
   Button,
   Dropdown,
+  ErrorMessage,
   Icon,
   Label,
-  TextInput,
-  ErrorMessage,
-  NumberInput,
   NewButton,
+  NumberInput,
+  TextInput,
 } from '@/shared/component';
 import { MAJORS } from '@/shared/constant';
 
+import { PRIVACY_TERM } from '@/feature/account/constant/privacyTerm';
 import {
+  validateBirthday,
   validateNickname,
   validateStudentNumber,
-  validateBirthday,
 } from '@/feature/account/lib';
-import { PRIVACY_TERM } from '@/feature/account/constant/privacyTerm';
+
+import { useRegister } from '@/apis';
 
 import styles from './UserInfoStep.module.css';
 
@@ -28,14 +28,16 @@ export default function UserInfoStep({ setFormData, formData }) {
   const navigate = useNavigate();
   const register = useRegister();
 
-  const [isTermsChecked, setIsTermsChecked] = useState(false);
+  const [isPrivacyTermsChecked, setIsPrivacyTermsChecked] = useState(false);
+  const [isNotiTermsChecked, setIsNotiTermsChecked] = useState(false);
+  const [isMarketingTermsChecked, setIsMarketingTermsChecked] = useState(false);
 
   const isFormValid =
     validateNickname(formData.nickname) === 'valid' &&
     validateStudentNumber(formData.studentNumber) === 'valid' &&
     validateBirthday(formData.birthday) === 'valid' &&
     formData.major &&
-    isTermsChecked;
+    isPrivacyTermsChecked;
 
   const inputList = [
     {
@@ -80,6 +82,7 @@ export default function UserInfoStep({ setFormData, formData }) {
           major: option.name,
         }));
       },
+      validate: (value) => (formData.major ? 'valid' : 'default'),
     },
     {
       type: 'text',
@@ -135,14 +138,32 @@ export default function UserInfoStep({ setFormData, formData }) {
           })}
         </div>
       </div>
-
-      <CheckTerms
-        label={'개인정보 수집 및 이용 동의'}
-        required
-        navigate={navigate}
-        isChecked={isTermsChecked}
-        setIsChecked={setIsTermsChecked}
-      />
+      <div className={styles.terms}>
+        <CheckTerms
+          id='privacyTerms'
+          label={'개인정보 수집 및 이용 동의'}
+          required
+          navigate={navigate}
+          isChecked={isPrivacyTermsChecked}
+          setIsChecked={setIsPrivacyTermsChecked}
+        />
+        <CheckTerms
+          id='notiTerms'
+          label={'알림 수신 동의'}
+          required={false}
+          navigate={navigate}
+          isChecked={isNotiTermsChecked}
+          setIsChecked={setIsNotiTermsChecked}
+        />
+        <CheckTerms
+          id='marketingTerms'
+          label={'광고성 알림 수신 동의'}
+          required={false}
+          navigate={navigate}
+          isChecked={isMarketingTermsChecked}
+          setIsChecked={setIsMarketingTermsChecked}
+        />
+      </div>
 
       <div className={styles.submit}>
         <NewButton
@@ -157,6 +178,7 @@ export default function UserInfoStep({ setFormData, formData }) {
 }
 
 function CheckTerms({
+  id = 'terms',
   label,
   isChecked = false,
   required = false,
@@ -187,14 +209,14 @@ function CheckTerms({
   return (
     <div className={styles.checkTerms}>
       <input
-        id='terms'
+        id={id}
         className={styles.checkbox}
         type='checkbox'
         hidden
         checked={isChecked}
         onChange={handleCheckboxChange}
       />
-      <label htmlFor='terms' className={styles.label}>
+      <label htmlFor={id} className={styles.label}>
         <Icon
           className={`${styles.blueBox} ${isChecked ? styles.checked : ''}`}
           id='checkbox-blue'
