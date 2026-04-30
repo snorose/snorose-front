@@ -1,44 +1,42 @@
 import { useContext } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import { useQuery } from '@tanstack/react-query';
 
-import { getReviewDetail } from '@/apis';
-
-import { ModalContext } from '@/shared/context/ModalContext';
-import { useModalReset } from '@/shared/hook/useBlocker';
 import {
   BackAppBar,
   FetchLoading,
   FetchLoadingOverlay,
   Icon,
 } from '@/shared/component';
-import { DateTime } from '@/shared/lib';
 import { QUERY_KEY } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
+import { useModalReset } from '@/shared/hook/useBlocker';
+import { DateTime } from '@/shared/lib';
 
-import { NotFoundPage } from '@/page/etc';
-
-import { useDeleteExamReviewHandler } from '@/feature/exam/hook/useDeleteExamReviewHandler';
+import { CommentInput, CommentListSuspense } from '@/feature/comment/component';
+import { useCommentContext } from '@/feature/comment/context';
 import {
   ConfirmedIcon,
   ExamReviewModalRenderer,
   ReviewContentItem,
   ReviewDownload,
 } from '@/feature/exam/component';
-import { convertToObject } from '@/feature/exam/lib';
 import {
-  LECTURE_TYPES,
-  SEMESTERS,
   EXAM_TYPES,
   FLEX_ALIGN,
+  LECTURE_TYPES,
+  SEMESTERS,
 } from '@/feature/exam/constant';
+import { useDeleteExamReviewHandler } from '@/feature/exam/hook/useDeleteExamReviewHandler';
+import { convertToObject } from '@/feature/exam/lib';
 import { useScrap } from '@/feature/scrap/hook';
 
-import { useReport } from '@/feature/report/hook';
-
-import { useCommentContext } from '@/feature/comment/context';
-import { CommentInput, CommentListSuspense } from '@/feature/comment/component';
+import { NotFoundPage } from '@/page/etc';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
+
+import { getReviewDetail } from '@/apis';
 
 import styles from './ExamReviewPage.module.css';
 
@@ -52,8 +50,6 @@ export default function ExamReviewPage() {
 
   const { modal, setModal } = useContext(ModalContext);
 
-  const { navigateReportPage } = useReport();
-
   // 페이지 언마운트 시 모달 상태 초기화
   useModalReset();
 
@@ -64,11 +60,13 @@ export default function ExamReviewPage() {
   });
 
   const handleReport = (targetType) => {
-    const props =
-      targetType === 'exam'
-        ? { examId: data.postId }
-        : { userId: data.encryptedUserId };
-    navigateReportPage(targetType, props);
+    if (targetType === 'exam') {
+      navigate(`/report/write/exam?targetId=${data.postId}`);
+    }
+
+    if (targetType === 'user') {
+      navigate(`/report/write/user?targetId=${data.encryptedUserId}`);
+    }
   };
   const { handleDelete } = useDeleteExamReviewHandler();
 

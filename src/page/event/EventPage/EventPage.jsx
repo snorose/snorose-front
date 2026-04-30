@@ -1,9 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { useState, useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { getEventContent } from '@/apis';
-import { NotFoundPage } from '@/page/etc';
+import { useQuery } from '@tanstack/react-query';
 
 import {
   BackAppBar,
@@ -13,25 +11,27 @@ import {
   PrimaryButton,
 } from '@/shared/component';
 import { LIKE_TYPE, QUERY_KEY, ROLE, TOAST } from '@/shared/constant';
-import { renderTextWithLinks, DateTime, getBoard } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
-import { useModalReset } from '@/shared/hook/useBlocker';
 import { useAuth, useToast } from '@/shared/hook';
+import { useModalReset } from '@/shared/hook/useBlocker';
+import { DateTime, getBoard, renderTextWithLinks } from '@/shared/lib';
 
-import { GuideModal } from '@/feature/event/component';
-import { isUrlValid } from '@/feature/event/lib';
-import { EVENT_GUIDE_MODAL_OPTIONS } from '@/feature/event/constant';
-
-import { CommentInput, CommentListSuspense } from '@/feature/comment/component';
-import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { PostModalRenderer } from '@/feature/board/component';
-import { useReportHandler } from '@/feature/report/hook/useReport';
-
+import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
+import { CommentInput, CommentListSuspense } from '@/feature/comment/component';
+import { useCommentContext } from '@/feature/comment/context';
+import { GuideModal } from '@/feature/event/component';
+import { EVENT_GUIDE_MODAL_OPTIONS } from '@/feature/event/constant';
+import { isUrlValid } from '@/feature/event/lib';
 import { useLike } from '@/feature/like/hook';
 import { useScrap } from '@/feature/scrap/hook';
-import { useCommentContext } from '@/feature/comment/context';
+
+import { NotFoundPage } from '@/page/etc';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
+
+import { getEventContent } from '@/apis';
+
 import styles from './EventPage.module.css';
 
 export default function EventPage() {
@@ -56,7 +56,6 @@ export default function EventPage() {
   });
 
   const { handleDelete } = useDeletePostHandler(currentBoard?.id);
-  const { handleReport } = useReportHandler(modal, setModal, data);
 
   const handleEdit = () => {
     setModal({ id: null, type: null });
@@ -323,7 +322,6 @@ export default function EventPage() {
       <PostModalRenderer
         modal={modal}
         handleEdit={handleEdit}
-        handleReport={handleReport}
         handleDelete={handleDelete}
         handleShare={handleShare}
       />
