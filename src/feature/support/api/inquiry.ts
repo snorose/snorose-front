@@ -65,7 +65,7 @@ export const createInquiry = async ({
   }
 };
 
-export type InquirUpdateRequest = {
+export type InquiryUpdateRequest = {
   postId: string;
   title: string;
   content: string;
@@ -85,7 +85,7 @@ export const updateInquiry = async ({
   oldAttachments = [],
   newAttachments = [],
   deleteAttachments = [],
-}: InquirUpdateRequest) => {
+}: InquiryUpdateRequest) => {
   try {
     const response = await authAxios.patch(`/v1/inquiries/inquiry/${postId}`, {
       title,
