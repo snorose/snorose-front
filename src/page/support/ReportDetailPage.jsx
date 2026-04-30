@@ -1,19 +1,19 @@
 import { Suspense, useContext } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useParams } from 'react-router-dom';
+
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { fetchReport } from '@/feature/support/api';
-
-import { ModalContext } from '@/shared/context/ModalContext';
 import { BackAppBar, Chip, FetchLoading } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
 
-import { REPORT_STATUS_MAP } from '@/feature/support/constant';
+import { MeatBallIcon, PostActionBar } from '@/feature/board/component';
 import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { PostDetailView } from '@/feature/board/ui';
-import { MeatBallIcon, PostActionBar } from '@/feature/board/component';
 import { CommentInputContainer } from '@/feature/comment/component';
+import { fetchReport } from '@/feature/support/api';
+import { REPORT_STATUS_MAP } from '@/feature/support/constant';
 
 import { NotFoundPage } from '@/page/etc';
 

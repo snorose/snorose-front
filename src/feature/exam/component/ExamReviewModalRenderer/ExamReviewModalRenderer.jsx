@@ -1,4 +1,4 @@
-import { MoreOptionModal, ConfirmModal } from '@/shared/component';
+import { ConfirmModal, MoreOptionModal } from '@/shared/component';
 import { CONFIRM_MODAL_TEXT, MORE_OPTION_MODAL_TEXT } from '@/shared/constant';
 
 export default function ExamReviewModalRenderer({
@@ -11,13 +11,6 @@ export default function ExamReviewModalRenderer({
     <>
       {(() => {
         switch (modal.id) {
-          case 'exam-review-download':
-            return (
-              <ConfirmModal
-                modalText={CONFIRM_MODAL_TEXT.EXAM_REVIEW_DUPLICATION}
-                onConfirm={handleReport}
-              />
-            );
           // 시험후기 더보기 모달 (게시글 신고, 이용자 신고)
           case 'exam-review-more-options':
             return (
