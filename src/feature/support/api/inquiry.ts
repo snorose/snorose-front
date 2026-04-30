@@ -92,7 +92,20 @@ export const updateInquiry = async ({
       content,
       inquiryCategory,
       targetUrl,
-      finalAttachments: [...oldAttachments, ...newAttachments],
+      finalAttachments: [
+        ...oldAttachments.map(({ id, fileName, fileComment, type }) => ({
+          id,
+          fileName,
+          fileComment,
+          type,
+        })),
+        ...newAttachments.map(({ id, fileName, fileComment, type }) => ({
+          id,
+          fileName,
+          fileComment,
+          type,
+        })),
+      ],
       deleteAttachments,
     });
 
