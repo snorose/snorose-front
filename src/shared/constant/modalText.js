@@ -223,6 +223,16 @@ const NOTICE_MODAL = {
     description: '이미 인증을 완료했거나 인증 대상이 아니에요.',
     confirmText: '홈으로 이동',
   },
+  ALREADY_ANSWERED: {
+    title: '이미 답변이 완료되었어요',
+    description: '답변이 등록된 문의글은 수정할 수 없어요',
+    confirmText: '돌아가기',
+  },
+  NOT_POST_AUTHOR: {
+    title: '접근 권한이 없어요',
+    description: '작성자 본인만 수정할 수 있어요',
+    confirmText: '돌아가기',
+  },
   MAEKETING_NOTICE_MODAL: {
     id: 'marketing-notice',
     title: (isMarketingAgreed) =>
