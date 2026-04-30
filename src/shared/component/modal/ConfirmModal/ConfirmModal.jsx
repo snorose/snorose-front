@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
-import { ModalContext } from '@/shared/context/ModalContext';
 import { DimModalLayout } from '@/shared/component';
+import { ModalContext } from '@/shared/context/ModalContext';
 
 import styles from './ConfirmModal.module.css';
 
@@ -10,6 +10,11 @@ export default function ConfirmModal({ modalText, onConfirm, onCancel }) {
 
   const handleCancel = () => {
     onCancel?.() || setModal({ id: null, type: null });
+  };
+
+  const handleConfirm = () => {
+    onConfirm();
+    setModal({ id: null, type: null });
   };
 
   return (
@@ -36,7 +41,7 @@ export default function ConfirmModal({ modalText, onConfirm, onCancel }) {
         <div className={styles.buttonDivider} />
         <button
           className={`${styles.bottomButton} ${styles.rightHover}`}
-          onClick={onConfirm}
+          onClick={handleConfirm}
         >
           {modalText.confirmText}
         </button>
