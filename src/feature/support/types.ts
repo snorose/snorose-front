@@ -1,17 +1,16 @@
-import { REPORT_OPTIONS } from '@/feature/support/data';
-
 import { Attachment } from '@/feature/attachment/types';
+import { REPORT_OPTIONS } from '@/feature/support/data';
 
 export type InquiryDTO = {
   postId: number;
   userRoleId: number;
   isWriter: boolean;
-  userId: string;
+  encryptedUserId: string;
   userDisplay: string;
   title: string;
   link: string;
   content: string;
-  category:
+  inquiryCategory:
     | 'EXAM_REVIEW_INQUIRY'
     | 'EVENT_INQUIRY'
     | 'NOTICE_INQUIRY'

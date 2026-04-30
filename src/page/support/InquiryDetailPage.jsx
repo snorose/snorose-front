@@ -2,7 +2,7 @@ import { Suspense, useContext } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 
 import {
   BackAppBar,
@@ -15,10 +15,9 @@ import { QUERY_KEY } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 
 import { MeatBallIcon, PostActionBar } from '@/feature/board/component';
-import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { PostDetailView } from '@/feature/board/ui';
 import { CommentInputContainer } from '@/feature/comment/component';
-import { readInquiry } from '@/feature/support/api';
+import { deleteInquiry, readInquiry } from '@/feature/support/api';
 import { INQUIRY_STATUS_MAP } from '@/feature/support/constant';
 
 import { NotFoundPage } from '@/page/etc';
@@ -34,6 +33,7 @@ export default function InquiryDetailPage() {
 }
 
 function InquiryDetailLoader() {
+  const navigate = useNavigate();
   const { postId } = useParams();
   const { setModal } = useContext(ModalContext);
 
@@ -43,7 +43,13 @@ function InquiryDetailLoader() {
     staleTime: 1000 * 60 * 5,
   });
 
-  const { handleDelete } = useDeletePostHandler();
+  const { mutate: deleteInquiryMutate } = useMutation({
+    mutationFn: () => deleteInquiry(postId),
+    onSuccess: () => {
+      navigate(-1);
+    },
+    onError: (error) => {},
+  });
 
   const onMenuOpen = () => {
     const id = data.isWriter ? 'my-post-more-options' : 'post-more-options';
@@ -57,7 +63,7 @@ function InquiryDetailLoader() {
   return (
     <PostDetailView
       data={data}
-      deletePost={handleDelete}
+      deletePost={deleteInquiryMutate}
       PostActionBar={
         <PostActionBar>
           <PostActionBar.Comment {...data} />
