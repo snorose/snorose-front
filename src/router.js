@@ -3,6 +3,7 @@ import { attendanceLoader } from '@/shared/loader';
 import { AppLayout, NavbarLayout } from '@/shared/ui';
 
 import { CheckExamPeriodRoute } from '@/feature/exam/lib';
+import InquiryUpdateErrorPage from '@/feature/support/InquiryUpdateErrorPage';
 import {
   inquiryEditLoader,
   reportEditLoader,
@@ -487,6 +488,11 @@ export const routeList = [
           },
           {
             path: ':postId/edit',
+            errorElement: (
+              <AppLayout>
+                <InquiryUpdateErrorPage />
+              </AppLayout>
+            ),
             element: (
               <ProtectedRoute>
                 <EditInquiryPage />
