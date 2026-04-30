@@ -3,7 +3,7 @@ import { Attachment } from '@/feature/attachment/types';
 import { putFileInBucket } from '@/apis';
 import { authAxios } from '@/axios';
 
-type ReportCreateRequest = {
+export type ReportCreateRequest = {
   targetId: string;
   title: string;
   content: string;
