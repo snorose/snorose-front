@@ -1,23 +1,21 @@
-import { MoreOptionModal, ConfirmModal } from '@/shared/component';
-import { ModalContext } from '@/shared/context/ModalContext';
-import { CONFIRM_MODAL_TEXT, MORE_OPTION_MODAL_TEXT } from '@/shared/constant';
-
-import { useLocation } from 'react-router-dom';
-import { useCommentContext } from '../../context';
-import { useReport } from '@/feature/report/hook';
-import { useComment } from '../../hook';
 import { useContext } from 'react';
-import { getBoard } from '@/shared/lib';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import { ConfirmModal, MoreOptionModal } from '@/shared/component';
+import { CONFIRM_MODAL_TEXT, MORE_OPTION_MODAL_TEXT } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
+
+import { useCommentContext } from '../../context';
+import { useComment } from '../../hook';
 
 export default function CommentModalRenderer({ data, moreOptionTop }) {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const { modal, setModal } = useContext(ModalContext);
-  const { navigateReportPage } = useReport();
+
   const { deleteComment } = useComment();
 
   const { commentId, resetCommentState } = useCommentContext();
-
-  const currentBoard = getBoard(pathname.split('/')[2]);
 
   return (
     <>
@@ -31,16 +29,11 @@ export default function CommentModalRenderer({ data, moreOptionTop }) {
                 title='댓글'
                 optionList={MORE_OPTION_MODAL_TEXT.COMMENT_MORE_OPTION_LIST}
                 functions={[
+                  () => navigate(`/report/write/comment?targetId=${data.id}`),
                   () =>
-                    navigateReportPage('comment', {
-                      boardId: currentBoard.id,
-                      postId: data.postId,
-                      commentId: data.id,
-                    }),
-                  () =>
-                    navigateReportPage('user', {
-                      userId: data.encryptedUserId,
-                    }),
+                    navigate(
+                      `/report/write/user?targetId=${data.encryptedUserId}`
+                    ),
                 ]}
                 top={moreOptionTop}
               />

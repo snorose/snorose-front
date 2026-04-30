@@ -25,7 +25,6 @@ import {
 import { EXAM_TYPES, LECTURE_TYPES, SEMESTERS } from '@/feature/exam/constant';
 import { useDeleteExamReviewHandler } from '@/feature/exam/hook/useDeleteExamReviewHandler';
 import { convertToObject } from '@/feature/exam/lib';
-import { useReport } from '@/feature/report/hook';
 import { useScrap } from '@/feature/scrap/hook';
 
 import { NotFoundPage } from '@/page/etc';
@@ -46,8 +45,6 @@ export default function ExamReviewPage() {
 
   const { modal, setModal } = useContext(ModalContext);
 
-  const { navigateReportPage } = useReport();
-
   // 페이지 언마운트 시 모달 상태 초기화
   useModalReset();
 
@@ -58,11 +55,13 @@ export default function ExamReviewPage() {
   });
 
   const handleReport = (targetType) => {
-    const props =
-      targetType === 'exam'
-        ? { examId: data.postId }
-        : { userId: data.encryptedUserId };
-    navigateReportPage(targetType, props);
+    if (targetType === 'exam') {
+      navigate(`/report/write/exam?targetId=${data.postId}`);
+    }
+
+    if (targetType === 'user') {
+      navigate(`/report/write/user?targetId=${data.encryptedUserId}`);
+    }
   };
   const { handleDelete } = useDeleteExamReviewHandler();
 
