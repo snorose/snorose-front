@@ -1,5 +1,5 @@
 import { useContext, useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import {
   AttachmentSwiper,
@@ -12,7 +12,7 @@ import { ROLE, TOAST } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useModalReset, useToast } from '@/shared/hook';
 import useAuth from '@/shared/hook/useAuth';
-import { DateTime, getBoard, linkifyHtml } from '@/shared/lib';
+import { DateTime, linkifyHtml } from '@/shared/lib';
 
 import {
   FullScreenAttachment,
@@ -21,7 +21,6 @@ import {
 import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
 import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
 import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
-import { useReport } from '@/feature/report/hook/useReport';
 
 import sponsorBanner from '@/assets/banners/sponsorBanner.png';
 import cloudLogo from '@/assets/images/cloudLogo.svg';
@@ -199,26 +198,21 @@ function MetaContainer({
 
 function MoreModal({ deletePost, data }) {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
 
   const { modal, setModal } = useContext(ModalContext);
 
-  const { navigateReportPage } = useReport();
   const { toast } = useToast();
 
   // 페이지 언마운트 시 모달 상태 초기화
   useModalReset();
 
   const handleReport = (targetType) => {
-    const currentBoard = getBoard(pathname.split('/')[2]);
+    if (targetType === 'post') {
+      navigate(`/report/write/${targetType}?targetId=${data.postId}`);
+    }
 
     if (targetType === 'user') {
-      navigateReportPage(targetType, { userId: data.encryptedUserId });
-    } else if (targetType === 'post') {
-      navigateReportPage(targetType, {
-        postId: data.postId,
-        boardId: currentBoard.id,
-      });
+      navigate(`/report/write/${targetType}?targetId=${data.encryptedUserId}`);
     }
   };
 
