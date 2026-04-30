@@ -13,6 +13,7 @@ import {
 } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
+import { useToast } from '@/shared/hook';
 
 import { MeatBallIcon, PostActionBar } from '@/feature/board/component';
 import { PostDetailView } from '@/feature/board/ui';
@@ -37,6 +38,8 @@ function InquiryDetailLoader() {
   const { postId } = useParams();
   const { setModal } = useContext(ModalContext);
 
+  const { toast } = useToast();
+
   const { data } = useSuspenseQuery({
     queryKey: QUERY_KEY.post(postId),
     queryFn: () => readInquiry(postId),
@@ -48,7 +51,9 @@ function InquiryDetailLoader() {
     onSuccess: () => {
       navigate(-1);
     },
-    onError: (error) => {},
+    onError: (error) => {
+      toast({ message: error.message, variant: 'error' });
+    },
   });
 
   const onMenuOpen = () => {

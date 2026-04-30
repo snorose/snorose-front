@@ -17,6 +17,16 @@ export default function PostModalRenderer({
     ? 13
     : getBoard(pathname.split('/')[2]).id;
 
+  const optionList =
+    currentBoardId === 13
+      ? MORE_OPTION_MODAL_TEXT.MY_POST_MORE_OPTION_LIST.slice(0, 2)
+      : MORE_OPTION_MODAL_TEXT.MY_POST_MORE_OPTION_LIST;
+
+  const functions =
+    currentBoardId === 13
+      ? [handleEdit, null]
+      : [handleEdit, null, handleShare];
+
   return (
     <>
       {(() => {
@@ -39,8 +49,8 @@ export default function PostModalRenderer({
             return (
               <MoreOptionModal
                 title='내 게시글'
-                optionList={MORE_OPTION_MODAL_TEXT.MY_POST_MORE_OPTION_LIST}
-                functions={[handleEdit, null, handleShare]}
+                optionList={optionList}
+                functions={functions}
               />
             );
           // 이벤트 게시글 더보기 모달 (공유하기)
