@@ -44,9 +44,12 @@ export const inquiryEditLoader = async ({ params }: LoaderFunctionArgs) => {
 
     return post;
   } catch (error) {
-    switch (error.response.status) {
+    const status = error.response?.status;
+    const code = error.response?.data?.code;
+
+    switch (status) {
       case 403:
-        throw json({ code: error.response?.data?.code }, { status: 403 });
+        throw json({ code }, { status: 403 });
       case 404:
         throw new Response('Not Found', { status: 404 });
       default:
