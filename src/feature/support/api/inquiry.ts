@@ -3,12 +3,6 @@ import type { Attachment } from '@/feature/attachment/types';
 import { putFileInBucket } from '@/apis';
 import { authAxios } from '@/axios';
 
-export const readInquiry = async (inquiryId: string) => {
-  const response = await authAxios.get(`/v1/inquiries/inquiry/${inquiryId}`);
-
-  return response.data.result;
-};
-
 export type InquiryCreateRequest = {
   title: string;
   content: string;
@@ -63,6 +57,12 @@ export const createInquiry = async ({
         throw new Error('잠시 후 다시 시도해주세요.');
     }
   }
+};
+
+export const readInquiry = async (postId: string) => {
+  const response = await authAxios.get(`/v1/inquiries/inquiry/${postId}`);
+
+  return response.data.result;
 };
 
 export type InquiryUpdateRequest = {
@@ -133,6 +133,29 @@ export const updateInquiry = async ({
         throw new Error('첨부파일은 최대 3개까지 업로드할 수 있어요');
       case 6102:
         throw new Error('답변 완료된 글은 수정할 수 없어요');
+      default:
+        throw new Error('잠시 후 다시 시도해주세요.');
+    }
+  }
+};
+
+export const deleteInquiry = async (postId: string) => {
+  try {
+    const response = await authAxios.delete(`/v1/inquiries/inquiry/${postId}`);
+
+    return response.data.result;
+  } catch (error) {
+    const response = error?.response;
+
+    if (!response) {
+      throw new Error('네트워크 통신 중 오류가 발생했어요');
+    }
+
+    switch (response.data.code) {
+      case 6101:
+        throw new Error('존재하지 않는 게시글이에요');
+      case 6102:
+        throw new Error('답변 완료된 글은 삭제할 수 없어요');
       default:
         throw new Error('잠시 후 다시 시도해주세요.');
     }

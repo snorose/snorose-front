@@ -1,9 +1,9 @@
 import { useLocation } from 'react-router-dom';
 
+import { ConfirmModal, MoreOptionModal } from '@/shared/component';
+import { CONFIRM_MODAL_TEXT, MORE_OPTION_MODAL_TEXT } from '@/shared/constant';
 import { useBoard } from '@/shared/hook';
-import { MoreOptionModal, ConfirmModal } from '@/shared/component';
 import { getBoard } from '@/shared/lib';
-import { MORE_OPTION_MODAL_TEXT, CONFIRM_MODAL_TEXT } from '@/shared/constant';
 
 export default function PostModalRenderer({
   modal,
@@ -13,7 +13,19 @@ export default function PostModalRenderer({
   handleShare,
 }) {
   const { pathname } = useLocation();
-  const currentBoard = getBoard(pathname.split('/')[2]);
+  const currentBoardId = pathname.startsWith('/inquiry')
+    ? 13
+    : getBoard(pathname.split('/')[2]).id;
+
+  const optionList =
+    currentBoardId === 13
+      ? MORE_OPTION_MODAL_TEXT.MY_POST_MORE_OPTION_LIST.slice(0, 2)
+      : MORE_OPTION_MODAL_TEXT.MY_POST_MORE_OPTION_LIST;
+
+  const functions =
+    currentBoardId === 13
+      ? [handleEdit, null]
+      : [handleEdit, null, handleShare];
 
   return (
     <>
@@ -37,8 +49,8 @@ export default function PostModalRenderer({
             return (
               <MoreOptionModal
                 title='내 게시글'
-                optionList={MORE_OPTION_MODAL_TEXT.MY_POST_MORE_OPTION_LIST}
-                functions={[handleEdit, null, handleShare]}
+                optionList={optionList}
+                functions={functions}
               />
             );
           // 이벤트 게시글 더보기 모달 (공유하기)
@@ -55,7 +67,7 @@ export default function PostModalRenderer({
             return (
               <ConfirmModal
                 modalText={
-                  [21, 22].includes(Number(currentBoard.id))
+                  [21, 22].includes(Number(currentBoardId))
                     ? CONFIRM_MODAL_TEXT.DELETE_POST
                     : CONFIRM_MODAL_TEXT.DELETE_POST_WITHOUT_POINT_DEDUCTION
                 }
