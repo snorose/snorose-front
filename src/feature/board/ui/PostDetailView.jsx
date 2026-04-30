@@ -148,15 +148,13 @@ function MoreModal({ deletePost, data }) {
   useModalReset();
 
   const handleReport = (targetType) => {
-    let targetId;
-
     if (targetType === 'post') {
-      targetId = data.postId;
-    } else if (targetType === 'post') {
-      targetId = data.encryptedUserId;
+      navigate(`/report/write/${targetType}?targetId=${data.postId}`);
     }
 
-    navigate(`/report/write/${targetType}?targetId=${targetId}`);
+    if (targetType === 'user') {
+      navigate(`/report/write/${targetType}?targetId=${data.encryptedUserId}`);
+    }
   };
 
   const handleEdit = () => {
