@@ -1,7 +1,8 @@
-import { LoaderFunctionArgs, redirect } from 'react-router-dom';
+import { json, LoaderFunctionArgs, redirect } from 'react-router-dom';
 
+import { readInquiry } from '@/feature/support/api';
 import { REPORT_PARAMS_SCHEMA, ReportType } from '@/feature/support/data';
-import type { InquiryDTO, ReportDTO } from '@/feature/support/types';
+import type { ReportDTO } from '@/feature/support/types';
 
 export type ReportParamsLoaderData = Awaited<
   ReturnType<typeof validateReportWriteLoader>
@@ -35,37 +36,26 @@ function validateReportWriteParams(type: string, params: URLSearchParams) {
   }
 }
 
-/**
- * TODO:
- * - 존재하지 않는 inquiryId로 접근 시 404 처리
- * - 권한이 없는 inquryId로 접근 시 403 처리
- * - 답변 완료 후에는 접근 불가
- */
-
 export const inquiryEditLoader = async ({ params }: LoaderFunctionArgs) => {
-  const { inquiryId } = params;
-  // const result = await fetch(`/v1/inquiries/${inquiryId}`);
+  const { postId } = params;
 
-  const post: InquiryDTO = {
-    postId: 15,
-    userRoleId: 4,
-    isWriter: false,
-    userId: '629j3YCdF2F+NPCBzMf0Rg==',
-    userDisplay: '눈송',
-    title: '시험후기 문의',
-    link: 'https://www.snorose.com/...',
-    content: '문의 내용',
-    category: 'EXAM_REVIEW_INQUIRY',
-    status: 'PENDING',
-    commentCount: 0,
-    createdAt: '2025-08-30T22:47:09.234619',
-    updatedAt: null,
-    isEdited: true,
-    isWriterWithdrawn: false,
-    attachments: [],
-  };
+  try {
+    const post = await readInquiry(postId);
 
-  return post;
+    return post;
+  } catch (error) {
+    const status = error.response?.status;
+    const code = error.response?.data?.code;
+
+    switch (status) {
+      case 403:
+        throw json({ code }, { status: 403 });
+      case 404:
+        throw new Response('Not Found', { status: 404 });
+      default:
+        throw new Response('Internal Server Error', { status: 500 });
+    }
+  }
 };
 
 /**
