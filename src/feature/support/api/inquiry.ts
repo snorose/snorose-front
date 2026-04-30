@@ -133,6 +133,8 @@ export const updateInquiry = async ({
         throw new Error('첨부파일은 최대 3개까지 업로드할 수 있어요');
       case 6102:
         throw new Error('답변 완료된 글은 수정할 수 없어요');
+      default:
+        throw new Error('잠시 후 다시 시도해주세요.');
     }
   }
 };
