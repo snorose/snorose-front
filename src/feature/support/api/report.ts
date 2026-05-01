@@ -36,12 +36,12 @@ export const createReport = async ({
 
     const { reportId, attachmentUrlList } = response.data.result;
 
-    // if (attachmentUrlList.length > 0) {
-    //   await putFileInBucket(
-    //     attachmentUrlList,
-    //     attachments.map(({ file }) => file)
-    //   );
-    // }
+    if (attachmentUrlList.length > 0) {
+      await putFileInBucket(
+        attachmentUrlList,
+        attachments.map(({ file }) => file)
+      );
+    }
 
     return { postId: reportId };
   } catch (error) {
