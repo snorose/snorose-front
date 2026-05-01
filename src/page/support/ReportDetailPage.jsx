@@ -45,7 +45,7 @@ function ReportDetailLoader() {
   });
 
   const { mutate: deleteReportMutate } = useMutation({
-    mutationFn: deleteReport,
+    mutationFn: () => deleteReport(postId),
     onSuccess: () => {
       navigate(-1);
     },
