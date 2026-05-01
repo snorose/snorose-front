@@ -1,21 +1,25 @@
 import { Suspense, useContext } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { BackAppBar, Chip, FetchLoading } from '@/shared/component';
-import { QUERY_KEY } from '@/shared/constant';
+import {
+  BackAppBar,
+  Chip,
+  FetchLoading,
+  NoticeModal,
+  ServerErrorFallback,
+} from '@/shared/component';
+import { NOTICE_MODAL_TEXT, QUERY_KEY } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 
 import { MeatBallIcon, PostActionBar } from '@/feature/board/component';
 import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { PostDetailView } from '@/feature/board/ui';
 import { CommentInputContainer } from '@/feature/comment/component';
-import { fetchReport } from '@/feature/support/api';
+import { readReport } from '@/feature/support/api';
 import { REPORT_STATUS_MAP } from '@/feature/support/constant';
-
-import { NotFoundPage } from '@/page/etc';
 
 export default function ReportDetailPage() {
   return (
@@ -33,7 +37,7 @@ function ReportDetailLoader() {
 
   const { data } = useSuspenseQuery({
     queryKey: QUERY_KEY.post(postId),
-    queryFn: () => fetchReport(postId),
+    queryFn: () => readReport(postId),
     staleTime: 1000 * 60 * 5,
   });
 
@@ -69,8 +73,24 @@ function ReportDetailLoader() {
 }
 
 function ErrorFallback({ error, resetErrorBoundary }) {
-  if (error?.response.status === 404) {
-    return <NotFoundPage />;
+  const navigate = useNavigate();
+
+  const status = error.response?.status;
+
+  if (status === 404) {
+    throw error;
+  }
+
+  switch (status) {
+    case 403:
+      return (
+        <NoticeModal
+          modalText={NOTICE_MODAL_TEXT.NOT_POST_AUTHOR}
+          onConfirm={() => navigate(-1)}
+        />
+      );
+    default:
+      return <ServerErrorFallback reset={resetErrorBoundary} />;
   }
 }
 
