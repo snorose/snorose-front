@@ -21,8 +21,6 @@ import { CommentInputContainer } from '@/feature/comment/component';
 import { deleteInquiry, readInquiry } from '@/feature/support/api';
 import { INQUIRY_STATUS_MAP } from '@/feature/support/constant';
 
-import { NotFoundPage } from '@/page/etc';
-
 export default function InquiryDetailPage() {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
