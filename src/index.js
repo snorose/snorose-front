@@ -36,8 +36,6 @@ Sentry.init({
 
 growthbook.init({ streaming: true });
 
-const router = createBrowserRouter(routeList);
-
 async function enableMocking() {
   if (process.env.NODE_ENV !== 'development') return;
 
@@ -47,6 +45,8 @@ async function enableMocking() {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 enableMocking().then(() => {
+  const router = createBrowserRouter(routeList);
+
   root.render(
     <React.StrictMode>
       <GrowthBookProvider growthbook={growthbook}>

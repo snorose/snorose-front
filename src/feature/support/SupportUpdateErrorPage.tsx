@@ -7,7 +7,7 @@ import {
 import { NoticeModal } from '@/shared/component';
 import { NOTICE_MODAL_TEXT } from '@/shared/constant';
 
-export default function InquiryUpdateErrorPage() {
+export default function SupportUpdateErrorPage() {
   const error = useRouteError();
   const navigate = useNavigate();
 
