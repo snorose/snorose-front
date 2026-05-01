@@ -24,7 +24,6 @@
   cursor: pointer;
 }
 
-
 .titleWrapper {
   padding: 0 var(--default-margin) 2.1rem;
 }
@@ -32,13 +31,17 @@
 .title {
   font: var(--text-title-1-bold);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.4rem;
 }
 
 .required {
-  color: var(--pink-3);
-  font-size: var(--text-title-1-bold);
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background-color: var(--pink-3);
+  flex-shrink: 0;
+  margin-top: 0.3rem;
 }
 
 .contentWrapper {
@@ -65,15 +68,7 @@
   margin-bottom: 2.4rem;
 }
 
-.content h2 {
-  font: var(--text-body-1-bold);
-  margin-bottom: 0.8rem;
-  border-bottom: 0.1rem solid var(--grey-4);
-  padding-bottom: 0.4rem;
-}
-
 .content p {
-  font: var(--text-body-2-reg);
   white-space: pre-wrap;
 }
 
@@ -93,7 +88,9 @@
   padding: 2rem var(--default-margin);
   background: var(--white);
   flex-shrink: 0;
-  box-shadow: 0 -0.4rem 1rem rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 
 /* 스크롤바 스타일링 */
