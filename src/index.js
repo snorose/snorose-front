@@ -18,8 +18,6 @@ import { routeList } from '@/router.js';
 
 import '@/index.css';
 
-const router = createBrowserRouter(routeList);
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -40,6 +38,8 @@ async function enableMocking() {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 enableMocking().then(() => {
+  const router = createBrowserRouter(routeList);
+
   root.render(
     <React.StrictMode>
       <GrowthBookProvider growthbook={growthbook}>
