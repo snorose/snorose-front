@@ -13,9 +13,10 @@ export default function PostModalRenderer({
   handleShare,
 }) {
   const { pathname } = useLocation();
-  const currentBoardId = pathname.startsWith('/inquiry')
-    ? 13
-    : getBoard(pathname.split('/')[2]).id;
+  const currentBoardId =
+    pathname.startsWith('/inquiry') || pathname.startsWith('/report')
+      ? 13
+      : getBoard(pathname.split('/')[2]).id;
 
   const optionList =
     currentBoardId === 13
