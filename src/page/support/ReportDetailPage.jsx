@@ -2,7 +2,7 @@ import { Suspense, useContext } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 
 import {
   BackAppBar,
@@ -13,12 +13,12 @@ import {
 } from '@/shared/component';
 import { NOTICE_MODAL_TEXT, QUERY_KEY } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
+import { useToast } from '@/shared/hook';
 
 import { MeatBallIcon, PostActionBar } from '@/feature/board/component';
-import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { PostDetailView } from '@/feature/board/ui';
 import { CommentInputContainer } from '@/feature/comment/component';
-import { readReport } from '@/feature/support/api';
+import { deleteReport, readReport } from '@/feature/support/api';
 import { REPORT_STATUS_MAP } from '@/feature/support/constant';
 
 export default function ReportDetailPage() {
@@ -32,8 +32,11 @@ export default function ReportDetailPage() {
 }
 
 function ReportDetailLoader() {
+  const navigate = useNavigate();
   const { postId } = useParams();
   const { setModal } = useContext(ModalContext);
+
+  const { toast } = useToast();
 
   const { data } = useSuspenseQuery({
     queryKey: QUERY_KEY.post(postId),
@@ -41,7 +44,15 @@ function ReportDetailLoader() {
     staleTime: 1000 * 60 * 5,
   });
 
-  const { handleDelete } = useDeletePostHandler();
+  const { mutate: deleteReportMutate } = useMutation({
+    mutationFn: deleteReport,
+    onSuccess: () => {
+      navigate(-1);
+    },
+    onError: (error) => {
+      toast({ message: error.message, variant: 'error' });
+    },
+  });
 
   const onMenuOpen = () => {
     const id = data.isWriter ? 'my-post-more-options' : 'post-more-options';
@@ -55,7 +66,7 @@ function ReportDetailLoader() {
   return (
     <PostDetailView
       data={data}
-      deletePost={handleDelete}
+      deletePost={deleteReportMutate}
       PostActionBar={
         <PostActionBar>
           <PostActionBar.Comment {...data} />

@@ -136,3 +136,26 @@ export const updateReport = async ({
     }
   }
 };
+
+export const deleteReport = async (postId: string) => {
+  try {
+    const response = await authAxios.delete(`/v1/reports/report/${postId}`);
+
+    return response.data.result;
+  } catch (error) {
+    const response = error?.response;
+
+    if (!response) {
+      throw new Error('네트워크 통신 중 오류가 발생했어요');
+    }
+
+    switch (response.data.code) {
+      case 6101:
+        throw new Error('존재하지 않는 게시글이에요');
+      case 6102:
+        throw new Error('답변 완료된 글은 삭제할 수 없어요');
+      default:
+        throw new Error('잠시 후 다시 시도해주세요.');
+    }
+  }
+};
