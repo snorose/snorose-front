@@ -33,7 +33,7 @@ export type ReportDTO = {
   userDisplay: string;
   title: string;
   content: string;
-  reportType: 'POST' | 'COMMNET' | 'EXAM' | 'USER';
+  reportType: 'POST' | 'COMMENT' | 'EXAM' | 'USER';
   reportCategory: string;
   status: 'PENDING' | 'COMPLETED';
   commentCount: number;
