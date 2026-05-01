@@ -94,20 +94,14 @@ export const updateReport = async ({
       title,
       content,
       reportCategory,
-      finalAttachments: [
-        ...oldAttachments.map(({ id, fileName, fileComment, type }) => ({
+      finalAttachments: [...oldAttachments, ...newAttachments].map(
+        ({ id, fileName, fileComment, type }) => ({
           id,
           fileName,
           fileComment,
           type,
-        })),
-        ...newAttachments.map(({ id, fileName, fileComment, type }) => ({
-          id,
-          fileName,
-          fileComment,
-          type,
-        })),
-      ],
+        })
+      ),
       deleteAttachments,
     });
 
