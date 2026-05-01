@@ -1,8 +1,7 @@
 import { json, LoaderFunctionArgs } from 'react-router-dom';
 
-import { readInquiry } from '@/feature/support/api';
+import { readInquiry, readReport } from '@/feature/support/api';
 import { REPORT_PARAMS_SCHEMA, ReportType } from '@/feature/support/data';
-import type { ReportDTO } from '@/feature/support/types';
 
 export function validateReportWriteLoader({ params }: LoaderFunctionArgs) {
   const { reportType } = params;
@@ -22,8 +21,16 @@ export const inquiryEditLoader = async ({ params }: LoaderFunctionArgs) => {
   try {
     const post = await readInquiry(postId);
 
+    if (post.status === 'COMPLETED') {
+      throw json({ code: 6102 }, { status: 403 });
+    }
+
     return post;
   } catch (error) {
+    if (error instanceof Response) {
+      throw error;
+    }
+
     const status = error.response?.status;
     const code = error.response?.data?.code;
 
@@ -38,35 +45,32 @@ export const inquiryEditLoader = async ({ params }: LoaderFunctionArgs) => {
   }
 };
 
-/**
- * TODO:
- * - 존재하지 않는 reportId로 접근 시 404 처리
- * - 권한이 없는 reportId로 접근 시 403 처리
- * - 처리 완료 후에는 접근 불가
- */
-
 export const reportEditLoader = async ({ params }: LoaderFunctionArgs) => {
-  const { reportId } = params;
+  const { postId } = params;
 
-  // const result = await fetch(`/v1/report/${reportId}`);
+  try {
+    const post = await readReport(postId);
 
-  const post: ReportDTO = {
-    reportId: 15,
-    userRoleId: 4,
-    isWriter: true,
-    userId: '629j3YCdF2F+NPCBzMf0Rg==',
-    userDisplay: '눈송',
-    title: '댓글 신고',
-    content: '댓글 신고 내용~~~~~',
-    reportType: 'COMMENT_REPORT',
-    category: 'COMMENT_PERSONAL_DATA_LEAK',
-    status: 'PENDING',
-    commentCount: 0,
-    createdAt: '2026-02-16T22:47:09.234619',
-    isEdited: false,
-    isWriterWithdrawn: false,
-    attachments: [],
-  };
+    if (post.status === 'COMPLETED') {
+      throw json({ code: 6102 }, { status: 403 });
+    }
 
-  return post;
+    return post;
+  } catch (error) {
+    if (error instanceof Response) {
+      throw error;
+    }
+
+    const status = error.response?.status;
+    const code = error.response?.data?.code;
+
+    switch (status) {
+      case 403:
+        throw json({ code }, { status: 403 });
+      case 404:
+        throw new Response('Not Found', { status: 404 });
+      default:
+        throw new Response('Internal Server Error', { status: 500 });
+    }
+  }
 };

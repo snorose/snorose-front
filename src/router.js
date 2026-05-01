@@ -3,12 +3,12 @@ import { attendanceLoader } from '@/shared/loader';
 import { AppLayout, NavbarLayout } from '@/shared/ui';
 
 import { CheckExamPeriodRoute } from '@/feature/exam/lib';
-import InquiryUpdateErrorPage from '@/feature/support/InquiryUpdateErrorPage';
 import {
   inquiryEditLoader,
   reportEditLoader,
   validateReportWriteLoader,
 } from '@/feature/support/loader';
+import SupportUpdateErrorPage from '@/feature/support/SupportUpdateErrorPage';
 
 import {
   FindIdPage,
@@ -498,7 +498,7 @@ export const routeList = [
             path: ':postId/edit',
             errorElement: (
               <AppLayout>
-                <InquiryUpdateErrorPage />
+                <SupportUpdateErrorPage />
               </AppLayout>
             ),
             element: (
@@ -533,6 +533,11 @@ export const routeList = [
           },
           {
             path: ':postId/edit',
+            errorElement: (
+              <AppLayout>
+                <SupportUpdateErrorPage />
+              </AppLayout>
+            ),
             element: (
               <ProtectedRoute>
                 <EditReportPage />
