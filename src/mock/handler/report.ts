@@ -173,7 +173,7 @@ export const reportHandlers = [
     // return HttpResponse.error();
   }),
 
-  http.delete('*/v1/reports/report/:reoprtId', async () => {
+  http.delete('*/v1/reports/report/:reportId', async () => {
     // 성공
     return HttpResponse.json({
       isSuccess: true,
