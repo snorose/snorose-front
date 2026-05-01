@@ -21,13 +21,22 @@ import { FontSize } from '../extensions/font-size-extension';
 import LinkBubbleMenu from '../LinkBubbleMenu/LinkBubbleMenu';
 import styles from './EditorContainer.module.css';
 
-const isImageUrl = (url) => {
+const isImageUrl = async (url) => {
   if (!url) return false;
 
-  const hasImageExtension = /\.(jpeg|jpg|gif|png|bmp|webp|svg)(\?.*)?$/i.test(url);
-  const trustedDomains = ['imgur.com', 'flickr.com', 'postimages.org', 'picsum.photos'];
-  const isTrustedHost = trustedDomains.some((domain) => url.startsWith(domain));
-  return hasImageExtension || isTrustedHost;
+  if (/\.(jpeg|jpg|gif|png|bmp|webp|svg)(\?.*)?$/i.test(url)) return true;
+
+  const trustedDomains = ['imgur.com', 'flickr.com', 'postimages.org', 
+                          'picsum.photos', 'gstatic.com', 'googleusercontent.com'];
+  if (trustedDomains.some((domain) => url.includes(domain))) return true;
+
+  // 3. img 태그로 실제 로드 시도
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = url;
+  });
 };
 
 export default function EditorContainer({
