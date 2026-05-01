@@ -7,7 +7,6 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   BackAppBar,
   Chip,
-  ConfirmModal,
   FetchLoading,
   NoticeModal,
   ServerErrorFallback,
@@ -21,8 +20,6 @@ import { PostDetailView } from '@/feature/board/ui';
 import { CommentInputContainer } from '@/feature/comment/component';
 import { readReport } from '@/feature/support/api';
 import { REPORT_STATUS_MAP } from '@/feature/support/constant';
-
-import { NotFoundPage } from '@/page/etc';
 
 export default function ReportDetailPage() {
   return (
@@ -84,7 +81,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
     throw error;
   }
 
-  switch (error.response.status) {
+  switch (status) {
     case 403:
       return (
         <NoticeModal

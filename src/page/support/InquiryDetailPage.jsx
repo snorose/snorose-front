@@ -94,7 +94,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
     throw error;
   }
 
-  switch (error.response?.status) {
+  switch (status) {
     case 403:
       return (
         <NoticeModal
