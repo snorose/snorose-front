@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, Icon } from '@/shared/component';
+
+import { NewButton, Icon } from '@/shared/component';
+
 import styles from './TermModal.module.css';
 
-export default function TermModal({ title, onAgree, onClose, children }) {
+export default function TermModal({ title, required = false, onAgree, onSkip, onClose, children }) {
   const [hasScrolledToEnd, setHasScrolledToEnd] = useState(false);
   const contentRef = useRef(null);
 
@@ -39,7 +41,10 @@ export default function TermModal({ title, onAgree, onClose, children }) {
       </div>
 
       <div className={styles.titleWrapper}>
-        <h1 className={styles.title}>{title}</h1>
+        <h1 className={styles.title}>
+          {title}
+          {required && <span className={styles.required} />}
+        </h1>
       </div>
 
       <section className={styles.contentWrapper}>
@@ -53,12 +58,20 @@ export default function TermModal({ title, onAgree, onClose, children }) {
       </section>
 
       <div className={styles.footer}>
-        <Button
-          btnName='동의하고 계속하기'
-          className={hasScrolledToEnd ? 'right' : 'ready'}
+        {onSkip && (
+          <NewButton
+            variant='outlined'
+            onClick={onSkip}
+          >
+            다음에
+          </NewButton>
+        )}
+        <NewButton
           disabled={!hasScrolledToEnd}
           onClick={onAgree}
-        />
+        >
+          동의하고 계속하기
+        </NewButton>
       </div>
     </div>
   );
