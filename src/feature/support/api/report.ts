@@ -36,12 +36,12 @@ export const createReport = async ({
 
     const { reportId, attachmentUrlList } = response.data.result;
 
-    if (attachmentUrlList.length > 0) {
-      await putFileInBucket(
-        attachmentUrlList,
-        attachments.map(({ file }) => file)
-      );
-    }
+    // if (attachmentUrlList.length > 0) {
+    //   await putFileInBucket(
+    //     attachmentUrlList,
+    //     attachments.map(({ file }) => file)
+    //   );
+    // }
 
     return { postId: reportId };
   } catch (error) {
@@ -64,27 +64,8 @@ export const createReport = async ({
   }
 };
 
-export const fetchReport = async (reportId) => {
-  // const response = await authAxios.get(`/v1/report/${reportId}`);
+export const readReport = async (postId: string) => {
+  const response = await authAxios.get(`/v1/reports/report/${postId}`);
 
-  // return response?.data.result;
-
-  return {
-    postId: 15,
-    userRoleId: 2,
-    isWriter: true,
-    userId: '629j3YCdF2F+NPCBzMf0Rg==',
-    userDisplay: '눈송',
-    title: '악의적인 댓글 신고',
-    content: '신고 내용',
-    reportType: 'COMMENT',
-    category: 'COMMENT_INSULT_OR_DEFAMATION',
-    status: 'PENDING',
-    commentCount: 0,
-    createdAt: '2025-08-30T22:47:09.234619',
-    updatedAt: null,
-    isEdited: true,
-    isWriterWithdrawn: false,
-    attachments: [],
-  };
+  return response.data.result;
 };

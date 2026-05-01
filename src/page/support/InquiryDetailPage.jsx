@@ -11,7 +11,7 @@ import {
   NoticeModal,
   ServerErrorFallback,
 } from '@/shared/component';
-import { QUERY_KEY } from '@/shared/constant';
+import { NOTICE_MODAL_TEXT, QUERY_KEY } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useToast } from '@/shared/hook';
 
@@ -88,24 +88,20 @@ function InquiryDetailLoader() {
 function ErrorFallback({ error, resetErrorBoundary }) {
   const navigate = useNavigate();
 
-  if (error.response?.status >= 500) {
-    return <ServerErrorFallback reset={resetErrorBoundary} />;
+  const status = error.response?.status;
+
+  if (status === 404) {
+    throw error;
   }
 
   switch (error.response?.status) {
     case 403:
       return (
         <NoticeModal
-          modalText={{
-            title: '권한 없음',
-            description: '내가 작성한 글이 아니에요',
-            confirmText: '돌아가기',
-          }}
-          onConfirm={() => navigate('/', { replace: true })}
+          modalText={NOTICE_MODAL_TEXT.NOT_POST_AUTHOR}
+          onConfirm={() => navigate(-1)}
         />
       );
-    case 404:
-      return <NotFoundPage />;
     default:
       return <ServerErrorFallback reset={resetErrorBoundary} />;
   }
