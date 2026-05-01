@@ -5,6 +5,7 @@ export default function MarketingTermModal({ onAgree, onClose }) {
     <TermModal
       title="광고성 알림 수신 동의"
       onAgree={onAgree}
+      onSkip={onClose}
       onClose={onClose}
     >
       <section>

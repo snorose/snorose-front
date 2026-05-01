@@ -5,6 +5,7 @@ export default function NotiTermModal({ onAgree, onClose }) {
     <TermModal
       title="알림 수신 동의"
       onAgree={onAgree}
+      onSkip={onClose}
       onClose={onClose}
     >
       <section>
