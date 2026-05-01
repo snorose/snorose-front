@@ -229,7 +229,7 @@ const NOTICE_MODAL = {
   },
   NOT_POST_AUTHOR: {
     title: '접근 권한이 없어요',
-    description: '작성자 본인만 수정할 수 있어요',
+    description: '내가 작성한 글이 아니에요',
     confirmText: '돌아가기',
   },
   MAEKETING_NOTICE_MODAL: {
