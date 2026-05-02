@@ -1,27 +1,25 @@
 import { Link } from 'react-router-dom';
 
-import { useSuspensePagination } from '@/shared/hook';
 import { FetchLoading } from '@/shared/component';
+import { STALE_TIME } from '@/shared/constant';
+import { useSuspensePagination } from '@/shared/hook';
 import {
-  getBoardTextId,
   deduplicatePaginatedData,
   flatPaginationCache,
+  getBoardTextId,
 } from '@/shared/lib';
-import { STALE_TIME } from '@/shared/constant';
 
+import { PostBar } from '@/feature/board/component';
 import { ACTIVITIES } from '@/feature/my/constant';
 import { INQUIRY_STATUS_MAP } from '@/feature/support/constant';
-import { PostBar } from '@/feature/board/component';
 
 import {
+  noCommentsIllustration,
   noPostsIllustration,
   noScrapedPostsIllustration,
-  noCommentsIllustration,
 } from '@/assets/illustrations';
 
 import styles from './MyPostList.module.css';
-
-const INQUIRY_AND_REPORT_BOARD_ID = 13;
 
 export default function MyPostList({
   queryKey,
@@ -67,7 +65,7 @@ export default function MyPostList({
   }
 
   const makePath = ({ boardId, postId, isNotice, group }) => {
-    if (boardId === INQUIRY_AND_REPORT_BOARD_ID) {
+    if (group) {
       return `/${group.toLowerCase()}/${postId}`;
     }
 
