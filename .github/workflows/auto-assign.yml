@@ -1,0 +1,87 @@
+name: 'Auto Assign and Set Issue Type'
+
+on:
+  issues:
+    types: [opened, reopened]
+  pull_request:
+    types: [opened, reopened]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  automation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto Assign and Set Issue Type
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.ISSUE_AUTOMIZATION || github.token }}
+          script: |
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.issue ? context.payload.issue.number : context.payload.pull_request.number;
+            const author = context.payload.issue ? context.payload.issue.user.login : context.payload.pull_request.user.login;
+            const title = (context.payload.issue ? context.payload.issue.title : context.payload.pull_request.title) || '';
+            const node_id = context.payload.issue ? context.payload.issue.node_id : context.payload.pull_request.node_id;
+
+            // 1. 담당자 지정 (이슈 & PR 공통)
+            try {
+              await github.rest.issues.addAssignees({
+                owner,
+                repo,
+                issue_number,
+                assignees: [author]
+              });
+              console.log(`[Success] Assigned author: ${author}`);
+            } catch (e) {
+              console.log(`[Error] Failed to assign author: ${e.message}`);
+            }
+
+            // 2. 이슈 타입 설정 (이슈인 경우에만)
+            if (context.payload.issue) {
+              let targetTypeStr = 'Task';
+              if (title.toUpperCase().includes('[FEAT]')) targetTypeStr = 'Feature';
+              else if (title.toUpperCase().includes('[BUG]') || title.toUpperCase().includes('[FIX]')) targetTypeStr = 'Bug';
+
+              try {
+                const typeQuery = `
+                  query getIssueTypes($owner: String!, $name: String!) {
+                    repository(owner: $owner, name: $name) {
+                      issueTypes(first: 20) {
+                        nodes {
+                          id
+                          name
+                        }
+                      }
+                    }
+                  }
+                `;
+
+                const repoData = await github.graphql(typeQuery, { owner, name: repo });
+                const issueTypes = repoData.repository.issueTypes.nodes;
+                const matchedType = issueTypes.find(t => t.name.toLowerCase() === targetTypeStr.toLowerCase());
+
+                if (matchedType) {
+                  const mutation = `
+                    mutation updateIssueType($issueId: ID!, $issueTypeId: ID!) {
+                      updateIssue(input: {id: $issueId, issueTypeId: $issueTypeId}) {
+                        issue { id }
+                      }
+                    }
+                  `;
+                  await github.graphql(mutation, {
+                    issueId: node_id,
+                    issueTypeId: matchedType.id
+                  });
+                  console.log(`[Success] Issue type set to: ${matchedType.name}`);
+                } else {
+                  console.log(`[Warning] Issue type "${targetTypeStr}" not found.`);
+                  console.log(`[Debug] Available types (${issueTypes.length}): ${issueTypes.map(t => t.name).join(', ')}`);
+                }
+              } catch (e) {
+                // 에러 발생 시 상세 메시지를 출력하여 원인 파악을 돕습니다.
+                console.log(`[Warning] Issue Type automation failed: ${e.message}`);
+                if (e.errors) console.log(`[Debug] GraphQL Errors: ${JSON.stringify(e.errors)}`);
+              }
+            }
