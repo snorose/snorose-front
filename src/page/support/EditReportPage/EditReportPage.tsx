@@ -1,8 +1,8 @@
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { BOARD_ID } from '@/shared/constant';
+import { BOARD_ID, QUERY_KEY, TOAST } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 
 import { mapFileToAttachment } from '@/feature/attachment/lib';
@@ -24,14 +24,14 @@ export default function EditReportPage() {
   const { postId } = useParams();
   const navigate = useNavigate();
 
+  const queryClient = useQueryClient();
+
   const { toast } = useToast();
 
   const { mutate: submit } = useMutation({
     mutationFn: updateReport,
     onSuccess: (data) => {
       const { postId } = data;
-
-      navigate(`/report/${postId}`, { replace: true });
 
       createThumbnail(BOARD_ID.inquiryAndReport, postId) //
         .catch((error) => {
@@ -40,6 +40,12 @@ export default function EditReportPage() {
            * 에러 로그 수집 (모니터링: sentry)
            */
         });
+
+      toast({ message: TOAST.INQUIRY.update, variant: 'success' });
+
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY.post(postId) });
+
+      navigate(`/report/${postId}`, { replace: true });
     },
     onError: (error) => {
       console.log(error);

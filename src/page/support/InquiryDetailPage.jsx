@@ -2,7 +2,11 @@ import { Suspense, useContext } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 
 import {
   BackAppBar,
@@ -11,7 +15,7 @@ import {
   NoticeModal,
   ServerErrorFallback,
 } from '@/shared/component';
-import { NOTICE_MODAL_TEXT, QUERY_KEY } from '@/shared/constant';
+import { NOTICE_MODAL_TEXT, QUERY_KEY, TOAST } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useToast } from '@/shared/hook';
 
@@ -34,8 +38,10 @@ export default function InquiryDetailPage() {
 function InquiryDetailLoader() {
   const navigate = useNavigate();
   const { postId } = useParams();
-  const { setModal } = useContext(ModalContext);
 
+  const queryClient = useQueryClient();
+
+  const { setModal } = useContext(ModalContext);
   const { toast } = useToast();
 
   const { data } = useSuspenseQuery({
@@ -47,6 +53,8 @@ function InquiryDetailLoader() {
   const { mutate: deleteInquiryMutate } = useMutation({
     mutationFn: () => deleteInquiry(postId),
     onSuccess: () => {
+      toast({ message: TOAST.INQUIRY.delete, variant: 'success' });
+      queryClient.removeQueries(QUERY_KEY.post(postId));
       navigate(-1);
     },
     onError: (error) => {
