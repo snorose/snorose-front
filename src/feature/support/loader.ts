@@ -1,12 +1,12 @@
 import { json, LoaderFunctionArgs } from 'react-router-dom';
 
 import { readInquiry, readReport } from '@/feature/support/api';
-import { REPORT_PARAMS_SCHEMA, ReportType } from '@/feature/support/data';
+import { REPORT_TYPES, ReportType } from '@/feature/support/data';
 
 export function validateReportWriteLoader({ params }: LoaderFunctionArgs) {
   const { reportType } = params;
 
-  if (!(reportType in REPORT_PARAMS_SCHEMA)) {
+  if (!reportType || !REPORT_TYPES.includes(reportType as ReportType)) {
     throw new Response('Not Found', { status: 404 });
   }
 
