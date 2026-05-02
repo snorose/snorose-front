@@ -1,0 +1,19 @@
+# .github/auto_assign.yml
+# 리뷰어 할당 비활성화
+addReviewers: false
+
+# PR 작성자를 담당자로 자동 지정
+addAssignees: author
+
+# 할당할 담당자 수
+numberOfAssignees: 1
+
+# 특정 키워드가 포함된 경우 제외
+skipKeywords:
+  - wip
+
+# 이슈 생성 시 담당자 지정
+addAssigneesToIssues: author
+
+# 할당할 담당자 수
+numberOfAssigneesToIssues: 1
