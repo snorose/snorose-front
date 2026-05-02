@@ -103,7 +103,7 @@ export const updateInquiry = async ({
       deleteAttachments,
     });
 
-    const { inquiryId, attachmentUrlList } = response.data.result;
+    const { postId: inquiryId, attachmentUrlList } = response.data.result;
 
     if (attachmentUrlList.length > 0) {
       await putFileInBucket(
