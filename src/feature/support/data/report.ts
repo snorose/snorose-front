@@ -45,3 +45,10 @@ export const REPORT_OPTIONS: Record<ReportType, readonly Option[]> = {
 
 export const REPORT_TYPES = ['post', 'comment', 'exam', 'user'] as const;
 export type ReportType = (typeof REPORT_TYPES)[number];
+
+export const REPORT_TYPE_MAP = {
+  post: 'POST_REPORT',
+  comment: 'COMMENT_REPORT',
+  exam: 'EXAM_REVIEW_REPORT',
+  user: 'USER_REPORT',
+};

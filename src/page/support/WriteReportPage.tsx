@@ -11,7 +11,11 @@ import {
   REPORT_PLACEHOLDERS,
   REPORT_TYPE_TAG,
 } from '@/feature/support/constant';
-import { REPORT_OPTIONS, ReportType } from '@/feature/support/data';
+import {
+  REPORT_OPTIONS,
+  REPORT_TYPE_MAP,
+  ReportType,
+} from '@/feature/support/data';
 import { SupportFormView } from '@/feature/support/ui';
 
 import { createThumbnail } from '@/apis';
@@ -59,7 +63,7 @@ export default function WriteReportPage() {
     <SupportFormView
       submit={({ title, content, selectedOption, files }) =>
         submit({
-          reportType,
+          reportType: REPORT_TYPE_MAP[reportType],
           targetId,
           title,
           content,
