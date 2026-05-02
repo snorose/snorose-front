@@ -25,7 +25,7 @@ export const createReport = async ({
       targetId,
       title,
       content,
-      reportCategory,
+      inquiryCategory: reportCategory,
       reportType,
       attachments: attachments.map(({ fileName, fileComment, type }) => ({
         fileName,
@@ -93,7 +93,7 @@ export const updateReport = async ({
     const response = await authAxios.patch(`/v1/reports/report/${postId}`, {
       title,
       content,
-      reportCategory,
+      inquiryCategory: reportCategory,
       finalAttachments: [...oldAttachments, ...newAttachments].map(
         ({ id, fileName, fileComment, type }) => ({
           id,
