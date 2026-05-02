@@ -34,7 +34,7 @@ export const createReport = async ({
       })),
     });
 
-    const { reportId, attachmentUrlList } = response.data.result;
+    const { postId, attachmentUrlList } = response.data.result;
 
     if (attachmentUrlList.length > 0) {
       await putFileInBucket(
@@ -43,7 +43,7 @@ export const createReport = async ({
       );
     }
 
-    return { postId: reportId };
+    return { postId };
   } catch (error) {
     const response = error?.response;
 
@@ -105,7 +105,7 @@ export const updateReport = async ({
       deleteAttachments,
     });
 
-    const { reportId, attachmentUrlList } = response.data.result;
+    const { postId: reportId, attachmentUrlList } = response.data.result;
 
     if (attachmentUrlList.length > 0) {
       await putFileInBucket(
