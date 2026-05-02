@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { BOARD_ID } from '@/shared/constant';
+import { BOARD_ID, QUERY_KEY, TOAST } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 
 import { mapFileToAttachment } from '@/feature/attachment/lib';
@@ -15,14 +15,15 @@ import { createThumbnail } from '@/apis';
 
 export default function WriteInquiryPage() {
   const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
+
   const { toast } = useToast();
 
   const { mutate: submitInquiry } = useMutation({
     mutationFn: createInquiry,
     onSuccess: (data) => {
       const { postId } = data;
-
-      navigate(`/inquiry/${postId}`, { replace: true });
 
       createThumbnail(BOARD_ID.inquiryAndReport, postId) //
         .catch((error) => {
@@ -31,6 +32,14 @@ export default function WriteInquiryPage() {
            * 에러 로그 수집 (모니터링: sentry)
            */
         });
+
+      toast({ message: TOAST.INQUIRY.create, variant: 'success' });
+
+      queryClient.removeQueries({
+        queryKey: [QUERY_KEY.myInquiriesAndReports],
+      });
+
+      navigate(`/inquiry/${postId}`, { replace: true });
     },
     onError: (error) => {
       toast({ message: error.message, variant: 'error' });
