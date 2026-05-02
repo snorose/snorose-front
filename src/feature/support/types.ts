@@ -34,7 +34,7 @@ export type ReportDTO = {
   title: string;
   content: string;
   reportType: 'POST' | 'COMMENT' | 'EXAM' | 'USER';
-  reportCategory: string;
+  inquiryCategory: string;
   status: 'PENDING' | 'COMPLETED';
   commentCount: number;
   createdAt: string;
