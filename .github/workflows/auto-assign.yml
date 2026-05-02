@@ -6,6 +6,10 @@ on:
   pull_request:
     types: [opened, reopened]
 
+permissions:
+  issues: write
+  pull-requests: write
+
 jobs:
   automation:
     runs-on: ubuntu-latest
@@ -13,7 +17,7 @@ jobs:
       - name: Auto Assign and Set Issue Type
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.ISSUE_AUTOMIZATION }}
+          github-token: ${{ secrets.ISSUE_AUTOMIZATION || github.token }}
           script: |
             const { owner, repo } = context.repo;
             const issue_number = context.payload.issue ? context.payload.issue.number : context.payload.pull_request.number;
@@ -44,7 +48,7 @@ jobs:
                 const typeQuery = `
                   query getIssueTypes($owner: String!, $name: String!) {
                     repository(owner: $owner, name: $name) {
-                      issueTypes(first: 10) {
+                      issueTypes(first: 20) {
                         nodes {
                           id
                           name
@@ -71,8 +75,13 @@ jobs:
                     issueTypeId: matchedType.id
                   });
                   console.log(`[Success] Issue type set to: ${matchedType.name}`);
+                } else {
+                  console.log(`[Warning] Issue type "${targetTypeStr}" not found.`);
+                  console.log(`[Debug] Available types (${issueTypes.length}): ${issueTypes.map(t => t.name).join(', ')}`);
                 }
               } catch (e) {
-                console.log('[Warning] Issue Type automation failed. This might be a personal repo or feature not enabled.');
+                // 에러 발생 시 상세 메시지를 출력하여 원인 파악을 돕습니다.
+                console.log(`[Warning] Issue Type automation failed: ${e.message}`);
+                if (e.errors) console.log(`[Debug] GraphQL Errors: ${JSON.stringify(e.errors)}`);
               }
             }
