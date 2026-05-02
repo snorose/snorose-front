@@ -19,7 +19,7 @@ import { createThumbnail } from '@/apis';
 
 export default function EditReportPage() {
   const post = useLoaderData() as ReportDTO;
-  const reportType = post.reportType.toLowerCase() as ReportType;
+  const reportType = post.reportType.split('_')[0].toLowerCase() as ReportType;
 
   const { postId } = useParams();
   const navigate = useNavigate();
@@ -59,7 +59,7 @@ export default function EditReportPage() {
     <SupportFormView
       post={post}
       initialOption={REPORT_OPTIONS[reportType].find(
-        (option) => option.key === post.reportCategory
+        (option) => option.key === post.inquiryCategory
       )}
       submit={({ title, content, selectedOption, attachments, files }) => {
         const originalIds = post.attachments.map((at) => at.id);
