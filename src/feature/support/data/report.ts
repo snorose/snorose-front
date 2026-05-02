@@ -43,11 +43,5 @@ export const REPORT_OPTIONS: Record<ReportType, readonly Option[]> = {
   user,
 };
 
-export const REPORT_PARAMS_SCHEMA = {
-  post: ['postId', 'boardId'],
-  comment: ['postId', 'boardId', 'commentId'],
-  exam: ['examId'],
-  user: ['userId'],
-} as const;
-
-export type ReportType = keyof typeof REPORT_PARAMS_SCHEMA;
+export const REPORT_TYPES = ['post', 'comment', 'exam', 'user'] as const;
+export type ReportType = (typeof REPORT_TYPES)[number];
