@@ -14,10 +14,17 @@ jobs:
   automation:
     runs-on: ubuntu-latest
     steps:
+      - name: Generate Token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
+
       - name: Auto Assign and Set Issue Type
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.ISSUE_AUTOMIZATION || github.token }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             const { owner, repo } = context.repo;
             const issue_number = context.payload.issue ? context.payload.issue.number : context.payload.pull_request.number;
