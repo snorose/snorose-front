@@ -17,6 +17,7 @@ jobs:
       - name: Generate Token
         uses: actions/create-github-app-token@v1
         id: app-token
+        continue-on-error: true
         with:
           app-id: ${{ secrets.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_PRIVATE_KEY }}
@@ -24,7 +25,7 @@ jobs:
       - name: Auto Assign and Set Issue Type
         uses: actions/github-script@v6
         with:
-          github-token: ${{ steps.app-token.outputs.token }}
+          github-token: ${{ steps.app-token.outputs.token || github.token }}
           script: |
             const { owner, repo } = context.repo;
             const issue_number = context.payload.issue ? context.payload.issue.number : context.payload.pull_request.number;
