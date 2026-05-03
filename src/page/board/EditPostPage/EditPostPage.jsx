@@ -35,6 +35,7 @@ import { DateTime } from '@/shared/lib';
 import { AttachmentBar } from '@/feature/board/component';
 import { EditorContainer } from '@/feature/editor/component';
 import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
+import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
 
@@ -176,7 +177,7 @@ export default function EditPostPage() {
       boardId: currentBoard?.id,
       postId,
       title,
-      content: editor?.getHTML(),
+      content: sanitizeHtml(preserveEmptyParagraphs(editor?.getHTML() ?? '')),
       isNotice,
       attachmentsInfo,
       deleteAttachments,
