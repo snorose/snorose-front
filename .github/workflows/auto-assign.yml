@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Generate Token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@v3
         id: app-token
         continue-on-error: true
         with:
@@ -23,7 +23,7 @@ jobs:
           private-key: ${{ secrets.BOT_PRIVATE_KEY }}
 
       - name: Auto Assign and Set Issue Type
-        uses: actions/github-script@v6
+        uses: actions/github-script@v9
         with:
           github-token: ${{ steps.app-token.outputs.token || github.token }}
           script: |
