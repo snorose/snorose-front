@@ -26,6 +26,7 @@ export default function ExamReviewListPage() {
   const { data: isReviewPeriodActive } = useQuery({
     queryKey: [QUERY_KEY.reviewWritePeriodActive],
     queryFn: getReviewWritePeriodActive,
+    staleTime: STALE_TIME.reviewWritePeriodActive,
   });
 
   return (

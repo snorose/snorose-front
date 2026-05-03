@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { QUERY_KEY } from '@/shared/constant';
+import { QUERY_KEY, STALE_TIME } from '@/shared/constant';
 import { ROLE } from '@/shared/constant/role';
 import { useAuth } from '@/shared/hook';
 
@@ -16,6 +16,7 @@ export default function CheckExamPeriodRoute({ children }) {
   const { data: isReviewPeriodActive } = useQuery({
     queryKey: [QUERY_KEY.reviewWritePeriodActive],
     queryFn: getReviewWritePeriodActive,
+    staleTime: STALE_TIME.reviewWritePeriodActive,
     enabled: !!userInfo && userInfo.userRoleId !== ROLE.admin,
   });
 
