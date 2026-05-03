@@ -275,7 +275,9 @@ export default function EditPostPage() {
                 placeholder='내용'
                 onEditorReady={setEditor}
                 onChangeEditor={(editor) => {
-                  const sanitized = preserveEmptyParagraphs(editor.getHTML());
+                  const sanitized = sanitizeHtml(
+                    preserveEmptyParagraphs(editor.getHTML())
+                  );
                   setText(sanitized);
                 }}
               />

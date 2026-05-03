@@ -25,7 +25,7 @@ import styles from './EditorContainer.module.css';
 export default function EditorContainer({
   placeholder,
   text,
-  setText,
+  onChangeEditor,
   onEditorReady,
 }) {
   const [isLinkMenuOpen, setIsLinkMenuOpen] = useState(false);
@@ -66,7 +66,7 @@ export default function EditorContainer({
     ],
     immediatelyRender: false,
     onUpdate: ({ editor }) => {
-      if (setText) setText(editor);
+      if (onChangeEditor) onChangeEditor(editor);
 
       const { $from, empty } = editor.state.selection;
 

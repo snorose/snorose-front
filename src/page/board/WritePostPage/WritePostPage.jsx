@@ -395,7 +395,7 @@ export default function WritePostPage() {
               <EditorContainer
                 placeholder='내용'
                 onEditorReady={(editorInstance) => setEditor(editorInstance)}
-                setText={(editor) => {
+                onChangeEditor={(editor) => {
                   const sanitized = sanitizeHtml(
                     preserveEmptyParagraphs(editor.getHTML())
                   );
