@@ -1,0 +1,39 @@
+name: 🐞 BugFix Report
+description: 예상과 다른 동작, 오류, 예외 상황을 보고합니다.
+title: '[BUG] '
+labels: ['🐞 BugFix']
+body:
+  - type: textarea
+    id: bug_reproduction
+    attributes:
+      label: 🔎 버그 재현 방법
+      description: 1. 어디로 이동했는지 2. 어떤 작업을 수행했는지 3. 어떤 오류가 발생했는지 순서대로 작성해 주세요.
+      value: |
+        1.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: ✅ 기대 동작
+      description: 문제가 없을 경우 어떻게 동작해야 하는지 설명해주세요.
+      value: |
+        - 예상 동작: 
+
+        - 실제 동작:
+
+    validations:
+      required: true
+  - type: textarea
+    id: environment_info
+    attributes:
+      label: 🌱 환경 정보
+      description: 'OS(예: `macOS 12.0`), 브라우저(예: `Chrome`), React 버전(예: `18.x`), Node.js 버전(예: `20.18.2`)을 적어주세요.'
+      value: |
+        - OS: 
+        - 브라우저: 
+        - React 버전: 
+        - Node.js 버전:
+    validations:
+      required: false
