@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { useToast } from '@/shared/hook';
 import { ATTACHMENT_SIZE_LIMIT } from '@/shared/constant';
 import {
@@ -16,6 +17,29 @@ import {
 
 export function useAttachmentUpload({ attachmentsInfo, setAttachmentsInfo }) {
   const { toast } = useToast();
+  const attachmentBarRef = useRef();
+
+  useEffect(() => {
+    const vv = window.visualViewport;
+    const handler = () => {
+      requestAnimationFrame(() => {
+        const keyboardHeight = window.innerHeight - vv.height;
+        const offsetTop = vv.offsetTop;
+
+        attachmentBarRef.current.style.transform =
+          keyboardHeight > 0
+            ? `translateY(-${keyboardHeight - offsetTop}px)`
+            : `translateY(0px)`;
+      });
+    };
+    vv.addEventListener('resize', handler);
+    vv.addEventListener('scroll', handler);
+    return () => {
+      vv.removeEventListener('resize', handler);
+      vv.removeEventListener('scroll', handler);
+    };
+  }, [attachmentBarRef]);
+
   const changeImageUpload = (e) => {
     const newFiles = Array.from(e.target.files);
     const filteredFileArray = combineFilters(
@@ -97,6 +121,7 @@ export function useAttachmentUpload({ attachmentsInfo, setAttachmentsInfo }) {
   };
 
   return {
+    attachmentBarRef,
     changeImageUpload,
     changeVideoUpload,
   };

@@ -8,14 +8,19 @@ import { FixedMenuEditor } from '@/feature/editor/component';
 
 import styles from './AttachmentBar.module.css';
 
-export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo, editor }) {
+export default function AttachmentBar({
+  attachmentsInfo,
+  setAttachmentsInfo,
+  editor,
+}) {
   const img = useRef();
   const vid = useRef();
 
-  const { changeImageUpload, changeVideoUpload } = useAttachmentUpload({
-    attachmentsInfo,
-    setAttachmentsInfo,
-  });
+  const { attachmentBarRef, changeImageUpload, changeVideoUpload } =
+    useAttachmentUpload({
+      attachmentsInfo,
+      setAttachmentsInfo,
+    });
 
   //이미지*영상* 에디터 첨부 버튼의 UI 상태를 좌우함
   const [isImageIconHighlighted, setIsImageIconHighlighted] = useState(false);
@@ -23,10 +28,8 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo, edi
   const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   return (
-    <div className={styles.bar}>
-      {isEditorOpen && editor && (
-        <FixedMenuEditor editor={editor} />
-      )}
+    <div ref={attachmentBarRef} className={styles.bar}>
+      {isEditorOpen && editor && <FixedMenuEditor editor={editor} />}
       <div className={styles.attachmentBar}>
         <Icon
           id={isImageIconHighlighted ? 'image-fill' : 'image'}
@@ -72,9 +75,8 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo, edi
           width={27}
           height={21}
           className={styles.image}
-          onClick={() => setIsEditorOpen(prev => !prev)}
+          onClick={() => setIsEditorOpen((prev) => !prev)}
         />
-        
       </div>
     </div>
   );
