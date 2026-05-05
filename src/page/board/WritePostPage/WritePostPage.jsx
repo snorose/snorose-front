@@ -39,6 +39,7 @@ import { useGuide } from '@/feature/attachment/hook';
 import { AttachmentBar } from '@/feature/board/component';
 import { EditorContainer } from '@/feature/editor/component';
 import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
+import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
 
 import attachmentGuide1 from '@/assets/images/attachmentGuide1.png';
 import attachmentGuide2 from '@/assets/images/attachmentGuide2.png';
@@ -394,8 +395,10 @@ export default function WritePostPage() {
               <EditorContainer
                 placeholder='내용'
                 onEditorReady={(editorInstance) => setEditor(editorInstance)}
-                setText={(editor) => {
-                  const sanitized = preserveEmptyParagraphs(editor.getHTML());
+                onChangeEditor={(editor) => {
+                  const sanitized = sanitizeHtml(
+                    preserveEmptyParagraphs(editor.getHTML())
+                  );
                   setText(sanitized);
                 }}
               />

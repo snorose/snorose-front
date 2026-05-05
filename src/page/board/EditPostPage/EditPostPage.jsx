@@ -35,6 +35,7 @@ import { DateTime } from '@/shared/lib';
 import { AttachmentBar } from '@/feature/board/component';
 import { EditorContainer } from '@/feature/editor/component';
 import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
+import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
 
@@ -176,7 +177,7 @@ export default function EditPostPage() {
       boardId: currentBoard?.id,
       postId,
       title,
-      content: editor?.getHTML(),
+      content: sanitizeHtml(preserveEmptyParagraphs(editor?.getHTML() ?? '')),
       isNotice,
       attachmentsInfo,
       deleteAttachments,
@@ -274,7 +275,9 @@ export default function EditPostPage() {
                 placeholder='내용'
                 onEditorReady={setEditor}
                 onChangeEditor={(editor) => {
-                  const sanitized = preserveEmptyParagraphs(editor.getHTML());
+                  const sanitized = sanitizeHtml(
+                    preserveEmptyParagraphs(editor.getHTML())
+                  );
                   setText(sanitized);
                 }}
               />

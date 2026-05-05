@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import Image from '@tiptap/extension-image';
+import TipTapImage from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
 import TextAlign from '@tiptap/extension-text-align';
@@ -16,33 +16,16 @@ import StarterKit from '@tiptap/starter-kit';
 import { EnterKeyHandler } from '@/feature/editor/component/extensions/enterkey-handler-extension';
 import { Iframe } from '@/feature/editor/component/extensions/iframe-extension';
 
-import { formatEmbedUrl } from '../../utils/format-embed-url';
+import { isAllowedEmbedUrl } from '../../lib/sanitize';
+import { formatEmbedUrl, isImageUrl } from '../../utils';
 import { FontSize } from '../extensions/font-size-extension';
 import LinkBubbleMenu from '../LinkBubbleMenu/LinkBubbleMenu';
 import styles from './EditorContainer.module.css';
 
-const isImageUrl = async (url) => {
-  if (!url) return false;
-
-  if (/\.(jpeg|jpg|gif|png|bmp|webp|svg)(\?.*)?$/i.test(url)) return true;
-
-  const trustedDomains = ['imgur.com', 'flickr.com', 'postimages.org', 
-                          'picsum.photos', 'gstatic.com', 'googleusercontent.com'];
-  if (trustedDomains.some((domain) => url.includes(domain))) return true;
-
-  // 3. img 태그로 실제 로드 시도
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => resolve(true);
-    img.onerror = () => resolve(false);
-    img.src = url;
-  });
-};
-
 export default function EditorContainer({
   placeholder,
   text,
-  setText,
+  onChangeEditor,
   onEditorReady,
 }) {
   const [isLinkMenuOpen, setIsLinkMenuOpen] = useState(false);
@@ -70,7 +53,7 @@ export default function EditorContainer({
         alignments: ['left', 'center', 'right'],
       }),
       Iframe,
-      Image,
+      TipTapImage,
       TextStyle,
       Color,
       BackgroundColor,
@@ -83,7 +66,7 @@ export default function EditorContainer({
     ],
     immediatelyRender: false,
     onUpdate: ({ editor }) => {
-      if (setText) setText(editor);
+      if (onChangeEditor) onChangeEditor(editor);
 
       const { $from, empty } = editor.state.selection;
 
@@ -114,16 +97,22 @@ export default function EditorContainer({
 
           if (isImageUrl(url)) {
             setTimeout(() => {
-                editor
-                  .chain()
-                  .focus()
-                  .extendMarkRange('link')
-                  .deleteSelection()
-                  .setImage({ src: url })
-                  .run();
-              }, 0);
-              return;
+              editor
+                .chain()
+                .focus()
+                .extendMarkRange('link')
+                .deleteSelection()
+                .setImage({ src: url })
+                .run();
+            }, 0);
+            return;
           }
+
+          if (!isAllowedEmbedUrl(formatEmbedUrl(url))) {
+            if (isLinkMenuOpen) setIsLinkMenuOpen(false);
+            return;
+          }
+
           // 화면상의 절대 좌표(픽셀)를 계산하여 팝업 띄울 위치 결정
           const coords = editor.view.coordsAtPos(checkPos);
 
@@ -164,7 +153,7 @@ export default function EditorContainer({
 
   const handleConvertIframe = () => {
     const url = linkMenuData.url;
-    let formattedUrl = formatEmbedUrl(url);
+    const formattedUrl = formatEmbedUrl(url);
 
     editor
       .chain()
