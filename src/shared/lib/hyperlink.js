@@ -40,3 +40,11 @@ export const renderTextWithLinks = (text) => {
     </>
   );
 };
+
+export const convertLinks = (html) => {
+  return html.replace(
+    /(https?:\/\/[^\s<]+)/g,
+    (url) =>
+      `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`,
+  );
+};

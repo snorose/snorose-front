@@ -46,6 +46,7 @@ export default function EditorContainer({
       Link.configure({
         openOnClick: false,
         autolink: true,
+        defaultProtocol: 'https',
       }),
       EnterKeyHandler,
       TextAlign.configure({
