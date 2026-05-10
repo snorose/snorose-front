@@ -3,7 +3,10 @@ import { React, useRef, useState } from 'react';
 import { Icon } from '@/shared/component';
 import { ATTACHMENT_EXTENSION_LIMIT } from '@/shared/constant';
 
-import { useAttachmentUpload } from '@/feature/attachment/hook';
+import {
+  useAttachmentBarPosition,
+  useAttachmentUpload,
+} from '@/feature/attachment/hook';
 import { FixedMenuEditor } from '@/feature/editor/component';
 
 import styles from './AttachmentBar.module.css';
@@ -16,11 +19,11 @@ export default function AttachmentBar({
   const img = useRef();
   const vid = useRef();
 
-  const { attachmentBarRef, changeImageUpload, changeVideoUpload } =
-    useAttachmentUpload({
-      attachmentsInfo,
-      setAttachmentsInfo,
-    });
+  const attachmentBarRef = useAttachmentBarPosition();
+  const { changeImageUpload, changeVideoUpload } = useAttachmentUpload({
+    attachmentsInfo,
+    setAttachmentsInfo,
+  });
 
   //이미지*영상* 에디터 첨부 버튼의 UI 상태를 좌우함
   const [isImageIconHighlighted, setIsImageIconHighlighted] = useState(false);
