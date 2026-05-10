@@ -1,21 +1,22 @@
 import { useToast } from '@/shared/hook';
-import { ATTACHMENT_SIZE_LIMIT } from '@/shared/constant';
+
 import {
+  checkIfFilesContainUnusableChar,
+  checkIfImage,
+  checkIfVideo,
+  checkImageQuantity,
+  checkImageSize,
+  checkVideoQuantity,
+  checkVideoSize,
   combineFilters,
   filterOversizedImage,
   filterOversizedVideo,
   filterUnusableCharNamedAtts,
-  checkIfImage,
-  checkImageQuantity,
-  checkImageSize,
-  checkIfVideo,
-  checkVideoQuantity,
-  checkVideoSize,
-  checkIfFilesContainUnusableChar,
 } from '@/feature/attachment/lib';
 
 export function useAttachmentUpload({ attachmentsInfo, setAttachmentsInfo }) {
   const { toast } = useToast();
+
   const changeImageUpload = (e) => {
     const newFiles = Array.from(e.target.files);
     const filteredFileArray = combineFilters(

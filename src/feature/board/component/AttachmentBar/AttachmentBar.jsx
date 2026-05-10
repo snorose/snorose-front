@@ -3,15 +3,23 @@ import { React, useRef, useState } from 'react';
 import { Icon } from '@/shared/component';
 import { ATTACHMENT_EXTENSION_LIMIT } from '@/shared/constant';
 
-import { useAttachmentUpload } from '@/feature/attachment/hook';
+import {
+  useAttachmentBarPosition,
+  useAttachmentUpload,
+} from '@/feature/attachment/hook';
 import { FixedMenuEditor } from '@/feature/editor/component';
 
 import styles from './AttachmentBar.module.css';
 
-export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo, editor }) {
+export default function AttachmentBar({
+  attachmentsInfo,
+  setAttachmentsInfo,
+  editor,
+}) {
   const img = useRef();
   const vid = useRef();
 
+  const attachmentBarRef = useAttachmentBarPosition();
   const { changeImageUpload, changeVideoUpload } = useAttachmentUpload({
     attachmentsInfo,
     setAttachmentsInfo,
@@ -23,10 +31,8 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo, edi
   const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   return (
-    <div className={styles.bar}>
-      {isEditorOpen && editor && (
-        <FixedMenuEditor editor={editor} />
-      )}
+    <div ref={attachmentBarRef} className={styles.bar}>
+      {isEditorOpen && editor && <FixedMenuEditor editor={editor} />}
       <div className={styles.attachmentBar}>
         <Icon
           id={isImageIconHighlighted ? 'image-fill' : 'image'}
@@ -72,9 +78,8 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo, edi
           width={27}
           height={21}
           className={styles.image}
-          onClick={() => setIsEditorOpen(prev => !prev)}
+          onClick={() => setIsEditorOpen((prev) => !prev)}
         />
-        
       </div>
     </div>
   );
