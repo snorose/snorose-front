@@ -74,7 +74,7 @@ export default function PostDetailView({
         <div
           className={editorStyles.editor}
           dangerouslySetInnerHTML={{
-            __html: sanitizeHtml(convertLinks(preserveEmptyParagraphs(data.content))),
+            __html: sanitizeHtml(preserveEmptyParagraphs(data.content)),
           }}
         />
 
