@@ -42,9 +42,29 @@ export const renderTextWithLinks = (text) => {
 };
 
 export const convertLinks = (html) => {
-  return html.replace(
-    /(https?:\/\/[^\s<]+)/g,
-    (url) =>
-      `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`,
-  );
+  // DOM 파서로 HTML 구조를 유지하면서 텍스트 노드만 변환
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+
+  const walkTextNodes = (node) => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const urlRegex = /(https?:\/\/[^\s<]+)/g;
+      if (urlRegex.test(node.textContent)) {
+        const span = document.createElement('span');
+        span.innerHTML = node.textContent.replace(
+          urlRegex,
+          (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`
+        );
+        node.parentNode.replaceChild(span, node);
+      }
+    } else if (
+      node.nodeType === Node.ELEMENT_NODE &&
+      node.tagName !== 'A' // 이미 링크인 건 건너뜀
+    ) {
+      Array.from(node.childNodes).forEach(walkTextNodes);
+    }
+  };
+
+  Array.from(doc.body.childNodes).forEach(walkTextNodes);
+  return doc.body.innerHTML;
 };
