@@ -42,24 +42,26 @@ export const renderTextWithLinks = (text) => {
 };
 
 export const convertLinks = (html) => {
+  if (typeof window === 'undefined' || !html) return html;
+
+  const urlRegex = /(https?:\/\/[^\s<]+[^.,:;?!\s<])/g;
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
 
   const walkTextNodes = (node) => {
     if (node.nodeType === Node.TEXT_NODE) {
-      const urlRegex = /(https?:\/\/[^\s<]+[^.,:;?!\s<])/g;
       const text = node.textContent;
       if (urlRegex.test(text)) {
-        const fragment = document.createDocumentFragment();
+        const fragment = doc.createDocumentFragment();
         let lastIndex = 0;
         let match;
         urlRegex.lastIndex = 0;
         while ((match = urlRegex.exec(text)) !== null) {
           if (match.index > lastIndex) {
-            fragment.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+            fragment.appendChild(doc.createTextNode(text.slice(lastIndex, match.index)));
           }
           const url = match[0];
-          const a = document.createElement('a');
+          const a = doc.createElement('a');
           a.href = url;
           a.target = '_blank';
           a.rel = 'noopener noreferrer';
@@ -68,7 +70,7 @@ export const convertLinks = (html) => {
           lastIndex = urlRegex.lastIndex;
         }
         if (lastIndex < text.length) {
-          fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+          fragment.appendChild(doc.createTextNode(text.slice(lastIndex)));
         }
         node.parentNode.replaceChild(fragment, node);
       }
