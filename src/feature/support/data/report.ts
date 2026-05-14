@@ -21,7 +21,7 @@ const exam = [
 const comment = [
   { key: 'COMMENT_INSULT_OR_DEFAMATION', label: '특정인에 대한 욕설 및 비하' },
   { key: 'COMMENT_COMMERCIAL_ADVERTISEMENT', label: '상업적 광고 및 판매글' },
-  { key: 'COMMENT_ILLEGAL_CONTENT', label: '불법촬영물 등의 유통' },
+  { key: 'COMMENT_AGITATION_OR_DISPUTE', label: '불법촬영물 등의 유통' },
   { key: 'COMMENT_PERSONAL_DATA_LEAK', label: '개인정보 유출' },
   { key: 'COMMENT_OBSCENE_OR_IMMORAL', label: '음란물/불건전한 만남 및 대화' },
   { key: 'COMMENT_LOW_QUALITY', label: '스팸/무성의한 댓글' },
