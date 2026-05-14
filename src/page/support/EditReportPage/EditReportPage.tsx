@@ -46,10 +46,10 @@ export default function EditReportPage() {
       const deletedIds = originalIds.filter((id) => !remainingIds.has(id));
 
       return updateReport({
-        postId,
+        postId: postId!,
         title,
         content,
-        reportCategory: selectedOption.key,
+        reportCategory: selectedOption!.key,
         oldAttachments: attachments,
         newAttachments: files.map(mapFileToAttachment),
         deleteAttachments: deletedIds,
