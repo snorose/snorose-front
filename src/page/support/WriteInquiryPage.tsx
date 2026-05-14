@@ -36,7 +36,7 @@ export default function WriteInquiryPage() {
       createInquiry({
         title,
         content,
-        inquiryCategory: selectedOption.key,
+        inquiryCategory: selectedOption!.key,
         target: url,
         attachments: files.map(mapFileToAttachment),
       }),
