@@ -14,11 +14,11 @@ const MAX_TOTAL_FILE_SIZE = 10 * 1024 * 1024;
 export default function FileUploadSection({
   currentFileCount,
   curruentTotalFileSize,
-  updateFiles,
+  setFiles,
 }: {
   currentFileCount: number;
   curruentTotalFileSize: number;
-  updateFiles: (file: UploadFile[]) => void;
+  setFiles: React.Dispatch<React.SetStateAction<UploadFile[]>>;
 }) {
   const id = useId();
   const { toast } = useToast();
@@ -89,9 +89,10 @@ export default function FileUploadSection({
             return;
           }
 
-          updateFiles(
-            selectedFiles.map((file) => ({ file, id: crypto.randomUUID() }))
-          );
+          setFiles((prev) => [
+            ...prev,
+            ...selectedFiles.map((file) => ({ file, id: crypto.randomUUID() })),
+          ]);
 
           e.target.value = '';
         }}
