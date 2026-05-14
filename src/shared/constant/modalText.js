@@ -175,6 +175,32 @@ const CONFIRM_MODAL = {
     cancelText: '취소',
   },
 
+  // 문의 및 신고 확인 모달
+  INQUIRY_CREATE: {
+    title: '문의글 작성을 완료할까요?',
+    description: '관리자 답변이 달리면 게시글 수정 및 삭제가 불가능해요',
+    confirmText: '완료',
+    cancelText: '취소',
+  },
+  INQUIRY_UPDATE: {
+    title: '문의글 수정을 완료할까요?',
+    description: '관리자 답변이 달리면 게시글 수정 및 삭제가 불가능해요',
+    confirmText: '완료',
+    cancelText: '취소',
+  },
+  REPORT_CREATE: {
+    title: '신고글 작성을 완료할까요?',
+    description: '관리자 답변이 달리면 게시글 수정 및 삭제가 불가능해요',
+    confirmText: '완료',
+    cancelText: '취소',
+  },
+  REPORT_UPDATE: {
+    title: '신고글 수정을 완료할까요?',
+    description: '관리자 답변이 달리면 게시글 수정 및 삭제가 불가능해요',
+    confirmText: '완료',
+    cancelText: '취소',
+  },
+
   // 유저 관련 확인 모달
   WITHDRAW_ACCOUNT: {
     title: '정말 탈퇴하시겠습니까?',

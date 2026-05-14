@@ -1,11 +1,20 @@
+import { useContext, useState } from 'react';
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { BOARD_ID, QUERY_KEY, TOAST } from '@/shared/constant';
+import { ConfirmModal } from '@/shared/component';
+import {
+  BOARD_ID,
+  CONFIRM_MODAL_TEXT,
+  QUERY_KEY,
+  TOAST,
+} from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
 import { useToast } from '@/shared/hook';
 
 import { mapFileToAttachment } from '@/feature/attachment/lib';
+import { Attachment, UploadFile } from '@/feature/attachment/types';
 import { updateReport } from '@/feature/support/api';
 import {
   REPORT_PLACEHOLDERS,
@@ -16,6 +25,7 @@ import type { ReportDTO } from '@/feature/support/types';
 import { SupportFormView } from '@/feature/support/ui';
 
 import { createThumbnail } from '@/apis';
+import { Option } from '@/types';
 
 export default function EditReportPage() {
   const post = useLoaderData() as ReportDTO;
@@ -26,10 +36,26 @@ export default function EditReportPage() {
 
   const queryClient = useQueryClient();
 
+  const { modal, setModal } = useContext(ModalContext);
   const { toast } = useToast();
 
-  const { mutate: submit } = useMutation({
-    mutationFn: updateReport,
+  const { mutate: submitReport } = useMutation({
+    mutationFn: () => {
+      const originalIds = post.attachments.map((at) => at.id);
+      const remainingIds = new Set(attachments.map((at) => at.id));
+      const deletedIds = originalIds.filter((id) => !remainingIds.has(id));
+
+      return updateReport({
+        postId,
+        title,
+        content,
+        reportCategory: selectedOption.key,
+        oldAttachments: attachments,
+        newAttachments: files.map(mapFileToAttachment),
+        deleteAttachments: deletedIds,
+      });
+    },
+
     onSuccess: (data) => {
       const { postId } = data;
 
@@ -47,39 +73,51 @@ export default function EditReportPage() {
 
       navigate(`/report/${postId}`, { replace: true });
     },
+
     onError: (error) => {
-      console.log(error);
       toast({ message: error.message, variant: 'error' });
     },
   });
 
-  const { dropdown, title, content } = REPORT_PLACEHOLDERS[reportType];
+  const [title, setTitle] = useState(post?.title ?? '');
+  const [content, setContent] = useState(post?.content ?? '');
+  const [selectedOption, setSelectedOption] = useState<Option | undefined>(
+    REPORT_OPTIONS[reportType].find(
+      (option) => option.key === post.inquiryCategory
+    )
+  );
+  const [attachments, setAttachments] = useState<Attachment[]>(
+    post?.attachments ?? []
+  );
+  const [files, setFiles] = useState<UploadFile[]>([]);
 
   return (
-    <SupportFormView
-      post={post}
-      initialOption={REPORT_OPTIONS[reportType].find(
-        (option) => option.key === post.inquiryCategory
-      )}
-      submit={({ title, content, selectedOption, attachments, files }) => {
-        const originalIds = post.attachments.map((at) => at.id);
-        const remainingIds = new Set(attachments.map((at) => at.id));
-        const deletedIds = originalIds.filter((id) => !remainingIds.has(id));
+    <>
+      <SupportFormView
+        title={title}
+        content={content}
+        selectedOption={selectedOption}
+        attachments={attachments}
+        files={files}
+        setTitle={setTitle}
+        setContent={setContent}
+        setSelectedOption={setSelectedOption}
+        setAttachments={setAttachments}
+        setFiles={setFiles}
+        options={REPORT_OPTIONS[reportType]}
+        contentLabel={'신고 내용'}
+        placeholders={REPORT_PLACEHOLDERS[reportType]}
+        tag={REPORT_TYPE_TAG[reportType]}
+        modalId='confirm-report-update'
+      />
 
-        submit({
-          postId,
-          title,
-          content,
-          reportCategory: selectedOption.key,
-          oldAttachments: attachments,
-          newAttachments: files.map(mapFileToAttachment),
-          deleteAttachments: deletedIds,
-        });
-      }}
-      options={REPORT_OPTIONS[reportType]}
-      contentLabel={'신고 내용'}
-      placeholders={{ dropdown, title, content }}
-      tag={REPORT_TYPE_TAG[reportType]}
-    />
+      {modal.id === 'confirm-report-update' && (
+        <ConfirmModal
+          modalText={CONFIRM_MODAL_TEXT.REPORT_UPDATE}
+          onConfirm={submitReport}
+          onCancel={() => setModal({ id: null })}
+        />
+      )}
+    </>
   );
 }

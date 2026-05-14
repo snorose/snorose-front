@@ -1,11 +1,20 @@
+import { useContext, useState } from 'react';
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { BOARD_ID, QUERY_KEY, TOAST } from '@/shared/constant';
+import { ConfirmModal } from '@/shared/component';
+import {
+  BOARD_ID,
+  CONFIRM_MODAL_TEXT,
+  QUERY_KEY,
+  TOAST,
+} from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
 import { useToast } from '@/shared/hook';
 
 import { mapFileToAttachment } from '@/feature/attachment/lib';
+import { Attachment, UploadFile } from '@/feature/attachment/types';
 import { updateInquiry } from '@/feature/support/api';
 import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 import { INQUIRY_OPTIONS } from '@/feature/support/data';
@@ -13,6 +22,7 @@ import type { InquiryDTO } from '@/feature/support/types';
 import { SupportFormView } from '@/feature/support/ui';
 
 import { createThumbnail } from '@/apis';
+import { Option } from '@/types';
 
 export default function EditInquiryPage() {
   const post = useLoaderData() as InquiryDTO;
@@ -22,10 +32,27 @@ export default function EditInquiryPage() {
 
   const queryClient = useQueryClient();
 
+  const { modal, setModal } = useContext(ModalContext);
   const { toast } = useToast();
 
-  const { mutate: submit } = useMutation({
-    mutationFn: updateInquiry,
+  const { mutate: submitInquiry } = useMutation({
+    mutationFn: () => {
+      const originalIds = post.attachments.map((at) => at.id);
+      const remainingIds = new Set(attachments.map((at) => at.id));
+      const deletedIds = originalIds.filter((id) => !remainingIds.has(id));
+
+      return updateInquiry({
+        postId,
+        title,
+        content,
+        targetUrl: url,
+        inquiryCategory: selectedOption.key,
+        oldAttachments: attachments,
+        newAttachments: files.map(mapFileToAttachment),
+        deleteAttachments: deletedIds,
+      });
+    },
+
     onSuccess: (data) => {
       const { postId } = data;
 
@@ -43,40 +70,52 @@ export default function EditInquiryPage() {
 
       navigate(`/inquiry/${postId}`, { replace: true });
     },
+
     onError: (error) => {
       toast({ message: error.message, variant: 'error' });
     },
   });
 
-  const { dropdown, title, content } = INQUIRY_PLACEHOLDERS;
+  const [title, setTitle] = useState(post?.title ?? '');
+  const [content, setContent] = useState(post?.content ?? '');
+  const [url, setUrl] = useState(post.link ?? '');
+  const [selectedOption, setSelectedOption] = useState<Option | undefined>(
+    INQUIRY_OPTIONS.find((option) => option.key === post.inquiryCategory)
+  );
+  const [attachments, setAttachments] = useState<Attachment[]>(
+    post?.attachments ?? []
+  );
+  const [files, setFiles] = useState<UploadFile[]>([]);
 
   return (
-    <SupportFormView
-      post={post}
-      initialOption={INQUIRY_OPTIONS.find(
-        (option) => option.key === post.inquiryCategory
-      )}
-      initialLink={post.link}
-      submit={({ selectedOption, title, url, content, attachments, files }) => {
-        const originalIds = post.attachments.map((at) => at.id);
-        const remainingIds = new Set(attachments.map((at) => at.id));
-        const deletedIds = originalIds.filter((id) => !remainingIds.has(id));
+    <>
+      <SupportFormView
+        title={title}
+        content={content}
+        url={url}
+        selectedOption={selectedOption}
+        attachments={attachments}
+        files={files}
+        setTitle={setTitle}
+        setContent={setContent}
+        setUrl={setUrl}
+        setSelectedOption={setSelectedOption}
+        setAttachments={setAttachments}
+        setFiles={setFiles}
+        options={INQUIRY_OPTIONS}
+        contentLabel={'문의 내용'}
+        placeholders={INQUIRY_PLACEHOLDERS}
+        showLinkField
+        modalId='confirm-inquiry-update'
+      />
 
-        submit({
-          postId,
-          title,
-          content,
-          targetUrl: url,
-          inquiryCategory: selectedOption.key,
-          oldAttachments: attachments,
-          newAttachments: files.map(mapFileToAttachment),
-          deleteAttachments: deletedIds,
-        });
-      }}
-      options={INQUIRY_OPTIONS}
-      contentLabel={'문의 내용'}
-      placeholders={{ dropdown, title, content }}
-      showLinkField
-    />
+      {modal.id === 'confirm-inquiry-update' && (
+        <ConfirmModal
+          modalText={CONFIRM_MODAL_TEXT.INQUIRY_UPDATE}
+          onConfirm={submitInquiry}
+          onCancel={() => setModal({ id: null })}
+        />
+      )}
+    </>
   );
 }
