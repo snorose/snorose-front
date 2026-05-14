@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 
 import {
   CloseAppBar,
@@ -8,10 +8,10 @@ import {
   TextareaFieldBlue,
   TextFieldBlue,
 } from '@/shared/component';
+import { ModalContext } from '@/shared/context/ModalContext';
 import { useAuth } from '@/shared/hook';
 
-import type { Attachment, UploadFile } from '@/feature/attachment/types';
-import type { InquiryDTO, ReportDTO } from '@/feature/support/types';
+import { Attachment, UploadFile } from '@/feature/attachment/types';
 import { FileUploadSection, SubmitButton } from '@/feature/support/ui';
 
 import { Option } from '@/types';
@@ -19,7 +19,20 @@ import { Option } from '@/types';
 import styles from './SupportFormView.module.css';
 
 type SupportFormViewProps = {
-  submit: (values: SupportAllState) => void;
+  title: string;
+  content: string;
+  selectedOption?: Option;
+  attachments: Attachment[];
+  files: UploadFile[];
+  url?: string;
+
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  setContent: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedOption: React.Dispatch<React.SetStateAction<Option | undefined>>;
+  setAttachments: React.Dispatch<React.SetStateAction<Attachment[]>>;
+  setFiles: React.Dispatch<React.SetStateAction<UploadFile[]>>;
+  setUrl?: React.Dispatch<React.SetStateAction<string>>;
+
   options: readonly Option[];
   contentLabel: string;
   placeholders: {
@@ -27,50 +40,37 @@ type SupportFormViewProps = {
     title: string;
     content: string;
   };
-  post?: InquiryDTO | ReportDTO;
-  initialOption?: Option;
-  initialLink?: string;
+
+  modalId: string;
   showLinkField?: boolean;
   tag?: string;
 };
 
-export type SupportAllState = {
-  selectedOption: Option;
-  title: string;
-  url: string;
-  content: string;
-  attachments: Attachment[];
-  files: UploadFile[];
-};
-
 export default function SupportFormView({
-  post,
-  submit,
+  title,
+  content,
+  url,
+  selectedOption,
+  attachments,
+  files,
+
+  setTitle,
+  setContent,
+  setUrl,
+  setSelectedOption,
+  setAttachments,
+  setFiles,
+
   options,
   contentLabel,
   placeholders,
-  initialOption,
-  initialLink,
+
   tag,
   showLinkField = false,
+  modalId,
 }: SupportFormViewProps) {
   const { userInfo } = useAuth();
-
-  const [selectedOption, setSelectedOption] = useState<Option | undefined>(
-    initialOption
-  );
-  const [title, setTitle] = useState(post?.title ?? '');
-  const [url, setUrl] = useState(initialLink ?? '');
-  const [content, setContent] = useState(post?.content ?? '');
-  const [attachments, setAttachments] = useState<Attachment[]>(
-    post?.attachments ?? []
-  );
-  const [files, setFiles] = useState<UploadFile[]>([]);
-
-  const updateOption = (option: Option) => setSelectedOption(option);
-
-  const updateFiles = (files: UploadFile[]) =>
-    setFiles((prev) => [...prev, ...files]);
+  const { setModal } = useContext(ModalContext);
 
   const handleRemoveAttachment = (targetId: number) =>
     setAttachments((prev) => prev.filter(({ id }) => id !== targetId));
@@ -89,16 +89,9 @@ export default function SupportFormView({
     <div className={styles.container}>
       <CloseAppBar backgroundColor={'#eaf5fd'}>
         <SubmitButton
-          onClick={() =>
-            submit({
-              selectedOption: selectedOption!,
-              title,
-              url,
-              content,
-              attachments,
-              files,
-            })
-          }
+          onClick={() => {
+            setModal({ id: modalId, type: null });
+          }}
           disabled={disabled}
         >
           등록
@@ -117,7 +110,7 @@ export default function SupportFormView({
               key={option.key}
               id={option.key}
               selected={selectedOption?.key === option.key}
-              onClick={() => updateOption(option)}
+              onClick={() => setSelectedOption(option)}
             >
               {option.label}
             </DropdownBlue.Item>
@@ -165,7 +158,7 @@ export default function SupportFormView({
             (total, { file }) => total + file.size,
             0
           )}
-          updateFiles={updateFiles}
+          setFiles={setFiles}
         />
 
         <div className={styles.fileContainer}>
