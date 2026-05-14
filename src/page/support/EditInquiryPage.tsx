@@ -42,7 +42,7 @@ export default function EditInquiryPage() {
       const deletedIds = originalIds.filter((id) => !remainingIds.has(id));
 
       return updateInquiry({
-        postId,
+        postId: postId!,
         title,
         content,
         targetUrl: url,
