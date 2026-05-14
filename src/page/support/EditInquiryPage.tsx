@@ -46,7 +46,7 @@ export default function EditInquiryPage() {
         title,
         content,
         targetUrl: url,
-        inquiryCategory: selectedOption.key,
+        inquiryCategory: selectedOption!.key,
         oldAttachments: attachments,
         newAttachments: files.map(mapFileToAttachment),
         deleteAttachments: deletedIds,
