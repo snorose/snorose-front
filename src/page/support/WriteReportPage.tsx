@@ -45,10 +45,10 @@ export default function WriteReportPage() {
     mutationFn: () =>
       createReport({
         reportType: REPORT_TYPE_MAP[reportType],
-        targetId,
+        targetId: targetId!,
         title,
         content,
-        reportCategory: selectedOption.key!,
+        reportCategory: selectedOption!.key,
         attachments: files.map(mapFileToAttachment),
       }),
 
