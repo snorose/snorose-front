@@ -12,11 +12,7 @@ import {
 } from '@/shared/component';
 import { MAJORS } from '@/shared/constant';
 
-import {
-  MarketingTermModal,
-  NotiTermModal,
-  PrivacyTermModal,
-} from '@/feature/account/component/TermModal';
+import { PrivacyTermModal } from '@/feature/account/component/TermModal';
 import {
   validateBirthday,
   validateNickname,
@@ -32,8 +28,6 @@ export default function UserInfoStep({ setFormData, formData }) {
   const register = useRegister();
 
   const [isPrivacyTermsChecked, setIsPrivacyTermsChecked] = useState(false);
-  const [isNotiTermsChecked, setIsNotiTermsChecked] = useState(false);
-  const [isMarketingTermsChecked, setIsMarketingTermsChecked] = useState(false);
 
   const isFormValid =
     validateNickname(formData.nickname) === 'valid' &&
@@ -150,22 +144,6 @@ export default function UserInfoStep({ setFormData, formData }) {
           isChecked={isPrivacyTermsChecked}
           setIsChecked={setIsPrivacyTermsChecked}
         />
-        <CheckTerms
-          id='notiTerms'
-          label={'알림 수신 동의'}
-          required={false}
-          navigate={navigate}
-          isChecked={isNotiTermsChecked}
-          setIsChecked={setIsNotiTermsChecked}
-        />
-        <CheckTerms
-          id='marketingTerms'
-          label={'광고성 알림 수신 동의'}
-          required={false}
-          navigate={navigate}
-          isChecked={isMarketingTermsChecked}
-          setIsChecked={setIsMarketingTermsChecked}
-        />
       </div>
 
       <div className={styles.submit}>
@@ -243,15 +221,6 @@ function CheckTerms({
 
       {isModalOpen && id === 'privacyTerms' && (
         <PrivacyTermModal
-          onAgree={handleModalAgree}
-          onClose={handleModalClose}
-        />
-      )}
-      {isModalOpen && id === 'notiTerms' && (
-        <NotiTermModal onAgree={handleModalAgree} onClose={handleModalClose} />
-      )}
-      {isModalOpen && id === 'marketingTerms' && (
-        <MarketingTermModal
           onAgree={handleModalAgree}
           onClose={handleModalClose}
         />
