@@ -1,7 +1,7 @@
 import { PRIVACY_TERM } from '@/feature/account/constant/privacyTerm';
 
-import TermModal from './TermModal';
 import styles from './PrivacyTermModal.module.css';
+import TermModal from './TermModal';
 
 const EMAIL = 'smsnorose@gmail.com';
 
