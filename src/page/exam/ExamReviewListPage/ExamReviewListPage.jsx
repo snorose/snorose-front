@@ -1,25 +1,36 @@
 import { Link } from 'react-router-dom';
+
 import { useQuery } from '@tanstack/react-query';
 
-import { getNoticeLine } from '@/apis';
-
 import { AppBar, Icon, MenuIcon, WriteButton } from '@/shared/component';
-import { QUERY_KEY, STALE_TIME } from '@/shared/constant';
+import { QUERY_KEY, ROLE, STALE_TIME } from '@/shared/constant';
+import { useAuth } from '@/shared/hook';
 
 import { Filter, FilterList } from '@/feature/exam/component';
-import { YEARS, SEMESTERS, EXAM_TYPES } from '@/feature/exam/constant';
+import { EXAM_TYPES, SEMESTERS, YEARS } from '@/feature/exam/constant';
 import {
   Search,
   SearchExamReviewListSuspense,
 } from '@/feature/search/component';
 
+import { getNoticeLine, getReviewWritePeriodActive } from '@/apis';
+
 import styles from './ExamReviewListPage.module.css';
 
 export default function ExamReviewListPage() {
+  const { userInfo } = useAuth();
+
   const { data: noticeLineData } = useQuery({
     queryKey: [QUERY_KEY.noticeLine, 32],
     queryFn: () => getNoticeLine(32),
     staleTime: STALE_TIME.noticeLine,
+  });
+
+  const { data: isReviewPeriodActive } = useQuery({
+    queryKey: [QUERY_KEY.reviewWritePeriodActive],
+    queryFn: getReviewWritePeriodActive,
+    enabled: !!userInfo && userInfo.userRoleId !== ROLE.admin,
+    staleTime: STALE_TIME.reviewWritePeriodActive,
   });
 
   return (
@@ -45,7 +56,9 @@ export default function ExamReviewListPage() {
       </FilterList>
       <SearchExamReviewListSuspense />
 
-      <WriteButton to='/board/exam-review-write' />
+      {(isReviewPeriodActive || userInfo?.userRoleId === ROLE.admin) && (
+        <WriteButton to='/board/exam-review-write' />
+      )}
     </section>
   );
 }

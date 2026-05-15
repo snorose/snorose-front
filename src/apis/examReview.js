@@ -19,6 +19,11 @@ export const getExamReviewList = async ({ page, params }) => {
   return response?.data.result;
 };
 
+export const getReviewWritePeriodActive = async () => {
+  const response = await authAxios.get('/v1/reviews/period/active');
+  return response?.data.result;
+};
+
 export const getReviewDetail = async (postId) => {
   const response = await authAxios.get(`/v1/reviews/${postId}`);
   return response?.data.result;
