@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { NewButton, Icon } from '@/shared/component';
+import { Icon, NewButton } from '@/shared/component';
 
 import styles from './TermModal.module.css';
 
-export default function TermModal({ title, required = false, onAgree, onSkip, onClose, children }) {
+export default function TermModal({
+  title,
+  required = false,
+  onAgree,
+  onClose,
+  children,
+}) {
   const [hasScrolledToEnd, setHasScrolledToEnd] = useState(false);
   const contentRef = useRef(null);
 
@@ -58,18 +64,8 @@ export default function TermModal({ title, required = false, onAgree, onSkip, on
       </section>
 
       <div className={styles.footer}>
-        {onSkip && (
-          <NewButton
-            variant='outlined'
-            onClick={onSkip}
-          >
-            다음에
-          </NewButton>
-        )}
-        <NewButton
-          disabled={!hasScrolledToEnd}
-          onClick={onAgree}
-        >
+
+        <NewButton disabled={!hasScrolledToEnd} onClick={onAgree}>
           동의하고 계속하기
         </NewButton>
       </div>
