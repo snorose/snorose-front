@@ -1,7 +1,7 @@
 const DEFAULT_OG = {
   title: '스노로즈',
   description:
-    '숙명여대 재학생, 수료생, 졸업생이 함께하는 소통과 정보 공유의 커뮤니티. 학업, 진로, 취업 정보와 캠퍼스 소식을 한눈에 확인하세요.',
+    '숙명여대 재학생, 수료생, 졸업생이 함께하는 소통과 정보 공유의 커뮤니티.',
   image: 'https://www.snorose.com/og-image.png',
 };
 
@@ -24,7 +24,10 @@ const STATIC_ROUTES = {
   '/board/event': { ...DEFAULT_OG, title: '이벤트 | 스노로즈' },
   '/board/exam-review': { ...DEFAULT_OG, title: '시험후기 | 스노로즈' },
   '/board/student-council': { ...DEFAULT_OG, title: '총학생회 | 스노로즈' },
-  '/board/graduation-preparation': { ...DEFAULT_OG, title: '졸업준비위원회 | 스노로즈' },
+  '/board/graduation-preparation': {
+    ...DEFAULT_OG,
+    title: '졸업준비위원회 | 스노로즈',
+  },
   '/board/finance-audit': { ...DEFAULT_OG, title: '재정감사위원회 | 스노로즈' },
 };
 
@@ -34,10 +37,14 @@ function getOGData(pathname) {
   // /board/:boardPath/post/:postId 등 하위 경로는 게시판명으로 fallback
   if (pathname.startsWith('/board/')) {
     for (const [route, og] of Object.entries(STATIC_ROUTES)) {
-      if (route.startsWith('/board/') && pathname.startsWith(route)) {
+      if (
+        route.startsWith('/board/') &&
+        (pathname === route || pathname.startsWith(route + '/'))
+      ) {
         return og;
       }
     }
+    return STATIC_ROUTES['/board'] || DEFAULT_OG;
   }
 
   return DEFAULT_OG;
@@ -54,25 +61,44 @@ export async function onRequest(context) {
 
   return new HTMLRewriter()
     .on("meta[property='og:title']", {
-      element(el) { el.setAttribute('content', ogData.title); },
+      element(el) {
+        el.setAttribute('content', ogData.title);
+      },
     })
     .on("meta[property='og:description']", {
-      element(el) { el.setAttribute('content', ogData.description); },
+      element(el) {
+        el.setAttribute('content', ogData.description);
+      },
     })
     .on("meta[property='og:image']", {
-      element(el) { el.setAttribute('content', ogData.image); },
+      element(el) {
+        el.setAttribute('content', ogData.image);
+      },
     })
     .on("meta[property='og:url']", {
-      element(el) { el.setAttribute('content', url.href); },
+      element(el) {
+        el.setAttribute('content', url.origin + url.pathname);
+      },
     })
     .on("meta[name='twitter:title']", {
-      element(el) { el.setAttribute('content', ogData.title); },
+      element(el) {
+        el.setAttribute('content', ogData.title);
+      },
     })
     .on("meta[name='twitter:description']", {
-      element(el) { el.setAttribute('content', ogData.description); },
+      element(el) {
+        el.setAttribute('content', ogData.description);
+      },
+    })
+    .on("meta[name='twitter:image']", {
+      element(el) {
+        el.setAttribute('content', ogData.image);
+      },
     })
     .on('title', {
-      element(el) { el.setInnerContent(ogData.title); },
+      element(el) {
+        el.setInnerContent(ogData.title);
+      },
     })
     .transform(response);
 }
