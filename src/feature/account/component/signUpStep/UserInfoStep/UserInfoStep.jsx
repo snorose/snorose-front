@@ -79,7 +79,8 @@ export default function UserInfoStep({ setFormData, formData }) {
           major: option.name,
         }));
       },
-      validate: (value) => (formData.major ? 'valid' : 'default'),
+      value: formData.major,
+      validate: (value) => (value ? 'valid' : 'default'),
     },
     {
       type: 'text',
@@ -140,7 +141,6 @@ export default function UserInfoStep({ setFormData, formData }) {
           id='privacyTerms'
           label={'개인정보 수집 및 이용 동의'}
           required
-          navigate={navigate}
           isChecked={isPrivacyTermsChecked}
           setIsChecked={setIsPrivacyTermsChecked}
         />
@@ -163,7 +163,6 @@ function CheckTerms({
   label,
   isChecked = false,
   required = false,
-  navigate,
   setIsChecked,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);

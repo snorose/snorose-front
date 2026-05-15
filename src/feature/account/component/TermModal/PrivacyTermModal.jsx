@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { PRIVACY_TERM } from '@/feature/account/constant/privacyTerm';
 
 import styles from './PrivacyTermModal.module.css';
@@ -10,11 +11,16 @@ function renderWithEmailLink(content) {
   if (parts.length === 1) return content;
   return (
     <>
-      {parts[0]}
-      <a href={`mailto:${EMAIL}`} className={styles.emailLink}>
-        {EMAIL}
-      </a>
-      {parts[1]}
+      {parts.map((part, index) => (
+        <Fragment key={index}>
+          {part}
+          {index < parts.length - 1 && (
+            <a href={`mailto:${EMAIL}`} className={styles.emailLink}>
+              {EMAIL}
+            </a>
+          )}
+        </Fragment>
+      ))}
     </>
   );
 }
