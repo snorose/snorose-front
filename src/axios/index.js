@@ -32,6 +32,9 @@ authAxios.interceptors.request.use(
   }
 );
 
+let isRefreshing = false;
+let pendingQueue = [];
+
 authAxios.interceptors.response.use(
   (response) => {
     return response;
@@ -40,23 +43,61 @@ authAxios.interceptors.response.use(
     const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
-      try {
-        const { accessToken } = await reissueToken();
-        localStorage.setItem('accessToken', accessToken);
-
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-        originalRequest._retry = true;
-
-        return authAxios(originalRequest);
-      } catch (refreshError) {
-        localStorage.removeItem('accessToken');
-
-        return Promise.reject(refreshError);
+      if (isRefreshing) {
+        return new Promise((resolve, reject) =>
+          pendingQueue.push({ resolve, reject })
+        )
+          .then((token) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            return authAxios(originalRequest);
+          })
+          .catch((err) => Promise.reject(err));
       }
+
+      const newToken = await reissueAccessToken();
+
+      originalRequest.headers.Authorization = `Bearer ${newToken}`;
+      originalRequest._retry = true;
+
+      return authAxios(originalRequest);
     }
 
     return Promise.reject(error);
   }
 );
+
+function processQueue({ error, token }) {
+  pendingQueue.forEach(({ resolve, reject }) => {
+    if (error) {
+      reject(error);
+    } else {
+      resolve(token);
+    }
+  });
+
+  pendingQueue = [];
+}
+
+async function reissueAccessToken() {
+  let newToken;
+  isRefreshing = true;
+
+  try {
+    const data = await reissueToken();
+    newToken = data.accessToken;
+
+    localStorage.setItem('accessToken', newToken);
+    processQueue({ token: newToken });
+  } catch (refreshError) {
+    localStorage.removeItem('accessToken');
+    processQueue({ error: refreshError });
+
+    return Promise.reject(refreshError);
+  } finally {
+    isRefreshing = false;
+  }
+
+  return newToken;
+}
 
 export { authAxios, defaultAxios };
