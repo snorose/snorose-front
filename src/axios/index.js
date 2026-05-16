@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-import { reissueToken } from '@/apis';
-
 const defaultAxios = axios.create({
   baseURL: process.env.REACT_APP_SERVER_DOMAIN,
   headers: {
@@ -83,8 +81,19 @@ async function reissueAccessToken() {
   isRefreshing = true;
 
   try {
-    const data = await reissueToken();
-    newToken = data.accessToken;
+    const response = await axios.post(
+      '/v1/users/reissueToken',
+      {},
+      {
+        baseURL: process.env.REACT_APP_SERVER_DOMAIN,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      }
+    );
+
+    newToken = response?.data.result.accessToken;
 
     localStorage.setItem('accessToken', newToken);
     processQueue({ token: newToken });
