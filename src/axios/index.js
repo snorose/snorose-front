@@ -42,4 +42,4 @@ authAxios.interceptors.request.use(
   }
 );
 
-export { defaultAxios, authAxios };
+export { authAxios, defaultAxios };
