@@ -7,12 +7,14 @@ export const reissueToken = async () => {
     '/v1/users/reissueToken',
     {},
     {
-      'Content-Type': 'application/json',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       withCredentials: true,
     }
   );
 
-  return response?.data.result;
+  return response?.data?.result;
 };
 
 export const logout = async () => {
