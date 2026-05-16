@@ -13,13 +13,13 @@ const authAxios = axios.create({
   baseURL: process.env.REACT_APP_SERVER_DOMAIN,
   headers: {
     'Content-Type': 'application/json',
-    withCredentials: true,
   },
+  withCredentials: true,
 });
 
 authAxios.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem('accessToken') ?? 'unauthorized';
+    const accessToken = localStorage.getItem('accessToken');
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
@@ -39,8 +39,7 @@ authAxios.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // 토큰 재발급
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       try {
         const { accessToken } = await reissueToken();
         localStorage.setItem('accessToken', accessToken);
