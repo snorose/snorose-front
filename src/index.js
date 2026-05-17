@@ -38,9 +38,7 @@ Sentry.init({
 
 growthbook.init({ streaming: true });
 
-const sentryCreateBrowserRouter =
-  Sentry.wrapCreateBrowserRouterV6(createBrowserRouter);
-const router = sentryCreateBrowserRouter(routeList);
+const router = createBrowserRouter(routeList);
 
 const queryClient = new QueryClient({
   defaultOptions: {
