@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "start": "craco start",
-    "build:origin": "craco build",
-    "build:stage": "REACT_APP_SERVER_DOMAIN=https://stage.snorose.com npm run build:origin",
-    "build": "if [ \"$CF_PAGES_BRANCH\" = \"stage\" ]; then npm run build:stage; else npm run build:origin; fi",
+    "build:app": "craco build",
+    "build:prod": "REACT_APP_ENV=production npm run build:app && npm run sentry:sourcemaps",
+    "build:stage": "REACT_APP_SERVER_DOMAIN=https://stage.snorose.com REACT_APP_ENV=stage npm run build:app",
+    "build": "if [ \"$CF_PAGES_BRANCH\" = \"stage\" ]; then npm run build:stage; else npm run build:prod; fi",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject ./build && sentry-cli sourcemaps upload ./build && rimraf ./build/**/*.map",
     "test": "craco test",
     "eject": "craco eject",
     "storybook": "storybook dev -p 6006",
@@ -14,6 +16,7 @@
   },
   "dependencies": {
     "@growthbook/growthbook-react": "^1.6.0",
+    "@sentry/cli": "^2.58.5",
     "@sentry/react": "^10.53.1",
     "@svgr/webpack": "latest",
     "@tanstack/react-query": "^5.51.23",

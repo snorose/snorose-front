@@ -21,9 +21,9 @@ import '@/index.css';
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
-  environment: process.env.NODE_ENV,
-  enabled: process.env.NODE_ENV === 'production',
-  debug: process.env.NODE_ENV !== 'production',
+  environment: process.env.REACT_APP_ENV,
+  enabled: process.env.REACT_APP_ENV === 'production',
+  debug: process.env.NODE_ENV === 'development',
   integrations: [
     Sentry.captureConsoleIntegration({ levels: ['error'] }),
     Sentry.replayIntegration({
