@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -11,7 +11,7 @@ import {
 import { ROLE, TOAST } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useModalReset, useToast } from '@/shared/hook';
-import { convertLinks, DateTime } from '@/shared/lib';
+import { DateTime, linkifyHtml } from '@/shared/lib';
 
 import {
   FullScreenAttachment,
@@ -35,6 +35,11 @@ export default function PostDetailView({
   BellIcon,
 }) {
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
+
+  const sanitizedContent = useMemo(() => {
+    if (!data?.content) return '';
+    return sanitizeHtml(linkifyHtml(preserveEmptyParagraphs(data.content)));
+  }, [data?.content]);
 
   if (!data) {
     return (
@@ -71,9 +76,7 @@ export default function PostDetailView({
 
         <div
           className={editorStyles.editor}
-          dangerouslySetInnerHTML={{
-            __html: sanitizeHtml(convertLinks(preserveEmptyParagraphs(data.content))),
-          }}
+          dangerouslySetInnerHTML={{ __html: sanitizedContent }}
         />
 
         {data.attachments.length !== 0 && (
