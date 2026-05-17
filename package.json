@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@growthbook/growthbook-react": "^1.6.0",
-    "@sentry/cli": "^2.58.5",
     "@sentry/react": "^10.53.1",
     "@svgr/webpack": "latest",
     "@tanstack/react-query": "^5.51.23",
@@ -50,6 +49,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.3",
     "@craco/craco": "^7.1.0",
+    "@sentry/cli": "^3.4.2",
     "@storybook/addon-docs": "^8.4.7",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
