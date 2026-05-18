@@ -182,7 +182,6 @@ export default function EditorContainer({
     <>
       <div
         className={styles.editor}
-        onClick={() => editor?.commands.focus('end')}
       >
         <EditorContent editor={editor} />
       </div>
