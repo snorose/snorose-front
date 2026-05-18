@@ -7,6 +7,15 @@ export const isAllowedEmbedUrl = (url) =>
   EMBED_SOURCES.some((source) => source.embedUrlPattern.test(url));
 
 DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+  if (node.tagName === 'A') {
+    const href = node.getAttribute('href') || '';
+
+    if (/^https?:\/\//i.test(href)) {
+      node.setAttribute('target', '_blank');
+      node.setAttribute('rel', 'noopener noreferrer');
+    }
+  }
+
   if (node.tagName === 'IFRAME') {
     const src = node.getAttribute('src') || '';
 
@@ -25,6 +34,7 @@ export const sanitizeHtml = (html) => {
       'frameborder',
       'scrolling',
       'src',
+      'target',
       'width',
       'height',
     ],

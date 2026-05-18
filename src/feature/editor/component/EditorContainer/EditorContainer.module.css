@@ -10,9 +10,12 @@
 
   a {
     color: var(--blue-3);
+    word-break: break-all;
+    text-decoration: underline;
   }
 
   a:hover {
+    color: var(--blue-4);
     text-decoration: underline;
   }
 }

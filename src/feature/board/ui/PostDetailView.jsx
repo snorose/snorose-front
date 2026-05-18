@@ -1,8 +1,6 @@
-import { useContext, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ModalContext } from '@/shared/context/ModalContext';
-import { useModalReset, useToast } from '@/shared/hook';
 import {
   AttachmentSwiper,
   BackAppBar,
@@ -10,23 +8,24 @@ import {
   FetchLoading,
   Icon,
 } from '@/shared/component';
-import { DateTime, renderTextWithLinks } from '@/shared/lib';
 import { ROLE, TOAST } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
+import { useModalReset, useToast } from '@/shared/hook';
+import { DateTime, linkifyHtml } from '@/shared/lib';
 
-import { useReportHandler } from '@/feature/report/hook/useReport';
 import {
   FullScreenAttachment,
   PostModalRenderer,
 } from '@/feature/board/component';
-
-import cloudLogo from '@/assets/images/cloudLogo.svg';
-import sponsorBanner from '@/assets/banners/sponsorBanner.png';
-import DOMPurify from 'dompurify';
-import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
 import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
+import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
+import { useReportHandler } from '@/feature/report/hook/useReport';
 
-import styles from './PostDetailView.module.css';
+import sponsorBanner from '@/assets/banners/sponsorBanner.png';
+import cloudLogo from '@/assets/images/cloudLogo.svg';
+
 import editorStyles from '../../editor/component/EditorContainer/EditorContainer.module.css';
+import styles from './PostDetailView.module.css';
 
 export default function PostDetailView({
   data,
@@ -36,6 +35,11 @@ export default function PostDetailView({
   BellIcon,
 }) {
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
+
+  const sanitizedContent = useMemo(() => {
+    if (!data?.content) return '';
+    return sanitizeHtml(linkifyHtml(preserveEmptyParagraphs(data.content)));
+  }, [data?.content]);
 
   if (!data) {
     return (
@@ -72,9 +76,7 @@ export default function PostDetailView({
 
         <div
           className={editorStyles.editor}
-          dangerouslySetInnerHTML={{
-            __html: sanitizeHtml(preserveEmptyParagraphs(data.content)),
-          }}
+          dangerouslySetInnerHTML={{ __html: sanitizedContent }}
         />
 
         {data.attachments.length !== 0 && (
