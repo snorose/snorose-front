@@ -1,8 +1,13 @@
 export const EMBED_SOURCES = [
   {
-    name: 'youtube',
-    sourcePattern:
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]+)/,
+    name: 'youtube-video',
+    sourcePattern: /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/,
+    toEmbedUrl: (_url, match) => `https://www.youtube.com/embed/${match[1]}`,
+    embedUrlPattern: /^https?:\/\/(www\.)?youtube\.com\/embed\//,
+  },
+  {
+    name: 'youtube-shorts',
+    sourcePattern: /youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/,
     toEmbedUrl: (_url, match) => `https://www.youtube.com/embed/${match[1]}`,
     embedUrlPattern: /^https?:\/\/(www\.)?youtube\.com\/embed\//,
   },
