@@ -54,14 +54,7 @@ export default function FixedMenuEditor({ editor, isTitleFocused }) {
   const handleMouseDown = (e) => {
     if (isTitleFocused) {
       e.preventDefault();
-      e.stopPropagation();
     }
-  };
-
-  const runIfEditorFocused = (callback) => {
-    if (isTitleFocused) return;
-
-    callback();
   };
 
   useEffect(() => {
@@ -231,7 +224,7 @@ export default function FixedMenuEditor({ editor, isTitleFocused }) {
 
       <button
         aria-label='굵게'
-        onClick={() => runIfEditorFocused(() => editor.chain().focus().toggleBold().run())}
+        onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={isTitleFocused}
         style={editorState.isBold ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
@@ -240,7 +233,7 @@ export default function FixedMenuEditor({ editor, isTitleFocused }) {
 
       <button
         aria-label='밑줄'
-        onClick={() => runIfEditorFocused(() => editor.chain().focus().toggleUnderline().run())}
+        onClick={() => editor.chain().focus().toggleUnderline().run()}
         disabled={isTitleFocused}
         style={
           editorState.isUnderline ? { '--icon-stroke': 'var(--blue-4)' } : {}
@@ -251,7 +244,7 @@ export default function FixedMenuEditor({ editor, isTitleFocused }) {
 
       <button
         aria-label='취소선'
-        onClick={() => runIfEditorFocused(() => editor.chain().focus().toggleStrike().run())}
+        onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={isTitleFocused}
         style={editorState.isStrike ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
