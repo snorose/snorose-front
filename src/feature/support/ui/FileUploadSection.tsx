@@ -9,15 +9,13 @@ import type { UploadFile } from '@/feature/attachment/types';
 import styles from './FileUploadSection.module.css';
 
 const MAX_FILE_COUNT = 3;
-const MAX_TOTAL_FILE_SIZE = 10 * 1024 * 1024;
+const MAX_FILE_SIZE = 7 * 1024 * 1024;
 
 export default function FileUploadSection({
   currentFileCount,
-  curruentTotalFileSize,
   setFiles,
 }: {
   currentFileCount: number;
-  curruentTotalFileSize: number;
   setFiles: React.Dispatch<React.SetStateAction<UploadFile[]>>;
 }) {
   const id = useId();
@@ -52,15 +50,13 @@ export default function FileUploadSection({
             return;
           }
 
-          const selectedFilesSize = selectedFiles.reduce(
-            (total, { size }) => total + size,
-            0
-          );
-          if (curruentTotalFileSize + selectedFilesSize > MAX_TOTAL_FILE_SIZE) {
+          const selectedFileSizes = selectedFiles.map((file) => file.size);
+
+          if (selectedFileSizes.some((size) => size > MAX_FILE_SIZE)) {
             e.target.value = '';
 
             toast({
-              message: '10MB까지 올릴 수 있어요',
+              message: `${MAX_FILE_SIZE / (1024 * 1024)}MB 이하의 이미지만 업로드할 수 있어요`,
               variant: 'info',
             });
 
