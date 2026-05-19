@@ -20,7 +20,7 @@ const PRESET_BG_COLORS = [
   { label: '파랑', value: 'var(--blue-2)' },
 ];
 
-export default function FixedMenuEditor({ editor }) {
+export default function FixedMenuEditor({ editor, isTitleFocused }) {
   const editorState = useEditorState({
     editor,
     selector: (ctx) => ({
@@ -51,6 +51,19 @@ export default function FixedMenuEditor({ editor }) {
     return 'paragraph';
   };
 
+  const handleMouseDown = (e) => {
+    if (isTitleFocused) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
+
+  const runIfEditorFocused = (callback) => {
+    if (isTitleFocused) return;
+
+    callback();
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       [
@@ -71,9 +84,11 @@ export default function FixedMenuEditor({ editor }) {
   if (!editor) return null;
 
   return (
-    <div className={styles.toolbar}>
+    <div className={styles.toolbar} onMouseDown={handleMouseDown}>
+      {isTitleFocused && <div className={styles.toolbarBlocker} />}
       <div ref={headingRef} className={styles.headingWrapper}>
         <button
+          disabled={isTitleFocused}
           className={styles.headingButton}
           onClick={() => setHeadingOpen((prev) => !prev)}
         >
@@ -94,6 +109,7 @@ export default function FixedMenuEditor({ editor }) {
               <button
                 key={option.value}
                 className={`${styles.headingOption} ${getCurrentHeading() === option.value ? styles.headingOptionActive : ''}`}
+                disabled={isTitleFocused}
                 onClick={() => {
                   if (option.value === 'paragraph') {
                     editor.chain().focus().setParagraph().run();
@@ -117,6 +133,7 @@ export default function FixedMenuEditor({ editor }) {
       <div ref={textColorRef} className={styles.colorPickerWrapper}>
         {/* 폰트 색상 토글 버튼 */}
         <button
+          disabled={isTitleFocused}
           onClick={() => setShowTextColor((prev) => !prev)}
           style={{ color: textColor || 'var(--grey-4)' }}
         >
@@ -129,6 +146,7 @@ export default function FixedMenuEditor({ editor }) {
           {/* 색상 없음 */}
           <button
             className={styles.colorSwatchNone}
+            disabled={isTitleFocused}
             title='색상 없음'
             onClick={() => {
               setTextColor('');
@@ -141,6 +159,7 @@ export default function FixedMenuEditor({ editor }) {
           {/* 고정 색상 */}
           {PRESET_COLORS.map((color) => (
             <button
+              disabled={isTitleFocused}
               key={color.label}
               className={`${styles.colorSwatch} ${textColor === color.value ? styles.selected : ''}`}
               style={{ backgroundColor: color.value }}
@@ -160,6 +179,7 @@ export default function FixedMenuEditor({ editor }) {
 
       <div ref={bgColorRef} className={styles.colorPickerWrapper}>
         <button
+          disabled={isTitleFocused}
           onClick={() => setShowBgColor((prev) => !prev)}
           style={{
             '--bg-icon-fill': bgColor || '#E6F7B1',
@@ -173,6 +193,7 @@ export default function FixedMenuEditor({ editor }) {
           className={`${styles.colorPaletteInline} ${showBgColor ? styles.open : ''}`}
         >
           <button
+            disabled={isTitleFocused}
             className={styles.colorSwatchNone}
             title='배경색 없음'
             onClick={() => {
@@ -190,6 +211,7 @@ export default function FixedMenuEditor({ editor }) {
           {/* 고정 색상 */}
           {PRESET_BG_COLORS.map((color) => (
             <button
+              disabled={isTitleFocused}
               key={color.label}
               className={`${styles.colorSwatch} ${bgColor === color.value ? styles.selected : ''}`}
               style={{ backgroundColor: color.value }}
@@ -209,7 +231,8 @@ export default function FixedMenuEditor({ editor }) {
 
       <button
         aria-label='굵게'
-        onClick={() => editor.chain().focus().toggleBold().run()}
+        onClick={() => runIfEditorFocused(() => editor.chain().focus().toggleBold().run())}
+        disabled={isTitleFocused}
         style={editorState.isBold ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
         <Icon id='bold' width={24} height={24} />
@@ -217,7 +240,8 @@ export default function FixedMenuEditor({ editor }) {
 
       <button
         aria-label='밑줄'
-        onClick={() => editor.chain().focus().toggleUnderline().run()}
+        onClick={() => runIfEditorFocused(() => editor.chain().focus().toggleUnderline().run())}
+        disabled={isTitleFocused}
         style={
           editorState.isUnderline ? { '--icon-stroke': 'var(--blue-4)' } : {}
         }
@@ -227,7 +251,8 @@ export default function FixedMenuEditor({ editor }) {
 
       <button
         aria-label='취소선'
-        onClick={() => editor.chain().focus().toggleStrike().run()}
+        onClick={() => runIfEditorFocused(() => editor.chain().focus().toggleStrike().run())}
+        disabled={isTitleFocused}
         style={editorState.isStrike ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
         <Icon id='strikethrough' width={24} height={24} />

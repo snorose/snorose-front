@@ -15,6 +15,7 @@ export default function AttachmentBar({
   attachmentsInfo,
   setAttachmentsInfo,
   editor,
+  isTitleFocused,
 }) {
   const img = useRef();
   const vid = useRef();
@@ -32,7 +33,7 @@ export default function AttachmentBar({
 
   return (
     <div ref={attachmentBarRef} className={styles.bar}>
-      {isEditorOpen && editor && <FixedMenuEditor editor={editor} />}
+      {isEditorOpen && editor && <FixedMenuEditor editor={editor} isTitleFocused={isTitleFocused} />}
       <div className={styles.attachmentBar}>
         <Icon
           id={isImageIconHighlighted ? 'image-fill' : 'image'}
