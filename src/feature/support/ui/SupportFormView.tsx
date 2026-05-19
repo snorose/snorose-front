@@ -154,10 +154,6 @@ export default function SupportFormView({
 
         <FileUploadSection
           currentFileCount={attachments.length + files.length}
-          curruentTotalFileSize={files.reduce(
-            (total, { file }) => total + file.size,
-            0
-          )}
           setFiles={setFiles}
         />
 
