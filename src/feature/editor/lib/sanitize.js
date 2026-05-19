@@ -22,6 +22,12 @@ DOMPurify.addHook('afterSanitizeAttributes', (node) => {
     if (!isAllowedEmbedUrl(src)) {
       node.removeAttribute('src');
     }
+
+    node.setAttribute('scrolling', 'no');
+    node.setAttribute(
+      'allow',
+      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+    );
   }
 });
 
