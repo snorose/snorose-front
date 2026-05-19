@@ -8,6 +8,14 @@ export const Iframe = Node.create({
   addAttributes() {
     return {
       src: { default: null },
+      embedType: {
+        default: null,
+        parseHTML: (element) => element.getAttribute('data-embed-type'),
+        renderHTML: (attributes) =>
+          attributes.embedType
+            ? { 'data-embed-type': attributes.embedType }
+            : {},
+      },
     };
   },
 
@@ -21,9 +29,12 @@ export const Iframe = Node.create({
       {
         ...HTMLAttributes,
         width: '100%',
-        height: '336px',
+        height: `500px`,
         frameborder: '0',
         allowfullscreen: 'true',
+        scrolling: 'no',
+        allow:
+          'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
       },
     ];
   },
