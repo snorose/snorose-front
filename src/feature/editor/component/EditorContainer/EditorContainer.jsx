@@ -15,7 +15,9 @@ import StarterKit from '@tiptap/starter-kit';
 
 import { EnterKeyHandler } from '@/feature/editor/component/extensions/enterkey-handler-extension';
 import { Iframe } from '@/feature/editor/component/extensions/iframe-extension';
+import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
 
+import { EMBED_SOURCES } from '../../constant';
 import { isAllowedEmbedUrl } from '../../lib/sanitize';
 import { formatEmbedUrl, isImageUrl } from '../../utils';
 import { FontSize } from '../extensions/font-size-extension';
@@ -34,6 +36,8 @@ export default function EditorContainer({
     pos: null,
     coords: null,
   });
+
+  useIframeAutoResize();
 
   const editor = useEditor({
     extensions: [
@@ -154,6 +158,7 @@ export default function EditorContainer({
   const handleConvertIframe = () => {
     const url = linkMenuData.url;
     const formattedUrl = formatEmbedUrl(url);
+    const embedSource = EMBED_SOURCES.find((s) => s.sourcePattern.test(url));
 
     editor
       .chain()
@@ -167,7 +172,10 @@ export default function EditorContainer({
       // 4. 그 위치에 Iframe 노드 렌더링
       .insertContent({
         type: 'iframe',
-        attrs: { src: formattedUrl },
+        attrs: {
+          src: formattedUrl,
+          embedType: embedSource?.name ?? null,
+        },
       })
       .run();
 
