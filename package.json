@@ -97,6 +97,9 @@
     "typescript": "^4.9.5",
     "webpack": "^5.97.1"
   },
+  "overrides": {
+    "react-refresh": "0.11.0"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
