@@ -79,6 +79,7 @@ export default function WritePostPage() {
 
   const textId = pathname.split('/')[2];
   const currentBoard = getBoard(textId);
+  const [isTitleFocused, setIsTitleFocused] = useState(false);
   const [boardTitle, setBoardTitle] = useState(
     currentBoard?.title ?? '게시판을 선택해주세요'
   );
@@ -385,6 +386,8 @@ export default function WritePostPage() {
                 placeholder='제목을 입력해주세요'
                 value={title}
                 onChange={handleTitleChange}
+                onFocus={() => setIsTitleFocused(true)}
+                onBlur={() => setIsTitleFocused(false)}
               />
               {/*<TextareaAutosize
                   className={styles.text}
@@ -449,6 +452,7 @@ export default function WritePostPage() {
           attachmentsInfo={attachmentsInfo}
           setAttachmentsInfo={setAttachmentsInfo}
           editor={editor}
+          isTitleFocused={isTitleFocused}
         />
       </div>
 
