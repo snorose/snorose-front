@@ -7,6 +7,7 @@
   padding-bottom: 1.5rem;
   white-space: pre-wrap;
   word-break: keep-all;
+  cursor: text;
 
   a {
     color: var(--blue-3);
@@ -18,6 +19,11 @@
     color: var(--blue-4);
     text-decoration: underline;
   }
+}
+
+.editor :global(.ProseMirror) {
+  min-height: 150px; 
+  outline: none;
 }
 
 .editor h1 {

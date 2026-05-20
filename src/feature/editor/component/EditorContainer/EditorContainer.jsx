@@ -136,6 +136,7 @@ export default function EditorContainer({
     },
     onCreate: ({ editor }) => {
       if (onEditorReady) onEditorReady(editor);
+      editor.commands.focus('start');
     },
   });
 
@@ -170,13 +171,18 @@ export default function EditorContainer({
         attrs: { src: formattedUrl },
       })
       .run();
+      setTimeout(() => {
+        editor.commands.focus('end');
+      }, 0);
 
     setIsLinkMenuOpen(false);
   };
 
   return (
     <>
-      <div className={styles.editor}>
+      <div
+        className={styles.editor}
+      >
         <EditorContent editor={editor} />
       </div>
 
