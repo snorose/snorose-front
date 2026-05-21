@@ -2,6 +2,7 @@ export * from './attachment';
 export * from './board';
 export * from './board-config';
 export * from './footerData';
+export * from './http';
 export * from './icon';
 export * from './loading';
 export * from './majors';
