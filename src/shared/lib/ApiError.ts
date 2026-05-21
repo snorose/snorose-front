@@ -4,12 +4,15 @@ export class ApiError extends Error {
   readonly code: number;
   readonly httpStatusCode: HttpStatusCode;
 
-  constructor(message: string, code: number, httpStatusCode: HttpStatusCode) {
+  constructor(
+    message: string,
+    options: { code: number; httpStatusCode: HttpStatusCode }
+  ) {
     super(message);
 
-    this.name = `ApiError [${HTTP_STATUS_NAME[httpStatusCode]}]`;
-    this.code = code;
-    this.httpStatusCode = httpStatusCode;
+    this.name = `ApiError [${HTTP_STATUS_NAME[options.httpStatusCode]}]`;
+    this.code = options.code;
+    this.httpStatusCode = options.httpStatusCode;
 
     Object.setPrototypeOf(this, new.target.prototype);
 
