@@ -9,6 +9,11 @@
   word-break: keep-all;
   cursor: text;
 
+  :global(.ProseMirror) {
+    min-height: 150px;
+    outline: none;
+  }
+
   a {
     color: var(--blue-3);
     word-break: break-all;
@@ -19,25 +24,37 @@
     color: var(--blue-4);
     text-decoration: underline;
   }
-}
 
-.editor :global(.ProseMirror) {
-  min-height: 150px; 
-  outline: none;
-}
+  h1 {
+    font-size: 2rem;
+    padding: 12px 0;
+  }
 
-.editor h1 {
-  font-size: 2rem;
-  padding: 12px 0;
-}
-.editor h1:first-child {
-  padding: 0 0 12px 0;
-}
+  h1:first-child {
+    padding: 0 0 12px 0;
+  }
 
-.editor iframe {
-  display: block;
-  width: 100%;
-  height: 336px;
-  border: none;
-  margin: 1.5rem 0;
+  iframe {
+    display: block;
+    width: 100%;
+    border: none;
+    margin: 1.5rem 0;
+  }
+
+  iframe[data-embed-type='youtube-video'],
+  iframe[data-embed-type='naver-tv'] {
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
+
+  iframe[data-embed-type='youtube-shorts'] {
+    aspect-ratio: 9 / 16;
+    height: auto;
+  }
+
+  iframe[data-embed-type='tiktok'] {
+    aspect-ratio: 9 / 16;
+    height: auto;
+    max-width: 320px;
+  }
 }

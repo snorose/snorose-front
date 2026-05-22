@@ -17,6 +17,7 @@ import {
   FullScreenAttachment,
   PostModalRenderer,
 } from '@/feature/board/component';
+import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
 import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
 import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
 import { useReportHandler } from '@/feature/report/hook/useReport';
@@ -40,6 +41,7 @@ export default function PostDetailView({
     if (!data?.content) return '';
     return sanitizeHtml(linkifyHtml(preserveEmptyParagraphs(data.content)));
   }, [data?.content]);
+  useIframeAutoResize();
 
   if (!data) {
     return (
