@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "start": "craco start",
-    "build:origin": "craco build",
-    "build:stage": "REACT_APP_SERVER_DOMAIN=https://stage.snorose.com npm run build:origin",
-    "build": "if [ \"$CF_PAGES_BRANCH\" = \"stage\" ]; then npm run build:stage; else npm run build:origin; fi",
+    "build:app": "craco build",
+    "build:prod": "REACT_APP_ENV=production npm run build:app && npm run sentry:sourcemaps",
+    "build:stage": "REACT_APP_SERVER_DOMAIN=https://stage.snorose.com REACT_APP_ENV=stage npm run build:app",
+    "build": "if [ \"$CF_PAGES_BRANCH\" = \"stage\" ]; then npm run build:stage; else npm run build:prod; fi",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject ./build && sentry-cli sourcemaps upload ./build && rimraf ./build/**/*.map",
     "test": "craco test",
     "eject": "craco eject",
     "storybook": "storybook dev -p 6006",
@@ -15,6 +17,7 @@
   "dependencies": {
     "@floating-ui/dom": "^1.7.5",
     "@growthbook/growthbook-react": "^1.6.0",
+    "@sentry/react": "^10.53.1",
     "@svgr/webpack": "latest",
     "@tanstack/react-query": "^5.51.23",
     "@testing-library/jest-dom": "^5.14.1",
@@ -63,6 +66,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.3",
     "@craco/craco": "^7.1.0",
+    "@sentry/cli": "^3.4.2",
     "@storybook/addon-docs": "^8.4.7",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
@@ -81,6 +85,7 @@
     "eslint-plugin-storybook": "^0.11.2",
     "prettier": "^3.3.2",
     "prop-types": "^15.8.1",
+    "rimraf": "^6.1.3",
     "storybook": "^8.4.7",
     "typescript": "^4.9.5",
     "webpack": "^5.97.1"
