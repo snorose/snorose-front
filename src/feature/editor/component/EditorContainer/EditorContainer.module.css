@@ -1,6 +1,11 @@
 :global(.ProseMirror:focus) {
   outline: none;
 }
+
+.linkBubbleMenu {
+  z-index: var(--z-index-dropdown);
+}
+
 .editor {
   font: var(--text-headline-2-reg);
   color: var(--grey-4);
