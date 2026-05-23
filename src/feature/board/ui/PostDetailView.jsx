@@ -8,6 +8,7 @@ import {
   FetchLoading,
   Icon,
 } from '@/shared/component';
+import LinkAlertModal from '@/shared/component/modal/LinkAlertModal/LinkAlertModal';
 import { ROLE, TOAST } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useModalReset, useToast } from '@/shared/hook';
@@ -35,7 +36,32 @@ export default function PostDetailView({
   CommentInputContainer,
   BellIcon,
 }) {
+  const [linkModalOpen, setLinkModalOpen] = useState(false);
+  const [selectedLink, setSelectedLink] = useState('');
+  const [dontshowAgain, setDontShowAgain] = useState(false);
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
+
+  const handleLinkClick = (event) => {
+    const anchor = event.target.closest('a');
+
+    if (!anchor) return;
+
+    event.preventDefault();
+
+    const href = anchor.getAttribute('href');
+
+    if (!href) return;
+
+    const shouldHide = localStorage.getItem('hideLinkAlert');
+
+    setSelectedLink(href);
+
+    if (shouldHide === 'true') {
+      window.open(href, '_blank');
+    } else {
+      setLinkModalOpen(true)
+    } 
+  };
 
   const sanitizedContent = useMemo(() => {
     if (!data?.content) return '';
@@ -78,6 +104,7 @@ export default function PostDetailView({
 
         <div
           className={editorStyles.editor}
+          onClick={handleLinkClick}
           dangerouslySetInnerHTML={{ __html: sanitizedContent }}
         />
 
@@ -105,6 +132,16 @@ export default function PostDetailView({
       />
 
       <MoreModal deletePost={deletePost} data={data} />
+      <LinkAlertModal
+        isOpen={linkModalOpen}
+        checked={dontshowAgain}
+        setChecked={setDontShowAgain}
+        onClose={() => setLinkModalOpen(false)}
+        onConfirm={() => {
+          window.open(selectedLink, '_blank');
+          setLinkModalOpen(false);
+        }}
+      />
     </div>
   );
 }
