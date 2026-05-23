@@ -33,7 +33,9 @@ export default function AttachmentBar({
 
   return (
     <div ref={attachmentBarRef} className={styles.bar}>
-      {isEditorOpen && editor && <FixedMenuEditor editor={editor} isTitleFocused={isTitleFocused} />}
+      {isEditorOpen && editor && (
+        <FixedMenuEditor editor={editor} isTitleFocused={isTitleFocused} />
+      )}
       <div className={styles.attachmentBar}>
         <Icon
           id={isImageIconHighlighted ? 'image-fill' : 'image'}
@@ -80,6 +82,7 @@ export default function AttachmentBar({
           height={21}
           className={styles.image}
           onClick={() => setIsEditorOpen((prev) => !prev)}
+          onMouseDown={(e) => e.preventDefault()}
         />
       </div>
     </div>

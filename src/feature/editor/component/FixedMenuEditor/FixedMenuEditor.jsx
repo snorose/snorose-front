@@ -51,12 +51,6 @@ export default function FixedMenuEditor({ editor, isTitleFocused }) {
     return 'paragraph';
   };
 
-  const handleMouseDown = (e) => {
-    if (isTitleFocused) {
-      e.preventDefault();
-    }
-  };
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       [
@@ -77,7 +71,12 @@ export default function FixedMenuEditor({ editor, isTitleFocused }) {
   if (!editor) return null;
 
   return (
-    <div className={styles.toolbar} onMouseDown={handleMouseDown}>
+    <div
+      className={styles.toolbar}
+      onMouseDown={(e) => {
+        e.preventDefault();
+      }}
+    >
       {isTitleFocused && <div className={styles.toolbarBlocker} />}
       <div ref={headingRef} className={styles.headingWrapper}>
         <button
