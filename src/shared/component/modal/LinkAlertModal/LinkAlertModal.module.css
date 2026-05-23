@@ -1,0 +1,130 @@
+/* 모달 공통 스타일 */
+.dim {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 600;
+  width: 100vw;
+  max-width: var(--default-width);
+  height: 100vh;
+  justify-content: center;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.2);
+  /* Note: backdrop-filter has minimal browser support */
+}
+
+.container {
+  width: 30rem;
+
+  border-radius: 0.625rem;
+  background: var(--white);
+
+  overflow: hidden;
+}
+
+.title {
+  font: var(--text-headline-1-med);
+  text-align: center;
+  color: var(--black);
+}
+
+/* LinkAlertModal 스타일 */
+
+.content {
+  padding: 2.4rem 2.4rem 2.4rem;
+}
+
+.description {
+  margin-top: 1.1rem;
+
+  text-align: center;
+
+  color: var(--grey-4);
+  font: var(--text-headline-2-med);
+  line-height: 1.3;
+}
+
+.checkRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+
+  margin-top: 0.8rem;
+
+  cursor: pointer;
+}
+
+.checkCircle {
+  width: 2rem;
+  height: 2rem;
+
+  border-radius: 50%;
+  background: var(--grey-1-1);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--grey-3); 
+}
+
+.checked {
+  background: var(--blue-1);
+  color: #ffffff;
+}
+
+.checkIcon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/* 체크됐을 때 */
+.checked .checkIcon {
+  color: var(--blue-3);
+}
+
+.checkText {
+  color: var(--grey-4);
+  font: var(--text-body-1-reg);
+}
+
+.bottom {
+  display: flex;
+
+  border-top: 0.0625rem solid var(--grey-2);
+}
+
+.button {
+  flex: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 1.2rem 0;
+
+
+  cursor: pointer;
+}
+
+.cancelBtn {
+  color: var(--grey-3-1);
+  font: var(--text-headline-2-med);
+  border-right: 0.0625rem solid var(--grey-2);
+}
+
+.cancelBtn:hover {
+    background: var(--grey-2);
+}
+
+.confirmBtn {
+  color: var(--blue-4);
+  font: var(--text-headline-2-med);
+}
+
+.confirmBtn:hover {
+    background: var(--grey-2);
+}
