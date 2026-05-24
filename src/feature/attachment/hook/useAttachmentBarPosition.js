@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const IOS_KEYBOARD_TOOLBAR = 44;
+const IOS_KEYBOARD_TOOLBAR = 55;
 const VV_EVENTS = ['resize', 'scroll'];
 const DOC_EVENTS = ['focusin', 'focusout'];
 
@@ -12,22 +12,23 @@ const isAndroid = () => /Android/i.test(navigator.userAgent);
 
 const getIOSToolbarOffset = () => {
   const el = document.activeElement;
-  if (!el || el.isContentEditable) return 0;
-  if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+  if (!el) return 0;
+  if (
+    el.isContentEditable ||
+    el.tagName === 'INPUT' ||
+    el.tagName === 'TEXTAREA'
+  ) {
     return IOS_KEYBOARD_TOOLBAR;
   }
   return 0;
 };
 
 const computeIOSOffset = (vv) =>
-  Math.max(
-    0,
-    window.innerHeight - vv.height - vv.offsetTop - getIOSToolbarOffset()
-  );
+  Math.max(0, window.innerHeight - vv.height - getIOSToolbarOffset());
 
 const computeAndroidOffset = (vv) => {
   const keyboardHeight = window.innerHeight - vv.height;
-  return keyboardHeight > 0 ? keyboardHeight - vv.offsetTop : 0;
+  return keyboardHeight > 0 ? Math.max(0, keyboardHeight - vv.offsetTop) : 0;
 };
 
 export function useAttachmentBarPosition() {
