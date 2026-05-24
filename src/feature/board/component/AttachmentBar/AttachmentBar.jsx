@@ -33,8 +33,8 @@ export default function AttachmentBar({
 
   return (
     <div ref={attachmentBarRef} className={styles.bar}>
-      {isEditorOpen && editor && (
-        <FixedMenuEditor editor={editor} isTitleFocused={isTitleFocused} />
+      {isEditorOpen && editor && !isTitleFocused && (
+        <FixedMenuEditor editor={editor} />
       )}
       <div className={styles.attachmentBar}>
         <Icon
@@ -77,11 +77,16 @@ export default function AttachmentBar({
         />
 
         <Icon
-          id={isEditorOpen ? 'open-editor-fill' : 'open-editor'}
+          id={
+            isEditorOpen && !isTitleFocused ? 'open-editor-fill' : 'open-editor'
+          }
           width={27}
           height={21}
-          className={styles.image}
-          onClick={() => setIsEditorOpen((prev) => !prev)}
+          className={`${styles.image} ${isTitleFocused ? styles.disabled : ''}`}
+          onClick={() => {
+            if (isTitleFocused) return;
+            setIsEditorOpen((prev) => !prev);
+          }}
           onMouseDown={(e) => e.preventDefault()}
         />
       </div>
