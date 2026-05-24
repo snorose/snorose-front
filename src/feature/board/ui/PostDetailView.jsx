@@ -39,32 +39,37 @@ export default function PostDetailView({
 }) {
 
   const { userInfo } = useAuth();
+
   const [linkModalOpen, setLinkModalOpen] = useState(false);
   const [selectedLink, setSelectedLink] = useState('');
   const [dontshowAgain, setDontShowAgain] = useState(false);
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
 
-  const storageKey = `hideLinkAlert_${userInfo?.id}`;
+  // userInfo 로딩 전이면 storageKey를 null로
+  const storageKey = userInfo?.encryptedUserId
+    ? `hideLinkAlert_${userInfo.encryptedUserId}`
+    : null;
+
   const handleLinkClick = (event) => {
     const anchor = event.target.closest('a');
-
     if (!anchor) return;
-
     event.preventDefault();
 
     const href = anchor.getAttribute('href');
-
     if (!href) return;
 
-    const shouldHide = localStorage.getItem(storageKey);
+    // storageKey 없으면 항상 모달 표시
+    const shouldHide = storageKey
+      ? localStorage.getItem(storageKey) === 'true'
+      : false;
 
     setSelectedLink(href);
 
-    if (shouldHide === 'true') {
+    if (shouldHide) {
       window.open(href, '_blank');
     } else {
-      setLinkModalOpen(true)
-    } 
+      setLinkModalOpen(true);
+    }
   };
 
   const sanitizedContent = useMemo(() => {
