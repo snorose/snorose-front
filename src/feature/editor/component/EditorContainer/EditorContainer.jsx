@@ -202,9 +202,7 @@ export default function EditorContainer({
 
   return (
     <>
-      <div
-        className={styles.editor}
-      >
+      <div className={styles.editor}>
         <EditorContent editor={editor} />
       </div>
 
@@ -218,7 +216,16 @@ export default function EditorContainer({
             strategy: 'fixed', // 모바일 키보드 대응
             offset: 8,
             flip: true,
-            shift: { padding: 8 }, // 화면 가장자리 넘침 자동 보정
+            shift: { padding: 8 },
+            onShow: () => {
+              requestAnimationFrame(() => {
+                if (editor && !editor.isDestroyed) {
+                  editor.view.dispatch(
+                    editor.state.tr.setMeta('bubbleMenu', 'updatePosition')
+                  );
+                }
+              });
+            },
           }}
         >
           <LinkBubbleMenu
