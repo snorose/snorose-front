@@ -12,6 +12,7 @@ import LinkAlertModal from '@/shared/component/modal/LinkAlertModal/LinkAlertMod
 import { ROLE, TOAST } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useModalReset, useToast } from '@/shared/hook';
+import useAuth from '@/shared/hook/useAuth';
 import { DateTime, linkifyHtml } from '@/shared/lib';
 
 import {
@@ -36,11 +37,14 @@ export default function PostDetailView({
   CommentInputContainer,
   BellIcon,
 }) {
+
+  const { userInfo } = useAuth();
   const [linkModalOpen, setLinkModalOpen] = useState(false);
   const [selectedLink, setSelectedLink] = useState('');
   const [dontshowAgain, setDontShowAgain] = useState(false);
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
 
+  const storageKey = `hideLinkAlert_${userInfo?.id}`;
   const handleLinkClick = (event) => {
     const anchor = event.target.closest('a');
 
@@ -52,7 +56,7 @@ export default function PostDetailView({
 
     if (!href) return;
 
-    const shouldHide = localStorage.getItem('hideLinkAlert');
+    const shouldHide = localStorage.getItem(storageKey);
 
     setSelectedLink(href);
 
@@ -138,6 +142,10 @@ export default function PostDetailView({
         setChecked={setDontShowAgain}
         onClose={() => setLinkModalOpen(false)}
         onConfirm={() => {
+          if (dontshowAgain) {
+            localStorage.setItem(storageKey, 'true');
+          }
+
           window.open(selectedLink, '_blank');
           setLinkModalOpen(false);
         }}
