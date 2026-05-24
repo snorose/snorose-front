@@ -24,24 +24,14 @@ export default function LinkAlertModal({
       onConfirm={onConfirm}
       confirmButtonClassName={styles.linkConfirmButton}
     >
-      <div
-        className={styles.checkRow}
-        onClick={() => setChecked(!checked)}
-      >
+      <div className={styles.checkRow} onClick={() => setChecked(!checked)}>
         <div
-          className={`${styles.checkCircle} ${
-            checked ? styles.checked : ''
-          }`}
+          className={`${styles.checkCircle} ${checked ? styles.checked : ''}`}
         >
-          <Icon
-            id='check-editor'
-            className={styles.checkIcon}
-          />
+          <Icon id='check-editor' className={styles.checkIcon} />
         </div>
 
-        <span className={styles.checkText}>
-          이 게시판에서 다시 보지 않기
-        </span>
+        <span className={styles.checkText}>다시 보지 않기</span>
       </div>
     </ConfirmModal>
   );
