@@ -8,9 +8,11 @@ import {
   FetchLoading,
   Icon,
 } from '@/shared/component';
+import LinkAlertModal from '@/shared/component/modal/LinkAlertModal/LinkAlertModal';
 import { ROLE, TOAST } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useModalReset, useToast } from '@/shared/hook';
+import useAuth from '@/shared/hook/useAuth';
 import { DateTime, linkifyHtml } from '@/shared/lib';
 
 import {
@@ -35,7 +37,40 @@ export default function PostDetailView({
   CommentInputContainer,
   BellIcon,
 }) {
+
+  const { userInfo } = useAuth();
+
+  const [linkModalOpen, setLinkModalOpen] = useState(false);
+  const [selectedLink, setSelectedLink] = useState('');
+  const [dontShowAgain, setDontShowAgain] = useState(false);
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
+
+  // userInfo 로딩 전이면 storageKey를 null로
+  const storageKey = userInfo?.encryptedUserId
+    ? `hideLinkAlert_${userInfo.encryptedUserId}`
+    : null;
+
+  const handleLinkClick = (event) => {
+    const anchor = event.target.closest('a');
+    if (!anchor) return;
+    event.preventDefault();
+
+    const href = anchor.getAttribute('href');
+    if (!href) return;
+
+    // storageKey 없으면 항상 모달 표시
+    const shouldHide = storageKey
+      ? localStorage.getItem(storageKey) === 'true'
+      : false;
+
+    setSelectedLink(href);
+
+    if (shouldHide) {
+      window.open(href, '_blank', 'noopener,noreferrer');
+    } else {
+      setLinkModalOpen(true);
+    }
+  };
 
   const sanitizedContent = useMemo(() => {
     if (!data?.content) return '';
@@ -78,6 +113,7 @@ export default function PostDetailView({
 
         <div
           className={editorStyles.editor}
+          onClick={handleLinkClick}
           dangerouslySetInnerHTML={{ __html: sanitizedContent }}
         />
 
@@ -105,6 +141,24 @@ export default function PostDetailView({
       />
 
       <MoreModal deletePost={deletePost} data={data} />
+      <LinkAlertModal
+        isOpen={linkModalOpen}
+        checked={dontShowAgain}
+        setChecked={setDontShowAgain}
+        onClose={() => {
+          setLinkModalOpen(false);
+          setDontShowAgain(false);
+        }}
+        onConfirm={() => {
+          if (dontShowAgain && storageKey) {
+            localStorage.setItem(storageKey, 'true');
+          }
+
+          window.open(selectedLink, '_blank', 'noopener,noreferrer');
+          setLinkModalOpen(false);
+          setDontShowAgain(false);
+        }}
+      />
     </div>
   );
 }
