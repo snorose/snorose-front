@@ -6,6 +6,7 @@
   bottom: 0;
   z-index: 100;
 }
+
 .attachmentBar {
   height: 7rem;
   background-color: var(--blue-0);
@@ -13,13 +14,21 @@
   display: flex;
   align-items: center;
 }
+
 .image {
   margin-right: 2.4rem;
   cursor: pointer;
 }
+
+.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 .imageInput {
   display: none;
 }
+
 .videoInput {
   display: none;
 }

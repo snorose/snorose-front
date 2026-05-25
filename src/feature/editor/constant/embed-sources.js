@@ -13,7 +13,7 @@ export const EMBED_SOURCES = [
   },
   {
     name: 'instagram-reel',
-    sourcePattern: /instagram\.com\/reel\/([a-zA-Z0-9_-]+)/,
+    sourcePattern: /instagram\.com\/reels?\/([a-zA-Z0-9_-]+)/,
     toEmbedUrl: (_url, match) =>
       `https://www.instagram.com/reel/${match[1]}/embed/`,
     embedUrlPattern:
