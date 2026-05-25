@@ -42,7 +42,7 @@ export default function PostDetailView({
 
   const [linkModalOpen, setLinkModalOpen] = useState(false);
   const [selectedLink, setSelectedLink] = useState('');
-  const [dontshowAgain, setDontShowAgain] = useState(false);
+  const [dontShowAgain, setDontShowAgain] = useState(false);
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
 
   // userInfo 로딩 전이면 storageKey를 null로
@@ -66,7 +66,7 @@ export default function PostDetailView({
     setSelectedLink(href);
 
     if (shouldHide) {
-      window.open(href, '_blank');
+      window.open(href, '_blank', 'noopener,noreferrer');
     } else {
       setLinkModalOpen(true);
     }
@@ -143,16 +143,20 @@ export default function PostDetailView({
       <MoreModal deletePost={deletePost} data={data} />
       <LinkAlertModal
         isOpen={linkModalOpen}
-        checked={dontshowAgain}
+        checked={dontShowAgain}
         setChecked={setDontShowAgain}
-        onClose={() => setLinkModalOpen(false)}
+        onClose={() => {
+          setLinkModalOpen(false);
+          setDontShowAgain(false);
+        }}
         onConfirm={() => {
-          if (dontshowAgain) {
+          if (dontShowAgain && storageKey) {
             localStorage.setItem(storageKey, 'true');
           }
 
-          window.open(selectedLink, '_blank');
+          window.open(selectedLink, '_blank', 'noopener,noreferrer');
           setLinkModalOpen(false);
+          setDontShowAgain(false);
         }}
       />
     </div>
