@@ -1,13 +1,10 @@
-export type NetworkErrorType =
-  | 'TIMEOUT'
-  | 'OFFLINE'
-  | 'CONNECTION_ERROR'
-  | 'UNKNOWN';
-
 export class NetworkError extends Error {
-  readonly type: NetworkErrorType;
+  readonly type: 'OFFLINE' | 'TIMEOUT' | 'CONNECTION_ERROR';
 
-  constructor(message: string, option: { type: NetworkErrorType }) {
+  constructor(
+    message: string,
+    option: { type: 'OFFLINE' | 'TIMEOUT' | 'CONNECTION_ERROR' }
+  ) {
     super(message);
     this.name = `NetworkError`;
     this.type = option.type;
