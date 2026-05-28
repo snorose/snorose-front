@@ -14,9 +14,11 @@ export const HTTP_STATUS = {
 
 export const HTTP_STATUS_NAME = invertObject(HTTP_STATUS);
 
-export type HttpStatusCode = (typeof HTTP_STATUS)[keyof typeof HTTP_STATUS];
+type HttpStatusCode = (typeof HTTP_STATUS)[keyof typeof HTTP_STATUS];
 
 export type InfraErrorStatusCode =
   | typeof HTTP_STATUS.BAD_GATEWAY
   | typeof HTTP_STATUS.SERVICE_UNAVAILABLE
   | typeof HTTP_STATUS.GATEWAY_TIMEOUT;
+
+export type ApiErrorStatusCode = Exclude<HttpStatusCode, InfraErrorStatusCode>;

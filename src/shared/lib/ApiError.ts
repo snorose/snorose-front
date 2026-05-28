@@ -1,18 +1,18 @@
-import { HTTP_STATUS_NAME, type HttpStatusCode } from '@/shared/constant';
+import { type ApiErrorStatusCode } from '@/shared/constant';
 
 export class ApiError extends Error {
   readonly code: number;
-  readonly httpStatusCode: HttpStatusCode;
+  readonly errorStatusCode: ApiErrorStatusCode;
 
   constructor(
     message: string,
-    options: { code: number; httpStatusCode: HttpStatusCode }
+    options: { code: number; errorStatusCode: ApiErrorStatusCode }
   ) {
     super(message);
 
-    this.name = `ApiError [${HTTP_STATUS_NAME[options.httpStatusCode]}]`;
+    this.name = `ApiError`;
     this.code = options.code;
-    this.httpStatusCode = options.httpStatusCode;
+    this.errorStatusCode = options.errorStatusCode;
 
     Object.setPrototypeOf(this, new.target.prototype);
 
