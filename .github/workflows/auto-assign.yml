@@ -14,10 +14,18 @@ jobs:
   automation:
     runs-on: ubuntu-latest
     steps:
-      - name: Auto Assign and Set Issue Type
-        uses: actions/github-script@v6
+      - name: Generate Token
+        uses: actions/create-github-app-token@v3
+        id: app-token
+        continue-on-error: true
         with:
-          github-token: ${{ secrets.ISSUE_AUTOMIZATION || github.token }}
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
+
+      - name: Auto Assign and Set Issue Type
+        uses: actions/github-script@v9
+        with:
+          github-token: ${{ steps.app-token.outputs.token || github.token }}
           script: |
             const { owner, repo } = context.repo;
             const issue_number = context.payload.issue ? context.payload.issue.number : context.payload.pull_request.number;
@@ -83,5 +91,33 @@ jobs:
                 // 에러 발생 시 상세 메시지를 출력하여 원인 파악을 돕습니다.
                 console.log(`[Warning] Issue Type automation failed: ${e.message}`);
                 if (e.errors) console.log(`[Debug] GraphQL Errors: ${JSON.stringify(e.errors)}`);
+              }
+            }
+
+            // 3. PR 라벨 복사 (PR 제목에 #이슈번호가 있는 경우)
+            if (context.payload.pull_request) {
+              const issueMatch = title.match(/#(\d+)/);
+              if (issueMatch) {
+                const linkedIssueNumber = parseInt(issueMatch[1]);
+                try {
+                  const { data: linkedIssue } = await github.rest.issues.get({
+                    owner,
+                    repo,
+                    issue_number: linkedIssueNumber,
+                  });
+
+                  if (linkedIssue.labels && linkedIssue.labels.length > 0) {
+                    const labelsToAdd = linkedIssue.labels.map(l => typeof l === 'string' ? l : l.name);
+                    await github.rest.issues.addLabels({
+                      owner,
+                      repo,
+                      issue_number,
+                      labels: labelsToAdd
+                    });
+                    console.log(`[Success] Copied labels from #${linkedIssueNumber}: ${labelsToAdd.join(', ')}`);
+                  }
+                } catch (e) {
+                  console.log(`[Warning] Failed to copy labels from #${linkedIssueNumber}: ${e.message}`);
+                }
               }
             }
