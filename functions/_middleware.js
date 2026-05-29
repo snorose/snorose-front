@@ -32,19 +32,19 @@ const STATIC_ROUTES = {
 };
 
 function getOGData(pathname) {
-  if (STATIC_ROUTES[pathname]) return STATIC_ROUTES[pathname];
+  const normalized =
+    pathname.endsWith('/') && pathname !== '/'
+      ? pathname.slice(0, -1)
+      : pathname;
 
-  // /board/:boardPath/post/:postId 등 하위 경로는 게시판명으로 fallback
-  if (pathname.startsWith('/board/')) {
-    for (const [route, og] of Object.entries(STATIC_ROUTES)) {
-      if (
-        route.startsWith('/board/') &&
-        (pathname === route || pathname.startsWith(route + '/'))
-      ) {
-        return og;
-      }
-    }
-    return STATIC_ROUTES['/board'] || DEFAULT_OG;
+  if (STATIC_ROUTES[normalized]) return STATIC_ROUTES[normalized];
+
+  if (normalized.startsWith('/board/')) {
+    const segments = normalized.split('/').filter(Boolean);
+
+    const boardPath = '/' + segments.slice(0, 2).join('/');
+
+    return STATIC_ROUTES[boardPath] ?? STATIC_ROUTES['/board'] ?? DEFAULT_OG;
   }
 
   return DEFAULT_OG;
@@ -53,52 +53,65 @@ function getOGData(pathname) {
 export async function onRequest(context) {
   const response = await context.next();
 
-  const contentType = response.headers.get('content-type') ?? '';
-  if (!contentType.includes('text/html')) return response;
+  try {
+    const contentType = response.headers.get('content-type') ?? '';
+    if (!contentType.includes('text/html')) return response;
 
-  const url = new URL(context.request.url);
-  const ogData = getOGData(url.pathname);
+    const url = new URL(context.request.url);
+    const ogData = getOGData(url.pathname);
 
-  return new HTMLRewriter()
-    .on("meta[property='og:title']", {
-      element(el) {
-        el.setAttribute('content', ogData.title);
-      },
-    })
-    .on("meta[property='og:description']", {
-      element(el) {
-        el.setAttribute('content', ogData.description);
-      },
-    })
-    .on("meta[property='og:image']", {
-      element(el) {
-        el.setAttribute('content', ogData.image);
-      },
-    })
-    .on("meta[property='og:url']", {
-      element(el) {
-        el.setAttribute('content', url.origin + url.pathname);
-      },
-    })
-    .on("meta[name='twitter:title']", {
-      element(el) {
-        el.setAttribute('content', ogData.title);
-      },
-    })
-    .on("meta[name='twitter:description']", {
-      element(el) {
-        el.setAttribute('content', ogData.description);
-      },
-    })
-    .on("meta[name='twitter:image']", {
-      element(el) {
-        el.setAttribute('content', ogData.image);
-      },
-    })
-    .on('title', {
-      element(el) {
-        el.setInnerContent(ogData.title);
-      },
-    })
-    .transform(response);
+    return new HTMLRewriter()
+      .on('title', {
+        element(el) {
+          el.setInnerContent(ogData.title);
+        },
+      })
+
+      .on('meta[property="og:title"]', {
+        element(el) {
+          el.setAttribute('content', ogData.title);
+        },
+      })
+      .on('meta[property="og:description"]', {
+        element(el) {
+          el.setAttribute('content', ogData.description);
+        },
+      })
+      .on('meta[property="og:image"]', {
+        element(el) {
+          el.setAttribute('content', ogData.image);
+        },
+      })
+      .on('meta[property="og:url"]', {
+        element(el) {
+          el.setAttribute('content', url.origin + url.pathname);
+        },
+      })
+
+      .on('meta[name="twitter:card"]', {
+        element(el) {
+          el.setAttribute('content', 'summary_large_image');
+        },
+      })
+      .on('meta[name="twitter:title"]', {
+        element(el) {
+          el.setAttribute('content', ogData.title);
+        },
+      })
+      .on('meta[name="twitter:description"]', {
+        element(el) {
+          el.setAttribute('content', ogData.description);
+        },
+      })
+      .on('meta[name="twitter:image"]', {
+        element(el) {
+          el.setAttribute('content', ogData.image);
+        },
+      })
+
+      .transform(response);
+  } catch (error) {
+    console.error('OG 주입 미들웨어 에러 발생:', error);
+    return response;
+  }
 }
