@@ -503,6 +503,8 @@ export function NewWritePostPage({ isNotice = false }) {
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [isTitleFocused, setIsTitleFocused] = useState(false);
+  const [editor, setEditor] = useState(null);
 
   const [isBlock, setIsBlock] = useState(false);
 
@@ -727,12 +729,29 @@ export function NewWritePostPage({ isNotice = false }) {
                 placeholder='제목을 입력해주세요'
                 value={title}
                 onChange={handleTitleChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+                    e.preventDefault();
+                  }
+                }}
+                onFocus={() => setIsTitleFocused(true)}
+                onBlur={() => setIsTitleFocused(false)}
               />
-              <TextareaAutosize
+              {/*<TextareaAutosize
                 className={styles.text}
                 placeholder='내용을 작성해주세요'
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
+              />*/}
+              <EditorContainer
+                placeholder='내용'
+                onEditorReady={(editorInstance) => setEditor(editorInstance)}
+                onChangeEditor={(editor) => {
+                  const sanitized = sanitizeHtml(
+                    preserveEmptyParagraphs(editor.getHTML())
+                  );
+                  setContent(sanitized);
+                }}
               />
               <AttachmentList
                 attachmentsInfo={attachmentsInfo}
@@ -773,6 +792,8 @@ export function NewWritePostPage({ isNotice = false }) {
         <AttachmentBar
           attachmentsInfo={attachmentsInfo}
           setAttachmentsInfo={setAttachmentsInfo}
+          editor={editor}
+          isTitleFocused={isTitleFocused}
         />
       </div>
 

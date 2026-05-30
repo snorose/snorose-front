@@ -385,6 +385,7 @@ export function NewEditPostPage({ isNotice = false }) {
   const [userDisplay, setUserDisplay] = useState('');
   const [submitDisabled, setSubmitDisabled] = useState(false);
   const [isBlock, setIsBlock] = useState(false);
+  const [isTitleFocused, setIsTitleFocused] = useState(false);
 
   //'게시글 상세 조회' API에서 제공하는 기존 첨부파일 정보
   const [attachmentsInfo, setAttachmentsInfo] = useState([]);
@@ -393,13 +394,15 @@ export function NewEditPostPage({ isNotice = false }) {
   const [trashImageIndex, setTrashImageIndex] = useState(null);
   const trashImageConfirmModal = useModal();
 
+  const [editor, setEditor] = useState(null);
+
   // isBlock 업데이트
   useEffect(() => {
     if (!data || Object.keys(data).length === 0) return;
 
     setIsBlock(
       data.title !== title.trim() ||
-        data.content !== content.trim() ||
+        data.content !== editor?.getHTML() ||
         data.isNotice !== isNotice ||
         data.attachments !== attachmentsInfo
     );
@@ -443,6 +446,13 @@ export function NewEditPostPage({ isNotice = false }) {
     setAttachmentsInfo(data.attachments);
   }, [data]);
 
+  // 에디터에 기존 게시글 내용 반영
+  useEffect(() => {
+    if (!editor || !data?.content) return;
+
+    editor.commands.setContent(data.content);
+  }, [editor, data]);
+
   // 게시글 수정
   const mutation = useMutation({
     mutationKey: [MUTATION_KEY.editPost],
@@ -484,7 +494,7 @@ export function NewEditPostPage({ isNotice = false }) {
       boardId,
       postId,
       title,
-      content,
+      content: sanitizeHtml(preserveEmptyParagraphs(editor?.getHTML() ?? '')),
       isNotice,
       attachmentsInfo,
       deleteAttachments,
@@ -560,12 +570,29 @@ export function NewEditPostPage({ isNotice = false }) {
                 placeholder='제목을 입력해주세요'
                 value={title}
                 onChange={handleTitleChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+                    e.preventDefault();
+                  }
+                }}
+                onFocus={() => setIsTitleFocused(true)}
+                onBlur={() => setIsTitleFocused(false)}
               />
-              <TextareaAutosize
+              {/*<TextareaAutosize
                 className={styles.text}
                 placeholder='내용을 작성해주세요'
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
+              />*/}
+              <EditorContainer
+                placeholder='내용'
+                onEditorReady={setEditor}
+                onChangeEditor={(editor) => {
+                  const sanitized = sanitizeHtml(
+                    preserveEmptyParagraphs(editor.getHTML())
+                  );
+                  setContent(sanitized);
+                }}
               />
               <AttachmentList
                 attachmentsInfo={attachmentsInfo}
@@ -606,6 +633,8 @@ export function NewEditPostPage({ isNotice = false }) {
         <AttachmentBar
           attachmentsInfo={attachmentsInfo}
           setAttachmentsInfo={setAttachmentsInfo}
+          editor={editor}
+          isTitleFocused={isTitleFocused}
         />
       </div>
 
