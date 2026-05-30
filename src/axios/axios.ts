@@ -76,13 +76,13 @@ function throwNormalizedError(error: unknown): never {
     !isJsonResponse
   ) {
     throw new InfraError(errorMessage, {
-      errorStatusCode: status as InfraErrorStatusCode,
+      status: status as InfraErrorStatusCode,
     });
   }
 
   throw new ApiError(errorMessage, {
     code: errorCode,
-    errorStatusCode: status as ApiErrorStatusCode,
+    status: status as ApiErrorStatusCode,
   });
 }
 
