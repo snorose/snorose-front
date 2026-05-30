@@ -63,6 +63,7 @@ export default function EditPostPage() {
   const [userDisplay, setUserDisplay] = useState('');
   const [submitDisabled, setSubmitDisabled] = useState(false);
   const [isBlock, setIsBlock] = useState(false);
+  const [isTitleFocused, setIsTitleFocused] = useState(false);
 
   //'게시글 상세 조회' API에서 제공하는 기존 첨부파일 정보
   const [attachmentsInfo, setAttachmentsInfo] = useState([]);
@@ -264,6 +265,13 @@ export default function EditPostPage() {
                 placeholder='제목을 입력해주세요'
                 value={title}
                 onChange={handleTitleChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+                    e.preventDefault();
+                  }
+                }}
+                onFocus={() => setIsTitleFocused(true)}
+                onBlur={() => setIsTitleFocused(false)}
               />
               {/*<TextareaAutosize
                 className={styles.text}
@@ -329,6 +337,7 @@ export default function EditPostPage() {
           attachmentsInfo={attachmentsInfo}
           setAttachmentsInfo={setAttachmentsInfo}
           editor={editor}
+          isTitleFocused={isTitleFocused}
         />
       </div>
 
