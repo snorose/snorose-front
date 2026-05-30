@@ -6,9 +6,9 @@ export class ApiError extends Error {
 
   constructor(
     message: string,
-    options: { code: number; status: ApiErrorStatusCode }
+    options: { code: number; status: ApiErrorStatusCode; cause?: unknown }
   ) {
-    super(message);
+    super(message, { cause: options.cause });
     this.name = `ApiError`;
     this.code = options.code;
     this.status = options.status;
@@ -16,9 +16,7 @@ export class ApiError extends Error {
     Object.setPrototypeOf(this, new.target.prototype);
 
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, ApiError);
-    } else {
-      this.stack = new Error(message).stack;
+      Error.captureStackTrace(this, new.target);
     }
   }
 }

@@ -1,20 +1,23 @@
+type NetworkErrorType = 'OFFLINE' | 'TIMEOUT' | 'CONNECTION_ERROR';
+
 export class NetworkError extends Error {
-  readonly type: 'OFFLINE' | 'TIMEOUT' | 'CONNECTION_ERROR';
+  readonly type: NetworkErrorType;
 
   constructor(
     message: string,
-    option: { type: 'OFFLINE' | 'TIMEOUT' | 'CONNECTION_ERROR' }
+    options: {
+      type: NetworkErrorType;
+      cause?: unknown;
+    }
   ) {
-    super(message);
+    super(message, { cause: options.cause });
     this.name = `NetworkError`;
-    this.type = option.type;
+    this.type = options.type;
 
     Object.setPrototypeOf(this, new.target.prototype);
 
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, NetworkError);
-    } else {
-      this.stack = new Error(message).stack;
+      Error.captureStackTrace(this, new.target);
     }
   }
 }
