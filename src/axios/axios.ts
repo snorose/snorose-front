@@ -46,40 +46,45 @@ privateClient.interceptors.request.use(
 
 privateClient.interceptors.response.use(
   (response) => response,
-  async (error: unknown) => {
-    if (axios.isCancel(error)) throw error;
+  throwNormalizedError
+);
 
-    if (!axios.isAxiosError(error)) throw error;
+function throwNormalizedError(error: unknown): never {
+  if (axios.isCancel(error)) throw error;
 
-    const axiosError = error as AxiosError<BaseResponse>;
+  if (!axios.isAxiosError(error)) throw error;
 
-    if (!axiosError.response) {
-      handleNetworkError(axiosError);
-    }
+  const axiosError = error as AxiosError<BaseResponse>;
 
-    const { headers, status, data } = axiosError.response;
+  if (!axiosError.response) {
+    return handleNetworkError(axiosError);
+  }
 
-    const isJsonResponse =
-      headers['content-type']?.includes('application/json');
-    const errorMessage =
-      data?.message || '알 수 없는 서버 에러가 발생했습니다.';
-    const errorCode = data?.code || 0;
+  const { headers, status, data } = axiosError.response;
 
-    if (
-      (INFRA_ERROR_STATUS_CODE as readonly number[]).includes(status) ||
-      !isJsonResponse
-    ) {
-      throw new InfraError(errorMessage, {
-        errorStatusCode: status as InfraErrorStatusCode,
-      });
-    }
+  const contentType = headers['content-type'] ?? headers['Content-Type'];
+  const isJsonResponse =
+    typeof contentType === 'string' && contentType.includes('application/json');
+  const errorMessage =
+    data?.message ||
+    axiosError.message ||
+    '알 수 없는 서버 에러가 발생했습니다.';
+  const errorCode = typeof data?.code === 'number' ? data.code : 0;
 
-    throw new ApiError(errorMessage, {
-      code: errorCode,
-      errorStatusCode: status as ApiErrorStatusCode,
+  if (
+    (INFRA_ERROR_STATUS_CODE as readonly number[]).includes(status) ||
+    !isJsonResponse
+  ) {
+    throw new InfraError(errorMessage, {
+      errorStatusCode: status as InfraErrorStatusCode,
     });
   }
-);
+
+  throw new ApiError(errorMessage, {
+    code: errorCode,
+    errorStatusCode: status as ApiErrorStatusCode,
+  });
+}
 
 function handleNetworkError(error: AxiosError<BaseResponse>): never {
   if (!window.navigator.onLine) {
