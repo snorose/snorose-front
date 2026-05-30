@@ -1,16 +1,12 @@
 import { InfraErrorStatusCode } from '@/shared/constant';
 
 export class InfraError extends Error {
-  readonly errorStatusCode: InfraErrorStatusCode;
+  readonly status: InfraErrorStatusCode;
 
-  constructor(
-    message: string,
-    options: { errorStatusCode: InfraErrorStatusCode }
-  ) {
+  constructor(message: string, options: { status: InfraErrorStatusCode }) {
     super(message);
-
     this.name = `InfraError`;
-    this.errorStatusCode = options.errorStatusCode;
+    this.status = options.status;
 
     Object.setPrototypeOf(this, new.target.prototype);
 

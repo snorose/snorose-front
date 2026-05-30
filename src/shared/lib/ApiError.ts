@@ -2,17 +2,16 @@ import { type ApiErrorStatusCode } from '@/shared/constant';
 
 export class ApiError extends Error {
   readonly code: number;
-  readonly errorStatusCode: ApiErrorStatusCode;
+  readonly status: ApiErrorStatusCode;
 
   constructor(
     message: string,
-    options: { code: number; errorStatusCode: ApiErrorStatusCode }
+    options: { code: number; status: ApiErrorStatusCode }
   ) {
     super(message);
-
     this.name = `ApiError`;
     this.code = options.code;
-    this.errorStatusCode = options.errorStatusCode;
+    this.status = options.status;
 
     Object.setPrototypeOf(this, new.target.prototype);
 
