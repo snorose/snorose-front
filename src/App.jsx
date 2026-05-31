@@ -1,23 +1,25 @@
 import { useEffect, useRef } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { Outlet } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
 
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { useScrollRestoration } from '@/shared/hook';
-import { AppLayout } from '@/shared/ui';
 import { Sidebar } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
+import { useScrollRestoration } from '@/shared/hook';
+import { AppLayout } from '@/shared/ui';
 
 import { PushNotificationManager } from '@/feature/alert/lib';
-
 import {
-  MAINTENANCE_START,
   MAINTENANCE_END,
+  MAINTENANCE_START,
 } from '@/feature/maintenance/hook/useMaintenance';
-import { MaintenancePage } from './page/maintenance';
+
+import GlobalErrorFallback from '@/GlobalErrorFallback';
 
 import styles from './App.module.css';
+import { MaintenancePage } from './page/maintenance';
 
 function App() {
   const appRef = useRef();
@@ -50,12 +52,14 @@ function App() {
   }
 
   return (
-    <AppLayout>
-      <div className={styles.app} ref={appRef}>
-        <Outlet />
-        <Sidebar />
-      </div>
-    </AppLayout>
+    <ErrorBoundary FallbackComponent={GlobalErrorFallback}>
+      <AppLayout>
+        <div className={styles.app} ref={appRef}>
+          <Outlet />
+          <Sidebar />
+        </div>
+      </AppLayout>
+    </ErrorBoundary>
   );
 }
 
