@@ -20,7 +20,7 @@ export default function ConfirmModal({ modalText, onConfirm, onCancel, children 
           dangerouslySetInnerHTML={{ __html: modalText.title }}
         />
         {modalText.description && (
-          <p
+          <div
             className={styles.description}
             dangerouslySetInnerHTML={{ __html: modalText.description }}
           />

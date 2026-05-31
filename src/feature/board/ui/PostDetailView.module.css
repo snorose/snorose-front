@@ -56,20 +56,23 @@
   margin: 0.7rem 0 2.6rem 0;
 
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
 }
 
 .title {
+  width: 100%;
   font: var(--text-title-1-bold);
   color: var(--grey-4);
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .views {
   white-space: nowrap;
   color: var(--blue-3);
   font-size: 1.1rem;
-  padding-left: 0.2rem;
-  padding-bottom: 0.7rem;
 }
 
 .sponsorBannerWrapper {
