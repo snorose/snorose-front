@@ -25,12 +25,7 @@ import {
   ReviewDownload,
 } from '@/feature/exam/component';
 import { convertToObject } from '@/feature/exam/lib';
-import {
-  LECTURE_TYPES,
-  SEMESTERS,
-  EXAM_TYPES,
-  FLEX_ALIGN,
-} from '@/feature/exam/constant';
+import { LECTURE_TYPES, SEMESTERS, EXAM_TYPES } from '@/feature/exam/constant';
 import { useScrap } from '@/feature/scrap/hook';
 import { useReportHandler } from '@/feature/report/hook/useReport';
 import { useCommentContext } from '@/feature/comment/context';
@@ -157,11 +152,13 @@ export default function ExamReviewPage() {
           <ReviewContentItem tag='시험 종류' value={EXAM_TYPE[examType]} />
           <ReviewContentItem tag='P/F' value={isPF ? 'O' : 'X'} />
           <ReviewContentItem tag='온라인 수업' value={isOnline ? 'O' : 'X'} />
-          <ReviewContentItem
-            tag='시험 유형 및 문항수'
-            value={questionDetail}
-            align={FLEX_ALIGN.flexStart}
-          />
+        </div>
+
+        <div className={styles.questionDetailSection}>
+          <p className={styles.questionDetailTitle}>시험 유형 및 문항수</p>
+          <div className={styles.questionDetail}>
+            <p className={styles.questionDetailContent}>{questionDetail}</p>
+          </div>
         </div>
 
         <ReviewDownload
