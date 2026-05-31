@@ -1,4 +1,6 @@
-import { QueryClient } from '@tanstack/react-query';
+import { QueryCache, QueryClient } from '@tanstack/react-query';
+
+import { handleQueryError } from '@/query-error-handler';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -7,4 +9,8 @@ export const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
     },
   },
+
+  queryCache: new QueryCache({
+    onError: handleQueryError,
+  }),
 });

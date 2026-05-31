@@ -1,4 +1,8 @@
 import * as Sentry from '@sentry/react';
+import axios from 'axios';
+
+import { HttpError } from '@/shared/lib/HttpError';
+import { NetworkError } from '@/shared/lib/NetworkError';
 
 export function initSentry() {
   Sentry.init({
@@ -16,6 +20,13 @@ export function initSentry() {
 
     replaysOnErrorSampleRate: 1.0, // 에러 발생 시 세션 리플레이 100%
     replaysSessionSampleRate: 0.05, // 전체 세션 중 5%만 리플레이
+    beforeSend: (event, hint) => {
+      if (isCanceledRequestError(hint.originalException)) {
+        return null;
+      }
+
+      return event;
+    },
   });
 }
 
@@ -24,4 +35,16 @@ export function captureException(
   context: Parameters<typeof Sentry.captureException>[1]
 ) {
   Sentry.captureException(error, context);
+}
+
+export function isHttpError(error: Error): error is HttpError {
+  return error instanceof HttpError;
+}
+
+export function isNetworkError(error: Error): error is NetworkError {
+  return error instanceof NetworkError;
+}
+
+function isCanceledRequestError(error: unknown): boolean {
+  return axios.isCancel(error);
 }

@@ -9,7 +9,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ModalProvider } from '@/shared/context/ModalContext';
 import { ToastProvider } from '@/shared/context/ToastContext';
 import { growthbook } from '@/shared/lib';
-import { initSentry } from '@/shared/lib/sentry';
 
 import { CommentContextProvider } from '@/feature/comment/context';
 
@@ -17,6 +16,7 @@ import { queryClient } from '@/queryClient';
 // import { routeList } from '@/router.migration.js';
 import reportWebVitals from '@/reportWebVitals';
 import { routeList } from '@/router.js';
+import { initSentry } from '@/sentry';
 
 import '@/index.css';
 
