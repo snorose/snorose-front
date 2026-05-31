@@ -18,10 +18,9 @@ import { NotFoundPage } from '@/page/etc';
 
 import { getPostContent } from '@/apis';
 
-const ADMIN_BADGE_BOARD_IDS = [
-  BOARD_REGISTRY.find('notice').id,
-  BOARD_REGISTRY.find('event').id,
-];
+const NOTICE_BOARD_ID = BOARD_REGISTRY.find('notice').id;
+const EVENT_BOARD_ID = BOARD_REGISTRY.find('event').id;
+const ADMIN_BADGE_BOARD_IDS = [NOTICE_BOARD_ID, EVENT_BOARD_ID];
 
 export default function PostDetailPage() {
   return (
