@@ -52,14 +52,14 @@ function App() {
   }
 
   return (
-    <ErrorBoundary FallbackComponent={GlobalErrorFallback}>
-      <AppLayout>
+    <AppLayout>
+      <ErrorBoundary FallbackComponent={GlobalErrorFallback}>
         <div className={styles.app} ref={appRef}>
           <Outlet />
           <Sidebar />
         </div>
-      </AppLayout>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </AppLayout>
   );
 }
 
