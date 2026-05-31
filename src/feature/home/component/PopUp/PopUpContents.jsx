@@ -44,10 +44,10 @@ const POPUP_CONTENTS = [
     endDate: '2026-05-04',
   },
   {
-    title: '[캘린더] 5월 스노로즈 일정',
+    title: '[캘린더] 6월 스노로즈 일정',
     image: calendarImage,
-    startDate: '2026-04-28',
-    endDate: '2026-05-10',
+    startDate: '2026-05-31',
+    endDate: '2026-06-10',
   },
 ];
 
