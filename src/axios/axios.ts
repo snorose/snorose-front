@@ -1,19 +1,19 @@
 import axios, { AxiosError } from 'axios';
 
-import {
-  ApiErrorStatusCode,
-  INFRA_ERROR_STATUS_CODE,
-  InfraErrorStatusCode,
-} from '@/shared/constant';
-import { ApiError } from '@/shared/lib/ApiError';
-import { InfraError } from '@/shared/lib/InfraError';
+import { HttpError } from '@/shared/lib/HttpError';
 import { NetworkError } from '@/shared/lib/NetworkError';
+
+type ApiResponseBase = {
+  code: number;
+  message: string;
+};
 
 const publicClient = axios.create({
   baseURL: process.env.REACT_APP_SERVER_DOMAIN,
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 10000,
 });
 
 const privateClient = axios.create({
@@ -22,14 +22,8 @@ const privateClient = axios.create({
     'Content-Type': 'application/json',
   },
   withCredentials: true,
+  timeout: 10000,
 });
-
-interface BaseResponse<T = unknown> {
-  success: boolean;
-  code: number;
-  message: string;
-  result?: T;
-}
 
 privateClient.interceptors.request.use(
   (config) => {
@@ -44,70 +38,85 @@ privateClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+publicClient.interceptors.response.use(
+  (response) => response,
+  throwNormalizedError
+);
+
 privateClient.interceptors.response.use(
   (response) => response,
   throwNormalizedError
 );
 
-function throwNormalizedError(error: unknown): never {
-  if (axios.isCancel(error)) throw error;
-
-  if (!axios.isAxiosError(error)) throw error;
-
-  const axiosError = error as AxiosError<BaseResponse>;
-
-  if (!axiosError.response) {
-    return handleNetworkError(axiosError);
+export function throwNormalizedError(error: unknown): never {
+  if (axios.isCancel(error)) {
+    throw error;
   }
 
-  const { headers, status, data } = axiosError.response;
+  if (!axios.isAxiosError(error)) {
+    throw error;
+  }
 
-  const contentType = headers['content-type'] ?? headers['Content-Type'];
-  const isJsonResponse =
-    typeof contentType === 'string' && contentType.includes('application/json');
-  const errorMessage =
-    data?.message ||
-    axiosError.message ||
-    '알 수 없는 서버 에러가 발생했습니다.';
-  const errorCode = typeof data?.code === 'number' ? data.code : 0;
+  const axiosError = error as AxiosError<unknown>;
+  const response = axiosError.response;
 
-  if (
-    (INFRA_ERROR_STATUS_CODE as readonly number[]).includes(status) ||
-    !isJsonResponse
-  ) {
-    throw new InfraError(errorMessage, {
-      status: status as InfraErrorStatusCode,
+  if (!response) {
+    throwNetworkError(axiosError);
+  }
+
+  const { status, data } = response;
+
+  if (isApiResponseBase(data)) {
+    throw new HttpError(data.message, {
+      status,
+      kind: 'API_CONTRACT',
+      code: data.code,
+      cause: axiosError,
     });
   }
 
-  throw new ApiError(errorMessage, {
-    code: errorCode,
-    status: status as ApiErrorStatusCode,
+  throw new HttpError(axiosError.message || '알 수 없는 오류가 발생했습니다.', {
+    status,
+    kind: 'UNEXPECTED_RESPONSE',
+    cause: axiosError,
   });
 }
 
-function handleNetworkError(error: AxiosError<BaseResponse>): never {
+function throwNetworkError(error: AxiosError<unknown>): never {
   if (!window.navigator.onLine) {
     throw new NetworkError(
       '인터넷 연결이 끊겼습니다. 네트워크 상태를 확인해 주세요.',
-      { type: 'OFFLINE' }
+      { type: 'OFFLINE', cause: error }
     );
   }
 
   if (error.code === 'ECONNABORTED') {
     throw new NetworkError('요청 시간이 초과되었습니다. 다시 시도해 주세요.', {
       type: 'TIMEOUT',
+      cause: error,
     });
   }
 
   if (error.code === 'ERR_NETWORK') {
     throw new NetworkError(
       '서버와 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.',
-      { type: 'CONNECTION_ERROR' }
+      { type: 'CONNECTION_ERROR', cause: error }
     );
   }
 
-  throw error;
+  throw new NetworkError(
+    '서버와 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.',
+    { type: 'UNKNOWN', cause: error }
+  );
+}
+
+function isApiResponseBase(data: unknown): data is ApiResponseBase {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    typeof (data as Partial<ApiResponseBase>).code === 'number' &&
+    typeof (data as Partial<ApiResponseBase>).message === 'string'
+  );
 }
 
 export { privateClient, publicClient };

@@ -1,4 +1,4 @@
-type NetworkErrorType = 'OFFLINE' | 'TIMEOUT' | 'CONNECTION_ERROR';
+type NetworkErrorType = 'OFFLINE' | 'TIMEOUT' | 'CONNECTION_ERROR' | 'UNKNOWN';
 
 export class NetworkError extends Error {
   readonly type: NetworkErrorType;
@@ -6,8 +6,8 @@ export class NetworkError extends Error {
   constructor(
     message: string,
     options: {
+      cause: unknown;
       type: NetworkErrorType;
-      cause?: unknown;
     }
   ) {
     super(message, { cause: options.cause });
