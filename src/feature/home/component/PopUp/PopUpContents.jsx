@@ -44,6 +44,20 @@ const POPUP_CONTENTS = [
     endDate: '2026-05-04',
   },
   {
+    title: '[블로그] 2026 새학기 이벤트 돌아보기',
+    description:
+      '새내기들의 캠퍼스 라이프를 응원하기 위해 진행한 ‘2026 새학기 이벤트’의 기록을 담았습니다.',
+    link: [
+      {
+        title: '블로그 링크 (노션)',
+        url: 'https://snorose.notion.site/2026-3167ef0aa3bf8057a749d2c6442a2422',
+        isExternal: true,
+      },
+    ],
+    startDate: '2026-05-31',
+    endDate: '2026-06-10',
+  },
+  {
     title: '[캘린더] 6월 스노로즈 일정',
     image: calendarImage,
     startDate: '2026-05-31',
