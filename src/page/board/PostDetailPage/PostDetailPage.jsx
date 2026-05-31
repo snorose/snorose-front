@@ -51,7 +51,9 @@ function PostDetailLoader() {
   return (
     <PostDetailView
       data={data}
-      authorBadgeRoleId={currentBoard.id === 14 ? ROLE.admin : undefined}
+      authorBadgeRoleId={
+        [12, 14].includes(currentBoard.id) ? ROLE.admin : undefined
+      }
       deletePost={handleDelete}
       PostActionBar={
         <PostActionBar>
