@@ -4,6 +4,7 @@ import { FetchLoading, List, PullToRefresh } from '@/shared/component';
 import { BOARDS, NEW_ROUTES, ROLE } from '@/shared/constant';
 import { useBoard } from '@/shared/hook';
 import {
+  BOARD_REGISTRY,
   deduplicatePaginatedData,
   flatPaginationCache,
   getBoardTitleToTextId,
@@ -13,6 +14,8 @@ import { PostBar } from '@/feature/board/component';
 import { useSearch } from '@/feature/search/hook';
 
 import styles from './SearchResultList.module.css';
+
+const NOTICE_BOARD_ID = BOARD_REGISTRY.find('notice').id;
 
 export default function SearchResultList() {
   const { pathname } = useLocation();
@@ -91,7 +94,7 @@ function NewSearchResultList({ boardId }) {
 function getNoticeBadgeRoleId(post) {
   const isNotice =
     post.isNotice ||
-    Number(post.boardId) === 12 ||
+    Number(post.boardId) === NOTICE_BOARD_ID ||
     post.boardName === '공지사항';
 
   return isNotice ? ROLE.admin : undefined;
