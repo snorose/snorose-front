@@ -1,8 +1,6 @@
 import * as Sentry from '@sentry/react';
-import axios from 'axios';
 
-import { HttpError } from '@/shared/lib/HttpError';
-import { NetworkError } from '@/shared/lib/NetworkError';
+import { isCanceledRequestError } from '@/shared/lib/error-guard';
 
 export function initSentry() {
   Sentry.init({
@@ -35,16 +33,4 @@ export function captureException(
   context: Parameters<typeof Sentry.captureException>[1]
 ) {
   Sentry.captureException(error, context);
-}
-
-export function isHttpError(error: Error): error is HttpError {
-  return error instanceof HttpError;
-}
-
-export function isNetworkError(error: Error): error is NetworkError {
-  return error instanceof NetworkError;
-}
-
-function isCanceledRequestError(error: unknown): boolean {
-  return axios.isCancel(error);
 }

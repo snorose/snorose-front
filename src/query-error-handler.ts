@@ -2,10 +2,15 @@ import { Query } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { HTTP_STATUS_CODE } from '@/shared/constant';
+import {
+  isCanceledRequestError,
+  isHttpError,
+  isNetworkError,
+} from '@/shared/lib/error-guard';
 import { HttpError } from '@/shared/lib/HttpError';
 import { NetworkError } from '@/shared/lib/NetworkError';
 
-import { captureException, isHttpError, isNetworkError } from '@/sentry';
+import { captureException } from '@/sentry';
 
 export function handleQueryError(error: Error, query: Query) {
   if (isHttpError(error) && error.status === HTTP_STATUS_CODE.UNAUTHORIZED) {
@@ -13,17 +18,13 @@ export function handleQueryError(error: Error, query: Query) {
     return;
   }
 
-  if (isCanceledRequest(error)) return;
+  if (isCanceledRequestError(error)) return;
   if (!shouldReportToSentry(error)) return;
 
   captureException(error, {
     tags: getQueryErrorTags(error, query),
     extra: getQueryErrorExtra(error, query),
   });
-}
-
-function isCanceledRequest(error: unknown): boolean {
-  return axios.isCancel(error);
 }
 
 export function shouldReportToSentry(error: Error) {
