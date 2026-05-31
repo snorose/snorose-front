@@ -1,5 +1,4 @@
 import { Query } from '@tanstack/react-query';
-import axios from 'axios';
 
 import { HTTP_STATUS_CODE } from '@/shared/constant';
 import {
@@ -27,7 +26,7 @@ export function handleQueryError(error: Error, query: Query) {
   });
 }
 
-export function shouldReportToSentry(error: Error) {
+function shouldReportToSentry(error: Error) {
   if (isNetworkError(error)) {
     return error.type !== 'OFFLINE';
   }
@@ -44,7 +43,7 @@ export function shouldReportToSentry(error: Error) {
   return true;
 }
 
-export function getQueryErrorTags(error: Error, query: Query) {
+function getQueryErrorTags(error: Error, query: Query) {
   return {
     operation: 'query',
     error_kind: getErrorKind(error),
@@ -65,7 +64,7 @@ function getErrorKind(error: Error) {
   return 'unknown';
 }
 
-export function getQueryErrorExtra(error: Error, query: Query) {
+function getQueryErrorExtra(error: Error, query: Query) {
   return {
     queryKey: query.queryKey,
 
