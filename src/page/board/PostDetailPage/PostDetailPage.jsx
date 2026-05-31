@@ -6,7 +6,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { BackAppBar, FetchLoading } from '@/shared/component';
 import { QUERY_KEY, ROLE } from '@/shared/constant';
-import { getBoard } from '@/shared/lib';
+import { BOARD_REGISTRY, getBoard } from '@/shared/lib';
 
 import { BellIcon } from '@/feature/alert/component';
 import { PostActionBar } from '@/feature/board/component';
@@ -17,6 +17,11 @@ import { CommentInputContainer } from '@/feature/comment/component';
 import { NotFoundPage } from '@/page/etc';
 
 import { getPostContent } from '@/apis';
+
+const ADMIN_BADGE_BOARD_IDS = [
+  BOARD_REGISTRY.find('notice').id,
+  BOARD_REGISTRY.find('event').id,
+];
 
 export default function PostDetailPage() {
   return (
@@ -52,7 +57,7 @@ function PostDetailLoader() {
     <PostDetailView
       data={data}
       authorBadgeRoleId={
-        [12, 14].includes(currentBoard.id) ? ROLE.admin : undefined
+        ADMIN_BADGE_BOARD_IDS.includes(currentBoard.id) ? ROLE.admin : undefined
       }
       deletePost={handleDelete}
       PostActionBar={
