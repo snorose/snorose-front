@@ -32,12 +32,12 @@ import styles from './PostDetailView.module.css';
 
 export default function PostDetailView({
   data,
+  authorBadgeRoleId,
   deletePost,
   PostActionBar,
   CommentInputContainer,
   BellIcon,
 }) {
-
   const { userInfo } = useAuth();
 
   const [linkModalOpen, setLinkModalOpen] = useState(false);
@@ -102,7 +102,11 @@ export default function PostDetailView({
       )}
 
       <div className={styles.blueContainer}>
-        <MetaContainer {...data} BellIcon={BellIcon} />
+        <MetaContainer
+          {...data}
+          authorBadgeRoleId={authorBadgeRoleId}
+          BellIcon={BellIcon}
+        />
 
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>{data.title}</h1>
@@ -166,6 +170,7 @@ export default function PostDetailView({
 function MetaContainer({
   userDisplay,
   userRoleId,
+  authorBadgeRoleId,
   createdAt,
   isEdited,
   isNotice,
@@ -183,9 +188,11 @@ function MetaContainer({
     });
   };
 
+  const badgeRoleId = authorBadgeRoleId ?? userRoleId;
   const showBadge =
-    userRoleId === ROLE.official ||
-    (userRoleId === ROLE.admin && userDisplay !== '익명송이');
+    authorBadgeRoleId != null ||
+    badgeRoleId === ROLE.official ||
+    (badgeRoleId === ROLE.admin && userDisplay !== '익명송이');
   const showBellIcon = !isNotice && isWriter && BellIcon;
   const showMeatBallIcon = !isNotice || isWriter;
 
@@ -195,7 +202,7 @@ function MetaContainer({
         <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
         <p>{userDisplay || 'Unknown'}</p>
         {showBadge && (
-          <Badge userRoleId={userRoleId} className={styles.badge} />
+          <Badge userRoleId={badgeRoleId} className={styles.badge} />
         )}
         <p className={styles.dot}>·</p>
         <p>

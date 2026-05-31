@@ -1,21 +1,22 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useLocation, useParams } from 'react-router-dom';
+
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { getPostContent } from '@/apis';
-
 import { BackAppBar, FetchLoading } from '@/shared/component';
+import { QUERY_KEY, ROLE } from '@/shared/constant';
 import { getBoard } from '@/shared/lib';
-import { QUERY_KEY } from '@/shared/constant';
 
+import { BellIcon } from '@/feature/alert/component';
+import { PostActionBar } from '@/feature/board/component';
 import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { PostDetailView } from '@/feature/board/ui';
-import { PostActionBar } from '@/feature/board/component';
 import { CommentInputContainer } from '@/feature/comment/component';
-import { BellIcon } from '@/feature/alert/component';
 
 import { NotFoundPage } from '@/page/etc';
+
+import { getPostContent } from '@/apis';
 
 export default function PostDetailPage() {
   return (
@@ -50,6 +51,7 @@ function PostDetailLoader() {
   return (
     <PostDetailView
       data={data}
+      authorBadgeRoleId={currentBoard.id === 14 ? ROLE.admin : undefined}
       deletePost={handleDelete}
       PostActionBar={
         <PostActionBar>
