@@ -33,7 +33,7 @@ export function shouldReportToSentry(error: Error) {
 
   if (
     isHttpError(error) &&
-    error.kind === 'API_CONTRACT' &&
+    error.kind === 'API_RESPONSE' &&
     error.status >= 400 &&
     error.status < 500
   ) {

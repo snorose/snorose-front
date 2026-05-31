@@ -16,7 +16,7 @@ export default function GlobalErrorFallback({ error, resetErrorBoundary }) {
     return <>서비스 연결이 원활하지 않아요</>;
   }
 
-  if (error instanceof HttpError && error.kind === 'API_CONTRACT') {
+  if (error instanceof HttpError && error.kind === 'API_RESPONSE') {
     switch (error.status) {
       case HTTP_STATUS_CODE.UNAUTHORIZED:
         return (

@@ -1,4 +1,4 @@
-type HttpErrorKind = 'API_CONTRACT' | 'UNEXPECTED_RESPONSE';
+type HttpErrorKind = 'API_RESPONSE' | 'UNEXPECTED_RESPONSE';
 
 export class HttpError extends Error {
   readonly status: number;

@@ -29,7 +29,7 @@ export function throwNormalizedError(error: unknown): never {
   if (isApiResponseBase(data)) {
     throw new HttpError(data.message, {
       status,
-      kind: 'API_CONTRACT',
+      kind: 'API_RESPONSE',
       code: data.code,
       cause: axiosError,
     });
