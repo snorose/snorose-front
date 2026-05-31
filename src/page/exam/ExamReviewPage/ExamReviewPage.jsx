@@ -155,12 +155,14 @@ export default function ExamReviewPage() {
           <ReviewContentItem tag='온라인 수업' value={isOnline ? 'O' : 'X'} />
         </div>
 
-        <div className={styles.questionDetailSection}>
-          <p className={styles.questionDetailTitle}>시험 유형 및 문항수</p>
-          <div className={styles.questionDetail}>
-            <p className={styles.questionDetailContent}>{questionDetail}</p>
+        {questionDetail && (
+          <div className={styles.questionDetailSection}>
+            <p className={styles.questionDetailTitle}>시험 유형 및 문항 수</p>
+            <div className={styles.questionDetail}>
+              <p className={styles.questionDetailContent}>{questionDetail}</p>
+            </div>
           </div>
-        </div>
+        )}
 
         <ReviewDownload
           className={styles.fileDownload}
