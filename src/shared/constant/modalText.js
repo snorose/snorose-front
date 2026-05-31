@@ -163,7 +163,8 @@ const CONFIRM_MODAL = {
   },
   EXAM_REVIEW_DOWNLOAD: {
     title: '다운로드할까요?',
-    description: '다운로드시 50 포인트가 차감돼요',
+    description:
+      '<p style="font-size: 16px; color: #484848;">다운로드시 50 포인트가 차감돼요</p><p style="margin-top: 8px; font-size: 14px; color: #484848;">원활한 이용을 위해 Chrome 또는 \nEdge브라우저 사용을 권장해요.</p>',
     confirmText: '확인',
     cancelText: '취소',
   },
