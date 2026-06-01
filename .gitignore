@@ -36,3 +36,5 @@ yarn.lock
 *storybook.log
 
 storybook-static/*
+# Sentry Config File
+.sentryclirc

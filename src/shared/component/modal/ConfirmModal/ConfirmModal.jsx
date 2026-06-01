@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
-import { ModalContext } from '@/shared/context/ModalContext';
 import { DimModalLayout } from '@/shared/component';
+import { ModalContext } from '@/shared/context/ModalContext';
 
 import styles from './ConfirmModal.module.css';
 
@@ -20,7 +20,7 @@ export default function ConfirmModal({ modalText, onConfirm, onCancel }) {
           dangerouslySetInnerHTML={{ __html: modalText.title }}
         />
         {modalText.description && (
-          <p
+          <div
             className={styles.description}
             dangerouslySetInnerHTML={{ __html: modalText.description }}
           />

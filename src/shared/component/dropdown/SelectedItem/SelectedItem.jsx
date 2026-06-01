@@ -2,7 +2,13 @@ import { Icon } from '@/shared/component';
 
 import styles from './SelectedItem.module.css';
 
-export default function SelectedItem({ select, placeholder, isOpen, onClick }) {
+export default function SelectedItem({
+  select,
+  placeholder,
+  isOpen,
+  onClick,
+  status = 'default',
+}) {
   return (
     <div
       className={`
@@ -12,7 +18,7 @@ export default function SelectedItem({ select, placeholder, isOpen, onClick }) {
       `}
     >
       <div
-        className={`${styles.select} ${select ? '' : styles.unselect}`}
+        className={`${styles.select} ${select ? '' : styles.unselect} ${styles[status] || ''}`}
         onClick={onClick}
       >
         {select?.name || (
@@ -23,6 +29,7 @@ export default function SelectedItem({ select, placeholder, isOpen, onClick }) {
           width={16}
           height={9}
           className={`${styles.arrow} ${isOpen ? styles.rotated : ''}`}
+          fill='currentColor'
         />
       </div>
     </div>
