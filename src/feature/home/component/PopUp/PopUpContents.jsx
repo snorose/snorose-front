@@ -44,6 +44,20 @@ const POPUP_CONTENTS = [
     endDate: '2026-05-04',
   },
   {
+    title: '[전시] 2026 Low-Code AI Challenge 수상작 🏆',
+    description:
+      '스노로즈와 Upstage가 공동 주최한 2026 Low-Code AI Challenge의 수상작을 공개합니다. 일상 속 다양한 문제를 Low-Code 기반 AI 자동화로 해결한 프로젝트들을 만나보세요.',
+    link: [
+      {
+        title: '수상작 보러가기',
+        url: 'https://2026-hackathon.snorose.com',
+        isExternal: true,
+      },
+    ],
+    startDate: '2026-06-01',
+    endDate: '2026-06-10',
+  },
+  {
     title: '[블로그] 2026 새학기 이벤트 돌아보기',
     description:
       '새내기들의 캠퍼스 라이프를 응원하기 위해 진행한 ‘2026 새학기 이벤트’의 기록을 담았습니다.',
@@ -57,6 +71,7 @@ const POPUP_CONTENTS = [
     startDate: '2026-05-31',
     endDate: '2026-06-10',
   },
+
   {
     title: '[캘린더] 6월 스노로즈 일정',
     image: calendarImage,
