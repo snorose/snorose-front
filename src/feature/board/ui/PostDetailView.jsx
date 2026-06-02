@@ -39,7 +39,7 @@ export default function PostDetailView({
 }) {
 
   const { userInfo } = useAuth();
-  console.log('userInfo:', userInfo);
+
   const [linkModalOpen, setLinkModalOpen] = useState(false);
   const [selectedLink, setSelectedLink] = useState('');
   const [dontShowAgain, setDontShowAgain] = useState(false);
