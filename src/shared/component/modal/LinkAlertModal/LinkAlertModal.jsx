@@ -14,9 +14,9 @@ export default function LinkAlertModal({
   return (
     <ConfirmModal
       modalText={{
-        title: '외부 링크로 연결할까요?',
+        title: '외부 링크로 이동할까요?',
         description:
-          '다른 사용자가 공유한 외부 링크의 <br />안전 여부는 스노로즈에서 내용을 <br />확인하기 어려우니 주의해주세요',
+          '다른 사용자가 게시한 외부 링크는<br /> 안전하지 않을 수 있어요',
         cancelText: '취소',
         confirmText: '연결',
       }}
