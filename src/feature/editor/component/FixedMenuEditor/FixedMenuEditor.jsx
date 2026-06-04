@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useRef, useState } from 'react';
 
 import { useEditorState } from '@tiptap/react';
 
@@ -32,15 +32,13 @@ export default function FixedMenuEditor({ editor }) {
 
   const [textColor, setTextColor] = useState('var(--grey-4)');
   const [bgColor, setBgColor] = useState('');
-  const [showTextColor, setShowTextColor] = useState(false);
-  const [showBgColor, setShowBgColor] = useState(false);
 
   const textColorRef = useRef(null);
   const bgColorRef = useRef(null);
 
-  const [headingOpen, setHeadingOpen] = useState(false);
   const headingRef = useRef(null);
 
+  const [openedMenu, setOpenedMenu] = useState(null);
   const HEADING_OPTIONS = [
     { value: 'paragraph', label: '본문' },
     { value: '1', label: '소제목' },
@@ -51,22 +49,7 @@ export default function FixedMenuEditor({ editor }) {
     return 'paragraph';
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      [
-        { ref: textColorRef, setter: setShowTextColor },
-        { ref: bgColorRef, setter: setShowBgColor },
-        { ref: headingRef, setter: setHeadingOpen },
-      ].forEach(({ ref, setter }) => {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setter(false);
-        }
-      });
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  
 
   if (!editor) return null;
 
@@ -80,7 +63,13 @@ export default function FixedMenuEditor({ editor }) {
       <div ref={headingRef} className={styles.headingWrapper}>
         <button
           className={styles.headingButton}
-          onClick={() => setHeadingOpen((prev) => !prev)}
+          onClick={() => 
+            setOpenedMenu(
+              openedMenu === 'heading'
+                ? null
+                : 'heading'
+            )
+          }
         >
           {HEADING_OPTIONS.find((o) => o.value === getCurrentHeading())
             ?.label ?? '본문'}
@@ -93,7 +82,7 @@ export default function FixedMenuEditor({ editor }) {
           />
         </button>
 
-        {headingOpen && (
+        {openedMenu === 'heading' && (
           <div className={styles.headingDropdown}>
             {HEADING_OPTIONS.map((option) => (
               <button
@@ -109,7 +98,6 @@ export default function FixedMenuEditor({ editor }) {
                       .setHeading({ level: parseInt(option.value, 10) })
                       .run();
                   }
-                  setHeadingOpen(false);
                 }}
               >
                 {option.label}
@@ -122,14 +110,14 @@ export default function FixedMenuEditor({ editor }) {
       <div ref={textColorRef} className={styles.colorPickerWrapper}>
         {/* 폰트 색상 토글 버튼 */}
         <button
-          onClick={() => setShowTextColor((prev) => !prev)}
+          onClick={() => setOpenedMenu((prev) => prev === 'textColor' ? null : 'textColor')}
           style={{ color: textColor || 'var(--grey-4)' }}
         >
           <Icon id='font-color' width={24} height={24} />
         </button>
 
         <div
-          className={`${styles.colorPaletteInline} ${showTextColor ? styles.open : ''}`}
+          className={`${styles.colorPaletteInline} ${openedMenu === 'textColor' ? styles.open : ''}`}
         >
           {/* 색상 없음 */}
           <button
@@ -165,7 +153,7 @@ export default function FixedMenuEditor({ editor }) {
 
       <div ref={bgColorRef} className={styles.colorPickerWrapper}>
         <button
-          onClick={() => setShowBgColor((prev) => !prev)}
+          onClick={() => setOpenedMenu((prev) => prev === 'bgColor' ? null : 'bgColor')}
           style={{
             '--bg-icon-fill': bgColor || '#E6F7B1',
             '--bg-icon-stroke': bgColor || '#AAD916',
@@ -175,7 +163,7 @@ export default function FixedMenuEditor({ editor }) {
         </button>
 
         <div
-          className={`${styles.colorPaletteInline} ${showBgColor ? styles.open : ''}`}
+          className={`${styles.colorPaletteInline} ${openedMenu === 'bgColor' ? styles.open : ''}`}
         >
           <button
             className={styles.colorSwatchNone}
