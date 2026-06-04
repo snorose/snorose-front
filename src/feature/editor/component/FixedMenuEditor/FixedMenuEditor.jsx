@@ -1,4 +1,4 @@
-import React, {useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { useEditorState } from '@tiptap/react';
 
@@ -48,7 +48,6 @@ export default function FixedMenuEditor({ editor }) {
     if (editor.isActive('heading', { level: 1 })) return '1';
     return 'paragraph';
   };
-
   
 
   if (!editor) return null;
@@ -98,6 +97,7 @@ export default function FixedMenuEditor({ editor }) {
                       .setHeading({ level: parseInt(option.value, 10) })
                       .run();
                   }
+                  setOpenedMenu(null);
                 }}
               >
                 {option.label}
