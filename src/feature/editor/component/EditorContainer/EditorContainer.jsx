@@ -98,7 +98,14 @@ export default function EditorContainer({
         const doc = new DOMParser().parseFromString(html, 'text/html');
         doc.querySelectorAll('[style]').forEach((el) => {
           el.style.removeProperty('font-size');
+          el.style.removeProperty('color');
+          el.style.removeProperty('background-color');
+          el.style.removeProperty('font-weight');
+          el.style.removeProperty('text-decoration');
           if (!el.getAttribute('style')) el.removeAttribute('style');
+        });
+        doc.querySelectorAll('b, strong, u, s, strike, i').forEach((el) => {
+          el.replaceWith(...el.childNodes);
         });
         return doc.body.innerHTML;
       },
@@ -106,7 +113,6 @@ export default function EditorContainer({
     immediatelyRender: false,
     onUpdate: ({ editor }) => {
       if (onChangeEditor) onChangeEditor(editor);
-
       // 이미지 URL 링크는 메뉴 없이 즉시 이미지로 변환
       // (임베드 메뉴 노출 여부는 BubbleMenu의 shouldShow가 담당)
       const link = getLinkAtCursor(editor);
