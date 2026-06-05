@@ -102,11 +102,15 @@ export default function EditorContainer({
           el.style.removeProperty('background-color');
           el.style.removeProperty('font-weight');
           el.style.removeProperty('text-decoration');
-          if (!el.getAttribute('style')) el.removeAttribute('style');
+          if (el.style.length === 0) el.removeAttribute('style');
         });
-        doc.querySelectorAll('b, strong, u, s, strike, i').forEach((el) => {
-          el.replaceWith(...el.childNodes);
-        });
+        doc
+          .querySelectorAll('b, strong, u, s, strike, i, em, del')
+          .forEach((el) => {
+            if (el.parentNode) {
+              el.replaceWith(...el.childNodes);
+            }
+          });
         return doc.body.innerHTML;
       },
     },
