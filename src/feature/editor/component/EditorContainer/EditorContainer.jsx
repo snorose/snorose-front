@@ -94,6 +94,17 @@ export default function EditorContainer({
         if (typeof window === 'undefined' || !html) return html;
 
         const doc = new DOMParser().parseFromString(html, 'text/html');
+
+        doc.querySelectorAll('img').forEach((img) => {
+          const realSrc =
+            img.getAttribute('data-lazy-src') ||
+            img.getAttribute('data-src') ||
+            img.getAttribute('data-original');
+          if (realSrc) {
+            img.setAttribute('src', realSrc);
+          }
+        });
+
         doc.querySelectorAll('[style]').forEach((el) => {
           el.removeAttribute('style');
         });
