@@ -136,6 +136,8 @@ export default function EditorContainer({
             .extendMarkRange('link')
             .deleteSelection()
             .setImage({ src: link.url })
+            .createParagraphNear()
+            .focus()
             .run();
         }, 0);
       }
