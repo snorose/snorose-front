@@ -46,8 +46,8 @@ export default function PostDetailView({
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
 
   // userInfo 로딩 전이면 storageKey를 null로
-  const storageKey = userInfo?.encryptedUserId
-    ? `hideLinkAlert_${userInfo.encryptedUserId}`
+  const storageKey = userInfo?.loginId
+    ? `hideLinkAlert_${userInfo.loginId}`
     : null;
 
   const handleLinkClick = (event) => {
