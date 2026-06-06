@@ -54,6 +54,30 @@
   border-radius: 0.5rem;
 }
 
+.questionDetailSection {
+  margin: 1.7rem var(--default-margin) 0;
+}
+
+.questionDetailTitle {
+  margin-bottom: 0.8rem;
+  font: var(--text-body-1-reg);
+  color: var(--grey-3-1);
+}
+
+.questionDetail {
+  padding: 1.6rem 1.3rem;
+  background: var(--white);
+  border-radius: 0.5rem;
+}
+
+.questionDetailContent {
+  font: var(--text-headline-2-reg);
+  color: var(--grey-4);
+  white-space: pre-wrap;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 .content {
   margin: 0 var(--default-margin) 2.3rem var(--default-margin);
   font-size: 1.4rem;

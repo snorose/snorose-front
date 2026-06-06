@@ -1,42 +1,38 @@
 import { useContext } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import { useQuery } from '@tanstack/react-query';
 
-import { getReviewDetail } from '@/apis';
-
-import { ModalContext } from '@/shared/context/ModalContext';
-import { useModalReset } from '@/shared/hook/useBlocker';
 import {
   BackAppBar,
   FetchLoading,
   FetchLoadingOverlay,
   Icon,
 } from '@/shared/component';
-import { DateTime } from '@/shared/lib';
 import { QUERY_KEY } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
+import { useModalReset } from '@/shared/hook/useBlocker';
+import { DateTime } from '@/shared/lib';
 
-import { NotFoundPage } from '@/page/etc';
-
-import { useDeleteExamReviewHandler } from '@/feature/exam/hook/useDeleteExamReviewHandler';
+import { CommentInput, CommentListSuspense } from '@/feature/comment/component';
+import { useCommentContext } from '@/feature/comment/context';
 import {
   ConfirmedIcon,
   ExamReviewModalRenderer,
   ReviewContentItem,
   ReviewDownload,
 } from '@/feature/exam/component';
+import { EXAM_TYPES, LECTURE_TYPES, SEMESTERS } from '@/feature/exam/constant';
+import { useDeleteExamReviewHandler } from '@/feature/exam/hook/useDeleteExamReviewHandler';
 import { convertToObject } from '@/feature/exam/lib';
-import {
-  LECTURE_TYPES,
-  SEMESTERS,
-  EXAM_TYPES,
-  FLEX_ALIGN,
-} from '@/feature/exam/constant';
-import { useScrap } from '@/feature/scrap/hook';
 import { useReportHandler } from '@/feature/report/hook/useReport';
-import { useCommentContext } from '@/feature/comment/context';
-import { CommentInput, CommentListSuspense } from '@/feature/comment/component';
+import { useScrap } from '@/feature/scrap/hook';
+
+import { NotFoundPage } from '@/page/etc';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
+
+import { getReviewDetail } from '@/apis';
 
 import styles from './ExamReviewPage.module.css';
 
@@ -157,12 +153,16 @@ export default function ExamReviewPage() {
           <ReviewContentItem tag='시험 종류' value={EXAM_TYPE[examType]} />
           <ReviewContentItem tag='P/F' value={isPF ? 'O' : 'X'} />
           <ReviewContentItem tag='온라인 수업' value={isOnline ? 'O' : 'X'} />
-          <ReviewContentItem
-            tag='시험 유형 및 문항수'
-            value={questionDetail}
-            align={FLEX_ALIGN.flexStart}
-          />
         </div>
+
+        {questionDetail && (
+          <div className={styles.questionDetailSection}>
+            <p className={styles.questionDetailTitle}>시험 유형 및 문항 수</p>
+            <div className={styles.questionDetail}>
+              <p className={styles.questionDetailContent}>{questionDetail}</p>
+            </div>
+          </div>
+        )}
 
         <ReviewDownload
           className={styles.fileDownload}
