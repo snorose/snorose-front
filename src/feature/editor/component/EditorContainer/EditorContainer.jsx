@@ -98,10 +98,12 @@ export default function EditorContainer({
         const doc = new DOMParser().parseFromString(html, 'text/html');
         doc.querySelectorAll('[style]').forEach((el) => {
           el.style.removeProperty('font-size');
+          el.style.removeProperty('font-family');
           el.style.removeProperty('color');
           el.style.removeProperty('background-color');
           el.style.removeProperty('font-weight');
           el.style.removeProperty('text-decoration');
+          el.style.removeProperty('text-align');
           if (el.style.length === 0) el.removeAttribute('style');
         });
         doc
