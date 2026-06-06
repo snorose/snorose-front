@@ -104,7 +104,15 @@ export default function EditorContainer({
             img.getAttribute('data-lazy-src') ||
             img.getAttribute('data-src') ||
             img.getAttribute('data-original');
-          if (realSrc) {
+          if (!realSrc) return;
+
+          const currentSrc = img.getAttribute('src');
+          try {
+            img.setAttribute(
+              'src',
+              new URL(realSrc, currentSrc || undefined).href
+            );
+          } catch {
             img.setAttribute('src', realSrc);
           }
         });
@@ -112,6 +120,7 @@ export default function EditorContainer({
         doc.querySelectorAll('[style]').forEach((el) => {
           el.removeAttribute('style');
         });
+
         doc
           .querySelectorAll('b, strong, u, s, strike, i, em, del')
           .forEach((el) => {
