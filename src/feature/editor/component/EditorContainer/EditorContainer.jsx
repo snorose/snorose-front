@@ -90,21 +90,12 @@ export default function EditorContainer({
       }),
     ],
     editorProps: {
-      // 외부(예: 노션) 붙여넣기 시 인라인 font-size를 제거해
-      // 에디터 기본 폰트 크기를 따르도록 정규화
       transformPastedHTML(html) {
         if (typeof window === 'undefined' || !html) return html;
 
         const doc = new DOMParser().parseFromString(html, 'text/html');
         doc.querySelectorAll('[style]').forEach((el) => {
-          el.style.removeProperty('font-size');
-          el.style.removeProperty('font-family');
-          el.style.removeProperty('color');
-          el.style.removeProperty('background-color');
-          el.style.removeProperty('font-weight');
-          el.style.removeProperty('text-decoration');
-          el.style.removeProperty('text-align');
-          if (el.style.length === 0) el.removeAttribute('style');
+          el.removeAttribute('style');
         });
         doc
           .querySelectorAll('b, strong, u, s, strike, i, em, del')
