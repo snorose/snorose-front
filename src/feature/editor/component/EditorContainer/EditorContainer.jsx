@@ -90,23 +90,26 @@ export default function EditorContainer({
       }),
     ],
     editorProps: {
-      // 외부(예: 노션) 붙여넣기 시 인라인 font-size를 제거해
-      // 에디터 기본 폰트 크기를 따르도록 정규화
       transformPastedHTML(html) {
         if (typeof window === 'undefined' || !html) return html;
 
         const doc = new DOMParser().parseFromString(html, 'text/html');
         doc.querySelectorAll('[style]').forEach((el) => {
-          el.style.removeProperty('font-size');
-          if (!el.getAttribute('style')) el.removeAttribute('style');
+          el.removeAttribute('style');
         });
+        doc
+          .querySelectorAll('b, strong, u, s, strike, i, em, del')
+          .forEach((el) => {
+            if (el.parentNode) {
+              el.replaceWith(...el.childNodes);
+            }
+          });
         return doc.body.innerHTML;
       },
     },
     immediatelyRender: false,
     onUpdate: ({ editor }) => {
       if (onChangeEditor) onChangeEditor(editor);
-
       // 이미지 URL 링크는 메뉴 없이 즉시 이미지로 변환
       // (임베드 메뉴 노출 여부는 BubbleMenu의 shouldShow가 담당)
       const link = getLinkAtCursor(editor);
