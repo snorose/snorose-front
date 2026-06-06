@@ -3,11 +3,9 @@ import { useEffect, useRef } from 'react';
 import TipTapImage from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
-import TextAlign from '@tiptap/extension-text-align';
 import {
   BackgroundColor,
   Color,
-  FontFamily,
   TextStyle,
 } from '@tiptap/extension-text-style';
 import { EditorContent, useEditor } from '@tiptap/react';
@@ -21,9 +19,21 @@ import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
 import { EMBED_SOURCES } from '../../constant';
 import { isAllowedEmbedUrl } from '../../lib/sanitize';
 import { formatEmbedUrl, isImageUrl } from '../../utils';
-import { FontSize } from '../extensions/font-size-extension';
 import LinkBubbleMenu from '../LinkBubbleMenu/LinkBubbleMenu';
 import styles from './EditorContainer.module.css';
+
+const ReferrerSafeImage = TipTapImage.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      referrerpolicy: {
+        default: 'no-referrer',
+        parseHTML: () => 'no-referrer',
+        renderHTML: () => ({ referrerpolicy: 'no-referrer' }),
+      },
+    };
+  },
+});
 
 // 커서 바로 앞 링크 마크 정보를 찾아 { url, pos } 반환 (없으면 null)
 function getLinkAtCursor(editor) {
@@ -73,17 +83,11 @@ export default function EditorContainer({
         autolink: true,
       }),
       EnterKeyHandler,
-      TextAlign.configure({
-        types: ['heading', 'paragraph'],
-        alignments: ['left', 'center', 'right'],
-      }),
       Iframe,
-      TipTapImage,
+      ReferrerSafeImage,
       TextStyle,
       Color,
       BackgroundColor,
-      FontFamily,
-      FontSize,
       Placeholder.configure({
         emptyEditorClass: 'is-editor-empty',
         placeholder,
