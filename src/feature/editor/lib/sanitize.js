@@ -16,6 +16,10 @@ DOMPurify.addHook('afterSanitizeAttributes', (node) => {
     }
   }
 
+  if (node.tagName === 'IMG') {
+    node.setAttribute('referrerpolicy', 'no-referrer');
+  }
+
   if (node.tagName === 'IFRAME') {
     const src = node.getAttribute('src') || '';
 
@@ -38,6 +42,7 @@ export const sanitizeHtml = (html) => {
       'allow',
       'allowfullscreen',
       'frameborder',
+      'referrerpolicy',
       'scrolling',
       'src',
       'target',

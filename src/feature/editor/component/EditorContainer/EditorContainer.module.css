@@ -15,8 +15,13 @@
   cursor: text;
 
   :global(.ProseMirror) {
-    min-height: 150px;
+    min-height: 100vh;
     outline: none;
+  }
+
+  img {
+    height: auto;
+    margin: 1.5rem 0;
   }
 
   a {
