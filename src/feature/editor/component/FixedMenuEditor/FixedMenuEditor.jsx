@@ -29,6 +29,9 @@ export default function FixedMenuEditor({ editor }) {
       isStrike: ctx.editor.isActive('strike'),
       currentColor: ctx.editor.getAttributes('textStyle').color || '',
       currentBgColor: ctx.editor.getAttributes('textStyle').backgroundColor || '',
+      currentHeading: ctx.editor.isActive('heading', { level: 1 })
+        ? '1'
+        : 'paragraph',
     }),
   });
 
@@ -37,11 +40,6 @@ export default function FixedMenuEditor({ editor }) {
     { value: 'paragraph', label: '본문' },
     { value: '1', label: '소제목' },
   ];
-
-  const getCurrentHeading = () => {
-    if (editor.isActive('heading', { level: 1 })) return '1';
-    return 'paragraph';
-  };
 
   if (!editor) return null;
 
@@ -59,7 +57,7 @@ export default function FixedMenuEditor({ editor }) {
             setOpenedMenu((prev) => (prev === 'heading' ? null : 'heading'))
           }
         >
-          {HEADING_OPTIONS.find((o) => o.value === getCurrentHeading())
+          {HEADING_OPTIONS.find((o) => o.value === editorState.currentHeading)
             ?.label ?? '본문'}
 
           <Icon
@@ -75,7 +73,7 @@ export default function FixedMenuEditor({ editor }) {
             {HEADING_OPTIONS.map((option) => (
               <button
                 key={option.value}
-                className={`${styles.headingOption} ${getCurrentHeading() === option.value ? styles.headingOptionActive : ''}`}
+                className={`${styles.headingOption} ${editorState.currentHeading === option.value ? styles.headingOptionActive : ''}`}
                 onClick={() => {
                   if (option.value === 'paragraph') {
                     editor.chain().focus().setParagraph().run();
