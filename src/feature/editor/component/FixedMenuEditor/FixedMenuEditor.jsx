@@ -27,11 +27,12 @@ export default function FixedMenuEditor({ editor }) {
       isBold: ctx.editor.isActive('bold'),
       isUnderline: ctx.editor.isActive('underline'),
       isStrike: ctx.editor.isActive('strike'),
+      currentColor: ctx.editor.getAttributes('textStyle').color || '',
+      currentBgColor: ctx.editor.getAttributes('textStyle').backgroundColor || '',
     }),
   });
 
-  const [textColor, setTextColor] = useState('var(--grey-4)');
-  const [bgColor, setBgColor] = useState('');
+
 
   const textColorRef = useRef(null);
   const bgColorRef = useRef(null);
@@ -111,7 +112,7 @@ export default function FixedMenuEditor({ editor }) {
         {/* 폰트 색상 토글 버튼 */}
         <button
           onClick={() => setOpenedMenu((prev) => prev === 'textColor' ? null : 'textColor')}
-          style={{ color: textColor || 'var(--grey-4)' }}
+          style={{ color: editorState.currentColor || 'var(--grey-4)' }}
         >
           <Icon id='font-color' width={24} height={24} />
         </button>
@@ -124,7 +125,6 @@ export default function FixedMenuEditor({ editor }) {
             className={styles.colorSwatchNone}
             title='색상 없음'
             onClick={() => {
-              setTextColor('');
               editor.chain().focus().unsetColor().run();
             }}
           >
@@ -135,11 +135,10 @@ export default function FixedMenuEditor({ editor }) {
           {PRESET_COLORS.map((color) => (
             <button
               key={color.label}
-              className={`${styles.colorSwatch} ${textColor === color.value ? styles.selected : ''}`}
+              className={`${styles.colorSwatch} ${editorState.currentColor === color.value ? styles.selected : ''}`}
               style={{ backgroundColor: color.value }}
               title={color.label}
               onClick={() => {
-                setTextColor(color.value);
                 editor
                   .chain()
                   .focus()
@@ -155,8 +154,8 @@ export default function FixedMenuEditor({ editor }) {
         <button
           onClick={() => setOpenedMenu((prev) => prev === 'bgColor' ? null : 'bgColor')}
           style={{
-            '--bg-icon-fill': bgColor || '#E6F7B1',
-            '--bg-icon-stroke': bgColor || '#AAD916',
+            '--bg-icon-fill': editorState.currentBgColor || '#E6F7B1',
+            '--bg-icon-stroke': editorState.currentBgColor || '#AAD916',
           }}
         >
           <Icon id='bg-color' width={24} height={24} />
@@ -169,7 +168,6 @@ export default function FixedMenuEditor({ editor }) {
             className={styles.colorSwatchNone}
             title='배경색 없음'
             onClick={() => {
-              setBgColor('');
               editor
                 .chain()
                 .focus()
@@ -184,11 +182,10 @@ export default function FixedMenuEditor({ editor }) {
           {PRESET_BG_COLORS.map((color) => (
             <button
               key={color.label}
-              className={`${styles.colorSwatch} ${bgColor === color.value ? styles.selected : ''}`}
+              className={`${styles.colorSwatch} ${editorState.currentBgColor === color.value ? styles.selected : ''}`}
               style={{ backgroundColor: color.value }}
               title={color.label}
               onClick={() => {
-                setBgColor(color.value);
                 editor
                   .chain()
                   .focus()
