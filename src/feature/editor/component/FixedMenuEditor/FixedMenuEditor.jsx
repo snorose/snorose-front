@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useEditorState } from '@tiptap/react';
 
@@ -27,46 +27,19 @@ export default function FixedMenuEditor({ editor }) {
       isBold: ctx.editor.isActive('bold'),
       isUnderline: ctx.editor.isActive('underline'),
       isStrike: ctx.editor.isActive('strike'),
+      currentColor: ctx.editor.getAttributes('textStyle').color || '',
+      currentBgColor: ctx.editor.getAttributes('textStyle').backgroundColor || '',
+      currentHeading: ctx.editor.isActive('heading', { level: 1 })
+        ? '1'
+        : 'paragraph',
     }),
   });
 
-  const [textColor, setTextColor] = useState('var(--grey-4)');
-  const [bgColor, setBgColor] = useState('');
-  const [showTextColor, setShowTextColor] = useState(false);
-  const [showBgColor, setShowBgColor] = useState(false);
-
-  const textColorRef = useRef(null);
-  const bgColorRef = useRef(null);
-
-  const [headingOpen, setHeadingOpen] = useState(false);
-  const headingRef = useRef(null);
-
+  const [openedMenu, setOpenedMenu] = useState(null);
   const HEADING_OPTIONS = [
     { value: 'paragraph', label: '본문' },
     { value: '1', label: '소제목' },
   ];
-
-  const getCurrentHeading = () => {
-    if (editor.isActive('heading', { level: 1 })) return '1';
-    return 'paragraph';
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      [
-        { ref: textColorRef, setter: setShowTextColor },
-        { ref: bgColorRef, setter: setShowBgColor },
-        { ref: headingRef, setter: setHeadingOpen },
-      ].forEach(({ ref, setter }) => {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setter(false);
-        }
-      });
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   if (!editor) return null;
 
@@ -77,12 +50,14 @@ export default function FixedMenuEditor({ editor }) {
         e.preventDefault();
       }}
     >
-      <div ref={headingRef} className={styles.headingWrapper}>
+      <div className={styles.headingWrapper}>
         <button
           className={styles.headingButton}
-          onClick={() => setHeadingOpen((prev) => !prev)}
+          onClick={() =>
+            setOpenedMenu((prev) => (prev === 'heading' ? null : 'heading'))
+          }
         >
-          {HEADING_OPTIONS.find((o) => o.value === getCurrentHeading())
+          {HEADING_OPTIONS.find((o) => o.value === editorState.currentHeading)
             ?.label ?? '본문'}
 
           <Icon
@@ -93,12 +68,12 @@ export default function FixedMenuEditor({ editor }) {
           />
         </button>
 
-        {headingOpen && (
+        {openedMenu === 'heading' && (
           <div className={styles.headingDropdown}>
             {HEADING_OPTIONS.map((option) => (
               <button
                 key={option.value}
-                className={`${styles.headingOption} ${getCurrentHeading() === option.value ? styles.headingOptionActive : ''}`}
+                className={`${styles.headingOption} ${editorState.currentHeading === option.value ? styles.headingOptionActive : ''}`}
                 onClick={() => {
                   if (option.value === 'paragraph') {
                     editor.chain().focus().setParagraph().run();
@@ -109,7 +84,7 @@ export default function FixedMenuEditor({ editor }) {
                       .setHeading({ level: parseInt(option.value, 10) })
                       .run();
                   }
-                  setHeadingOpen(false);
+                  setOpenedMenu(null);
                 }}
               >
                 {option.label}
@@ -119,24 +94,23 @@ export default function FixedMenuEditor({ editor }) {
         )}
       </div>
 
-      <div ref={textColorRef} className={styles.colorPickerWrapper}>
+      <div className={styles.colorPickerWrapper}>
         {/* 폰트 색상 토글 버튼 */}
         <button
-          onClick={() => setShowTextColor((prev) => !prev)}
-          style={{ color: textColor || 'var(--grey-4)' }}
+          onClick={() => setOpenedMenu((prev) => prev === 'textColor' ? null : 'textColor')}
+          style={{ color: editorState.currentColor || 'var(--grey-4)' }}
         >
           <Icon id='font-color' width={24} height={24} />
         </button>
 
         <div
-          className={`${styles.colorPaletteInline} ${showTextColor ? styles.open : ''}`}
+          className={`${styles.colorPaletteInline} ${openedMenu === 'textColor' ? styles.open : ''}`}
         >
           {/* 색상 없음 */}
           <button
             className={styles.colorSwatchNone}
             title='색상 없음'
             onClick={() => {
-              setTextColor('');
               editor.chain().focus().unsetColor().run();
             }}
           >
@@ -147,11 +121,10 @@ export default function FixedMenuEditor({ editor }) {
           {PRESET_COLORS.map((color) => (
             <button
               key={color.label}
-              className={`${styles.colorSwatch} ${textColor === color.value ? styles.selected : ''}`}
+              className={`${styles.colorSwatch} ${editorState.currentColor === color.value ? styles.selected : ''}`}
               style={{ backgroundColor: color.value }}
               title={color.label}
               onClick={() => {
-                setTextColor(color.value);
                 editor
                   .chain()
                   .focus()
@@ -163,25 +136,24 @@ export default function FixedMenuEditor({ editor }) {
         </div>
       </div>
 
-      <div ref={bgColorRef} className={styles.colorPickerWrapper}>
+      <div className={styles.colorPickerWrapper}>
         <button
-          onClick={() => setShowBgColor((prev) => !prev)}
+          onClick={() => setOpenedMenu((prev) => prev === 'bgColor' ? null : 'bgColor')}
           style={{
-            '--bg-icon-fill': bgColor || '#E6F7B1',
-            '--bg-icon-stroke': bgColor || '#AAD916',
+            '--bg-icon-fill': editorState.currentBgColor || '#E6F7B1',
+            '--bg-icon-stroke': editorState.currentBgColor || '#AAD916',
           }}
         >
           <Icon id='bg-color' width={24} height={24} />
         </button>
 
         <div
-          className={`${styles.colorPaletteInline} ${showBgColor ? styles.open : ''}`}
+          className={`${styles.colorPaletteInline} ${openedMenu === 'bgColor' ? styles.open : ''}`}
         >
           <button
             className={styles.colorSwatchNone}
             title='배경색 없음'
             onClick={() => {
-              setBgColor('');
               editor
                 .chain()
                 .focus()
@@ -196,11 +168,10 @@ export default function FixedMenuEditor({ editor }) {
           {PRESET_BG_COLORS.map((color) => (
             <button
               key={color.label}
-              className={`${styles.colorSwatch} ${bgColor === color.value ? styles.selected : ''}`}
+              className={`${styles.colorSwatch} ${editorState.currentBgColor === color.value ? styles.selected : ''}`}
               style={{ backgroundColor: color.value }}
               title={color.label}
               onClick={() => {
-                setBgColor(color.value);
                 editor
                   .chain()
                   .focus()
