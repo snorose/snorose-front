@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useEditorState } from '@tiptap/react';
 
@@ -32,13 +32,6 @@ export default function FixedMenuEditor({ editor }) {
     }),
   });
 
-
-
-  const textColorRef = useRef(null);
-  const bgColorRef = useRef(null);
-
-  const headingRef = useRef(null);
-
   const [openedMenu, setOpenedMenu] = useState(null);
   const HEADING_OPTIONS = [
     { value: 'paragraph', label: '본문' },
@@ -49,7 +42,6 @@ export default function FixedMenuEditor({ editor }) {
     if (editor.isActive('heading', { level: 1 })) return '1';
     return 'paragraph';
   };
-  
 
   if (!editor) return null;
 
@@ -60,15 +52,11 @@ export default function FixedMenuEditor({ editor }) {
         e.preventDefault();
       }}
     >
-      <div ref={headingRef} className={styles.headingWrapper}>
+      <div className={styles.headingWrapper}>
         <button
           className={styles.headingButton}
-          onClick={() => 
-            setOpenedMenu(
-              openedMenu === 'heading'
-                ? null
-                : 'heading'
-            )
+          onClick={() =>
+            setOpenedMenu((prev) => (prev === 'heading' ? null : 'heading'))
           }
         >
           {HEADING_OPTIONS.find((o) => o.value === getCurrentHeading())
@@ -108,7 +96,7 @@ export default function FixedMenuEditor({ editor }) {
         )}
       </div>
 
-      <div ref={textColorRef} className={styles.colorPickerWrapper}>
+      <div className={styles.colorPickerWrapper}>
         {/* 폰트 색상 토글 버튼 */}
         <button
           onClick={() => setOpenedMenu((prev) => prev === 'textColor' ? null : 'textColor')}
@@ -150,7 +138,7 @@ export default function FixedMenuEditor({ editor }) {
         </div>
       </div>
 
-      <div ref={bgColorRef} className={styles.colorPickerWrapper}>
+      <div className={styles.colorPickerWrapper}>
         <button
           onClick={() => setOpenedMenu((prev) => prev === 'bgColor' ? null : 'bgColor')}
           style={{
