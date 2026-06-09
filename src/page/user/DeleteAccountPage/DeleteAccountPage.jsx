@@ -1,7 +1,14 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { CloseAppBar, ConfirmModal, Icon, PwInput } from '@/shared/component';
+import {
+  CloseAppBar,
+  ConfirmModal,
+  Icon,
+  Label,
+  PasswordInput,
+  PwInput,
+} from '@/shared/component';
 import { CONFIRM_MODAL_TEXT } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useAuth } from '@/shared/hook';
@@ -19,10 +26,6 @@ export default function DeleteAccountPage() {
 
   const { withdraw } = useAuth();
   const { modal, setModal } = useContext(ModalContext);
-
-  const handlePasswordInputChange = (event) => {
-    setPassword(event.target.value);
-  };
 
   const handleModalPrimaryButtonClick = () => {
     withdraw(password, {
@@ -53,13 +56,15 @@ export default function DeleteAccountPage() {
             ))}
           </div>
 
-          <PwInput
-            title='비밀번호'
-            placeholder='비밀번호를 입력하세요'
-            value={password}
-            onChange={handlePasswordInputChange}
-            isStatic
-          />
+          <div>
+            <Label htmlFor={'pw'}>비밀번호</Label>
+            <PasswordInput
+              id={'pw'}
+              placeholder='비밀번호를 입력하세요'
+              value={password}
+              onChange={setPassword}
+            />
+          </div>
         </div>
 
         <div className={styles.buttonWrapper}>
