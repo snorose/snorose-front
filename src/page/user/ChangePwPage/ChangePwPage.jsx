@@ -45,6 +45,7 @@ export default function ChangePwPage() {
 
     return (
       password.length >= 8 &&
+      password.length <= 16 &&
       spaceRegex.test(password) &&
       /[A-Za-z]/.test(password) &&
       /\d/.test(password) &&
