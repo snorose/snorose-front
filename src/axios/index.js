@@ -47,6 +47,8 @@ authAxios.interceptors.response.use(
         )
           .then((token) => {
             originalRequest.headers.Authorization = `Bearer ${token}`;
+            originalRequest._retry = true;
+
             return authAxios(originalRequest);
           })
           .catch((err) => Promise.reject(err));
@@ -63,18 +65,6 @@ authAxios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-function processQueue({ error, token }) {
-  pendingQueue.forEach(({ resolve, reject }) => {
-    if (error) {
-      reject(error);
-    } else {
-      resolve(token);
-    }
-  });
-
-  pendingQueue = [];
-}
 
 async function reissueAccessToken() {
   let newToken;
@@ -93,7 +83,7 @@ async function reissueAccessToken() {
       }
     );
 
-    newToken = response?.data.result.accessToken;
+    newToken = response?.data?.result?.accessToken;
 
     localStorage.setItem('accessToken', newToken);
     processQueue({ token: newToken });
@@ -107,6 +97,18 @@ async function reissueAccessToken() {
   }
 
   return newToken;
+}
+
+function processQueue({ error, token }) {
+  pendingQueue.forEach(({ resolve, reject }) => {
+    if (error) {
+      reject(error);
+    } else {
+      resolve(token);
+    }
+  });
+
+  pendingQueue = [];
 }
 
 export { authAxios, defaultAxios };

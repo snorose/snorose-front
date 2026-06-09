@@ -1,7 +1,7 @@
-import { defaultAxios } from '@/axios';
-
-import { useToast } from '@/shared/hook';
 import { TOAST } from '@/shared/constant';
+import { useToast } from '@/shared/hook';
+
+import { defaultAxios } from '@/axios';
 
 const LOGIN_ERROR_MAP = {
   '아이디 또는 비밀번호가 틀립니다.': '아이디 혹은 비밀번호가 일치하지 않아요',
@@ -23,20 +23,21 @@ export const useLogin = () => {
       toast({ message: TOAST.LOGIN.emptyPw, variant: 'info' });
     } else {
       try {
-        const response = await defaultAxios.post(endpoint, formData);
-        const { accessToken, refreshToken } =
-          response?.data.result.tokenResponse;
+        const response = await defaultAxios.post(endpoint, formData, {
+          withCredentials: true,
+        });
+        const { accessToken } = response?.data.result.tokenResponse;
 
         localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
 
         setIsError(false);
         setErrorMessage('');
         navigate('/');
         window.location.reload();
       } catch (e) {
-          const status = e.response?.status;
-          const serverMsg = e.response?.data?.message || '네트워크 연결 상태를 확인해주세요.';
+        const status = e.response?.status;
+        const serverMsg =
+          e.response?.data?.message || '네트워크 연결 상태를 확인해주세요.';
 
         if (status === 500) {
           toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
