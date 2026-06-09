@@ -122,11 +122,11 @@ export default function ChangePwPage() {
       <section className={styles.contentContainer}>
         <h1 className={styles.pageTitle}>비밀번호 변경</h1>
         <div className={styles.updatePasswordForm}>
-          {inputProps.map((props) => {
+          {inputProps.map(({ label, validate, errorMessage, ...props }) => {
             let status = 'default';
 
-            if ('validate' in props) {
-              status = props.validate(props.value) ? 'valid' : 'error';
+            if (validate) {
+              status = validate(props.value) ? 'valid' : 'error';
             }
 
             if (props.value === '') {
@@ -135,10 +135,10 @@ export default function ChangePwPage() {
 
             return (
               <div key={`change-pw-${props.id}`} className={styles.field}>
-                <Label htmlFor={props.id}>{props.label}</Label>
+                <Label htmlFor={props.id}>{label}</Label>
                 <PasswordInput status={status} {...props} />
                 {status === 'error' && (
-                  <ErrorMessage>{props.errorMessage}</ErrorMessage>
+                  <ErrorMessage>{errorMessage}</ErrorMessage>
                 )}
               </div>
             );
