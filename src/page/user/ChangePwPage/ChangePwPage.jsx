@@ -100,7 +100,9 @@ export default function ChangePwPage() {
         <div className={styles.submitBtn}>
           <ActionButton
             type='button'
-            disabled={isUpdatePasswordPending || !isPasswordValid}
+            disabled={
+              isUpdatePasswordPending || !currentPassword || !isPasswordValid
+            }
             onClick={() => {
               if (!isPasswordValid) {
                 return;
