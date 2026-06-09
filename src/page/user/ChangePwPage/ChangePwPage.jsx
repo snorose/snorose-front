@@ -1,9 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useMutation } from '@tanstack/react-query';
 
-import { ActionButton, BackAppBar, PwInput } from '@/shared/component';
+import {
+  ActionButton,
+  BackAppBar,
+  ErrorMessage,
+  Label,
+  PasswordInput,
+} from '@/shared/component';
 import { MUTATION_KEY, TOAST } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 
@@ -12,15 +18,12 @@ import { updatePassword } from '@/apis';
 import styles from './ChangePwPage.module.css';
 
 export default function ChangePwPage() {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordCheck, setNewPasswordCheck] = useState('');
-  const [newPasswordError, setNewPasswordError] = useState('');
-  const [newPasswordCheckError, setNewPasswordCheckError] = useState('');
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
-
-  const navigate = useNavigate();
-  const { toast } = useToast();
 
   const { mutate: updatePasswordMutate, isPending: isUpdatePasswordPending } =
     useMutation({
@@ -40,71 +43,52 @@ export default function ChangePwPage() {
     const specialCharRegex = /[!@#%^&*]/;
     const emojiRegex = /[\uD83C-\uDBFF\uDC00-\uDFFF]+/g;
 
-    if (
-      password.length < 8 ||
-      !spaceRegex.test(password) ||
-      !/[A-Za-z]/.test(password) ||
-      !/\d/.test(password) ||
-      !specialCharRegex.test(password) ||
-      emojiRegex.test(password)
-    ) {
-      setNewPasswordError(
-        '영어, 숫자, 특수문자(!@#%^&*)를 사용하여 8자 이상 16자 이하로 작성해주세요.'
-      );
-      setIsPasswordValid(false);
-    } else {
-      setNewPasswordError('');
-      setIsPasswordValid(true);
-    }
+    return (
+      password.length >= 8 &&
+      spaceRegex.test(password) &&
+      /[A-Za-z]/.test(password) &&
+      /\d/.test(password) &&
+      specialCharRegex.test(password) &&
+      !emojiRegex.test(password)
+    );
   };
 
-  const validatePasswordMatch = (passwordCheck, password) => {
-    if (passwordCheck !== password) {
-      setNewPasswordCheckError('비밀번호가 일치하지 않아요');
-    } else {
-      setNewPasswordCheckError('');
-    }
+  const validatePasswordMatch = (passwordCheck) => {
+    return passwordCheck === newPassword;
   };
 
-  const handleSubmitButtonClick = () => {
-    if (newPassword !== newPasswordCheck) {
-      return;
-    }
+  const inputProps = [
+    {
+      id: 'current-pw',
+      label: '현재 비밀번호',
+      placeholder: '기존 비밀번호를 입력하세요',
+      value: currentPassword,
+      onChange: setCurrentPassword,
+    },
+    {
+      id: 'new-pw',
+      label: '새 비밀번호',
+      placeholder: '새로운 비밀번호를 입력하세요',
+      value: newPassword,
+      onChange: setNewPassword,
+      validate: validatePasswordStrength,
+      errorMessage:
+        '영어, 숫자, 특수문자(!@#%^&*)를 사용하여 8자 이상 16자 이하로 작성해주세요.',
+    },
+    {
+      id: 'new-pw-check',
+      label: '새 비밀번호 확인',
+      placeholder: '새 비밀번호를 다시 입력하세요',
+      value: newPasswordCheck,
+      onChange: setNewPasswordCheck,
+      validate: validatePasswordMatch,
+      errorMessage: '비밀번호가 일치하지 않아요',
+    },
+  ];
 
-    updatePasswordMutate({
-      currentPassword,
-      newPassword,
-    });
-  };
-
-  const handleCurrentPasswordInputChange = (e) => {
-    setCurrentPassword(e.target.value);
-  };
-
-  const handleNewPasswordInputChange = (e) => {
-    setNewPassword(e.target.value);
-  };
-
-  const handleConfirmNewPasswordInputChange = (e) => {
-    setNewPasswordCheck(e.target.value);
-  };
-
-  useEffect(() => {
-    if (newPassword) {
-      validatePasswordStrength(newPassword);
-    } else {
-      setNewPasswordError('');
-      setIsPasswordValid(false);
-    }
-  }, [newPassword]);
-
-  useEffect(() => {
-    if (newPasswordCheck) {
-      validatePasswordMatch(newPasswordCheck, newPassword);
-    } else {
-      setNewPasswordCheckError('');
-    }
-  }, [newPasswordCheck, newPassword]);
+  const isPasswordValid =
+    validatePasswordStrength(newPassword) &&
+    validatePasswordMatch(newPasswordCheck);
 
   return (
     <main className={styles.changePasswordPage}>
@@ -115,12 +99,17 @@ export default function ChangePwPage() {
         <div className={styles.submitBtn}>
           <ActionButton
             type='button'
-            disabled={
-              isUpdatePasswordPending ||
-              newPassword !== newPasswordCheck ||
-              !isPasswordValid
-            }
-            onClick={handleSubmitButtonClick}
+            disabled={isUpdatePasswordPending || !isPasswordValid}
+            onClick={() => {
+              if (!isPasswordValid) {
+                return;
+              }
+
+              updatePasswordMutate({
+                currentPassword,
+                newPassword,
+              });
+            }}
           >
             완료
           </ActionButton>
@@ -130,29 +119,27 @@ export default function ChangePwPage() {
       <section className={styles.contentContainer}>
         <h1 className={styles.pageTitle}>비밀번호 변경</h1>
         <div className={styles.updatePasswordForm}>
-          <PwInput
-            title='현재 비밀번호'
-            placeholder='기존 비밀번호를 입력하세요'
-            value={currentPassword}
-            isStatic
-            onChange={handleCurrentPasswordInputChange}
-          />
+          {inputProps.map((props) => {
+            let status = 'default';
 
-          <PwInput
-            title='새 비밀번호'
-            placeholder='새로운 비밀번호를 입력하세요'
-            value={newPassword}
-            errorMessage={newPasswordError}
-            onChange={handleNewPasswordInputChange}
-          />
+            if ('validate' in props) {
+              status = props.validate(props.value) ? 'valid' : 'error';
+            }
 
-          <PwInput
-            title='새 비밀번호 확인'
-            placeholder='새 비밀번호를 다시 입력하세요'
-            value={newPasswordCheck}
-            errorMessage={newPasswordCheckError}
-            onChange={handleConfirmNewPasswordInputChange}
-          />
+            if (props.value === '') {
+              status = 'default';
+            }
+
+            return (
+              <div key={`change-pw-${props.id}`} className={styles.field}>
+                <Label htmlFor={props.id}>{props.label}</Label>
+                <PasswordInput status={status} {...props} />
+                {status === 'error' && (
+                  <ErrorMessage>{props.errorMessage}</ErrorMessage>
+                )}
+              </div>
+            );
+          })}
         </div>
       </section>
     </main>
