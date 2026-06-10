@@ -7,7 +7,6 @@ import {
   Icon,
   Label,
   PasswordInput,
-  PwInput,
 } from '@/shared/component';
 import { CONFIRM_MODAL_TEXT } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
