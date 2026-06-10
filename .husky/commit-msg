@@ -7,7 +7,7 @@ commit_regex='^\[([A-Z]+)\] #([0-9]+) .+|^(Merge|Revert|Initial|v[0-9]).*'
 RED='\033[0;31m'
 NC='\033[0m' 
 
-if ! grep -qE "$commit_regex" "$1"; then
+if ! head -n 1 "$1" | grep -qE "$commit_regex"; then
     echo ""
     echo "  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo "  ┃                                                            ┃"
