@@ -46,7 +46,7 @@
   height: 100vh;
 
   padding-top: var(--default-appbar-height);
-  background-color: var(--blue-0);
+  background-color: var(--white-2);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -66,7 +66,7 @@
 
 .center {
   padding: 0 var(--default-margin);
-  background-color: var(--blue-0);
+  background-color: var(--white-2);
 }
 
 .categorySelect {
@@ -90,6 +90,7 @@
 
 .categoryDropdownContainer {
   position: relative;
+  z-index: 1;
 }
 
 .dropDownList {

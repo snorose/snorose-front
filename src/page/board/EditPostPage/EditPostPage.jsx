@@ -1,9 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { AttachmentBar } from '@/feature/board/component';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import {
   AttachmentList,
   BackAppBar,
@@ -14,14 +14,15 @@ import {
   Icon,
 } from '@/shared/component';
 import {
+  ATTACHMENT_MODAL_TEXT,
   BOARD_MENUS,
+  CONFIRM_MODAL_TEXT,
   MUTATION_KEY,
   QUERY_KEY,
   ROLE,
   TOAST,
-  CONFIRM_MODAL_TEXT,
-  ATTACHMENT_MODAL_TEXT,
 } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
 import {
   useAuth,
   useBlocker,
@@ -30,12 +31,16 @@ import {
   useToast,
 } from '@/shared/hook';
 import { DateTime } from '@/shared/lib';
-import { ModalContext } from '@/shared/context/ModalContext';
+
+import { AttachmentBar } from '@/feature/board/component';
+import { EditorContainer } from '@/feature/editor/component';
+import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
+import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
+
+import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import { createThumbnail } from '@/apis';
 import { getPostContent, patchPost } from '@/apis';
-
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import styles from './EditPostPage.module.css';
 
@@ -58,15 +63,16 @@ export default function EditPostPage() {
   const [userDisplay, setUserDisplay] = useState('');
   const [submitDisabled, setSubmitDisabled] = useState(false);
   const [isBlock, setIsBlock] = useState(false);
+  const [isTitleFocused, setIsTitleFocused] = useState(false);
 
   //'게시글 상세 조회' API에서 제공하는 기존 첨부파일 정보
-  const [isCheckModalOpen, setIsCheckModalOpen] = useState(false);
-
   const [attachmentsInfo, setAttachmentsInfo] = useState([]);
   const [deleteAttachments, setDeleteAttachments] = useState([]);
   const [isTrashOverlapped, setIsTrashOverlapped] = useState(false);
   const [trashImageIndex, setTrashImageIndex] = useState(null);
   const trashImageConfirmModal = useModal();
+
+  const [editor, setEditor] = useState(null);
 
   // 페이지 이탈 방지 모달 노출
   useBlocker(isBlock);
@@ -78,6 +84,12 @@ export default function EditPostPage() {
     enabled: !!currentBoard?.id && !!postId,
     placeholderData: {},
   });
+
+  useEffect(() => {
+    if (!editor || !data?.content) return;
+
+    editor.commands.setContent(data.content);
+  }, [editor, data]);
 
   // 데이터 화면 표시
   useEffect(() => {
@@ -96,7 +108,7 @@ export default function EditPostPage() {
 
     setIsBlock(
       data.title !== title.trim() ||
-        data.content !== text.trim() ||
+        data.content !== editor?.getHTML() ||
         data.isNotice !== isNotice ||
         data.attachments !== attachmentsInfo
     );
@@ -166,7 +178,7 @@ export default function EditPostPage() {
       boardId: currentBoard?.id,
       postId,
       title,
-      content: text,
+      content: sanitizeHtml(preserveEmptyParagraphs(editor?.getHTML() ?? '')),
       isNotice,
       attachmentsInfo,
       deleteAttachments,
@@ -198,7 +210,7 @@ export default function EditPostPage() {
           <div className={styles.top}>
             <CloseAppBar
               children={<p onClick={handleSubmit}>수정</p>}
-              backgroundColor={'#eaf5fd'}
+              backgroundColor={'#fbfdff'}
             />
           </div>
           <div className={styles.center}>
@@ -253,12 +265,29 @@ export default function EditPostPage() {
                 placeholder='제목을 입력해주세요'
                 value={title}
                 onChange={handleTitleChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+                    e.preventDefault();
+                  }
+                }}
+                onFocus={() => setIsTitleFocused(true)}
+                onBlur={() => setIsTitleFocused(false)}
               />
-              <TextareaAutosize
+              {/*<TextareaAutosize
                 className={styles.text}
                 placeholder='내용을 작성해주세요'
                 value={text}
                 onChange={(e) => setText(e.target.value)}
+              />*/}
+              <EditorContainer
+                placeholder='내용'
+                onEditorReady={setEditor}
+                onChangeEditor={(editor) => {
+                  const sanitized = sanitizeHtml(
+                    preserveEmptyParagraphs(editor.getHTML())
+                  );
+                  setText(sanitized);
+                }}
               />
               <AttachmentList
                 attachmentsInfo={attachmentsInfo}
@@ -307,6 +336,8 @@ export default function EditPostPage() {
         <AttachmentBar
           attachmentsInfo={attachmentsInfo}
           setAttachmentsInfo={setAttachmentsInfo}
+          editor={editor}
+          isTitleFocused={isTitleFocused}
         />
       </div>
 
@@ -354,15 +385,16 @@ export function NewEditPostPage({ isNotice = false }) {
   const [userDisplay, setUserDisplay] = useState('');
   const [submitDisabled, setSubmitDisabled] = useState(false);
   const [isBlock, setIsBlock] = useState(false);
+  const [isTitleFocused, setIsTitleFocused] = useState(false);
 
   //'게시글 상세 조회' API에서 제공하는 기존 첨부파일 정보
-  const [isCheckModalOpen, setIsCheckModalOpen] = useState(false);
-
   const [attachmentsInfo, setAttachmentsInfo] = useState([]);
   const [deleteAttachments, setDeleteAttachments] = useState([]);
   const [isTrashOverlapped, setIsTrashOverlapped] = useState(false);
   const [trashImageIndex, setTrashImageIndex] = useState(null);
   const trashImageConfirmModal = useModal();
+
+  const [editor, setEditor] = useState(null);
 
   // isBlock 업데이트
   useEffect(() => {
@@ -370,7 +402,7 @@ export function NewEditPostPage({ isNotice = false }) {
 
     setIsBlock(
       data.title !== title.trim() ||
-        data.content !== content.trim() ||
+        data.content !== editor?.getHTML() ||
         data.isNotice !== isNotice ||
         data.attachments !== attachmentsInfo
     );
@@ -414,6 +446,13 @@ export function NewEditPostPage({ isNotice = false }) {
     setAttachmentsInfo(data.attachments);
   }, [data]);
 
+  // 에디터에 기존 게시글 내용 반영
+  useEffect(() => {
+    if (!editor || !data?.content) return;
+
+    editor.commands.setContent(data.content);
+  }, [editor, data]);
+
   // 게시글 수정
   const mutation = useMutation({
     mutationKey: [MUTATION_KEY.editPost],
@@ -455,7 +494,7 @@ export function NewEditPostPage({ isNotice = false }) {
       boardId,
       postId,
       title,
-      content,
+      content: sanitizeHtml(preserveEmptyParagraphs(editor?.getHTML() ?? '')),
       isNotice,
       attachmentsInfo,
       deleteAttachments,
@@ -487,7 +526,7 @@ export function NewEditPostPage({ isNotice = false }) {
           <div className={styles.top}>
             <CloseAppBar
               children={<p onClick={handleSubmit}>수정</p>}
-              backgroundColor={'#eaf5fd'}
+              backgroundColor={'#fbfdff'}
             />
           </div>
 
@@ -531,12 +570,29 @@ export function NewEditPostPage({ isNotice = false }) {
                 placeholder='제목을 입력해주세요'
                 value={title}
                 onChange={handleTitleChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+                    e.preventDefault();
+                  }
+                }}
+                onFocus={() => setIsTitleFocused(true)}
+                onBlur={() => setIsTitleFocused(false)}
               />
-              <TextareaAutosize
+              {/*<TextareaAutosize
                 className={styles.text}
                 placeholder='내용을 작성해주세요'
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
+              />*/}
+              <EditorContainer
+                placeholder='내용'
+                onEditorReady={setEditor}
+                onChangeEditor={(editor) => {
+                  const sanitized = sanitizeHtml(
+                    preserveEmptyParagraphs(editor.getHTML())
+                  );
+                  setContent(sanitized);
+                }}
               />
               <AttachmentList
                 attachmentsInfo={attachmentsInfo}
@@ -577,6 +633,8 @@ export function NewEditPostPage({ isNotice = false }) {
         <AttachmentBar
           attachmentsInfo={attachmentsInfo}
           setAttachmentsInfo={setAttachmentsInfo}
+          editor={editor}
+          isTitleFocused={isTitleFocused}
         />
       </div>
 

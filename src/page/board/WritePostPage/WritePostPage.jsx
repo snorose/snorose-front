@@ -1,7 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useContext, useEffect, useMemo, useState, useRef } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
+
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import {
   ActionButton,
@@ -9,38 +10,42 @@ import {
   Badge,
   CheckBox,
   CloseAppBar,
+  ConfirmModal,
   DropdownList,
   FetchLoading,
   Icon,
-  ConfirmModal,
 } from '@/shared/component';
 import {
+  ATTACHMENT_MODAL_TEXT,
   BOARD_MENUS,
+  CONFIRM_MODAL_TEXT,
   QUERY_KEY,
   ROLE,
   TOAST,
-  CONFIRM_MODAL_TEXT,
-  ATTACHMENT_MODAL_TEXT,
 } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
 import {
   useAuth,
   useBlocker,
-  useToast,
-  useModal,
   useBoard,
   useBoardNavigate,
+  useModal,
+  useToast,
 } from '@/shared/hook';
 import { DateTime, getBoard } from '@/shared/lib';
-import { ModalContext } from '@/shared/context/ModalContext';
 
-import { createThumbnail, postPost } from '@/apis';
-import { AttachmentBar } from '@/feature/board/component';
 import { Guideline } from '@/feature/attachment/component';
 import { useGuide } from '@/feature/attachment/hook';
+import { AttachmentBar } from '@/feature/board/component';
+import { EditorContainer } from '@/feature/editor/component';
+import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
+import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
 
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 import attachmentGuide1 from '@/assets/images/attachmentGuide1.png';
 import attachmentGuide2 from '@/assets/images/attachmentGuide2.png';
+import cloudLogo from '@/assets/images/cloudLogo.svg';
+
+import { createThumbnail, postPost } from '@/apis';
 
 import styles from './WritePostPage.module.css';
 
@@ -74,6 +79,7 @@ export default function WritePostPage() {
 
   const textId = pathname.split('/')[2];
   const currentBoard = getBoard(textId);
+  const [isTitleFocused, setIsTitleFocused] = useState(false);
   const [boardTitle, setBoardTitle] = useState(
     currentBoard?.title ?? '게시판을 선택해주세요'
   );
@@ -240,6 +246,9 @@ export default function WritePostPage() {
     }
   };
 
+  //에디터 컴포넌트
+  const [editor, setEditor] = useState(null);
+
   return (
     <>
       {isGuideOpened && (
@@ -284,7 +293,7 @@ export default function WritePostPage() {
         )}
         <div>
           <div className={styles.top}>
-            <CloseAppBar backgroundColor={'#eaf5fd'}>
+            <CloseAppBar backgroundColor={'#fbfdff'}>
               <ActionButton
                 onClick={handleSubmit}
                 disabled={
@@ -377,12 +386,29 @@ export default function WritePostPage() {
                 placeholder='제목을 입력해주세요'
                 value={title}
                 onChange={handleTitleChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+                    e.preventDefault();
+                  }
+                }}
+                onFocus={() => setIsTitleFocused(true)}
+                onBlur={() => setIsTitleFocused(false)}
               />
-              <TextareaAutosize
-                className={styles.text}
-                placeholder='내용을 작성해주세요'
-                value={text}
-                onChange={(e) => setText(e.target.value)}
+              {/*<TextareaAutosize
+                  className={styles.text}
+                  placeholder='내용'
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                />*/}
+              <EditorContainer
+                placeholder='내용'
+                onEditorReady={(editorInstance) => setEditor(editorInstance)}
+                onChangeEditor={(editor) => {
+                  const sanitized = sanitizeHtml(
+                    preserveEmptyParagraphs(editor.getHTML())
+                  );
+                  setText(sanitized);
+                }}
               />
               <AttachmentList
                 attachmentsInfo={attachmentsInfo}
@@ -430,6 +456,8 @@ export default function WritePostPage() {
         <AttachmentBar
           attachmentsInfo={attachmentsInfo}
           setAttachmentsInfo={setAttachmentsInfo}
+          editor={editor}
+          isTitleFocused={isTitleFocused}
         />
       </div>
 
@@ -475,6 +503,8 @@ export function NewWritePostPage({ isNotice = false }) {
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [isTitleFocused, setIsTitleFocused] = useState(false);
+  const [editor, setEditor] = useState(null);
 
   const [isBlock, setIsBlock] = useState(false);
 
@@ -699,12 +729,29 @@ export function NewWritePostPage({ isNotice = false }) {
                 placeholder='제목을 입력해주세요'
                 value={title}
                 onChange={handleTitleChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+                    e.preventDefault();
+                  }
+                }}
+                onFocus={() => setIsTitleFocused(true)}
+                onBlur={() => setIsTitleFocused(false)}
               />
-              <TextareaAutosize
+              {/*<TextareaAutosize
                 className={styles.text}
                 placeholder='내용을 작성해주세요'
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
+              />*/}
+              <EditorContainer
+                placeholder='내용'
+                onEditorReady={(editorInstance) => setEditor(editorInstance)}
+                onChangeEditor={(editor) => {
+                  const sanitized = sanitizeHtml(
+                    preserveEmptyParagraphs(editor.getHTML())
+                  );
+                  setContent(sanitized);
+                }}
               />
               <AttachmentList
                 attachmentsInfo={attachmentsInfo}
@@ -745,6 +792,8 @@ export function NewWritePostPage({ isNotice = false }) {
         <AttachmentBar
           attachmentsInfo={attachmentsInfo}
           setAttachmentsInfo={setAttachmentsInfo}
+          editor={editor}
+          isTitleFocused={isTitleFocused}
         />
       </div>
 

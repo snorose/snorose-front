@@ -2,25 +2,40 @@ import { React, useRef, useState } from 'react';
 
 import { Icon } from '@/shared/component';
 import { ATTACHMENT_EXTENSION_LIMIT } from '@/shared/constant';
-import { useAttachmentUpload } from '@/feature/attachment/hook';
+
+import {
+  useAttachmentBarPosition,
+  useAttachmentUpload,
+} from '@/feature/attachment/hook';
+import { FixedMenuEditor } from '@/feature/editor/component';
 
 import styles from './AttachmentBar.module.css';
 
-export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
+export default function AttachmentBar({
+  attachmentsInfo,
+  setAttachmentsInfo,
+  editor,
+  isTitleFocused,
+}) {
   const img = useRef();
   const vid = useRef();
 
+  const attachmentBarRef = useAttachmentBarPosition();
   const { changeImageUpload, changeVideoUpload } = useAttachmentUpload({
     attachmentsInfo,
     setAttachmentsInfo,
   });
 
-  //이미지*영상 첨부 버튼의 UI 상태를 좌우함
+  //이미지*영상* 에디터 첨부 버튼의 UI 상태를 좌우함
   const [isImageIconHighlighted, setIsImageIconHighlighted] = useState(false);
   const [isVideoIconHighlighted, setIsVideoIconHighlighted] = useState(false);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   return (
-    <div className={styles.bar}>
+    <div ref={attachmentBarRef} className={styles.bar}>
+      {isEditorOpen && editor && !isTitleFocused && (
+        <FixedMenuEditor editor={editor} />
+      )}
       <div className={styles.attachmentBar}>
         <Icon
           id={isImageIconHighlighted ? 'image-fill' : 'image'}
@@ -59,6 +74,20 @@ export default function AttachmentBar({ attachmentsInfo, setAttachmentsInfo }) {
           ref={vid}
           onChange={changeVideoUpload}
           multiple
+        />
+
+        <Icon
+          id={
+            isEditorOpen && !isTitleFocused ? 'open-editor-fill' : 'open-editor'
+          }
+          width={27}
+          height={21}
+          className={`${styles.image} ${isTitleFocused ? styles.disabled : ''}`}
+          onClick={() => {
+            if (isTitleFocused) return;
+            setIsEditorOpen((prev) => !prev);
+          }}
+          onMouseDown={(e) => e.preventDefault()}
         />
       </div>
     </div>

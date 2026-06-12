@@ -5,7 +5,7 @@ import { ModalContext } from '@/shared/context/ModalContext';
 
 import styles from './ConfirmModal.module.css';
 
-export default function ConfirmModal({ modalText, onConfirm, onCancel }) {
+export default function ConfirmModal({ modalText, onConfirm, onCancel, children = null, confirmButtonClassName = '' }) {
   const { modal, setModal } = useContext(ModalContext);
 
   const handleCancel = () => {
@@ -26,7 +26,17 @@ export default function ConfirmModal({ modalText, onConfirm, onCancel }) {
           />
         )}
       </div>
+
+      {children &&
+        <div className={styles.extraContent}>
+          {children}
+        </div>
+      }
+
+      <div className={styles.contentDivider} />
+
       <div className={styles.bottom}>
+
         <button
           className={`${styles.bottomButton} ${styles.leftHover}`}
           onClick={handleCancel}
@@ -35,7 +45,7 @@ export default function ConfirmModal({ modalText, onConfirm, onCancel }) {
         </button>
         <div className={styles.buttonDivider} />
         <button
-          className={`${styles.bottomButton} ${styles.rightHover}`}
+          className={`${styles.bottomButton} ${styles.rightHover} ${confirmButtonClassName}`}
           onClick={onConfirm}
         >
           {modalText.confirmText}
