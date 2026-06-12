@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import calendarImage from './calendar.png';
+import editorImage from './editor.jpeg';
 import eventImage from './event.png';
 import styles from './PopUpContents.module.css';
 
@@ -44,18 +45,19 @@ const POPUP_CONTENTS = [
     endDate: '2026-05-04',
   },
   {
-    title: '[전시] 2026 Low-Code AI Challenge 수상작 🏆',
+    title: '[신규 기능] 에디터 기능 오픈 안내',
     description:
-      '스노로즈와 Upstage가 공동 주최한 2026 Low-Code AI Challenge의 수상작을 공개합니다. 일상 속 다양한 문제를 Low-Code 기반 AI 자동화로 해결한 프로젝트들을 만나보세요.',
+      '게시글을 더 편리하게 작성하실 수 있도록 에디터 기능이 추가되었습니다. 다양한 서식과 콘텐츠 삽입 기능을 활용해 더욱 풍부한 글을 작성해 보세요.',
+    image: editorImage,
     link: [
       {
-        title: '수상작 보러가기',
-        url: 'https://2026-hackathon.snorose.com',
-        isExternal: true,
+        title: '스노로즈 공지',
+        url: '/board/notice/post/1907716',
+        isExternal: false,
       },
     ],
-    startDate: '2026-06-01',
-    endDate: '2026-06-10',
+    startDate: '2026-06-12',
+    endDate: '2026-06-20',
   },
   {
     title: '[블로그] 2026 새학기 이벤트 돌아보기',
