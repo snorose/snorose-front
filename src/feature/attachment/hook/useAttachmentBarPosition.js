@@ -14,12 +14,24 @@ const isAndroid = () => /Android/i.test(navigator.userAgent);
 const isIOSChrome = () => isIOS() && /CriOS/.test(navigator.userAgent);
 
 // iOS 인앱 브라우저(네이버/카카오톡/인스타그램)도 키보드 위에 자체 InputAccessoryView(완료 등)가 떠서 바를 가린다.
-const IOS_INAPP_BROWSER_PATTERNS = [/NAVER\(inapp/i, /KAKAOTALK/i, /Instagram/i];
+const IOS_INAPP_BROWSER_PATTERNS = [
+  /NAVER\(inapp/i,
+  /KAKAOTALK/i,
+  /Instagram/i,
+];
 const isIOSInAppBrowser = () =>
-  isIOS() && IOS_INAPP_BROWSER_PATTERNS.some((re) => re.test(navigator.userAgent));
+  isIOS() &&
+  IOS_INAPP_BROWSER_PATTERNS.some((re) => re.test(navigator.userAgent));
 
-// iOS Chrome / 인앱 브라우저처럼 키보드 위에 자체 toolbar가 떠서 Safari식 보정이 필요 없는 환경.
-const hasOwnKeyboardToolbar = () => isIOSChrome() || isIOSInAppBrowser();
+// iOS PWA(홈 화면에 추가, standalone)도 Safari와 달리 키보드 위에 자체 InputAccessoryView가 떠서 바를 가린다.
+const isIOSPWA = () =>
+  isIOS() &&
+  (navigator.standalone === true ||
+    window.matchMedia?.('(display-mode: standalone)').matches === true);
+
+// iOS Chrome / 인앱 브라우저 / PWA처럼 키보드 위에 자체 toolbar가 떠서 Safari식 보정이 필요 없는 환경.
+const hasOwnKeyboardToolbar = () =>
+  isIOSChrome() || isIOSInAppBrowser() || isIOSPWA();
 
 // 액세서리 바/toolbar는 편집 가능한 요소(input/textarea/contentEditable) 포커스 시에만 뜬다.
 const isEditableFocused = () => {
