@@ -1,0 +1,70 @@
+:global(.ProseMirror:focus) {
+  outline: none;
+}
+
+.linkBubbleMenu {
+  z-index: var(--z-index-dropdown);
+}
+
+.editor {
+  font: var(--text-headline-2-reg);
+  color: var(--grey-4);
+  padding-bottom: 1.5rem;
+  white-space: pre-wrap;
+  word-break: keep-all;
+  cursor: text;
+
+  :global(.ProseMirror) {
+    min-height: 100vh;
+    outline: none;
+  }
+
+  img {
+    height: auto;
+    margin: 1.5rem 0;
+  }
+
+  a {
+    color: var(--blue-3);
+    word-break: break-all;
+    text-decoration: underline;
+  }
+
+  a:hover {
+    color: var(--blue-4);
+    text-decoration: underline;
+  }
+
+  h1 {
+    font-size: 2rem;
+    padding: 12px 0;
+  }
+
+  h1:first-child {
+    padding: 0 0 12px 0;
+  }
+
+  iframe {
+    display: block;
+    width: 100%;
+    border: none;
+    margin: 1.5rem 0;
+  }
+
+  iframe[data-embed-type='youtube-video'],
+  iframe[data-embed-type='naver-tv'] {
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
+
+  iframe[data-embed-type='youtube-shorts'] {
+    aspect-ratio: 9 / 16;
+    height: auto;
+  }
+
+  iframe[data-embed-type='tiktok'] {
+    aspect-ratio: 9 / 16;
+    height: auto;
+    max-width: 320px;
+  }
+}

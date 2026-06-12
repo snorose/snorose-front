@@ -1,8 +1,6 @@
-import { useContext, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ModalContext } from '@/shared/context/ModalContext';
-import { useModalReset, useToast } from '@/shared/hook';
 import {
   AttachmentSwiper,
   BackAppBar,
@@ -10,18 +8,26 @@ import {
   FetchLoading,
   Icon,
 } from '@/shared/component';
-import { DateTime, renderTextWithLinks } from '@/shared/lib';
+import LinkAlertModal from '@/shared/component/modal/LinkAlertModal/LinkAlertModal';
 import { ROLE, TOAST } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
+import { useModalReset, useToast } from '@/shared/hook';
+import useAuth from '@/shared/hook/useAuth';
+import { DateTime, linkifyHtml } from '@/shared/lib';
 
-import { useReportHandler } from '@/feature/report/hook/useReport';
 import {
   FullScreenAttachment,
   PostModalRenderer,
 } from '@/feature/board/component';
+import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
+import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
+import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
+import { useReportHandler } from '@/feature/report/hook/useReport';
 
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 import sponsorBanner from '@/assets/banners/sponsorBanner.png';
+import cloudLogo from '@/assets/images/cloudLogo.svg';
 
+import editorStyles from '../../editor/component/EditorContainer/EditorContainer.module.css';
 import styles from './PostDetailView.module.css';
 
 export default function PostDetailView({
@@ -31,7 +37,46 @@ export default function PostDetailView({
   CommentInputContainer,
   BellIcon,
 }) {
+
+  const { userInfo } = useAuth();
+
+  const [linkModalOpen, setLinkModalOpen] = useState(false);
+  const [selectedLink, setSelectedLink] = useState('');
+  const [dontShowAgain, setDontShowAgain] = useState(false);
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
+
+  // userInfo 로딩 전이면 storageKey를 null로
+  const storageKey = userInfo?.loginId
+    ? `hideLinkAlert_${userInfo.loginId}`
+    : null;
+
+  const handleLinkClick = (event) => {
+    const anchor = event.target.closest('a');
+    if (!anchor) return;
+    event.preventDefault();
+
+    const href = anchor.getAttribute('href');
+    if (!href) return;
+
+    // storageKey 없으면 항상 모달 표시
+    const shouldHide = storageKey
+      ? localStorage.getItem(storageKey) === 'true'
+      : false;
+
+    setSelectedLink(href);
+
+    if (shouldHide) {
+      window.open(href, '_blank', 'noopener,noreferrer');
+    } else {
+      setLinkModalOpen(true);
+    }
+  };
+
+  const sanitizedContent = useMemo(() => {
+    if (!data?.content) return '';
+    return sanitizeHtml(linkifyHtml(preserveEmptyParagraphs(data.content)));
+  }, [data?.content]);
+  useIframeAutoResize();
 
   if (!data) {
     return (
@@ -66,9 +111,11 @@ export default function PostDetailView({
           </span>
         </div>
 
-        <p className={styles.contentText}>
-          {renderTextWithLinks(data.content)}
-        </p>
+        <div
+          className={editorStyles.editor}
+          onClick={handleLinkClick}
+          dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+        />
 
         {data.attachments.length !== 0 && (
           <AttachmentSwiper
@@ -94,6 +141,24 @@ export default function PostDetailView({
       />
 
       <MoreModal deletePost={deletePost} data={data} />
+      <LinkAlertModal
+        isOpen={linkModalOpen}
+        checked={dontShowAgain}
+        setChecked={setDontShowAgain}
+        onClose={() => {
+          setLinkModalOpen(false);
+          setDontShowAgain(false);
+        }}
+        onConfirm={() => {
+          if (dontShowAgain && storageKey) {
+            localStorage.setItem(storageKey, 'true');
+          }
+
+          window.open(selectedLink, '_blank', 'noopener,noreferrer');
+          setLinkModalOpen(false);
+          setDontShowAgain(false);
+        }}
+      />
     </div>
   );
 }

@@ -75,26 +75,6 @@
   font-size: 1.1rem;
 }
 
-/* content */
-
-.contentText {
-  font: var(--text-headline-2-reg);
-  color: var(--grey-4);
-  padding-bottom: 1.5rem;
-  white-space: pre-wrap;
-  word-break: keep-all;
-
-  a {
-    color: var(--blue-3);
-  }
-
-  a:hover {
-    text-decoration: underline;
-  }
-}
-
-/* sponsor banner */
-
 .sponsorBannerWrapper {
   margin: 0.2rem 0 1.7rem;
   width: 100%;

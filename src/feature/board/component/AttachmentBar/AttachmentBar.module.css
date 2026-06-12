@@ -4,21 +4,31 @@
   /* Default */
   position: fixed;
   bottom: 0;
+  z-index: 100;
 }
+
 .attachmentBar {
   height: 7rem;
-  background-color: var(--blue-1);
+  background-color: var(--blue-0);
   padding: 2.2rem;
   display: flex;
   align-items: center;
 }
+
 .image {
   margin-right: 2.4rem;
   cursor: pointer;
 }
+
+.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 .imageInput {
   display: none;
 }
+
 .videoInput {
   display: none;
 }
