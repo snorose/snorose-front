@@ -166,6 +166,7 @@ export default function EventPage() {
         <MetaContainer
           userDisplay={data.userDisplay}
           userRoleId={data.userRoleId}
+          authorBadgeRoleId={ROLE.admin}
           createdAt={data.createdAt}
           isEdited={data.isEdited}
           isNotice={data.isNotice}
@@ -334,6 +335,8 @@ export default function EventPage() {
 
 function MetaContainer({
   userDisplay,
+  userRoleId,
+  authorBadgeRoleId,
   createdAt,
   isEdited,
   isNotice,
@@ -351,13 +354,20 @@ function MetaContainer({
   };
 
   const showMeatBallIcon = !isNotice || isWriter;
+  const badgeRoleId = authorBadgeRoleId ?? userRoleId;
+  const showBadge =
+    authorBadgeRoleId != null ||
+    badgeRoleId === ROLE.official ||
+    (badgeRoleId === ROLE.admin && userDisplay !== '익명송이');
 
   return (
     <div className={styles.metaContainer}>
       <div className={styles.meta}>
         <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
         <p>{userDisplay || 'Unknown'}</p>
-        <Badge userRoleId={ROLE.admin} className={styles.badge} />
+        {showBadge && (
+          <Badge userRoleId={badgeRoleId} className={styles.badge} />
+        )}
         <p className={styles.dot}>·</p>
         <p>
           {createdAt ? DateTime.format(createdAt, 'YMD_HM') : ''}{' '}
