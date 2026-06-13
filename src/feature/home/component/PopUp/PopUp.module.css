@@ -94,9 +94,18 @@
 }
 
 .hideButton {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   flex: 1;
   color: #000;
   font-size: 13px;
+}
+
+.hideButtonIcon {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
 }
 
 .closeButton {
@@ -107,6 +116,6 @@
   color: var(--blue-4);
 }
 .closeButton:hover {
-  background: var(--blue-0);
+  background: var(--grey-2);
   border-radius: 0 0 0.5rem 0.5rem;
 }

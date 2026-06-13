@@ -1,11 +1,13 @@
+import { Icon } from '@/shared/component';
+
 import { usePopUp } from '@/feature/home/hook';
 
 import styles from './PopUp.module.css';
 import { getFilteredContents, PopUpContents } from './PopUpContents';
 
 const POPUP_HIDE_BUTTONS = [
-  { label: '오늘 하루 보지 않기' },
-  { label: '3일간 보지 않기' },
+  { label: '오늘 하루 보지 않기', duration: 0 },
+  { label: '3일간 보지 않기', duration: 2 },
 ];
 
 export default function PopUp() {
@@ -43,6 +45,7 @@ export default function PopUp() {
                 onClick={() => handleCloseButtonClick(button.duration)}
                 className={`${styles.hideButton}`}
               >
+                <Icon id='check-editor' className={styles.hideButtonIcon} />
                 {button.label}
               </button>
             ))}
