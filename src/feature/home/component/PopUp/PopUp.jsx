@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Icon } from '@/shared/component';
 
 import { usePopUp } from '@/feature/home/hook';
@@ -12,10 +14,17 @@ const POPUP_HIDE_BUTTONS = [
 
 export default function PopUp() {
   const { isPopUpOpened, closePopUp } = usePopUp();
+  const [selectedPopupHideDuration, setSelectedPopupHideDuration] = useState();
   const filteredContents = getFilteredContents();
 
-  const handleCloseButtonClick = (popupHideDuration) => {
-    closePopUp({ popupHideDuration });
+  const handleHideButtonClick = (popupHideDuration) => {
+    setSelectedPopupHideDuration((prevDuration) =>
+      prevDuration === popupHideDuration ? undefined : popupHideDuration
+    );
+  };
+
+  const handleCloseButtonClick = () => {
+    closePopUp({ popupHideDuration: selectedPopupHideDuration });
   };
 
   if (!isPopUpOpened || filteredContents.length === 0) {
@@ -42,17 +51,26 @@ export default function PopUp() {
             {POPUP_HIDE_BUTTONS.map((button) => (
               <button
                 key={button.label}
-                onClick={() => handleCloseButtonClick(button.duration)}
-                className={`${styles.hideButton}`}
+                type='button'
+                onClick={() => handleHideButtonClick(button.duration)}
+                className={styles.hideButton}
               >
-                <Icon id='check-editor' className={styles.hideButtonIcon} />
+                <Icon
+                  id={
+                    selectedPopupHideDuration === button.duration
+                      ? 'checkbox-blue'
+                      : 'checkbox-grey'
+                  }
+                  className={styles.hideButtonIcon}
+                />
                 {button.label}
               </button>
             ))}
           </div>
           <button
+            type='button'
             onClick={() => handleCloseButtonClick()}
-            className={`${styles.closeButton}`}
+            className={styles.closeButton}
           >
             닫기
           </button>
