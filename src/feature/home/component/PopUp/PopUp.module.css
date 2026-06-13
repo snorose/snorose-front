@@ -98,8 +98,8 @@
   align-items: center;
   gap: 0.4rem;
   flex: 1;
-  color: #000;
-  font-size: 13px;
+  color: var(--black);
+  font-size: 1.3rem;
 }
 
 .hideButtonIcon {
