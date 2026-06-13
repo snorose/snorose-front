@@ -52,6 +52,8 @@ export default function PopUp() {
               <button
                 key={button.label}
                 type='button'
+                role='checkbox'
+                aria-checked={selectedPopupHideDuration === button.duration}
                 onClick={() => handleHideButtonClick(button.duration)}
                 className={styles.hideButton}
               >
