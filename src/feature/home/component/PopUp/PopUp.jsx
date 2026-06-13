@@ -4,8 +4,8 @@ import styles from './PopUp.module.css';
 import { getFilteredContents, PopUpContents } from './PopUpContents';
 
 const POPUP_HIDE_BUTTONS = [
-  { label: '오늘 하루 보지 않기', duration: 0, className: 'hideButton' },
-  { label: '3일간 보지 않기', duration: 2, className: 'hideButton' },
+  { label: '오늘 하루 보지 않기' },
+  { label: '3일간 보지 않기' },
 ];
 
 export default function PopUp() {
@@ -36,18 +36,20 @@ export default function PopUp() {
         </div>
 
         <div className={styles.buttonContainer}>
-          {POPUP_HIDE_BUTTONS.map((button) => (
-            <button
-              key={button.label}
-              onClick={() => handleCloseButtonClick(button.duration)}
-              className={`${styles.button} ${styles[button.className]}`}
-            >
-              {button.label}
-            </button>
-          ))}
+          <div className={styles.hideButtonContainer}>
+            {POPUP_HIDE_BUTTONS.map((button) => (
+              <button
+                key={button.label}
+                onClick={() => handleCloseButtonClick(button.duration)}
+                className={`${styles.hideButton}`}
+              >
+                {button.label}
+              </button>
+            ))}
+          </div>
           <button
             onClick={() => handleCloseButtonClick()}
-            className={`${styles.button} ${styles.closeButton}`}
+            className={`${styles.closeButton}`}
           >
             닫기
           </button>
