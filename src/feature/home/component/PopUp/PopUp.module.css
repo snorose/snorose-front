@@ -81,30 +81,41 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  align-items: center;
   border-radius: 0 0 0.5rem 0.5rem;
   background-color: var(--white);
-  padding-top: 1.2rem;
 }
 
-.button {
+.hideButtonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
   width: 100%;
-  height: 4.8rem;
-  border-top: 1px solid var(--blue-2);
-  font: var(--text-headline-2-reg);
-}
-.button:hover {
-  background: var(--blue-0);
+  padding: 2rem 2.2rem 1.6rem;
 }
 
 .hideButton {
-  color: var(--blue-3);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 1;
+  color: var(--black);
+  font-size: 1.3rem;
+}
+
+.hideButtonIcon {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
 }
 
 .closeButton {
+  width: 100%;
+  height: 4.8rem;
+  font: var(--text-headline-2-reg);
+  border-top: 1px solid var(--blue-2);
   color: var(--blue-4);
 }
 .closeButton:hover {
-  background: var(--blue-0);
+  background: var(--grey-2);
   border-radius: 0 0 0.5rem 0.5rem;
 }
