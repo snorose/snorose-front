@@ -73,12 +73,34 @@ const POPUP_CONTENTS = [
     startDate: '2026-05-31',
     endDate: '2026-06-10',
   },
-
   {
     title: '[캘린더] 6월 스노로즈 일정',
     image: calendarImage,
     startDate: '2026-05-31',
     endDate: '2026-06-10',
+  },
+  {
+    title: '[공지] 스노로즈 서버 점검 안내',
+    description: '안정적인 서비스 제공을 위한 서버 점검이 진행됩니다.',
+    contentList: [
+      '일시: 2026/06/28(일) 15:00 ~ 16:00',
+      '점검 시간 동안 스노로즈 이용이 일시 중단됩니다.',
+    ],
+    link: [
+      {
+        title: '스노로즈 공지',
+        url: '/board/notice/post/1907923',
+        isExternal: false,
+      },
+    ],
+    startDate: '2026-06-21',
+    endDate: '2026-06-28',
+  },
+  {
+    title: '[공지] 시험후기 작성 기간 안내',
+    contentList: ['일시: 2026/06/23(화) ~ 2026/07/20(월)'],
+    startDate: '2026-06-21',
+    endDate: '2026-06-28',
   },
 ];
 
