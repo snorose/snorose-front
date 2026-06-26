@@ -1,5 +1,5 @@
 .main {
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,7 +10,7 @@
 }
 
 .logo {
-  margin-top: 30%;
+  margin-top: clamp(4rem, 10vh, 7rem);
 }
 
 .title {
@@ -40,4 +40,10 @@
   padding: 1rem;
   text-align: center;
   color: var(--grey-4);
+}
+
+@media (min-width: 768px) {
+  .logo {
+    margin-top: 4rem;
+  }
 }
