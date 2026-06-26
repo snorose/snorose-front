@@ -2,7 +2,7 @@
 # 커밋 메시지 패턴 검증
 # 형식: 태그: 메시지 (콜론 없이 공백으로 구분)
 # 예시: feat: 로그인 페이지 추가
-commit_regex='^([a-z]+): .+|^(Merge|Revert|Initial|v[0-9]).*'
+commit_regex='^(docs|feat|fix|modify|refactor|style|test|chore): .+|^(Merge|Revert|Initial|v[0-9]).*'
 
 RED='\033[0;31m'
 NC='\033[0m' 
