@@ -1,21 +1,26 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useLocation, useParams } from 'react-router-dom';
+
 import { useSuspenseQuery } from '@tanstack/react-query';
+
+import { BackAppBar, FetchLoading } from '@/shared/component';
+import { QUERY_KEY, ROLE } from '@/shared/constant';
+import { BOARD_REGISTRY, getBoard } from '@/shared/lib';
+
+import { BellIcon } from '@/feature/alert/component';
+import { PostActionBar } from '@/feature/board/component';
+import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
+import { PostDetailView } from '@/feature/board/ui';
+import { CommentInputContainer } from '@/feature/comment/component';
+
+import { NotFoundPage } from '@/page/etc';
 
 import { getPostContent } from '@/apis';
 
-import { BackAppBar, FetchLoading } from '@/shared/component';
-import { getBoard } from '@/shared/lib';
-import { QUERY_KEY } from '@/shared/constant';
-
-import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
-import { PostDetailView } from '@/feature/board/ui';
-import { PostActionBar } from '@/feature/board/component';
-import { CommentInputContainer } from '@/feature/comment/component';
-import { BellIcon } from '@/feature/alert/component';
-
-import { NotFoundPage } from '@/page/etc';
+const NOTICE_BOARD_ID = BOARD_REGISTRY.find('notice').id;
+const EVENT_BOARD_ID = BOARD_REGISTRY.find('event').id;
+const ADMIN_BADGE_BOARD_IDS = [NOTICE_BOARD_ID, EVENT_BOARD_ID];
 
 export default function PostDetailPage() {
   return (
@@ -50,6 +55,9 @@ function PostDetailLoader() {
   return (
     <PostDetailView
       data={data}
+      authorBadgeRoleId={
+        ADMIN_BADGE_BOARD_IDS.includes(currentBoard.id) ? ROLE.admin : undefined
+      }
       deletePost={handleDelete}
       PostActionBar={
         <PostActionBar>

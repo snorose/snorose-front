@@ -13,6 +13,7 @@ import { htmlToText } from '@/feature/editor/lib';
 export default function PostBar({
   className,
   userRoleId,
+  authorBadgeRoleId,
   userDisplay,
   createdAt,
   title,
@@ -30,6 +31,7 @@ export default function PostBar({
     <div className={`${styles.container} ${className}`}>
       <Meta
         userRoleId={userRoleId}
+        authorBadgeRoleId={authorBadgeRoleId}
         userDisplay={userDisplay}
         createdAt={createdAt}
       >
@@ -55,10 +57,18 @@ export default function PostBar({
   );
 }
 
-function Meta({ userRoleId, userDisplay, createdAt, children }) {
+function Meta({
+  userRoleId,
+  authorBadgeRoleId,
+  userDisplay,
+  createdAt,
+  children,
+}) {
+  const badgeRoleId = authorBadgeRoleId ?? userRoleId;
   const showBadge =
-    userRoleId === ROLE.official ||
-    (userRoleId === ROLE.admin && userDisplay !== '익명송이');
+    authorBadgeRoleId != null ||
+    badgeRoleId === ROLE.official ||
+    (badgeRoleId === ROLE.admin && userDisplay !== '익명송이');
 
   return (
     <div className={styles.meta}>
@@ -66,7 +76,7 @@ function Meta({ userRoleId, userDisplay, createdAt, children }) {
       <div className={styles.userDisplay} title={userDisplay || undefined}>
         {userDisplay}
       </div>
-      {showBadge && <Badge className={styles.badge} userRoleId={userRoleId} />}
+      {showBadge && <Badge className={styles.badge} userRoleId={badgeRoleId} />}
       <div className={styles.dot}>·</div>
       <div>{DateTime.formatAdaptive(createdAt)}</div>
       {children}

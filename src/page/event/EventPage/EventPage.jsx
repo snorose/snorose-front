@@ -1,9 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { useState, useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { getEventContent } from '@/apis';
-import { NotFoundPage } from '@/page/etc';
+import { useQuery } from '@tanstack/react-query';
 
 import {
   BackAppBar,
@@ -13,25 +11,28 @@ import {
   PrimaryButton,
 } from '@/shared/component';
 import { LIKE_TYPE, QUERY_KEY, ROLE, TOAST } from '@/shared/constant';
-import { renderTextWithLinks, DateTime, getBoard } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
-import { useModalReset } from '@/shared/hook/useBlocker';
 import { useAuth, useToast } from '@/shared/hook';
+import { useModalReset } from '@/shared/hook/useBlocker';
+import { DateTime, getBoard, renderTextWithLinks } from '@/shared/lib';
 
-import { GuideModal } from '@/feature/event/component';
-import { isUrlValid } from '@/feature/event/lib';
-import { EVENT_GUIDE_MODAL_OPTIONS } from '@/feature/event/constant';
-
-import { CommentInput, CommentListSuspense } from '@/feature/comment/component';
-import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { PostModalRenderer } from '@/feature/board/component';
-import { useReportHandler } from '@/feature/report/hook/useReport';
-
-import { useLike } from '@/feature/like/hook';
-import { useScrap } from '@/feature/scrap/hook';
+import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
+import { CommentInput, CommentListSuspense } from '@/feature/comment/component';
 import { useCommentContext } from '@/feature/comment/context';
+import { GuideModal } from '@/feature/event/component';
+import { EVENT_GUIDE_MODAL_OPTIONS } from '@/feature/event/constant';
+import { isUrlValid } from '@/feature/event/lib';
+import { useLike } from '@/feature/like/hook';
+import { useReportHandler } from '@/feature/report/hook/useReport';
+import { useScrap } from '@/feature/scrap/hook';
+
+import { NotFoundPage } from '@/page/etc';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
+
+import { getEventContent } from '@/apis';
+
 import styles from './EventPage.module.css';
 
 export default function EventPage() {
@@ -165,6 +166,7 @@ export default function EventPage() {
         <MetaContainer
           userDisplay={data.userDisplay}
           userRoleId={data.userRoleId}
+          authorBadgeRoleId={ROLE.admin}
           createdAt={data.createdAt}
           isEdited={data.isEdited}
           isNotice={data.isNotice}
@@ -334,6 +336,7 @@ export default function EventPage() {
 function MetaContainer({
   userDisplay,
   userRoleId,
+  authorBadgeRoleId,
   createdAt,
   isEdited,
   isNotice,
@@ -350,11 +353,12 @@ function MetaContainer({
     });
   };
 
-  const showBadge =
-    userRoleId === ROLE.official ||
-    (userRoleId === ROLE.admin && userDisplay !== '익명송이');
-
   const showMeatBallIcon = !isNotice || isWriter;
+  const badgeRoleId = authorBadgeRoleId ?? userRoleId;
+  const showBadge =
+    authorBadgeRoleId != null ||
+    badgeRoleId === ROLE.official ||
+    (badgeRoleId === ROLE.admin && userDisplay !== '익명송이');
 
   return (
     <div className={styles.metaContainer}>
@@ -362,7 +366,7 @@ function MetaContainer({
         <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
         <p>{userDisplay || 'Unknown'}</p>
         {showBadge && (
-          <Badge userRoleId={userRoleId} className={styles.badge} />
+          <Badge userRoleId={badgeRoleId} className={styles.badge} />
         )}
         <p className={styles.dot}>·</p>
         <p>

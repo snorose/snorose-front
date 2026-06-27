@@ -1,18 +1,21 @@
-import { useLocation, Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-import { useBoard } from '@/shared/hook';
 import { FetchLoading, List, PullToRefresh } from '@/shared/component';
+import { BOARDS, NEW_ROUTES, ROLE } from '@/shared/constant';
+import { useBoard } from '@/shared/hook';
 import {
-  getBoardTitleToTextId,
+  BOARD_REGISTRY,
   deduplicatePaginatedData,
   flatPaginationCache,
+  getBoardTitleToTextId,
 } from '@/shared/lib';
-import { NEW_ROUTES, BOARDS } from '@/shared/constant';
 
-import { useSearch } from '@/feature/search/hook';
 import { PostBar } from '@/feature/board/component';
+import { useSearch } from '@/feature/search/hook';
 
 import styles from './SearchResultList.module.css';
+
+const NOTICE_BOARD_ID = BOARD_REGISTRY.find('notice').id;
 
 export default function SearchResultList() {
   const { pathname } = useLocation();
@@ -31,7 +34,7 @@ export default function SearchResultList() {
             key={post.postId}
             to={`/board/${getBoardTitleToTextId(post.boardName)}/post/${post.postId}`}
           >
-            <PostBar {...post}>
+            <PostBar {...post} authorBadgeRoleId={getNoticeBadgeRoleId(post)}>
               <PostBar.Chip name={post.boardName} variant='grey' />
             </PostBar>
           </Link>
@@ -77,7 +80,7 @@ function NewSearchResultList({ boardId }) {
             key={post.postId}
             to={`/board/${getBoardTitleToTextId(post.boardName)}/post/${post.postId}`}
           >
-            <PostBar {...post}>
+            <PostBar {...post} authorBadgeRoleId={getNoticeBadgeRoleId(post)}>
               <PostBar.Chip name={post.boardName} variant='grey' />
             </PostBar>
           </Link>
@@ -86,4 +89,13 @@ function NewSearchResultList({ boardId }) {
       </List>
     </PullToRefresh>
   );
+}
+
+function getNoticeBadgeRoleId(post) {
+  const isNotice =
+    post.isNotice ||
+    Number(post.boardId) === NOTICE_BOARD_ID ||
+    post.boardName === '공지사항';
+
+  return isNotice ? ROLE.admin : undefined;
 }
