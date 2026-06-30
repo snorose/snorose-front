@@ -60,24 +60,24 @@ const POPUP_CONTENTS = [
     endDate: '2026-06-20',
   },
   {
-    title: '[블로그] 2026 새학기 이벤트 돌아보기',
+    title: '[블로그] 업스테이지 앰배서더의 스노로즈 해커톤 주최기',
     description:
-      '새내기들의 캠퍼스 라이프를 응원하기 위해 진행한 ‘2026 새학기 이벤트’의 기록을 담았습니다.',
+      '지난 5월 스노로즈와 업스테이지가 함께 진행한 2026 해커톤의 생생한 주최기를 만나보세요.',
     link: [
       {
         title: '블로그 링크 (노션)',
-        url: 'https://snorose.notion.site/2026-3167ef0aa3bf8057a749d2c6442a2422',
+        url: 'https://snorose.notion.site/38d7ef0aa3bf801da755e4cee4f0df95',
         isExternal: true,
       },
     ],
-    startDate: '2026-05-31',
-    endDate: '2026-06-10',
+    startDate: '2026-06-30',
+    endDate: '2026-07-10',
   },
   {
-    title: '[캘린더] 6월 스노로즈 일정',
+    title: '[캘린더] 7월 스노로즈 일정',
     image: calendarImage,
-    startDate: '2026-05-31',
-    endDate: '2026-06-10',
+    startDate: '2026-06-30',
+    endDate: '2026-07-10',
   },
   {
     title: '[공지] 스노로즈 서버 점검 안내',
