@@ -6,13 +6,13 @@ import { login } from '@/apis/auth';
 
 import { UseMutationCallbacks } from '@/types';
 
-export const useLogin = (callbacks: UseMutationCallbacks) => {
+export function useLogin(callbacks?: UseMutationCallbacks) {
   const navigate = useNavigate();
 
   return useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      if (callbacks.onSuccess) {
+      if (callbacks?.onSuccess) {
         callbacks.onSuccess();
       }
 
@@ -27,4 +27,4 @@ export const useLogin = (callbacks: UseMutationCallbacks) => {
       }
     },
   });
-};
+}
