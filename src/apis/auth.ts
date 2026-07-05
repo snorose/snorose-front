@@ -1,4 +1,4 @@
-import { authAxios, defaultAxios } from '@/axios';
+import { defaultAxios } from '@/axios';
 
 type LoginResponse = {
   tokenResponse: {
@@ -29,4 +29,11 @@ export async function login({
   );
 
   return response.data.result;
+}
+
+export async function logout() {
+  const response = await defaultAxios.post('/v2/users/logout', null, {
+    withCredentials: true,
+  });
+  return response.data;
 }
