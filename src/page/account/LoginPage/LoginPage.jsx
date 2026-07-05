@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-
-import { useLogin } from '@/apis';
+import { Link } from 'react-router-dom';
 
 import {
   BackAppBar,
@@ -10,42 +8,72 @@ import {
   PasswordInput,
   TextInput,
 } from '@/shared/component';
+import { TOAST } from '@/shared/constant';
+import { useToast } from '@/shared/hook';
+
+import { useLogin } from '@/feature/auth/hooks';
 
 import snoroseLogo from '@/assets/images/snoroseLogo.svg';
 
 import styles from './LoginPage.module.css';
 
+const LOGIN_ERROR_MAP = {
+  '아이디 또는 비밀번호가 틀립니다.': '아이디 혹은 비밀번호가 일치하지 않아요',
+};
+
 export default function Login() {
-  const navigate = useNavigate();
-  const login = useLogin();
   const [formData, setFormData] = useState({ loginId: '', password: '' });
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isRememberId, setIsRememberId] = useState(false);
 
-  const [isChecked, setIsChecked] = useState(false);
+  const { toast } = useToast();
+  const { mutate: login } = useLogin({
+    onError: (error) => {
+      const status = error.response?.status;
+      const serverMsg =
+        error.response?.data?.message || '네트워크 연결 상태를 확인해주세요.';
 
-  const toggleRememberId = () => {
-    setIsChecked((prev) => !prev);
-  };
+      if (status === 500) {
+        toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
+      } else {
+        setErrorMessage(LOGIN_ERROR_MAP[serverMsg] ?? serverMsg);
+      }
 
-  const handleLoginSubmit = (e) => {
-    if (isChecked) {
-      localStorage.setItem('rememberedLoginId', formData.loginId);
-    } else {
-      localStorage.removeItem('rememberedLoginId');
-    }
-
-    login(e, setIsError, formData, navigate, setErrorMessage);
-  };
+      setIsError(true);
+    },
+  });
 
   useEffect(() => {
     const savedId = localStorage.getItem('rememberedLoginId');
 
     if (savedId) {
       setFormData((prev) => ({ ...prev, loginId: savedId }));
-      setIsChecked(true);
+      setIsRememberId(true);
     }
   }, []);
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formData.loginId) {
+      toast({ message: TOAST.LOGIN.emptyId, variant: 'info' });
+      return;
+    }
+
+    if (!formData.password) {
+      toast({ message: TOAST.LOGIN.emptyPw, variant: 'info' });
+      return;
+    }
+
+    if (isRememberId) {
+      localStorage.setItem('rememberedLoginId', formData.loginId);
+    } else {
+      localStorage.removeItem('rememberedLoginId');
+    }
+
+    login(formData);
+  };
 
   const inputProps = [
     {
@@ -91,12 +119,17 @@ export default function Login() {
         </div>
 
         {errorMessage && (
-          <p role='alert' className={styles.errorMessage}>{errorMessage}</p>
+          <p role='alert' className={styles.errorMessage}>
+            {errorMessage}
+          </p>
         )}
 
-        <div className={styles.rememberIdCheckbox} onClick={toggleRememberId}>
+        <div
+          className={styles.rememberIdCheckbox}
+          onClick={() => setIsRememberId((prev) => !prev)}
+        >
           <Icon
-            id={isChecked ? 'inactive-check-circle' : 'active-check-circle'}
+            id={isRememberId ? 'inactive-check-circle' : 'active-check-circle'}
             width={22}
             height={22}
           />
