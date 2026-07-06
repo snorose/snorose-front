@@ -14,20 +14,26 @@ export function useLogout(callbacks?: UseMutationCallbacks) {
 
   return useMutation({
     mutationFn: logout,
-    onSuccess: (data) => {
+    onSuccess: () => {
       if (callbacks?.onSuccess) {
         callbacks.onSuccess();
       }
-
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      queryClient.removeQueries({ queryKey: [QUERY_KEY.userInfo] });
-      navigate('/');
     },
     onError: (error) => {
       if (callbacks?.onError) {
         callbacks.onError(error);
       }
+    },
+    onSettled: () => {
+      if (callbacks?.onSettled) {
+        callbacks.onSettled();
+      }
+
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      queryClient.removeQueries({ queryKey: [QUERY_KEY.userInfo] });
+
+      navigate('/', { replace: true });
     },
   });
 }

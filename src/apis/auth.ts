@@ -32,8 +32,14 @@ export async function login({
 }
 
 export async function logout() {
+  const accessToken = localStorage.getItem('accessToken');
+
   const response = await defaultAxios.post('/v2/users/logout', null, {
     withCredentials: true,
+    headers: accessToken
+      ? { Authorization: `Bearer ${accessToken}` }
+      : undefined,
   });
+
   return response.data;
 }
