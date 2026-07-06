@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import { Footer, Header } from '@/shared/component';
@@ -9,16 +10,15 @@ import {
   Carousel,
   CarouselErrorFallback,
   CarouselSkeleton,
-  PopUp,
   HomeBesookt,
   HomeBesooktErrorFallback,
   HomeBesooktSkeleton,
   HomeCard,
-  NewHomeCard,
   HomeCardErrorFallback,
   HomeCardSkeleton,
   HomeCommunity,
   ListHeader,
+  PopUp,
 } from '@/feature/home/component';
 
 import styles from './MainPage.module.css';
@@ -28,7 +28,7 @@ import styles from './MainPage.module.css';
  */
 export default function MainPage() {
   return (
-    <main>
+    <div>
       <Header className={styles.header} />
 
       <QueryErrorResetBoundary>
@@ -77,6 +77,6 @@ export default function MainPage() {
 
       <Footer />
       <PopUp />
-    </main>
+    </div>
   );
 }
