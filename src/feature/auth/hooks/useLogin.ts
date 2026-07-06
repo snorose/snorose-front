@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 
 import { useMutation } from '@tanstack/react-query';
 
-import { login } from '@/apis/auth';
+import { login } from '@/feature/auth/api';
 
 import { UseMutationCallbacks } from '@/types';
 

@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { logout } from '@/apis/auth';
-
 import { QUERY_KEY } from '@/shared/constant/reactQuery';
+
+import { logout } from '@/feature/auth/api';
 
 import { UseMutationCallbacks } from '@/types';
 
