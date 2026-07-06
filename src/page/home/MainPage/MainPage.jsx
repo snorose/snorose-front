@@ -5,6 +5,7 @@ import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import { Footer, Header } from '@/shared/component';
 import { NEW_ROUTES } from '@/shared/constant';
+import { useAuth } from '@/shared/hook';
 
 import {
   Carousel,
@@ -27,6 +28,8 @@ import styles from './MainPage.module.css';
  * TODO: 라우트 개선 작업 완료 후 HomeCard 교체
  */
 export default function MainPage() {
+  const auth = useAuth();
+
   return (
     <div>
       <Header className={styles.header} />
@@ -66,10 +69,11 @@ export default function MainPage() {
         {({ reset }) => (
           <ErrorBoundary
             onReset={reset}
+            resetKeys={[auth.status, auth.userInfo?.userRoleId]}
             FallbackComponent={HomeBesooktErrorFallback}
           >
             <Suspense fallback={<HomeBesooktSkeleton />}>
-              <HomeBesookt />
+              <HomeBesookt auth={auth} />
             </Suspense>
           </ErrorBoundary>
         )}

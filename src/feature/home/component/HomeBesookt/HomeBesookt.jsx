@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { QUERY_KEY } from '@/shared/constant';
-import { useAuth } from '@/shared/hook';
 import { BOARD_REGISTRY } from '@/shared/lib';
 
 import { PostBar } from '@/feature/board/component';
@@ -12,8 +11,8 @@ import { getBest3 } from '@/apis';
 
 import styles from './HomeBesookt.module.css';
 
-export default function HomeBesookt({ className }) {
-  const { status, userInfo } = useAuth();
+export default function HomeBesookt({ className, auth }) {
+  const { status, userInfo } = auth;
 
   const { data: besookts } = useSuspenseQuery({
     queryKey: [QUERY_KEY.best3, status, userInfo?.userRoleId],
