@@ -72,7 +72,7 @@ async function reissueAccessToken() {
 
   try {
     const response = await axios.post(
-      '/v1/users/reissueToken',
+      '/v2/users/reissueToken',
       {},
       {
         baseURL: process.env.REACT_APP_SERVER_DOMAIN,
