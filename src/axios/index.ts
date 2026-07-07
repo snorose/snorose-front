@@ -1,114 +1,125 @@
-import axios from 'axios';
+import axios, {
+  AxiosHeaders,
+  AxiosInstance,
+  AxiosRequestConfig,
+  InternalAxiosRequestConfig,
+} from 'axios';
 
-const defaultAxios = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_DOMAIN,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+import { activateSession, clearAuthTokens } from '@/feature/auth/libs';
 
-const authAxios = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_DOMAIN,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  withCredentials: true,
-});
+type RetryableRequestConfig = InternalAxiosRequestConfig & {
+  _retry?: boolean;
+};
 
-authAxios.interceptors.request.use(
-  (config) => {
-    const accessToken = localStorage.getItem('accessToken');
+const defaultAxios = createAxiosClient();
+const authAxios = createAxiosClient({ withCredentials: true });
+const refreshClient = createAxiosClient({ withCredentials: true });
 
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
-
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
+authAxios.interceptors.request.use(attachAccessToken, (error) =>
+  Promise.reject(error)
 );
-
-let isRefreshing = false;
-let pendingQueue = [];
 
 authAxios.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      if (isRefreshing) {
-        return new Promise((resolve, reject) =>
-          pendingQueue.push({ resolve, reject })
-        )
-          .then((token) => {
-            originalRequest.headers.Authorization = `Bearer ${token}`;
-            originalRequest._retry = true;
-
-            return authAxios(originalRequest);
-          })
-          .catch((err) => Promise.reject(err));
-      }
-
-      const newToken = await reissueAccessToken();
-
-      originalRequest.headers.Authorization = `Bearer ${newToken}`;
-      originalRequest._retry = true;
-
-      return authAxios(originalRequest);
-    }
-
-    return Promise.reject(error);
-  }
+  (response) => response,
+  handlePrivateClientError
 );
 
-async function reissueAccessToken() {
-  let newToken;
-  isRefreshing = true;
+export function createAxiosClient(config?: AxiosRequestConfig): AxiosInstance {
+  return axios.create({
+    baseURL: process.env.REACT_APP_SERVER_DOMAIN,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    timeout: 10000,
+    ...config,
+  });
+}
 
-  try {
-    const response = await axios.post(
-      '/v2/users/reissueToken',
-      {},
-      {
-        baseURL: process.env.REACT_APP_SERVER_DOMAIN,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      }
-    );
+export function attachAccessToken(config: InternalAxiosRequestConfig) {
+  const accessToken = localStorage.getItem('accessToken');
 
-    newToken = response?.data?.result?.accessToken;
-
-    localStorage.setItem('accessToken', newToken);
-    processQueue({ token: newToken });
-  } catch (refreshError) {
-    localStorage.removeItem('accessToken');
-    processQueue({ error: refreshError });
-
-    return Promise.reject(refreshError);
-  } finally {
-    isRefreshing = false;
+  if (accessToken) {
+    setAuthorizationHeader(config, accessToken);
   }
 
-  return newToken;
+  return config;
 }
 
-function processQueue({ error, token }) {
-  pendingQueue.forEach(({ resolve, reject }) => {
-    if (error) {
-      reject(error);
-    } else {
-      resolve(token);
+const refreshAccessTokenOnce = createRefreshAccessTokenOnce();
+
+async function handlePrivateClientError(error: unknown) {
+  if (!axios.isAxiosError(error) || !error.config) {
+    return Promise.reject(error);
+  }
+
+  const originalRequest = error.config as RetryableRequestConfig;
+
+  if (error.response?.status !== 401 || originalRequest._retry) {
+    return Promise.reject(error);
+  }
+
+  const requestToken = getRequestAccessToken(originalRequest);
+  const latestToken = localStorage.getItem('accessToken');
+
+  originalRequest._retry = true;
+
+  if (latestToken && requestToken && latestToken !== requestToken) {
+    setAuthorizationHeader(originalRequest, latestToken);
+    return authAxios(originalRequest);
+  }
+
+  try {
+    const accessToken = await refreshAccessTokenOnce();
+
+    activateSession(accessToken);
+    setAuthorizationHeader(originalRequest, accessToken);
+
+    return authAxios(originalRequest);
+  } catch (refreshError) {
+    clearAuthTokens();
+
+    return Promise.reject(refreshError);
+  }
+}
+
+function createRefreshAccessTokenOnce() {
+  let refreshPromise: Promise<string> | null = null;
+
+  return function refreshAccessTokenOnce() {
+    if (!refreshPromise) {
+      refreshPromise = reissueAccessToken().finally(() => {
+        refreshPromise = null;
+      });
     }
-  });
 
-  pendingQueue = [];
+    return refreshPromise;
+  };
 }
 
-export { authAxios, defaultAxios };
+function setAuthorizationHeader(
+  config: InternalAxiosRequestConfig,
+  accessToken: string
+) {
+  config.headers = AxiosHeaders.from(config.headers);
+  config.headers.set('Authorization', `Bearer ${accessToken}`);
+}
+
+function getRequestAccessToken(config: InternalAxiosRequestConfig) {
+  const authorization = AxiosHeaders.from(config.headers).get('Authorization');
+
+  if (typeof authorization !== 'string') {
+    return undefined;
+  }
+
+  return authorization.startsWith('Bearer ')
+    ? authorization.slice('Bearer '.length)
+    : undefined;
+}
+
+export async function reissueAccessToken() {
+  const response = await refreshClient.post('/v2/users/reissueToken');
+
+  return response.data.result.accessToken;
+}
+
+export { authAxios, defaultAxios, refreshClient };

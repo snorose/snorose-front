@@ -2,9 +2,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { QUERY_KEY } from '@/shared/constant/reactQuery';
-
 import { login, logout } from '@/feature/auth/apis';
+import { activateSession, clearAuthTokens } from '@/feature/auth/libs';
 
 import { UseMutationCallbacks } from '@/types';
 
@@ -20,11 +19,11 @@ export function useLogin(callbacks?: UseMutationCallbacks) {
 
       const accessToken = data.tokenResponse.accessToken;
 
-      localStorage.setItem('accessToken', accessToken);
+      activateSession(accessToken);
       navigate('/');
     },
     onError: (error) => {
-      if (callbacks.onError) {
+      if (callbacks?.onError) {
         callbacks.onError(error);
       }
     },
@@ -37,6 +36,9 @@ export function useLogout(callbacks?: UseMutationCallbacks) {
 
   return useMutation({
     mutationFn: logout,
+    meta: {
+      skipGlobalError: true,
+    },
     onSuccess: () => {
       if (callbacks?.onSuccess) {
         callbacks.onSuccess();
@@ -52,9 +54,8 @@ export function useLogout(callbacks?: UseMutationCallbacks) {
         callbacks.onSettled();
       }
 
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      queryClient.removeQueries({ queryKey: [QUERY_KEY.userInfo] });
+      clearAuthTokens();
+      queryClient.clear();
 
       navigate('/', { replace: true });
     },
