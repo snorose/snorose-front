@@ -13,6 +13,7 @@ import { BubbleMenu } from '@tiptap/react/menus';
 import StarterKit from '@tiptap/starter-kit';
 
 import { EnterKeyHandler } from '@/feature/editor/component/extensions/enterkey-handler-extension';
+import { HashtagHighlight } from '@/feature/editor/component/extensions/hashtag-highlight-extension';
 import { Iframe } from '@/feature/editor/component/extensions/iframe-extension';
 import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
 
@@ -83,6 +84,7 @@ export default function EditorContainer({
         autolink: true,
       }),
       EnterKeyHandler,
+      HashtagHighlight,
       Iframe,
       ReferrerSafeImage,
       TextStyle,
