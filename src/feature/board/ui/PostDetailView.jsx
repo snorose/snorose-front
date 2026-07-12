@@ -13,7 +13,7 @@ import { ROLE, TOAST } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useModalReset, useToast } from '@/shared/hook';
 import useAuth from '@/shared/hook/useAuth';
-import { DateTime, linkifyHtml } from '@/shared/lib';
+import { DateTime, hashtagifyHtml, linkifyHtml } from '@/shared/lib';
 
 import {
   FullScreenAttachment,
@@ -37,8 +37,8 @@ export default function PostDetailView({
   CommentInputContainer,
   BellIcon,
 }) {
-
   const { userInfo } = useAuth();
+  const navigate = useNavigate();
 
   const [linkModalOpen, setLinkModalOpen] = useState(false);
   const [selectedLink, setSelectedLink] = useState('');
@@ -51,6 +51,16 @@ export default function PostDetailView({
     : null;
 
   const handleLinkClick = (event) => {
+    const hashtag = event.target.closest('[data-hashtag]');
+    if (hashtag) {
+      event.preventDefault();
+      const keyword = hashtag.getAttribute('data-hashtag');
+      if (keyword) {
+        navigate(`/board/all/search?keyword=${encodeURIComponent(keyword)}`);
+      }
+      return;
+    }
+
     const anchor = event.target.closest('a');
     if (!anchor) return;
     event.preventDefault();
@@ -74,7 +84,9 @@ export default function PostDetailView({
 
   const sanitizedContent = useMemo(() => {
     if (!data?.content) return '';
-    return sanitizeHtml(linkifyHtml(preserveEmptyParagraphs(data.content)));
+    return sanitizeHtml(
+      hashtagifyHtml(linkifyHtml(preserveEmptyParagraphs(data.content)))
+    );
   }, [data?.content]);
   useIframeAutoResize();
 
@@ -92,7 +104,7 @@ export default function PostDetailView({
   return (
     <div>
       {clickedImageIndex === 0 ? (
-        <BackAppBar backgroundColor={'#eaf5fd'} />
+        <BackAppBar backgroundColor={'#fbfdff'} />
       ) : (
         <FullScreenAttachment
           attachmentUrls={data.attachments}
