@@ -89,6 +89,18 @@ export default function AttachmentBar({
           }}
           onMouseDown={(e) => e.preventDefault()}
         />
+
+        <Icon
+          id='hashtag'
+          width={23}
+          height={21}
+          className={`${styles.image} ${isTitleFocused ? styles.disabled : ''}`}
+          onClick={() => {
+            if (isTitleFocused || !editor) return;
+            editor.chain().focus().insertContent('#').run();
+          }}
+          onMouseDown={(e) => e.preventDefault()}
+        />
       </div>
     </div>
   );
