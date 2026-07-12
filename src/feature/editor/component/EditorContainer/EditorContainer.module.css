@@ -8,6 +8,7 @@
 
 .editor {
   font: var(--text-headline-2-reg);
+  line-height: 1.8;
   color: var(--grey-4);
   padding-bottom: 1.5rem;
   white-space: pre-wrap;
@@ -33,6 +34,37 @@
   a:hover {
     color: var(--blue-4);
     text-decoration: underline;
+  }
+
+  :global(.editor-hashtag),
+  :global(.post-hashtag) {
+    display: inline-block;
+    line-height: 1.6;
+    background-color: var(--blue-0);
+    border: 1px solid var(--blue-2);
+    border-radius: 5px;
+    padding: 0 8px;
+    margin: 0 2px;
+    box-shadow: 0 0 0 2px var(--white-2);
+    color: var(--blue-4);
+    font-weight: 400;
+    text-decoration: none;
+  }
+
+  :global(.editor-hashtag) *,
+  :global(.post-hashtag) * {
+    color: inherit !important;
+    background-color: transparent !important;
+    font-weight: inherit !important;
+    text-decoration: none !important;
+  }
+
+  :global(.post-hashtag) {
+    cursor: pointer;
+  }
+
+  :global(.post-hashtag):hover {
+    border-color: var(--blue-4);
   }
 
   h1 {
