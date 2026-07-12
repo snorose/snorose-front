@@ -67,6 +67,23 @@
     border-color: var(--blue-4);
   }
 
+  ul,
+  ol {
+    padding-left: 2.4rem;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  li p {
+    margin: 0;
+  }
+
   h1 {
     font-size: 2rem;
     padding: 12px 0;

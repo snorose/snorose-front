@@ -13,6 +13,10 @@ export const EnterKeyHandler = Extension.create({
             if (event.key === 'Enter') {
               const { state, dispatch } = view;
               const { $from } = state.selection;
+              for (let depth = $from.depth; depth > 0; depth--) {
+                if ($from.node(depth).type.name === 'listItem') return false;
+              }
+
               if ($from.parent.textContent.length === 0) {
                 const tr = state.tr
                   .insertText('\u00A0', $from.pos)

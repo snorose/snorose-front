@@ -76,8 +76,6 @@ export default function EditorContainer({
       StarterKit.configure({
         link: false,
         blockquote: false,
-        bulletList: false,
-        orderedList: false,
       }),
       Link.configure({
         openOnClick: false,
