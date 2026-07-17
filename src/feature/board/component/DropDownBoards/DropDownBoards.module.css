@@ -1,0 +1,16 @@
+.dropdown {
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font: var(--text-headline-1-bold);
+}
+
+.arrow {
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}

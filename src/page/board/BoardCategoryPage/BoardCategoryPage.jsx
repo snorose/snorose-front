@@ -1,10 +1,12 @@
 import { Header } from '@/shared/component';
 import { BOARD_MENUS } from '@/shared/constant';
 
-import { BoardBar } from '@/feature/board/component';
+import { BoardBar, DropDownBoards } from '@/feature/board/component';
 import { Search } from '@/feature/search/component';
 
 import styles from './BoardCategoryPage.module.css';
+
+const FAVORITE_BOARD_IDS = [20, 61];
 
 export default function BoardCategoryPage() {
   return (
@@ -17,34 +19,64 @@ export default function BoardCategoryPage() {
 
       <div className={styles.paddingContainer}>
         <div className={styles.boardBox}>
-          <div className={styles.boardTitle}>커뮤니티</div>
-          <div className={styles.boardListBox}>
-            {BOARD_MENUS.filter((board) =>
-              [20, 21, 22, 23].includes(board.id)
-            ).map((board, index) => (
-              <BoardBar key={board.id} data={board} />
-            ))}
-          </div>
+          <DropDownBoards
+            title='즐겨찾는 게시판'
+            isOpen={true}
+            onClick={() => {}}
+          >
+            <div className={styles.boardListBox}>
+              {BOARD_MENUS.filter((board) =>
+                FAVORITE_BOARD_IDS.includes(board.id)
+              ).map((board, index) => (
+                <BoardBar key={board.id} data={board} isFavorite={true} />
+              ))}
+            </div>
+          </DropDownBoards>
         </div>
         <div className={styles.boardBox}>
-          <div className={styles.boardTitle}>공식 게시판</div>
-          <div className={styles.boardListBox}>
-            {BOARD_MENUS.filter((board) => [60, 61, 62].includes(board.id)).map(
-              (board, index) => (
+          <DropDownBoards title='커뮤니티' isOpen={true} onClick={() => {}}>
+            <div className={styles.boardListBox}>
+              {BOARD_MENUS.filter((board) =>
+                [20, 21, 22, 23].includes(board.id)
+              ).map((board, index) => (
+                <BoardBar
+                  key={board.id}
+                  data={board}
+                  isFavorite={FAVORITE_BOARD_IDS.includes(board.id)}
+                />
+              ))}
+            </div>
+          </DropDownBoards>
+        </div>
+        <div className={styles.boardBox}>
+          <DropDownBoards title='공식 게시판' isOpen={true} onClick={() => {}}>
+            <div className={styles.boardListBox}>
+              {BOARD_MENUS.filter((board) =>
+                [60, 61, 62].includes(board.id)
+              ).map((board, index) => (
+                <BoardBar
+                  key={board.id}
+                  data={board}
+                  isFavorite={FAVORITE_BOARD_IDS.includes(board.id)}
+                />
+              ))}
+            </div>
+          </DropDownBoards>
+        </div>
+        <div className={styles.boardBox}>
+          <DropDownBoards
+            title='스노로즈 게시판'
+            isOpen={true}
+            onClick={() => {}}
+          >
+            <div className={styles.boardListBox}>
+              {BOARD_MENUS.filter((board) =>
+                ['event'].includes(board.textId)
+              ).map((board, index) => (
                 <BoardBar key={board.id} data={board} />
-              )
-            )}
-          </div>
-        </div>
-        <div className={styles.boardBox}>
-          <div className={styles.boardTitle}>스노로즈 게시판</div>
-          <div className={styles.boardListBox}>
-            {BOARD_MENUS.filter((board) =>
-              ['event'].includes(board.textId)
-            ).map((board, index) => (
-              <BoardBar key={board.id} data={board} />
-            ))}
-          </div>
+              ))}
+            </div>
+          </DropDownBoards>
         </div>
       </div>
     </div>

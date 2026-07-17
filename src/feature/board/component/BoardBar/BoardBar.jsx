@@ -4,7 +4,11 @@ import { Icon } from '@/shared/component';
 
 import styles from './BoardBar.module.css';
 
-export default function BoardBar({ data }) {
+export default function BoardBar({
+  data,
+  isFavorite = false,
+  onFavoriteClick = () => {},
+}) {
   return (
     <Link to={`/board/${data.textId}`} className={styles.container}>
       <img className={styles.image} src={data.image} alt={data.textId} />
@@ -17,10 +21,11 @@ export default function BoardBar({ data }) {
         id='star'
         width={25}
         height={25}
-        fill={true ? 'var(--grey-3)' : '#faee4c'} //나중에 data에 favorite 정보 들어오면 수정
-        stroke={true ? 'var(--grey-3)' : '#faee4c'}
+        fill={isFavorite ? '#faee4c' : 'var(--grey-3)'} //나중에 data에 favorite 정보 들어오면 수정
+        stroke={isFavorite ? '#faee4c' : 'var(--grey-3)'}
         onClick={(e) => {
           if (e.target !== e.currentTarget) return;
+          onFavoriteClick();
           // 즐겨찾기 추가하는 로직 추가
         }}
       />
