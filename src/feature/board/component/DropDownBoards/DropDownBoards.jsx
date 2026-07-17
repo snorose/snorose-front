@@ -5,14 +5,16 @@ import { Icon } from '@/shared/component';
 export default function DropDownBoards({ title, isOpen, onClick, children }) {
   return (
     <>
-      <div className={styles.dropdown}>
+      <div
+        className={`${styles.dropdown} ${!isOpen ? styles.closedDropdown : ''}`}
+      >
         <span className={styles.title}>{title}</span>
         <Icon
           id='arrow-down'
-          width={16}
-          height={9}
+          width={24}
+          height={24}
           className={`${styles.arrow} ${isOpen ? styles.rotated : ''}`}
-          fill='currentColor'
+          fill='var(--grey-3-1)'
           onClick={onClick}
         />
       </div>
