@@ -61,9 +61,7 @@
 }
 
 .boardListBox {
-  display: grid;
-  grid-template-columns: repeat(2, 2fr);
-  grid-row: auto auto;
-  grid-column-gap: 1rem;
-  grid-row-gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
