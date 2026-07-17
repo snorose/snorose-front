@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import { Icon } from '@/shared/component';
+
 import styles from './BoardBar.module.css';
 
 export default function BoardBar({ data }) {
@@ -10,6 +12,18 @@ export default function BoardBar({ data }) {
         <h3 className={styles.title}>{data.title}</h3>
         <p className={styles.description}>{data.desc}</p>
       </div>
+      <Icon
+        className={styles.favoriteIcon}
+        id='star'
+        width={25}
+        height={25}
+        fill={true ? 'var(--grey-3)' : '#faee4c'} //나중에 data에 favorite 정보 들어오면 수정
+        stroke={true ? 'var(--grey-3)' : '#faee4c'}
+        onClick={(e) => {
+          if (e.target !== e.currentTarget) return;
+          // 즐겨찾기 추가하는 로직 추가
+        }}
+      />
     </Link>
   );
 }
@@ -25,6 +39,12 @@ export function NewBoardBar({ name, to, desc, image }) {
         <h3 className={styles.title}>{name}</h3>
         <p className={styles.description}>{desc}</p>
       </div>
+      <Icon
+        className={styles.favoriteIcon}
+        id='star-circle'
+        width={20}
+        height={20}
+      />
     </Link>
   );
 }
