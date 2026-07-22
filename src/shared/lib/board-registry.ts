@@ -87,10 +87,23 @@ const LIFE = [
     id: 41,
     name: '주거',
     desc: '학교 주변 자취 · 기숙사 정보 공유',
-  }
-]
+  },
+  // TODO: 백엔드 boardId 배정 후 확정
+  {
+    key: 'culture',
+    id: 44,
+    name: '문화생활',
+    desc: '문화생활 정보·후기 커뮤니티',
+  },
+] as const satisfies readonly Board[];
 
-const ALL = [...COMMUNITY, ...OFFICIAL, ...REVIEW, ...SNOROSE, ...LIFE] as const;
+const ALL = [
+  ...COMMUNITY,
+  ...OFFICIAL,
+  ...REVIEW,
+  ...SNOROSE,
+  ...LIFE,
+] as const;
 
 type BoardId = (typeof ALL)[number]['id'];
 export type BoardKey = (typeof ALL)[number]['key'];

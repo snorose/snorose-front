@@ -38,6 +38,7 @@ export const BOARD_ID = Object.freeze({
   'large-snow': 22,
   'permanent-snow': 23,
   'exam-review': 32,
+  culture: 44,
   'student-council': 60,
   'graduation-preparation': 61,
   'finance-audit': 62,
@@ -72,6 +73,11 @@ export const BOARDS = Object.freeze([
     name: '만년설방',
     path: '/board/permanent-snow',
     mainImage: permanentSnowMain,
+  },
+  {
+    id: 44,
+    name: '문화생활',
+    path: '/board/culture',
   },
   {
     id: 60,
@@ -176,6 +182,13 @@ export const BOARD_MENUS = [
     desc: '시험후기 공지글 게시판',
     image: besookt,
     category: BOARD_CATEGORY.HIDDEN,
+  },
+  {
+    id: 44,
+    to: '/board/culture',
+    textId: 'culture',
+    title: '문화생활',
+    desc: '문화생활 정보·후기 커뮤니티',
   },
   {
     id: 60,

@@ -1,19 +1,20 @@
+import { ROLE } from '@/shared/constant';
 import { attendanceLoader } from '@/shared/loader';
 import { NavbarLayout } from '@/shared/ui';
-import { ROLE } from '@/shared/constant';
 
-import App from '@/App';
+import { CheckExamPeriodRoute } from '@/feature/exam/lib';
+
 import {
-  LoginPage,
   FindIdPage,
   FindPwPage,
   FoundIdPage,
   FoundPwPage,
+  LoginPage,
   NotFoundIdPage,
   NotFoundPwPage,
+  SignUpFailurePage,
   SignUpPage,
   SignUpSuccessPage,
-  SignUpFailurePage,
   SnoroseVerifyPage,
 } from '@/page/account';
 import { AlertPage, AlertSettingPage, MarketingTermsPage } from '@/page/alert';
@@ -27,10 +28,10 @@ import {
 } from '@/page/board';
 import { NotFoundPage } from '@/page/etc';
 import {
-  WriteEventPage,
   EditEventPage,
   EventListPage,
   EventPage,
+  WriteEventPage,
 } from '@/page/event';
 import {
   EditExamReviewPage,
@@ -39,6 +40,7 @@ import {
   WriteExamReviewPage,
 } from '@/page/exam';
 import { AttendancePage, MainPage } from '@/page/home';
+import { MaintenancePage } from '@/page/maintenance';
 import { SearchPage } from '@/page/search';
 import {
   AboutPage,
@@ -46,11 +48,11 @@ import {
   ServicePolicyPage,
 } from '@/page/snorose';
 import {
-  WriteInquiryPage,
   EditInquiryPage,
-  WriteReportPage,
   EditReportPage,
   FAQPage,
+  WriteInquiryPage,
+  WriteReportPage,
 } from '@/page/support';
 import {
   ActivityPage,
@@ -61,10 +63,8 @@ import {
   PointLogListPage,
 } from '@/page/user';
 
+import App from '@/App';
 import ProtectedRoute from '@/ProtectedRoute';
-import { MaintenancePage } from '@/page/maintenance';
-
-import { CheckExamPeriodRoute } from '@/feature/exam/lib';
 
 const getRolesForReadBoard = (boardPath) => {
   switch (boardPath) {
@@ -94,6 +94,7 @@ const getRolesForReadBoard = (boardPath) => {
     case 'finance-audit':
       return [ROLE.user, ROLE.admin, ROLE.official];
     case 'residence':
+    case 'culture':
       return [ROLE.user, ROLE.admin, ROLE.official];
     default:
       return [];
@@ -114,6 +115,7 @@ const getRolesForWriteBoard = (boardPath) => {
     case 'student-council':
     case 'finance-audit':
     case 'graduation-preparation':
+    case 'culture':
       return [ROLE.admin, ROLE.official];
     default:
       return [];
@@ -131,6 +133,7 @@ const boardPaths = [
   'graduation-preparation',
   'finance-audit',
   'residence',
+  'culture',
 ];
 
 const boardRoutes = boardPaths.flatMap((boardPath) => [
