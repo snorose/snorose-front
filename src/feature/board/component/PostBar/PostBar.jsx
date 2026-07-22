@@ -2,13 +2,13 @@ import { Badge, Chip, Icon } from '@/shared/component';
 import { ROLE } from '@/shared/constant';
 import { DateTime } from '@/shared/lib';
 
+import { htmlToText } from '@/feature/editor/lib';
 import { ConfirmedIcon } from '@/feature/exam/component';
 
 import altImage from '@/assets/images/altImage.png';
 import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import styles from './PostBar.module.css';
-import { htmlToText } from '@/feature/editor/lib';
 
 export default function PostBar({
   className,
@@ -66,7 +66,6 @@ function Meta({
 }) {
   const badgeRoleId = authorBadgeRoleId ?? userRoleId;
   const showBadge =
-    authorBadgeRoleId != null ||
     badgeRoleId === ROLE.official ||
     (badgeRoleId === ROLE.admin && userDisplay !== '익명송이');
 

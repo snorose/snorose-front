@@ -190,7 +190,6 @@ function MetaContainer({
 
   const badgeRoleId = authorBadgeRoleId ?? userRoleId;
   const showBadge =
-    authorBadgeRoleId != null ||
     badgeRoleId === ROLE.official ||
     (badgeRoleId === ROLE.admin && userDisplay !== '익명송이');
   const showBellIcon = !isNotice && isWriter && BellIcon;

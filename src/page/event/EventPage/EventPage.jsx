@@ -356,7 +356,6 @@ function MetaContainer({
   const showMeatBallIcon = !isNotice || isWriter;
   const badgeRoleId = authorBadgeRoleId ?? userRoleId;
   const showBadge =
-    authorBadgeRoleId != null ||
     badgeRoleId === ROLE.official ||
     (badgeRoleId === ROLE.admin && userDisplay !== '익명송이');
 
