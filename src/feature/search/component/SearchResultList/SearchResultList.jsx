@@ -4,9 +4,9 @@ import { FetchLoading, List, PullToRefresh } from '@/shared/component';
 import { BOARDS, NEW_ROUTES, ROLE } from '@/shared/constant';
 import { useBoard } from '@/shared/hook';
 import {
-  BOARD_REGISTRY,
   deduplicatePaginatedData,
   flatPaginationCache,
+  getBoard,
   getBoardTitleToTextId,
 } from '@/shared/lib';
 
@@ -15,7 +15,7 @@ import { useSearch } from '@/feature/search/hook';
 
 import styles from './SearchResultList.module.css';
 
-const NOTICE_BOARD_ID = BOARD_REGISTRY.find('notice').id;
+const NOTICE_BOARD_ID = getBoard('notice').id;
 
 export default function SearchResultList() {
   const { pathname } = useLocation();
