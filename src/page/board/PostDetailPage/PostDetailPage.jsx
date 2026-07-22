@@ -6,7 +6,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { BackAppBar, FetchLoading } from '@/shared/component';
 import { QUERY_KEY, ROLE } from '@/shared/constant';
-import { BOARD_REGISTRY, getBoard } from '@/shared/lib';
+import { getBoard } from '@/shared/lib';
 
 import { BellIcon } from '@/feature/alert/component';
 import { PostActionBar } from '@/feature/board/component';
@@ -18,8 +18,8 @@ import { NotFoundPage } from '@/page/etc';
 
 import { getPostContent } from '@/apis';
 
-const NOTICE_BOARD_ID = BOARD_REGISTRY.find('notice').id;
-const EVENT_BOARD_ID = BOARD_REGISTRY.find('event').id;
+const NOTICE_BOARD_ID = getBoard('notice').id;
+const EVENT_BOARD_ID = getBoard('event').id;
 const ADMIN_BADGE_BOARD_IDS = [NOTICE_BOARD_ID, EVENT_BOARD_ID];
 
 export default function PostDetailPage() {
