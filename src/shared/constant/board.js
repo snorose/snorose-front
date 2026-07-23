@@ -1,16 +1,15 @@
 import besookt from '@/assets/images/besookt-board-page.svg';
+import event from '@/assets/images/event-board-page.svg';
+import eventMain from '@/assets/images/event-main.svg';
 import financeAudit from '@/assets/images/financeAudit-board-page.svg';
 import firstSnow from '@/assets/images/firstSnow-board-page.svg';
+import firstSnowMain from '@/assets/images/firstSnow-main.svg';
 import graduationPreparation from '@/assets/images/graduationPreparation-board-page.svg';
 import largeSnow from '@/assets/images/largeSnow-board-page.svg';
-import permanentSnow from '@/assets/images/permanentSnow-board-page.svg';
-import studentCouncil from '@/assets/images/studentCouncil-board-page.svg';
-import event from '@/assets/images/event-board-page.svg';
-
-import firstSnowMain from '@/assets/images/firstSnow-main.svg';
 import largeSnowMain from '@/assets/images/largeSnow-main.svg';
+import permanentSnow from '@/assets/images/permanentSnow-board-page.svg';
 import permanentSnowMain from '@/assets/images/permanentSnow-main.svg';
-import eventMain from '@/assets/images/event-main.svg';
+import studentCouncil from '@/assets/images/studentCouncil-board-page.svg';
 
 export const BOARD_CATEGORY = {
   COMMUNITY: {
@@ -42,6 +41,7 @@ export const BOARD_ID = Object.freeze({
   'student-council': 60,
   'graduation-preparation': 61,
   'finance-audit': 62,
+  'residence': 41,
 });
 
 export const BOARDS = Object.freeze([
@@ -88,6 +88,11 @@ export const BOARDS = Object.freeze([
     name: '재정감사위원회',
     path: '/board/finance-audit',
   },
+  {
+    id: 41,
+    name: '주거',
+    path: '/board/residence',
+  }
 ]);
 
 export const BOARD_MENUS = [
@@ -199,6 +204,13 @@ export const BOARD_MENUS = [
     image: financeAudit,
     category: BOARD_CATEGORY.OFFICIAL,
   },
+  {
+    id: 41,
+    to: '/board/residence',
+    textId: 'residence',
+    title: '주거',
+    desc: '학교 주변 자취 · 기숙사 정보 공유'
+  }
 ];
 
 // 공식게시판

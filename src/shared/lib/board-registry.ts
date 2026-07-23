@@ -81,7 +81,16 @@ const SNOROSE = [
   },
 ] as const satisfies readonly Board[];
 
-const ALL = [...COMMUNITY, ...OFFICIAL, ...REVIEW, ...SNOROSE] as const;
+const LIFE = [
+  {
+    key: 'residence',
+    id: 41,
+    name: '주거',
+    desc: '학교 주변 자취 · 기숙사 정보 공유',
+  }
+]
+
+const ALL = [...COMMUNITY, ...OFFICIAL, ...REVIEW, ...SNOROSE, ...LIFE] as const;
 
 type BoardId = (typeof ALL)[number]['id'];
 export type BoardKey = (typeof ALL)[number]['key'];
@@ -89,6 +98,7 @@ export type BoardKey = (typeof ALL)[number]['key'];
 export const BOARD_REGISTRY = {
   communities: COMMUNITY,
   officials: OFFICIAL,
+  life: LIFE,
   all: ALL,
 
   find(identifier: BoardId | BoardKey): Board {
