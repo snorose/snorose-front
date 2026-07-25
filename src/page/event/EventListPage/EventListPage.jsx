@@ -1,11 +1,9 @@
 import { Suspense } from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
+
 import { QueryErrorResetBoundary, useQuery } from '@tanstack/react-query';
 
-import { getEventPosts, getNoticeLine } from '@/apis';
-
-import { useAuth, useSuspensePagination } from '@/shared/hook';
 import {
   BackAppBar,
   FetchLoading,
@@ -14,16 +12,19 @@ import {
   PullToRefresh,
   WriteButton,
 } from '@/shared/component';
+import { QUERY_KEY, ROLE, STALE_TIME } from '@/shared/constant';
+import { useAuth, useSuspensePagination } from '@/shared/hook';
 import {
   deduplicatePaginatedData,
   flatPaginationCache,
   getBoard,
 } from '@/shared/lib';
-import { QUERY_KEY, ROLE, STALE_TIME } from '@/shared/constant';
 
+import { PostBar, PostListErrorFallback } from '@/feature/board/component';
 import ProgressTab from '@/feature/event/component/ProgressTab/ProgressTab';
 import { PROGRESS } from '@/feature/event/constant';
-import { PostBar, PostListErrorFallback } from '@/feature/board/component';
+
+import { getEventPosts, getNoticeLine } from '@/apis';
 
 import styles from './EventListPage.module.css';
 
@@ -101,11 +102,7 @@ export default function EventListPage() {
         )}
       </QueryErrorResetBoundary>
 
-      {isAdmin && (
-        <WriteButton
-          to={`/board/event/event-post-write`}
-        />
-      )}
+      {isAdmin && <WriteButton to={`/board/event/event-post-write`} />}
     </section>
   );
 }
@@ -144,7 +141,7 @@ function PostList({ currentBoardTextId, currentBoard, activeProgress }) {
               to={`/board/${currentBoardTextId}/post/${post.postId}`}
               ref={index === postList.length - 1 ? ref : undefined}
             >
-              <PostBar {...post}>
+              <PostBar {...post} authorBadgeRoleId={ROLE.admin}>
                 <PostBar.Chip
                   name={PROGRESS[post.progressType]}
                   variant={
