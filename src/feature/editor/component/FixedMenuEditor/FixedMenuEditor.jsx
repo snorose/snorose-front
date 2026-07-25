@@ -4,6 +4,8 @@ import { useEditorState } from '@tiptap/react';
 
 import { Icon } from '@/shared/component';
 
+import { convertListTypesInSelection } from '@/feature/editor/lib';
+
 import styles from './FixedMenuEditor.module.css';
 
 const PRESET_COLORS = [
@@ -20,6 +22,17 @@ const PRESET_BG_COLORS = [
   { label: '파랑', value: 'var(--blue-2)' },
 ];
 
+const getNearestListType = (editorInstance) => {
+  const { $from } = editorInstance.state.selection;
+  for (let depth = $from.depth; depth > 0; depth--) {
+    const name = $from.node(depth).type.name;
+    if (name === 'bulletList' || name === 'orderedList') {
+      return name;
+    }
+  }
+  return null;
+};
+
 export default function FixedMenuEditor({ editor }) {
   const editorState = useEditorState({
     editor,
@@ -27,8 +40,8 @@ export default function FixedMenuEditor({ editor }) {
       isBold: ctx.editor.isActive('bold'),
       isUnderline: ctx.editor.isActive('underline'),
       isStrike: ctx.editor.isActive('strike'),
-      isBulletList: ctx.editor.isActive('bulletList'),
-      isOrderedList: ctx.editor.isActive('orderedList'),
+      isBulletList: getNearestListType(ctx.editor) === 'bulletList',
+      isOrderedList: getNearestListType(ctx.editor) === 'orderedList',
       currentColor: ctx.editor.getAttributes('textStyle').color || '',
       currentBgColor:
         ctx.editor.getAttributes('textStyle').backgroundColor || '',
@@ -47,9 +60,9 @@ export default function FixedMenuEditor({ editor }) {
   if (!editor) return null;
 
   const toggleListStyle = (listType) => {
-    const isBullet = editor.isActive('bulletList');
-    const isOrdered = editor.isActive('orderedList');
-    const alreadyActive = listType === 'bulletList' ? isBullet : isOrdered;
+    const nearestList = getNearestListType(editor);
+    const inAnyList = nearestList !== null;
+    const alreadyActive = nearestList === listType;
     const toggleCmd =
       listType === 'bulletList' ? 'toggleBulletList' : 'toggleOrderedList';
 
@@ -65,9 +78,10 @@ export default function FixedMenuEditor({ editor }) {
 
     if (alreadyActive) {
       chain.liftListItem('listItem');
-    } else if (isBullet || isOrdered) {
-      chain.liftListItem('listItem');
-      chain[toggleCmd]();
+    } else if (inAnyList) {
+      chain.command(({ tr, state }) =>
+        convertListTypesInSelection(tr, state.schema, listType)
+      );
     } else {
       chain[toggleCmd]();
     }
