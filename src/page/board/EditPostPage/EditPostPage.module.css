@@ -16,6 +16,10 @@
   flex-direction: column;
 }
 
+.submitButton {
+  cursor: pointer;
+}
+
 .center {
   flex: 1;
   display: flex;
