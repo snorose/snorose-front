@@ -152,7 +152,21 @@ export const hashtagifyHtml = (html) => {
       return;
     }
 
-    if (node.nodeType === Node.ELEMENT_NODE && !SKIP_TAGS.has(node.tagName)) {
+    if (node.nodeType !== Node.ELEMENT_NODE) return;
+
+    if (node.tagName === 'A') {
+      const tokens = tokenizeByHashtag(node.textContent.trim());
+      if (tokens.length === 1 && tokens[0].type === 'hashtag') {
+        const span = doc.createElement('span');
+        span.setAttribute('data-hashtag', tokens[0].value);
+        span.setAttribute('class', HASHTAG_CLASS);
+        span.textContent = tokens[0].value;
+        node.parentNode.replaceChild(span, node);
+      }
+      return;
+    }
+
+    if (!SKIP_TAGS.has(node.tagName)) {
       Array.from(node.childNodes).forEach(walkTextNodes);
     }
   };
