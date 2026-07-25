@@ -14,9 +14,9 @@ import StarterKit from '@tiptap/starter-kit';
 
 import { HASHTAG_REGEX } from '@/shared/lib';
 
-import { EnterKeyHandler } from '@/feature/editor/component/extensions/enterkey-handler-extension';
 import { HashtagHighlight } from '@/feature/editor/component/extensions/hashtag-highlight-extension';
 import { Iframe } from '@/feature/editor/component/extensions/iframe-extension';
+import { ListBackspaceHandler } from '@/feature/editor/component/extensions/list-backspace-handler-extension';
 import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
 
 import { EMBED_SOURCES } from '../../constant';
@@ -83,7 +83,7 @@ export default function EditorContainer({
         openOnClick: false,
         autolink: true,
       }),
-      EnterKeyHandler,
+      ListBackspaceHandler,
       HashtagHighlight,
       Iframe,
       ReferrerSafeImage,
