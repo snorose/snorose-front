@@ -206,7 +206,7 @@ export default function EditPostPage() {
   return (
     <>
       <div className={styles.container}>
-        <div>
+        <div className={styles.main}>
           <div className={styles.top}>
             <CloseAppBar
               children={<p onClick={handleSubmit}>수정</p>}
@@ -522,7 +522,7 @@ export function NewEditPostPage({ isNotice = false }) {
   return (
     <>
       <div className={styles.container}>
-        <div>
+        <div className={styles.main}>
           <div className={styles.top}>
             <CloseAppBar
               children={<p onClick={handleSubmit}>수정</p>}

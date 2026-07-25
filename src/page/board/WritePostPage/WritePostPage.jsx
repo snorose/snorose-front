@@ -291,7 +291,7 @@ export default function WritePostPage() {
             <FetchLoading>게시글 처리 중...</FetchLoading>
           </div>
         )}
-        <div>
+        <div className={styles.main}>
           <div className={styles.top}>
             <CloseAppBar backgroundColor={'#fbfdff'}>
               <ActionButton
@@ -675,7 +675,7 @@ export function NewWritePostPage({ isNotice = false }) {
             <FetchLoading>게시글 처리 중...</FetchLoading>
           </div>
         )}
-        <div>
+        <div className={styles.main}>
           <div className={styles.top}>
             <CloseAppBar backgroundColor={'#eaf5fd'}>
               <ActionButton
