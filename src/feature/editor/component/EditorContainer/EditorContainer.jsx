@@ -12,6 +12,8 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import { BubbleMenu } from '@tiptap/react/menus';
 import StarterKit from '@tiptap/starter-kit';
 
+import { HASHTAG_REGEX } from '@/shared/lib';
+
 import { EnterKeyHandler } from '@/feature/editor/component/extensions/enterkey-handler-extension';
 import { HashtagHighlight } from '@/feature/editor/component/extensions/hashtag-highlight-extension';
 import { Iframe } from '@/feature/editor/component/extensions/iframe-extension';
@@ -128,6 +130,16 @@ export default function EditorContainer({
               el.replaceWith(...el.childNodes);
             }
           });
+
+        doc.querySelectorAll('a').forEach((a) => {
+          if (!a.parentNode) return;
+          const text = a.textContent.trim();
+          const matches = [...text.matchAll(HASHTAG_REGEX)];
+          if (matches.length === 1 && matches[0][0] === text) {
+            a.replaceWith(doc.createTextNode(text));
+          }
+        });
+
         return doc.body.innerHTML;
       },
     },
