@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const IOS_KEYBOARD_TOOLBAR = 55; // iOS Safari: 키보드 액세서리 바 보정값
+const IOS_KEYBOARD_TOOLBAR = 0; // iOS Safari: 키보드 액세서리 바 보정값
 const VV_EVENTS = ['resize', 'scroll'];
 const DOC_EVENTS = ['focusin', 'focusout'];
 
@@ -44,20 +44,25 @@ const isEditableFocused = () => {
   );
 };
 
+// 레이아웃 뷰포트(position:fixed 기준) 바닥과 비주얼 뷰포트 바닥 사이의 간격.
+// window.innerHeight는 Safari 주소창 배치(상단/하단)·스크롤 축소 상태에 따라 값이 흔들려
+// 오프셋이 어긋나므로, 크롬 높이가 식에 들어가지 않는 clientHeight + vv.offsetTop으로 계산한다.
+const layoutBottomGap = (vv) =>
+  Math.max(
+    0,
+    document.documentElement.clientHeight - (vv.height + vv.offsetTop)
+  );
+
 // iOS Safari: visualViewport에 액세서리 바가 포함되지 않아 생기는 간격만큼 내려준다.
 const computeIOSOffset = (vv) => {
   const toolbar = isEditableFocused() ? IOS_KEYBOARD_TOOLBAR : 0;
-  return Math.max(0, window.innerHeight - vv.height - toolbar);
+  return Math.max(0, layoutBottomGap(vv) - toolbar);
 };
 
 // iOS Chrome / 인앱 브라우저: Safari의 액세서리 바 보정(-IOS_KEYBOARD_TOOLBAR) 없이 키보드 바로 위에 붙는다.
-const computeKeyboardTopOffset = (vv) =>
-  Math.max(0, window.innerHeight - vv.height);
+const computeKeyboardTopOffset = (vv) => layoutBottomGap(vv);
 
-const computeAndroidOffset = (vv) => {
-  const keyboardHeight = window.innerHeight - vv.height;
-  return keyboardHeight > 0 ? Math.max(0, keyboardHeight - vv.offsetTop) : 0;
-};
+const computeAndroidOffset = (vv) => layoutBottomGap(vv);
 
 export function useAttachmentBarPosition() {
   const attachmentBarRef = useRef(null);
