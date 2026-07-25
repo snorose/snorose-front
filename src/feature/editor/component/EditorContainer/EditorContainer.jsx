@@ -245,7 +245,7 @@ export default function EditorContainer({
 
   return (
     <>
-      <div className={styles.editor}>
+      <div className={`${styles.editor} ${styles.fill}`}>
         <EditorContent editor={editor} />
       </div>
 

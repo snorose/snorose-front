@@ -6,6 +6,22 @@
   z-index: var(--z-index-dropdown);
 }
 
+.fill {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(.ProseMirror) {
+    flex: 1;
+  }
+}
+
 .editor {
   font: var(--text-headline-2-reg);
   line-height: 1.9;
@@ -16,7 +32,7 @@
   cursor: text;
 
   :global(.ProseMirror) {
-    min-height: 100vh;
+    min-height: 12rem;
     outline: none;
   }
 
