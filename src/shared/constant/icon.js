@@ -30,6 +30,8 @@ export const STATIC_ICON_LIST = Object.freeze({
   flagPink: 'flag-pink',
   hamburger: 'hamburger',
   hashtag: 'hashtag',
+  listBullet: 'list-bullet',
+  listOrdered: 'list-ordered',
   heartMinus: 'heart-minus',
   heartPlus: 'heart-plus',
   home: 'home',
