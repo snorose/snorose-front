@@ -100,12 +100,59 @@
 
 .categoryDropdownContainer {
   position: relative;
-  z-index: 1;
+  z-index: 10;
 }
+
 
 .dropDownList {
   position: absolute;
   top: calc(100% + 0.7rem);
+}
+
+.categoryLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.subCategorySelect {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: var(--grey-1-1);
+  padding: 1.6rem 2rem;
+}
+
+.subCategorySelectContainer {
+  display: flex;
+  align-items: center;
+  /* background-color, padding은 위로 옮겼으니 여기선 제거 */
+}
+
+.subCategorySelectText {
+  font: var(--text-body-1-reg);
+  color: var(--grey-3-1);
+}
+
+.subCategoryDropdownContainer {
+  z-index: 1;
+  position: relative;
+}
+
+.subCategoryLabel {
+  margin-top: 1.2rem;
+  color: var(--grey-4);
+  font: var(--text-headline-2-med);
+}
+
+
+.requiredDot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background-color: var(--pink-3); /* 디자인 빨간 점 색상에 맞춰 조정 */
 }
 
 .profileBox {
@@ -203,3 +250,5 @@
   left: 50%;
   transform: translate(-50%, 0);
 }
+
+

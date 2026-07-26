@@ -17,9 +17,12 @@ import {
 } from '@/shared/component';
 import {
   ATTACHMENT_MODAL_TEXT,
+  BOARD_ID,
   BOARD_MENUS,
   CONFIRM_MODAL_TEXT,
   QUERY_KEY,
+  RESIDENCE_CATEGORY_ENUM,
+  RESIDENCE_CATEGORY_KOREAN_ENUM,
   ROLE,
   TOAST,
 } from '@/shared/constant';
@@ -60,6 +63,8 @@ export default function WritePostPage() {
 
   const [isNotice, setIsNotice] = useState(false);
   const [dropDownOpen, setDropDownOpen] = useState(false);
+  const [categoryDropDownOpen, setCategoryDropDownOpen] = useState(false);
+  const [category, setCategory] = useState(null);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const submitLockRef = useRef(false);
@@ -86,7 +91,7 @@ export default function WritePostPage() {
   const [boardId, setBoardId] = useState(currentBoard?.id ?? '');
 
   const boardTitles = BOARD_MENUS.filter((menu) =>
-    [21, 22, 23].includes(menu.id)
+    [21, 22, 23, 41].includes(menu.id)
   ).map((menu) => menu.title);
 
   // 공식 계정 일반글
@@ -133,6 +138,19 @@ export default function WritePostPage() {
     setDropDownOpen((prev) => !prev);
   };
 
+  const handleCategoryDropDownOpen = () => {
+    setCategoryDropDownOpen((prev) => !prev);
+  }
+
+  const categoryOptions = Object.entries(RESIDENCE_CATEGORY_KOREAN_ENUM).map(
+    ([key, name]) => ({ id: key, name})
+  );
+
+  const handleCategoryChange = (option) => {
+    setCategory(option.id);
+    setCategoryDropDownOpen(false);
+  };
+
   // 게시판 제목 선택 핸들러
   const handleBoardTitleChange = (option) => {
     setBoardTitle(option.name);
@@ -156,9 +174,12 @@ export default function WritePostPage() {
   };
 
   const data = {
-    category: null,
+    category: boardId === BOARD_ID.residence ? category: null,
     boardId,
-    title,
+    title:
+      boardId === BOARD_ID.residence && category
+        ? `[${RESIDENCE_CATEGORY_KOREAN_ENUM[category]}] ${title}`
+        : title,
     content: text,
     isNotice: textId === 'notice' ? true : isNotice,
     attachmentsInfo: attachmentsInfo,
@@ -219,6 +240,11 @@ export default function WritePostPage() {
       return;
     }
 
+    if (boardId === BOARD_ID.residence && !category) {
+      toast({ message: TOAST.POST.selectCategory, variant: 'info' });
+      return;
+    }
+
     if (!title.trim()) {
       toast({ message: TOAST.POST.emptyTitle, variant: 'info' });
       return;
@@ -226,7 +252,7 @@ export default function WritePostPage() {
     if (!text.trim()) {
       toast({ message: TOAST.POST.emptyContent, variant: 'info' });
       return;
-    }
+    } 
 
     if (submitLockRef.current) return;
     submitLockRef.current = true;
@@ -333,13 +359,45 @@ export default function WritePostPage() {
                     />
                     <p className={styles.categorySelectText}>{boardTitle}</p>
                   </div>
-                  <Icon id='angle-down' width={14} height={7} />
+                  <Icon id='angle-down' width={16} height={9} />
                 </div>
                 {dropDownOpen && (
                   <DropdownList
                     options={displayedOptions}
                     select={{ id: boardId, name: boardTitle }}
                     onSelect={handleBoardTitleChange}
+                    className={styles.dropDownList}
+                  />
+                )}
+              </div>
+            )}
+            {boardId === BOARD_ID.residence && (
+              <div className={styles.subCategoryDropdownContainer}>
+                <div className={styles.categoryLabel}>
+                  <p className={styles.subCategoryLabel}>카테고리</p>
+                  <span className={styles.requiredDot} />
+                </div>
+                <div
+                  className={styles.subCategorySelect}
+                  onClick={handleCategoryDropDownOpen}
+                >
+                  <div className={styles.subCategorySelectContainer}>
+                    <p className={styles.subCategorySelectText}>
+                      {category
+                        ? RESIDENCE_CATEGORY_KOREAN_ENUM[category]
+                        : '카테고리를 선택해주세요'}
+                    </p>
+                  </div>
+                  <Icon id='angle-down' width={16} height={9} />
+                </div>
+                {categoryDropDownOpen && (
+                  <DropdownList
+                    options={categoryOptions}
+                    select={{
+                      id: category,
+                      name: category ? RESIDENCE_CATEGORY_KOREAN_ENUM[category] : '',
+                    }}
+                    onSelect={handleCategoryChange}
                     className={styles.dropDownList}
                   />
                 )}

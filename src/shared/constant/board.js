@@ -438,3 +438,16 @@ export const COMMENT_REPORT_TYPE_MODAL_OPTION_CHILDREN = [
     value: COMMENT_REPORT_TYPE_ENUM.COMMENT_OTHER,
   },
 ];
+
+// TODO: 백엔드 API 문서 확정되면 실제 enum 값으로 교체 필요
+export const RESIDENCE_CATEGORY_ENUM = Object.freeze({
+  MYEONGJAE: 'MYEONGJAE',
+  DORM_OUTSIDE: 'DORM_OUTSIDE',
+  SELF_BOARDING: 'SELF_BOARDING',
+});
+
+export const RESIDENCE_CATEGORY_KOREAN_ENUM = Object.freeze({
+  MYEONGJAE: '명재관',
+  DORM_OUTSIDE: '외부기숙',
+  SELF_BOARDING: '자취',
+});
