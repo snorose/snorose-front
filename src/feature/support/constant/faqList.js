@@ -41,9 +41,10 @@ export const faqList = [
         ],
       },
       {
-        title: `⭐️ 더욱 자세한 사항은
-스노로즈 안내서 이용 꿀팁 페이지를 참고해 주세요.
-https://app.notion.com/p/snorose/3617ef0aa3bf8093b37cc88a54ac493c?v=3327ef0aa3bf81e48750000c0f590556&source=copy_link#38d7ef0aa3bf80d4a063e1c1d41ed257`,
+        title: `⭐️ 더욱 자세한 사항은`,
+        linkText: '스노로즈 안내서 이용 꿀팁 페이지 (링크)',
+        link: 'https://app.notion.com/p/snorose/3617ef0aa3bf8093b37cc88a54ac493c?v=3327ef0aa3bf81e48750000c0f590556&source=copy_link#38d7ef0aa3bf80d4a063e1c1d41ed257',
+        suffix: '를 참고해 주세요.',
       },
     ],
   },
