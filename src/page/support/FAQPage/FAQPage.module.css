@@ -24,6 +24,16 @@
   text-underline-offset: 0.2em;
 }
 
+.faqLink {
+  color: var(--blue-3);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.faqLink:hover {
+  color: var(--blue-4);
+}
+
 /* notice */
 .notice {
   margin: 0 var(--default-margin) 5rem;
