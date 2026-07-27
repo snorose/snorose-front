@@ -60,6 +60,23 @@ const POPUP_CONTENTS = [
     endDate: '2026-06-20',
   },
   {
+    title: '[공지] 스노로즈 서버 점검 안내',
+    description: '안정적인 서비스 제공을 위한 서버 점검이 진행됩니다.',
+    contentList: [
+      '일시: 2026/07/31(금) 20:00 ~ 23:00',
+      '점검 시간 동안 스노로즈 이용이 일시 중단됩니다.',
+    ],
+    link: [
+      {
+        title: '스노로즈 공지',
+        url: '/board/notice/post/1912079',
+        isExternal: false,
+      },
+    ],
+    startDate: '2026-07-27',
+    endDate: '2026-07-31',
+  },
+  {
     title: '[블로그] 스노로즈 초청강연 - 유트루 편',
     description:
       '지난 해 진행했던 첫 초청 강연의 비하인드와 강연 당일 현장을 담은 이벤트기획팀의 이야기를 확인해 보세요.',
@@ -78,23 +95,6 @@ const POPUP_CONTENTS = [
     image: calendarImage,
     startDate: '2026-07-27',
     endDate: '2026-08-10',
-  },
-  {
-    title: '[공지] 스노로즈 서버 점검 안내',
-    description: '안정적인 서비스 제공을 위한 서버 점검이 진행됩니다.',
-    contentList: [
-      '일시: 2026/06/28(일) 15:00 ~ 16:00',
-      '점검 시간 동안 스노로즈 이용이 일시 중단됩니다.',
-    ],
-    link: [
-      {
-        title: '스노로즈 공지',
-        url: '/board/notice/post/1907923',
-        isExternal: false,
-      },
-    ],
-    startDate: '2026-06-21',
-    endDate: '2026-06-28',
   },
   {
     title: '[공지] 시험후기 작성 기간 안내',
