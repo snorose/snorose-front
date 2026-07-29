@@ -42,10 +42,6 @@
   color: var(--grey-4);
 }
 
-.title:hover {
-  color: var(--blue-3);
-}
-
 /* menu list */
 .list {
   display: flex;
@@ -61,10 +57,6 @@
 
 .item li {
   padding: 0.6rem 0;
-}
-
-.item > li:hover {
-  color: var(--blue-3);
 }
 
 .item:first-child > li {

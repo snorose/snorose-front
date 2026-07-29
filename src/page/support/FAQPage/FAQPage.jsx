@@ -60,26 +60,45 @@ export default function FAQPage() {
             onClick={() => toggle(index)}
           >
             <div className={style.noticeBody}>
-              {faq.content.map(({ title, list, listStyle }, contentIndex) => (
-                <div key={contentIndex}>
-                  {title && (
-                    <h3 className={style.title}>
-                      {renderTextWithLinks(title)}
-                    </h3>
-                  )}
-                  {list && (
-                    <ul
-                      className={
-                        listStyle === 'none' ? style.listStyleNone : undefined
-                      }
-                    >
-                      {list.map((item, itemIndex) => (
-                        <li key={itemIndex}>{renderTextWithLinks(item)}</li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
+              {faq.content.map(
+                (
+                  { title, list, listStyle, linkText, link, suffix },
+                  contentIndex
+                ) => (
+                  <div key={contentIndex}>
+                    {title && (
+                      <h3 className={style.title}>
+                        {renderTextWithLinks(title)}
+                        {link && (
+                          <>
+                            {' '}
+                            <a
+                              className={style.faqLink}
+                              href={link}
+                              target='_blank'
+                              rel='noreferrer noopener'
+                            >
+                              <span className={style.linkText}>{linkText}</span>
+                            </a>
+                            {suffix}
+                          </>
+                        )}
+                      </h3>
+                    )}
+                    {list && (
+                      <ul
+                        className={
+                          listStyle === 'none' ? style.listStyleNone : undefined
+                        }
+                      >
+                        {list.map((item, itemIndex) => (
+                          <li key={itemIndex}>{renderTextWithLinks(item)}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )
+              )}
             </div>
           </Accordion>
         ))}

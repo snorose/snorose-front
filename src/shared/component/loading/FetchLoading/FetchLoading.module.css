@@ -14,14 +14,21 @@
   font-size: 1.3rem;
 }
 
-.icon {
-  animation: rotateAndPause 1s linear infinite;
-  width: 2.5rem;
-  height: 1.6rem;
+.icon,
+.iconStatic {
+  width: 4.4rem;
+  height: 2.7rem;
 }
 
-.iconStatic {
-  animation: none;
+.icon {
+  animation: rotateAndPause 1s linear infinite;
+}
+
+.icon img,
+.iconStatic img {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 @keyframes rotateAndPause {
