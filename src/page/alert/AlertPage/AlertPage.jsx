@@ -154,7 +154,7 @@ function NotificationList({ category }) {
   };
 
   const read = async (item) => {
-    await markNotificationAsRead.mutate(item);
+    await markNotificationAsRead.mutateAsync(item);
     openNotificationUrl(item.url, item.isExternal);
   };
 
