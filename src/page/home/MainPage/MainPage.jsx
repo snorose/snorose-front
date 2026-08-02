@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useNavigate } from 'react-router';
 
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
@@ -30,26 +29,14 @@ import styles from './MainPage.module.css';
  * TODO: 라우트 개선 작업 완료 후 HomeCard 교체
  */
 export default function MainPage() {
-  const navigate = useNavigate();
   const auth = useAuth();
-
-  const handleSearchKeyDown = (event) => {
-    if (event.target.value.trim() === '') {
-      return;
-    }
-
-    navigate(`/board/all/search`);
-  };
 
   return (
     <div>
       <Header className={styles.header} />
 
       <div className={styles.search}>
-        <Search
-          placeholder='전체 게시판 내 검색'
-          onKeyDown={handleSearchKeyDown}
-        />
+        <Search placeholder='전체 게시판 내 검색' to='/board/all/search' />
       </div>
 
       <QueryErrorResetBoundary>

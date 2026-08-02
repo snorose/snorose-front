@@ -1,32 +1,18 @@
-import { useNavigate } from 'react-router-dom';
-
 import { Header } from '@/shared/component';
-import { BOARD_REGISTRY } from '@/shared/lib';
-import { BOARD_MENUS, NEW_ROUTES } from '@/shared/constant';
+import { BOARD_MENUS } from '@/shared/constant';
 
-import { BoardBar, NewBoardBar } from '@/feature/board/component';
+import { BoardBar } from '@/feature/board/component';
 import { Search } from '@/feature/search/component';
-
-import { BOARD_IMAGES } from '@/assets/map/board-assets';
 
 import styles from './BoardCategoryPage.module.css';
 
 export default function BoardCategoryPage() {
-  const navigate = useNavigate();
-  const handleKeyDown = (event) => {
-    if (event.target.value.trim() === '') {
-      return;
-    }
-
-    navigate(`/board/all/search`);
-  };
-
   return (
     <div className={styles.container}>
       <Header />
 
       <div className={styles.searchbarBox}>
-        <Search placeholder='전체 게시판 내 검색' onKeyDown={handleKeyDown} />
+        <Search placeholder='전체 게시판 내 검색' to='/board/all/search' />
       </div>
 
       <div className={styles.paddingContainer}>
@@ -61,61 +47,6 @@ export default function BoardCategoryPage() {
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-/**
- * TODO(global search): 라우트 개선 작업 완료 후 교체 필요
- * TODO(board): 라우트 개선 작업 완료 후 교체 필요
- */
-const COMMUNITIES = BOARD_REGISTRY.communities;
-const BESOOKT = BOARD_REGISTRY.find('besookt');
-const OFFICIALS = BOARD_REGISTRY.officials;
-const SNOROSES = [BOARD_REGISTRY.find('event')];
-
-const BOARD_CATEGORIES = [
-  { title: '커뮤니티', list: [...COMMUNITIES, BESOOKT] },
-  { title: '공식 게시판', list: [...OFFICIALS] },
-  { title: '스노로즈 게시판', list: [...SNOROSES] },
-];
-
-export function NewBoardCategoryPage() {
-  const navigate = useNavigate();
-  const handleKeyDown = (event) => {
-    if (event.target.value.trim() === '') {
-      return;
-    }
-
-    navigate(NEW_ROUTES.globalSearch);
-  };
-
-  return (
-    <div className={styles.container}>
-      <Header />
-      <div className={styles.searchbarBox}>
-        <Search placeholder='전체 게시판 내 검색' onKeyDown={handleKeyDown} />
-      </div>
-
-      <div className={styles.paddingContainer}>
-        {BOARD_CATEGORIES.map(({ title, list }) => (
-          <div key={`board-home-${title}`} className={styles.boardBox}>
-            <div className={styles.boardTitle}>{title}</div>
-            <div className={styles.boardListBox}>
-              {list.map(({ key, to, name, desc }) => (
-                <NewBoardBar
-                  key={`board-category-${key}`}
-                  name={name}
-                  desc={desc}
-                  to={NEW_ROUTES.post.list(key)}
-                  image={BOARD_IMAGES[key].category}
-                />
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-
     </div>
   );
 }

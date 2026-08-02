@@ -1,29 +1,46 @@
 import { useEffect, useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Icon } from '@/shared/component';
 
 import styles from './Search.module.css';
 
-export default function Search({ className, placeholder, onKeyDown }) {
+export default function Search({
+  className = '',
+  placeholder,
+  to,
+  replace = false,
+}) {
   const ref = useRef();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const keyword = searchParams.get('keyword');
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const keyword = searchParams.get('keyword') ?? '';
 
-  const search = (keyword) => {
-    if (keyword === '') {
-      searchParams.delete('keyword');
-      setSearchParams(searchParams);
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.value = keyword;
+    }
+  }, [keyword]);
+
+  const handleSearch = (value) => {
+    const trimmedKeyword = value.trim();
+
+    if (trimmedKeyword === '') {
       return;
     }
 
-    searchParams.set('keyword', keyword);
-    setSearchParams(searchParams, { replace: true });
-  };
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.set('keyword', trimmedKeyword);
 
-  useEffect(() => {
-    ref.current.value = keyword;
-  }, []);
+    navigate(
+      {
+        pathname: to ?? location.pathname,
+        search: nextParams.toString(),
+      },
+      { replace }
+    );
+  };
 
   return (
     <div className={`${styles.container} ${className}`}>
@@ -38,11 +55,7 @@ export default function Search({ className, placeholder, onKeyDown }) {
             return;
           }
 
-          if (onKeyDown) {
-            onKeyDown(event);
-          }
-
-          search(event.target.value);
+          handleSearch(event.target.value);
         }}
       />
     </div>
