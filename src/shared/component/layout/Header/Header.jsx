@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom';
 
-import { useAuth } from '@/shared/hook';
 import { Icon, MenuIcon } from '@/shared/component';
+import { useAuth } from '@/shared/hook';
+
+import { useLogout } from '@/feature/auth/hooks';
 
 import styles from './Header.module.css';
 
 export default function Header({ className }) {
-  const { status, logout } = useAuth();
+  const { status } = useAuth();
+  const { mutate: logout } = useLogout();
 
   return (
     <>
