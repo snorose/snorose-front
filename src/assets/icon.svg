@@ -897,6 +897,13 @@
       <path d="M9.87157 1.13228C10.0008 0.652317 9.71622 0.159409 9.23594 0.0313398C8.75567 -0.0967294 8.26157 0.188537 8.13234 0.668501L9.00195 0.900391L9.87157 1.13228ZM3.01667 19.6685C2.88744 20.1485 3.17202 20.6414 3.65229 20.7694C4.13256 20.8975 4.62666 20.6122 4.75589 20.1323L3.88628 19.9004L3.01667 19.6685ZM9.00195 0.900391L8.13234 0.668501L3.01667 19.6685L3.88628 19.9004L4.75589 20.1323L9.87157 1.13228L9.00195 0.900391Z" fill="#5F86BF" stroke="none"/>
     </symbol>
 
+    <symbol id="hashtag-fill" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2.13477 5.94922H21.7002" stroke="#5F86BF" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M17.5728 1.3L12.6185 19.7" stroke="#5F86BF" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M1.2999 14.8867H20.6653" stroke="#5F86BF" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M8.89452 1.3L3.94025 19.7" stroke="#5F86BF" stroke-width="2.6" stroke-linecap="round"/>
+    </symbol>
+
     <symbol id="list-bullet" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M21 4L8 4" stroke="var(--icon-stroke, #898989)" stroke-width="1.8" stroke-linecap="round"/>
       <path d="M21 12L8 12" stroke="var(--icon-stroke, #898989)" stroke-width="1.8" stroke-linecap="round"/>
