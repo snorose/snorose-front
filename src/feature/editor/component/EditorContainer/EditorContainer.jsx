@@ -17,6 +17,7 @@ import { HASHTAG_REGEX } from '@/shared/lib';
 import { HashtagHighlight } from '@/feature/editor/component/extensions/hashtag-highlight-extension';
 import { Iframe } from '@/feature/editor/component/extensions/iframe-extension';
 import { ListBackspaceHandler } from '@/feature/editor/component/extensions/list-backspace-handler-extension';
+import { ListMergeHandler } from '@/feature/editor/component/extensions/list-merge-handler-extension';
 import { ListTabHandler } from '@/feature/editor/component/extensions/list-tab-handler-extension';
 import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
 
@@ -86,6 +87,7 @@ export default function EditorContainer({
       }),
       ListBackspaceHandler,
       ListTabHandler,
+      ListMergeHandler,
       HashtagHighlight,
       Iframe,
       ReferrerSafeImage,
