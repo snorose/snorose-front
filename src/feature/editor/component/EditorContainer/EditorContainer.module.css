@@ -24,7 +24,6 @@
 
 .editor {
   font: var(--text-headline-2-reg);
-  line-height: 1.9;
   color: var(--grey-4);
   padding-bottom: 1.5rem;
   white-space: pre-wrap;
@@ -55,7 +54,7 @@
   :global(.editor-hashtag),
   :global(.post-hashtag) {
     display: inline-block;
-    line-height: 1.6;
+    line-height: 1.4;
     background-color: var(--blue-0);
     border: 1px solid var(--blue-2);
     border-radius: 5px;
@@ -122,6 +121,10 @@
   ol ol ol ol ol ol,
   ol ol ol ol ol ol ol ol ol {
     list-style-type: lower-roman;
+  }
+
+  p {
+    line-height: 1.7;
   }
 
   li p {
