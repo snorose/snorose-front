@@ -21,6 +21,7 @@ import {
   ListHeader,
   PopUp,
 } from '@/feature/home/component';
+import { Search } from '@/feature/search/component';
 
 import styles from './MainPage.module.css';
 
@@ -33,6 +34,10 @@ export default function MainPage() {
   return (
     <div>
       <Header className={styles.header} />
+
+      <div className={styles.search}>
+        <Search placeholder='전체 게시판 내 검색' to='/board/all/search' />
+      </div>
 
       <QueryErrorResetBoundary>
         {({ reset }) => (

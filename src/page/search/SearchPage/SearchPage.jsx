@@ -1,4 +1,4 @@
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 import { BackAppBar } from '@/shared/component';
 
@@ -18,7 +18,7 @@ export default function SearchPage() {
   return (
     <div className={styles.container}>
       <BackAppBar hasSearchInput={true}>
-        <Search placeholder={PLACEHOLDER[current]} />
+        <Search placeholder={PLACEHOLDER[current]} replace />
       </BackAppBar>
 
       {paramsLength > 0 && <SearchResultListSuspense />}
