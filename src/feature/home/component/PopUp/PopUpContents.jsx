@@ -60,41 +60,41 @@ const POPUP_CONTENTS = [
     endDate: '2026-06-20',
   },
   {
-    title: '[블로그] 업스테이지 앰배서더의 스노로즈 해커톤 주최기',
-    description:
-      '지난 5월 스노로즈와 업스테이지가 함께 진행한 2026 해커톤의 생생한 주최기를 만나보세요.',
-    link: [
-      {
-        title: '블로그 링크 (노션)',
-        url: 'https://snorose.notion.site/38d7ef0aa3bf801da755e4cee4f0df95',
-        isExternal: true,
-      },
-    ],
-    startDate: '2026-06-30',
-    endDate: '2026-07-10',
-  },
-  {
-    title: '[캘린더] 7월 스노로즈 일정',
-    image: calendarImage,
-    startDate: '2026-06-30',
-    endDate: '2026-07-10',
-  },
-  {
     title: '[공지] 스노로즈 서버 점검 안내',
     description: '안정적인 서비스 제공을 위한 서버 점검이 진행됩니다.',
     contentList: [
-      '일시: 2026/06/28(일) 15:00 ~ 16:00',
+      '일시: 2026/07/31(금) 20:00 ~ 23:00',
       '점검 시간 동안 스노로즈 이용이 일시 중단됩니다.',
     ],
     link: [
       {
         title: '스노로즈 공지',
-        url: '/board/notice/post/1907923',
+        url: '/board/notice/post/1912079',
         isExternal: false,
       },
     ],
-    startDate: '2026-06-21',
-    endDate: '2026-06-28',
+    startDate: '2026-07-27',
+    endDate: '2026-07-31',
+  },
+  {
+    title: '[블로그] 스노로즈 초청강연 - 유트루 편',
+    description:
+      '지난 해 진행했던 첫 초청 강연의 비하인드와 강연 당일 현장을 담은 이벤트기획팀의 이야기를 확인해 보세요.',
+    link: [
+      {
+        title: '블로그 링크 (노션)',
+        url: 'https://snorose.notion.site/3a87ef0aa3bf80948861e5ab33627445',
+        isExternal: true,
+      },
+    ],
+    startDate: '2026-07-27',
+    endDate: '2026-08-10',
+  },
+  {
+    title: '[캘린더] 8월 스노로즈 일정',
+    image: calendarImage,
+    startDate: '2026-07-27',
+    endDate: '2026-08-10',
   },
   {
     title: '[공지] 시험후기 작성 기간 안내',

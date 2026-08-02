@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 
-import { useAuth } from '@/shared/hook';
 import { Icon } from '@/shared/component';
+
+import { useLogout } from '@/feature/auth/hooks';
 
 import styles from './PolicyTab.module.css';
 
 const PolicyTab = () => {
-  const { logout } = useAuth();
+  const { mutate: logout } = useLogout();
 
   return (
     <>
