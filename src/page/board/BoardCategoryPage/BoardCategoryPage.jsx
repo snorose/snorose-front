@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Header } from '@/shared/component';
 import { BOARD_MENUS } from '@/shared/constant';
 
@@ -6,9 +8,20 @@ import { Search } from '@/feature/search/component';
 
 import styles from './BoardCategoryPage.module.css';
 
-const FAVORITE_BOARD_IDS = [20, 61];
+const FAVORITE_BOARD_IDS = [20, 61]; //즐겨찾기 더미 데이터
 
 export default function BoardCategoryPage() {
+  const [openBoards, setOpenBoards] = useState({
+    community: true,
+    official: true,
+    snorose: true,
+  });
+  const toggleBoard = (boardName) => {
+    setOpenBoards((prev) => ({
+      ...prev,
+      [boardName]: !prev[boardName],
+    }));
+  };
   return (
     <div className={styles.container}>
       <Header />
@@ -18,23 +31,12 @@ export default function BoardCategoryPage() {
       </div>
 
       <div className={styles.paddingContainer}>
-        {/* <div className={styles.boardBox}>
-          <DropDownBoards
-            title='즐겨찾는 게시판'
-            isOpen={true}
-            onClick={() => {}}
-          >
-            <div className={styles.boardListBox}>
-              {BOARD_MENUS.filter((board) =>
-                FAVORITE_BOARD_IDS.includes(board.id)
-              ).map((board, index) => (
-                <BoardBar key={board.id} data={board} isFavorite={true} />
-              ))}
-            </div>
-          </DropDownBoards>
-        </div> */}
         <div className={styles.boardBox}>
-          <DropDownBoards title='커뮤니티' isOpen={true} onClick={() => {}}>
+          <DropDownBoards
+            title='커뮤니티'
+            isOpen={openBoards.community}
+            onClick={() => toggleBoard('community')}
+          >
             <div className={styles.boardListBox}>
               {BOARD_MENUS.filter((board) =>
                 [20, 21, 22, 23].includes(board.id)
@@ -49,7 +51,11 @@ export default function BoardCategoryPage() {
           </DropDownBoards>
         </div>
         <div className={styles.boardBox}>
-          <DropDownBoards title='공식 게시판' isOpen={true} onClick={() => {}}>
+          <DropDownBoards
+            title='공식 게시판'
+            isOpen={openBoards.official}
+            onClick={() => toggleBoard('official')}
+          >
             <div className={styles.boardListBox}>
               {BOARD_MENUS.filter((board) =>
                 [60, 61, 62].includes(board.id)
@@ -66,8 +72,8 @@ export default function BoardCategoryPage() {
         <div className={styles.boardBox}>
           <DropDownBoards
             title='스노로즈 게시판'
-            isOpen={true}
-            onClick={() => {}}
+            isOpen={openBoards.snorose}
+            onClick={() => toggleBoard('snorose')}
           >
             <div className={styles.boardListBox}>
               {BOARD_MENUS.filter((board) =>

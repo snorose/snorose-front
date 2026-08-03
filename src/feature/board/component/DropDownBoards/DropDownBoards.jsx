@@ -1,6 +1,8 @@
 import React from 'react';
-import styles from './DropDownBoards.module.css';
+
 import { Icon } from '@/shared/component';
+
+import styles from './DropDownBoards.module.css';
 
 export default function DropDownBoards({ title, isOpen, onClick, children }) {
   return (
