@@ -1,8 +1,5 @@
 import { useState } from 'react';
 
-import { verifySookmyungPortal } from '@/apis';
-
-import { useToast } from '@/shared/hook';
 import {
   EmailInput,
   ErrorMessage,
@@ -12,8 +9,11 @@ import {
   NumberInput,
   PasswordInput,
 } from '@/shared/component';
+import { useToast } from '@/shared/hook';
 
 import { validateEmail, validateStudentNumber } from '@/feature/account/lib';
+
+import { verifySookmyungPortal } from '@/apis';
 
 import styles from './VerifyStep.module.css';
 
