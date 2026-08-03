@@ -44,7 +44,7 @@ export default function ExamReviewListPage() {
         <p>[필독]&nbsp;&nbsp;{noticeLineData?.title}</p>
       </Link>
 
-      <Search className={styles.search} placeholder='시험후기 검색' />
+      <Search className={styles.search} placeholder='시험후기 검색' replace />
       <FilterList>
         <Filter filterKey='lectureYear' options={YEARS} placeholder='연도' />
         <Filter filterKey='semester' options={SEMESTERS} placeholder='학기' />

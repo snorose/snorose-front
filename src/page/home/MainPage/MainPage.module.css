@@ -2,6 +2,10 @@
   margin-bottom: 2.1rem;
 }
 
+.search {
+  margin: 1.4rem var(--default-margin) 1.2rem var(--default-margin);
+}
+
 .carousel {
   margin-bottom: 3rem;
   padding: 0 2rem;
