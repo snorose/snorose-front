@@ -16,7 +16,7 @@ export default function BoardBar({
         <h3 className={styles.title}>{data.title}</h3>
         <p className={styles.description}>{data.desc}</p>
       </div>
-      <Icon
+      {/* <Icon
         className={styles.favoriteIcon}
         id='star'
         width={25}
@@ -28,7 +28,7 @@ export default function BoardBar({
           onFavoriteClick();
           // 즐겨찾기 추가하는 로직 추가
         }}
-      />
+      /> */}
     </Link>
   );
 }

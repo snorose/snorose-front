@@ -18,7 +18,7 @@ export default function BoardCategoryPage() {
       </div>
 
       <div className={styles.paddingContainer}>
-        <div className={styles.boardBox}>
+        {/* <div className={styles.boardBox}>
           <DropDownBoards
             title='즐겨찾는 게시판'
             isOpen={true}
@@ -32,7 +32,7 @@ export default function BoardCategoryPage() {
               ))}
             </div>
           </DropDownBoards>
-        </div>
+        </div> */}
         <div className={styles.boardBox}>
           <DropDownBoards title='커뮤니티' isOpen={true} onClick={() => {}}>
             <div className={styles.boardListBox}>
