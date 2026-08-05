@@ -90,7 +90,7 @@ export default function WritePostPage() {
   const categoryEnum = BOARD_CATEGORY_MAP[boardId];
 
   const boardTitles = BOARD_MENUS.filter((menu) =>
-    [21, 22, 23, 41].includes(menu.id)
+    [21, 22, 23, 41, 43].includes(menu.id)
   ).map((menu) => menu.title);
 
   // 공식 계정 일반글

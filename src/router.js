@@ -107,8 +107,8 @@ const getRolesForWriteBoard = (boardPath) => {
     case 'first-snow':
       return [ROLE.preUser, ROLE.user, ROLE.admin, ROLE.official];
     case 'large-snow':
-      return [ROLE.user, ROLE.admin];
     case 'permanent-snow':
+    case 'sookplace':
       return [ROLE.user, ROLE.admin];
     case 'residence':
       return [ROLE.user, ROLE.admin, ROLE.official];
@@ -116,7 +116,6 @@ const getRolesForWriteBoard = (boardPath) => {
     case 'student-council':
     case 'finance-audit':
     case 'graduation-preparation':
-    case 'sookplace':
       return [ROLE.admin, ROLE.official];
     default:
       return [];
