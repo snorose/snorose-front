@@ -27,7 +27,6 @@
   color: var(--grey-4);
   padding-bottom: 1.5rem;
   white-space: pre-wrap;
-  word-break: keep-all;
   cursor: text;
 
   :global(.ProseMirror) {
@@ -55,7 +54,6 @@
   :global(.post-hashtag) {
     display: inline;
     line-height: 1.4;
-    word-break: break-all;
     background-color: var(--blue-0);
     border: 1px solid var(--blue-2);
     border-radius: 5px;
