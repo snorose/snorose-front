@@ -90,10 +90,10 @@ const LIFE = [
   },
   // TODO: 백엔드 boardId 배정 후 확정
   {
-    key: 'culture',
-    id: 44,
-    name: '문화생활',
-    desc: '문화생활 정보·후기 커뮤니티',
+    key: 'sookplace',
+    id: 43,
+    name: '숙플',
+    desc: '눈송이 맛집 커뮤니티',
   },
 ] as const satisfies readonly Board[];
 

@@ -94,7 +94,7 @@ const getRolesForReadBoard = (boardPath) => {
     case 'finance-audit':
       return [ROLE.user, ROLE.admin, ROLE.official];
     case 'residence':
-    case 'culture':
+    case 'sookplace':
       return [ROLE.user, ROLE.admin, ROLE.official];
     default:
       return [];
@@ -115,7 +115,7 @@ const getRolesForWriteBoard = (boardPath) => {
     case 'student-council':
     case 'finance-audit':
     case 'graduation-preparation':
-    case 'culture':
+    case 'sookplace':
       return [ROLE.admin, ROLE.official];
     default:
       return [];
@@ -133,7 +133,7 @@ const boardPaths = [
   'graduation-preparation',
   'finance-audit',
   'residence',
-  'culture',
+  'sookplace',
 ];
 
 const boardRoutes = boardPaths.flatMap((boardPath) => [

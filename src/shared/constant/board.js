@@ -38,7 +38,7 @@ export const BOARD_ID = Object.freeze({
   'large-snow': 22,
   'permanent-snow': 23,
   'exam-review': 32,
-  culture: 44,
+  sookplace: 43,
   'student-council': 60,
   'graduation-preparation': 61,
   'finance-audit': 62,
@@ -75,9 +75,9 @@ export const BOARDS = Object.freeze([
     mainImage: permanentSnowMain,
   },
   {
-    id: 44,
-    name: '문화생활',
-    path: '/board/culture',
+    id: 43,
+    name: '숙플',
+    path: '/board/sookplace',
   },
   {
     id: 60,
@@ -184,11 +184,11 @@ export const BOARD_MENUS = [
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
-    id: 44,
-    to: '/board/culture',
-    textId: 'culture',
-    title: '문화생활',
-    desc: '문화생활 정보·후기 커뮤니티',
+    id: 43,
+    to: '/board/sookplace',
+    textId: 'sookplace',
+    title: '숙플',
+    desc: '눈송이 맛집 커뮤니티',
   },
   {
     id: 60,
