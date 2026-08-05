@@ -9,6 +9,7 @@ import largeSnow from '@/assets/images/largeSnow-board-page.svg';
 import largeSnowMain from '@/assets/images/largeSnow-main.svg';
 import permanentSnow from '@/assets/images/permanentSnow-board-page.svg';
 import permanentSnowMain from '@/assets/images/permanentSnow-main.svg';
+import sookplace from '@/assets/images/sookPlace.svg';
 import studentCouncil from '@/assets/images/studentCouncil-board-page.svg';
 
 export const BOARD_CATEGORY = {
@@ -194,6 +195,7 @@ export const BOARD_MENUS = [
     title: '숙플',
     desc: '눈송이 맛집 커뮤니티',
     category: BOARD_CATEGORY.LIFE,
+    image: sookplace,
   },
   {
     id: 60,
