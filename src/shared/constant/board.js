@@ -24,6 +24,10 @@ export const BOARD_CATEGORY = {
     value: 'snorose',
     label: '스노로즈',
   },
+  LIFE: {
+    value: 'life',
+    label: '라이프 게시판',
+  },
   HIDDEN: {
     value: 'hidden',
     label: '숨김', //아직 게시글 리스트에 띄우지 않을 board들
@@ -189,6 +193,7 @@ export const BOARD_MENUS = [
     textId: 'sookplace',
     title: '숙플',
     desc: '눈송이 맛집 커뮤니티',
+    category: BOARD_CATEGORY.LIFE,
   },
   {
     id: 60,
