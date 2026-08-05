@@ -76,6 +76,8 @@ const getRolesForReadBoard = (boardPath) => {
       return [ROLE.user, ROLE.admin, ROLE.official];
     case 'besookt':
       return [ROLE.user, ROLE.admin, ROLE.official];
+    case 'sookplace':
+      return [ROLE.user, ROLE.admin, ROLE.official];
     case 'all':
       return [ROLE.preUser, ROLE.user, ROLE.admin, ROLE.official];
     case 'notice':
@@ -94,7 +96,6 @@ const getRolesForReadBoard = (boardPath) => {
     case 'finance-audit':
       return [ROLE.user, ROLE.admin, ROLE.official];
     case 'residence':
-    case 'sookplace':
       return [ROLE.user, ROLE.admin, ROLE.official];
     default:
       return [];
