@@ -88,7 +88,6 @@ const LIFE = [
     name: '주거',
     desc: '학교 주변 자취 · 기숙사 정보 공유',
   },
-  // TODO: 백엔드 boardId 배정 후 확정
   {
     key: 'sookplace',
     id: 43,
