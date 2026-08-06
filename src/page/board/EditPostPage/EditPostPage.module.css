@@ -47,6 +47,45 @@
   font: var(--text-headline-1-med);
 }
 
+.subCategorySelect {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: var(--grey-1-1);
+  padding: 1.6rem 2rem;
+}
+
+.subCategorySelectContainer {
+  display: flex;
+  align-items: center;
+  /* background-color, padding은 위로 옮겼으니 여기선 제거 */
+}
+
+.subCategorySelectText {
+  font: var(--text-body-1-reg);
+  color: var(--grey-3-1);
+}
+
+.subCategoryDropdownContainer {
+  z-index: 1;
+  position: relative;
+}
+
+.subCategoryLabelEdit {
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+  color: var(--grey-4);
+  font: var(--text-headline-2-med);
+}
+
+.requiredDot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background-color: var(--pink-3); /* 디자인 빨간 점 색상에 맞춰 조정 */
+}
+
 .profileBox {
   display: flex;
   align-items: center;
@@ -55,6 +94,7 @@
   color: var(--grey-3-1);
   font: var(--text-body-1-reg);
 }
+
 
 .profileBoxLeft {
   display: flex;

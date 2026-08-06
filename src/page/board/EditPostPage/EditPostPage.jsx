@@ -10,15 +10,18 @@ import {
   Badge,
   CloseAppBar,
   ConfirmModal,
+  DropdownList,
   FetchLoading,
   Icon,
 } from '@/shared/component';
 import {
   ATTACHMENT_MODAL_TEXT,
+  BOARD_ID,
   BOARD_MENUS,
   CONFIRM_MODAL_TEXT,
   MUTATION_KEY,
   QUERY_KEY,
+  RESIDENCE_CATEGORY_KOREAN_ENUM,
   ROLE,
   TOAST,
 } from '@/shared/constant';
@@ -57,6 +60,9 @@ export default function EditPostPage() {
   const currentBoard = BOARD_MENUS.find((menu) => menu.textId === textId);
   const boardTitle = currentBoard?.title || '';
 
+  const [category, setCategory] = useState(null);
+  const [categoryDropDownOpen, setCategoryDropDownOpen] = useState(false);
+
   const [isNotice, setIsNotice] = useState(false);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -77,6 +83,20 @@ export default function EditPostPage() {
   // 페이지 이탈 방지 모달 노출
   useBlocker(isBlock);
 
+  //카테고리
+  const categoryOptions = Object.entries(RESIDENCE_CATEGORY_KOREAN_ENUM).map(
+    ([key, name]) => ({ id: key, name })
+  );
+
+  const handleCategoryDropDownOpen = () => {
+    setCategoryDropDownOpen((prev) => !prev);
+  };
+
+  const handleCategoryChange = (option) => {
+    setCategory(option.id);
+    setCategoryDropDownOpen(false);
+  };
+
   // 게시글 내용 가져오기
   const { data, isLoading, error } = useQuery({
     queryKey: QUERY_KEY.post(postId),
@@ -91,11 +111,17 @@ export default function EditPostPage() {
     editor.commands.setContent(data.content);
   }, [editor, data]);
 
+
   // 데이터 화면 표시
   useEffect(() => {
     if (!data || Object.keys(data).length === 0) return;
 
-    setTitle(data.title);
+    // 카테고리 접두어 제거
+    const categoryMatch = data.title?.match(/^\[([^\]]+)\]\s*/);
+
+    setTitle(
+      categoryMatch ? data.title.replace(categoryMatch[0], '') : data.title
+    );
     setText(data.content);
     setIsNotice(data.isNotice);
     setUserDisplay(data.userDisplay);
@@ -113,6 +139,7 @@ export default function EditPostPage() {
         data.attachments !== attachmentsInfo
     );
   }, [title, text, isNotice, attachmentsInfo]);
+
 
   // 게시글 수정
   const mutation = useMutation({
@@ -170,14 +197,20 @@ export default function EditPostPage() {
       toast({ message: TOAST.POST.emptyContent, variant: 'info' });
       return;
     }
-
+    if (currentBoard?.id === BOARD_ID.residence && !category) {  // 추가
+      toast({ message: TOAST.POST.selectCategory, variant: 'info' });
+      return;
+    }
     setSubmitDisabled(true);
     setIsBlock(false);
 
     mutation.mutate({
       boardId: currentBoard?.id,
       postId,
-      title,
+      title:
+        currentBoard?.id === BOARD_ID.residence && category
+        ? `[${RESIDENCE_CATEGORY_KOREAN_ENUM[category]}] ${title}`
+        : title,
       content: sanitizeHtml(preserveEmptyParagraphs(editor?.getHTML() ?? '')),
       isNotice,
       attachmentsInfo,
@@ -220,15 +253,43 @@ export default function EditPostPage() {
           <div className={styles.center}>
             <div className={styles.categorySelect}>
               <div className={styles.categorySelectContainer}>
-                <Icon
-                  id='clip-board-list'
-                  width={21}
-                  height={22}
-                  fill='white'
-                />
+                <Icon id='clip-board-list' width={21} height={22} fill='white' />
                 <p className={styles.categorySelectText}>{boardTitle}</p>
               </div>
             </div>
+
+            {currentBoard?.id === BOARD_ID.residence && (
+              <div className={styles.subCategoryDropdownContainer}>
+                <div className={styles.categoryLabel}>
+                  <p className={styles.subCategoryLabelEdit}>카테고리</p>
+                  <span className={styles.requiredDot} />
+                </div>
+                <div
+                  className={styles.subCategorySelect}
+                  onClick={handleCategoryDropDownOpen}
+                >
+                  <div className={styles.subCategorySelectContainer}>
+                    <p className={styles.subCategorySelectText}>
+                      {category
+                        ? RESIDENCE_CATEGORY_KOREAN_ENUM[category]
+                        : '카테고리를 선택해주세요'}
+                    </p>
+                  </div>
+                  <Icon id='angle-down' width={14} height={7} />
+                </div>
+                {categoryDropDownOpen && (
+                  <DropdownList
+                    options={categoryOptions}
+                    select={{
+                      id: category,
+                      name: category ? RESIDENCE_CATEGORY_KOREAN_ENUM[category] : '',
+                    }}
+                    onSelect={handleCategoryChange}
+                    className={styles.subCategoryDropDownList}
+                  />
+                )}
+              </div>
+            )}
             <div className={styles.profileBox}>
               <div className={styles.profileBoxLeft}>
                 {userInfo?.userRoleId !== ROLE.admin &&
