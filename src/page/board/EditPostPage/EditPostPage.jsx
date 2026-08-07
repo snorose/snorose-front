@@ -206,10 +206,14 @@ export default function EditPostPage() {
   return (
     <>
       <div className={styles.container}>
-        <div>
+        <div className={styles.main}>
           <div className={styles.top}>
             <CloseAppBar
-              children={<p onClick={handleSubmit}>수정</p>}
+              children={
+                <p className={styles.submitButton} onClick={handleSubmit}>
+                  수정
+                </p>
+              }
               backgroundColor={'#fbfdff'}
             />
           </div>
@@ -522,10 +526,14 @@ export function NewEditPostPage({ isNotice = false }) {
   return (
     <>
       <div className={styles.container}>
-        <div>
+        <div className={styles.main}>
           <div className={styles.top}>
             <CloseAppBar
-              children={<p onClick={handleSubmit}>수정</p>}
+              children={
+                <p className={styles.submitButton} onClick={handleSubmit}>
+                  수정
+                </p>
+              }
               backgroundColor={'#fbfdff'}
             />
           </div>

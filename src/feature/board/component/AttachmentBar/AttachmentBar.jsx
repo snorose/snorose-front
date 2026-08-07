@@ -29,7 +29,13 @@ export default function AttachmentBar({
   //이미지*영상* 에디터 첨부 버튼의 UI 상태를 좌우함
   const [isImageIconHighlighted, setIsImageIconHighlighted] = useState(false);
   const [isVideoIconHighlighted, setIsVideoIconHighlighted] = useState(false);
+  const [isEditorIconHovered, setIsEditorIconHovered] = useState(false);
+  const [isHashtagIconHovered, setIsHashtagIconHovered] = useState(false);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
+
+  const isEditorIconHighlighted =
+    !isTitleFocused && (isEditorOpen || isEditorIconHovered);
+  const isHashtagIconHighlighted = !isTitleFocused && isHashtagIconHovered;
 
   return (
     <div ref={attachmentBarRef} className={styles.bar}>
@@ -77,9 +83,7 @@ export default function AttachmentBar({
         />
 
         <Icon
-          id={
-            isEditorOpen && !isTitleFocused ? 'open-editor-fill' : 'open-editor'
-          }
+          id={isEditorIconHighlighted ? 'open-editor-fill' : 'open-editor'}
           width={27}
           height={21}
           className={`${styles.image} ${isTitleFocused ? styles.disabled : ''}`}
@@ -87,6 +91,22 @@ export default function AttachmentBar({
             if (isTitleFocused) return;
             setIsEditorOpen((prev) => !prev);
           }}
+          onPointerEnter={() => setIsEditorIconHovered(true)}
+          onPointerLeave={() => setIsEditorIconHovered(false)}
+          onMouseDown={(e) => e.preventDefault()}
+        />
+
+        <Icon
+          id={isHashtagIconHighlighted ? 'hashtag-fill' : 'hashtag'}
+          width={23}
+          height={21}
+          className={`${styles.image} ${isTitleFocused ? styles.disabled : ''}`}
+          onClick={() => {
+            if (isTitleFocused || !editor) return;
+            editor.chain().focus().insertContent('#').run();
+          }}
+          onPointerEnter={() => setIsHashtagIconHovered(true)}
+          onPointerLeave={() => setIsHashtagIconHovered(false)}
           onMouseDown={(e) => e.preventDefault()}
         />
       </div>
