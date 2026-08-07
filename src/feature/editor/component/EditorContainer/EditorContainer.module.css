@@ -128,11 +128,20 @@
 
   h1 {
     font-size: 2rem;
-    padding: 12px 0;
+    margin: 12px 0;
   }
 
-  h1:first-child {
-    padding: 0 0 12px 0;
+  & > h1:first-child,
+  :global(.ProseMirror) > h1:first-child {
+    margin-top: 0;
+  }
+
+  li > h1 {
+    margin: 0;
+  }
+
+  li:has(> h1)::marker {
+    font-size: 2rem;
   }
 
   iframe {

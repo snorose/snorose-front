@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import TipTapImage from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
+import { ListItem } from '@tiptap/extension-list';
 import Placeholder from '@tiptap/extension-placeholder';
 import {
   BackgroundColor,
@@ -80,7 +81,9 @@ export default function EditorContainer({
       StarterKit.configure({
         link: false,
         blockquote: false,
+        listItem: false,
       }),
+      ListItem.extend({ content: '(paragraph|heading) block*' }),
       Link.configure({
         openOnClick: false,
         autolink: true,
