@@ -3,6 +3,7 @@
   content: attr(data-placeholder);
   color: var(--grey-placeholder);
   font: var(--text-headline-2-reg);
+  line-height: 1.9;
   pointer-events: none;
   float: left;
   height: 0;

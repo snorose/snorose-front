@@ -4,6 +4,8 @@ import { useEditorState } from '@tiptap/react';
 
 import { Icon } from '@/shared/component';
 
+import { convertListTypesInSelection } from '@/feature/editor/lib';
+
 import styles from './FixedMenuEditor.module.css';
 
 const PRESET_COLORS = [
@@ -20,6 +22,17 @@ const PRESET_BG_COLORS = [
   { label: '파랑', value: 'var(--blue-2)' },
 ];
 
+const getNearestListType = (editorInstance) => {
+  const { $from } = editorInstance.state.selection;
+  for (let depth = $from.depth; depth > 0; depth--) {
+    const name = $from.node(depth).type.name;
+    if (name === 'bulletList' || name === 'orderedList') {
+      return name;
+    }
+  }
+  return null;
+};
+
 export default function FixedMenuEditor({ editor }) {
   const editorState = useEditorState({
     editor,
@@ -27,8 +40,11 @@ export default function FixedMenuEditor({ editor }) {
       isBold: ctx.editor.isActive('bold'),
       isUnderline: ctx.editor.isActive('underline'),
       isStrike: ctx.editor.isActive('strike'),
+      isBulletList: getNearestListType(ctx.editor) === 'bulletList',
+      isOrderedList: getNearestListType(ctx.editor) === 'orderedList',
       currentColor: ctx.editor.getAttributes('textStyle').color || '',
-      currentBgColor: ctx.editor.getAttributes('textStyle').backgroundColor || '',
+      currentBgColor:
+        ctx.editor.getAttributes('textStyle').backgroundColor || '',
       currentHeading: ctx.editor.isActive('heading', { level: 1 })
         ? '1'
         : 'paragraph',
@@ -42,6 +58,36 @@ export default function FixedMenuEditor({ editor }) {
   ];
 
   if (!editor) return null;
+
+  const toggleListStyle = (listType) => {
+    const nearestList = getNearestListType(editor);
+    const inAnyList = nearestList !== null;
+    const alreadyActive = nearestList === listType;
+    const toggleCmd =
+      listType === 'bulletList' ? 'toggleBulletList' : 'toggleOrderedList';
+
+    const chain = editor.chain().focus();
+
+    const { selection, doc } = editor.state;
+    if (!selection.empty) {
+      const $to = doc.resolve(selection.to);
+      if ($to.parentOffset === 0) {
+        chain.setTextSelection({ from: selection.from, to: $to.before() });
+      }
+    }
+
+    if (alreadyActive) {
+      chain.liftListItem('listItem');
+    } else if (inAnyList) {
+      chain.command(({ tr, state }) =>
+        convertListTypesInSelection(tr, state.schema, listType)
+      );
+    } else {
+      chain[toggleCmd]();
+    }
+
+    chain.run();
+  };
 
   return (
     <div
@@ -97,7 +143,9 @@ export default function FixedMenuEditor({ editor }) {
       <div className={styles.colorPickerWrapper}>
         {/* 폰트 색상 토글 버튼 */}
         <button
-          onClick={() => setOpenedMenu((prev) => prev === 'textColor' ? null : 'textColor')}
+          onClick={() =>
+            setOpenedMenu((prev) => (prev === 'textColor' ? null : 'textColor'))
+          }
           style={{ color: editorState.currentColor || 'var(--grey-4)' }}
         >
           <Icon id='font-color' width={24} height={24} />
@@ -138,7 +186,9 @@ export default function FixedMenuEditor({ editor }) {
 
       <div className={styles.colorPickerWrapper}>
         <button
-          onClick={() => setOpenedMenu((prev) => prev === 'bgColor' ? null : 'bgColor')}
+          onClick={() =>
+            setOpenedMenu((prev) => (prev === 'bgColor' ? null : 'bgColor'))
+          }
           style={{
             '--bg-icon-fill': editorState.currentBgColor || '#E6F7B1',
             '--bg-icon-stroke': editorState.currentBgColor || '#AAD916',
@@ -207,6 +257,26 @@ export default function FixedMenuEditor({ editor }) {
         style={editorState.isStrike ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
         <Icon id='strikethrough' width={24} height={24} />
+      </button>
+
+      <button
+        aria-label='글머리 기호 목록'
+        onClick={() => toggleListStyle('bulletList')}
+        style={
+          editorState.isBulletList ? { '--icon-stroke': 'var(--blue-4)' } : {}
+        }
+      >
+        <Icon id='list-bullet' width={24} height={24} />
+      </button>
+
+      <button
+        aria-label='번호 매기기 목록'
+        onClick={() => toggleListStyle('orderedList')}
+        style={
+          editorState.isOrderedList ? { '--icon-stroke': 'var(--blue-4)' } : {}
+        }
+      >
+        <Icon id='list-ordered' width={24} height={24} />
       </button>
     </div>
   );

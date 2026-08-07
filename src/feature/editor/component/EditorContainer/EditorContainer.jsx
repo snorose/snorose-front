@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import TipTapImage from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
+import { ListItem } from '@tiptap/extension-list';
 import Placeholder from '@tiptap/extension-placeholder';
 import {
   BackgroundColor,
@@ -12,8 +13,13 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import { BubbleMenu } from '@tiptap/react/menus';
 import StarterKit from '@tiptap/starter-kit';
 
-import { EnterKeyHandler } from '@/feature/editor/component/extensions/enterkey-handler-extension';
+import { HASHTAG_REGEX } from '@/shared/lib';
+
+import { HashtagHighlight } from '@/feature/editor/component/extensions/hashtag-highlight-extension';
 import { Iframe } from '@/feature/editor/component/extensions/iframe-extension';
+import { ListBackspaceHandler } from '@/feature/editor/component/extensions/list-backspace-handler-extension';
+import { ListMergeHandler } from '@/feature/editor/component/extensions/list-merge-handler-extension';
+import { ListTabHandler } from '@/feature/editor/component/extensions/list-tab-handler-extension';
 import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
 
 import { EMBED_SOURCES } from '../../constant';
@@ -75,14 +81,17 @@ export default function EditorContainer({
       StarterKit.configure({
         link: false,
         blockquote: false,
-        bulletList: false,
-        orderedList: false,
+        listItem: false,
       }),
+      ListItem.extend({ content: '(paragraph|heading) block*' }),
       Link.configure({
         openOnClick: false,
         autolink: true,
       }),
-      EnterKeyHandler,
+      ListBackspaceHandler,
+      ListTabHandler,
+      ListMergeHandler,
+      HashtagHighlight,
       Iframe,
       ReferrerSafeImage,
       TextStyle,
@@ -128,6 +137,16 @@ export default function EditorContainer({
               el.replaceWith(...el.childNodes);
             }
           });
+
+        doc.querySelectorAll('a').forEach((a) => {
+          if (!a.parentNode) return;
+          const text = a.textContent.trim();
+          const matches = [...text.matchAll(HASHTAG_REGEX)];
+          if (matches.length === 1 && matches[0][0] === text) {
+            a.replaceWith(doc.createTextNode(text));
+          }
+        });
+
         return doc.body.innerHTML;
       },
     },
@@ -231,7 +250,7 @@ export default function EditorContainer({
 
   return (
     <>
-      <div className={styles.editor}>
+      <div className={`${styles.editor} ${styles.fill}`}>
         <EditorContent editor={editor} />
       </div>
 
