@@ -12,11 +12,10 @@ const { HIDDEN, ...VISIBLE_BOARD_CATEGORY } = BOARD_CATEGORY;
 const FAVORITE_BOARD_IDS = [20, 61]; //즐겨찾기 더미 데이터
 
 export default function BoardCategoryPage() {
-  const [openBoards, setOpenBoards] = useState(
-    Object.fromEntries(
-      Object.values(VISIBLE_BOARD_CATEGORY).map(({ value }) => [value, true])
-    )
+  const initialOpenBoards = Object.fromEntries(
+    Object.values(VISIBLE_BOARD_CATEGORY).map(({ value }) => [value, true])
   );
+  const [openBoards, setOpenBoards] = useState(initialOpenBoards);
   const toggleBoard = (boardName) => {
     setOpenBoards((prev) => ({
       ...prev,
@@ -32,8 +31,8 @@ export default function BoardCategoryPage() {
       </div>
 
       <div className={styles.paddingContainer}>
-        {Object.values(VISIBLE_BOARD_CATEGORY).map((category, index) => (
-          <div className={styles.boardBox}>
+        {Object.values(VISIBLE_BOARD_CATEGORY).map((category) => (
+          <div key={category.value} className={styles.boardBox}>
             <AccordianBoards
               title={category.label}
               isOpen={openBoards[category.value]}
