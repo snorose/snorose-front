@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Header } from '@/shared/component';
 import { BOARD_MENUS } from '@/shared/constant';
 
-import { BoardBar, DropDownBoards } from '@/feature/board/component';
+import { BoardBar, AccordianBoards } from '@/feature/board/component';
 import { Search } from '@/feature/search/component';
 
 import styles from './BoardCategoryPage.module.css';
@@ -32,7 +32,7 @@ export default function BoardCategoryPage() {
 
       <div className={styles.paddingContainer}>
         <div className={styles.boardBox}>
-          <DropDownBoards
+          <AccordianBoards
             title='커뮤니티'
             isOpen={openBoards.community}
             onClick={() => toggleBoard('community')}
@@ -48,10 +48,10 @@ export default function BoardCategoryPage() {
                 />
               ))}
             </div>
-          </DropDownBoards>
+          </AccordianBoards>
         </div>
         <div className={styles.boardBox}>
-          <DropDownBoards
+          <AccordianBoards
             title='공식 게시판'
             isOpen={openBoards.official}
             onClick={() => toggleBoard('official')}
@@ -67,10 +67,10 @@ export default function BoardCategoryPage() {
                 />
               ))}
             </div>
-          </DropDownBoards>
+          </AccordianBoards>
         </div>
         <div className={styles.boardBox}>
-          <DropDownBoards
+          <AccordianBoards
             title='스노로즈 게시판'
             isOpen={openBoards.snorose}
             onClick={() => toggleBoard('snorose')}
@@ -82,7 +82,7 @@ export default function BoardCategoryPage() {
                 <BoardBar key={board.id} data={board} />
               ))}
             </div>
-          </DropDownBoards>
+          </AccordianBoards>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 export { default as AttachmentBar } from './AttachmentBar/AttachmentBar';
 export { default as BoardBar } from './BoardBar/BoardBar';
-export { default as DropDownBoards } from './DropDownBoards/DropDownBoards';
+export { default as AccordianBoards } from './AccordianBoards/AccordianBoards';
 export { default as DropDownMenu } from './DropDownMenu/DropDownMenu';
 export { default as FullScreenAttachment } from './FullScreenAttachment/FullScreenAttachment';
 export { default as NoticeBar } from './NoticeBar/NoticeBar';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Icon } from '@/shared/component';
 
-import styles from './DropDownBoards.module.css';
+import styles from './AccordianBoards.module.css';
 
 export default function DropDownBoards({ title, isOpen, onClick, children }) {
   return (
