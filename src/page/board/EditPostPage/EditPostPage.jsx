@@ -118,6 +118,15 @@ export default function EditPostPage() {
 
     // 카테고리 접두어 제거
     const categoryMatch = data.title?.match(/^\[([^\]]+)\]\s*/);
+    const categoryName = categoryMatch?.[1];
+
+    const categoryKey = Object.entries(
+      RESIDENCE_CATEGORY_KOREAN_ENUM
+    ).find(([, name]) => name === categoryName)?.[0];
+
+    if (currentBoard?.id === BOARD_ID.residence) {
+      setCategory(categoryKey ?? null);
+    }
 
     setTitle(
       categoryMatch ? data.title.replace(categoryMatch[0], '') : data.title
