@@ -155,7 +155,8 @@ export default function EditPostPage() {
       data.title !== title.trim() ||
         data.content !== editor?.getHTML() ||
         data.isNotice !== isNotice ||
-        data.attachments !== attachmentsInfo
+        data.attachments !== attachmentsInfo ||
+        data.category !== category
     );
   }, [title, text, isNotice, attachmentsInfo]);
 
