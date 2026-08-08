@@ -1,0 +1,25 @@
+.dropdown {
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.closedDropdown {
+  border-bottom: 1px solid var(--blue-2);
+}
+
+.title {
+  font: var(--text-headline-1-med);
+}
+
+.arrow {
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  padding-left: 1rem;
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
