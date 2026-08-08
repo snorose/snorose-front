@@ -12,6 +12,25 @@ import largeSnowMain from '@/assets/images/largeSnow-main.svg';
 import permanentSnowMain from '@/assets/images/permanentSnow-main.svg';
 import eventMain from '@/assets/images/event-main.svg';
 
+export const BOARD_CATEGORY = {
+  COMMUNITY: {
+    value: 'community',
+    label: '커뮤니티',
+  },
+  OFFICIAL: {
+    value: 'official',
+    label: '공식 게시판',
+  },
+  SNOROSE: {
+    value: 'snorose',
+    label: '스노로즈',
+  },
+  HIDDEN: {
+    value: 'hidden',
+    label: '숨김', //아직 게시글 리스트에 띄우지 않을 board들
+  },
+};
+
 export const BOARD_ID = Object.freeze({
   all: 0, // 프론트에서만 사용하는 보드 ID
   event: 14,
@@ -79,6 +98,7 @@ export const BOARD_MENUS = [
     title: '공지사항',
     desc: '',
     image: '',
+    category: BOARD_CATEGORY.HIDDEN,
   },
   {
     id: 14,
@@ -87,6 +107,7 @@ export const BOARD_MENUS = [
     title: '스노로즈 이벤트',
     desc: '스노로즈 이벤트 게시판',
     image: event,
+    category: BOARD_CATEGORY.SNOROSE,
   },
   {
     id: 14,
@@ -95,6 +116,7 @@ export const BOARD_MENUS = [
     title: '이벤트',
     desc: '이벤트 공지글',
     image: event,
+    category: BOARD_CATEGORY.HIDDEN,
   },
   {
     id: 21,
@@ -103,6 +125,7 @@ export const BOARD_MENUS = [
     title: '첫눈온방',
     desc: '새내기 전용 커뮤니티',
     image: firstSnow,
+    category: BOARD_CATEGORY.COMMUNITY,
   },
   {
     id: 22,
@@ -111,6 +134,7 @@ export const BOARD_MENUS = [
     title: '함박눈방',
     desc: '눈송이 모두의\n커뮤니티',
     image: largeSnow,
+    category: BOARD_CATEGORY.COMMUNITY,
   },
   {
     id: 23,
@@ -119,6 +143,7 @@ export const BOARD_MENUS = [
     title: '만년설방',
     desc: '졸업생 전용 커뮤니티',
     image: permanentSnow,
+    category: BOARD_CATEGORY.COMMUNITY,
   },
   {
     id: 20,
@@ -127,6 +152,7 @@ export const BOARD_MENUS = [
     title: '베숙트',
     desc: '추천을 가장 많이\n받은 게시물 모아보기',
     image: besookt,
+    category: BOARD_CATEGORY.COMMUNITY,
   },
   {
     id: 32,
@@ -135,6 +161,7 @@ export const BOARD_MENUS = [
     title: '시험후기',
     desc: '시험 정보를 조회할 수\n있는 게시판입니다.',
     image: besookt,
+    category: BOARD_CATEGORY.HIDDEN,
   },
   {
     id: 32,
@@ -143,6 +170,7 @@ export const BOARD_MENUS = [
     title: '시험후기',
     desc: '시험후기 공지글 게시판',
     image: besookt,
+    category: BOARD_CATEGORY.HIDDEN,
   },
   {
     id: 60,
@@ -151,6 +179,7 @@ export const BOARD_MENUS = [
     title: '총학생회',
     desc: '총학생회 공지',
     image: studentCouncil,
+    category: BOARD_CATEGORY.OFFICIAL,
   },
   {
     id: 61,
@@ -159,6 +188,7 @@ export const BOARD_MENUS = [
     title: '졸업준비위원회',
     desc: '졸업준비위원회 공지',
     image: graduationPreparation,
+    category: BOARD_CATEGORY.OFFICIAL,
   },
   {
     id: 62,
@@ -167,6 +197,7 @@ export const BOARD_MENUS = [
     title: '재정감사위원회',
     desc: '재정감사 보고',
     image: financeAudit,
+    category: BOARD_CATEGORY.OFFICIAL,
   },
 ];
 
