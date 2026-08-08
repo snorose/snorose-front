@@ -451,3 +451,8 @@ export const RESIDENCE_CATEGORY_KOREAN_ENUM = Object.freeze({
   DORM_OUTSIDE: '외부기숙',
   SELF_BOARDING: '자취',
 });
+
+// 게시판과 카테고리를 연결
+export const BOARD_CATEGORY_MAP = {
+  [BOARD_ID.residence]: RESIDENCE_CATEGORY_KOREAN_ENUM,
+};

@@ -16,6 +16,7 @@ import {
 } from '@/shared/component';
 import {
   ATTACHMENT_MODAL_TEXT,
+  BOARD_CATEGORY_MAP,
   BOARD_ID,
   BOARD_MENUS,
   CONFIRM_MODAL_TEXT,
@@ -112,30 +113,36 @@ export default function EditPostPage() {
   }, [editor, data]);
 
 
-  // 데이터 화면 표시
   useEffect(() => {
     if (!data || Object.keys(data).length === 0) return;
 
-    // 카테고리 접두어 제거
-    const categoryMatch = data.title?.match(/^\[([^\]]+)\]\s*/);
-    const categoryName = categoryMatch?.[1];
+    // 현재 게시판에서 사용하는 카테고리 목록, 다른 게시판에서도 사용할 수 있게끔
+    const categoryEnum = BOARD_CATEGORY_MAP[currentBoard?.id];
 
-    const categoryKey = Object.entries(
-      RESIDENCE_CATEGORY_KOREAN_ENUM
-    ).find(([, name]) => name === categoryName)?.[0];
+    // 제목 앞의 [] 확인
+    const categoryMatch = categoryEnum
+      ? data.title?.match(/^\[([^\]]+)\]\s*/)
+      : null;
 
-    if (currentBoard?.id === BOARD_ID.residence) {
-      setCategory(categoryKey ?? null);
-    }
+    // [xxx]가 현재 게시판의 실제 카테고리인지 확인
+    const categoryKey = categoryMatch
+      ? Object.entries(categoryEnum).find(
+          ([, name]) => name === categoryMatch[1]
+        )?.[0]
+      : undefined;
 
+    setCategory(categoryKey ?? null);
+
+    // 실제 카테고리일 때만 접두어 제거
     setTitle(
-      categoryMatch ? data.title.replace(categoryMatch[0], '') : data.title
+      categoryKey ? data.title.replace(categoryMatch[0], '') : data.title
     );
+
     setText(data.content);
     setIsNotice(data.isNotice);
     setUserDisplay(data.userDisplay);
     setAttachmentsInfo(data.attachments);
-  }, [data]);
+  }, [data, currentBoard?.id]);
 
   // isBlock 업데이트
   useEffect(() => {
