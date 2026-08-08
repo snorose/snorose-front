@@ -220,13 +220,16 @@ export default function EditPostPage() {
     setSubmitDisabled(true);
     setIsBlock(false);
 
+    const categoryEnum = BOARD_CATEGORY_MAP[currentBoard?.id];
+
     mutation.mutate({
       boardId: currentBoard?.id,
       postId,
+      category: categoryEnum ? category: null,
       title:
-        currentBoard?.id === BOARD_ID.residence && category
-        ? `[${RESIDENCE_CATEGORY_KOREAN_ENUM[category]}] ${title}`
-        : title,
+        categoryEnum && category
+      ? `[${categoryEnum[category]}] ${title}`
+      : title,
       content: sanitizeHtml(preserveEmptyParagraphs(editor?.getHTML() ?? '')),
       isNotice,
       attachmentsInfo,
