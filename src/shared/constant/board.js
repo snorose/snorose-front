@@ -9,6 +9,7 @@ import largeSnow from '@/assets/images/largeSnow-board-page.svg';
 import largeSnowMain from '@/assets/images/largeSnow-main.svg';
 import permanentSnow from '@/assets/images/permanentSnow-board-page.svg';
 import permanentSnowMain from '@/assets/images/permanentSnow-main.svg';
+import residence from '@/assets/images/residence.svg';
 import sookplace from '@/assets/images/sookPlace.svg';
 import studentCouncil from '@/assets/images/studentCouncil-board-page.svg';
 
@@ -27,7 +28,7 @@ export const BOARD_CATEGORY = {
   },
   LIFE: {
     value: 'life',
-    label: '라이프 게시판',
+    label: '라이프',
   },
   HIDDEN: {
     value: 'hidden',
@@ -229,7 +230,9 @@ export const BOARD_MENUS = [
     to: '/board/residence',
     textId: 'residence',
     title: '주거',
-    desc: '학교 주변 자취 · 기숙사 정보 공유',
+    desc: '자취·주거 정보 커뮤니티',
+    image: residence,
+    category: BOARD_CATEGORY.LIFE,
   },
 ];
 
