@@ -47,7 +47,7 @@ export const BOARD_ID = Object.freeze({
   'student-council': 60,
   'graduation-preparation': 61,
   'finance-audit': 62,
-  'residence': 41,
+  residence: 41,
 });
 
 export const BOARDS = Object.freeze([
@@ -103,7 +103,7 @@ export const BOARDS = Object.freeze([
     id: 41,
     name: '주거',
     path: '/board/residence',
-  }
+  },
 ]);
 
 export const BOARD_MENUS = [
@@ -229,8 +229,8 @@ export const BOARD_MENUS = [
     to: '/board/residence',
     textId: 'residence',
     title: '주거',
-    desc: '학교 주변 자취 · 기숙사 정보 공유'
-  }
+    desc: '학교 주변 자취 · 기숙사 정보 공유',
+  },
 ];
 
 // 공식게시판
@@ -465,7 +465,13 @@ export const RESIDENCE_CATEGORY_KOREAN_ENUM = Object.freeze({
   SELF_BOARDING: '자취',
 });
 
+export const SOOKPLACE_CATEGORY_KOREAN_ENUM = Object.freeze({
+  ON_CAMPUS: '교내',
+  OFF_CAMPUS: '교외',
+});
+
 // 게시판과 카테고리를 연결
 export const BOARD_CATEGORY_MAP = {
   [BOARD_ID.residence]: RESIDENCE_CATEGORY_KOREAN_ENUM,
+  [BOARD_ID.sookplace]: SOOKPLACE_CATEGORY_KOREAN_ENUM,
 };

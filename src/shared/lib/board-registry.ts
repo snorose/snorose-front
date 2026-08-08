@@ -112,7 +112,6 @@ export const BOARD_REGISTRY = {
   officials: OFFICIAL,
   life: LIFE,
   all: ALL,
-  life: LIFE,
 
   find(identifier: BoardId | BoardKey): Board {
     const result =
