@@ -84,6 +84,7 @@ export const patchPost = async ({
   boardId,
   postId,
   title,
+  category = '',
   content,
   isNotice,
   attachmentsInfo,
@@ -92,7 +93,7 @@ export const patchPost = async ({
   const response = await authAxios.patch(
     `/v1/boards/${boardId}/posts/${postId}/update`,
     {
-      category: '',
+      category,
       title,
       content,
       isNotice,

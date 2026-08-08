@@ -32,6 +32,7 @@ import styles from './PostDetailView.module.css';
 
 export default function PostDetailView({
   data,
+  categoryName,
   authorBadgeRoleId,
   deletePost,
   PostActionBar,
@@ -122,7 +123,13 @@ export default function PostDetailView({
         />
 
         <div className={styles.titleContainer}>
-          <h1 className={styles.title}>{data.title}</h1>
+          <h1 className={styles.title}>
+            {categoryName &&
+              !data.title?.startsWith(`[${categoryName}]`) &&
+              `[${categoryName}] `}
+            {data.title}
+          </h1>
+
           <span className={styles.views}>
             {(data.viewCount ?? 0).toLocaleString()} views
           </span>
