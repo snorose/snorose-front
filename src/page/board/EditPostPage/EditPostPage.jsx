@@ -279,7 +279,7 @@ export default function EditPostPage() {
 
             {currentBoard?.id === BOARD_ID.residence && (
               <div className={styles.subCategoryDropdownContainer}>
-                <div className={styles.categoryLabel}>
+                <div>
                   <p className={styles.subCategoryLabelEdit}>카테고리</p>
                   <span className={styles.requiredDot} />
                 </div>
@@ -304,7 +304,6 @@ export default function EditPostPage() {
                       name: category ? RESIDENCE_CATEGORY_KOREAN_ENUM[category] : '',
                     }}
                     onSelect={handleCategoryChange}
-                    className={styles.subCategoryDropDownList}
                   />
                 )}
               </div>
