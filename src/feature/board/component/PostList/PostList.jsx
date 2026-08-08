@@ -1,19 +1,19 @@
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
-import { getEventPosts, getPosts } from '@/apis';
-
-import { useBoard, useSuspensePagination } from '@/shared/hook';
 import { FetchLoading, List, PullToRefresh } from '@/shared/component';
+import { BOARD_CATEGORY_MAP, NEW_ROUTES, QUERY_KEY, STALE_TIME } from '@/shared/constant';
+import { useBoard, useSuspensePagination } from '@/shared/hook';
 import {
-  getBoard,
-  getBoardTitleToTextId,
+  BOARD_REGISTRY,
   deduplicatePaginatedData,
   flatPaginationCache,
-  BOARD_REGISTRY,
+  getBoard,
+  getBoardTitleToTextId,
 } from '@/shared/lib';
-import { NEW_ROUTES, QUERY_KEY, STALE_TIME } from '@/shared/constant';
 
 import { PostBar } from '@/feature/board/component';
+
+import { getEventPosts, getPosts } from '@/apis';
 
 import styles from './PostList.module.css';
 
@@ -71,7 +71,10 @@ export default function PostList() {
               }
               ref={index === postList.length - 1 ? ref : undefined}
             >
-              <PostBar {...post}>
+              <PostBar
+                {...post}
+                category={BOARD_CATEGORY_MAP[currentBoard.id]?.[post.category]}
+              >
                 {post.boardName && (
                   <PostBar.Chip name={post.boardName} variant='grey' />
                 )}

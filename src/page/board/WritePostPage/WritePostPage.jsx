@@ -17,12 +17,10 @@ import {
 } from '@/shared/component';
 import {
   ATTACHMENT_MODAL_TEXT,
-  BOARD_ID,
+  BOARD_CATEGORY_MAP,
   BOARD_MENUS,
   CONFIRM_MODAL_TEXT,
   QUERY_KEY,
-  RESIDENCE_CATEGORY_ENUM,
-  RESIDENCE_CATEGORY_KOREAN_ENUM,
   ROLE,
   TOAST,
 } from '@/shared/constant';
@@ -89,6 +87,7 @@ export default function WritePostPage() {
     currentBoard?.title ?? '게시판을 선택해주세요'
   );
   const [boardId, setBoardId] = useState(currentBoard?.id ?? '');
+  const categoryEnum = BOARD_CATEGORY_MAP[boardId];
 
   const boardTitles = BOARD_MENUS.filter((menu) =>
     [21, 22, 23, 41].includes(menu.id)
@@ -142,9 +141,12 @@ export default function WritePostPage() {
     setCategoryDropDownOpen((prev) => !prev);
   }
 
-  const categoryOptions = Object.entries(RESIDENCE_CATEGORY_KOREAN_ENUM).map(
-    ([key, name]) => ({ id: key, name})
-  );
+  const categoryOptions = categoryEnum
+  ? Object.entries(categoryEnum).map(([key, name]) => ({
+      id: key,
+      name,
+    }))
+  : [];
 
   const handleCategoryChange = (option) => {
     setCategory(option.id);
@@ -174,12 +176,9 @@ export default function WritePostPage() {
   };
 
   const data = {
-    category: boardId === BOARD_ID.residence ? category: null,
+    category: categoryEnum ? category : '',
     boardId,
-    title:
-      boardId === BOARD_ID.residence && category
-        ? `[${RESIDENCE_CATEGORY_KOREAN_ENUM[category]}] ${title}`
-        : title,
+    title,
     content: text,
     isNotice: textId === 'notice' ? true : isNotice,
     attachmentsInfo: attachmentsInfo,
@@ -240,7 +239,7 @@ export default function WritePostPage() {
       return;
     }
 
-    if (boardId === BOARD_ID.residence && !category) {
+    if (categoryEnum && !category) {
       toast({ message: TOAST.POST.selectCategory, variant: 'info' });
       return;
     }
@@ -371,7 +370,7 @@ export default function WritePostPage() {
                 )}
               </div>
             )}
-            {boardId === BOARD_ID.residence && (
+            {categoryEnum && (
               <div className={styles.subCategoryDropdownContainer}>
                 <div className={styles.categoryLabel}>
                   <p className={styles.subCategoryLabel}>카테고리</p>
@@ -384,7 +383,7 @@ export default function WritePostPage() {
                   <div className={styles.subCategorySelectContainer}>
                     <p className={styles.subCategorySelectText}>
                       {category
-                        ? RESIDENCE_CATEGORY_KOREAN_ENUM[category]
+                        ? categoryEnum[category]
                         : '카테고리를 선택해주세요'}
                     </p>
                   </div>
@@ -395,7 +394,7 @@ export default function WritePostPage() {
                     options={categoryOptions}
                     select={{
                       id: category,
-                      name: category ? RESIDENCE_CATEGORY_KOREAN_ENUM[category] : '',
+                      name: category ? categoryEnum[category] : '',
                     }}
                     onSelect={handleCategoryChange}
                     className={styles.dropDownList}

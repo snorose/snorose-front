@@ -116,26 +116,29 @@ export default function EditPostPage() {
   useEffect(() => {
     if (!data || Object.keys(data).length === 0) return;
 
-    // 현재 게시판에서 사용하는 카테고리 목록, 다른 게시판에서도 사용할 수 있게끔
     const categoryEnum = BOARD_CATEGORY_MAP[currentBoard?.id];
 
-    // 제목 앞의 [] 확인
+    // 기존 게시글의 제목에 포함된 카테고리 접두어 확인
     const categoryMatch = categoryEnum
       ? data.title?.match(/^\[([^\]]+)\]\s*/)
       : null;
 
-    // [xxx]가 현재 게시판의 실제 카테고리인지 확인
-    const categoryKey = categoryMatch
+    const legacyCategoryKey = categoryMatch
       ? Object.entries(categoryEnum).find(
           ([, name]) => name === categoryMatch[1]
         )?.[0]
       : undefined;
 
+    // API의 category를 우선 사용하고, 기존 게시글만 제목에서 추출
+    const categoryKey = data.category || legacyCategoryKey;
+
     setCategory(categoryKey ?? null);
 
-    // 실제 카테고리일 때만 접두어 제거
+    // 기존 제목에 실제 카테고리 접두어가 있는 경우에만 제거
     setTitle(
-      categoryKey ? data.title.replace(categoryMatch[0], '') : data.title
+      legacyCategoryKey
+        ? data.title.replace(categoryMatch[0], '')
+        : data.title
     );
 
     setText(data.content);
@@ -226,10 +229,7 @@ export default function EditPostPage() {
       boardId: currentBoard?.id,
       postId,
       category: categoryEnum ? category: '',
-      title:
-        categoryEnum && category
-      ? `[${categoryEnum[category]}] ${title}`
-      : title,
+      title,
       content: sanitizeHtml(preserveEmptyParagraphs(editor?.getHTML() ?? '')),
       isNotice,
       attachmentsInfo,

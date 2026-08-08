@@ -17,6 +17,7 @@ export default function PostBar({
   userDisplay,
   createdAt,
   title,
+  category,
   content,
   hasMediaAttachment,
   thumbnailUrl,
@@ -26,6 +27,7 @@ export default function PostBar({
   isLiked,
   isScrapped,
   children,
+
 }) {
   return (
     <div className={`${styles.container} ${className}`}>
@@ -40,7 +42,10 @@ export default function PostBar({
 
       <div className={styles.body}>
         <div className={styles.text}>
-          <div className={styles.title}>{title}</div>
+          <div className={styles.title}>
+            {category && !title?.startsWith(`[${category}]`) && `[${category}] `}
+            {title}
+          </div>
           <div className={styles.content}>{htmlToText(content)}</div>
         </div>
         {hasMediaAttachment && <Thumbnail thumbnailUrl={thumbnailUrl} />}
