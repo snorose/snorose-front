@@ -225,7 +225,7 @@ export default function EditPostPage() {
     mutation.mutate({
       boardId: currentBoard?.id,
       postId,
-      category: categoryEnum ? category: null,
+      category: categoryEnum ? category: '',
       title:
         categoryEnum && category
       ? `[${categoryEnum[category]}] ${title}`
