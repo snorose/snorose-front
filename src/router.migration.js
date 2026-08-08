@@ -1,42 +1,41 @@
+import { BOARD_SECTION } from '@/shared/constant';
 import { attendanceLoader } from '@/shared/loader';
 import {
+  EditPageSelector,
   NavbarLayout,
   PostListPageSelector,
   PostPageSelector,
   WritePageSelector,
-  EditPageSelector,
 } from '@/shared/ui';
-import { BOARD_SECTION } from '@/shared/constant';
 
-import App from '@/App';
 import {
-  LoginPage,
   FindIdPage,
   FindPwPage,
   FoundIdPage,
   FoundPwPage,
+  LoginPage,
   NotFoundIdPage,
   NotFoundPwPage,
+  SignUpFailurePage,
   SignUpPage,
   SignUpSuccessPage,
-  SignUpFailurePage,
   SnoroseVerifyPage,
 } from '@/page/account';
 import { AlertPage, AlertSettingPage, MarketingTermsPage } from '@/page/alert';
 import {
   EditPostPage,
+  NewBoardCategoryPage,
   NewEditPostPage,
   NewNoticeListPage,
   NewPostPage,
   NewWritePostPage,
-  NewBoardCategoryPage,
   NoticeListPage,
   PostPage,
   WritePostPage,
 } from '@/page/board';
 import { NotFoundPage } from '@/page/etc';
-
 import { AttendancePage, MainPage } from '@/page/home';
+import { MaintenancePage } from '@/page/maintenance';
 import { SearchPage } from '@/page/search';
 import {
   AboutPage,
@@ -44,11 +43,11 @@ import {
   ServicePolicyPage,
 } from '@/page/snorose';
 import {
-  WriteInquiryPage,
   EditInquiryPage,
-  WriteReportPage,
   EditReportPage,
   FAQPage,
+  WriteInquiryPage,
+  WriteReportPage,
 } from '@/page/support';
 import {
   ActivityPage,
@@ -59,11 +58,10 @@ import {
   PointLogListPage,
 } from '@/page/user';
 
-import { MaintenancePage } from '@/page/maintenance';
-
+import App from '@/App';
+import BoardGuard from '@/BoardGuard';
 import BoardValidator from '@/BoardValidator';
 import RequireAuth from '@/RequireAuth';
-import BoardGuard from '@/BoardGuard';
 import UnverifiedOnly from '@/UnverifiedOnly';
 
 export const routeList = [

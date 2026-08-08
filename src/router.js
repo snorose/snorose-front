@@ -1,19 +1,20 @@
+import { ROLE } from '@/shared/constant';
 import { attendanceLoader } from '@/shared/loader';
 import { NavbarLayout } from '@/shared/ui';
-import { ROLE } from '@/shared/constant';
 
-import App from '@/App';
+import { CheckExamPeriodRoute } from '@/feature/exam/lib';
+
 import {
-  LoginPage,
   FindIdPage,
   FindPwPage,
   FoundIdPage,
   FoundPwPage,
+  LoginPage,
   NotFoundIdPage,
   NotFoundPwPage,
+  SignUpFailurePage,
   SignUpPage,
   SignUpSuccessPage,
-  SignUpFailurePage,
   SnoroseVerifyPage,
 } from '@/page/account';
 import { AlertPage, AlertSettingPage, MarketingTermsPage } from '@/page/alert';
@@ -27,10 +28,10 @@ import {
 } from '@/page/board';
 import { NotFoundPage } from '@/page/etc';
 import {
-  WriteEventPage,
   EditEventPage,
   EventListPage,
   EventPage,
+  WriteEventPage,
 } from '@/page/event';
 import {
   EditExamReviewPage,
@@ -39,6 +40,7 @@ import {
   WriteExamReviewPage,
 } from '@/page/exam';
 import { AttendancePage, MainPage } from '@/page/home';
+import { MaintenancePage } from '@/page/maintenance';
 import { SearchPage } from '@/page/search';
 import {
   AboutPage,
@@ -46,11 +48,11 @@ import {
   ServicePolicyPage,
 } from '@/page/snorose';
 import {
-  WriteInquiryPage,
   EditInquiryPage,
-  WriteReportPage,
   EditReportPage,
   FAQPage,
+  WriteInquiryPage,
+  WriteReportPage,
 } from '@/page/support';
 import {
   ActivityPage,
@@ -61,10 +63,8 @@ import {
   PointLogListPage,
 } from '@/page/user';
 
+import App from '@/App';
 import ProtectedRoute from '@/ProtectedRoute';
-import { MaintenancePage } from '@/page/maintenance';
-
-import { CheckExamPeriodRoute } from '@/feature/exam/lib';
 
 const getRolesForReadBoard = (boardPath) => {
   switch (boardPath) {
@@ -75,6 +75,8 @@ const getRolesForReadBoard = (boardPath) => {
     case 'permanent-snow':
       return [ROLE.user, ROLE.admin, ROLE.official];
     case 'besookt':
+      return [ROLE.user, ROLE.admin, ROLE.official];
+    case 'sookplace':
       return [ROLE.user, ROLE.admin, ROLE.official];
     case 'all':
       return [ROLE.preUser, ROLE.user, ROLE.admin, ROLE.official];
@@ -105,8 +107,8 @@ const getRolesForWriteBoard = (boardPath) => {
     case 'first-snow':
       return [ROLE.preUser, ROLE.user, ROLE.admin, ROLE.official];
     case 'large-snow':
-      return [ROLE.user, ROLE.admin];
     case 'permanent-snow':
+    case 'sookplace':
       return [ROLE.user, ROLE.admin];
     case 'residence':
       return [ROLE.user, ROLE.admin, ROLE.official];
@@ -131,6 +133,7 @@ const boardPaths = [
   'graduation-preparation',
   'finance-audit',
   'residence',
+  'sookplace',
 ];
 
 const boardRoutes = boardPaths.flatMap((boardPath) => [

@@ -9,6 +9,7 @@ import largeSnow from '@/assets/images/largeSnow-board-page.svg';
 import largeSnowMain from '@/assets/images/largeSnow-main.svg';
 import permanentSnow from '@/assets/images/permanentSnow-board-page.svg';
 import permanentSnowMain from '@/assets/images/permanentSnow-main.svg';
+import sookplace from '@/assets/images/sookPlace.svg';
 import studentCouncil from '@/assets/images/studentCouncil-board-page.svg';
 
 export const BOARD_CATEGORY = {
@@ -24,6 +25,10 @@ export const BOARD_CATEGORY = {
     value: 'snorose',
     label: '스노로즈',
   },
+  LIFE: {
+    value: 'life',
+    label: '라이프 게시판',
+  },
   HIDDEN: {
     value: 'hidden',
     label: '숨김', //아직 게시글 리스트에 띄우지 않을 board들
@@ -38,10 +43,11 @@ export const BOARD_ID = Object.freeze({
   'large-snow': 22,
   'permanent-snow': 23,
   'exam-review': 32,
+  sookplace: 43,
   'student-council': 60,
   'graduation-preparation': 61,
   'finance-audit': 62,
-  'residence': 41,
+  residence: 41,
 });
 
 export const BOARDS = Object.freeze([
@@ -74,6 +80,11 @@ export const BOARDS = Object.freeze([
     mainImage: permanentSnowMain,
   },
   {
+    id: 43,
+    name: '숙플',
+    path: '/board/sookplace',
+  },
+  {
     id: 60,
     name: '총학생회',
     path: '/board/student-council',
@@ -92,7 +103,7 @@ export const BOARDS = Object.freeze([
     id: 41,
     name: '주거',
     path: '/board/residence',
-  }
+  },
 ]);
 
 export const BOARD_MENUS = [
@@ -178,6 +189,15 @@ export const BOARD_MENUS = [
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
+    id: 43,
+    to: '/board/sookplace',
+    textId: 'sookplace',
+    title: '숙플',
+    desc: '눈송이 맛집 커뮤니티',
+    category: BOARD_CATEGORY.LIFE,
+    image: sookplace,
+  },
+  {
     id: 60,
     to: '/board/student-council',
     textId: 'student-council',
@@ -209,8 +229,8 @@ export const BOARD_MENUS = [
     to: '/board/residence',
     textId: 'residence',
     title: '주거',
-    desc: '학교 주변 자취 · 기숙사 정보 공유'
-  }
+    desc: '학교 주변 자취 · 기숙사 정보 공유',
+  },
 ];
 
 // 공식게시판
@@ -445,7 +465,13 @@ export const RESIDENCE_CATEGORY_KOREAN_ENUM = Object.freeze({
   SELF_BOARDING: '자취',
 });
 
+export const SOOKPLACE_CATEGORY_KOREAN_ENUM = Object.freeze({
+  ON_CAMPUS: '교내',
+  OFF_CAMPUS: '교외',
+});
+
 // 게시판과 카테고리를 연결
 export const BOARD_CATEGORY_MAP = {
   [BOARD_ID.residence]: RESIDENCE_CATEGORY_KOREAN_ENUM,
+  [BOARD_ID.sookplace]: SOOKPLACE_CATEGORY_KOREAN_ENUM,
 };

@@ -87,10 +87,22 @@ const LIFE = [
     id: 41,
     name: '주거',
     desc: '학교 주변 자취 · 기숙사 정보 공유',
-  }
-]
+  },
+  {
+    key: 'sookplace',
+    id: 43,
+    name: '숙플',
+    desc: '눈송이 맛집 커뮤니티',
+  },
+] as const satisfies readonly Board[];
 
-const ALL = [...COMMUNITY, ...OFFICIAL, ...REVIEW, ...SNOROSE, ...LIFE] as const;
+const ALL = [
+  ...COMMUNITY,
+  ...OFFICIAL,
+  ...REVIEW,
+  ...SNOROSE,
+  ...LIFE,
+] as const;
 
 type BoardId = (typeof ALL)[number]['id'];
 export type BoardKey = (typeof ALL)[number]['key'];
