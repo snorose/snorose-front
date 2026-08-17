@@ -7,8 +7,8 @@ export const FOOTER_CONTACT_ITEMS = Object.freeze([
   {
     type: 'bank',
     label: '숙명여대 후원하기',
-    value: '카카오뱅크 3333-31-8162062',
-    accountHolder: '(예금주: 김*지)',
+    value: '신한 100-038-947719',
+    accountHolder: '(예금주: 스노로즈)',
   },
 ]);
 
