@@ -7,8 +7,8 @@ export const FOOTER_CONTACT_ITEMS = Object.freeze([
   {
     type: 'bank',
     label: '숙명여대 후원하기',
-    value: '카카오뱅크 3333-31-8162062',
-    accountHolder: '(예금주: 김*지)',
+    value: '신한 100-038-947719',
+    accountHolder: '(예금주: 스노로즈)',
   },
 ]);
 
@@ -23,7 +23,7 @@ export const FOOTER_MENUS = Object.freeze([
   },
   {
     to: 'https://www.notion.so/snorose/1147ef0aa3bf8039add2e00a4edd0eb4',
-    title: '배너 및 광고 문의',
+    title: '광고 및 협업 문의',
   },
 ]);
 
