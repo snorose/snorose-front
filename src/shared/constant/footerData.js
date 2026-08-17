@@ -23,7 +23,7 @@ export const FOOTER_MENUS = Object.freeze([
   },
   {
     to: 'https://www.notion.so/snorose/1147ef0aa3bf8039add2e00a4edd0eb4',
-    title: '배너 및 광고 문의',
+    title: '광고 및 협업 문의',
   },
 ]);
 
