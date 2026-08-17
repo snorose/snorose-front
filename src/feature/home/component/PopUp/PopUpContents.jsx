@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
 import calendarImage from './calendar.png';
-import editorImage from './editor.jpeg';
 import eventImage from './event.png';
+import newFeatureImage from './hashtag.png';
 import styles from './PopUpContents.module.css';
 
 /**
@@ -45,19 +45,19 @@ const POPUP_CONTENTS = [
     endDate: '2026-05-04',
   },
   {
-    title: '[신규 기능] 에디터 기능 오픈 안내',
+    title: '[신규 기능] 해시태그 기능 오픈 안내',
     description:
-      '게시글을 더 편리하게 작성하실 수 있도록 에디터 기능이 추가되었습니다. 다양한 서식과 콘텐츠 삽입 기능을 활용해 더욱 풍부한 글을 작성해 보세요.',
-    image: editorImage,
+      '글 작성 시 #스노로즈, #꿀팁, #대학생활 등 관심 있는 키워드를 자유롭게 해시태그로 추가해 보세요! ✍️✨\n\n게시글에 등록된 해시태그를 클릭하면 같은 주제의 글을 한눈에 모아볼 수 있습니다. 🔍',
+    image: newFeatureImage,
     link: [
       {
         title: '스노로즈 공지',
-        url: '/board/notice/post/1907716',
+        url: '/board/notice/post/1913883',
         isExternal: false,
       },
     ],
-    startDate: '2026-06-12',
-    endDate: '2026-06-20',
+    startDate: '2026-08-17',
+    endDate: '2026-08-25',
   },
   {
     title: '[공지] 스노로즈 서버 점검 안내',
