@@ -37,7 +37,8 @@ export default function ReportDetailPage() {
 
 function ReportDetailLoader() {
   const navigate = useNavigate();
-  const { postId } = useParams();
+  const { postId: postIdParam } = useParams();
+  const postId = Number(postIdParam);
 
   const queryClient = useQueryClient();
 
