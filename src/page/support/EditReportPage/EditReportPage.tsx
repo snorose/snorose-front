@@ -71,7 +71,7 @@ export default function EditReportPage() {
 
       queryClient.invalidateQueries({ queryKey: QUERY_KEY.post(postId) });
 
-      navigate(`/report/${postId}`, { replace: true });
+      navigate(-1);
     },
 
     onError: (error) => {
