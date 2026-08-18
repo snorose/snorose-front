@@ -68,7 +68,7 @@ export default function EditInquiryPage() {
 
       queryClient.invalidateQueries({ queryKey: QUERY_KEY.post(postId) });
 
-      navigate(`/inquiry/${postId}`, { replace: true });
+      navigate(-1);
     },
 
     onError: (error) => {
