@@ -26,6 +26,7 @@ import {
   PostListPage,
   WritePostPage,
 } from '@/page/board';
+import SaleDetailPage from '@/page/commerce/SaleDetailPage';
 import { NotFoundPage } from '@/page/etc';
 import {
   EditEventPage,
@@ -622,6 +623,14 @@ export const routeList = [
       {
         path: '/my-page/service-policy',
         element: <ServicePolicyPage />,
+      },
+      {
+        path: '/commerce/sale/:saleId',
+        element: (
+          <ProtectedRoute>
+            <SaleDetailPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/about',
