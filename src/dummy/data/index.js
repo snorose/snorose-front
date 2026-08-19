@@ -5,6 +5,7 @@ import { POST_CONTENT } from './postContent.js';
 import { POST_LIST } from './postList.js';
 import { REVIEW_DETAIL, REVIEW_LIST } from './review.js';
 import { USER } from './user.js';
+export * from './sale.ts';
 
 export {
   BESOOKTS,
