@@ -7,7 +7,6 @@
 /* meta */
 .meta {
   padding: 0.4rem var(--default-margin) 2.2rem;
-  border-bottom: 0.8rem solid var(--grey-1);
 
   display: flex;
   flex-direction: column;
@@ -38,4 +37,35 @@
 
   flex-shrink: 0;
   padding-top: 0.2rem;
+}
+
+/* product */
+.productCarousel {
+  padding-bottom: 4rem;
+}
+
+.productInfo {
+  padding: 2rem var(--default-margin) 2rem;
+  min-width: 0;
+}
+
+.productName {
+  margin-bottom: 0.6rem;
+  font: var(--text-headline-1-bold);
+  color: var(--grey-4);
+  word-break: keep-all;
+}
+
+.productDescription {
+  font: var(--text-body-1-reg);
+  color: var(--grey-4);
+  white-space: pre-wrap;
+  word-break: keep-all;
+}
+
+/* border */
+.border {
+  margin: 0 var(--default-margin);
+  height: 0.5px;
+  background-color: var(--grey-2);
 }
