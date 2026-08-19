@@ -3,14 +3,17 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
-import { Footer, Header } from '@/shared/component';
-import { NEW_ROUTES } from '@/shared/constant';
-import { useAuth } from '@/shared/hook';
-
 import {
   Carousel,
   CarouselErrorFallback,
   CarouselSkeleton,
+  Footer,
+  Header,
+} from '@/shared/component';
+import { NEW_ROUTES } from '@/shared/constant';
+import { useAuth } from '@/shared/hook';
+
+import {
   HomeBesookt,
   HomeBesooktErrorFallback,
   HomeBesooktSkeleton,
@@ -20,6 +23,7 @@ import {
   HomeCommunity,
   ListHeader,
   PopUp,
+  Slide,
 } from '@/feature/home/component';
 import { useBanner } from '@/feature/home/hook';
 import { Search } from '@/feature/search/component';
@@ -90,5 +94,13 @@ export default function MainPage() {
 function Banner() {
   const { data: items } = useBanner();
 
-  return <Carousel className={styles.banner} slides={items} />;
+  return (
+    <Carousel
+      className={styles.banner}
+      items={items}
+      renderItem={({ imageUrl, redirectUrl }) => (
+        <Slide src={imageUrl} redirectUrl={redirectUrl} alt='banner' />
+      )}
+    />
+  );
 }

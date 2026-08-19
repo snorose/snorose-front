@@ -1,0 +1,40 @@
+.carousel {
+  width: 100%;
+  aspect-ratio: 3;
+  display: flex;
+  position: relative;
+  overflow: visible;
+}
+
+.carousel:global(.swiper-horizontal) > :global(.swiper-pagination-bullets) {
+  position: absolute;
+  top: 93%;
+}
+
+.carousel :global(.swiper-pagination-bullet) {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 1rem;
+  background-color: var(--blue-4);
+}
+
+.carousel :global(.swiper-button-prev) {
+  left: 2rem;
+}
+
+.carousel :global(.swiper-button-next) {
+  right: 2rem;
+}
+
+.carousel :global(.swiper-button-prev),
+.carousel :global(.swiper-button-next) {
+  margin: 0;
+  border-radius: 100%;
+  transform: translateY(-60%);
+}
+
+.carousel :global(.swiper-button-prev)::after,
+.carousel :global(.swiper-button-next)::after {
+  color: var(--blue-1);
+  font-size: 3rem;
+}
