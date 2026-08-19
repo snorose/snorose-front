@@ -1,4 +1,4 @@
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { Icon, MenuIcon } from '@/shared/component';
 
@@ -6,25 +6,27 @@ import styles from './BackAppBar.module.css';
 
 export default function BackAppBar({
   title,
-  hasMenu,
-  hasSearch,
+  hasMenu = false,
+  hasSearch = false,
   children,
-  hasSearchInput,
-  isDark,
-  notFixed,
+  hasSearchInput = false,
+  isDark = false,
+  notFixed = false,
   backNavTo,
   backgroundColor,
+}: {
+  title: string;
+  hasMenu?: boolean;
+  hasSearch?: boolean;
+  children?: React.ReactNode;
+  hasSearchInput?: boolean;
+  isDark?: boolean;
+  notFixed?: boolean;
+  backNavTo?: string;
+  backgroundColor?: string;
 }) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-
-  const getNavPath = () => {
-    if (backNavTo) {
-      return backNavTo;
-    } else {
-      return -1;
-    }
-  };
 
   return (
     <div
@@ -41,7 +43,7 @@ export default function BackAppBar({
           width={19}
           height={17}
           fill={isDark && 'white'}
-          onClick={() => navigate(getNavPath())}
+          onClick={() => (backNavTo ? navigate(backNavTo) : navigate(-1))}
         />
         {title && <span className={styles.title}>{title}</span>}
       </div>
