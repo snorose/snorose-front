@@ -1,11 +1,6 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
-
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
-import { QUERY_KEY } from '@/shared/constant';
-
-import { getBannerImage } from '@/apis';
 import { Slide } from '@/feature/home/component';
 
 import 'swiper/css';
@@ -13,14 +8,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './Carousel.css';
 
-export default function Carousel({ delay = 3000, className }) {
-  const { data: slides } = useSuspenseQuery({
-    queryKey: [QUERY_KEY.banner],
-    queryFn: getBannerImage,
-    gcTime: Infinity,
-    staleTime: 1000 * 60 * 5,
-  });
-
+export default function Carousel({ delay = 3000, className, slides }) {
   return (
     <Swiper
       className={className}
