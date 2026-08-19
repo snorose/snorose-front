@@ -24,6 +24,7 @@ export const QUERY_KEY = Object.freeze({
   unreadNotificationCount: ['unreadNotificationCount'],
   notificationSettings: ['notificationSettings'],
   events: 'events',
+  commerceSale: (saleId) => ['commerceSale', saleId],
 });
 
 export const MUTATION_KEY = Object.freeze({
