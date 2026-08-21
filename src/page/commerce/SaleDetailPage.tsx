@@ -4,6 +4,7 @@ import {
   BackAppBar,
   Carousel,
   CheckBox,
+  DimModalLayout,
   Label,
   NumberInput,
   PrimaryButton,
@@ -32,6 +33,7 @@ export default function SaleDetailPage() {
   const [quantityMap, setQuantityMap] = useState<QuantityMap>({});
   const [isOrdererInfoConsentChecked, setIsOrdererInfoConsentChecked] =
     useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   const totalPaymentAmount = useMemo(() => {
     if (!sale) return 0;
@@ -111,11 +113,55 @@ export default function SaleDetailPage() {
         <PrimaryButton
           className={styles.purchaseButton}
           disabled={isPurchaseButtonDisabled}
-          onClick={() => {}}
+          onClick={() => setIsPaymentModalOpen(true)}
         >
           구매 결정하기
         </PrimaryButton>
       </section>
+
+      {isPaymentModalOpen && (
+        <DimModalLayout>
+          <div
+            className={styles.accountModal}
+            role='dialog'
+            aria-modal='true'
+            aria-labelledby='accountModalTitle'
+          >
+            <div className={styles.accountModalContent}>
+              <h3 id='accountModalTitle' className={styles.accountModalTitle}>
+                입금 계좌 안내
+              </h3>
+
+              <dl className={styles.accountInfoList}>
+                <div className={styles.accountInfoItem}>
+                  <dt>계좌번호</dt>
+                  <dd>{sale.bank.accountNumber}</dd>
+                </div>
+                <div className={styles.accountInfoItem}>
+                  <dt>은행</dt>
+                  <dd>{sale.bank.bankName}</dd>
+                </div>
+                <div className={styles.accountInfoItem}>
+                  <dt>예금주</dt>
+                  <dd>{sale.bank.accountHolder}</dd>
+                </div>
+                <div className={styles.accountInfoItem}>
+                  <dt>입금금액</dt>
+                  <dd>{formatNumber(totalPaymentAmount)}원</dd>
+                </div>
+              </dl>
+            </div>
+
+            <button
+              type='button'
+              className={styles.accountModalButton}
+              onClick={() => setIsPaymentModalOpen(false)}
+            >
+              확인했어요
+            </button>
+          </div>
+        </DimModalLayout>
+      )}
     </div>
   );
 }
