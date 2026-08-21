@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { type Dispatch, type SetStateAction, useMemo, useState } from 'react';
 
 import {
   BackAppBar,
@@ -28,6 +28,24 @@ type ProductOptionItem = {
 };
 
 export default function SaleDetailPage() {
+  const [quantityMap, setQuantityMap] = useState<QuantityMap>({});
+
+  const totalPaymentAmount = useMemo(() => {
+    if (!sale) return 0;
+
+    return sale.products.reduce(
+      (saleTotal, product) =>
+        saleTotal +
+        product.variants.reduce((productTotal, variant) => {
+          const quantity =
+            quantityMap[product.productId]?.[variant.variantId] ?? 0;
+
+          return productTotal + variant.unitPrice * quantity;
+        }, 0),
+      0
+    );
+  }, [quantityMap]);
+
   if (!sale) return null;
 
   return (
@@ -47,11 +65,32 @@ export default function SaleDetailPage() {
 
       <div className={styles.border} />
 
-      <ProductOptionSection sale={sale} />
+      <ProductOptionSection
+        sale={sale}
+        quantityMap={quantityMap}
+        setQuantityMap={setQuantityMap}
+      />
 
       <div className={styles.border} />
 
       <OrdererInfoSection />
+
+      <div className={styles.border} />
+
+      <section className={styles.paymentSection}>
+        <div className={styles.totalPayment}>
+          <span className={styles.totalPaymentLabel}>총 결제 금액</span>
+          <strong className={styles.totalPaymentAmount}>
+            {formatNumber(totalPaymentAmount)}원
+          </strong>
+        </div>
+
+        <ul className={styles.paymentNoticeList}>
+          <li>주문 후 안내되는 학생단체 계좌로 직접 입금합니다.</li>
+          <li>입금 확인 전까지만 구매자가 취소할 수 있습니다.</li>
+          <li>배송 없이 지정 장소에서 수령합니다.</li>
+        </ul>
+      </section>
     </div>
   );
 }
@@ -152,9 +191,15 @@ function OrdererInfoSection() {
   );
 }
 
-function ProductOptionSection({ sale }: { sale: Sale }) {
-  const [quantityMap, setQuantityMap] = useState<QuantityMap>({});
-
+function ProductOptionSection({
+  sale,
+  quantityMap,
+  setQuantityMap,
+}: {
+  sale: Sale;
+  quantityMap: QuantityMap;
+  setQuantityMap: Dispatch<SetStateAction<QuantityMap>>;
+}) {
   const remainingQuantityByProductId = useMemo(() => {
     const result: Partial<Record<number, number | null>> = {};
 
