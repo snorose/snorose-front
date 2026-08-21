@@ -23,7 +23,7 @@ export async function fetchNotificationList(category) {
     throw new Error(data?.message || '알림 목록 조회 API 연결 실패');
   }
 
-  return Array.isArray(data.result) ? data.result : [];
+  return data.result;
 }
 
 export async function readNotifications(alertIds) {
