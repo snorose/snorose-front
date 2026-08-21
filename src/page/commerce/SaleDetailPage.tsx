@@ -6,6 +6,7 @@ import {
   CheckBox,
   Label,
   NumberInput,
+  PrimaryButton,
 } from '@/shared/component';
 import { useAuth } from '@/shared/hook';
 import { DateTime, formatNumber } from '@/shared/lib';
@@ -29,6 +30,8 @@ type ProductOptionItem = {
 
 export default function SaleDetailPage() {
   const [quantityMap, setQuantityMap] = useState<QuantityMap>({});
+  const [isOrdererInfoConsentChecked, setIsOrdererInfoConsentChecked] =
+    useState(false);
 
   const totalPaymentAmount = useMemo(() => {
     if (!sale) return 0;
@@ -45,6 +48,17 @@ export default function SaleDetailPage() {
       0
     );
   }, [quantityMap]);
+
+  const hasSelectedProduct = useMemo(
+    () =>
+      Object.values(quantityMap).some((productQuantities) =>
+        Object.values(productQuantities ?? {}).some((quantity) => quantity > 0)
+      ),
+    [quantityMap]
+  );
+
+  const isPurchaseButtonDisabled =
+    !hasSelectedProduct || !isOrdererInfoConsentChecked;
 
   if (!sale) return null;
 
@@ -73,7 +87,10 @@ export default function SaleDetailPage() {
 
       <div className={styles.border} />
 
-      <OrdererInfoSection />
+      <OrdererInfoSection
+        isOrdererInfoConsentChecked={isOrdererInfoConsentChecked}
+        setIsOrdererInfoConsentChecked={setIsOrdererInfoConsentChecked}
+      />
 
       <div className={styles.border} />
 
@@ -90,6 +107,14 @@ export default function SaleDetailPage() {
           <li>입금 확인 전까지만 구매자가 취소할 수 있습니다.</li>
           <li>배송 없이 지정 장소에서 수령합니다.</li>
         </ul>
+
+        <PrimaryButton
+          className={styles.purchaseButton}
+          disabled={isPurchaseButtonDisabled}
+          onClick={() => {}}
+        >
+          구매 결정하기
+        </PrimaryButton>
       </section>
     </div>
   );
@@ -135,11 +160,15 @@ function ProductCarouselSection({ sale }: { sale: Sale }) {
   );
 }
 
-function OrdererInfoSection() {
+function OrdererInfoSection({
+  isOrdererInfoConsentChecked,
+  setIsOrdererInfoConsentChecked,
+}: {
+  isOrdererInfoConsentChecked: boolean;
+  setIsOrdererInfoConsentChecked: Dispatch<SetStateAction<boolean>>;
+}) {
   const { userInfo, status } = useAuth();
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [isOrdererInfoConsentChecked, setIsOrdererInfoConsentChecked] =
-    useState(false);
 
   const ordererName = status === 'loading' ? '불러오는 중' : userInfo?.userName;
   const studentNumber =
