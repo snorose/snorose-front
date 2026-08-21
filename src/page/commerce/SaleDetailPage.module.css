@@ -78,7 +78,7 @@
 }
 
 .optionList {
-  margin: 0 var(--default-margin) 5rem;
+  margin: 0 var(--default-margin) 2rem;
   display: flex;
   flex-direction: column;
 }
@@ -170,4 +170,65 @@
   background-color: var(--grey-1);
   font: var(--text-body-2-bold);
   color: var(--grey-3-1);
+}
+
+/* orderer */
+.ordererSection {
+  padding-bottom: 3rem;
+}
+
+.ordererInfo {
+  margin: 0 var(--default-margin);
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.readonlyFieldList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.readonlyField {
+  min-height: 5rem;
+  padding: 1rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 0.5rem;
+  background-color: var(--grey-1-1);
+}
+
+.readonlyLabel {
+  font: var(--text-body-2-bold);
+  color: var(--grey-3-1);
+}
+
+.readonlyValue {
+  min-width: 0;
+  font: var(--text-body-1-reg);
+  color: var(--grey-4);
+  word-break: break-all;
+}
+
+.phoneField {
+  display: flex;
+  flex-direction: column;
+}
+
+.consentField {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+
+.consentLabel {
+  padding-top: 0.1rem;
+  font: var(--text-body-2-reg);
+  color: var(--grey-4);
+  line-height: 1.5;
+  word-break: keep-all;
+  cursor: pointer;
 }
