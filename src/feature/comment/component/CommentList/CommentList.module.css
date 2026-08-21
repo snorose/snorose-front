@@ -1,7 +1,7 @@
 .comments {
   width: 100%;
   font: var(--text-body-1-reg);
-  padding: 0 var(--default-margin) 10.4rem;
+  padding: 2rem var(--default-margin) 10.4rem;
   display: flex;
   flex-direction: column;
   row-gap: 0.8rem;
