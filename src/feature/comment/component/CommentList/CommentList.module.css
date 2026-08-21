@@ -8,10 +8,6 @@
   min-height: 30rem;
 }
 
-.commentsTitle {
-  padding: 2rem 0 1.2rem 0;
-}
-
 .failComment {
   height: 30rem;
   display: flex;
