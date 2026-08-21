@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
 import {
   QueryErrorResetBoundary,
   useIsFetching,
@@ -16,12 +17,12 @@ import {
 } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
 
+import { CategoryTab, NotificationItem } from '@/feature/alert/component';
+import { CATEGORY } from '@/feature/alert/constant';
 import {
   useNotification,
   useReadNotifications,
 } from '@/feature/alert/hook/notification';
-import { CategoryTab, NotificationItem } from '@/feature/alert/component';
-import { CATEGORY } from '@/feature/alert/constant';
 
 import { noAlertIllustration } from '@/assets/illustrations';
 
@@ -135,12 +136,26 @@ function NotificationList({ category }) {
   const { data: notifications } = useNotification(category);
   const { markNotificationAsRead } = useReadNotifications();
 
-  const read = async (item) => {
-    await markNotificationAsRead.mutate(item);
+  const openNotificationUrl = (url, isExternal = false) => {
+    const nextUrl = typeof url === 'string' ? url.trim() : '';
 
-    const url = typeof item.url === 'string' ? item.url.trim() : '';
-    if (!url || url === '/') return;
-    navigate(url);
+    if (!nextUrl || nextUrl === '/') return;
+
+    if (
+      isExternal ||
+      /^https?:\/\//i.test(nextUrl) ||
+      nextUrl.startsWith('mailto:')
+    ) {
+      window.open(nextUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    navigate(nextUrl);
+  };
+
+  const read = async (item) => {
+    await markNotificationAsRead.mutateAsync(item);
+    openNotificationUrl(item.url, item.isExternal);
   };
 
   if (notifications.length === 0) {
