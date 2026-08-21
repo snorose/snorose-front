@@ -23,6 +23,7 @@
     "@floating-ui/dom": "^1.7.5",
     "@growthbook/growthbook-react": "^1.6.0",
     "@sentry/react": "^10.53.1",
+    "@snorose/icons": "^0.0.0",
     "@svgr/webpack": "latest",
     "@tanstack/react-query": "^5.51.23",
     "@testing-library/jest-dom": "^5.14.1",
