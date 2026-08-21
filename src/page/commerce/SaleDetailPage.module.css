@@ -213,6 +213,10 @@
   word-break: keep-all;
 }
 
+.purchaseButton {
+  margin-top: 2rem;
+}
+
 /* orderer */
 .ordererSection {
   padding-bottom: 2rem;
