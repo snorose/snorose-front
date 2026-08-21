@@ -45,7 +45,7 @@
 }
 
 .productInfo {
-  padding: 2rem var(--default-margin) 2rem;
+  padding: 2rem var(--default-margin);
   min-width: 0;
 }
 
@@ -68,4 +68,106 @@
   margin: 0 var(--default-margin);
   height: 0.5px;
   background-color: var(--grey-2);
+}
+
+/* option */
+.sectionTitle {
+  margin: 2rem var(--default-margin);
+  font: var(--text-headline-2-bold);
+  color: var(--grey-4);
+}
+
+.optionList {
+  margin: 0 var(--default-margin) 5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.optionItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  padding: 1.4rem 0;
+  border-bottom: 0.1rem solid var(--grey-2);
+}
+
+.optionItem:first-child {
+  padding-top: 0;
+}
+
+.optionItem:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.optionItemSoldOut .optionName {
+  color: var(--grey-3-1);
+}
+
+.optionItemSoldOut .optionMeta {
+  color: var(--grey-3);
+}
+
+.optionInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.optionName {
+  font: var(--text-body-1-bold);
+  color: var(--grey-4);
+  word-break: keep-all;
+}
+
+.optionMeta {
+  font: var(--text-body-2-reg);
+  color: var(--grey-3-1);
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 0.6rem;
+}
+
+.quantityButton {
+  width: 3.2rem;
+  height: 3.2rem;
+  border: 0.1rem solid var(--grey-2);
+  border-radius: 0.4rem;
+  font: var(--text-headline-2-med);
+  color: var(--grey-4);
+  background-color: var(--white);
+}
+
+.quantityButton:disabled {
+  cursor: auto;
+  color: var(--grey-3);
+  background-color: var(--grey-1);
+}
+
+.quantity {
+  width: 2.8rem;
+  text-align: center;
+  font: var(--text-body-1-bold);
+  color: var(--grey-4);
+}
+
+.soldOutBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 5.2rem;
+  height: 3.2rem;
+  padding: 0 1rem;
+  border: 0.1rem solid var(--grey-2);
+  border-radius: 0.4rem;
+  background-color: var(--grey-1);
+  font: var(--text-body-2-bold);
+  color: var(--grey-3-1);
 }
