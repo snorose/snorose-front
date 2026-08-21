@@ -7,7 +7,7 @@ export type Sale = {
   description: string;
   closesAt: string;
   paymentDueMinutes: number;
-  bank: { bankName: string; accountHolder: string };
+  bank: { bankName: string; accountNumber: string; accountHolder: string };
   pickup: { place: string; instructions: string };
   products: Array<{
     productId: number;

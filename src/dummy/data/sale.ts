@@ -7,7 +7,11 @@ export const sale: Sale = {
   description: '눈송이가 판매하는 훌륭한 상품입니다.',
   closesAt: '2023-12-31T23:59:59Z',
   paymentDueMinutes: 30,
-  bank: { bankName: '국민은행', accountHolder: '눈송이' },
+  bank: {
+    bankName: '국민은행',
+    accountNumber: '123-45678-901234',
+    accountHolder: '눈송이',
+  },
   pickup: { place: '눈송이의 집', instructions: '방문 수령' },
   products: [
     {
