@@ -12,7 +12,7 @@ import { getComments } from '@/apis';
 
 import styles from './CommentList.module.css';
 
-export default function CommentList({ commentCount }) {
+export default function CommentList() {
   const { postId } = useParams();
 
   const { data, isFetching, ref } = useSuspensePagination({
