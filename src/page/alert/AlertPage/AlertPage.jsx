@@ -177,7 +177,7 @@ function NotificationList({ category }) {
         <NotificationItem
           key={item.id}
           {...item}
-          category={item.categoryLabel || CATEGORY[item.category] || '기타'}
+          category={CATEGORY[item.category]}
           onClick={() => read(item)}
         />
       ))}
