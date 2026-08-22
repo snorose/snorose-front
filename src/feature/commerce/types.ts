@@ -24,3 +24,16 @@ export type Sale = {
     }>;
   }>;
 };
+
+export type QuantityMap = Partial<
+  Record<number, Partial<Record<number, number>>>
+>;
+
+export type ProductOptionItem = {
+  product: Sale['products'][number];
+  variant: Sale['products'][number]['variants'][number];
+  quantity: number;
+  isSoldOut: boolean;
+};
+
+export type SelectedOrderItem = Omit<ProductOptionItem, 'isSoldOut'>;
