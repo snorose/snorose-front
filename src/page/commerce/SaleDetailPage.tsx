@@ -16,6 +16,8 @@ import type { Sale } from '@/feature/commerce/types';
 
 import ProductCard from '@/page/commerce/ProductCard';
 
+import { taskCompleteIllustration } from '@/assets/illustrations';
+
 import { sale } from '@/dummy/data/sale';
 
 import styles from './SaleDetailPage.module.css';
@@ -34,6 +36,7 @@ export default function SaleDetailPage() {
   const [isOrdererInfoConsentChecked, setIsOrdererInfoConsentChecked] =
     useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const isSaleClosed = isClosedSale(sale.closesAt);
 
   const totalPaymentAmount = useMemo(() => {
     if (!sale) return 0;
@@ -69,7 +72,12 @@ export default function SaleDetailPage() {
       <BackAppBar title='공구 상품' notFixed />
 
       <section className={styles.meta}>
-        <span className={styles.sellerName}>{sale.sellerName}</span>
+        <div className={styles.metaHeader}>
+          <span className={styles.sellerName}>{sale.sellerName}</span>
+          {isSaleClosed && (
+            <span className={styles.closedBadge}>판매 마감</span>
+          )}
+        </div>
         <h1 className={styles.title}>{sale.title}</h1>
         <span className={styles.deadline}>
           {DateTime.format(sale.closesAt, 'MD_HM')} 판매 마감 ·
@@ -81,43 +89,49 @@ export default function SaleDetailPage() {
 
       <div className={styles.border} />
 
-      <ProductOptionSection
-        sale={sale}
-        quantityMap={quantityMap}
-        setQuantityMap={setQuantityMap}
-      />
+      {isSaleClosed ? (
+        <SaleClosedSection sale={sale} />
+      ) : (
+        <>
+          <ProductOptionSection
+            sale={sale}
+            quantityMap={quantityMap}
+            setQuantityMap={setQuantityMap}
+          />
 
-      <div className={styles.border} />
+          <div className={styles.border} />
 
-      <OrdererInfoSection
-        isOrdererInfoConsentChecked={isOrdererInfoConsentChecked}
-        setIsOrdererInfoConsentChecked={setIsOrdererInfoConsentChecked}
-      />
+          <OrdererInfoSection
+            isOrdererInfoConsentChecked={isOrdererInfoConsentChecked}
+            setIsOrdererInfoConsentChecked={setIsOrdererInfoConsentChecked}
+          />
 
-      <div className={styles.border} />
+          <div className={styles.border} />
 
-      <section className={styles.paymentSection}>
-        <div className={styles.totalPayment}>
-          <span className={styles.totalPaymentLabel}>총 결제 금액</span>
-          <strong className={styles.totalPaymentAmount}>
-            {formatNumber(totalPaymentAmount)}원
-          </strong>
-        </div>
+          <section className={styles.paymentSection}>
+            <div className={styles.totalPayment}>
+              <span className={styles.totalPaymentLabel}>총 결제 금액</span>
+              <strong className={styles.totalPaymentAmount}>
+                {formatNumber(totalPaymentAmount)}원
+              </strong>
+            </div>
 
-        <ul className={styles.paymentNoticeList}>
-          <li>주문 후 안내되는 학생단체 계좌로 직접 입금합니다.</li>
-          <li>입금 확인 전까지만 구매자가 취소할 수 있습니다.</li>
-          <li>배송 없이 지정 장소에서 수령합니다.</li>
-        </ul>
+            <ul className={styles.paymentNoticeList}>
+              <li>주문 후 안내되는 학생단체 계좌로 직접 입금합니다.</li>
+              <li>입금 확인 전까지만 구매자가 취소할 수 있습니다.</li>
+              <li>배송 없이 지정 장소에서 수령합니다.</li>
+            </ul>
 
-        <PrimaryButton
-          className={styles.purchaseButton}
-          disabled={isPurchaseButtonDisabled}
-          onClick={() => setIsPaymentModalOpen(true)}
-        >
-          구매 결정하기
-        </PrimaryButton>
-      </section>
+            <PrimaryButton
+              className={styles.purchaseButton}
+              disabled={isPurchaseButtonDisabled}
+              onClick={() => setIsPaymentModalOpen(true)}
+            >
+              구매 결정하기
+            </PrimaryButton>
+          </section>
+        </>
+      )}
 
       {isPaymentModalOpen && (
         <DimModalLayout>
@@ -164,6 +178,12 @@ export default function SaleDetailPage() {
       )}
     </div>
   );
+}
+
+function isClosedSale(closesAt: string) {
+  const closesAtTime = new Date(closesAt).getTime();
+
+  return Number.isFinite(closesAtTime) && closesAtTime <= Date.now();
 }
 
 function ProductCarouselSection({ sale }: { sale: Sale }) {
@@ -420,6 +440,42 @@ function ProductOptionSection({
           </div>
         ))}
       </div>
+    </section>
+  );
+}
+
+function SaleClosedSection({ sale }: { sale: Sale }) {
+  return (
+    <section className={styles.closedSection} aria-labelledby='saleClosedTitle'>
+      <img
+        src={taskCompleteIllustration}
+        alt=''
+        aria-hidden='true'
+        className={styles.closedIllustration}
+      />
+
+      <h2 id='saleClosedTitle' className={styles.closedTitle}>
+        판매가 마감되었어요
+      </h2>
+      <p className={styles.closedDescription}>
+        이 상품은 새 주문을 받을 수 없어요. 기존 주문과 수령 안내는 판매자의
+        공지를 확인해주세요.
+      </p>
+
+      <dl className={styles.closedInfoList}>
+        <div className={styles.closedInfoItem}>
+          <dt>마감일</dt>
+          <dd>{DateTime.format(sale.closesAt, 'YMD_HM')}</dd>
+        </div>
+        <div className={styles.closedInfoItem}>
+          <dt>수령 방식</dt>
+          <dd>{sale.pickup.instructions}</dd>
+        </div>
+        <div className={styles.closedInfoItem}>
+          <dt>판매자</dt>
+          <dd>{sale.sellerName}</dd>
+        </div>
+      </dl>
     </section>
   );
 }
