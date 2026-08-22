@@ -3,14 +3,17 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
-import { Footer, Header } from '@/shared/component';
-import { NEW_ROUTES } from '@/shared/constant';
-import { useAuth } from '@/shared/hook';
-
 import {
   Carousel,
   CarouselErrorFallback,
   CarouselSkeleton,
+  Footer,
+  Header,
+} from '@/shared/component';
+import { NEW_ROUTES } from '@/shared/constant';
+import { useAuth } from '@/shared/hook';
+
+import {
   HomeBesookt,
   HomeBesooktErrorFallback,
   HomeBesooktSkeleton,
@@ -20,14 +23,13 @@ import {
   HomeCommunity,
   ListHeader,
   PopUp,
+  Slide,
 } from '@/feature/home/component';
+import { useBanner } from '@/feature/home/hook';
 import { Search } from '@/feature/search/component';
 
 import styles from './MainPage.module.css';
 
-/**
- * TODO: 라우트 개선 작업 완료 후 HomeCard 교체
- */
 export default function MainPage() {
   const auth = useAuth();
 
@@ -46,7 +48,7 @@ export default function MainPage() {
             FallbackComponent={CarouselErrorFallback}
           >
             <Suspense fallback={<CarouselSkeleton />}>
-              <Carousel className={styles.carousel} />
+              <Banner />
             </Suspense>
           </ErrorBoundary>
         )}
@@ -60,7 +62,6 @@ export default function MainPage() {
           >
             <Suspense fallback={<HomeCardSkeleton />}>
               <HomeCard />
-              {/* <NewHomeCard /> */}
             </Suspense>
           </ErrorBoundary>
         )}
@@ -87,5 +88,19 @@ export default function MainPage() {
       <Footer />
       <PopUp />
     </div>
+  );
+}
+
+function Banner() {
+  const { data: items } = useBanner();
+
+  return (
+    <Carousel
+      className={styles.banner}
+      items={items}
+      renderItem={({ imageUrl, redirectUrl }) => (
+        <Slide src={imageUrl} redirectUrl={redirectUrl} alt='banner' />
+      )}
+    />
   );
 }

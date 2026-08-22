@@ -50,6 +50,9 @@ export { default as ShimmerEffect } from './suspense/ShimmerEffect/ShimmerEffect
 export { default as AttachmentList } from './AttachmentList/AttachmentList';
 export { default as AttachmentSwiper } from './AttachmentSwiper/AttachmentSwiper';
 export { default as Badge } from './Badge/Badge';
+export { default as Carousel } from './Carousel/Carousel';
+export { default as CarouselErrorFallback } from './Carousel/CarouselErrorFallback';
+export { default as CarouselSkeleton } from './Carousel/CarouselSkeleton';
 export { default as CategoryFieldset } from './CategoryFieldset/CategoryFieldset';
 export { default as Chip } from './Chip/Chip';
 export { default as Icon } from './Icon/Icon';

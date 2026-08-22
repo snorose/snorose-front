@@ -1,0 +1,550 @@
+.container {
+  min-height: 100%;
+  padding-bottom: 2.4rem;
+  background-color: var(--white);
+}
+
+/* meta */
+.meta {
+  padding: 0.4rem var(--default-margin) 2.2rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+
+  margin-bottom: 1rem;
+
+  font: var(--text-body-2-reg);
+  color: var(--grey-3-1);
+}
+
+.metaHeader {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.sellerName {
+  display: block;
+  font: var(--text-body-2-bold);
+  color: var(--blue-4);
+}
+
+.closedBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.4rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.5rem;
+  background-color: var(--grey-2);
+  font: var(--text-body-2-bold);
+  color: var(--grey-3-1);
+}
+
+.title {
+  font: var(--text-title-1-bold);
+  color: var(--grey-4);
+  word-break: keep-all;
+}
+
+.deadline {
+  font: var(--text-body-2-reg);
+  color: var(--grey-4);
+
+  flex-shrink: 0;
+  padding-top: 0.2rem;
+}
+
+/* product */
+.productCarousel {
+  padding-bottom: 4rem;
+}
+
+.productInfo {
+  padding: 2rem var(--default-margin);
+  min-width: 0;
+}
+
+.productName {
+  margin-bottom: 0.6rem;
+  font: var(--text-headline-1-bold);
+  color: var(--grey-4);
+  word-break: keep-all;
+}
+
+.productDescription {
+  font: var(--text-body-1-reg);
+  color: var(--grey-4);
+  white-space: pre-wrap;
+  word-break: keep-all;
+}
+
+/* border */
+.border {
+  height: 0.8rem;
+  background-color: var(--grey-2);
+}
+
+/* option */
+.sectionTitle {
+  margin: 2rem var(--default-margin);
+  font: var(--text-headline-2-bold);
+  color: var(--grey-4);
+}
+
+.optionList {
+  margin: 0 var(--default-margin) 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.optionItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  padding: 1.4rem 0;
+  border-bottom: 0.1rem solid var(--grey-2);
+}
+
+.optionItem:first-child {
+  padding-top: 0;
+}
+
+.optionItem:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.optionItemSoldOut .optionName {
+  color: var(--grey-3-1);
+}
+
+.optionItemSoldOut .optionMeta {
+  color: var(--grey-3);
+}
+
+.optionInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.optionName {
+  font: var(--text-body-1-bold);
+  color: var(--grey-4);
+  word-break: keep-all;
+}
+
+.optionMeta {
+  font: var(--text-body-2-reg);
+  color: var(--grey-3-1);
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 0.6rem;
+}
+
+.quantityButton {
+  width: 3.2rem;
+  height: 3.2rem;
+  border: 0.1rem solid var(--grey-2);
+  border-radius: 0.4rem;
+  font: var(--text-headline-2-med);
+  color: var(--grey-4);
+  background-color: var(--white);
+}
+
+.quantityButton:disabled {
+  cursor: auto;
+  color: var(--grey-3);
+  background-color: var(--grey-1);
+}
+
+.quantity {
+  width: 2.8rem;
+  text-align: center;
+  font: var(--text-body-1-bold);
+  color: var(--grey-4);
+}
+
+.soldOutBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 5.2rem;
+  height: 3.2rem;
+  padding: 0 1rem;
+  border: 0.1rem solid var(--grey-2);
+  border-radius: 0.4rem;
+  background-color: var(--grey-1);
+  font: var(--text-body-2-bold);
+  color: var(--grey-3-1);
+}
+
+/* closed */
+.closedSection {
+  margin: 0 var(--default-margin);
+  padding: 3.2rem 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.closedIllustration {
+  width: 18rem;
+  height: 18rem;
+  margin-bottom: 1.4rem;
+}
+
+.closedTitle {
+  margin-bottom: 0.8rem;
+  font: var(--text-headline-1-bold);
+  color: var(--grey-4);
+}
+
+.closedDescription {
+  max-width: 31rem;
+  font: var(--text-body-1-reg);
+  color: var(--grey-3-1);
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+.closedInfoList {
+  width: 100%;
+  margin-top: 2.4rem;
+  border-top: 0.1rem solid var(--grey-2);
+}
+
+.closedInfoItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+  padding: 1.3rem 0;
+  border-bottom: 0.1rem solid var(--grey-2);
+}
+
+.closedInfoItem dt {
+  flex-shrink: 0;
+  font: var(--text-body-2-bold);
+  color: var(--grey-3-1);
+}
+
+.closedInfoItem dd {
+  min-width: 0;
+  text-align: right;
+  font: var(--text-body-1-bold);
+  color: var(--grey-4);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* payment */
+.paymentSection {
+  margin: 0 var(--default-margin);
+  padding: 2rem 0 0.6rem;
+}
+
+.totalPayment {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  padding-bottom: 1.4rem;
+  border-bottom: 0.1rem solid var(--grey-2);
+}
+
+.totalPaymentLabel {
+  flex-shrink: 0;
+  font: var(--text-body-1-bold);
+  color: var(--grey-4);
+}
+
+.totalPaymentAmount {
+  min-width: 0;
+  text-align: right;
+  font: var(--text-headline-2-bold);
+  color: var(--blue-4);
+  word-break: break-all;
+}
+
+.paymentNoticeList {
+  margin-top: 1.4rem;
+  padding-left: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: disc;
+  font: var(--text-body-2-reg);
+  color: var(--grey-3-1);
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+.purchaseButton {
+  margin-top: 2rem;
+}
+
+/* account modal */
+.accountModal {
+  width: 100%;
+  max-height: calc(100vh - 4rem);
+  max-height: calc(100dvh - 4rem);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.accountModalScrollHint {
+  position: relative;
+}
+
+.accountModalScrollHint::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 4.8rem;
+  left: 0;
+  height: 3.2rem;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--white-rgb), 0),
+    var(--white)
+  );
+}
+
+.accountModalContent {
+  min-height: 0;
+  padding: 2.4rem 2rem 2rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.accountModalContent::-webkit-scrollbar {
+  display: none;
+}
+
+.accountModalTitle {
+  margin-bottom: 1.8rem;
+  text-align: center;
+  font: var(--text-headline-1-med);
+  color: var(--grey-4);
+}
+
+.saleClosedModalDescription {
+  text-align: center;
+  font: var(--text-body-1-reg);
+  color: var(--grey-3-1);
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+.orderConfirmSection {
+  margin-top: 1.8rem;
+}
+
+.orderConfirmSection:first-of-type {
+  margin-top: 0;
+}
+
+.orderConfirmSectionTitle {
+  margin-bottom: 0.8rem;
+  font: var(--text-body-1-bold);
+  color: var(--grey-4);
+}
+
+.orderConfirmProductList {
+  display: flex;
+  flex-direction: column;
+  border-top: 0.1rem solid var(--grey-2);
+}
+
+.orderConfirmProductItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+  padding: 1.2rem 0;
+  border-bottom: 0.1rem solid var(--grey-2);
+}
+
+.orderConfirmProductInfo {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.orderConfirmProductInfo strong {
+  font: var(--text-body-1-bold);
+  color: var(--grey-4);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.orderConfirmProductInfo span {
+  font: var(--text-body-2-reg);
+  color: var(--grey-3-1);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.orderConfirmProductDivider {
+  flex-shrink: 0;
+}
+
+.orderConfirmProductSummary {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.orderConfirmProductSummary span {
+  font: var(--text-body-2-reg);
+  color: var(--grey-3-1);
+}
+
+.orderConfirmNoticeList {
+  margin-top: 1.8rem;
+  padding-left: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: disc;
+  font: var(--text-body-2-reg);
+  color: var(--grey-3-1);
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+.accountInfoList {
+  display: flex;
+  flex-direction: column;
+}
+
+.accountInfoItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+  padding: 1.2rem 0;
+}
+
+.accountInfoItem dt {
+  flex-shrink: 0;
+  font: var(--text-body-2-bold);
+  color: var(--grey-3-1);
+}
+
+.accountInfoItem dd {
+  min-width: 0;
+  text-align: right;
+  font: var(--text-body-1-bold);
+  color: var(--grey-4);
+  word-break: break-all;
+}
+
+.accountModalButton {
+  width: 100%;
+  flex-shrink: 0;
+  padding: 1.3rem 0;
+  border-top: 0.1rem solid var(--grey-2);
+  font: var(--text-headline-2-med);
+  color: var(--blue-4);
+}
+
+.accountModalButton:disabled {
+  cursor: auto;
+  color: var(--grey-3);
+  background-color: var(--grey-1);
+}
+
+.accountModalButtonGroup {
+  width: 100%;
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 0.1rem solid var(--grey-2);
+}
+
+.accountModalButtonGroup .accountModalButton {
+  border-top: 0;
+}
+
+.accountModalSecondaryButton {
+  border-right: 0.1rem solid var(--grey-2);
+  color: var(--grey-3-1);
+}
+
+/* orderer */
+.ordererSection {
+  padding-bottom: 2rem;
+}
+
+.ordererInfo {
+  margin: 0 var(--default-margin);
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.readonlyFieldList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.readonlyField {
+  min-height: 5rem;
+  padding: 1rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 0.5rem;
+  background-color: var(--grey-1-1);
+}
+
+.readonlyLabel {
+  font: var(--text-body-2-bold);
+  color: var(--grey-3-1);
+}
+
+.readonlyValue {
+  min-width: 0;
+  font: var(--text-body-1-reg);
+  color: var(--grey-4);
+  word-break: break-all;
+}
+
+.phoneField {
+  display: flex;
+  flex-direction: column;
+}
+
+.consentField {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+
+.consentLabel {
+  padding-top: 0.1rem;
+  font: var(--text-body-2-reg);
+  color: var(--grey-4);
+  line-height: 1.5;
+  word-break: keep-all;
+  cursor: pointer;
+}
