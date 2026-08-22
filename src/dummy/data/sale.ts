@@ -5,7 +5,7 @@ export const sale: Sale = {
   sellerName: '눈송이',
   title: '눈송이의 판매 상품',
   description: '눈송이가 판매하는 훌륭한 상품입니다.',
-  closesAt: '2023-12-31T23:59:59Z',
+  closesAt: '2026-12-31T23:59:59Z',
   paymentDueMinutes: 30,
   bank: {
     bankName: '국민은행',
