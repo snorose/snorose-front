@@ -12,6 +12,7 @@ type OrderConfirmModalProps = {
   selectedOrderItems: SelectedOrderItem[];
   totalPaymentAmount: number;
   phoneNumber: string;
+  isConfirming: boolean;
   onEdit: () => void;
   onConfirm: () => void;
 };
@@ -21,6 +22,7 @@ export default function OrderConfirmModal({
   selectedOrderItems,
   totalPaymentAmount,
   phoneNumber,
+  isConfirming,
   onEdit,
   onConfirm,
 }: OrderConfirmModalProps) {
@@ -145,9 +147,10 @@ export default function OrderConfirmModal({
           <button
             type='button'
             className={styles.accountModalButton}
+            disabled={isConfirming}
             onClick={onConfirm}
           >
-            주문 확정하기
+            {isConfirming ? '주문 중...' : '주문 확정하기'}
           </button>
         </div>
       </div>

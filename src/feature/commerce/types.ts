@@ -25,6 +25,17 @@ export type Sale = {
   }>;
 };
 
+export type CreateOrderRequest = {
+  saleId: string;
+  clientRequestId: string;
+  buyerContact: string;
+  contactSharingConsent: boolean;
+  items: Array<{
+    variantId: number;
+    quantity: number;
+  }>;
+};
+
 export type QuantityMap = Partial<
   Record<number, Partial<Record<number, number>>>
 >;

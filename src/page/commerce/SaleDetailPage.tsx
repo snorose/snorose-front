@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import { BackAppBar } from '@/shared/component';
 import { DateTime } from '@/shared/lib';
@@ -10,71 +10,60 @@ import ProductCarouselSection from '@/feature/commerce/components/ProductCarouse
 import ProductOptionSection from '@/feature/commerce/components/ProductOptionSection';
 import SaleClosedModal from '@/feature/commerce/components/SaleClosedModal';
 import SaleClosedSection from '@/feature/commerce/components/SaleClosedSection';
-import type { QuantityMap, SelectedOrderItem } from '@/feature/commerce/types';
-import { isClosedSale } from '@/feature/commerce/utils/saleDetail';
+import {
+  useCreateOrder,
+  useOrderClientRequestId,
+} from '@/feature/commerce/hooks';
+import type { QuantityMap } from '@/feature/commerce/types';
+import {
+  getCreateOrderItems,
+  getCreateOrderRequestSignature,
+  getSelectedOrderItems,
+  getTotalPaymentAmount,
+  hasSelectedOrderItem,
+  isClosedSale,
+} from '@/feature/commerce/utils/saleDetail';
 
 import { sale } from '@/dummy/data/sale';
 
 import styles from './SaleDetailPage.module.css';
 
 export default function SaleDetailPage() {
+  const createOrderMutation = useCreateOrder();
+
   const [quantityMap, setQuantityMap] = useState<QuantityMap>({});
   const [isOrdererInfoConsentChecked, setIsOrdererInfoConsentChecked] =
     useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isSaleClosedModalOpen, setIsSaleClosedModalOpen] = useState(false);
+
+  const saleId = String(sale.saleId);
   const isSaleClosed = isClosedSale(sale.closesAt);
 
-  const totalPaymentAmount = useMemo(() => {
-    if (!sale) return 0;
+  const totalPaymentAmount = getTotalPaymentAmount(sale, quantityMap);
+  const hasSelectedProduct = hasSelectedOrderItem(quantityMap);
+  const selectedOrderItems = getSelectedOrderItems(sale, quantityMap);
+  const orderItems = getCreateOrderItems(selectedOrderItems);
+  const orderRequest = {
+    saleId,
+    buyerContact: phoneNumber,
+    contactSharingConsent: isOrdererInfoConsentChecked,
+    items: orderItems,
+  };
+  const orderRequestSignature = getCreateOrderRequestSignature({
+    saleId,
+    buyerContact: phoneNumber,
+    items: orderItems,
+  });
 
-    return sale.products.reduce(
-      (saleTotal, product) =>
-        saleTotal +
-        product.variants.reduce((productTotal, variant) => {
-          const quantity =
-            quantityMap[product.productId]?.[variant.variantId] ?? 0;
-
-          return productTotal + variant.unitPrice * quantity;
-        }, 0),
-      0
-    );
-  }, [quantityMap]);
-
-  const hasSelectedProduct = useMemo(
-    () =>
-      Object.values(quantityMap).some((productQuantities) =>
-        Object.values(productQuantities ?? {}).some((quantity) => quantity > 0)
-      ),
-    [quantityMap]
+  const { getClientRequestId, resetClientRequestId } = useOrderClientRequestId(
+    orderRequestSignature
   );
 
-  const selectedOrderItems = useMemo<SelectedOrderItem[]>(
-    () =>
-      sale.products
-        .flatMap((product) =>
-          product.variants.map((variant) => {
-            const quantity =
-              quantityMap[product.productId]?.[variant.variantId] ?? 0;
-
-            return {
-              product,
-              variant,
-              quantity,
-            };
-          })
-        )
-        .filter(({ quantity }) => quantity > 0),
-    [quantityMap]
-  );
-
+  const isPhoneNumberValid = phoneNumber.length === 11;
   const isPurchaseButtonDisabled =
-    !hasSelectedProduct ||
-    phoneNumber.length !== 11 ||
-    !isOrdererInfoConsentChecked;
-
-  if (!sale) return null;
+    !hasSelectedProduct || !isPhoneNumberValid || !isOrdererInfoConsentChecked;
 
   const handlePurchaseClick = () => {
     if (isClosedSale(sale.closesAt)) {
@@ -83,6 +72,30 @@ export default function SaleDetailPage() {
     }
 
     setIsPaymentModalOpen(true);
+  };
+
+  const handleOrderConfirm = async () => {
+    if (createOrderMutation.isPending) return;
+
+    if (isClosedSale(sale.closesAt)) {
+      setIsPaymentModalOpen(false);
+      setIsSaleClosedModalOpen(true);
+      return;
+    }
+
+    const clientRequestId = getClientRequestId();
+
+    try {
+      await createOrderMutation.mutateAsync({
+        ...orderRequest,
+        clientRequestId,
+      });
+
+      resetClientRequestId();
+      setIsPaymentModalOpen(false);
+    } catch {
+      // Keep clientRequestId for retrying the same order request.
+    }
   };
 
   return (
@@ -146,8 +159,9 @@ export default function SaleDetailPage() {
           selectedOrderItems={selectedOrderItems}
           totalPaymentAmount={totalPaymentAmount}
           phoneNumber={phoneNumber}
+          isConfirming={createOrderMutation.isPending}
           onEdit={() => setIsPaymentModalOpen(false)}
-          onConfirm={() => setIsPaymentModalOpen(false)}
+          onConfirm={handleOrderConfirm}
         />
       )}
     </div>
