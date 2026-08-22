@@ -297,11 +297,43 @@
 /* account modal */
 .accountModal {
   width: 100%;
+  max-height: calc(100vh - 4rem);
+  max-height: calc(100dvh - 4rem);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
+.accountModalScrollHint {
+  position: relative;
+}
+
+.accountModalScrollHint::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 4.8rem;
+  left: 0;
+  height: 3.2rem;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--white-rgb), 0),
+    var(--white)
+  );
+}
+
 .accountModalContent {
+  min-height: 0;
   padding: 2.4rem 2rem 2rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.accountModalContent::-webkit-scrollbar {
+  display: none;
 }
 
 .accountModalTitle {
@@ -314,6 +346,85 @@
 .saleClosedModalDescription {
   text-align: center;
   font: var(--text-body-1-reg);
+  color: var(--grey-3-1);
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+.orderConfirmSection {
+  margin-top: 1.8rem;
+}
+
+.orderConfirmSection:first-of-type {
+  margin-top: 0;
+}
+
+.orderConfirmSectionTitle {
+  margin-bottom: 0.8rem;
+  font: var(--text-body-1-bold);
+  color: var(--grey-4);
+}
+
+.orderConfirmProductList {
+  display: flex;
+  flex-direction: column;
+  border-top: 0.1rem solid var(--grey-2);
+}
+
+.orderConfirmProductItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+  padding: 1.2rem 0;
+  border-bottom: 0.1rem solid var(--grey-2);
+}
+
+.orderConfirmProductInfo {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.orderConfirmProductInfo strong {
+  font: var(--text-body-1-bold);
+  color: var(--grey-4);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.orderConfirmProductInfo span {
+  font: var(--text-body-2-reg);
+  color: var(--grey-3-1);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.orderConfirmProductDivider {
+  flex-shrink: 0;
+}
+
+.orderConfirmProductSummary {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.orderConfirmProductSummary span {
+  font: var(--text-body-2-reg);
+  color: var(--grey-3-1);
+}
+
+.orderConfirmNoticeList {
+  margin-top: 1.8rem;
+  padding-left: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: disc;
+  font: var(--text-body-2-reg);
   color: var(--grey-3-1);
   line-height: 1.5;
   word-break: keep-all;
@@ -347,6 +458,7 @@
 
 .accountModalButton {
   width: 100%;
+  flex-shrink: 0;
   padding: 1.3rem 0;
   border-top: 0.1rem solid var(--grey-2);
   font: var(--text-headline-2-med);
