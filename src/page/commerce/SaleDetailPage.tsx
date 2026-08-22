@@ -35,6 +35,7 @@ export default function SaleDetailPage() {
   const [quantityMap, setQuantityMap] = useState<QuantityMap>({});
   const [isOrdererInfoConsentChecked, setIsOrdererInfoConsentChecked] =
     useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isSaleClosedModalOpen, setIsSaleClosedModalOpen] = useState(false);
   const isSaleClosed = isClosedSale(sale.closesAt);
@@ -64,7 +65,9 @@ export default function SaleDetailPage() {
   );
 
   const isPurchaseButtonDisabled =
-    !hasSelectedProduct || !isOrdererInfoConsentChecked;
+    !hasSelectedProduct ||
+    phoneNumber.length !== 11 ||
+    !isOrdererInfoConsentChecked;
 
   if (!sale) return null;
 
@@ -112,6 +115,8 @@ export default function SaleDetailPage() {
           <div className={styles.border} />
 
           <OrdererInfoSection
+            phoneNumber={phoneNumber}
+            setPhoneNumber={setPhoneNumber}
             isOrdererInfoConsentChecked={isOrdererInfoConsentChecked}
             setIsOrdererInfoConsentChecked={setIsOrdererInfoConsentChecked}
           />
@@ -241,14 +246,17 @@ function ProductCarouselSection({ sale }: { sale: Sale }) {
 }
 
 function OrdererInfoSection({
+  phoneNumber,
+  setPhoneNumber,
   isOrdererInfoConsentChecked,
   setIsOrdererInfoConsentChecked,
 }: {
+  phoneNumber: string;
+  setPhoneNumber: Dispatch<SetStateAction<string>>;
   isOrdererInfoConsentChecked: boolean;
   setIsOrdererInfoConsentChecked: Dispatch<SetStateAction<boolean>>;
 }) {
   const { userInfo, status } = useAuth();
-  const [phoneNumber, setPhoneNumber] = useState('');
 
   const ordererName = status === 'loading' ? '불러오는 중' : userInfo?.userName;
   const studentNumber =
