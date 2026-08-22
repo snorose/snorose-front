@@ -1,18 +1,18 @@
 import { useParams } from 'react-router-dom';
 
-import { getComments } from '@/apis';
-
-import { useSuspensePagination } from '@/shared/hook';
 import { FetchLoading } from '@/shared/component';
-import { flatPaginationCache } from '@/shared/lib';
 import { QUERY_KEY } from '@/shared/constant';
+import { useSuspensePagination } from '@/shared/hook';
+import { flatPaginationCache } from '@/shared/lib';
 
 import { Comment } from '@/feature/comment/component';
 import { filterVisibleComments } from '@/feature/comment/lib';
 
+import { getComments } from '@/apis';
+
 import styles from './CommentList.module.css';
 
-export default function CommentList({ commentCount }) {
+export default function CommentList() {
   const { postId } = useParams();
 
   const { data, isFetching, ref } = useSuspensePagination({
@@ -25,9 +25,6 @@ export default function CommentList({ commentCount }) {
 
   return (
     <div className={styles.comments}>
-      <p className={styles.commentsTitle}>
-        댓글 {commentCount.toLocaleString()}개
-      </p>
       {visibledCommentList.map((comment, index) => (
         <Comment
           ref={index === visibledCommentList.length - 1 ? ref : undefined}
