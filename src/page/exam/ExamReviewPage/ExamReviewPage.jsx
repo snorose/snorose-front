@@ -178,7 +178,7 @@ export default function ExamReviewPage() {
         />
       </div>
 
-      <CommentListSuspense commentCount={commentCount} />
+      <CommentListSuspense />
       <CommentInput />
 
       {/* 시험후기 관련 모달 렌더링 */}

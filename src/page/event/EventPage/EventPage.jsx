@@ -318,7 +318,6 @@ export default function EventPage() {
 
       <CommentContainer
         isNotice={data.isNotice}
-        commentCount={data.commentCount}
         userInfo={userInfo.userRoleId}
       />
 
@@ -455,14 +454,14 @@ function ActionContainer({
   );
 }
 
-function CommentContainer({ isNotice, commentCount, userInfo }) {
+function CommentContainer({ isNotice, userInfo }) {
   return (
     <>
       {isNotice ? (
         <div className={styles.whiteBox} />
       ) : (
         <>
-          <CommentListSuspense commentCount={commentCount} />
+          <CommentListSuspense />
           {userInfo === 4 && <CommentInput />}
         </>
       )}

@@ -152,10 +152,7 @@ export default function PostDetailView({
         {PostActionBar}
       </div>
 
-      <CommentInputContainer
-        isNotice={data.isNotice}
-        commentCount={data.commentCount}
-      />
+      <CommentInputContainer isNotice={data.isNotice} />
 
       <MoreModal deletePost={deletePost} data={data} />
       <LinkAlertModal
