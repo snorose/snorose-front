@@ -465,6 +465,23 @@
   color: var(--blue-4);
 }
 
+.accountModalButtonGroup {
+  width: 100%;
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 0.1rem solid var(--grey-2);
+}
+
+.accountModalButtonGroup .accountModalButton {
+  border-top: 0;
+}
+
+.accountModalSecondaryButton {
+  border-right: 0.1rem solid var(--grey-2);
+  color: var(--grey-3-1);
+}
+
 /* orderer */
 .ordererSection {
   padding-bottom: 2rem;

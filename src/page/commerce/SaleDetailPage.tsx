@@ -186,7 +186,8 @@ export default function SaleDetailPage() {
           selectedOrderItems={selectedOrderItems}
           totalPaymentAmount={totalPaymentAmount}
           phoneNumber={phoneNumber}
-          onClose={() => setIsPaymentModalOpen(false)}
+          onEdit={() => setIsPaymentModalOpen(false)}
+          onConfirm={() => setIsPaymentModalOpen(false)}
         />
       )}
     </div>
@@ -198,13 +199,15 @@ function OrderConfirmModal({
   selectedOrderItems,
   totalPaymentAmount,
   phoneNumber,
-  onClose,
+  onEdit,
+  onConfirm,
 }: {
   sale: Sale;
   selectedOrderItems: SelectedOrderItem[];
   totalPaymentAmount: number;
   phoneNumber: string;
-  onClose: () => void;
+  onEdit: () => void;
+  onConfirm: () => void;
 }) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [hasMoreContent, setHasMoreContent] = useState(false);
@@ -316,13 +319,22 @@ function OrderConfirmModal({
           </ul>
         </div>
 
-        <button
-          type='button'
-          className={styles.accountModalButton}
-          onClick={onClose}
-        >
-          확인했어요
-        </button>
+        <div className={styles.accountModalButtonGroup}>
+          <button
+            type='button'
+            className={`${styles.accountModalButton} ${styles.accountModalSecondaryButton}`}
+            onClick={onEdit}
+          >
+            수정하기
+          </button>
+          <button
+            type='button'
+            className={styles.accountModalButton}
+            onClick={onConfirm}
+          >
+            주문 확정하기
+          </button>
+        </div>
       </div>
     </DimModalLayout>
   );
