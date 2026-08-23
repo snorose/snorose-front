@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import {
   BackAppBar,
@@ -22,6 +22,9 @@ const LOGIN_ERROR_MAP = {
 };
 
 export default function Login() {
+  const location = useLocation();
+  const redirectTo = getRedirectPath(location.state);
+
   const [formData, setFormData] = useState({ loginId: '', password: '' });
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -29,6 +32,7 @@ export default function Login() {
 
   const { toast } = useToast();
   const { mutate: login } = useLogin({
+    redirectTo,
     onError: (error) => {
       const status = error.response?.status;
       const serverMsg =
@@ -148,4 +152,23 @@ export default function Login() {
       </form>
     </div>
   );
+}
+
+function getRedirectPath(state) {
+  const from = state?.from;
+  const pathname = from?.pathname;
+
+  if (
+    typeof pathname !== 'string' ||
+    !pathname.startsWith('/') ||
+    pathname.startsWith('//') ||
+    pathname === '/login'
+  ) {
+    return '/';
+  }
+
+  const search = typeof from.search === 'string' ? from.search : '';
+  const hash = typeof from.hash === 'string' ? from.hash : '';
+
+  return `${pathname}${search}${hash}`;
 }
