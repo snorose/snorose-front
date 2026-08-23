@@ -17,7 +17,7 @@ import { DateTime } from '@/shared/lib';
 import { CommentInput, CommentListSuspense } from '@/feature/comment/component';
 import { useCommentContext } from '@/feature/comment/context';
 import {
-  ConfirmedIcon,
+  ConfirmedChip,
   ExamReviewModalRenderer,
   ReviewContentItem,
   ReviewDownload,
@@ -123,7 +123,7 @@ export default function ExamReviewPage() {
             <span className={styles.dot}></span>
             <span>{DateTime.format(createdAt, 'YMD')}</span>
             {isEdited && <span>&nbsp;(수정됨)</span>}
-            {isConfirmed && <ConfirmedIcon />}
+            {isConfirmed && <ConfirmedChip />}
           </div>
 
           <Icon
