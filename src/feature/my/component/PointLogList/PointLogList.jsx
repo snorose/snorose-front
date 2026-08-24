@@ -1,32 +1,32 @@
-import { getPointLogs } from '@/apis';
-
-import { useSuspensePagination } from '@/shared/hook';
-import { FetchLoading } from '@/shared/component';
-import { flatPaginationCache } from '@/shared/lib';
+import { FetchLoading, InfiniteScrollSentinel } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
+import { useSuspenseInfiniteScroll } from '@/shared/hook';
 
 import { PointLog } from '@/feature/my/component';
+
+import { getPointLogs } from '@/apis';
 
 import styles from './PointLogList.module.css';
 
 export default function PointLogList() {
-  const { data, ref, isFetching } = useSuspensePagination({
+  const {
+    items: pointList,
+    ref,
+    isFetchingNextPage,
+  } = useSuspenseInfiniteScroll({
     queryKey: [QUERY_KEY.pointHistory],
     queryFn: ({ pageParam }) => getPointLogs({ page: pageParam }),
+    getItemKey: (item) => item.id,
   });
-
-  const pointList = flatPaginationCache(data);
 
   return (
     <ul className={styles.pointListContainer}>
-      {pointList.map((log, index) => (
-        <PointLog
-          key={log.id}
-          ref={index === pointList.length - 1 ? ref : undefined}
-          log={log}
-        />
+      {pointList.map((log) => (
+        <PointLog key={log.id} log={log} />
       ))}
-      {isFetching && <FetchLoading />}
+
+      <InfiniteScrollSentinel ref={ref} />
+      {isFetchingNextPage && <FetchLoading />}
     </ul>
   );
 }
