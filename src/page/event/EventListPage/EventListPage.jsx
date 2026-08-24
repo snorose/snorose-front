@@ -108,7 +108,7 @@ function PostList({ currentBoardTextId, currentBoard, activeProgress }) {
   const {
     items: postList,
     ref,
-    isFetching,
+    isFetchingNextPage,
     refetch,
   } = useSuspenseInfiniteScroll({
     queryKey: [QUERY_KEY.events, currentBoard.id, activeProgress],
@@ -153,7 +153,7 @@ function PostList({ currentBoardTextId, currentBoard, activeProgress }) {
           ))}
 
           <InfiniteScrollSentinel ref={ref} />
-          {isFetching && <FetchLoading />}
+          {isFetchingNextPage && <FetchLoading />}
         </List>
       </PullToRefresh>
     </div>
