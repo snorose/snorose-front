@@ -22,6 +22,7 @@ type UseSuspenseInfiniteScrollOptions<
 > = {
   queryKey: TQueryKey;
   queryFn: QueryFunction<InfiniteScrollPage<TItem>, TQueryKey, number>;
+  getItemKey: (item: TItem) => unknown;
   staleTime?: number;
 };
 
@@ -31,6 +32,7 @@ export default function useSuspenseInfiniteScroll<
 >({
   queryKey,
   queryFn,
+  getItemKey,
   staleTime = 0,
 }: UseSuspenseInfiniteScrollOptions<TItem, TQueryKey>) {
   const queryClient = useQueryClient();
@@ -53,7 +55,10 @@ export default function useSuspenseInfiniteScroll<
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
     infiniteQuery;
 
-  const items = data.pages.flatMap((page) => page.data);
+  const items = deduplicateItems(
+    data.pages.flatMap((page) => page.data),
+    getItemKey
+  );
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -92,4 +97,22 @@ export default function useSuspenseInfiniteScroll<
     refetch: refetchWithReset,
     ref,
   };
+}
+
+function deduplicateItems<TItem>(
+  items: TItem[],
+  getItemKey: (item: TItem) => unknown
+) {
+  const seen = new Set<unknown>();
+
+  return items.filter((item) => {
+    const key = getItemKey(item);
+
+    if (seen.has(key)) {
+      return false;
+    }
+
+    seen.add(key);
+    return true;
+  });
 }
