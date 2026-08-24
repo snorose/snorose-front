@@ -8,17 +8,14 @@ import {
   BackAppBar,
   FetchLoading,
   Icon,
+  InfiniteScrollSentinel,
   List,
   PullToRefresh,
   WriteButton,
 } from '@/shared/component';
 import { QUERY_KEY, ROLE, STALE_TIME } from '@/shared/constant';
-import { useAuth, useSuspensePagination } from '@/shared/hook';
-import {
-  deduplicatePaginatedData,
-  flatPaginationCache,
-  getBoard,
-} from '@/shared/lib';
+import { useAuth, useSuspenseInfiniteScroll } from '@/shared/hook';
+import { getBoard } from '@/shared/lib';
 
 import { PostBar, PostListErrorFallback } from '@/feature/board/component';
 import ProgressTab from '@/feature/event/component/ProgressTab/ProgressTab';
@@ -108,7 +105,12 @@ export default function EventListPage() {
 }
 
 function PostList({ currentBoardTextId, currentBoard, activeProgress }) {
-  const { data, ref, isFetching, refetch } = useSuspensePagination({
+  const {
+    items: postList,
+    ref,
+    isFetching,
+    refetch,
+  } = useSuspenseInfiniteScroll({
     queryKey: [QUERY_KEY.events, currentBoard.id, activeProgress],
     queryFn: ({ pageParam }) =>
       getEventPosts({
@@ -116,9 +118,8 @@ function PostList({ currentBoardTextId, currentBoard, activeProgress }) {
         progressType: activeProgress === 'ALL' ? undefined : activeProgress,
       }),
     staleTime: STALE_TIME.boardPostList,
+    getItemKey: (item) => item.postId,
   });
-
-  const postList = deduplicatePaginatedData(flatPaginationCache(data));
 
   if (!postList.length) {
     return (
@@ -134,12 +135,11 @@ function PostList({ currentBoardTextId, currentBoard, activeProgress }) {
     <div>
       <PullToRefresh onRefresh={refetch}>
         <List>
-          {postList.map((post, index) => (
+          {postList.map((post) => (
             <Link
               className={styles.to}
               key={post.postId}
               to={`/board/${currentBoardTextId}/post/${post.postId}`}
-              ref={index === postList.length - 1 ? ref : undefined}
             >
               <PostBar {...post} authorBadgeRoleId={ROLE.admin}>
                 <PostBar.Chip
@@ -151,6 +151,8 @@ function PostList({ currentBoardTextId, currentBoard, activeProgress }) {
               </PostBar>
             </Link>
           ))}
+
+          <InfiniteScrollSentinel ref={ref} />
           {isFetching && <FetchLoading />}
         </List>
       </PullToRefresh>
