@@ -1,8 +1,22 @@
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
-import { FetchLoading, List, PullToRefresh } from '@/shared/component';
-import { BOARD_CATEGORY_MAP, NEW_ROUTES, QUERY_KEY, STALE_TIME } from '@/shared/constant';
-import { useBoard, useSuspensePagination } from '@/shared/hook';
+import {
+  FetchLoading,
+  InfiniteScrollSentinel,
+  List,
+  PullToRefresh,
+} from '@/shared/component';
+import {
+  BOARD_CATEGORY_MAP,
+  NEW_ROUTES,
+  QUERY_KEY,
+  STALE_TIME,
+} from '@/shared/constant';
+import {
+  useBoard,
+  useSuspenseInfiniteScroll,
+  useSuspensePagination,
+} from '@/shared/hook';
 import {
   BOARD_REGISTRY,
   deduplicatePaginatedData,
@@ -28,7 +42,12 @@ export default function PostList() {
   const progressType = searchParams.get('progressType') ?? 'ALL';
 
   // 페이지네이션 관련 hook (일반 / 이벤트 )
-  const { data, ref, isFetching, refetch } = useSuspensePagination({
+  const {
+    items: postList,
+    ref,
+    isFetchingNextPage,
+    refetch,
+  } = useSuspenseInfiniteScroll({
     queryKey: isEvent
       ? [QUERY_KEY.events, currentBoard.id, progressType]
       : [QUERY_KEY.posts, currentBoard.id],
@@ -40,9 +59,8 @@ export default function PostList() {
           })
         : getPosts(currentBoard.id, pageParam),
     staleTime: STALE_TIME.boardPostList,
+    getItemKey: (item) => item.postId,
   });
-
-  const postList = deduplicatePaginatedData(flatPaginationCache(data));
 
   if (!postList.length) {
     return (
@@ -60,7 +78,7 @@ export default function PostList() {
     <div>
       <PullToRefresh onRefresh={refetch}>
         <List>
-          {postList.map((post, index) => (
+          {postList.map((post) => (
             <Link
               className={styles.to}
               key={post.postId}
@@ -69,7 +87,6 @@ export default function PostList() {
                   ? `/board/${getBoardTitleToTextId(post.boardName)}/post/${post.postId}`
                   : `/board/${currentBoardTextId}/post/${post.postId}`
               }
-              ref={index === postList.length - 1 ? ref : undefined}
             >
               <PostBar
                 {...post}
@@ -81,7 +98,9 @@ export default function PostList() {
               </PostBar>
             </Link>
           ))}
-          {isFetching && <FetchLoading />}
+
+          <InfiniteScrollSentinel ref={ref} />
+          {isFetchingNextPage && <FetchLoading />}
         </List>
       </PullToRefresh>
     </div>
