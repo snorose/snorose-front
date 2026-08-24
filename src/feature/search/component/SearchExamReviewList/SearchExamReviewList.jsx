@@ -7,11 +7,7 @@ import {
   PullToRefresh,
 } from '@/shared/component';
 import { QUERY_KEY, STALE_TIME } from '@/shared/constant';
-import {
-  useSuspenseInfiniteScroll,
-  useSuspensePagination,
-} from '@/shared/hook';
-import { deduplicatePaginatedData, flatPaginationCache } from '@/shared/lib';
+import { useSuspenseInfiniteScroll } from '@/shared/hook';
 
 import { PostBar } from '@/feature/board/component';
 
