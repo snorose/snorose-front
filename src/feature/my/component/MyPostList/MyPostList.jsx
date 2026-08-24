@@ -1,23 +1,20 @@
 import { Link } from 'react-router-dom';
 
-import { useSuspensePagination } from '@/shared/hook';
-import { FetchLoading } from '@/shared/component';
-import {
-  getBoardTextId,
-  deduplicatePaginatedData,
-  flatPaginationCache,
-} from '@/shared/lib';
+import { FetchLoading, InfiniteScrollSentinel } from '@/shared/component';
 import { STALE_TIME } from '@/shared/constant';
+import { useSuspenseInfiniteScroll } from '@/shared/hook';
+import { getBoardTextId } from '@/shared/lib';
 
 import { PostBar } from '@/feature/board/component';
 
-import styles from './MyPostList.module.css';
-import { ACTIVITIES } from '../../constant/activity';
 import {
+  noCommentsIllustration,
   noPostsIllustration,
   noScrapedPostsIllustration,
-  noCommentsIllustration,
 } from '@/assets/illustrations';
+
+import { ACTIVITIES } from '../../constant/activity';
+import styles from './MyPostList.module.css';
 
 export default function MyPostList({
   queryKey,
@@ -25,13 +22,16 @@ export default function MyPostList({
   hasLike = true,
   errorMessage,
 }) {
-  const { data, ref, isFetching } = useSuspensePagination({
+  const {
+    items: list,
+    ref,
+    isFetchingNextPage,
+  } = useSuspenseInfiniteScroll({
     queryKey: [queryKey],
     queryFn: ({ pageParam }) => queryFn({ page: pageParam }),
     staleTime: STALE_TIME.mypageActivity,
+    getItemKey: (item) => item.postId,
   });
-
-  const list = deduplicatePaginatedData(flatPaginationCache(data));
 
   const activity = ACTIVITIES.find(
     (activity) => activity.queryKey === queryKey
@@ -78,10 +78,9 @@ export default function MyPostList({
 
   return (
     <ul className={styles.posts}>
-      {list.map((post, index) => (
+      {list.map((post) => (
         <Link
           className={styles.to}
-          ref={index === list.length - 1 ? ref : undefined}
           key={post.postId}
           to={makePath({
             boardId: post.boardId,
@@ -96,7 +95,9 @@ export default function MyPostList({
           </PostBar>
         </Link>
       ))}
-      {isFetching && <FetchLoading />}
+
+      <InfiniteScrollSentinel ref={ref} />
+      {isFetchingNextPage && <FetchLoading />}
     </ul>
   );
 }
