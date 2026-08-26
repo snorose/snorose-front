@@ -82,7 +82,7 @@ export const BOARDS = Object.freeze([
   },
   {
     id: 43,
-    name: '숙플',
+    name: '숙플레이스',
     path: '/board/sookplace',
   },
   {
@@ -193,7 +193,7 @@ export const BOARD_MENUS = [
     id: 43,
     to: '/board/sookplace',
     textId: 'sookplace',
-    title: '숙플',
+    title: '숙플레이스',
     desc: '눈송이 맛집 커뮤니티',
     category: BOARD_CATEGORY.LIFE,
     image: sookplace,
