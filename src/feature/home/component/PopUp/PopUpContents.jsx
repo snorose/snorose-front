@@ -63,18 +63,18 @@ const POPUP_CONTENTS = [
     title: '[공지] 스노로즈 서버 점검 안내',
     description: '안정적인 서비스 제공을 위한 서버 점검이 진행됩니다.',
     contentList: [
-      '일시: 2026/07/31(금) 20:00 ~ 23:00',
+      '일시: 2026년 8월 29일 (토) 14:00 ~ 18:00',
       '점검 시간 동안 스노로즈 이용이 일시 중단됩니다.',
     ],
     link: [
       {
         title: '스노로즈 공지',
-        url: '/board/notice/post/1912079',
+        url: '/board/notice/post/1914738',
         isExternal: false,
       },
     ],
-    startDate: '2026-07-27',
-    endDate: '2026-07-31',
+    startDate: '2026-08-26',
+    endDate: '2026-08-29',
   },
   {
     title: '[블로그] 스노로즈 초청강연 - 유트루 편',
