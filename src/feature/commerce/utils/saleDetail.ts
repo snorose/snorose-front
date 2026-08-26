@@ -1,7 +1,7 @@
 import type {
   CreateOrderRequest,
   QuantityMap,
-  Sale,
+  SaleResponse,
   SelectedOrderItem,
 } from '@/feature/commerce/types';
 
@@ -11,7 +11,10 @@ export function isClosedSale(closesAt: string) {
   return Number.isFinite(closesAtTime) && closesAtTime <= Date.now();
 }
 
-export function getTotalPaymentAmount(sale: Sale, quantityMap: QuantityMap) {
+export function getTotalPaymentAmount(
+  sale: SaleResponse,
+  quantityMap: QuantityMap
+) {
   return sale.products.reduce(
     (saleTotal, product) =>
       saleTotal +
@@ -32,7 +35,7 @@ export function hasSelectedOrderItem(quantityMap: QuantityMap) {
 }
 
 export function getSelectedOrderItems(
-  sale: Sale,
+  sale: SaleResponse,
   quantityMap: QuantityMap
 ): SelectedOrderItem[] {
   return sale.products
