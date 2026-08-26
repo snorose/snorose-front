@@ -7,10 +7,11 @@ import { QUERY_KEY } from '@/shared/constant';
 import { createOrder, getSale } from '@/feature/commerce/apis';
 import type { SaleResponse } from '@/feature/commerce/types';
 
-export function useSale(saleId: string) {
+export function useSale(saleId?: string) {
   return useQuery<SaleResponse>({
     queryKey: QUERY_KEY.commerceSale(saleId),
-    queryFn: () => getSale(saleId),
+    queryFn: () => getSale(saleId!),
+    enabled: Boolean(saleId),
   });
 }
 
