@@ -625,7 +625,7 @@ export const routeList = [
         element: <ServicePolicyPage />,
       },
       {
-        path: '/commerce/sale/:saleId',
+        path: '/commerce/sales/:saleId',
         element: (
           <ProtectedRoute>
             <SaleDetailPage />

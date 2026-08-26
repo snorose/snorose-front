@@ -2,21 +2,28 @@ import { useState } from 'react';
 
 import { Carousel } from '@/shared/component';
 
-import type { Sale } from '@/feature/commerce/types';
+import type { SaleResponse } from '@/feature/commerce/types';
 
 import styles from '@/page/commerce/SaleDetailPage.module.css';
 
 import ProductCard from './ProductCard';
 
-export default function ProductCarouselSection({ sale }: { sale: Sale }) {
+type ProductCarouselSectionProps = {
+  products: SaleResponse['products'];
+};
+
+export default function ProductCarouselSection({
+  products,
+}: ProductCarouselSectionProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const carouselItems = sale.products.flatMap((product) => {
-    const imageUrls = product.imageUrls.length > 0 ? product.imageUrls : [''];
+  const carouselItems = products.flatMap((product) => {
+    const images = product.images.length > 0 ? product.images : [];
 
-    return imageUrls.map((imageUrl) => ({
-      product,
-      imageUrl,
+    return images.map((image) => ({
+      imageUrl: image.url,
+      productName: product.name,
+      productDescription: product.description,
     }));
   });
 
@@ -30,18 +37,15 @@ export default function ProductCarouselSection({ sale }: { sale: Sale }) {
         className={styles.productCarousel}
         items={carouselItems}
         renderItem={(item) => (
-          <ProductCard
-            src={item.imageUrl}
-            alt={item.product.name ?? sale.title}
-          />
+          <ProductCard src={item.imageUrl} alt={item.productName} />
         )}
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         autoplay={false}
       />
       <div className={styles.productInfo}>
-        <h2 className={styles.productName}>{activeItem.product.name}</h2>
+        <h2 className={styles.productName}>{activeItem.productName}</h2>
         <p className={styles.productDescription}>
-          {activeItem.product.description}
+          {activeItem.productDescription}
         </p>
       </div>
     </section>

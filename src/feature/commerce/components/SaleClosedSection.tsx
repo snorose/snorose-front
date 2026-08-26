@@ -1,12 +1,12 @@
 import { DateTime } from '@/shared/lib';
 
-import type { Sale } from '@/feature/commerce/types';
+import type { SaleResponse } from '@/feature/commerce/types';
 
 import styles from '@/page/commerce/SaleDetailPage.module.css';
 
 import { taskCompleteIllustration } from '@/assets/illustrations';
 
-export default function SaleClosedSection({ sale }: { sale: Sale }) {
+export default function SaleClosedSection({ sale }: { sale: SaleResponse }) {
   return (
     <section className={styles.closedSection} aria-labelledby='saleClosedTitle'>
       <img
@@ -28,10 +28,6 @@ export default function SaleClosedSection({ sale }: { sale: Sale }) {
         <div className={styles.closedInfoItem}>
           <dt>마감일</dt>
           <dd>{DateTime.format(sale.closesAt, 'YMD_HM')}</dd>
-        </div>
-        <div className={styles.closedInfoItem}>
-          <dt>수령 방식</dt>
-          <dd>{sale.pickup.instructions}</dd>
         </div>
         <div className={styles.closedInfoItem}>
           <dt>판매자</dt>

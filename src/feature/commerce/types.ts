@@ -1,27 +1,33 @@
-export type InventoryPolicy = 'PREORDER' | 'LIMITED_STOCK';
-
-export type Sale = {
+export type SaleResponse = {
   saleId: number;
   sellerName: string;
   title: string;
   description: string;
+  status: 'OPEN' | 'CLOSE';
+  orderable: boolean;
+  opensAt: string;
   closesAt: string;
-  paymentDueMinutes: number;
-  bank: { bankName: string; accountNumber: string; accountHolder: string };
-  pickup: { place: string; instructions: string };
   products: Array<{
     productId: number;
     name: string;
     description: string;
-    inventoryPolicy: InventoryPolicy;
+    inventoryPolicy: 'PREORDER' | 'LIMITED_STOCK';
     maxPerBuyer: number | null;
-    imageUrls: string[];
+    remainingForBuyer: number | null;
+    images: Array<{ imageId: number; url: string }>;
     variants: Array<{
       variantId: number;
-      optionName: string;
+      optionLabel: string;
       unitPrice: number;
       availableQuantity: number | null;
     }>;
+  }>;
+  notices: Array<{
+    noticeId: number;
+    version: number;
+    type: 'GENERAL' | 'SYSTEM_PRIVACY_CONSENT';
+    text: string;
+    required: boolean;
   }>;
 };
 
@@ -41,8 +47,8 @@ export type QuantityMap = Partial<
 >;
 
 export type ProductOptionItem = {
-  product: Sale['products'][number];
-  variant: Sale['products'][number]['variants'][number];
+  product: SaleResponse['products'][number];
+  variant: SaleResponse['products'][number]['variants'][number];
   quantity: number;
   isSoldOut: boolean;
 };

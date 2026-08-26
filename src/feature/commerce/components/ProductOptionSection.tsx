@@ -5,26 +5,26 @@ import { formatNumber } from '@/shared/lib';
 import type {
   ProductOptionItem,
   QuantityMap,
-  Sale,
+  SaleResponse,
 } from '@/feature/commerce/types';
 
 import styles from '@/page/commerce/SaleDetailPage.module.css';
 
 type ProductOptionSectionProps = {
-  sale: Sale;
+  products: SaleResponse['products'];
   quantityMap: QuantityMap;
   setQuantityMap: Dispatch<SetStateAction<QuantityMap>>;
 };
 
 export default function ProductOptionSection({
-  sale,
+  products,
   quantityMap,
   setQuantityMap,
 }: ProductOptionSectionProps) {
   const remainingQuantityByProductId = useMemo(() => {
     const result: Partial<Record<number, number | null>> = {};
 
-    sale.products.forEach((product) => {
+    products.forEach((product) => {
       if (product.maxPerBuyer === null) {
         result[product.productId] = null;
         return;
@@ -41,7 +41,7 @@ export default function ProductOptionSection({
     });
 
     return result;
-  }, [sale.products, quantityMap]);
+  }, [products, quantityMap]);
 
   const handleQuantityChange = (
     productId: number,
@@ -57,12 +57,15 @@ export default function ProductOptionSection({
         return prev;
       }
 
-      const product = sale.products.find(
+      const product = products.find(
         (product) => product.productId === productId
       );
       const variant = product?.variants.find(
         (variant) => variant.variantId === variantId
       );
+
+      if (!variant) return prev;
+
       const availableQuantity = variant.availableQuantity;
 
       if (
@@ -88,16 +91,15 @@ export default function ProductOptionSection({
     });
   };
 
-  const productOptionItems: ProductOptionItem[] = sale.products.flatMap(
-    (product) =>
-      product.variants.map((variant) => {
-        return {
-          product,
-          variant,
-          quantity: quantityMap[product.productId]?.[variant.variantId] ?? 0,
-          isSoldOut: variant.availableQuantity === 0,
-        };
-      })
+  const productOptionItems: ProductOptionItem[] = products.flatMap((product) =>
+    product.variants.map((variant) => {
+      return {
+        product,
+        variant,
+        quantity: quantityMap[product.productId]?.[variant.variantId] ?? 0,
+        isSoldOut: variant.availableQuantity === 0,
+      };
+    })
   );
 
   return (
@@ -113,8 +115,8 @@ export default function ProductOptionSection({
             key={`${product.productId} - ${variant.variantId}`}
           >
             <div className={styles.optionInfo}>
-              <div className={styles.optionName}>
-                {product.name} · {variant.optionName}
+              <div className={styles.optionLabel}>
+                {product.name} · {variant.optionLabel}
               </div>
               <div className={styles.optionMeta}>
                 {formatNumber(variant.unitPrice)}원
@@ -127,7 +129,7 @@ export default function ProductOptionSection({
                 <button
                   type='button'
                   className={styles.quantityButton}
-                  aria-label={`${product.name} ${variant.optionName} 수량 감소`}
+                  aria-label={`${product.name} ${variant.optionLabel} 수량 감소`}
                   disabled={quantity === 0}
                   onClick={() =>
                     handleQuantityChange(
@@ -145,7 +147,7 @@ export default function ProductOptionSection({
                 <button
                   type='button'
                   className={styles.quantityButton}
-                  aria-label={`${product.name} ${variant.optionName} 수량 증가`}
+                  aria-label={`${product.name} ${variant.optionLabel} 수량 증가`}
                   disabled={
                     remainingQuantityByProductId[product.productId] === 0 ||
                     (variant.availableQuantity !== null &&

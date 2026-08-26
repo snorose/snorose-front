@@ -57,6 +57,14 @@
   padding-top: 0.2rem;
 }
 
+.feedback {
+  padding: 4rem var(--default-margin);
+  font: var(--text-body-1-reg);
+  color: var(--grey-3-1);
+  text-align: center;
+  word-break: keep-all;
+}
+
 /* product */
 .productCarousel {
   padding-bottom: 4rem;
@@ -118,7 +126,7 @@
   border-bottom: 0;
 }
 
-.optionItemSoldOut .optionName {
+.optionItemSoldOut .optionLabel {
   color: var(--grey-3-1);
 }
 
@@ -133,7 +141,7 @@
   min-width: 0;
 }
 
-.optionName {
+.optionLabel {
   font: var(--text-body-1-bold);
   color: var(--grey-4);
   word-break: keep-all;
