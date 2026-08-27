@@ -1,6 +1,10 @@
 import { delay, http, HttpResponse } from 'msw';
 
-import type { SaleResponse } from '@/feature/commerce/types';
+import type {
+  CreateOrderRequest,
+  NoticeAcceptance,
+  SaleResponse,
+} from '@/feature/commerce/types';
 
 const sale: SaleResponse = {
   saleId: 1,
@@ -18,7 +22,7 @@ const sale: SaleResponse = {
       description: '휘두루 마뚜루 머리에 둘러써~',
       inventoryPolicy: 'LIMITED_STOCK',
       maxPerBuyer: 5,
-      remainingForBuyer: 2,
+      remainingForBuyer: 3,
       images: [
         {
           imageId: 1,
@@ -35,14 +39,14 @@ const sale: SaleResponse = {
           optionLabel: '네이비 · M',
           unitPrice: 8000,
           available: true,
-          availableQuantity: 3,
+          availableQuantity: 2,
         },
         {
           variantId: 2,
           optionLabel: '아이보리 · M',
           unitPrice: 8000,
           available: true,
-          availableQuantity: 0,
+          availableQuantity: 17,
         },
       ],
     },
@@ -50,9 +54,9 @@ const sale: SaleResponse = {
       productId: 10,
       name: '스노로즈 레터링 티셔츠',
       description: '가벼운 면 소재의 교내 수령 전용 상품입니다.',
-      inventoryPolicy: 'PREORDER',
-      maxPerBuyer: null,
-      remainingForBuyer: null,
+      inventoryPolicy: 'LIMITED_STOCK',
+      maxPerBuyer: 30,
+      remainingForBuyer: 11,
       images: [
         {
           imageId: 100,
@@ -121,6 +125,51 @@ const saleResponseById = new Map(
   ])
 );
 
+function findRequiredNoticeError(
+  saleResponse: SaleResponse,
+  noticeAcceptances: NoticeAcceptance[] = []
+) {
+  const noticeAcceptanceById = new Map(
+    noticeAcceptances.map((noticeAcceptance) => [
+      noticeAcceptance.noticeId,
+      noticeAcceptance,
+    ])
+  );
+
+  const hasVersionChanged = saleResponse.notices.some((notice) => {
+    const noticeAcceptance = noticeAcceptanceById.get(notice.noticeId);
+
+    return (
+      noticeAcceptance !== undefined &&
+      noticeAcceptance.version !== notice.version
+    );
+  });
+
+  if (hasVersionChanged) {
+    return {
+      code: 'COMMERCE_NOTICE_VERSION_CHANGED',
+      message: '유의사항이 변경되었습니다. 다시 확인해 주세요.',
+      status: 409,
+    };
+  }
+
+  const hasUncheckedRequiredNotice = saleResponse.notices.some((notice) => {
+    const noticeAcceptance = noticeAcceptanceById.get(notice.noticeId);
+
+    return notice.required && noticeAcceptance?.accepted !== true;
+  });
+
+  if (hasUncheckedRequiredNotice) {
+    return {
+      code: 'COMMERCE_NOTICE_REQUIRED',
+      message: '필수 확인 항목에 모두 동의해 주세요.',
+      status: 400,
+    };
+  }
+
+  return null;
+}
+
 export const handlers = [
   http.get('*/v1/commerce/sales/:saleId', async ({ params }) => {
     await delay(250);
@@ -142,6 +191,64 @@ export const handlers = [
 
     return HttpResponse.json({
       result: saleResponse,
+    });
+  }),
+  http.post('*/v1/commerce/orders', async ({ request }) => {
+    await delay(250);
+
+    const requestBody = (await request.json()) as Partial<CreateOrderRequest>;
+    const saleResponse = saleResponseById.get(String(requestBody.saleId));
+
+    if (!saleResponse) {
+      return HttpResponse.json(
+        {
+          code: 'COMMERCE_SALE_NOT_FOUND',
+          message: '판매 정보를 찾을 수 없습니다.',
+        },
+        { status: 404 }
+      );
+    }
+
+    if (!saleResponse.orderable) {
+      return HttpResponse.json(
+        {
+          code: 'COMMERCE_SALE_NOT_ORDERABLE',
+          message: '지금은 주문할 수 있는 판매가 아닙니다.',
+        },
+        { status: 409 }
+      );
+    }
+
+    if (requestBody.contactSharingConsent !== true) {
+      return HttpResponse.json(
+        {
+          code: 'COMMERCE_CONSENT_REQUIRED',
+          message: '개인정보 제공 동의가 필요합니다.',
+        },
+        { status: 400 }
+      );
+    }
+
+    const noticeError = findRequiredNoticeError(
+      saleResponse,
+      requestBody.noticeAcceptances
+    );
+
+    if (noticeError) {
+      return HttpResponse.json(
+        {
+          code: noticeError.code,
+          message: noticeError.message,
+        },
+        { status: noticeError.status }
+      );
+    }
+
+    return HttpResponse.json({
+      result: {
+        orderNumber: 'SR-20260813-000001',
+        idempotentReplay: false,
+      },
     });
   }),
 ];

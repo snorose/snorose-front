@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import type {
   CreateOrderRequest,
   QuantityMap,
@@ -5,8 +7,64 @@ import type {
   SelectedOrderItem,
 } from '@/feature/commerce/types';
 
-export function isSaleOrderable(sale: SaleResponse) {
-  return sale.orderable === true;
+export function getSelectedOrderItems(
+  products: SaleResponse['products'],
+  quantityMap: QuantityMap
+): SelectedOrderItem[] {
+  return products
+    .flatMap((product) =>
+      product.variants.map((variant) => {
+        const quantity =
+          quantityMap[product.productId]?.[variant.variantId] ?? 0;
+
+        return {
+          product,
+          variant,
+          quantity,
+        };
+      })
+    )
+    .filter(({ quantity }) => quantity > 0);
+}
+
+export const getProductQuantity = (
+  productId: number,
+  quantityMap: QuantityMap
+) => {
+  return Object.values(quantityMap[productId]).reduce(
+    (total, quantity) => total + quantity,
+    0
+  );
+};
+
+export const isValidMaxPerBuyer = (
+  product: SaleResponse['products'][number],
+  quantityMap: QuantityMap
+) => {
+  return (
+    getProductQuantity(product.productId, quantityMap) + 1 <=
+    product.remainingForBuyer
+  );
+};
+
+export const isValidQuantityPolicy = (
+  variant: SaleResponse['products'][number]['variants'][number],
+  nextQuantity: number
+) => {
+  return nextQuantity <= variant.availableQuantity;
+};
+
+export function getCreateOrderRequestSignature(
+  request: Pick<
+    CreateOrderRequest,
+    | 'saleId'
+    | 'buyerContact'
+    | 'contactSharingConsent'
+    | 'noticeAcceptances'
+    | 'items'
+  >
+) {
+  return JSON.stringify(request);
 }
 
 export function getSaleUnavailableTitle(sale: SaleResponse) {
@@ -25,77 +83,16 @@ export function getSaleUnavailableMessage(sale: SaleResponse) {
   return '현재 이 판매는 새 주문을 받을 수 없어요.';
 }
 
-export function isLimitedStockProduct(
-  product: SaleResponse['products'][number]
-) {
-  return product.inventoryPolicy === 'LIMITED_STOCK';
-}
-
-export function isVariantSoldOut(
-  product: SaleResponse['products'][number],
-  variant: SaleResponse['products'][number]['variants'][number]
-) {
-  if (variant.available === false) {
-    return true;
+export function getCommerceErrorCode(error: unknown) {
+  if (!axios.isAxiosError(error)) {
+    return undefined;
   }
 
-  return isLimitedStockProduct(product) && variant.availableQuantity === 0;
-}
+  const code = error.response?.data?.code;
 
-export function getTotalPaymentAmount(
-  sale: SaleResponse,
-  quantityMap: QuantityMap
-) {
-  return sale.products.reduce(
-    (saleTotal, product) =>
-      saleTotal +
-      product.variants.reduce((productTotal, variant) => {
-        const quantity =
-          quantityMap[product.productId]?.[variant.variantId] ?? 0;
+  if (typeof code !== 'string' && typeof code !== 'number') {
+    return undefined;
+  }
 
-        return productTotal + variant.unitPrice * quantity;
-      }, 0),
-    0
-  );
-}
-
-export function hasSelectedOrderItem(quantityMap: QuantityMap) {
-  return Object.values(quantityMap).some((productQuantities) =>
-    Object.values(productQuantities ?? {}).some((quantity) => quantity > 0)
-  );
-}
-
-export function getSelectedOrderItems(
-  sale: SaleResponse,
-  quantityMap: QuantityMap
-): SelectedOrderItem[] {
-  return sale.products
-    .flatMap((product) =>
-      product.variants.map((variant) => {
-        const quantity =
-          quantityMap[product.productId]?.[variant.variantId] ?? 0;
-
-        return {
-          product,
-          variant,
-          quantity,
-        };
-      })
-    )
-    .filter(({ quantity }) => quantity > 0);
-}
-
-export function getCreateOrderItems(
-  selectedOrderItems: SelectedOrderItem[]
-): CreateOrderRequest['items'] {
-  return selectedOrderItems.map(({ variant, quantity }) => ({
-    variantId: variant.variantId,
-    quantity,
-  }));
-}
-
-export function getCreateOrderRequestSignature(
-  request: Pick<CreateOrderRequest, 'saleId' | 'buyerContact' | 'items'>
-) {
-  return JSON.stringify(request);
+  return Number(code);
 }

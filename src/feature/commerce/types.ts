@@ -37,10 +37,27 @@ export type CreateOrderRequest = {
   clientRequestId: string;
   buyerContact: string;
   contactSharingConsent: boolean;
+  noticeAcceptances: NoticeAcceptance[];
   items: Array<{
+    productId: number;
     variantId: number;
     quantity: number;
   }>;
+};
+
+export type NoticeAcceptance = {
+  noticeId: number;
+  version: number;
+  accepted: boolean;
+};
+
+export type NoticeAcceptanceMap = Partial<Record<number, boolean>>;
+
+export type CreateOrderResponse = {
+  result?: {
+    orderNumber?: string;
+    idempotentReplay?: boolean;
+  };
 };
 
 export type QuantityMap = Partial<

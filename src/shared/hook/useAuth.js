@@ -65,7 +65,7 @@ const useAuth = () => {
   };
 
   return {
-    userInfo,
+    userInfo: {},
     status,
     withdraw,
     invalidUserInfoQuery,

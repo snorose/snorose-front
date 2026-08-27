@@ -5,14 +5,14 @@ import styles from '@/page/commerce/SaleDetailPage.module.css';
 
 type PaymentSectionProps = {
   totalPaymentAmount: number;
-  isPurchaseButtonDisabled: boolean;
-  onPurchaseClick: () => void;
+  isOrderButtonDisabled: boolean;
+  onClick: () => void;
 };
 
 export default function PaymentSection({
   totalPaymentAmount,
-  isPurchaseButtonDisabled,
-  onPurchaseClick,
+  isOrderButtonDisabled,
+  onClick,
 }: PaymentSectionProps) {
   return (
     <section className={styles.paymentSection}>
@@ -31,11 +31,20 @@ export default function PaymentSection({
 
       <PrimaryButton
         className={styles.purchaseButton}
-        disabled={isPurchaseButtonDisabled}
-        onClick={onPurchaseClick}
+        disabled={isOrderButtonDisabled}
+        onClick={onClick}
       >
         구매 결정하기
       </PrimaryButton>
     </section>
   );
 }
+
+// const handlePurchaseClick = () => {
+//   if (isSaleClosed) {
+//     setIsSaleClosedModalOpen(true);
+//     return;
+//   }
+
+//   setIsOrderConfirmModalOpen(true);
+// };
