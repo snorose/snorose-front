@@ -4,16 +4,20 @@ import { useParams } from 'react-router-dom';
 
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
-import { BackAppBar, FetchLoading } from '@/shared/component';
+import { BackAppBar, FetchLoading, PrimaryButton } from '@/shared/component';
+import { useToast } from '@/shared/hook';
 import { DateTime, formatNumber } from '@/shared/lib';
 
 import { PostListErrorFallback } from '@/feature/board/component';
+import CancelOrderConfirmModal from '@/feature/commerce/components/CancelOrderConfirmModal';
 import {
   FULFILLMENT_STATUS_LABEL,
   ORDER_STATUS_LABEL,
   PAYMENT_STATUS_LABEL,
 } from '@/feature/commerce/constants';
+import useCancelConfirmModal from '@/feature/commerce/hooks/useCancelConfirmModal';
 import useOrder from '@/feature/commerce/hooks/useOrder';
+import useOrderCancel from '@/feature/commerce/hooks/useOrderCancel';
 
 import styles from './OrderDetailPage.module.css';
 
@@ -39,7 +43,16 @@ export default function OrderDetailPage() {
 function OrderDetailView() {
   const { orderNumber } = useParams();
 
-  const { data: order } = useOrder(orderNumber);
+  const { data: order, refetch } = useOrder(orderNumber);
+  const { mutate: cancelOrder, isPending } = useOrderCancel();
+
+  const { toast } = useToast();
+  const {
+    isCancelConfirmModalOpen,
+    openCancelConfirmModal,
+    closeCancelConfirmModal,
+  } = useCancelConfirmModal();
+
   const { orderStatus, paymentStatus, fulfillmentStatus } = order;
 
   const showBankInfo =
@@ -51,6 +64,20 @@ function OrderDetailView() {
       paymentStatus === 'PAID' &&
       fulfillmentStatus === 'PENDING') ||
     orderStatus === 'COMPLETED';
+
+  const handleCancelOrder = () => {
+    if (!order.cancellable || isPending) {
+      return;
+    }
+
+    cancelOrder(orderNumber, {
+      onSuccess: () => {
+        toast({ message: '주문이 취소되었어요', variant: 'success' });
+        refetch();
+      },
+      onError: () => {},
+    });
+  };
 
   return (
     <div>
@@ -102,17 +129,17 @@ function OrderDetailView() {
           <div className={styles.infoItem}>
             <dt>결제</dt>
             <dd>
-              {order.orderStatus === 'CANCELED'
-                ? ORDER_STATUS_LABEL[order.orderStatus]
+              {orderStatus === 'CANCELED'
+                ? ORDER_STATUS_LABEL[orderStatus]
                 : PAYMENT_STATUS_LABEL[order.paymentStatus]}
             </dd>
           </div>
           <div className={styles.infoItem}>
             <dt>수령</dt>
             <dd>
-              {order.orderStatus === 'CANCELED'
-                ? ORDER_STATUS_LABEL[order.orderStatus]
-                : FULFILLMENT_STATUS_LABEL[order.fulfillmentStatus]}
+              {orderStatus === 'CANCELED'
+                ? ORDER_STATUS_LABEL[orderStatus]
+                : FULFILLMENT_STATUS_LABEL[fulfillmentStatus]}
             </dd>
           </div>
         </dl>
@@ -132,6 +159,30 @@ function OrderDetailView() {
             </div>
           </dl>
         </section>
+      )}
+
+      {order.cancellable && (
+        <div className={styles.butttonWrapper}>
+          <PrimaryButton
+            className={styles.button}
+            disabled={isPending}
+            onClick={() => {
+              openCancelConfirmModal();
+            }}
+          >
+            주문 취소
+          </PrimaryButton>
+        </div>
+      )}
+
+      {isCancelConfirmModalOpen && (
+        <CancelOrderConfirmModal
+          onClose={closeCancelConfirmModal}
+          onConfirm={() => {
+            closeCancelConfirmModal();
+            handleCancelOrder();
+          }}
+        />
       )}
     </div>
   );

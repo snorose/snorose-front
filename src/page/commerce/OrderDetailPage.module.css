@@ -76,6 +76,11 @@
   }
 }
 
+/* button */
+.butttonWrapper {
+  margin: 0 var(--default-margin);
+}
+
 /* 반응형 */
 @media (max-width: 480px) {
   .info {
