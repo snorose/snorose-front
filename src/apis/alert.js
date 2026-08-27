@@ -17,7 +17,13 @@ export async function fetchNotificationList(category) {
     params: { filter: category },
   });
 
-  return response.data.result;
+  const data = response?.data ?? {};
+
+  if (!data?.isSuccess) {
+    throw new Error(data?.message || '알림 목록 조회 API 연결 실패');
+  }
+
+  return data.result;
 }
 
 export async function readNotifications(alertIds) {

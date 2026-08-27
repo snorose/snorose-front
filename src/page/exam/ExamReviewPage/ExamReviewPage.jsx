@@ -25,7 +25,6 @@ import {
 import { EXAM_TYPES, LECTURE_TYPES, SEMESTERS } from '@/feature/exam/constant';
 import { useDeleteExamReviewHandler } from '@/feature/exam/hook/useDeleteExamReviewHandler';
 import { convertToObject } from '@/feature/exam/lib';
-import { useReportHandler } from '@/feature/report/hook/useReport';
 import { useScrap } from '@/feature/scrap/hook';
 
 import { NotFoundPage } from '@/page/etc';
@@ -43,6 +42,7 @@ const EXAM_TYPE = convertToObject(EXAM_TYPES);
 export default function ExamReviewPage() {
   const { postId } = useParams();
   const navigate = useNavigate();
+
   const { modal, setModal } = useContext(ModalContext);
 
   // 페이지 언마운트 시 모달 상태 초기화
@@ -54,7 +54,15 @@ export default function ExamReviewPage() {
     staleTime: 1000 * 60 * 5,
   });
 
-  const { handleReport } = useReportHandler(modal, setModal, data);
+  const handleReport = (targetType) => {
+    if (targetType === 'exam') {
+      navigate(`/report/write/exam?targetId=${data.postId}`);
+    }
+
+    if (targetType === 'user') {
+      navigate(`/report/write/user?targetId=${data.encryptedUserId}`);
+    }
+  };
   const { handleDelete } = useDeleteExamReviewHandler();
 
   const handleEdit = () => {
@@ -178,7 +186,7 @@ export default function ExamReviewPage() {
         />
       </div>
 
-      <CommentListSuspense commentCount={commentCount} />
+      <CommentListSuspense />
       <CommentInput />
 
       {/* 시험후기 관련 모달 렌더링 */}

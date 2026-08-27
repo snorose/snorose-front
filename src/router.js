@@ -1,19 +1,26 @@
-import { attendanceLoader } from '@/shared/loader';
-import { NavbarLayout } from '@/shared/ui';
 import { ROLE } from '@/shared/constant';
+import { attendanceLoader } from '@/shared/loader';
+import { AppLayout, NavbarLayout } from '@/shared/ui';
 
-import App from '@/App';
+import { CheckExamPeriodRoute } from '@/feature/exam/lib';
 import {
-  LoginPage,
+  inquiryEditLoader,
+  reportEditLoader,
+  validateReportWriteLoader,
+} from '@/feature/support/loader';
+import SupportUpdateErrorPage from '@/feature/support/SupportUpdateErrorPage';
+
+import {
   FindIdPage,
   FindPwPage,
   FoundIdPage,
   FoundPwPage,
+  LoginPage,
   NotFoundIdPage,
   NotFoundPwPage,
+  SignUpFailurePage,
   SignUpPage,
   SignUpSuccessPage,
-  SignUpFailurePage,
   SnoroseVerifyPage,
 } from '@/page/account';
 import { AlertPage, AlertSettingPage, MarketingTermsPage } from '@/page/alert';
@@ -25,12 +32,12 @@ import {
   PostListPage,
   WritePostPage,
 } from '@/page/board';
-import { NotFoundPage } from '@/page/etc';
+import { ErrorPage, NotFoundPage } from '@/page/etc';
 import {
-  WriteEventPage,
   EditEventPage,
   EventListPage,
   EventPage,
+  WriteEventPage,
 } from '@/page/event';
 import {
   EditExamReviewPage,
@@ -39,6 +46,7 @@ import {
   WriteExamReviewPage,
 } from '@/page/exam';
 import { AttendancePage, MainPage } from '@/page/home';
+import { MaintenancePage } from '@/page/maintenance';
 import { SearchPage } from '@/page/search';
 import {
   AboutPage,
@@ -46,11 +54,13 @@ import {
   ServicePolicyPage,
 } from '@/page/snorose';
 import {
-  WriteInquiryPage,
   EditInquiryPage,
-  WriteReportPage,
   EditReportPage,
   FAQPage,
+  InquiryDetailPage,
+  ReportDetailPage,
+  WriteInquiryPage,
+  WriteReportPage,
 } from '@/page/support';
 import {
   ActivityPage,
@@ -61,10 +71,8 @@ import {
   PointLogListPage,
 } from '@/page/user';
 
+import App from '@/App';
 import ProtectedRoute from '@/ProtectedRoute';
-import { MaintenancePage } from '@/page/maintenance';
-
-import { CheckExamPeriodRoute } from '@/feature/exam/lib';
 
 const getRolesForReadBoard = (boardPath) => {
   switch (boardPath) {
@@ -201,6 +209,11 @@ export const routeList = [
   {
     path: '/',
     element: <App />,
+    errorElement: (
+      <AppLayout>
+        <ErrorPage />
+      </AppLayout>
+    ),
     children: [
       {
         index: true,
@@ -466,55 +479,63 @@ export const routeList = [
             ),
           },
           {
-            path: ':inquiryId',
+            path: ':postId',
             element: (
               <ProtectedRoute>
-                <PostDetailPage />
+                <InquiryDetailPage />
               </ProtectedRoute>
             ),
           },
           {
-            path: ':inquiryId/edit',
+            path: ':postId/edit',
+            errorElement: (
+              <AppLayout>
+                <SupportUpdateErrorPage />
+              </AppLayout>
+            ),
             element: (
               <ProtectedRoute>
                 <EditInquiryPage />
               </ProtectedRoute>
             ),
+            loader: inquiryEditLoader,
           },
         ],
       },
       {
         path: 'report',
         children: [
+          { index: true, element: <NotFoundPage /> },
           {
-            path: 'write',
-            children: [
-              { index: true, element: <NotFoundPage /> },
-              {
-                path: ':reportType',
-                element: (
-                  <ProtectedRoute>
-                    <WriteReportPage />
-                  </ProtectedRoute>
-                ),
-              },
-            ],
-          },
-          {
-            path: ':reportId',
+            path: 'write/:reportType',
             element: (
               <ProtectedRoute>
-                <PostDetailPage />
+                <WriteReportPage />
+              </ProtectedRoute>
+            ),
+            loader: validateReportWriteLoader,
+          },
+          {
+            path: ':postId',
+            element: (
+              <ProtectedRoute>
+                <ReportDetailPage />
               </ProtectedRoute>
             ),
           },
           {
-            path: ':reportId/edit',
+            path: ':postId/edit',
+            errorElement: (
+              <AppLayout>
+                <SupportUpdateErrorPage />
+              </AppLayout>
+            ),
             element: (
               <ProtectedRoute>
                 <EditReportPage />
               </ProtectedRoute>
             ),
+            loader: reportEditLoader,
           },
         ],
       },
@@ -581,6 +602,14 @@ export const routeList = [
       },
       {
         path: '/my-page/download-exam-review',
+        element: (
+          <ProtectedRoute>
+            <ActivityPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/my-page/inquiry-report',
         element: (
           <ProtectedRoute>
             <ActivityPage />

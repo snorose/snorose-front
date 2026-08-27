@@ -1,15 +1,11 @@
 .comments {
   width: 100%;
   font: var(--text-body-1-reg);
-  padding: 0 var(--default-margin) 10.4rem;
+  padding: 2rem var(--default-margin) 10.4rem;
   display: flex;
   flex-direction: column;
   row-gap: 0.8rem;
   min-height: 30rem;
-}
-
-.commentsTitle {
-  padding: 2rem 0 1.2rem 0;
 }
 
 .failComment {

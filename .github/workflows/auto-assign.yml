@@ -4,8 +4,7 @@ on:
   issues:
     types: [opened, reopened]
   pull_request:
-    types: [opened, reopened]
-
+    types: [opened, reopened, synchronize, edited, ready_for_review]
 permissions:
   issues: write
   pull-requests: write
@@ -19,7 +18,7 @@ jobs:
         id: app-token
         continue-on-error: true
         with:
-          app-id: ${{ secrets.BOT_APP_ID }}
+          client-id: ${{ secrets.BOT_CLIENT_ID }}
           private-key: ${{ secrets.BOT_PRIVATE_KEY }}
 
       - name: Auto Assign and Set Issue Type
@@ -94,9 +93,11 @@ jobs:
               }
             }
 
-            // 3. PR 라벨 복사 (PR 제목에 #이슈번호가 있는 경우)
+            // 3. PR 라벨 복사 (PR 제목/브랜치명/본문에 #이슈번호가 있는 경우)
             if (context.payload.pull_request) {
-              const issueMatch = title.match(/#(\d+)/);
+              const branchName = context.payload.pull_request.head.ref || '';
+              const body = context.payload.pull_request.body || '';
+              const issueMatch = `${title} ${branchName} ${body}`.match(/#(\d+)/);
               if (issueMatch) {
                 const linkedIssueNumber = parseInt(issueMatch[1]);
                 try {
