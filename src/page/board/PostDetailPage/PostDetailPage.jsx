@@ -1,15 +1,16 @@
-import { Suspense } from 'react';
+import { Suspense, useContext } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { BackAppBar, FetchLoading } from '@/shared/component';
-import { BOARD_CATEGORY_MAP,QUERY_KEY, ROLE } from '@/shared/constant';
+import { BOARD_CATEGORY_MAP, QUERY_KEY, ROLE } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
 import { getBoard } from '@/shared/lib';
 
 import { BellIcon } from '@/feature/alert/component';
-import { PostActionBar } from '@/feature/board/component';
+import { MeatBallIcon, PostActionBar } from '@/feature/board/component';
 import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { PostDetailView } from '@/feature/board/ui';
 import { CommentInputContainer } from '@/feature/comment/component';
@@ -36,6 +37,7 @@ export default function PostDetailPage() {
 function PostDetailLoader() {
   const { postId } = useParams();
   const { pathname } = useLocation();
+  const { setModal } = useContext(ModalContext);
 
   const currentBoard = getBoard(pathname.split('/')[2]);
   // const { id: boardId } = useBoard();
@@ -48,9 +50,18 @@ function PostDetailLoader() {
   });
 
   const { handleDelete } = useDeletePostHandler(
-    currentBoard.id,
-    currentBoard.textId
+    currentBoard?.id,
+    currentBoard?.textId
   );
+
+  const onMenuOpen = () => {
+    const id = data.isWriter ? 'my-post-more-options' : 'post-more-options';
+
+    setModal({
+      id,
+      type: null,
+    });
+  };
 
   return (
     <PostDetailView
@@ -68,12 +79,19 @@ function PostDetailLoader() {
         </PostActionBar>
       }
       CommentInputContainer={CommentInputContainer}
-      BellIcon={
-        <BellIcon
-          boardId={currentBoard.id}
-          postId={postId}
-          isActive={data.isCommentAlertConsent}
-        />
+      Actions={
+        <>
+          {!data.isNotice && data.isWriter && (
+            <BellIcon
+              boardId={currentBoard.id}
+              postId={postId}
+              isActive={data.isCommentAlertConsent}
+            />
+          )}
+          {(!data.isNotice || data.isWriter) && (
+            <MeatBallIcon onClick={onMenuOpen} />
+          )}
+        </>
       }
     />
   );
