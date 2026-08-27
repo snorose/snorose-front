@@ -64,7 +64,16 @@
 
 /* pick-up */
 .pickUpInfo {
-  background-color: var(--grey-1-1);
+  border: 0.1rem solid #c8def8;
+  background-color: #edf5ff;
+
+  & .infoTitle {
+    color: #173f78;
+  }
+
+  & .infoItem dd {
+    color: #173f78;
+  }
 }
 
 /* 반응형 */
