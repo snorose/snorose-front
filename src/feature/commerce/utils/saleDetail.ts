@@ -1,5 +1,6 @@
 import type {
   CreateOrderRequest,
+  NoticeAcceptanceMap,
   QuantityMap,
   SaleResponse,
   SelectedOrderItem,
@@ -25,12 +26,6 @@ export function getTotalPaymentAmount(
         return productTotal + variant.unitPrice * quantity;
       }, 0),
     0
-  );
-}
-
-export function hasSelectedOrderItem(quantityMap: QuantityMap) {
-  return Object.values(quantityMap).some((productQuantities) =>
-    Object.values(productQuantities ?? {}).some((quantity) => quantity > 0)
   );
 }
 
@@ -63,8 +58,52 @@ export function getCreateOrderItems(
   }));
 }
 
+export function getNoticeAcceptances(
+  sale: SaleResponse,
+  noticeAcceptanceMap: NoticeAcceptanceMap
+): CreateOrderRequest['noticeAcceptances'] {
+  return sale.notices.map((notice) => ({
+    noticeId: notice.noticeId,
+    version: notice.version,
+    accepted: Boolean(noticeAcceptanceMap[notice.noticeId]),
+  }));
+}
+
+export function areRequiredNoticesAccepted(
+  sale: SaleResponse,
+  noticeAcceptanceMap: NoticeAcceptanceMap
+) {
+  return sale.notices.every(
+    (notice) =>
+      !notice.required || noticeAcceptanceMap[notice.noticeId] === true
+  );
+}
+
+export function isContactSharingConsentAccepted(
+  sale: SaleResponse,
+  noticeAcceptanceMap: NoticeAcceptanceMap
+) {
+  const consentNotices = sale.notices.filter(
+    (notice) => notice.type === 'SYSTEM_PRIVACY_CONSENT'
+  );
+
+  return (
+    consentNotices.length > 0 &&
+    consentNotices.every(
+      (notice) => noticeAcceptanceMap[notice.noticeId] === true
+    )
+  );
+}
+
 export function getCreateOrderRequestSignature(
-  request: Pick<CreateOrderRequest, 'saleId' | 'buyerContact' | 'items'>
+  request: Pick<
+    CreateOrderRequest,
+    | 'saleId'
+    | 'buyerContact'
+    | 'contactSharingConsent'
+    | 'noticeAcceptances'
+    | 'items'
+  >
 ) {
   return JSON.stringify(request);
 }

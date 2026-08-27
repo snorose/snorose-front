@@ -1,5 +1,6 @@
 import type {
   CreateOrderRequest,
+  CreateOrderResponse,
   SaleResponse,
 } from '@/feature/commerce/types';
 
@@ -15,13 +16,15 @@ export async function createOrder({
   clientRequestId,
   buyerContact,
   contactSharingConsent,
+  noticeAcceptances,
   items,
-}: CreateOrderRequest) {
+}: CreateOrderRequest): Promise<CreateOrderResponse> {
   const response = await authAxios.post('/v1/commerce/orders', {
     saleId,
     clientRequestId,
     buyerContact,
     contactSharingConsent,
+    noticeAcceptances,
     items,
   });
 
