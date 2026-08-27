@@ -42,3 +42,11 @@ export async function readOrder(orderNumber: string): Promise<OrderResponse> {
   const response = await authAxios.get(`/v1/commerce/orders/${orderNumber}`);
   return response.data.result;
 }
+
+export async function cancelOrder(orderNumber: string) {
+  const resopnse = await authAxios.post(
+    `/v1/commerce/orders/${orderNumber}/cancel`
+  );
+
+  return resopnse.data;
+}

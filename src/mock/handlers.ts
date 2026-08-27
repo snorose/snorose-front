@@ -624,6 +624,28 @@ const mockOrderDetailResponseByOrderNumber = new Map(
   mockOrderDetailResponses.map((order) => [order.orderNumber, order])
 );
 
+function cancelMockOrder(orderNumber: string, orderResponse: OrderResponse) {
+  const canceledOrderResponse: OrderResponse = {
+    ...orderResponse,
+    orderStatus: 'CANCELED',
+    cancellable: false,
+    reviewNotice:
+      '취소된 주문입니다. 재주문이 필요하면 판매 페이지를 확인해 주세요.',
+  };
+
+  mockOrderDetailResponseByOrderNumber.set(orderNumber, canceledOrderResponse);
+
+  const orderListItem = mockOrderListResponse.data.find(
+    (order) => order.orderNumber === orderNumber
+  );
+
+  if (orderListItem) {
+    orderListItem.orderStatus = 'CANCELED';
+  }
+
+  return canceledOrderResponse;
+}
+
 export const handlers = [
   http.get('*/v1/commerce/sales/:saleId', async ({ params }) => {
     await delay(250);
@@ -676,6 +698,48 @@ export const handlers = [
 
     return HttpResponse.json({
       result: orderResponse,
+    });
+  }),
+  http.post('*/v1/commerce/orders/:orderNumber/cancel', async ({ params }) => {
+    await delay(250);
+
+    const orderNumber = Array.isArray(params.orderNumber)
+      ? params.orderNumber[0]
+      : params.orderNumber;
+    const orderResponse = mockOrderDetailResponseByOrderNumber.get(
+      String(orderNumber)
+    );
+
+    if (!orderResponse) {
+      return HttpResponse.json(
+        {
+          code: 'COMMERCE_ORDER_NOT_FOUND',
+          message: '주문 정보를 찾을 수 없습니다.',
+        },
+        { status: 404 }
+      );
+    }
+
+    if (!orderResponse.cancellable) {
+      return HttpResponse.json(
+        {
+          code: 'COMMERCE_ORDER_NOT_CANCELABLE',
+          message: '취소할 수 없는 주문입니다.',
+        },
+        { status: 409 }
+      );
+    }
+
+    const canceledOrderResponse = cancelMockOrder(
+      String(orderNumber),
+      orderResponse
+    );
+
+    return HttpResponse.json({
+      result: {
+        orderNumber: canceledOrderResponse.orderNumber,
+        orderStatus: canceledOrderResponse.orderStatus,
+      },
     });
   }),
   http.post('*/v1/commerce/orders', async ({ request }) => {
