@@ -19,6 +19,7 @@ export type SaleResponse = {
       variantId: number;
       optionLabel: string;
       unitPrice: number;
+      available: boolean;
       availableQuantity: number | null;
     }>;
   }>;

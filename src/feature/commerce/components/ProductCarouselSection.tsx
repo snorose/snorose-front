@@ -18,9 +18,11 @@ export default function ProductCarouselSection({
   const [activeIndex, setActiveIndex] = useState(0);
 
   const carouselItems = products.flatMap((product) => {
-    const images = product.images.length > 0 ? product.images : [];
+    const images =
+      product.images.length > 0 ? product.images : [{ imageId: 0, url: '' }];
 
-    return images.map((image) => ({
+    return images.map((image, imageIndex) => ({
+      id: `${product.productId}-${image.imageId}-${imageIndex}`,
       imageUrl: image.url,
       productName: product.name,
       productDescription: product.description,
@@ -37,7 +39,11 @@ export default function ProductCarouselSection({
         className={styles.productCarousel}
         items={carouselItems}
         renderItem={(item) => (
-          <ProductCard src={item.imageUrl} alt={item.productName} />
+          <ProductCard
+            key={item.id}
+            src={item.imageUrl}
+            alt={item.productName}
+          />
         )}
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         autoplay={false}

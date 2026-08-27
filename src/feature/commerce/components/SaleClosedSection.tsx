@@ -6,7 +6,17 @@ import styles from '@/page/commerce/SaleDetailPage.module.css';
 
 import { taskCompleteIllustration } from '@/assets/illustrations';
 
-export default function SaleClosedSection({ sale }: { sale: SaleResponse }) {
+type SaleClosedSectionProps = {
+  sale: SaleResponse;
+  title: string;
+  message: string;
+};
+
+export default function SaleClosedSection({
+  sale,
+  title,
+  message,
+}: SaleClosedSectionProps) {
   return (
     <section className={styles.closedSection} aria-labelledby='saleClosedTitle'>
       <img
@@ -17,12 +27,9 @@ export default function SaleClosedSection({ sale }: { sale: SaleResponse }) {
       />
 
       <h2 id='saleClosedTitle' className={styles.closedTitle}>
-        판매가 마감되었어요
+        {title}
       </h2>
-      <p className={styles.closedDescription}>
-        이 상품은 새 주문을 받을 수 없어요. 기존 주문과 수령 안내는 판매자의
-        공지를 확인해주세요.
-      </p>
+      <p className={styles.closedDescription}>{message}</p>
 
       <dl className={styles.closedInfoList}>
         <div className={styles.closedInfoItem}>

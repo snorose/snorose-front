@@ -49,6 +49,14 @@
   word-break: keep-all;
 }
 
+.description {
+  font: var(--text-body-1-reg);
+  color: var(--grey-4);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: keep-all;
+}
+
 .deadline {
   font: var(--text-body-2-reg);
   color: var(--grey-4);

@@ -5,10 +5,41 @@ import type {
   SelectedOrderItem,
 } from '@/feature/commerce/types';
 
-export function isClosedSale(closesAt: string) {
-  const closesAtTime = new Date(closesAt).getTime();
+export function isSaleOrderable(sale: SaleResponse) {
+  return sale.orderable === true;
+}
 
-  return Number.isFinite(closesAtTime) && closesAtTime <= Date.now();
+export function getSaleUnavailableTitle(sale: SaleResponse) {
+  if (sale.status === 'CLOSE') {
+    return '판매가 마감되었어요';
+  }
+
+  return '지금은 주문할 수 없어요';
+}
+
+export function getSaleUnavailableMessage(sale: SaleResponse) {
+  if (sale.status === 'CLOSE') {
+    return '이 상품은 새 주문을 받을 수 없어요. 기존 주문과 수령 안내는 판매자의 공지를 확인해주세요.';
+  }
+
+  return '현재 이 판매는 새 주문을 받을 수 없어요.';
+}
+
+export function isLimitedStockProduct(
+  product: SaleResponse['products'][number]
+) {
+  return product.inventoryPolicy === 'LIMITED_STOCK';
+}
+
+export function isVariantSoldOut(
+  product: SaleResponse['products'][number],
+  variant: SaleResponse['products'][number]['variants'][number]
+) {
+  if (variant.available === false) {
+    return true;
+  }
+
+  return isLimitedStockProduct(product) && variant.availableQuantity === 0;
 }
 
 export function getTotalPaymentAmount(

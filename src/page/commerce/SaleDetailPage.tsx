@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import axios from 'axios';
+
 import { BackAppBar } from '@/shared/component';
 import { DateTime } from '@/shared/lib';
 
@@ -8,27 +10,27 @@ import OrdererInfoSection from '@/feature/commerce/components/OrdererInfoSection
 import PaymentSection from '@/feature/commerce/components/PaymentSection';
 import ProductCarouselSection from '@/feature/commerce/components/ProductCarouselSection';
 import ProductOptionSection from '@/feature/commerce/components/ProductOptionSection';
-import SaleClosedModal from '@/feature/commerce/components/SaleClosedModal';
 import SaleClosedSection from '@/feature/commerce/components/SaleClosedSection';
 import { useSale } from '@/feature/commerce/hooks';
 import type { QuantityMap } from '@/feature/commerce/types';
 import {
+  getSaleUnavailableMessage,
+  getSaleUnavailableTitle,
   getTotalPaymentAmount,
   hasSelectedOrderItem,
-  isClosedSale,
+  isSaleOrderable,
 } from '@/feature/commerce/utils/saleDetail';
 
 import styles from './SaleDetailPage.module.css';
 
 export default function SaleDetailPage() {
   const { saleId } = useParams();
-  const { data: sale, isError, isLoading } = useSale(saleId);
+  const { data: sale, error, isError, isLoading } = useSale(saleId);
 
   const [quantityMap, setQuantityMap] = useState<QuantityMap>({});
   const [isOrdererInfoConsentChecked, setIsOrdererInfoConsentChecked] =
     useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [isSaleClosedModalOpen, setIsSaleClosedModalOpen] = useState(false);
 
   if (!saleId) {
     return <SaleDetailFeedback message='판매 정보를 찾을 수 없어요.' />;
@@ -39,24 +41,15 @@ export default function SaleDetailPage() {
   }
 
   if (isError || !sale) {
-    return <SaleDetailFeedback message='판매 정보를 불러오지 못했어요.' />;
+    return <SaleDetailFeedback message={getSaleFetchErrorMessage(error)} />;
   }
 
-  const isSaleClosed =
-    sale.status === 'CLOSE' || !sale.orderable || isClosedSale(sale.closesAt);
-
+  const isOrderable = isSaleOrderable(sale);
   const totalPaymentAmount = getTotalPaymentAmount(sale, quantityMap);
   const hasSelectedProduct = hasSelectedOrderItem(quantityMap);
   const isPhoneNumberValid = phoneNumber.length === 11;
   const isPurchaseButtonDisabled =
     !hasSelectedProduct || !isPhoneNumberValid || !isOrdererInfoConsentChecked;
-
-  const handlePurchaseClick = () => {
-    if (isClosedSale(sale.closesAt)) {
-      setIsSaleClosedModalOpen(true);
-      return;
-    }
-  };
 
   return (
     <div className={styles.container}>
@@ -65,13 +58,14 @@ export default function SaleDetailPage() {
       <section className={styles.meta}>
         <div className={styles.metaHeader}>
           <span className={styles.sellerName}>{sale.sellerName}</span>
-          {isSaleClosed && (
-            <span className={styles.closedBadge}>판매 마감</span>
+          {!isOrderable && (
+            <span className={styles.closedBadge}>주문 불가</span>
           )}
         </div>
         <h1 className={styles.title}>{sale.title}</h1>
+        <p className={styles.description}>{sale.description}</p>
         <span className={styles.deadline}>
-          {DateTime.format(sale.closesAt, 'MD_HM')} 판매 마감 ·
+          {DateTime.format(sale.closesAt, 'MD_HM')} 판매 마감
         </span>
       </section>
 
@@ -79,8 +73,12 @@ export default function SaleDetailPage() {
 
       <div className={styles.border} />
 
-      {isSaleClosed ? (
-        <SaleClosedSection sale={sale} />
+      {!isOrderable ? (
+        <SaleClosedSection
+          sale={sale}
+          title={getSaleUnavailableTitle(sale)}
+          message={getSaleUnavailableMessage(sale)}
+        />
       ) : (
         <>
           <ProductOptionSection
@@ -103,13 +101,9 @@ export default function SaleDetailPage() {
           <PaymentSection
             totalPaymentAmount={totalPaymentAmount}
             isPurchaseButtonDisabled={isPurchaseButtonDisabled}
-            onPurchaseClick={handlePurchaseClick}
+            onPurchaseClick={() => undefined}
           />
         </>
-      )}
-
-      {isSaleClosedModalOpen && (
-        <SaleClosedModal onClose={() => setIsSaleClosedModalOpen(false)} />
       )}
     </div>
   );
@@ -124,4 +118,16 @@ function SaleDetailFeedback({ message }: { message: string }) {
       </section>
     </div>
   );
+}
+
+function getSaleFetchErrorMessage(error: unknown) {
+  if (axios.isAxiosError(error)) {
+    const message = error.response?.data?.message;
+
+    if (typeof message === 'string') {
+      return message;
+    }
+  }
+
+  return '판매 정보를 불러오지 못했어요.';
 }

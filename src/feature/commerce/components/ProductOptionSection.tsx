@@ -7,6 +7,10 @@ import type {
   QuantityMap,
   SaleResponse,
 } from '@/feature/commerce/types';
+import {
+  isLimitedStockProduct,
+  isVariantSoldOut,
+} from '@/feature/commerce/utils/saleDetail';
 
 import styles from '@/page/commerce/SaleDetailPage.module.css';
 
@@ -21,23 +25,13 @@ export default function ProductOptionSection({
   quantityMap,
   setQuantityMap,
 }: ProductOptionSectionProps) {
-  const remainingQuantityByProductId = useMemo(() => {
-    const result: Partial<Record<number, number | null>> = {};
+  const selectedQuantityByProductId = useMemo(() => {
+    const result: Partial<Record<number, number>> = {};
 
     products.forEach((product) => {
-      if (product.maxPerBuyer === null) {
-        result[product.productId] = null;
-        return;
-      }
-
-      const totalQuantityByProductId = Object.values(
+      result[product.productId] = Object.values(
         quantityMap[product.productId] ?? {}
       ).reduce((sum, quantity) => sum + quantity, 0);
-
-      result[product.productId] = Math.max(
-        product.maxPerBuyer - totalQuantityByProductId,
-        0
-      );
     });
 
     return result;
@@ -50,13 +44,6 @@ export default function ProductOptionSection({
   ) => {
     setQuantityMap((prev) => {
       const currentQuantity = prev[productId]?.[variantId] ?? 0;
-      const quantityDiff = nextQuantity - currentQuantity;
-      const remainingQuantity = remainingQuantityByProductId[productId];
-
-      if (remainingQuantity !== null && remainingQuantity < quantityDiff) {
-        return prev;
-      }
-
       const product = products.find(
         (product) => product.productId === productId
       );
@@ -66,22 +53,39 @@ export default function ProductOptionSection({
 
       if (!variant) return prev;
 
+      if (isVariantSoldOut(product, variant)) {
+        return prev;
+      }
+
       const availableQuantity = variant.availableQuantity;
+      const normalizedNextQuantity = Math.max(nextQuantity, 0);
+
+      if (typeof product.remainingForBuyer === 'number') {
+        const currentProductQuantity = Object.values(
+          prev[productId] ?? {}
+        ).reduce((sum, quantity) => sum + quantity, 0);
+        const nextProductQuantity =
+          currentProductQuantity - currentQuantity + normalizedNextQuantity;
+
+        if (nextProductQuantity > product.remainingForBuyer) {
+          return prev;
+        }
+      }
 
       if (
-        availableQuantity !== null &&
-        availableQuantity !== undefined &&
-        nextQuantity > availableQuantity
+        isLimitedStockProduct(product) &&
+        typeof availableQuantity === 'number' &&
+        normalizedNextQuantity > availableQuantity
       ) {
         return prev;
       }
 
       const nextProductQuantities = { ...(prev[productId] ?? {}) };
 
-      if (nextQuantity <= 0) {
+      if (normalizedNextQuantity === 0) {
         nextProductQuantities[variantId] = 0;
       } else {
-        nextProductQuantities[variantId] = nextQuantity;
+        nextProductQuantities[variantId] = normalizedNextQuantity;
       }
 
       return {
@@ -97,7 +101,7 @@ export default function ProductOptionSection({
         product,
         variant,
         quantity: quantityMap[product.productId]?.[variant.variantId] ?? 0,
-        isSoldOut: variant.availableQuantity === 0,
+        isSoldOut: isVariantSoldOut(product, variant),
       };
     })
   );
@@ -149,8 +153,11 @@ export default function ProductOptionSection({
                   className={styles.quantityButton}
                   aria-label={`${product.name} ${variant.optionLabel} 수량 증가`}
                   disabled={
-                    remainingQuantityByProductId[product.productId] === 0 ||
-                    (variant.availableQuantity !== null &&
+                    (typeof product.remainingForBuyer === 'number' &&
+                      (selectedQuantityByProductId[product.productId] ?? 0) >=
+                        product.remainingForBuyer) ||
+                    (isLimitedStockProduct(product) &&
+                      typeof variant.availableQuantity === 'number' &&
                       quantity >= variant.availableQuantity)
                   }
                   onClick={() =>
