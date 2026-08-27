@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
-import { BackAppBar } from '@/shared/component';
+import { BackAppBar, FetchLoading } from '@/shared/component';
 import { DateTime, formatNumber } from '@/shared/lib';
 
 import { PostListErrorFallback } from '@/feature/board/component';
@@ -24,7 +24,9 @@ export default function OrderDetailPage() {
           onReset={reset}
           FallbackComponent={PostListErrorFallback}
         >
-          <Suspense>
+          <Suspense
+            fallback={<FetchLoading>주문 상세 불러오는 중...</FetchLoading>}
+          >
             <OrderDetailView />
           </Suspense>
         </ErrorBoundary>
