@@ -1,0 +1,84 @@
+/* common */
+
+.info {
+  margin: 1.6rem var(--default-margin) 2rem;
+  padding: 2.4rem 3.2rem 2.8rem;
+  border-radius: 0.8rem;
+}
+
+.infoTitle {
+  margin-bottom: 1.6rem;
+
+  font: var(--text-headline-1-bold);
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.infoItem {
+  display: flex;
+  gap: 4rem;
+  align-items: flex-start;
+
+  & dt {
+    flex-shrink: 0;
+    flex-basis: 7rem;
+    color: var(--grey-3-1);
+    font: var(--text-headline-2-reg);
+  }
+
+  & dd {
+    margin: 0;
+    font: var(--text-headline-2-med);
+    overflow-wrap: anywhere;
+  }
+}
+
+/* payment */
+.paymentInfo {
+  border: 0.1rem solid #c8def8;
+  background-color: #edf5ff;
+
+  & .infoTitle {
+    color: #173f78;
+  }
+
+  & .infoItem dd {
+    color: #173f78;
+  }
+}
+
+/* order */
+.orderInfo {
+  background-color: var(--grey-1-1);
+}
+
+.productItemList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* pick-up */
+.pickUpInfo {
+  background-color: var(--grey-1-1);
+}
+
+/* 반응형 */
+@media (max-width: 480px) {
+  .info {
+    padding: 2rem;
+  }
+
+  .infoTitle {
+    margin-bottom: 2.2rem;
+  }
+
+  .infoItem {
+    grid-template-columns: minmax(7.2rem, auto) minmax(0, 1fr);
+    column-gap: 1.6rem;
+  }
+}
