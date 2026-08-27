@@ -32,6 +32,24 @@ export type SaleResponse = {
   }>;
 };
 
+export type OrdersResponse = {
+  hasNext: boolean;
+  data: Array<{
+    orderNumber: string;
+    saleId: number;
+    sellerName: string;
+    saleTitle: string;
+    thumbnailUrl: string;
+    itemSummary: string;
+    totalAmount: number;
+    orderStatus: 'ACTIVE' | 'CANCELED' | 'COMPLETED';
+    paymentStatus: 'WAITING' | 'PAID' | 'REVIEW_REQUIRED' | 'EXPIRED';
+    fulfillmentStatus: 'PENDING' | 'PICKED_UP';
+    paymentDueAt: string;
+    createdAt: string;
+  }>;
+};
+
 export type CreateOrderRequest = {
   saleId: string;
   clientRequestId: string;

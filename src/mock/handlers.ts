@@ -443,6 +443,72 @@ function createCommerceErrorResponse({
   );
 }
 
+const mockOrderListResponse = {
+  hasNext: false,
+  data: [
+    {
+      orderNumber: 'SR-20260813-000001',
+      saleId: 1,
+      sellerName: '눈송이',
+      saleTitle: '2026 스노로즈 여름 굿즈',
+      thumbnailUrl:
+        'https://cdn.snorose.com/commerce/products/8f2c-order-thumbnail.png',
+      itemSummary: '스노로즈 레터링 티셔츠 네이비 · M 외 1건',
+      totalAmount: 24000,
+      orderStatus: 'ACTIVE',
+      paymentStatus: 'WAITING',
+      fulfillmentStatus: 'PENDING',
+      paymentDueAt: '2026-08-14T18:00:00',
+      createdAt: '2026-08-13T17:30:12',
+    },
+    {
+      orderNumber: 'SR-20260814-000002',
+      saleId: 1,
+      sellerName: '눈송이',
+      saleTitle: '2026 스노로즈 가을 굿즈',
+      thumbnailUrl:
+        'https://cdn.snorose.com/commerce/products/8f2c-order-thumbnail.png',
+      itemSummary: '스노로즈 키링 화이트 · 1개 외 1건',
+      totalAmount: 18000,
+      orderStatus: 'ACTIVE',
+      paymentStatus: 'PAID',
+      fulfillmentStatus: 'PENDING',
+      paymentDueAt: '2026-08-15T18:00:00',
+      createdAt: '2026-08-14T12:08:44',
+    },
+    {
+      orderNumber: 'SR-20260815-000003',
+      saleId: 1,
+      sellerName: '눈송이',
+      saleTitle: '스노로즈 리유저블 컵 공동구매',
+      thumbnailUrl:
+        'https://cdn.snorose.com/commerce/products/8f2c-order-thumbnail.png',
+      itemSummary: '리유저블 컵 클리어 · 2개',
+      totalAmount: 16000,
+      orderStatus: 'COMPLETED',
+      paymentStatus: 'PAID',
+      fulfillmentStatus: 'PICKED_UP',
+      paymentDueAt: '2026-08-16T18:00:00',
+      createdAt: '2026-08-15T09:42:31',
+    },
+    {
+      orderNumber: 'SR-20260816-000004',
+      saleId: 1,
+      sellerName: '눈송이',
+      saleTitle: '스노로즈 스티커팩 공동구매',
+      thumbnailUrl:
+        'https://cdn.snorose.com/commerce/products/8f2c-order-thumbnail.png',
+      itemSummary: '스티커팩 기본 · 1개',
+      totalAmount: 5000,
+      orderStatus: 'CANCELED',
+      paymentStatus: 'WAITING',
+      fulfillmentStatus: 'PENDING',
+      paymentDueAt: '2026-08-17T18:00:00',
+      createdAt: '2026-08-16T21:15:07',
+    },
+  ],
+};
+
 export const handlers = [
   http.get('*/v1/commerce/sales/:saleId', async ({ params }) => {
     await delay(250);
@@ -464,6 +530,13 @@ export const handlers = [
 
     return HttpResponse.json({
       result: getSaleResponseForMockScenario(String(saleId), saleResponse),
+    });
+  }),
+  http.get('*/v1/commerce/orders', async () => {
+    await delay(250);
+
+    return HttpResponse.json({
+      result: mockOrderListResponse,
     });
   }),
   http.post('*/v1/commerce/orders', async ({ request }) => {
