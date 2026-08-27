@@ -1,11 +1,13 @@
 import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { Link } from 'react-router-dom';
 
-import { ErrorBoundary } from '@sentry/react';
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import { BackAppBar, FetchLoading } from '@/shared/component';
 import { flatPaginationCache } from '@/shared/lib';
 
+import { PostListErrorFallback } from '@/feature/board/component';
 import OrderItem from '@/feature/commerce/components/OrderItem';
 import useOrders from '@/feature/commerce/hooks/useOrders';
 import type { OrdersResponse } from '@/feature/commerce/types';
@@ -16,11 +18,20 @@ import styles from './OrderListPage.module.css';
 
 export default function OrderListPage() {
   return (
-    <ErrorBoundary>
-      <Suspense>
-        <OrderListView />
-      </Suspense>
-    </ErrorBoundary>
+    <QueryErrorResetBoundary>
+      {({ reset }) => (
+        <ErrorBoundary
+          onReset={reset}
+          FallbackComponent={PostListErrorFallback}
+        >
+          <Suspense
+            fallback={<FetchLoading>주문 내역 불러오는 중...</FetchLoading>}
+          >
+            <OrderListView />
+          </Suspense>
+        </ErrorBoundary>
+      )}
+    </QueryErrorResetBoundary>
   );
 }
 
