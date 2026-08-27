@@ -18,3 +18,7 @@
     color: var(--blue-4);
   }
 }
+
+.sm {
+  font: var(--text-caption-1-med);
+}
