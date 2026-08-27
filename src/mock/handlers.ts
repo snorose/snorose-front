@@ -443,6 +443,27 @@ function createCommerceErrorResponse({
   );
 }
 
+const mockOrderListResponse = {
+  hasNext: false,
+  data: [
+    {
+      orderNumber: 'SR-20260813-000001',
+      saleId: 1,
+      sellerName: '눈송이',
+      saleTitle: '2026 스노로즈 여름 굿즈',
+      thumbnailUrl:
+        'https://cdn.snorose.com/commerce/products/8f2c-order-thumbnail.png',
+      itemSummary: '스노로즈 레터링 티셔츠 네이비 · M 외 1건',
+      totalAmount: 24000,
+      orderStatus: 'ACTIVE',
+      paymentStatus: 'WAITING',
+      fulfillmentStatus: 'PENDING',
+      paymentDueAt: '2026-08-14T18:00:00',
+      createdAt: '2026-08-13T17:30:12',
+    },
+  ],
+};
+
 export const handlers = [
   http.get('*/v1/commerce/sales/:saleId', async ({ params }) => {
     await delay(250);
@@ -464,6 +485,13 @@ export const handlers = [
 
     return HttpResponse.json({
       result: getSaleResponseForMockScenario(String(saleId), saleResponse),
+    });
+  }),
+  http.get('*/v1/commerce/orders', async () => {
+    await delay(250);
+
+    return HttpResponse.json({
+      result: mockOrderListResponse,
     });
   }),
   http.post('*/v1/commerce/orders', async ({ request }) => {

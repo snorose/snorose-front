@@ -32,6 +32,7 @@ import {
   PostListPage,
   WritePostPage,
 } from '@/page/board';
+import OrderListPage from '@/page/commerce/OrderListPage';
 import SaleDetailPage from '@/page/commerce/SaleDetailPage';
 import { ErrorPage, NotFoundPage } from '@/page/etc';
 import {
@@ -658,6 +659,14 @@ export const routeList = [
         element: (
           <ProtectedRoute>
             <SaleDetailPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/commerce/orders',
+        element: (
+          <ProtectedRoute>
+            <OrderListPage />
           </ProtectedRoute>
         ),
       },

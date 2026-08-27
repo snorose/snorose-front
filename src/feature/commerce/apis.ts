@@ -1,6 +1,7 @@
 import type {
   CreateOrderRequest,
   CreateOrderResponse,
+  OrdersResponse,
   SaleResponse,
 } from '@/feature/commerce/types';
 
@@ -29,4 +30,9 @@ export async function createOrder({
   });
 
   return response.data;
+}
+
+export async function readOrders(page: number = 0): Promise<OrdersResponse> {
+  const response = await authAxios.get(`/v1/commerce/orders?page=${page}`);
+  return response.data.result;
 }

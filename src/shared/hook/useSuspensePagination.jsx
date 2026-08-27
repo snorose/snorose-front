@@ -1,15 +1,16 @@
-import { useEffect, useCallback } from 'react';
-import {
-  useSuspenseInfiniteQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useCallback, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+
+import {
+  useQueryClient,
+  useSuspenseInfiniteQuery,
+} from '@tanstack/react-query';
 
 export default function useSuspensePagination({
   queryKey,
   queryFn,
   staleTime = 0,
-  enabled,
+  enabled = undefined,
 }) {
   const queryClient = useQueryClient();
 
