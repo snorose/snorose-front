@@ -24,7 +24,6 @@ import { GuideModal } from '@/feature/event/component';
 import { EVENT_GUIDE_MODAL_OPTIONS } from '@/feature/event/constant';
 import { isUrlValid } from '@/feature/event/lib';
 import { useLike } from '@/feature/like/hook';
-import { useReportHandler } from '@/feature/report/hook/useReport';
 import { useScrap } from '@/feature/scrap/hook';
 
 import { NotFoundPage } from '@/page/etc';
@@ -57,7 +56,6 @@ export default function EventPage() {
   });
 
   const { handleDelete } = useDeletePostHandler(currentBoard?.id);
-  const { handleReport } = useReportHandler(modal, setModal, data);
 
   const handleEdit = () => {
     setModal({ id: null, type: null });
@@ -324,7 +322,6 @@ export default function EventPage() {
       <PostModalRenderer
         modal={modal}
         handleEdit={handleEdit}
-        handleReport={handleReport}
         handleDelete={handleDelete}
         handleShare={handleShare}
       />

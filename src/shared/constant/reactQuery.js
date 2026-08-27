@@ -16,6 +16,7 @@ export const QUERY_KEY = Object.freeze({
   myPosts: 'myPosts',
   myCommentedPosts: 'myCommentedPosts',
   myDownloadedExamReviews: 'myDownloadedExamReviews',
+  myInquiriesAndReports: 'myInquiriesAndReports',
   myScrapedPosts: 'myScrapedPosts',
   myScrapedExamReviews: 'myScrapedExamReviews',
   best3: 'best3',

@@ -1,8 +1,14 @@
 import { ROLE } from '@/shared/constant';
 import { attendanceLoader } from '@/shared/loader';
-import { NavbarLayout } from '@/shared/ui';
+import { AppLayout, NavbarLayout } from '@/shared/ui';
 
 import { CheckExamPeriodRoute } from '@/feature/exam/lib';
+import {
+  inquiryEditLoader,
+  reportEditLoader,
+  validateReportWriteLoader,
+} from '@/feature/support/loader';
+import SupportUpdateErrorPage from '@/feature/support/SupportUpdateErrorPage';
 
 import {
   FindIdPage,
@@ -27,7 +33,7 @@ import {
   WritePostPage,
 } from '@/page/board';
 import SaleDetailPage from '@/page/commerce/SaleDetailPage';
-import { NotFoundPage } from '@/page/etc';
+import { ErrorPage, NotFoundPage } from '@/page/etc';
 import {
   EditEventPage,
   EventListPage,
@@ -52,6 +58,8 @@ import {
   EditInquiryPage,
   EditReportPage,
   FAQPage,
+  InquiryDetailPage,
+  ReportDetailPage,
   WriteInquiryPage,
   WriteReportPage,
 } from '@/page/support';
@@ -210,6 +218,11 @@ export const routeList = [
   {
     path: '/',
     element: <App />,
+    errorElement: (
+      <AppLayout>
+        <ErrorPage />
+      </AppLayout>
+    ),
     children: [
       {
         index: true,
@@ -475,55 +488,63 @@ export const routeList = [
             ),
           },
           {
-            path: ':inquiryId',
+            path: ':postId',
             element: (
               <ProtectedRoute>
-                <PostDetailPage />
+                <InquiryDetailPage />
               </ProtectedRoute>
             ),
           },
           {
-            path: ':inquiryId/edit',
+            path: ':postId/edit',
+            errorElement: (
+              <AppLayout>
+                <SupportUpdateErrorPage />
+              </AppLayout>
+            ),
             element: (
               <ProtectedRoute>
                 <EditInquiryPage />
               </ProtectedRoute>
             ),
+            loader: inquiryEditLoader,
           },
         ],
       },
       {
         path: 'report',
         children: [
+          { index: true, element: <NotFoundPage /> },
           {
-            path: 'write',
-            children: [
-              { index: true, element: <NotFoundPage /> },
-              {
-                path: ':reportType',
-                element: (
-                  <ProtectedRoute>
-                    <WriteReportPage />
-                  </ProtectedRoute>
-                ),
-              },
-            ],
-          },
-          {
-            path: ':reportId',
+            path: 'write/:reportType',
             element: (
               <ProtectedRoute>
-                <PostDetailPage />
+                <WriteReportPage />
+              </ProtectedRoute>
+            ),
+            loader: validateReportWriteLoader,
+          },
+          {
+            path: ':postId',
+            element: (
+              <ProtectedRoute>
+                <ReportDetailPage />
               </ProtectedRoute>
             ),
           },
           {
-            path: ':reportId/edit',
+            path: ':postId/edit',
+            errorElement: (
+              <AppLayout>
+                <SupportUpdateErrorPage />
+              </AppLayout>
+            ),
             element: (
               <ProtectedRoute>
                 <EditReportPage />
               </ProtectedRoute>
             ),
+            loader: reportEditLoader,
           },
         ],
       },
@@ -590,6 +611,14 @@ export const routeList = [
       },
       {
         path: '/my-page/download-exam-review',
+        element: (
+          <ProtectedRoute>
+            <ActivityPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/my-page/inquiry-report',
         element: (
           <ProtectedRoute>
             <ActivityPage />

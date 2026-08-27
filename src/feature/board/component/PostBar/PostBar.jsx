@@ -27,7 +27,6 @@ export default function PostBar({
   isLiked,
   isScrapped,
   children,
-
 }) {
   return (
     <div className={`${styles.container} ${className}`}>
@@ -43,7 +42,9 @@ export default function PostBar({
       <div className={styles.body}>
         <div className={styles.text}>
           <div className={styles.title}>
-            {category && !title?.startsWith(`[${category}]`) && `[${category}] `}
+            {category &&
+              !title?.startsWith(`[${category}]`) &&
+              `[${category}] `}
             {title}
           </div>
           <div className={styles.content}>{htmlToText(content)}</div>
@@ -143,7 +144,7 @@ function ActionContainer({
         if (count <= 0) return null;
 
         return (
-          <div className={styles.action}>
+          <div key={iconId} className={styles.action}>
             <Icon
               id={iconId}
               width={width}
