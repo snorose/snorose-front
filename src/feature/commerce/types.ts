@@ -50,6 +50,45 @@ export type OrdersResponse = {
   }>;
 };
 
+export type OrderResponse = {
+  orderNumber: string;
+  createdAt: string;
+
+  saleId: number;
+  sellerName: string;
+  saleTitle: string;
+
+  orderStatus: OrderStatus;
+  paymentStatus: PaymentStatus;
+  fulfillmentStatus: FulfillmentStatus;
+
+  items: Array<{
+    productId: number;
+    name: string;
+    optionLabel: string;
+    price: number;
+    quantity: number;
+  }>;
+
+  totalAmount: number;
+
+  bank: {
+    bankName: string;
+    accountNumber: string;
+    accountHolder: string;
+  };
+  paymentDueAt: string;
+
+  pickup: {
+    method: 'PICKUP';
+    pickupPlace: string;
+    pickupInstructions: string;
+  };
+
+  cancellable: boolean;
+  reviewNotice: string;
+};
+
 export type CreateOrderRequest = {
   saleId: string;
   clientRequestId: string;
@@ -90,3 +129,8 @@ export type ProductOptionItem = {
 };
 
 export type SelectedOrderItem = Omit<ProductOptionItem, 'isSoldOut'>;
+
+export type OrderStatus = OrdersResponse['data'][number]['orderStatus'];
+export type PaymentStatus = OrdersResponse['data'][number]['paymentStatus'];
+export type FulfillmentStatus =
+  OrdersResponse['data'][number]['fulfillmentStatus'];

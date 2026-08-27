@@ -3,10 +3,13 @@ import { delay, http, HttpResponse } from 'msw';
 import type {
   CreateOrderRequest,
   NoticeAcceptance,
+  OrderResponse,
+  OrdersResponse,
   SaleResponse,
 } from '@/feature/commerce/types';
 
 type ProductResponse = SaleResponse['products'][number];
+type OrderListItemResponse = OrdersResponse['data'][number];
 type MockOrderErrorCode =
   | 7000
   | 7001
@@ -443,7 +446,7 @@ function createCommerceErrorResponse({
   );
 }
 
-const mockOrderListResponse = {
+const mockOrderListResponse: OrdersResponse = {
   hasNext: false,
   data: [
     {
@@ -509,6 +512,118 @@ const mockOrderListResponse = {
   ],
 };
 
+const mockOrderBank: OrderResponse['bank'] = {
+  bankName: '신한은행',
+  accountNumber: '110-123-456789',
+  accountHolder: '스노로즈',
+};
+
+const mockOrderPickup: OrderResponse['pickup'] = {
+  method: 'PICKUP',
+  pickupPlace: '학생회관 1층 스노로즈 부스',
+  pickupInstructions:
+    '수령 가능 시간에 방문해 주문번호와 학생증을 제시해 주세요.',
+};
+
+function createMockOrderDetail(
+  order: OrderListItemResponse,
+  detail: Pick<OrderResponse, 'items' | 'cancellable' | 'reviewNotice'>
+): OrderResponse {
+  return {
+    orderNumber: order.orderNumber,
+    createdAt: order.createdAt,
+    saleId: order.saleId,
+    sellerName: order.sellerName,
+    saleTitle: order.saleTitle,
+    orderStatus: order.orderStatus,
+    paymentStatus: order.paymentStatus,
+    fulfillmentStatus: order.fulfillmentStatus,
+    items: detail.items,
+    totalAmount: order.totalAmount,
+    bank: mockOrderBank,
+    paymentDueAt: order.paymentDueAt,
+    pickup: mockOrderPickup,
+    cancellable: detail.cancellable,
+    reviewNotice: detail.reviewNotice,
+  };
+}
+
+const mockOrderDetailResponses: OrderResponse[] = [
+  createMockOrderDetail(mockOrderListResponse.data[0], {
+    items: [
+      {
+        productId: 101,
+        name: '스노로즈 레터링 티셔츠',
+        optionLabel: '네이비 · M',
+        price: 12000,
+        quantity: 1,
+      },
+      {
+        productId: 101,
+        name: '스노로즈 레터링 티셔츠',
+        optionLabel: '아이보리 · M',
+        price: 12000,
+        quantity: 1,
+      },
+    ],
+    cancellable: true,
+    reviewNotice:
+      '입금 확인 전 주문입니다. 입금자명과 주문자명이 다르면 운영팀에 알려 주세요.',
+  }),
+  createMockOrderDetail(mockOrderListResponse.data[1], {
+    items: [
+      {
+        productId: 201,
+        name: '스노로즈 키링',
+        optionLabel: '화이트',
+        price: 6000,
+        quantity: 1,
+      },
+      {
+        productId: 202,
+        name: '스노로즈 아크릴 참',
+        optionLabel: '눈송이',
+        price: 12000,
+        quantity: 1,
+      },
+    ],
+    cancellable: false,
+    reviewNotice:
+      '입금 확인이 완료되었습니다. 수령 일정이 변경되면 판매자가 별도로 안내합니다.',
+  }),
+  createMockOrderDetail(mockOrderListResponse.data[2], {
+    items: [
+      {
+        productId: 301,
+        name: '리유저블 컵',
+        optionLabel: '클리어',
+        price: 8000,
+        quantity: 2,
+      },
+    ],
+    cancellable: false,
+    reviewNotice: '수령이 완료된 주문입니다.',
+  }),
+  createMockOrderDetail(mockOrderListResponse.data[3], {
+    items: [
+      {
+        productId: 401,
+        name: '스티커팩',
+        optionLabel: '기본',
+        price: 5000,
+        quantity: 1,
+      },
+    ],
+    cancellable: false,
+    reviewNotice:
+      '취소된 주문입니다. 재주문이 필요하면 판매 페이지를 확인해 주세요.',
+  }),
+];
+
+const mockOrderDetailResponseByOrderNumber = new Map(
+  mockOrderDetailResponses.map((order) => [order.orderNumber, order])
+);
+
 export const handlers = [
   http.get('*/v1/commerce/sales/:saleId', async ({ params }) => {
     await delay(250);
@@ -537,6 +652,30 @@ export const handlers = [
 
     return HttpResponse.json({
       result: mockOrderListResponse,
+    });
+  }),
+  http.get('*/v1/commerce/orders/:orderNumber', async ({ params }) => {
+    await delay(250);
+
+    const orderNumber = Array.isArray(params.orderNumber)
+      ? params.orderNumber[0]
+      : params.orderNumber;
+    const orderResponse = mockOrderDetailResponseByOrderNumber.get(
+      String(orderNumber)
+    );
+
+    if (!orderResponse) {
+      return HttpResponse.json(
+        {
+          code: 'COMMERCE_ORDER_NOT_FOUND',
+          message: '주문 정보를 찾을 수 없습니다.',
+        },
+        { status: 404 }
+      );
+    }
+
+    return HttpResponse.json({
+      result: orderResponse,
     });
   }),
   http.post('*/v1/commerce/orders', async ({ request }) => {
