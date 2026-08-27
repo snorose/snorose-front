@@ -6,7 +6,6 @@ import {
   BackAppBar,
   Badge,
   FetchLoading,
-  Icon,
 } from '@/shared/component';
 import LinkAlertModal from '@/shared/component/modal/LinkAlertModal/LinkAlertModal';
 import { ROLE, TOAST } from '@/shared/constant';
@@ -22,7 +21,6 @@ import {
 import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
 import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
 import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
-import { useReportHandler } from '@/feature/report/hook/useReport';
 
 import sponsorBanner from '@/assets/banners/sponsorBanner.png';
 import cloudLogo from '@/assets/images/cloudLogo.svg';
@@ -36,7 +34,8 @@ export default function PostDetailView({
   deletePost,
   PostActionBar,
   CommentInputContainer,
-  BellIcon,
+  Chip,
+  Actions,
 }) {
   const { userInfo } = useAuth();
   const navigate = useNavigate();
@@ -118,7 +117,8 @@ export default function PostDetailView({
         <MetaContainer
           {...data}
           authorBadgeRoleId={authorBadgeRoleId}
-          BellIcon={BellIcon}
+          Chip={Chip}
+          Actions={Actions}
         />
 
         <div className={styles.titleContainer}>
@@ -183,27 +183,13 @@ function MetaContainer({
   authorBadgeRoleId,
   createdAt,
   isEdited,
-  isNotice,
-  isWriter,
-  BellIcon = null,
+  Chip = null,
+  Actions = null,
 }) {
-  const { setModal } = useContext(ModalContext);
-
-  const onMenuOpen = () => {
-    const id = isWriter ? 'my-post-more-options' : 'post-more-options';
-
-    setModal({
-      id,
-      type: null,
-    });
-  };
-
   const badgeRoleId = authorBadgeRoleId ?? userRoleId;
   const showBadge =
     badgeRoleId === ROLE.official ||
     (badgeRoleId === ROLE.admin && userDisplay !== '익명송이');
-  const showBellIcon = !isNotice && isWriter && BellIcon;
-  const showMeatBallIcon = !isNotice || isWriter;
 
   return (
     <div className={styles.metaContainer}>
@@ -218,17 +204,10 @@ function MetaContainer({
           {DateTime.format(createdAt, 'YMD_HM')}
           {isEdited && ' (수정됨)'}
         </p>
+        {Chip}
       </div>
 
-      <div className={styles.actions}>
-        {showBellIcon && BellIcon}
-
-        {showMeatBallIcon && (
-          <div className={styles.meatBall} onClick={onMenuOpen}>
-            <Icon id='meat-ball' width={18} height={4} stroke='none' />
-          </div>
-        )}
-      </div>
+      {Actions && <div className={styles.actions}>{Actions}</div>}
     </div>
   );
 }
@@ -237,12 +216,21 @@ function MoreModal({ deletePost, data }) {
   const navigate = useNavigate();
 
   const { modal, setModal } = useContext(ModalContext);
+
   const { toast } = useToast();
 
   // 페이지 언마운트 시 모달 상태 초기화
   useModalReset();
 
-  const { handleReport } = useReportHandler(modal, setModal, data);
+  const handleReport = (targetType) => {
+    if (targetType === 'post') {
+      navigate(`/report/write/${targetType}?targetId=${data.postId}`);
+    }
+
+    if (targetType === 'user') {
+      navigate(`/report/write/${targetType}?targetId=${data.encryptedUserId}`);
+    }
+  };
 
   const handleEdit = () => {
     setModal({ id: null, type: null });

@@ -1,23 +1,25 @@
 import { Link } from 'react-router-dom';
 
-import { useSuspensePagination } from '@/shared/hook';
 import { FetchLoading } from '@/shared/component';
+import { STALE_TIME } from '@/shared/constant';
+import { useSuspensePagination } from '@/shared/hook';
 import {
-  getBoardTextId,
   deduplicatePaginatedData,
   flatPaginationCache,
+  getBoardTextId,
 } from '@/shared/lib';
-import { STALE_TIME } from '@/shared/constant';
 
 import { PostBar } from '@/feature/board/component';
+import { ACTIVITIES } from '@/feature/my/constant';
+import { INQUIRY_STATUS_MAP } from '@/feature/support/constant';
 
-import styles from './MyPostList.module.css';
-import { ACTIVITIES } from '../../constant/activity';
 import {
+  noCommentsIllustration,
   noPostsIllustration,
   noScrapedPostsIllustration,
-  noCommentsIllustration,
 } from '@/assets/illustrations';
+
+import styles from './MyPostList.module.css';
 
 export default function MyPostList({
   queryKey,
@@ -62,7 +64,11 @@ export default function MyPostList({
     );
   }
 
-  const makePath = ({ boardId, postId, isNotice }) => {
+  const makePath = ({ boardId, postId, isNotice, group }) => {
+    if (group) {
+      return `/${group.toLowerCase()}/${postId}`;
+    }
+
     if (boardId === 14) {
       return isNotice
         ? `/board/event-notice/post/${postId}`
@@ -80,19 +86,22 @@ export default function MyPostList({
     <ul className={styles.posts}>
       {list.map((post, index) => (
         <Link
+          key={post.postId}
           className={styles.to}
           ref={index === list.length - 1 ? ref : undefined}
-          key={post.postId}
-          to={makePath({
-            boardId: post.boardId,
-            postId: post.postId,
-            isNotice: post.isNotice,
-          })}
+          to={makePath({ ...post })}
         >
           <PostBar {...post} content={post.questionDetail ?? post.content}>
             {post.boardName && (
               <PostBar.Chip name={post.boardName} variant='grey' />
             )}
+            {post.status && (
+              <PostBar.Chip
+                name={INQUIRY_STATUS_MAP[post.status].label}
+                variant={INQUIRY_STATUS_MAP[post.status].variant}
+              />
+            )}
+            {post.isConfirmed && <PostBar.ConfirmedIcon />}
           </PostBar>
         </Link>
       ))}
