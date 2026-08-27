@@ -62,13 +62,18 @@ function SaleDetailView() {
     totalPaymentAmount,
     handlePlusQuantity,
     handleMinusQuantity,
+    resetQuantityMap,
   } = useSaleOrderForm(sale.products);
 
   const { name, studentNumber, phoneNumber, handlePhoneNumber } =
     useOrdererInfo();
 
-  const { noticeAcceptanceMap, handleNoticeAcceptance, noticeAcceptances } =
-    useNoticeAgreement(sale.notices);
+  const {
+    noticeAcceptanceMap,
+    handleNoticeAcceptance,
+    noticeAcceptances,
+    resetNoticeAcceptanceMap,
+  } = useNoticeAgreement(sale.notices);
 
   const { getClientRequestId } = useOrderClientRequestId(
     getCreateOrderRequestSignature({
@@ -92,6 +97,14 @@ function SaleDetailView() {
   const { mutate: createOrder, isPending: isPendingCreateOrder } =
     useCreateOrder();
 
+  const refetchSaleAndResetProducts = async () => {
+    const { data: newSale } = await refetch();
+
+    if (newSale) {
+      resetQuantityMap(newSale.products);
+    }
+  };
+
   const handleCreateOrder = () => {
     createOrder(
       {
@@ -106,11 +119,15 @@ function SaleDetailView() {
         onSuccess: () => {
           toast({ message: '주문이 완료되었어요.' });
         },
-        onError: (error) => {
+        onError: async (error) => {
           const errorCode = getCommerceErrorCode(error);
 
           switch (errorCode) {
             case 7000: // 판매 없음/DRAFT
+              toast({
+                message: '주문을 할 수 없습니다',
+                variant: 'error',
+              });
               refetch();
               break;
             case 7001: // 기간 외/CLOSED
@@ -118,37 +135,58 @@ function SaleDetailView() {
               refetch();
               break;
             case 7003: // 비활성/삭제된 옵션
-              toast({ text: '삭제된 옵션이 포함되었습니다', type: 'error' });
-              refetch();
+              toast({
+                message: '삭제된 옵션이 포함되어 있습니다',
+                variant: 'error',
+              });
+              refetchSaleAndResetProducts();
               break;
             case 7004: // 다른 판매의 옵션 포함
               toast({
-                text: '다른 판매의 옵션이 포함되었습니다',
-                type: 'error',
+                message: '다른 판매 옵션이 포함되어 있습니다',
+                variant: 'error',
               });
-              refetch();
+              refetchSaleAndResetProducts();
               break;
             case 7005: // 재고 부족
-              toast({ text: '품절된 상품이 포함되었습니다', type: 'error' });
-              refetch();
+              toast({
+                message: '품절 상품이 포함되었습니다',
+                variant: 'error',
+              });
+              refetchSaleAndResetProducts();
               break;
             case 7006: // 1인 최대 수량 초과
-              toast({ text: '인당 수량 제한이 초과되었습니다', type: 'error' });
+              toast({
+                message: '인당 수량 제한이 초과되었습니다',
+                variant: 'error',
+              });
               break;
             case 7007: // 수량 오류
             case 7008: // 연락처 형식 오류
-              toast({ text: '다시 시도해주세요', type: 'error' });
+              toast({ message: '다시 시도해주세요', variant: 'error' });
               break;
             case 7009: // 동의 누락
             case 7010: // 필수 확인 항목 누락
-              toast({ text: '필수 확인 항목을 체크해주세요', type: 'error' });
+              toast({
+                message: '필수 체크 항목을 확인해주세요',
+                variant: 'error',
+              });
               break;
             case 7011: // 확인 항목 버전 변경
-              toast({ text: '다시 시도해주세요', type: 'error' });
-              refetch();
+              const { data: newSale } = await refetch();
+
+              if (newSale) {
+                resetNoticeAcceptanceMap(newSale.notices);
+              }
+
+              toast({
+                message: '다시 시도해주세요',
+                variant: 'error',
+              });
+
               break;
             case 7012:
-              toast({ text: '다시 시도해주세요', type: 'error' });
+              toast({ message: '다시 시도해주세요', variant: 'error' });
               getClientRequestId();
               break;
           }
@@ -240,7 +278,10 @@ function SaleDetailView() {
           totalPaymentAmount={totalPaymentAmount}
           isSubmitting={isPendingCreateOrder}
           onCancel={closeOrderConfirmModal}
-          onConfirm={handleCreateOrder}
+          onConfirm={() => {
+            closeOrderConfirmModal();
+            handleCreateOrder();
+          }}
         />
       )}
     </div>

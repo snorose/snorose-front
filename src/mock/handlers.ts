@@ -6,6 +6,29 @@ import type {
   SaleResponse,
 } from '@/feature/commerce/types';
 
+type ProductResponse = SaleResponse['products'][number];
+type MockOrderErrorCode =
+  | 7000
+  | 7001
+  | 7003
+  | 7004
+  | 7005
+  | 7006
+  | 7007
+  | 7008
+  | 7009
+  | 7010
+  | 7011;
+
+type MockOrderErrorScenario = {
+  saleId: string;
+  errorCode: MockOrderErrorCode;
+  message: string;
+  status: number;
+  initialSale: SaleResponse;
+  refetchedSale: SaleResponse;
+};
+
 const sale: SaleResponse = {
   saleId: 1,
   sellerName: '스노로즈 운영팀',
@@ -106,6 +129,226 @@ const sale: SaleResponse = {
   ],
 };
 
+const baseProduct = sale.products[0];
+const navyVariant = baseProduct.variants[0];
+const ivoryVariant = baseProduct.variants[1];
+
+const createScenarioSale = (
+  saleId: number,
+  titleSuffix: string,
+  overrides: Partial<SaleResponse> = {}
+): SaleResponse => ({
+  ...sale,
+  saleId,
+  title: `${sale.title} - ${titleSuffix}`,
+  ...overrides,
+});
+
+const createScenarioProduct = (
+  overrides: Partial<ProductResponse> = {}
+): ProductResponse => ({
+  ...baseProduct,
+  ...overrides,
+});
+
+const mockOrderErrorScenarios: MockOrderErrorScenario[] = [
+  {
+    saleId: '7000',
+    errorCode: 7000,
+    message: '판매 정보를 찾을 수 없거나 공개되지 않은 판매입니다.',
+    status: 404,
+    initialSale: createScenarioSale(7000, '7000 판매 없음/DRAFT mock', {
+      description: '주문 시 판매 없음 또는 DRAFT 에러를 반환합니다.',
+    }),
+    refetchedSale: createScenarioSale(7000, '7000 주문 불가 반영', {
+      description: '판매가 더 이상 주문 가능한 상태가 아닌 최신 데이터입니다.',
+      orderable: false,
+    }),
+  },
+  {
+    saleId: '7001',
+    errorCode: 7001,
+    message: '판매 기간이 아니거나 마감된 판매입니다.',
+    status: 409,
+    initialSale: createScenarioSale(7001, '7001 기간 외/CLOSED mock', {
+      description: '주문 시 기간 외 또는 마감 에러를 반환합니다.',
+    }),
+    refetchedSale: createScenarioSale(7001, '7001 마감 반영', {
+      description: '마감 상태가 반영된 최신 판매 데이터입니다.',
+      status: 'CLOSE',
+      orderable: false,
+      closesAt: '2026-08-01T23:59:59',
+    }),
+  },
+  {
+    saleId: '7003',
+    errorCode: 7003,
+    message: '삭제된 옵션이 포함되었습니다.',
+    status: 409,
+    initialSale: createScenarioSale(7003, '7003 옵션 삭제 mock', {
+      description: '주문 시 삭제/비활성 옵션 에러를 반환합니다.',
+    }),
+    refetchedSale: createScenarioSale(7003, '7003 옵션 삭제 반영', {
+      description: '삭제된 옵션이 제거된 최신 판매 데이터입니다.',
+      products: [
+        createScenarioProduct({
+          variants: [
+            {
+              ...navyVariant,
+              optionLabel: '네이비 · M',
+            },
+          ],
+        }),
+      ],
+    }),
+  },
+  {
+    saleId: '7004',
+    errorCode: 7004,
+    message: '다른 판매의 옵션이 포함되었습니다.',
+    status: 409,
+    initialSale: createScenarioSale(7004, '7004 다른 판매 옵션 mock', {
+      description: '주문 시 다른 판매 옵션 포함 에러를 반환합니다.',
+    }),
+    refetchedSale: createScenarioSale(7004, '7004 현재 판매 옵션 반영', {
+      description: '현재 판매에 속한 옵션만 다시 표시된 최신 데이터입니다.',
+      products: [
+        createScenarioProduct({
+          name: '현재 판매 반다나',
+          variants: [
+            {
+              ...navyVariant,
+              optionLabel: '현재 판매 · 네이비 · M',
+            },
+            {
+              ...ivoryVariant,
+              optionLabel: '현재 판매 · 아이보리 · M',
+            },
+          ],
+        }),
+      ],
+    }),
+  },
+  {
+    saleId: '7005',
+    errorCode: 7005,
+    message: '품절된 상품이 포함되었습니다.',
+    status: 409,
+    initialSale: createScenarioSale(7005, '7005 재고 부족 mock', {
+      description: '주문 시 재고 부족 에러를 반환합니다.',
+    }),
+    refetchedSale: createScenarioSale(7005, '7005 품절 반영', {
+      description: '품절 상태가 반영된 최신 판매 데이터입니다.',
+      products: [
+        createScenarioProduct({
+          remainingForBuyer: 0,
+          variants: [
+            {
+              ...navyVariant,
+              availableQuantity: 0,
+            },
+            {
+              ...ivoryVariant,
+              availableQuantity: 0,
+            },
+          ],
+        }),
+      ],
+    }),
+  },
+  {
+    saleId: '7006',
+    errorCode: 7006,
+    message: '1인 최대 구매 수량을 초과했습니다.',
+    status: 409,
+    initialSale: createScenarioSale(7006, '7006 인당 수량 제한 mock', {
+      description: '주문 시 1인 최대 수량 초과 에러를 반환합니다.',
+    }),
+    refetchedSale: createScenarioSale(7006, '7006 인당 수량 제한 mock', {
+      description: '주문 시 1인 최대 수량 초과 에러를 반환합니다.',
+    }),
+  },
+  {
+    saleId: '7007',
+    errorCode: 7007,
+    message: '주문 수량이 올바르지 않습니다.',
+    status: 400,
+    initialSale: createScenarioSale(7007, '7007 수량 오류 mock', {
+      description: '주문 시 수량 오류를 반환합니다.',
+    }),
+    refetchedSale: createScenarioSale(7007, '7007 수량 오류 mock', {
+      description: '주문 시 수량 오류를 반환합니다.',
+    }),
+  },
+  {
+    saleId: '7008',
+    errorCode: 7008,
+    message: '연락처 형식이 올바르지 않습니다.',
+    status: 400,
+    initialSale: createScenarioSale(7008, '7008 연락처 형식 오류 mock', {
+      description: '주문 시 연락처 형식 오류를 반환합니다.',
+    }),
+    refetchedSale: createScenarioSale(7008, '7008 연락처 형식 오류 mock', {
+      description: '주문 시 연락처 형식 오류를 반환합니다.',
+    }),
+  },
+  {
+    saleId: '7009',
+    errorCode: 7009,
+    message: '동의 항목이 누락되었습니다.',
+    status: 400,
+    initialSale: createScenarioSale(7009, '7009 동의 누락 mock', {
+      description: '주문 시 동의 누락 에러를 반환합니다.',
+    }),
+    refetchedSale: createScenarioSale(7009, '7009 동의 누락 mock', {
+      description: '주문 시 동의 누락 에러를 반환합니다.',
+    }),
+  },
+  {
+    saleId: '7010',
+    errorCode: 7010,
+    message: '필수 확인 항목이 누락되었습니다.',
+    status: 400,
+    initialSale: createScenarioSale(7010, '7010 필수 확인 항목 누락 mock', {
+      description: '주문 시 필수 확인 항목 누락 에러를 반환합니다.',
+    }),
+    refetchedSale: createScenarioSale(7010, '7010 필수 확인 항목 누락 mock', {
+      description: '주문 시 필수 확인 항목 누락 에러를 반환합니다.',
+    }),
+  },
+  {
+    saleId: '7011',
+    errorCode: 7011,
+    message: '유의사항이 변경되었습니다. 다시 확인해 주세요.',
+    status: 409,
+    initialSale: createScenarioSale(7011, '7011 안내 변경 mock', {
+      description: '주문 시 확인 항목 버전 변경 에러를 반환합니다.',
+    }),
+    refetchedSale: createScenarioSale(7011, '7011 안내 변경 mock', {
+      description: '주문 시 확인 항목 버전 변경 에러를 반환합니다.',
+      notices: [
+        {
+          ...sale.notices[0],
+          version: sale.notices[0].version + 1,
+          text: '최신 안내: 수령 시 학생증 또는 모바일 학생증과 주문자 연락처를 함께 확인합니다.',
+        },
+        {
+          ...sale.notices[1],
+          version: sale.notices[1].version + 1,
+          text: '최신 안내: 배송 없이 지정된 장소와 시간에 직접 수령합니다.',
+        },
+        sale.notices[2],
+      ],
+    }),
+  },
+];
+
+const mockOrderErrorScenarioBySaleId = new Map(
+  mockOrderErrorScenarios.map((scenario) => [scenario.saleId, scenario])
+);
+
+const triggeredMockOrderErrorSaleIds = new Set<string>();
+
 const saleResponses: SaleResponse[] = [
   sale,
   {
@@ -116,6 +359,7 @@ const saleResponses: SaleResponse[] = [
     orderable: false,
     closesAt: '2026-08-01T23:59:59',
   },
+  ...mockOrderErrorScenarios.map((scenario) => scenario.initialSale),
 ];
 
 const saleResponseById = new Map(
@@ -170,6 +414,35 @@ function findRequiredNoticeError(
   return null;
 }
 
+function getSaleResponseForMockScenario(
+  saleId: string,
+  saleResponse: SaleResponse
+) {
+  const mockOrderErrorScenario = mockOrderErrorScenarioBySaleId.get(saleId);
+
+  if (!mockOrderErrorScenario) {
+    return saleResponse;
+  }
+
+  return triggeredMockOrderErrorSaleIds.has(saleId)
+    ? mockOrderErrorScenario.refetchedSale
+    : mockOrderErrorScenario.initialSale;
+}
+
+function createCommerceErrorResponse({
+  errorCode,
+  message,
+  status,
+}: MockOrderErrorScenario) {
+  return HttpResponse.json(
+    {
+      code: String(errorCode),
+      message,
+    },
+    { status }
+  );
+}
+
 export const handlers = [
   http.get('*/v1/commerce/sales/:saleId', async ({ params }) => {
     await delay(250);
@@ -190,14 +463,15 @@ export const handlers = [
     }
 
     return HttpResponse.json({
-      result: saleResponse,
+      result: getSaleResponseForMockScenario(String(saleId), saleResponse),
     });
   }),
   http.post('*/v1/commerce/orders', async ({ request }) => {
     await delay(250);
 
     const requestBody = (await request.json()) as Partial<CreateOrderRequest>;
-    const saleResponse = saleResponseById.get(String(requestBody.saleId));
+    const saleId = String(requestBody.saleId);
+    const saleResponse = saleResponseById.get(saleId);
 
     if (!saleResponse) {
       return HttpResponse.json(
@@ -217,6 +491,14 @@ export const handlers = [
         },
         { status: 409 }
       );
+    }
+
+    const mockOrderErrorScenario = mockOrderErrorScenarioBySaleId.get(saleId);
+
+    if (mockOrderErrorScenario) {
+      triggeredMockOrderErrorSaleIds.add(saleId);
+
+      return createCommerceErrorResponse(mockOrderErrorScenario);
     }
 
     if (requestBody.contactSharingConsent !== true) {

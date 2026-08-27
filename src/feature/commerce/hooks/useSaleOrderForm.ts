@@ -8,16 +8,13 @@ import {
 } from '@/feature/commerce/utils/saleDetail';
 
 export default function useSaleOrderForm(products: SaleResponse['products']) {
-  const initialQuantityMap = products.reduce<QuantityMap>((acc, product) => {
-    acc[product.productId] = Object.fromEntries(
-      product.variants.map((variant) => [variant.variantId, 0])
-    );
+  const [quantityMap, setQuantityMap] = useState<QuantityMap>(() =>
+    createQuantityMap(products)
+  );
 
-    return acc;
-  }, {});
-
-  const [quantityMap, setQuantityMap] =
-    useState<QuantityMap>(initialQuantityMap);
+  const resetQuantityMap = (newProducts: SaleResponse['products']) => {
+    setQuantityMap(createQuantityMap(newProducts));
+  };
 
   const selectedOrderItems = getSelectedOrderItems(products, quantityMap);
 
@@ -81,5 +78,16 @@ export default function useSaleOrderForm(products: SaleResponse['products']) {
     totalPaymentAmount,
     handlePlusQuantity,
     handleMinusQuantity,
+    resetQuantityMap,
   };
+}
+
+function createQuantityMap(products: SaleResponse['products']) {
+  return products.reduce<QuantityMap>((acc, product) => {
+    acc[product.productId] = Object.fromEntries(
+      product.variants.map((variant) => [variant.variantId, 0])
+    );
+
+    return acc;
+  }, {});
 }
