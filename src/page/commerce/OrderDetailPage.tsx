@@ -10,6 +10,7 @@ import { DateTime, formatNumber } from '@/shared/lib';
 import { PostListErrorFallback } from '@/feature/board/component';
 import {
   FULFILLMENT_STATUS_LABEL,
+  ORDER_STATUS_LABEL,
   PAYMENT_STATUS_LABEL,
 } from '@/feature/commerce/constants';
 import useOrder from '@/feature/commerce/hooks/useOrder';
@@ -80,6 +81,7 @@ function OrderDetailView() {
           </dl>
         </section>
       )}
+
       <section className={`${styles.info} ${styles.orderInfo}`}>
         <h2 className={styles.infoTitle}>주문 정보</h2>
         <dl className={styles.infoList}>
@@ -99,14 +101,23 @@ function OrderDetailView() {
           </div>
           <div className={styles.infoItem}>
             <dt>결제</dt>
-            <dd>{PAYMENT_STATUS_LABEL[order.paymentStatus]}</dd>
+            <dd>
+              {order.orderStatus === 'CANCELED'
+                ? ORDER_STATUS_LABEL[order.orderStatus]
+                : PAYMENT_STATUS_LABEL[order.paymentStatus]}
+            </dd>
           </div>
           <div className={styles.infoItem}>
             <dt>수령</dt>
-            <dd>{FULFILLMENT_STATUS_LABEL[order.fulfillmentStatus]}</dd>
+            <dd>
+              {order.orderStatus === 'CANCELED'
+                ? ORDER_STATUS_LABEL[order.orderStatus]
+                : FULFILLMENT_STATUS_LABEL[order.fulfillmentStatus]}
+            </dd>
           </div>
         </dl>
       </section>
+
       {pickUpInfo && (
         <section className={`${styles.info} ${styles.pickUpInfo}`}>
           <h2 className={styles.infoTitle}>수령 안내</h2>
