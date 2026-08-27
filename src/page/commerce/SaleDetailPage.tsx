@@ -8,10 +8,12 @@ import { useToast } from '@/shared/hook';
 import { DateTime } from '@/shared/lib';
 
 import NoticeAgreementSection from '@/feature/commerce/components/NoticeAgreementSection';
+import OrderConfirmModal from '@/feature/commerce/components/OrderConfirmModal';
 import OrdererInfoSection from '@/feature/commerce/components/OrdererInfoSection';
 import PaymentSection from '@/feature/commerce/components/PaymentSection';
 import ProductCarouselSection from '@/feature/commerce/components/ProductCarouselSection';
 import ProductOptionSection from '@/feature/commerce/components/ProductOptionSection';
+import SaleClosedModal from '@/feature/commerce/components/SaleClosedModal';
 import SaleClosedSection from '@/feature/commerce/components/SaleClosedSection';
 import {
   useCreateOrder,
@@ -19,8 +21,10 @@ import {
   useOrderClientRequestId,
   useOrdererInfo,
   useSale,
+  useSaleClosedModal,
   useSaleOrderForm,
 } from '@/feature/commerce/hooks';
+import useOrderConfirmModal from '@/feature/commerce/hooks/useOrderConfirmModal';
 import {
   getCommerceErrorCode,
   getCreateOrderRequestSignature,
@@ -49,10 +53,11 @@ export default function SaleDetailPage() {
 function SaleDetailView() {
   const { saleId } = useParams();
 
-  const { data: sale } = useSale(saleId);
+  const { data: sale, refetch } = useSale(saleId);
 
   const {
     quantityMap,
+    selectedOrderItems,
     items,
     totalPaymentAmount,
     handlePlusQuantity,
@@ -76,6 +81,13 @@ function SaleDetailView() {
   );
 
   const { toast } = useToast();
+  const { isSaleClosedModalOpen, openSaleClosedModal, closeSaleClosedModal } =
+    useSaleClosedModal();
+  const {
+    isOrderConfirmModalOpen,
+    openOrderConfirmModal,
+    closeOrderConfirmModal,
+  } = useOrderConfirmModal();
 
   const { mutate: createOrder, isPending: isPendingCreateOrder } =
     useCreateOrder();
@@ -98,41 +110,46 @@ function SaleDetailView() {
           const errorCode = getCommerceErrorCode(error);
 
           switch (errorCode) {
-            case 7000:
-              toast({ text: '판매 없음/DRAFT', type: 'error' });
+            case 7000: // 판매 없음/DRAFT
+              refetch();
               break;
-            case 7001:
-              toast({ text: '기간 외/CLOSED', type: 'error' });
+            case 7001: // 기간 외/CLOSED
+              openSaleClosedModal();
+              refetch();
               break;
-            case 7004:
-              toast({ text: '다른 판매의 옵션 포함', type: 'error' });
+            case 7003: // 비활성/삭제된 옵션
+              toast({ text: '삭제된 옵션이 포함되었습니다', type: 'error' });
+              refetch();
               break;
-            case 7003:
-              toast({ text: '비활성/삭제된 옵션', type: 'error' });
+            case 7004: // 다른 판매의 옵션 포함
+              toast({
+                text: '다른 판매의 옵션이 포함되었습니다',
+                type: 'error',
+              });
+              refetch();
               break;
-            case 7005:
-              toast({ text: '재고 부족', type: 'error' });
+            case 7005: // 재고 부족
+              toast({ text: '품절된 상품이 포함되었습니다', type: 'error' });
+              refetch();
               break;
-            case 7006:
-              toast({ text: '1인 최대 수량 초과', type: 'error' });
+            case 7006: // 1인 최대 수량 초과
+              toast({ text: '인당 수량 제한이 초과되었습니다', type: 'error' });
               break;
-            case 7007:
-              toast({ text: '수량 오류', type: 'error' });
+            case 7007: // 수량 오류
+            case 7008: // 연락처 형식 오류
+              toast({ text: '다시 시도해주세요', type: 'error' });
               break;
-            case 7008:
-              toast({ text: '연락처 형식 오류', type: 'error' });
+            case 7009: // 동의 누락
+            case 7010: // 필수 확인 항목 누락
+              toast({ text: '필수 확인 항목을 체크해주세요', type: 'error' });
               break;
-            case 7009:
-              toast({ text: '동의 누락', type: 'error' });
-              break;
-            case 7010:
-              toast({ text: '필수 확인 항목 누락', type: 'error' });
-              break;
-            case 7011:
-              toast({ text: '확인 항목 버전 변경', type: 'error' });
+            case 7011: // 확인 항목 버전 변경
+              toast({ text: '다시 시도해주세요', type: 'error' });
+              refetch();
               break;
             case 7012:
-              toast({ text: 'clientRequestId 형식 오류', type: 'error' });
+              toast({ text: '다시 시도해주세요', type: 'error' });
+              getClientRequestId();
               break;
           }
         },
@@ -207,26 +224,25 @@ function SaleDetailView() {
           <PaymentSection
             totalPaymentAmount={totalPaymentAmount}
             isOrderButtonDisabled={!isOrderable}
-            onClick={() => handleCreateOrder()}
+            onClick={() => openOrderConfirmModal()}
           />
         </>
       )}
 
-      {/* {isSaleClosedModalOpen && (
+      {isSaleClosedModalOpen && (
         <SaleClosedModal onClose={closeSaleClosedModal} />
       )}
 
       {isOrderConfirmModalOpen && (
         <OrderConfirmModal
           selectedOrderItems={selectedOrderItems}
-          acceptedNoticeTexts={acceptedNoticeTexts}
           phoneNumber={phoneNumber}
           totalPaymentAmount={totalPaymentAmount}
-          isSubmitting={isSubmittingOrder}
+          isSubmitting={isPendingCreateOrder}
           onCancel={closeOrderConfirmModal}
-          onConfirm={handleOrderConfirm}
+          onConfirm={handleCreateOrder}
         />
-      )} */}
+      )}
     </div>
   );
 }
