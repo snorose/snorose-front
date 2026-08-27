@@ -1,6 +1,10 @@
 import { delay, http, HttpResponse } from 'msw';
 
-import type { SaleResponse } from '@/feature/commerce/types';
+import type {
+  CreateOrderRequest,
+  NoticeAcceptance,
+  SaleResponse,
+} from '@/feature/commerce/types';
 
 const sale: SaleResponse = {
   saleId: 1,
@@ -117,6 +121,51 @@ const saleResponseById = new Map(
   ])
 );
 
+function findRequiredNoticeError(
+  saleResponse: SaleResponse,
+  noticeAcceptances: NoticeAcceptance[] = []
+) {
+  const noticeAcceptanceById = new Map(
+    noticeAcceptances.map((noticeAcceptance) => [
+      noticeAcceptance.noticeId,
+      noticeAcceptance,
+    ])
+  );
+
+  const hasVersionChanged = saleResponse.notices.some((notice) => {
+    const noticeAcceptance = noticeAcceptanceById.get(notice.noticeId);
+
+    return (
+      noticeAcceptance !== undefined &&
+      noticeAcceptance.version !== notice.version
+    );
+  });
+
+  if (hasVersionChanged) {
+    return {
+      code: 'COMMERCE_NOTICE_VERSION_CHANGED',
+      message: '유의사항이 변경되었습니다. 다시 확인해 주세요.',
+      status: 409,
+    };
+  }
+
+  const hasUncheckedRequiredNotice = saleResponse.notices.some((notice) => {
+    const noticeAcceptance = noticeAcceptanceById.get(notice.noticeId);
+
+    return notice.required && noticeAcceptance?.accepted !== true;
+  });
+
+  if (hasUncheckedRequiredNotice) {
+    return {
+      code: 'COMMERCE_NOTICE_REQUIRED',
+      message: '필수 확인 항목에 모두 동의해 주세요.',
+      status: 400,
+    };
+  }
+
+  return null;
+}
+
 export const handlers = [
   http.get('*/v1/commerce/sales/:saleId', async ({ params }) => {
     await delay(250);
@@ -138,6 +187,64 @@ export const handlers = [
 
     return HttpResponse.json({
       result: saleResponse,
+    });
+  }),
+  http.post('*/v1/commerce/orders', async ({ request }) => {
+    await delay(250);
+
+    const requestBody = (await request.json()) as Partial<CreateOrderRequest>;
+    const saleResponse = saleResponseById.get(String(requestBody.saleId));
+
+    if (!saleResponse) {
+      return HttpResponse.json(
+        {
+          code: 'COMMERCE_SALE_NOT_FOUND',
+          message: '판매 정보를 찾을 수 없습니다.',
+        },
+        { status: 404 }
+      );
+    }
+
+    if (!saleResponse.orderable) {
+      return HttpResponse.json(
+        {
+          code: 'COMMERCE_SALE_NOT_ORDERABLE',
+          message: '지금은 주문할 수 있는 판매가 아닙니다.',
+        },
+        { status: 409 }
+      );
+    }
+
+    if (requestBody.contactSharingConsent !== true) {
+      return HttpResponse.json(
+        {
+          code: 'COMMERCE_CONSENT_REQUIRED',
+          message: '개인정보 제공 동의가 필요합니다.',
+        },
+        { status: 400 }
+      );
+    }
+
+    const noticeError = findRequiredNoticeError(
+      saleResponse,
+      requestBody.noticeAcceptances
+    );
+
+    if (noticeError) {
+      return HttpResponse.json(
+        {
+          code: noticeError.code,
+          message: noticeError.message,
+        },
+        { status: noticeError.status }
+      );
+    }
+
+    return HttpResponse.json({
+      result: {
+        orderNumber: 'SR-20260813-000001',
+        idempotentReplay: false,
+      },
     });
   }),
 ];

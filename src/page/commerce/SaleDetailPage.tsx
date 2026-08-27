@@ -1,62 +1,57 @@
-import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { BackAppBar } from '@/shared/component';
 import { DateTime } from '@/shared/lib';
 
+import NoticeAgreementSection from '@/feature/commerce/components/NoticeAgreementSection';
+import OrderConfirmModal from '@/feature/commerce/components/OrderConfirmModal';
 import OrdererInfoSection from '@/feature/commerce/components/OrdererInfoSection';
 import PaymentSection from '@/feature/commerce/components/PaymentSection';
 import ProductCarouselSection from '@/feature/commerce/components/ProductCarouselSection';
 import ProductOptionSection from '@/feature/commerce/components/ProductOptionSection';
 import SaleClosedModal from '@/feature/commerce/components/SaleClosedModal';
 import SaleClosedSection from '@/feature/commerce/components/SaleClosedSection';
-import { useSale } from '@/feature/commerce/hooks';
-import type { QuantityMap } from '@/feature/commerce/types';
-import {
-  getTotalPaymentAmount,
-  hasSelectedOrderItem,
-  isClosedSale,
-} from '@/feature/commerce/utils/saleDetail';
+import { useSaleOrderForm } from '@/feature/commerce/hooks';
 
 import styles from './SaleDetailPage.module.css';
 
 export default function SaleDetailPage() {
   const { saleId } = useParams();
-  const { data: sale, isError, isLoading } = useSale(saleId);
-
-  const [quantityMap, setQuantityMap] = useState<QuantityMap>({});
-  const [isOrdererInfoConsentChecked, setIsOrdererInfoConsentChecked] =
-    useState(false);
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [isSaleClosedModalOpen, setIsSaleClosedModalOpen] = useState(false);
+  const {
+    sale,
+    isSaleError,
+    isSaleLoading,
+    quantityMap,
+    setQuantityMap,
+    noticeAcceptanceMap,
+    setNoticeAcceptanceMap,
+    phoneNumber,
+    setPhoneNumber,
+    isSaleClosed,
+    isSaleClosedModalOpen,
+    closeSaleClosedModal,
+    isOrderConfirmModalOpen,
+    closeOrderConfirmModal,
+    selectedOrderItems,
+    acceptedNoticeTexts,
+    totalPaymentAmount,
+    isSubmittingOrder,
+    isPurchaseButtonDisabled,
+    handlePurchaseClick,
+    handleOrderConfirm,
+  } = useSaleOrderForm(saleId);
 
   if (!saleId) {
     return <SaleDetailFeedback message='판매 정보를 찾을 수 없어요.' />;
   }
 
-  if (isLoading) {
+  if (isSaleLoading) {
     return <SaleDetailFeedback message='판매 정보를 불러오는 중이에요.' />;
   }
 
-  if (isError || !sale) {
+  if (isSaleError || !sale) {
     return <SaleDetailFeedback message='판매 정보를 불러오지 못했어요.' />;
   }
-
-  const isSaleClosed =
-    sale.status === 'CLOSE' || !sale.orderable || isClosedSale(sale.closesAt);
-
-  const totalPaymentAmount = getTotalPaymentAmount(sale, quantityMap);
-  const hasSelectedProduct = hasSelectedOrderItem(quantityMap);
-  const isPhoneNumberValid = phoneNumber.length === 11;
-  const isPurchaseButtonDisabled =
-    !hasSelectedProduct || !isPhoneNumberValid || !isOrdererInfoConsentChecked;
-
-  const handlePurchaseClick = () => {
-    if (isClosedSale(sale.closesAt)) {
-      setIsSaleClosedModalOpen(true);
-      return;
-    }
-  };
 
   return (
     <div className={styles.container}>
@@ -94,8 +89,14 @@ export default function SaleDetailPage() {
           <OrdererInfoSection
             phoneNumber={phoneNumber}
             setPhoneNumber={setPhoneNumber}
-            isOrdererInfoConsentChecked={isOrdererInfoConsentChecked}
-            setIsOrdererInfoConsentChecked={setIsOrdererInfoConsentChecked}
+          />
+
+          <div className={styles.border} />
+
+          <NoticeAgreementSection
+            notices={sale.notices}
+            noticeAcceptanceMap={noticeAcceptanceMap}
+            setNoticeAcceptanceMap={setNoticeAcceptanceMap}
           />
 
           <div className={styles.border} />
@@ -109,7 +110,19 @@ export default function SaleDetailPage() {
       )}
 
       {isSaleClosedModalOpen && (
-        <SaleClosedModal onClose={() => setIsSaleClosedModalOpen(false)} />
+        <SaleClosedModal onClose={closeSaleClosedModal} />
+      )}
+
+      {isOrderConfirmModalOpen && (
+        <OrderConfirmModal
+          selectedOrderItems={selectedOrderItems}
+          acceptedNoticeTexts={acceptedNoticeTexts}
+          phoneNumber={phoneNumber}
+          totalPaymentAmount={totalPaymentAmount}
+          isSubmitting={isSubmittingOrder}
+          onCancel={closeOrderConfirmModal}
+          onConfirm={handleOrderConfirm}
+        />
       )}
     </div>
   );
