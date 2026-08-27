@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { ErrorBoundary } from '@sentry/react';
 
-import { BackAppBar } from '@/shared/component';
+import { BackAppBar, FetchLoading } from '@/shared/component';
 import { flatPaginationCache } from '@/shared/lib';
 
 import OrderItem from '@/feature/commerce/components/OrderItem';
@@ -25,7 +25,7 @@ export default function OrderListPage() {
 }
 
 function OrderListView() {
-  const { data } = useOrders();
+  const { data, ref, isFetching } = useOrders();
   const orders: OrdersResponse['data'] = flatPaginationCache(data);
 
   if (orders.length === 0) {
@@ -49,11 +49,16 @@ function OrderListView() {
       <BackAppBar title='내 주문 목록' />
 
       <div className={styles.orderList}>
-        {orders.map((order) => (
-          <Link key={order.orderNumber} to={order.orderNumber}>
+        {orders.map((order, index) => (
+          <Link
+            key={order.orderNumber}
+            to={order.orderNumber}
+            ref={index === orders.length - 1 ? ref : undefined}
+          >
             <OrderItem {...order} />
           </Link>
         ))}
+        {isFetching && <FetchLoading />}
       </div>
     </div>
   );

@@ -46,11 +46,13 @@ export default function OrderItem({
           </div>
         </div>
         <div className={styles.statusList}>
-          <Chip
-            name={ORDER_STATUS_LABEL[orderStatus]}
-            variant={'grey'}
-            size='sm'
-          />
+          {orderStatus === 'CANCELED' && (
+            <Chip
+              name={ORDER_STATUS_LABEL[orderStatus]}
+              variant={'grey'}
+              size='sm'
+            />
+          )}
           <Chip
             name={PAYMENT_STATUS_LABEL[paymentStatus]}
             variant={paymentStatus === 'PAID' ? 'gradient' : 'grey'}

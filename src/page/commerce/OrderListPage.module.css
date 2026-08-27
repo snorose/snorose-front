@@ -5,9 +5,11 @@
 }
 
 .orderList {
+  padding: 1.6rem var(--default-margin) 2.4rem;
+
   display: flex;
   flex-direction: column;
-  padding: 1.6rem var(--default-margin) 2.4rem;
+  gap: 1.2rem;
 }
 
 .orderItem {
