@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import type {
-  CreateOrderRequest,
   QuantityMap,
   SaleResponse,
   SelectedOrderItem,
@@ -53,15 +52,6 @@ export const isValidQuantityPolicy = (
 ) => {
   return nextQuantity <= variant.availableQuantity;
 };
-
-export function getCreateOrderRequestSignature(
-  request: Pick<
-    CreateOrderRequest,
-    'saleId' | 'buyerContact' | 'noticeAcceptances' | 'items'
-  >
-) {
-  return JSON.stringify(request);
-}
 
 export function getSaleUnavailableTitle(sale: SaleResponse) {
   if (sale.status === 'CLOSED') {

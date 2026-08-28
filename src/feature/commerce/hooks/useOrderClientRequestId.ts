@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 
-export default function useOrderClientRequestId(resetKey: string) {
+export default function useOrderClientRequestId() {
   const clientRequestIdRef = useRef<string | null>(null);
 
   const getClientRequestId = useCallback(() => {
@@ -14,10 +14,6 @@ export default function useOrderClientRequestId(resetKey: string) {
   const resetClientRequestId = useCallback(() => {
     clientRequestIdRef.current = null;
   }, []);
-
-  useEffect(() => {
-    resetClientRequestId();
-  }, [resetClientRequestId, resetKey]);
 
   return { getClientRequestId, resetClientRequestId };
 }

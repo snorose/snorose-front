@@ -27,7 +27,6 @@ import {
 import useOrderConfirmModal from '@/feature/commerce/hooks/useOrderConfirmModal';
 import {
   getCommerceErrorCode,
-  getCreateOrderRequestSignature,
   getSaleUnavailableMessage,
   getSaleUnavailableTitle,
 } from '@/feature/commerce/utils/saleDetail';
@@ -71,14 +70,8 @@ function SaleDetailView() {
   const { noticeAcceptanceMap, handleNoticeAcceptance, noticeAcceptances } =
     useNoticeAgreement(sale.notices);
 
-  const { getClientRequestId } = useOrderClientRequestId(
-    getCreateOrderRequestSignature({
-      saleId,
-      buyerContact: phoneNumber,
-      noticeAcceptances,
-      items,
-    })
-  );
+  const { getClientRequestId, resetClientRequestId } =
+    useOrderClientRequestId();
 
   const { toast } = useToast();
   const { isSaleClosedModalOpen, openSaleClosedModal, closeSaleClosedModal } =
@@ -111,6 +104,7 @@ function SaleDetailView() {
       },
       {
         onSuccess: () => {
+          resetClientRequestId();
           toast({ message: '주문이 완료되었어요.' });
         },
         onError: async (error) => {
@@ -168,7 +162,6 @@ function SaleDetailView() {
               break;
             case 7012:
               toast({ message: '다시 시도해주세요', variant: 'error' });
-              getClientRequestId();
               break;
           }
         },
