@@ -10,7 +10,7 @@ import type {
 
 type ProductResponse = SaleResponse['products'][number];
 type OrderListItemResponse = OrdersResponse['data'][number];
-type MockOrderErrorCode =
+type MockCreateOrderErrorCode =
   | 7000
   | 7001
   | 7003
@@ -22,14 +22,22 @@ type MockOrderErrorCode =
   | 7009
   | 7010
   | 7011;
+type MockCancelOrderErrorCode = 7014 | 7015 | 7017;
 
-type MockOrderErrorScenario = {
-  saleId: string;
-  errorCode: MockOrderErrorCode;
+type MockCommerceErrorScenario = {
+  errorCode: MockCreateOrderErrorCode | MockCancelOrderErrorCode;
   message: string;
   status: number;
+};
+
+type MockOrderErrorScenario = MockCommerceErrorScenario & {
+  saleId: string;
   initialSale: SaleResponse;
   refetchedSale: SaleResponse;
+};
+
+type MockOrderCancelErrorScenario = MockCommerceErrorScenario & {
+  orderNumber: string;
 };
 
 const sale: SaleResponse = {
@@ -436,7 +444,7 @@ function createCommerceErrorResponse({
   errorCode,
   message,
   status,
-}: MockOrderErrorScenario) {
+}: MockCommerceErrorScenario) {
   return HttpResponse.json(
     {
       code: String(errorCode),
@@ -509,8 +517,81 @@ const mockOrderListResponse: OrdersResponse = {
       paymentDueAt: '2026-08-17T18:00:00',
       createdAt: '2026-08-16T21:15:07',
     },
+    {
+      orderNumber: 'SR-20260817-007014',
+      saleId: 1,
+      sellerName: '눈송이',
+      saleTitle: '취소 실패 mock - 7014 타인 주문',
+      thumbnailUrl:
+        'https://cdn.snorose.com/commerce/products/8f2c-order-thumbnail.png',
+      itemSummary: '스노로즈 레터링 티셔츠 네이비 · M',
+      totalAmount: 12000,
+      orderStatus: 'ACTIVE',
+      paymentStatus: 'WAITING',
+      fulfillmentStatus: 'PENDING',
+      paymentDueAt: '2026-08-18T18:00:00',
+      createdAt: '2026-08-17T10:11:12',
+    },
+    {
+      orderNumber: 'SR-20260817-007017',
+      saleId: 1,
+      sellerName: '눈송이',
+      saleTitle: '취소 실패 mock - 7017 결제/수령 상태',
+      thumbnailUrl:
+        'https://cdn.snorose.com/commerce/products/8f2c-order-thumbnail.png',
+      itemSummary: '스노로즈 키링 화이트 · 1개',
+      totalAmount: 6000,
+      orderStatus: 'ACTIVE',
+      paymentStatus: 'PAID',
+      fulfillmentStatus: 'PENDING',
+      paymentDueAt: '2026-08-18T18:00:00',
+      createdAt: '2026-08-17T11:21:31',
+    },
+    {
+      orderNumber: 'SR-20260817-007015',
+      saleId: 1,
+      sellerName: '눈송이',
+      saleTitle: '취소 실패 mock - 7015 이미 취소됨',
+      thumbnailUrl:
+        'https://cdn.snorose.com/commerce/products/8f2c-order-thumbnail.png',
+      itemSummary: '스티커팩 기본 · 1개',
+      totalAmount: 5000,
+      orderStatus: 'ACTIVE',
+      paymentStatus: 'WAITING',
+      fulfillmentStatus: 'PENDING',
+      paymentDueAt: '2026-08-18T18:00:00',
+      createdAt: '2026-08-17T12:34:56',
+    },
   ],
 };
+
+const mockOrderCancelErrorScenarios: MockOrderCancelErrorScenario[] = [
+  {
+    orderNumber: 'SR-20260817-007014',
+    errorCode: 7014,
+    message: '본인의 주문만 취소할 수 있습니다.',
+    status: 403,
+  },
+  {
+    orderNumber: 'SR-20260817-007017',
+    errorCode: 7017,
+    message: '입금 확인 전 주문만 취소할 수 있습니다.',
+    status: 409,
+  },
+  {
+    orderNumber: 'SR-20260817-007015',
+    errorCode: 7015,
+    message: '이미 취소되었거나 완료된 주문입니다.',
+    status: 409,
+  },
+];
+
+const mockOrderCancelErrorScenarioByOrderNumber = new Map(
+  mockOrderCancelErrorScenarios.map((scenario) => [
+    scenario.orderNumber,
+    scenario,
+  ])
+);
 
 const mockOrderBank: OrderResponse['bank'] = {
   bankName: '신한은행',
@@ -618,6 +699,48 @@ const mockOrderDetailResponses: OrderResponse[] = [
     reviewNotice:
       '취소된 주문입니다. 재주문이 필요하면 판매 페이지를 확인해 주세요.',
   }),
+  createMockOrderDetail(mockOrderListResponse.data[4], {
+    items: [
+      {
+        productId: 101,
+        name: '스노로즈 레터링 티셔츠',
+        optionLabel: '네이비 · M',
+        price: 12000,
+        quantity: 1,
+      },
+    ],
+    cancellable: true,
+    reviewNotice:
+      '취소 요청 시 7014 타인 주문 에러를 반환하는 테스트 주문입니다.',
+  }),
+  createMockOrderDetail(mockOrderListResponse.data[5], {
+    items: [
+      {
+        productId: 201,
+        name: '스노로즈 키링',
+        optionLabel: '화이트',
+        price: 6000,
+        quantity: 1,
+      },
+    ],
+    cancellable: true,
+    reviewNotice:
+      '취소 요청 시 7017 결제/수령 상태 에러를 반환하는 테스트 주문입니다.',
+  }),
+  createMockOrderDetail(mockOrderListResponse.data[6], {
+    items: [
+      {
+        productId: 401,
+        name: '스티커팩',
+        optionLabel: '기본',
+        price: 5000,
+        quantity: 1,
+      },
+    ],
+    cancellable: true,
+    reviewNotice:
+      '취소 요청 시 7015 이미 취소된 주문 에러를 반환하는 테스트 주문입니다.',
+  }),
 ];
 
 const mockOrderDetailResponseByOrderNumber = new Map(
@@ -718,6 +841,13 @@ export const handlers = [
         },
         { status: 404 }
       );
+    }
+
+    const mockOrderCancelErrorScenario =
+      mockOrderCancelErrorScenarioByOrderNumber.get(String(orderNumber));
+
+    if (mockOrderCancelErrorScenario) {
+      return createCommerceErrorResponse(mockOrderCancelErrorScenario);
     }
 
     if (!orderResponse.cancellable) {
