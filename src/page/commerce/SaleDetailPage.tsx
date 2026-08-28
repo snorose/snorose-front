@@ -198,6 +198,7 @@ function SaleDetailView() {
   const isOrderable =
     items.length > 0 &&
     phoneNumber.length === 11 &&
+    /^010\d{8}$/.test(phoneNumber) &&
     sale.notices
       .filter((notice) => notice.required)
       .every((notice) => noticeAcceptanceMap[notice.noticeId]) &&
