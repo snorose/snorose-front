@@ -87,7 +87,7 @@ export default function WritePostPage() {
     currentBoard?.title ?? '게시판을 선택해주세요'
   );
   const [boardId, setBoardId] = useState(currentBoard?.id ?? '');
-  const categoryEnum = BOARD_CATEGORY_MAP[boardId];
+  const categoryConfig = BOARD_CATEGORY_MAP[boardId];
 
   const boardTitles = BOARD_MENUS.filter((menu) =>
     [21, 22, 23, 41, 43].includes(menu.id)
@@ -141,9 +141,12 @@ export default function WritePostPage() {
     setCategoryDropDownOpen((prev) => !prev);
   };
 
-  const categoryOptions = categoryEnum
-    ? Object.values(categoryEnum).map((name) => ({ id: name, name }))
-    : [];
+  const categoryOptions = Array.isArray(categoryConfig)
+    ? categoryConfig.map((name) => ({ id: name, name }))
+    : Object.entries(categoryConfig ?? {}).map(([id, name]) => ({ id, name }));
+  const selectedCategoryName = Array.isArray(categoryConfig)
+    ? category
+    : categoryConfig?.[category];
 
   const handleCategoryChange = (option) => {
     setCategory(option.id);
@@ -174,7 +177,7 @@ export default function WritePostPage() {
   };
 
   const data = {
-    category: categoryEnum ? category : '',
+    category: categoryConfig ? category : '',
     boardId,
     title,
     content: text,
@@ -237,7 +240,7 @@ export default function WritePostPage() {
       return;
     }
 
-    if (categoryEnum && !category) {
+    if (categoryConfig && !category) {
       toast({ message: TOAST.POST.selectCategory, variant: 'info' });
       return;
     }
@@ -368,7 +371,7 @@ export default function WritePostPage() {
                 )}
               </div>
             )}
-            {categoryEnum && (
+            {categoryConfig && (
               <div className={styles.subCategoryDropdownContainer}>
                 <div className={styles.categoryLabel}>
                   <p className={styles.subCategoryLabel}>카테고리</p>
@@ -380,7 +383,7 @@ export default function WritePostPage() {
                 >
                   <div className={styles.subCategorySelectContainer}>
                     <p className={styles.subCategorySelectText}>
-                      {category || '카테고리를 선택해주세요'}
+                      {selectedCategoryName || '카테고리를 선택해주세요'}
                     </p>
                   </div>
                   <Icon id='angle-down' width={16} height={9} />
@@ -390,7 +393,7 @@ export default function WritePostPage() {
                     options={categoryOptions}
                     select={{
                       id: category,
-                      name: category ?? '',
+                      name: selectedCategoryName ?? '',
                     }}
                     onSelect={handleCategoryChange}
                     className={styles.dropDownList}
