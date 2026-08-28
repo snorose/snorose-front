@@ -12,6 +12,5 @@ export default function useOrderCancel() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEY.commerceOrders });
     },
-    onError: () => {},
   });
 }
