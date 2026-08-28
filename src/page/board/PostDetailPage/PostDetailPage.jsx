@@ -5,7 +5,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { BackAppBar, FetchLoading } from '@/shared/component';
-import { BOARD_CATEGORY_MAP, QUERY_KEY, ROLE } from '@/shared/constant';
+import { QUERY_KEY, ROLE } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { getBoard } from '@/shared/lib';
 
@@ -66,7 +66,7 @@ function PostDetailLoader() {
   return (
     <PostDetailView
       data={data}
-      categoryName={BOARD_CATEGORY_MAP[currentBoard.id]?.[data.category]}
+      categoryName={data.category}
       authorBadgeRoleId={
         ADMIN_BADGE_BOARD_IDS.includes(currentBoard.id) ? ROLE.admin : undefined
       }

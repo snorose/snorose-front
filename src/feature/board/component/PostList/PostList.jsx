@@ -1,7 +1,7 @@
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
 import { FetchLoading, List, PullToRefresh } from '@/shared/component';
-import { BOARD_CATEGORY_MAP, NEW_ROUTES, QUERY_KEY, STALE_TIME } from '@/shared/constant';
+import { NEW_ROUTES, QUERY_KEY, STALE_TIME } from '@/shared/constant';
 import { useBoard, useSuspensePagination } from '@/shared/hook';
 import {
   BOARD_REGISTRY,
@@ -71,10 +71,7 @@ export default function PostList() {
               }
               ref={index === postList.length - 1 ? ref : undefined}
             >
-              <PostBar
-                {...post}
-                category={BOARD_CATEGORY_MAP[currentBoard.id]?.[post.category]}
-              >
+              <PostBar {...post}>
                 {post.boardName && (
                   <PostBar.Chip name={post.boardName} variant='grey' />
                 )}

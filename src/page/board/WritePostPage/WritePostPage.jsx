@@ -139,14 +139,11 @@ export default function WritePostPage() {
 
   const handleCategoryDropDownOpen = () => {
     setCategoryDropDownOpen((prev) => !prev);
-  }
+  };
 
   const categoryOptions = categoryEnum
-  ? Object.entries(categoryEnum).map(([key, name]) => ({
-      id: key,
-      name,
-    }))
-  : [];
+    ? Object.values(categoryEnum).map((name) => ({ id: name, name }))
+    : [];
 
   const handleCategoryChange = (option) => {
     setCategory(option.id);
@@ -157,6 +154,7 @@ export default function WritePostPage() {
   const handleBoardTitleChange = (option) => {
     setBoardTitle(option.name);
     setBoardId(option.id);
+    setCategory(null);
     setDropDownOpen(false);
   };
 
@@ -251,7 +249,7 @@ export default function WritePostPage() {
     if (!text.trim()) {
       toast({ message: TOAST.POST.emptyContent, variant: 'info' });
       return;
-    } 
+    }
 
     if (submitLockRef.current) return;
     submitLockRef.current = true;
@@ -382,9 +380,7 @@ export default function WritePostPage() {
                 >
                   <div className={styles.subCategorySelectContainer}>
                     <p className={styles.subCategorySelectText}>
-                      {category
-                        ? categoryEnum[category]
-                        : '카테고리를 선택해주세요'}
+                      {category || '카테고리를 선택해주세요'}
                     </p>
                   </div>
                   <Icon id='angle-down' width={16} height={9} />
@@ -394,7 +390,7 @@ export default function WritePostPage() {
                     options={categoryOptions}
                     select={{
                       id: category,
-                      name: category ? categoryEnum[category] : '',
+                      name: category ?? '',
                     }}
                     onSelect={handleCategoryChange}
                     className={styles.dropDownList}
