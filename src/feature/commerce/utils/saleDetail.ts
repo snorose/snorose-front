@@ -64,7 +64,7 @@ export function getCreateOrderRequestSignature(
 }
 
 export function getSaleUnavailableTitle(sale: SaleResponse) {
-  if (sale.status === 'CLOSE') {
+  if (sale.status === 'CLOSED') {
     return '판매가 마감되었어요';
   }
 
@@ -72,7 +72,7 @@ export function getSaleUnavailableTitle(sale: SaleResponse) {
 }
 
 export function getSaleUnavailableMessage(sale: SaleResponse) {
-  if (sale.status === 'CLOSE') {
+  if (sale.status === 'CLOSED') {
     return '이 상품은 새 주문을 받을 수 없어요. 기존 주문과 수령 안내는 판매자의 공지를 확인해주세요.';
   }
 

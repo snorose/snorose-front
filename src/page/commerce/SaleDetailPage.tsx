@@ -207,7 +207,7 @@ function SaleDetailView() {
 
       <div className={styles.border} />
 
-      {!sale.orderable ? (
+      {sale.status === 'CLOSED' ? (
         <SaleClosedSection
           sale={sale}
           title={getSaleUnavailableTitle(sale)}

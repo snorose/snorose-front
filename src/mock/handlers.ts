@@ -187,7 +187,7 @@ const mockOrderErrorScenarios: MockOrderErrorScenario[] = [
     }),
     refetchedSale: createScenarioSale(7001, '7001 마감 반영', {
       description: '마감 상태가 반영된 최신 판매 데이터입니다.',
-      status: 'CLOSE',
+      status: 'CLOSED',
       orderable: false,
       closesAt: '2026-08-01T23:59:59',
     }),
@@ -342,7 +342,7 @@ const saleResponses: SaleResponse[] = [
     ...sale,
     saleId: 2,
     title: `${sale.title} - 마감`,
-    status: 'CLOSE',
+    status: 'CLOSED',
     orderable: false,
     closesAt: '2026-08-01T23:59:59',
   },

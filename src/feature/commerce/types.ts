@@ -3,7 +3,7 @@ export type SaleResponse = {
   sellerName: string;
   title: string;
   description: string;
-  status: 'OPEN' | 'CLOSE';
+  status: 'OPEN' | 'CLOSED';
   orderable: boolean;
   opensAt: string;
   closesAt: string;
