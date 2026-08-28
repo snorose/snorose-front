@@ -17,7 +17,7 @@ export default function useCreateOrder() {
 
       const orderNumber = data.result.orderNumber;
       if (orderNumber) {
-        navigate(`/commerce/orders/${orderNumber}`);
+        navigate(`/commerce/orders/${orderNumber}`, { replace: true });
         return;
       }
     },

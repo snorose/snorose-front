@@ -57,7 +57,7 @@ function OrderListView() {
 
   return (
     <div className={styles.container}>
-      <BackAppBar title='내 주문 목록' />
+      <BackAppBar title='내 주문 목록' backNavTo={'/my-page'} />
 
       <div className={styles.orderList}>
         {orders.map((order, index) => (
