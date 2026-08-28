@@ -37,11 +37,11 @@ import styles from './SaleDetailPage.module.css';
 export default function SaleDetailPage() {
   return (
     <ErrorBoundary
-      fallback={<SaleDetailFeedback message='판매 정보를 불러오지 못했어요.' />}
+      fallback={<SaleDetailFeedback message='존재하지 않는 판매예요' />}
     >
       <Suspense
         fallback={
-          <SaleDetailFeedback message='판매 정보를 불러오는 중이에요.' />
+          <SaleDetailFeedback message='판매 정보를 불러오는 중이에요' />
         }
       >
         <SaleDetailView />
