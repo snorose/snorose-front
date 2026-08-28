@@ -57,11 +57,7 @@ export const isValidQuantityPolicy = (
 export function getCreateOrderRequestSignature(
   request: Pick<
     CreateOrderRequest,
-    | 'saleId'
-    | 'buyerContact'
-    | 'contactSharingConsent'
-    | 'noticeAcceptances'
-    | 'items'
+    'saleId' | 'buyerContact' | 'noticeAcceptances' | 'items'
   >
 ) {
   return JSON.stringify(request);

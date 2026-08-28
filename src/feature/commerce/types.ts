@@ -24,8 +24,6 @@ export type SaleResponse = {
     }>;
   }>;
   notices: Array<{
-    noticeId: number;
-    version: number;
     type: 'GENERAL' | 'SYSTEM_PRIVACY_CONSENT';
     text: string;
     required: boolean;
@@ -111,7 +109,6 @@ export type CreateOrderRequest = {
   saleId: string;
   clientRequestId: string;
   buyerContact: string;
-  contactSharingConsent: boolean;
   noticeAcceptances: NoticeAcceptance[];
   items: Array<{
     productId: number;
@@ -121,8 +118,8 @@ export type CreateOrderRequest = {
 };
 
 export type NoticeAcceptance = {
-  noticeId: number;
-  version: number;
+  type: 'GENERAL' | 'SYSTEM_PRIVACY_CONSENT';
+  text: string;
   accepted: boolean;
 };
 

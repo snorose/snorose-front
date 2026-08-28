@@ -26,8 +26,7 @@ type MockCreateOrderErrorCode =
   | 7007
   | 7008
   | 7009
-  | 7010
-  | 7011;
+  | 7010;
 type MockCancelOrderErrorCode = 7014 | 7015 | 7017;
 
 type MockCommerceErrorScenario = {
@@ -125,22 +124,16 @@ const sale: SaleResponse = {
   ],
   notices: [
     {
-      noticeId: 31,
-      version: 2,
       type: 'GENERAL',
       text: '수령 시 학생증 또는 모바일 학생증을 제시합니다.',
       required: true,
     },
     {
-      noticeId: 32,
-      version: 1,
       type: 'GENERAL',
       text: '배송 없이 지정된 장소에서 직접 수령합니다.',
       required: true,
     },
     {
-      noticeId: 90,
-      version: 3,
       type: 'SYSTEM_PRIVACY_CONSENT',
       text: '주문 확인과 수령 연락을 위해 이름·학번·연락처·주문 상품을 이 판매의 승인된 운영자에게 제공하는 데 동의합니다.',
       required: true,
@@ -335,31 +328,6 @@ const mockOrderErrorScenarios: MockOrderErrorScenario[] = [
       description: '주문 시 필수 확인 항목 누락 에러를 반환합니다.',
     }),
   },
-  {
-    saleId: '7011',
-    errorCode: 7011,
-    message: '유의사항이 변경되었습니다. 다시 확인해 주세요.',
-    status: 409,
-    initialSale: createScenarioSale(7011, '7011 안내 변경 mock', {
-      description: '주문 시 확인 항목 버전 변경 에러를 반환합니다.',
-    }),
-    refetchedSale: createScenarioSale(7011, '7011 안내 변경 mock', {
-      description: '주문 시 확인 항목 버전 변경 에러를 반환합니다.',
-      notices: [
-        {
-          ...sale.notices[0],
-          version: sale.notices[0].version + 1,
-          text: '최신 안내: 수령 시 학생증 또는 모바일 학생증과 주문자 연락처를 함께 확인합니다.',
-        },
-        {
-          ...sale.notices[1],
-          version: sale.notices[1].version + 1,
-          text: '최신 안내: 배송 없이 지정된 장소와 시간에 직접 수령합니다.',
-        },
-        sale.notices[2],
-      ],
-    }),
-  },
 ];
 
 const mockOrderErrorScenarioBySaleId = new Map(
@@ -392,32 +360,12 @@ function findRequiredNoticeError(
   saleResponse: SaleResponse,
   noticeAcceptances: NoticeAcceptance[] = []
 ) {
-  const noticeAcceptanceById = new Map(
-    noticeAcceptances.map((noticeAcceptance) => [
-      noticeAcceptance.noticeId,
-      noticeAcceptance,
-    ])
-  );
-
-  const hasVersionChanged = saleResponse.notices.some((notice) => {
-    const noticeAcceptance = noticeAcceptanceById.get(notice.noticeId);
-
-    return (
-      noticeAcceptance !== undefined &&
-      noticeAcceptance.version !== notice.version
-    );
-  });
-
-  if (hasVersionChanged) {
-    return {
-      code: 'COMMERCE_NOTICE_VERSION_CHANGED',
-      message: '유의사항이 변경되었습니다. 다시 확인해 주세요.',
-      status: 409,
-    };
-  }
-
   const hasUncheckedRequiredNotice = saleResponse.notices.some((notice) => {
-    const noticeAcceptance = noticeAcceptanceById.get(notice.noticeId);
+    const noticeAcceptance = noticeAcceptances.find(
+      (noticeAcceptance) =>
+        noticeAcceptance.type === notice.type &&
+        noticeAcceptance.text === notice.text
+    );
 
     return notice.required && noticeAcceptance?.accepted !== true;
   });
@@ -1149,16 +1097,6 @@ export const handlers = [
       triggeredMockOrderErrorSaleIds.add(saleId);
 
       return createCommerceErrorResponse(mockOrderErrorScenario);
-    }
-
-    if (requestBody.contactSharingConsent !== true) {
-      return HttpResponse.json(
-        {
-          code: 'COMMERCE_CONSENT_REQUIRED',
-          message: '개인정보 제공 동의가 필요합니다.',
-        },
-        { status: 400 }
-      );
     }
 
     const noticeError = findRequiredNoticeError(

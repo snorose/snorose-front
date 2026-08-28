@@ -68,18 +68,13 @@ function SaleDetailView() {
   const { name, studentNumber, phoneNumber, handlePhoneNumber } =
     useOrdererInfo();
 
-  const {
-    noticeAcceptanceMap,
-    handleNoticeAcceptance,
-    noticeAcceptances,
-    resetNoticeAcceptanceMap,
-  } = useNoticeAgreement(sale.notices);
+  const { noticeAcceptanceMap, handleNoticeAcceptance, noticeAcceptances } =
+    useNoticeAgreement(sale.notices);
 
   const { getClientRequestId } = useOrderClientRequestId(
     getCreateOrderRequestSignature({
       saleId,
       buyerContact: phoneNumber,
-      contactSharingConsent: true,
       noticeAcceptances,
       items,
     })
@@ -111,7 +106,6 @@ function SaleDetailView() {
         saleId,
         clientRequestId: getClientRequestId(),
         buyerContact: phoneNumber,
-        contactSharingConsent: true,
         noticeAcceptances,
         items,
       },
@@ -172,19 +166,6 @@ function SaleDetailView() {
                 variant: 'error',
               });
               break;
-            case 7011: // 확인 항목 버전 변경
-              const { data: newSale } = await refetch();
-
-              if (newSale) {
-                resetNoticeAcceptanceMap(newSale.notices);
-              }
-
-              toast({
-                message: '다시 시도해주세요',
-                variant: 'error',
-              });
-
-              break;
             case 7012:
               toast({ message: '다시 시도해주세요', variant: 'error' });
               getClientRequestId();
@@ -201,7 +182,7 @@ function SaleDetailView() {
     /^010\d{8}$/.test(phoneNumber) &&
     sale.notices
       .filter((notice) => notice.required)
-      .every((notice) => noticeAcceptanceMap[notice.noticeId]) &&
+      .every((notice) => noticeAcceptanceMap[notice.text]) &&
     !isPendingCreateOrder;
 
   return (
