@@ -83,7 +83,7 @@ export const BOARDS = Object.freeze([
   },
   {
     id: 43,
-    name: '숙플',
+    name: '숙플레이스',
     path: '/board/sookplace',
   },
   {
@@ -194,7 +194,7 @@ export const BOARD_MENUS = [
     id: 43,
     to: '/board/sookplace',
     textId: 'sookplace',
-    title: '숙플',
+    title: '숙플레이스',
     desc: '눈송이 맛집 커뮤니티',
     category: BOARD_CATEGORY.LIFE,
     image: sookplace,
@@ -464,9 +464,9 @@ export const COMMENT_REPORT_TYPE_MODAL_OPTION_CHILDREN = [
 ];
 
 export const RESIDENCE_CATEGORY_KOREAN_ENUM = Object.freeze({
-  MYEONGJAE: '명재관',
-  DORM_OUTSIDE: '외부기숙',
-  SELF_BOARDING: '자취',
+  명재관: '명재관',
+  외부기숙사: '외부기숙',
+  자취: '자취',
 });
 
 export const SOOKPLACE_CATEGORY_KOREAN_ENUM = Object.freeze({
