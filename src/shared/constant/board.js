@@ -464,9 +464,9 @@ export const COMMENT_REPORT_TYPE_MODAL_OPTION_CHILDREN = [
 ];
 
 export const RESIDENCE_CATEGORY_KOREAN_ENUM = Object.freeze({
-  MYEONGJAE: '명재관',
-  DORM_OUTSIDE: '외부기숙',
-  SELF_BOARDING: '자취',
+  명재관: '명재관',
+  외부기숙사: '외부기숙',
+  자취: '자취',
 });
 
 export const SOOKPLACE_CATEGORY_KOREAN_ENUM = Object.freeze({
