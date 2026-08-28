@@ -1,5 +1,20 @@
+import type { ReactNode } from 'react';
+
 import styles from './AppLayout.module.css';
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
-  return <div className={styles.layout}>{children}</div>;
+type AppLayoutProps = {
+  children: ReactNode;
+  variant?: 'default' | 'pickupDisplay';
+};
+
+export default function AppLayout({
+  children,
+  variant = 'default',
+}: AppLayoutProps) {
+  const className =
+    variant === 'pickupDisplay'
+      ? `${styles.layout} ${styles.pickupDisplayLayout}`
+      : styles.layout;
+
+  return <div className={className}>{children}</div>;
 }

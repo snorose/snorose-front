@@ -193,3 +193,33 @@
     font: var(--text-heading-1-bold);
   }
 }
+
+@media (min-width: 768px) {
+  .container {
+    padding: 3.2rem 4rem;
+  }
+
+  .panel,
+  .pairingForm {
+    max-width: none;
+    min-height: min(70rem, calc(100vh - 6.4rem));
+    min-height: min(70rem, calc(100dvh - 6.4rem));
+    padding: 4rem;
+    gap: 3.2rem;
+  }
+
+  .itemList {
+    gap: 1.2rem;
+  }
+
+  .item {
+    min-height: 8rem;
+    padding: 1.6rem 2rem;
+  }
+
+  .primaryButton,
+  .confirmButton,
+  .secondaryButton {
+    min-height: 6rem;
+  }
+}

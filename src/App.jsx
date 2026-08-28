@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -20,8 +20,10 @@ import { MaintenancePage } from './page/maintenance';
 
 function App() {
   const appRef = useRef();
+  const location = useLocation();
   const queryClient = useQueryClient();
   const isEnabled = useFeatureIsOn('push-notification');
+  const isPickupDisplayPage = location.pathname === '/commerce/pickup-display';
 
   // 푸시 알림 설정
   useEffect(() => {
@@ -37,7 +39,7 @@ function App() {
     PushNotificationManager.registerServiceWorker()
       .then(() => PushNotificationManager.onForegroundMessage(listen))
       .catch((error) => console.error(error));
-  }, [isEnabled]);
+  }, [isEnabled, queryClient]);
 
   useScrollRestoration(appRef);
 
@@ -49,7 +51,7 @@ function App() {
   }
 
   return (
-    <AppLayout>
+    <AppLayout variant={isPickupDisplayPage ? 'pickupDisplay' : 'default'}>
       <div className={styles.app} ref={appRef}>
         <main>
           <Outlet />
