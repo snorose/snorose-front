@@ -1,12 +1,19 @@
 import type {
+  ConfirmPickupSessionResponse,
   CreateOrderRequest,
   CreateOrderResponse,
   OrderResponse,
   OrdersResponse,
+  PairPickupDeviceRequest,
+  PairPickupDeviceResponse,
+  PickupDeviceHeartbeatResponse,
+  PickupDeviceSessionResponse,
   SaleResponse,
 } from '@/feature/commerce/types';
 
-import { authAxios } from '@/axios';
+import { authAxios, defaultAxios } from '@/axios';
+
+const PICKUP_DEVICE_TOKEN_HEADER = 'X-Pickup-Device-Token';
 
 export async function getSale(saleId: string): Promise<SaleResponse> {
   const response = await authAxios.get(`/v1/commerce/sales/${saleId}`);
@@ -49,4 +56,63 @@ export async function cancelOrder(orderNumber: string) {
   );
 
   return resopnse.data;
+}
+
+export async function pairPickupDevice({
+  pairingCode,
+  deviceLabel,
+}: PairPickupDeviceRequest): Promise<PairPickupDeviceResponse> {
+  const response = await defaultAxios.post('/v1/commerce/pickup-device/pair', {
+    pairingCode,
+    deviceLabel,
+  });
+
+  return response.data.result;
+}
+
+export async function readPickupDeviceSession(
+  deviceToken: string
+): Promise<PickupDeviceSessionResponse> {
+  const response = await defaultAxios.get(
+    '/v1/commerce/pickup-device/session',
+    {
+      headers: generatePickupDeviceHeaders(deviceToken),
+    }
+  );
+
+  return response.data.result;
+}
+
+export async function confirmPickupSession(
+  deviceToken: string
+): Promise<ConfirmPickupSessionResponse> {
+  const response = await defaultAxios.post(
+    '/v1/commerce/pickup-device/session/confirm',
+    undefined,
+    {
+      headers: generatePickupDeviceHeaders(deviceToken),
+    }
+  );
+
+  return response.data.result;
+}
+
+export async function sendPickupDeviceHeartbeat(
+  deviceToken: string
+): Promise<PickupDeviceHeartbeatResponse> {
+  const response = await defaultAxios.post(
+    '/v1/commerce/pickup-device/heartbeat',
+    undefined,
+    {
+      headers: generatePickupDeviceHeaders(deviceToken),
+    }
+  );
+
+  return response.data.result;
+}
+
+function generatePickupDeviceHeaders(deviceToken: string) {
+  return {
+    [PICKUP_DEVICE_TOKEN_HEADER]: deviceToken,
+  };
 }

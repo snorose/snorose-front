@@ -32,6 +32,24 @@ export type SaleResponse = {
   }>;
 };
 
+export type QuantityMap = Partial<
+  Record<number, Partial<Record<number, number>>>
+>;
+
+export type ProductOptionItem = {
+  product: SaleResponse['products'][number];
+  variant: SaleResponse['products'][number]['variants'][number];
+  quantity: number;
+  isSoldOut: boolean;
+};
+
+export type SelectedOrderItem = Omit<ProductOptionItem, 'isSoldOut'>;
+
+export type OrderStatus = OrdersResponse['data'][number]['orderStatus'];
+export type PaymentStatus = OrdersResponse['data'][number]['paymentStatus'];
+export type FulfillmentStatus =
+  OrdersResponse['data'][number]['fulfillmentStatus'];
+
 export type OrdersResponse = {
   hasNext: boolean;
   data: Array<{
@@ -117,20 +135,49 @@ export type CreateOrderResponse = {
   };
 };
 
-export type QuantityMap = Partial<
-  Record<number, Partial<Record<number, number>>>
->;
-
-export type ProductOptionItem = {
-  product: SaleResponse['products'][number];
-  variant: SaleResponse['products'][number]['variants'][number];
+export type PickupDeviceOrderItem = {
+  productName: string;
+  optionLabel: string;
   quantity: number;
-  isSoldOut: boolean;
 };
 
-export type SelectedOrderItem = Omit<ProductOptionItem, 'isSoldOut'>;
+export type PairPickupDeviceRequest = {
+  pairingCode: string;
+  deviceLabel: string;
+};
 
-export type OrderStatus = OrdersResponse['data'][number]['orderStatus'];
-export type PaymentStatus = OrdersResponse['data'][number]['paymentStatus'];
-export type FulfillmentStatus =
-  OrdersResponse['data'][number]['fulfillmentStatus'];
+export type PairPickupDeviceResponse = {
+  deviceId: number;
+  deviceToken: string;
+  name: string;
+  heartbeatIntervalSeconds: number;
+};
+
+export type PickupDeviceSessionResponse =
+  | {
+      state: 'IDLE';
+    }
+  | {
+      state: 'ARMED';
+      sessionId: number;
+      expiresAt: string;
+      remainingSeconds: number;
+      order: {
+        buyerName: string;
+        studentNumberMasked: string;
+        saleTitle: string;
+        items: PickupDeviceOrderItem[];
+      };
+    };
+
+export type ConfirmPickupSessionResponse = {
+  state: 'CONFIRMED';
+  buyerName: string;
+  items: PickupDeviceOrderItem[];
+  autoResetSeconds: number;
+};
+
+export type PickupDeviceHeartbeatResponse = {
+  serverTime: string;
+  state: PickupDeviceSessionResponse['state'];
+};
