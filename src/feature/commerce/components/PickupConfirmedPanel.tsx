@@ -17,7 +17,7 @@ export default function PickupConfirmedPanel({
         <p className={styles.description}>{pickup.buyerName}님</p>
       </div>
 
-      <div className={styles.itemList}>
+      <div className={`${styles.itemList} ${styles.confirmedItemList}`}>
         {pickup.items.map((item, index) => (
           <div
             className={styles.item}

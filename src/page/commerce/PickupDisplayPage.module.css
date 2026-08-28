@@ -1,4 +1,6 @@
 .container {
+  --pickup-display-content-max-width: 64rem;
+
   min-height: 100%;
   padding: 2.4rem var(--default-margin);
   display: flex;
@@ -22,13 +24,6 @@
   background-color: var(--white-2);
 }
 
-.panelTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.2rem;
-}
-
 .statusBadge {
   width: fit-content;
   min-height: 3.2rem;
@@ -40,20 +35,6 @@
   background-color: var(--blue-1);
   color: var(--blue-4);
   font: var(--text-body-1-bold);
-}
-
-.remainingTime {
-  flex-shrink: 0;
-  min-width: 7.2rem;
-  min-height: 4rem;
-  padding: 0.7rem 1.2rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.5rem;
-  background-color: var(--grey-4);
-  color: var(--white);
-  font: var(--text-heading-1-bold);
 }
 
 .panelHeader {
@@ -90,6 +71,13 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.armedItemList,
+.confirmedItemList {
+  width: 100%;
+  max-width: var(--pickup-display-content-max-width);
+  align-self: center;
 }
 
 .item {
@@ -134,6 +122,9 @@
 }
 
 .fieldList {
+  width: 100%;
+  max-width: var(--pickup-display-content-max-width);
+  align-self: center;
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
@@ -151,12 +142,24 @@
   font: var(--text-headline-2-bold);
 }
 
+.primaryButton {
+  width: 100%;
+  max-width: var(--pickup-display-content-max-width);
+  align-self: center;
+}
+
 .confirmButton {
+  width: 100%;
+  max-width: var(--pickup-display-content-max-width);
   margin-top: auto;
+  align-self: center;
 }
 
 .secondaryButton {
+  width: 100%;
+  max-width: var(--pickup-display-content-max-width);
   margin-top: auto;
+  align-self: center;
   color: var(--grey-4);
   background-color: var(--grey-2);
 }
@@ -167,6 +170,7 @@
   font: var(--text-body-1-reg);
   text-align: center;
   word-break: keep-all;
+  margin-bottom: auto;
 }
 
 .errorMessage {
@@ -183,10 +187,6 @@
     min-height: calc(100vh - 3.2rem);
     min-height: calc(100dvh - 3.2rem);
     padding: 2.4rem 1.6rem;
-  }
-
-  .panelTop {
-    align-items: flex-start;
   }
 
   .title {

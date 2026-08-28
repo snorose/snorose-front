@@ -20,14 +20,9 @@ export default function PickupArmedPanel({
   isConfirming,
   onConfirm,
 }: PickupArmedPanelProps) {
-  const remainingSeconds = Math.max(session.remainingSeconds, 0);
-
   return (
     <section className={styles.panel} aria-live='polite'>
-      <div className={styles.panelTop}>
-        <div className={styles.statusBadge}>수령 확인</div>
-        <div className={styles.remainingTime}>{remainingSeconds}초</div>
-      </div>
+      <div className={styles.statusBadge}>수령 확인</div>
 
       <div className={styles.panelHeader}>
         <h1 className={styles.title}>{session.order.saleTitle}</h1>
@@ -38,7 +33,7 @@ export default function PickupArmedPanel({
         </div>
       </div>
 
-      <div className={styles.itemList}>
+      <div className={`${styles.itemList} ${styles.armedItemList}`}>
         {session.order.items.map((item, index) => (
           <div
             className={styles.item}
