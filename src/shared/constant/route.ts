@@ -27,6 +27,7 @@ export const ROUTE = Object.freeze({
   mypageMyPost: '/my-page/my-post',
   mypageComment: '/my-page/comment',
   mypageDownloadExamReview: '/my-page/download-exam-review',
+  mypageInquiryReport: '/my-page/inquiry-report',
   mypageScrap: '/my-page/scrap',
   mypageExamReviewScrap: '/my-page/scrap-exam-review',
   login: '/login',
@@ -85,8 +86,19 @@ export const NEW_ROUTES = Object.freeze({
   alert: '/alert',
   alertSetting: '/alert/setting',
 
+  /* 문의 및 신고 */
+  inquiryWrite: '/inquiry/write',
+  inquiryDetail: (inquiryId: string) => `/inquiry/${inquiryId}`,
+  inquiryEdit: (inquiryId: string) => `/inquiry/${inquiryId}/edit`,
+
+  reportWrite: (reportType: 'post' | 'exam' | 'comment' | 'user') =>
+    `/report/write/${reportType}`,
+  reportDetail: (reportId: string) => `/report/${reportId}`,
+  reportEdit: (reportId: string) => `/report/${reportId}/edit`,
+
   /* 마이페이지 */
   mypage: '/my-page',
+  myActivityInquiriesAndReports: '/my-page/inquiry-report',
   // mypagePassword: '/my-page/password',
   // mypageEditInfo: '/my-page/edit-info',
   // mypagePoint: '/my-page/view-point-list',

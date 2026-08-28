@@ -4,8 +4,9 @@ import { FetchLoading, InfiniteScrollSentinel } from '@/shared/component';
 import { STALE_TIME } from '@/shared/constant';
 import { useSuspenseInfiniteScroll } from '@/shared/hook';
 import { getBoardTextId } from '@/shared/lib';
-
 import { PostBar } from '@/feature/board/component';
+import { ACTIVITIES } from '@/feature/my/constant';
+import { INQUIRY_STATUS_MAP } from '@/feature/support/constant';
 
 import {
   noCommentsIllustration,
@@ -13,7 +14,6 @@ import {
   noScrapedPostsIllustration,
 } from '@/assets/illustrations';
 
-import { ACTIVITIES } from '../../constant/activity';
 import styles from './MyPostList.module.css';
 
 export default function MyPostList({
@@ -62,7 +62,11 @@ export default function MyPostList({
     );
   }
 
-  const makePath = ({ boardId, postId, isNotice }) => {
+  const makePath = ({ boardId, postId, isNotice, group }) => {
+    if (group) {
+      return `/${group.toLowerCase()}/${postId}`;
+    }
+
     if (boardId === 14) {
       return isNotice
         ? `/board/event-notice/post/${postId}`
@@ -80,8 +84,8 @@ export default function MyPostList({
     <ul className={styles.posts}>
       {list.map((post) => (
         <Link
-          className={styles.to}
           key={post.postId}
+          className={styles.to}
           to={makePath({
             boardId: post.boardId,
             postId: post.postId,
@@ -92,6 +96,13 @@ export default function MyPostList({
             {post.boardName && (
               <PostBar.Chip name={post.boardName} variant='grey' />
             )}
+            {post.status && (
+              <PostBar.Chip
+                name={INQUIRY_STATUS_MAP[post.status].label}
+                variant={INQUIRY_STATUS_MAP[post.status].variant}
+              />
+            )}
+            {post.isConfirmed && <PostBar.ConfirmedIcon />}
           </PostBar>
         </Link>
       ))}

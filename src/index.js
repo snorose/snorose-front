@@ -12,7 +12,6 @@ import { QueryProvider } from '@/shared/provider/query-provider';
 
 import { CommentContextProvider } from '@/feature/comment/context';
 
-// import { routeList } from '@/router.migration.js';
 import reportWebVitals from '@/reportWebVitals';
 import { routeList } from '@/router.js';
 
@@ -37,23 +36,32 @@ Sentry.init({
 
 growthbook.init({ streaming: true });
 
-const router = createBrowserRouter(routeList);
+async function enableMocking() {
+  if (process.env.NODE_ENV !== 'development') return;
+
+  const { worker } = await import('@/mock/browser');
+  return worker.start();
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <GrowthBookProvider growthbook={growthbook}>
-      <ToastProvider>
-        <QueryProvider navigate={router.navigate}>
-          <ModalProvider>
-            <CommentContextProvider>
-              <RouterProvider router={router} />
-            </CommentContextProvider>
-          </ModalProvider>
-        </QueryProvider>
-      </ToastProvider>
-    </GrowthBookProvider>
-  </React.StrictMode>
-);
+enableMocking().then(() => {
+  const router = createBrowserRouter(routeList);
+
+  root.render(
+    <React.StrictMode>
+      <GrowthBookProvider growthbook={growthbook}>
+        <ToastProvider>
+          <QueryProvider navigate={router.navigate}>
+            <ModalProvider>
+              <CommentContextProvider>
+                <RouterProvider router={router} />
+              </CommentContextProvider>
+            </ModalProvider>
+          </QueryProvider>
+        </ToastProvider>
+      </GrowthBookProvider>
+    </React.StrictMode>
+  );
+});
 
 reportWebVitals();

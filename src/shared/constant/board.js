@@ -38,6 +38,7 @@ export const BOARD_CATEGORY = {
 
 export const BOARD_ID = Object.freeze({
   all: 0, // 프론트에서만 사용하는 보드 ID
+  inquiryAndReport: 13,
   event: 14,
   besookt: 20,
   'first-snow': 21,
