@@ -28,6 +28,7 @@ export const QUERY_KEY = Object.freeze({
   commerceSale: (saleId) => ['commerceSale', saleId],
   commerceOrders: ['commerceOrders'],
   commerceOrder: (orderNumber) => ['commerceOrder', orderNumber],
+  commercePickupDeviceSession: ['commercePickupDeviceSession'],
 });
 
 export const MUTATION_KEY = Object.freeze({

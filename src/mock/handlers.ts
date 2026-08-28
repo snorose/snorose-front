@@ -1,10 +1,16 @@
 import { delay, http, HttpResponse } from 'msw';
 
 import type {
+  ConfirmPickupSessionResponse,
   CreateOrderRequest,
   NoticeAcceptance,
   OrderResponse,
   OrdersResponse,
+  PairPickupDeviceRequest,
+  PairPickupDeviceResponse,
+  PickupDeviceHeartbeatResponse,
+  PickupDeviceOrderItem,
+  PickupDeviceSessionResponse,
   SaleResponse,
 } from '@/feature/commerce/types';
 
@@ -39,6 +45,8 @@ type MockOrderErrorScenario = MockCommerceErrorScenario & {
 type MockOrderCancelErrorScenario = MockCommerceErrorScenario & {
   orderNumber: string;
 };
+
+type MockPickupDeviceStatus = 'IDLE' | 'ARMED' | 'CONFIRMED';
 
 const sale: SaleResponse = {
   saleId: 1,
@@ -769,6 +777,141 @@ function cancelMockOrder(orderNumber: string, orderResponse: OrderResponse) {
   return canceledOrderResponse;
 }
 
+const MOCK_PICKUP_PAIRING_CODE = '482913';
+const MOCK_PICKUP_DEVICE_TOKEN = 'pdt_msw_success_token';
+const MOCK_PICKUP_DEVICE_ID = 12;
+const MOCK_PICKUP_SESSION_ID = 771;
+const MOCK_PICKUP_SESSION_SECONDS = 60;
+const MOCK_PICKUP_CONFIRM_AUTO_RESET_SECONDS = 5;
+
+const mockPickupOrderItems: PickupDeviceOrderItem[] = [
+  {
+    productName: '스노로즈 레터링 티셔츠',
+    optionLabel: '네이비 · M',
+    quantity: 1,
+  },
+  {
+    productName: '스노로즈 키링',
+    optionLabel: '화이트',
+    quantity: 1,
+  },
+];
+
+let mockPickupDeviceName = '명신관 1층 iPad';
+// let mockPickupDeviceStatus: MockPickupDeviceStatus = 'IDLE';
+let mockPickupDeviceStatus: MockPickupDeviceStatus = 'ARMED';
+let mockPickupSessionExpiresAt = createMockPickupSessionExpiresAt();
+let mockPickupConfirmedAt = 0;
+
+function padMockDateUnit(value: number) {
+  return String(value).padStart(2, '0');
+}
+
+function formatMockDateTime(date: Date) {
+  const year = date.getFullYear();
+  const month = padMockDateUnit(date.getMonth() + 1);
+  const day = padMockDateUnit(date.getDate());
+  const hours = padMockDateUnit(date.getHours());
+  const minutes = padMockDateUnit(date.getMinutes());
+  const seconds = padMockDateUnit(date.getSeconds());
+
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+}
+
+function createMockPickupSessionExpiresAt() {
+  return formatMockDateTime(
+    new Date(Date.now() + MOCK_PICKUP_SESSION_SECONDS * 1000)
+  );
+}
+
+function getMockPickupRemainingSeconds() {
+  return Math.max(
+    0,
+    Math.ceil(
+      (new Date(mockPickupSessionExpiresAt).getTime() - Date.now()) / 1000
+    )
+  );
+}
+
+function getPickupDeviceToken(request: Request) {
+  return request.headers.get('X-Pickup-Device-Token');
+}
+
+function isAuthorizedPickupDevice(request: Request) {
+  return getPickupDeviceToken(request) === MOCK_PICKUP_DEVICE_TOKEN;
+}
+
+function createPickupDeviceErrorResponse(
+  code: number,
+  message: string,
+  status: number
+) {
+  return HttpResponse.json(
+    {
+      code: String(code),
+      message,
+    },
+    { status }
+  );
+}
+
+function createPickupDeviceUnauthorizedResponse() {
+  return createPickupDeviceErrorResponse(
+    7062,
+    '단말 인증에 실패했습니다.',
+    401
+  );
+}
+
+function armMockPickupSession() {
+  mockPickupDeviceStatus = 'ARMED';
+  mockPickupSessionExpiresAt = createMockPickupSessionExpiresAt();
+  mockPickupConfirmedAt = 0;
+}
+
+function getMockPickupDeviceVisibleStatus(): PickupDeviceSessionResponse['state'] {
+  if (mockPickupDeviceStatus !== 'ARMED') {
+    return 'IDLE';
+  }
+
+  if (getMockPickupRemainingSeconds() <= 0) {
+    mockPickupDeviceStatus = 'IDLE';
+    return 'IDLE';
+  }
+
+  return 'ARMED';
+}
+
+function getMockPickupSessionResponse(): PickupDeviceSessionResponse {
+  if (getMockPickupDeviceVisibleStatus() !== 'ARMED') {
+    return {
+      state: 'IDLE',
+    };
+  }
+
+  return {
+    state: 'ARMED',
+    sessionId: MOCK_PICKUP_SESSION_ID,
+    expiresAt: mockPickupSessionExpiresAt,
+    remainingSeconds: getMockPickupRemainingSeconds(),
+    order: {
+      buyerName: '김눈송',
+      studentNumberMasked: '23*****',
+      saleTitle: '2026 스노로즈 여름 굿즈',
+      items: mockPickupOrderItems,
+    },
+  };
+}
+
+function createMockPickupConfirmedResponse(): ConfirmPickupSessionResponse {
+  return {
+    state: 'CONFIRMED',
+    buyerName: '김눈송',
+    items: mockPickupOrderItems,
+    autoResetSeconds: MOCK_PICKUP_CONFIRM_AUTO_RESET_SECONDS,
+  };
+}
+
 export const handlers = [
   http.get('*/v1/commerce/sales/:saleId', async ({ params }) => {
     await delay(250);
@@ -790,6 +933,107 @@ export const handlers = [
 
     return HttpResponse.json({
       result: getSaleResponseForMockScenario(String(saleId), saleResponse),
+    });
+  }),
+  http.post('*/v1/commerce/pickup-device/pair', async ({ request }) => {
+    await delay(250);
+
+    const requestBody =
+      (await request.json()) as Partial<PairPickupDeviceRequest>;
+
+    if (requestBody.pairingCode !== MOCK_PICKUP_PAIRING_CODE) {
+      return createPickupDeviceErrorResponse(
+        7067,
+        '페어링 코드가 올바르지 않거나 만료되었습니다.',
+        400
+      );
+    }
+
+    mockPickupDeviceName =
+      requestBody.deviceLabel?.trim() || mockPickupDeviceName;
+    armMockPickupSession();
+
+    const response: PairPickupDeviceResponse = {
+      deviceId: MOCK_PICKUP_DEVICE_ID,
+      deviceToken: MOCK_PICKUP_DEVICE_TOKEN,
+      name: mockPickupDeviceName,
+      heartbeatIntervalSeconds: 30,
+    };
+
+    return HttpResponse.json({
+      result: response,
+    });
+  }),
+  http.get('*/v1/commerce/pickup-device/session', async ({ request }) => {
+    await delay(250);
+
+    if (!isAuthorizedPickupDevice(request)) {
+      return createPickupDeviceUnauthorizedResponse();
+    }
+
+    return HttpResponse.json({
+      result: getMockPickupSessionResponse(),
+    });
+  }),
+  http.post(
+    '*/v1/commerce/pickup-device/session/confirm',
+    async ({ request }) => {
+      await delay(250);
+
+      if (!isAuthorizedPickupDevice(request)) {
+        return createPickupDeviceUnauthorizedResponse();
+      }
+
+      if (
+        mockPickupDeviceStatus === 'CONFIRMED' &&
+        Date.now() - mockPickupConfirmedAt <=
+          MOCK_PICKUP_CONFIRM_AUTO_RESET_SECONDS * 1000
+      ) {
+        return HttpResponse.json({
+          result: createMockPickupConfirmedResponse(),
+        });
+      }
+
+      if (mockPickupDeviceStatus !== 'ARMED') {
+        return createPickupDeviceErrorResponse(
+          7063,
+          '활성 수령 세션이 없습니다.',
+          409
+        );
+      }
+
+      if (getMockPickupRemainingSeconds() <= 0) {
+        mockPickupDeviceStatus = 'IDLE';
+
+        return createPickupDeviceErrorResponse(
+          7064,
+          '수령 세션이 만료되었습니다.',
+          409
+        );
+      }
+
+      mockPickupDeviceStatus = 'CONFIRMED';
+      mockPickupConfirmedAt = Date.now();
+
+      return HttpResponse.json({
+        result: createMockPickupConfirmedResponse(),
+      });
+    }
+  ),
+  http.post('*/v1/commerce/pickup-device/heartbeat', async ({ request }) => {
+    await delay(100);
+
+    if (!isAuthorizedPickupDevice(request)) {
+      return createPickupDeviceUnauthorizedResponse();
+    }
+
+    const response: PickupDeviceHeartbeatResponse = {
+      serverTime: formatMockDateTime(new Date()),
+      state: getMockPickupDeviceVisibleStatus(),
+    };
+
+    return HttpResponse.json({
+      result: response,
     });
   }),
   http.get('*/v1/commerce/orders', async () => {

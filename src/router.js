@@ -34,6 +34,7 @@ import {
 } from '@/page/board';
 import OrderDetailPage from '@/page/commerce/OrderDetailPage';
 import OrderListPage from '@/page/commerce/OrderListPage';
+import PickupDisplayPage from '@/page/commerce/PickupDisplayPage';
 import SaleDetailPage from '@/page/commerce/SaleDetailPage';
 import { ErrorPage, NotFoundPage } from '@/page/etc';
 import {
@@ -678,6 +679,10 @@ export const routeList = [
             <OrderDetailPage />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: '/commerce/pickup-display',
+        element: <PickupDisplayPage />,
       },
       {
         path: '/about',
