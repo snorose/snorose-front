@@ -15,6 +15,8 @@ export default function OrdererInfoSection({
   phoneNumber,
   handlePhoneNumber,
 }: OrdererInfoSectionProps) {
+  const isValidPhoneNumber = /^010\d{8}$/.test(phoneNumber);
+
   return (
     <section className={styles.ordererSection}>
       <h2 className={styles.sectionTitle}>주문자 정보</h2>
@@ -34,13 +36,20 @@ export default function OrdererInfoSection({
 
         <div className={styles.phoneField}>
           <Label htmlFor='phoneNumber'>전화번호</Label>
-          <NumberInput
-            id='phoneNumber'
-            placeholder='- 제외 숫자만 입력'
-            value={phoneNumber}
-            onChange={handlePhoneNumber}
-            maxLength={11}
-          />
+          <div className={styles.fieldMessageWrapper}>
+            <NumberInput
+              id='phoneNumber'
+              placeholder='- 제외 숫자만 입력'
+              value={phoneNumber}
+              onChange={handlePhoneNumber}
+              maxLength={11}
+            />
+            {phoneNumber && !isValidPhoneNumber && (
+              <div className={styles.message}>
+                010으로 시작하는 11자리 숫자를 입력하세요
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>

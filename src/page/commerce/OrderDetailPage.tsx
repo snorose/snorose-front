@@ -101,7 +101,7 @@ function OrderDetailView() {
 
   return (
     <div>
-      <BackAppBar title='주문 상세' notFixed />
+      <BackAppBar title='주문 상세' backNavTo={'/commerce/orders'} notFixed />
 
       {showBankInfo && (
         <section className={`${styles.info} ${styles.paymentInfo}`}>

@@ -24,7 +24,6 @@ export async function createOrder({
   saleId,
   clientRequestId,
   buyerContact,
-  contactSharingConsent,
   noticeAcceptances,
   items,
 }: CreateOrderRequest): Promise<CreateOrderResponse> {
@@ -32,7 +31,6 @@ export async function createOrder({
     saleId,
     clientRequestId,
     buyerContact,
-    contactSharingConsent,
     noticeAcceptances,
     items,
   });

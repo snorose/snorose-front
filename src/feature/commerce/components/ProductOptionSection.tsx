@@ -5,10 +5,7 @@ import type {
   QuantityMap,
   SaleResponse,
 } from '@/feature/commerce/types';
-import {
-  getProductQuantity,
-  isValidQuantityPolicy,
-} from '@/feature/commerce/utils/saleDetail';
+import { getProductQuantity } from '@/feature/commerce/utils/saleDetail';
 
 import styles from '@/page/commerce/SaleDetailPage.module.css';
 
@@ -43,9 +40,11 @@ export default function ProductOptionSection({
       <div className={styles.optionList}>
         {productOptionItems.map(({ product, variant, quantity, isSoldOut }) => {
           const isPlusQuantityValid =
-            quantity < variant.availableQuantity &&
-            getProductQuantity(product.productId, quantityMap) <
-              product.remainingForBuyer;
+            product.inventoryPolicy === 'PREORDER' ||
+            (product.inventoryPolicy === 'LIMITED_STOCK' &&
+              quantity < variant.availableQuantity &&
+              getProductQuantity(product.productId, quantityMap) <
+                product.remainingForBuyer);
 
           return (
             <div

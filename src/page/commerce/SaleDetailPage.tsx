@@ -27,7 +27,6 @@ import {
 import useOrderConfirmModal from '@/feature/commerce/hooks/useOrderConfirmModal';
 import {
   getCommerceErrorCode,
-  getCreateOrderRequestSignature,
   getSaleUnavailableMessage,
   getSaleUnavailableTitle,
 } from '@/feature/commerce/utils/saleDetail';
@@ -37,11 +36,11 @@ import styles from './SaleDetailPage.module.css';
 export default function SaleDetailPage() {
   return (
     <ErrorBoundary
-      fallback={<SaleDetailFeedback message='판매 정보를 불러오지 못했어요.' />}
+      fallback={<SaleDetailFeedback message='존재하지 않는 판매예요' />}
     >
       <Suspense
         fallback={
-          <SaleDetailFeedback message='판매 정보를 불러오는 중이에요.' />
+          <SaleDetailFeedback message='판매 정보를 불러오는 중이에요' />
         }
       >
         <SaleDetailView />
@@ -68,22 +67,11 @@ function SaleDetailView() {
   const { name, studentNumber, phoneNumber, handlePhoneNumber } =
     useOrdererInfo();
 
-  const {
-    noticeAcceptanceMap,
-    handleNoticeAcceptance,
-    noticeAcceptances,
-    resetNoticeAcceptanceMap,
-  } = useNoticeAgreement(sale.notices);
+  const { noticeAcceptanceMap, handleNoticeAcceptance, noticeAcceptances } =
+    useNoticeAgreement(sale.notices);
 
-  const { getClientRequestId } = useOrderClientRequestId(
-    getCreateOrderRequestSignature({
-      saleId,
-      buyerContact: phoneNumber,
-      contactSharingConsent: true,
-      noticeAcceptances,
-      items,
-    })
-  );
+  const { getClientRequestId, resetClientRequestId } =
+    useOrderClientRequestId();
 
   const { toast } = useToast();
   const { isSaleClosedModalOpen, openSaleClosedModal, closeSaleClosedModal } =
@@ -111,12 +99,12 @@ function SaleDetailView() {
         saleId,
         clientRequestId: getClientRequestId(),
         buyerContact: phoneNumber,
-        contactSharingConsent: true,
         noticeAcceptances,
         items,
       },
       {
         onSuccess: () => {
+          resetClientRequestId();
           toast({ message: '주문이 완료되었어요.' });
         },
         onError: async (error) => {
@@ -172,22 +160,8 @@ function SaleDetailView() {
                 variant: 'error',
               });
               break;
-            case 7011: // 확인 항목 버전 변경
-              const { data: newSale } = await refetch();
-
-              if (newSale) {
-                resetNoticeAcceptanceMap(newSale.notices);
-              }
-
-              toast({
-                message: '다시 시도해주세요',
-                variant: 'error',
-              });
-
-              break;
             case 7012:
               toast({ message: '다시 시도해주세요', variant: 'error' });
-              getClientRequestId();
               break;
           }
         },
@@ -198,9 +172,10 @@ function SaleDetailView() {
   const isOrderable =
     items.length > 0 &&
     phoneNumber.length === 11 &&
+    /^010\d{8}$/.test(phoneNumber) &&
     sale.notices
       .filter((notice) => notice.required)
-      .every((notice) => noticeAcceptanceMap[notice.noticeId]) &&
+      .every((notice) => noticeAcceptanceMap[notice.text]) &&
     !isPendingCreateOrder;
 
   return (
@@ -225,7 +200,7 @@ function SaleDetailView() {
 
       <div className={styles.border} />
 
-      {!sale.orderable ? (
+      {sale.status === 'CLOSED' ? (
         <SaleClosedSection
           sale={sale}
           title={getSaleUnavailableTitle(sale)}

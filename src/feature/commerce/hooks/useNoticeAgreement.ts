@@ -6,32 +6,27 @@ export default function useNoticeAgreement(notices: SaleResponse['notices']) {
   const [noticeAcceptanceMap, setNoticeAcceptanceMap] =
     useState<NoticeAcceptanceMap>(() => createNoticeAcceptanceMap(notices));
 
-  const resetNoticeAcceptanceMap = (newNotices: SaleResponse['notices']) => {
-    setNoticeAcceptanceMap(createNoticeAcceptanceMap(newNotices));
-  };
-
-  const handleNoticeAcceptance = (noticeId: number, accepted: boolean) => {
+  const handleNoticeAcceptance = (noticeText: string, accepted: boolean) => {
     setNoticeAcceptanceMap((prev) => ({
       ...prev,
-      [noticeId]: accepted,
+      [noticeText]: accepted,
     }));
   };
 
   return {
     noticeAcceptanceMap,
     handleNoticeAcceptance,
-    noticeAcceptances: notices.map(({ noticeId, version }) => ({
-      noticeId,
-      version,
-      accepted: noticeAcceptanceMap[noticeId],
+    noticeAcceptances: notices.map(({ type, text }) => ({
+      type,
+      text,
+      accepted: noticeAcceptanceMap[text],
     })),
-    resetNoticeAcceptanceMap,
   };
 }
 
 function createNoticeAcceptanceMap(notices: SaleResponse['notices']) {
   return notices.reduce(
-    (acc, notice) => ({ ...acc, [notice.noticeId]: false }),
+    (acc, notice) => ({ ...acc, [notice.text]: false }),
     {}
   );
 }

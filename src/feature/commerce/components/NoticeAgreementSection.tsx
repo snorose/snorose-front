@@ -10,7 +10,7 @@ import styles from '@/page/commerce/SaleDetailPage.module.css';
 type NoticeAgreementSectionProps = {
   notices: SaleResponse['notices'];
   noticeAcceptanceMap: NoticeAcceptanceMap;
-  handleNoticeAcceptance: (noticeId: number, accepted: boolean) => void;
+  handleNoticeAcceptance: (noticeId: string, accepted: boolean) => void;
 };
 
 export default function NoticeAgreementSection({
@@ -24,15 +24,15 @@ export default function NoticeAgreementSection({
 
       <div className={styles.noticeAgreementList}>
         {notices.map((notice) => {
-          const inputId = `commerceNotice${notice.noticeId}`;
+          const inputId = `commerceNotice-${notice.text}`;
 
           return (
-            <div className={styles.noticeAgreementItem} key={notice.noticeId}>
+            <div className={styles.noticeAgreementItem} key={inputId}>
               <CheckBox
                 id={inputId}
-                checked={Boolean(noticeAcceptanceMap[notice.noticeId])}
+                checked={Boolean(noticeAcceptanceMap[notice.text])}
                 onChange={(accepted) =>
-                  handleNoticeAcceptance(notice.noticeId, accepted)
+                  handleNoticeAcceptance(notice.text, accepted)
                 }
               />
               <label className={styles.noticeAgreementLabel} htmlFor={inputId}>
