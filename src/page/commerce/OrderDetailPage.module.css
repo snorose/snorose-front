@@ -9,7 +9,7 @@
 .infoTitle {
   margin-bottom: 1.6rem;
 
-  font: var(--text-headline-1-bold);
+  font: var(--text-headline-2-bold);
 }
 
 .infoList {
@@ -27,12 +27,12 @@
     flex-shrink: 0;
     flex-basis: 7rem;
     color: var(--grey-3-1);
-    font: var(--text-headline-2-reg);
+    font: var(--text-body-1-reg);
   }
 
   & dd {
     margin: 0;
-    font: var(--text-headline-2-med);
+    font: var(--text-body-1-med);
     overflow-wrap: anywhere;
   }
 }

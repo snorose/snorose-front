@@ -56,7 +56,7 @@
 
 .orderTitle {
   color: var(--grey-4);
-  font: var(--text-headline-2-bold);
+  font: var(--text-body-1-bold);
   word-break: keep-all;
 }
 
