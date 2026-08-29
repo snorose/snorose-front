@@ -141,12 +141,8 @@ export default function WritePostPage() {
     setCategoryDropDownOpen((prev) => !prev);
   };
 
-  const categoryOptions = Array.isArray(categoryConfig)
-    ? categoryConfig.map((name) => ({ id: name, name }))
-    : Object.entries(categoryConfig ?? {}).map(([id, name]) => ({ id, name }));
-  const selectedCategoryName = Array.isArray(categoryConfig)
-    ? category
-    : categoryConfig?.[category];
+  const categoryOptions =
+    categoryConfig?.map((name) => ({ id: name, name })) ?? [];
 
   const handleCategoryChange = (option) => {
     setCategory(option.id);
@@ -383,7 +379,7 @@ export default function WritePostPage() {
                 >
                   <div className={styles.subCategorySelectContainer}>
                     <p className={styles.subCategorySelectText}>
-                      {selectedCategoryName || '카테고리를 선택해주세요'}
+                      {category || '카테고리를 선택해주세요'}
                     </p>
                   </div>
                   <Icon id='angle-down' width={16} height={9} />
@@ -393,7 +389,7 @@ export default function WritePostPage() {
                     options={categoryOptions}
                     select={{
                       id: category,
-                      name: selectedCategoryName ?? '',
+                      name: category ?? '',
                     }}
                     onSelect={handleCategoryChange}
                     className={styles.dropDownList}

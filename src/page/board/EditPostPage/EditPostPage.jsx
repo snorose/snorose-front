@@ -83,12 +83,8 @@ export default function EditPostPage() {
   useBlocker(isBlock);
 
   const categoryConfig = BOARD_CATEGORY_MAP[currentBoard?.id];
-  const categoryOptions = Array.isArray(categoryConfig)
-    ? categoryConfig.map((name) => ({ id: name, name }))
-    : Object.entries(categoryConfig ?? {}).map(([id, name]) => ({ id, name }));
-  const selectedCategoryName = Array.isArray(categoryConfig)
-    ? category
-    : categoryConfig?.[category];
+  const categoryOptions =
+    categoryConfig?.map((name) => ({ id: name, name })) ?? [];
 
   const handleCategoryDropDownOpen = () => {
     setCategoryDropDownOpen((prev) => !prev);
@@ -121,11 +117,9 @@ export default function EditPostPage() {
       ? data.title?.match(/^\[([^\]]+)\]\s*/)
       : null;
 
-    const legacyCategory = Array.isArray(categoryConfig)
-      ? categoryConfig.find((name) => name === categoryMatch?.[1])
-      : Object.entries(categoryConfig ?? {}).find(
-          ([, name]) => name === categoryMatch?.[1]
-        )?.[0];
+    const legacyCategory = categoryConfig?.find(
+      (name) => name === categoryMatch?.[1]
+    );
 
     // API의 category를 우선 사용하고, 기존 게시글만 제목에서 추출
     const initialCategory = data.category || legacyCategory;
@@ -297,7 +291,7 @@ export default function EditPostPage() {
                 >
                   <div className={styles.subCategorySelectContainer}>
                     <p className={styles.subCategorySelectText}>
-                      {selectedCategoryName || '카테고리를 선택해주세요'}
+                      {category || '카테고리를 선택해주세요'}
                     </p>
                   </div>
                   <Icon id='angle-down' width={14} height={7} />
@@ -307,7 +301,7 @@ export default function EditPostPage() {
                     options={categoryOptions}
                     select={{
                       id: category,
-                      name: selectedCategoryName ?? '',
+                      name: category ?? '',
                     }}
                     onSelect={handleCategoryChange}
                   />
