@@ -146,7 +146,9 @@ function OrderDetailView() {
                     <span>
                       {item.name} · {item.optionLabel}
                     </span>
-                    <span>{item.quantity}개</span>
+                    <span>
+                      {formatNumber(item.price)}원 X {item.quantity}개
+                    </span>
                   </div>
                 </dd>
               ))}
