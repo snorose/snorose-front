@@ -300,7 +300,7 @@ export default function EditPostPage() {
                       {selectedCategoryName || '카테고리를 선택해주세요'}
                     </p>
                   </div>
-                  <Icon id='angle-down' width={14} height={7} />
+                  <Icon id='angle-down' width={24} height={24} />
                 </div>
                 {categoryDropDownOpen && (
                   <DropdownList

@@ -359,7 +359,7 @@ export default function WritePostPage() {
                     />
                     <p className={styles.categorySelectText}>{boardTitle}</p>
                   </div>
-                  <Icon id='angle-down' width={16} height={9} />
+                  <Icon id='angle-down' width={24} height={24} />
                 </div>
                 {dropDownOpen && (
                   <DropdownList
@@ -386,7 +386,7 @@ export default function WritePostPage() {
                       {selectedCategoryName || '카테고리를 선택해주세요'}
                     </p>
                   </div>
-                  <Icon id='angle-down' width={16} height={9} />
+                  <Icon id='angle-down' width={24} height={24} />
                 </div>
                 {categoryDropDownOpen && (
                   <DropdownList
