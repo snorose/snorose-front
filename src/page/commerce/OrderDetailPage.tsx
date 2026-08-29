@@ -1,14 +1,20 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
-import { BackAppBar, FetchLoading, PrimaryButton } from '@/shared/component';
+import {
+  BackAppBar,
+  FetchLoading,
+  NoticeModal,
+  PrimaryButton,
+  ServerErrorFallback,
+} from '@/shared/component';
+import { NOTICE_MODAL_TEXT } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 import { DateTime, formatNumber } from '@/shared/lib';
 
-import { PostListErrorFallback } from '@/feature/board/component';
 import CancelOrderConfirmModal from '@/feature/commerce/components/CancelOrderConfirmModal';
 import {
   FULFILLMENT_STATUS_LABEL,
@@ -26,10 +32,7 @@ export default function OrderDetailPage() {
   return (
     <QueryErrorResetBoundary>
       {({ reset }) => (
-        <ErrorBoundary
-          onReset={reset}
-          FallbackComponent={PostListErrorFallback}
-        >
+        <ErrorBoundary onReset={reset} FallbackComponent={ErrorFallback}>
           <Suspense
             fallback={<FetchLoading>주문 상세 불러오는 중...</FetchLoading>}
           >
@@ -206,4 +209,31 @@ function OrderDetailView() {
       )}
     </div>
   );
+}
+
+function ErrorFallback({ error, resetErrorBoundary }) {
+  const navigate = useNavigate();
+
+  const errorCode = getCommerceErrorCode(error);
+
+  switch (errorCode) {
+    case 7013:
+      return (
+        <div className={styles.container}>
+          <BackAppBar title='내 주문' notFixed />
+          <section className={styles.feedback} aria-live='polite'>
+            존재하지 않는 주문이에요
+          </section>
+        </div>
+      );
+    case 7014:
+      return (
+        <NoticeModal
+          modalText={NOTICE_MODAL_TEXT.NOT_MY_ORDER}
+          onConfirm={() => navigate(-1)}
+        />
+      );
+    default:
+      return <ServerErrorFallback reset={resetErrorBoundary} />;
+  }
 }

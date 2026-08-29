@@ -81,6 +81,21 @@
   margin: 0 var(--default-margin);
 }
 
+/* error */
+.container {
+  min-height: 100%;
+  padding-bottom: 2.4rem;
+  background-color: var(--white);
+}
+
+.feedback {
+  padding: 4rem var(--default-margin);
+  font: var(--text-body-1-reg);
+  color: var(--grey-3-1);
+  text-align: center;
+  word-break: keep-all;
+}
+
 /* 반응형 */
 @media (max-width: 480px) {
   .info {

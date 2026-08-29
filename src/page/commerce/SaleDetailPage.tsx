@@ -1,9 +1,10 @@
 import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useParams } from 'react-router-dom';
 
-import { ErrorBoundary } from '@sentry/react';
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
-import { BackAppBar } from '@/shared/component';
+import { BackAppBar, ServerErrorFallback } from '@/shared/component';
 import { useToast } from '@/shared/hook';
 import { DateTime } from '@/shared/lib';
 
@@ -35,17 +36,19 @@ import styles from './SaleDetailPage.module.css';
 
 export default function SaleDetailPage() {
   return (
-    <ErrorBoundary
-      fallback={<SaleDetailFeedback message='존재하지 않는 판매예요' />}
-    >
-      <Suspense
-        fallback={
-          <SaleDetailFeedback message='판매 정보를 불러오는 중이에요' />
-        }
-      >
-        <SaleDetailView />
-      </Suspense>
-    </ErrorBoundary>
+    <QueryErrorResetBoundary>
+      {({ reset }) => (
+        <ErrorBoundary onReset={reset} FallbackComponent={ErrorFallback}>
+          <Suspense
+            fallback={
+              <SaleDetailFeedback message='판매 정보를 불러오는 중이에요' />
+            }
+          >
+            <SaleDetailView />
+          </Suspense>
+        </ErrorBoundary>
+      )}
+    </QueryErrorResetBoundary>
   );
 }
 
@@ -272,4 +275,15 @@ function SaleDetailFeedback({ message }: { message: string }) {
       </section>
     </div>
   );
+}
+
+function ErrorFallback({ error, resetErrorBoundary }) {
+  const errorCode = getCommerceErrorCode(error);
+
+  switch (errorCode) {
+    case 7000:
+      return <SaleDetailFeedback message='존재하지 않는 판매예요' />;
+    default:
+      return <ServerErrorFallback reset={resetErrorBoundary} />;
+  }
 }
