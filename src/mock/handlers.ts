@@ -553,6 +553,21 @@ const mockOrderListResponse: OrdersResponse = {
       paymentDueAt: '2026-08-18T18:00:00',
       createdAt: '2026-08-17T12:34:56',
     },
+    {
+      orderNumber: 'SR-20260818-000005',
+      saleId: 1,
+      sellerName: '눈송이',
+      saleTitle: '입금 확인 필요 mock',
+      thumbnailUrl:
+        'https://cdn.snorose.com/commerce/products/8f2c-order-thumbnail.png',
+      itemSummary: '스노로즈 파우치 블루 · 1개',
+      totalAmount: 15000,
+      orderStatus: 'ACTIVE',
+      paymentStatus: 'REVIEW_REQUIRED',
+      fulfillmentStatus: 'PENDING',
+      paymentDueAt: '2026-08-19T18:00:00',
+      createdAt: '2026-08-18T09:20:35',
+    },
   ],
 };
 
@@ -753,6 +768,20 @@ const mockOrderDetailResponses: OrderResponse[] = [
     cancellable: true,
     reviewNotice:
       '취소 요청 시 7015 이미 취소된 주문 에러를 반환하는 테스트 주문입니다.',
+  }),
+  createMockOrderDetail(mockOrderListResponse.data[7], {
+    items: [
+      {
+        productId: 501,
+        name: '스노로즈 파우치',
+        optionLabel: '블루',
+        price: 15000,
+        quantity: 1,
+      },
+    ],
+    cancellable: false,
+    reviewNotice:
+      '입금 내역 확인이 필요합니다. 판매자가 확인 후 상태를 변경할 예정입니다.',
   }),
 ];
 

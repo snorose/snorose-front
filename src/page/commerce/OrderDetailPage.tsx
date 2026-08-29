@@ -184,6 +184,10 @@ function OrderDetailView() {
         </section>
       )}
 
+      {orderStatus === 'ACTIVE' && paymentStatus === 'REVIEW_REQUIRED' && (
+        <div className={styles.feedback}>{order.reviewNotice}</div>
+      )}
+
       {order.cancellable && (
         <div className={styles.butttonWrapper}>
           <PrimaryButton

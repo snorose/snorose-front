@@ -13,7 +13,7 @@ export const ORDER_STATUS_LABEL: Record<OrderStatus, string> = {
 export const PAYMENT_STATUS_LABEL: Record<PaymentStatus, string> = {
   WAITING: '입금 대기',
   PAID: '입금 완료',
-  REVIEW_REQUIRED: '확인 필요',
+  REVIEW_REQUIRED: '운영자 확인 필요',
   EXPIRED: '입금 만료',
 };
 
