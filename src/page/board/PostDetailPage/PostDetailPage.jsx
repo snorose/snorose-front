@@ -40,6 +40,7 @@ function PostDetailLoader() {
   const { setModal } = useContext(ModalContext);
 
   const currentBoard = getBoard(pathname.split('/')[2]);
+  const categoryConfig = BOARD_CATEGORY_MAP[currentBoard.id];
   // const { id: boardId } = useBoard();
 
   const { data } = useSuspenseQuery({
@@ -66,7 +67,11 @@ function PostDetailLoader() {
   return (
     <PostDetailView
       data={data}
-      categoryName={BOARD_CATEGORY_MAP[currentBoard.id]?.[data.category]}
+      categoryName={
+        Array.isArray(categoryConfig)
+          ? data.category
+          : (categoryConfig?.[data.category] ?? data.category)
+      }
       authorBadgeRoleId={
         ADMIN_BADGE_BOARD_IDS.includes(currentBoard.id) ? ROLE.admin : undefined
       }

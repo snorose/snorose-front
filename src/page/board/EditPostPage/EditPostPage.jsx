@@ -17,12 +17,10 @@ import {
 import {
   ATTACHMENT_MODAL_TEXT,
   BOARD_CATEGORY_MAP,
-  BOARD_ID,
   BOARD_MENUS,
   CONFIRM_MODAL_TEXT,
   MUTATION_KEY,
   QUERY_KEY,
-  RESIDENCE_CATEGORY_KOREAN_ENUM,
   ROLE,
   TOAST,
 } from '@/shared/constant';
@@ -84,10 +82,13 @@ export default function EditPostPage() {
   // 페이지 이탈 방지 모달 노출
   useBlocker(isBlock);
 
-  //카테고리
-  const categoryOptions = Object.entries(RESIDENCE_CATEGORY_KOREAN_ENUM).map(
-    ([key, name]) => ({ id: key, name })
-  );
+  const categoryConfig = BOARD_CATEGORY_MAP[currentBoard?.id];
+  const categoryOptions = Array.isArray(categoryConfig)
+    ? categoryConfig.map((name) => ({ id: name, name }))
+    : Object.entries(categoryConfig ?? {}).map(([id, name]) => ({ id, name }));
+  const selectedCategoryName = Array.isArray(categoryConfig)
+    ? category
+    : categoryConfig?.[category];
 
   const handleCategoryDropDownOpen = () => {
     setCategoryDropDownOpen((prev) => !prev);
@@ -112,40 +113,35 @@ export default function EditPostPage() {
     editor.commands.setContent(data.content);
   }, [editor, data]);
 
-
   useEffect(() => {
     if (!data || Object.keys(data).length === 0) return;
 
-    const categoryEnum = BOARD_CATEGORY_MAP[currentBoard?.id];
-
     // 기존 게시글의 제목에 포함된 카테고리 접두어 확인
-    const categoryMatch = categoryEnum
+    const categoryMatch = categoryConfig
       ? data.title?.match(/^\[([^\]]+)\]\s*/)
       : null;
 
-    const legacyCategoryKey = categoryMatch
-      ? Object.entries(categoryEnum).find(
-          ([, name]) => name === categoryMatch[1]
-        )?.[0]
-      : undefined;
+    const legacyCategory = Array.isArray(categoryConfig)
+      ? categoryConfig.find((name) => name === categoryMatch?.[1])
+      : Object.entries(categoryConfig ?? {}).find(
+          ([, name]) => name === categoryMatch?.[1]
+        )?.[0];
 
     // API의 category를 우선 사용하고, 기존 게시글만 제목에서 추출
-    const categoryKey = data.category || legacyCategoryKey;
+    const initialCategory = data.category || legacyCategory;
 
-    setCategory(categoryKey ?? null);
+    setCategory(initialCategory ?? null);
 
     // 기존 제목에 실제 카테고리 접두어가 있는 경우에만 제거
     setTitle(
-      legacyCategoryKey
-        ? data.title.replace(categoryMatch[0], '')
-        : data.title
+      legacyCategory ? data.title.replace(categoryMatch[0], '') : data.title
     );
 
     setText(data.content);
     setIsNotice(data.isNotice);
     setUserDisplay(data.userDisplay);
     setAttachmentsInfo(data.attachments);
-  }, [data, currentBoard?.id]);
+  }, [data, currentBoard?.id, categoryConfig]);
 
   // isBlock 업데이트
   useEffect(() => {
@@ -158,8 +154,16 @@ export default function EditPostPage() {
         data.attachments !== attachmentsInfo ||
         data.category !== category
     );
-  }, [title, text, isNotice, attachmentsInfo]);
-
+  }, [
+    title,
+    text,
+    isNotice,
+    attachmentsInfo,
+    category,
+    categoryConfig,
+    data,
+    editor,
+  ]);
 
   // 게시글 수정
   const mutation = useMutation({
@@ -217,19 +221,17 @@ export default function EditPostPage() {
       toast({ message: TOAST.POST.emptyContent, variant: 'info' });
       return;
     }
-    if (currentBoard?.id === BOARD_ID.residence && !category) {  // 추가
+    if (categoryConfig && !category) {
       toast({ message: TOAST.POST.selectCategory, variant: 'info' });
       return;
     }
     setSubmitDisabled(true);
     setIsBlock(false);
 
-    const categoryEnum = BOARD_CATEGORY_MAP[currentBoard?.id];
-
     mutation.mutate({
       boardId: currentBoard?.id,
       postId,
-      category: categoryEnum ? category: '',
+      category: categoryConfig ? category : '',
       title,
       content: sanitizeHtml(preserveEmptyParagraphs(editor?.getHTML() ?? '')),
       isNotice,
@@ -273,12 +275,17 @@ export default function EditPostPage() {
           <div className={styles.center}>
             <div className={styles.categorySelect}>
               <div className={styles.categorySelectContainer}>
-                <Icon id='clip-board-list' width={21} height={22} fill='white' />
+                <Icon
+                  id='clip-board-list'
+                  width={21}
+                  height={22}
+                  fill='white'
+                />
                 <p className={styles.categorySelectText}>{boardTitle}</p>
               </div>
             </div>
 
-            {currentBoard?.id === BOARD_ID.residence && (
+            {categoryConfig && (
               <div className={styles.subCategoryDropdownContainer}>
                 <div>
                   <p className={styles.subCategoryLabelEdit}>카테고리</p>
@@ -290,9 +297,7 @@ export default function EditPostPage() {
                 >
                   <div className={styles.subCategorySelectContainer}>
                     <p className={styles.subCategorySelectText}>
-                      {category
-                        ? RESIDENCE_CATEGORY_KOREAN_ENUM[category]
-                        : '카테고리를 선택해주세요'}
+                      {selectedCategoryName || '카테고리를 선택해주세요'}
                     </p>
                   </div>
                   <Icon id='angle-down' width={14} height={7} />
@@ -302,7 +307,7 @@ export default function EditPostPage() {
                     options={categoryOptions}
                     select={{
                       id: category,
-                      name: category ? RESIDENCE_CATEGORY_KOREAN_ENUM[category] : '',
+                      name: selectedCategoryName ?? '',
                     }}
                     onSelect={handleCategoryChange}
                   />

@@ -469,13 +469,10 @@ export const RESIDENCE_CATEGORY_KOREAN_ENUM = Object.freeze({
   자취: '자취',
 });
 
-export const SOOKPLACE_CATEGORY_KOREAN_ENUM = Object.freeze({
-  ON_CAMPUS: '교내',
-  OFF_CAMPUS: '교외',
-});
+export const SOOKPLACE_CATEGORIES = Object.freeze(['교내', '교외']);
 
 // 게시판과 카테고리를 연결
 export const BOARD_CATEGORY_MAP = {
   [BOARD_ID.residence]: RESIDENCE_CATEGORY_KOREAN_ENUM,
-  [BOARD_ID.sookplace]: SOOKPLACE_CATEGORY_KOREAN_ENUM,
+  [BOARD_ID.sookplace]: SOOKPLACE_CATEGORIES,
 };
