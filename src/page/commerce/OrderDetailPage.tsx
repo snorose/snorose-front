@@ -161,7 +161,7 @@ function OrderDetailView() {
           <div className={styles.infoItem}>
             <dt>결제</dt>
             <dd>
-              {orderStatus === 'CANCELED'
+              {orderStatus === 'CANCELLED'
                 ? ORDER_STATUS_LABEL[orderStatus]
                 : PAYMENT_STATUS_LABEL[order.paymentStatus]}
             </dd>
@@ -169,7 +169,7 @@ function OrderDetailView() {
           <div className={styles.infoItem}>
             <dt>수령</dt>
             <dd>
-              {orderStatus === 'CANCELED'
+              {orderStatus === 'CANCELLED'
                 ? ORDER_STATUS_LABEL[orderStatus]
                 : FULFILLMENT_STATUS_LABEL[fulfillmentStatus]}
             </dd>

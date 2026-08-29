@@ -46,7 +46,7 @@ export default function OrderItem({
           </div>
         </div>
         <div className={styles.statusList}>
-          {orderStatus === 'CANCELED' && (
+          {orderStatus === 'CANCELLED' && (
             <Chip
               name={ORDER_STATUS_LABEL[orderStatus]}
               variant={'grey'}

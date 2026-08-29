@@ -58,7 +58,7 @@ export type OrdersResponse = {
     thumbnailUrl: string;
     itemSummary: string;
     totalAmount: number;
-    orderStatus: 'ACTIVE' | 'CANCELED' | 'COMPLETED';
+    orderStatus: 'ACTIVE' | 'CANCELLED' | 'COMPLETED';
     paymentStatus: 'WAITING' | 'PAID' | 'REVIEW_REQUIRED' | 'EXPIRED';
     fulfillmentStatus: 'PENDING' | 'PICKED_UP';
     paymentDueAt: string;

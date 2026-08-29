@@ -502,7 +502,7 @@ const mockOrderListResponse: OrdersResponse = {
         'https://cdn.snorose.com/commerce/products/8f2c-order-thumbnail.png',
       itemSummary: '스티커팩 기본 · 1개',
       totalAmount: 5000,
-      orderStatus: 'CANCELED',
+      orderStatus: 'CANCELLED',
       paymentStatus: 'WAITING',
       fulfillmentStatus: 'PENDING',
       paymentDueAt: '2026-08-17T18:00:00',
@@ -792,7 +792,7 @@ const mockOrderDetailResponseByOrderNumber = new Map(
 function cancelMockOrder(orderNumber: string, orderResponse: OrderResponse) {
   const canceledOrderResponse: OrderResponse = {
     ...orderResponse,
-    orderStatus: 'CANCELED',
+    orderStatus: 'CANCELLED',
     cancellable: false,
     reviewNotice:
       '취소된 주문입니다. 재주문이 필요하면 판매 페이지를 확인해 주세요.',
@@ -805,7 +805,7 @@ function cancelMockOrder(orderNumber: string, orderResponse: OrderResponse) {
   );
 
   if (orderListItem) {
-    orderListItem.orderStatus = 'CANCELED';
+    orderListItem.orderStatus = 'CANCELLED';
   }
 
   return canceledOrderResponse;

@@ -6,7 +6,7 @@ import {
 
 export const ORDER_STATUS_LABEL: Record<OrderStatus, string> = {
   ACTIVE: '주문 활성',
-  CANCELED: '주문 취소',
+  CANCELLED: '주문 취소',
   COMPLETED: '주문 완료',
 };
 
