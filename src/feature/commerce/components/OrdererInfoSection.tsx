@@ -1,5 +1,7 @@
 import { Label, NumberInput } from '@/shared/component';
 
+import { isValidPhoneNumber } from '@/feature/commerce/utils/commerceRules';
+
 import styles from '@/page/commerce/SaleDetailPage.module.css';
 
 type OrdererInfoSectionProps = {
@@ -15,8 +17,6 @@ export default function OrdererInfoSection({
   phoneNumber,
   handlePhoneNumber,
 }: OrdererInfoSectionProps) {
-  const isValidPhoneNumber = /^010\d{8}$/.test(phoneNumber);
-
   return (
     <section className={styles.ordererSection}>
       <h2 className={styles.sectionTitle}>주문자 정보</h2>
@@ -44,7 +44,7 @@ export default function OrdererInfoSection({
               onChange={handlePhoneNumber}
               maxLength={11}
             />
-            {phoneNumber && !isValidPhoneNumber && (
+            {phoneNumber && !isValidPhoneNumber(phoneNumber) && (
               <div className={styles.message}>
                 010으로 시작하는 11자리 숫자를 입력하세요
               </div>

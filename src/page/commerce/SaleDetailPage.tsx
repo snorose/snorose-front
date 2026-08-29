@@ -26,7 +26,10 @@ import {
   useSaleOrderForm,
 } from '@/feature/commerce/hooks';
 import useOrderConfirmModal from '@/feature/commerce/hooks/useOrderConfirmModal';
-import { getCommerceErrorCode } from '@/feature/commerce/utils/commerceRules';
+import {
+  getCommerceErrorCode,
+  isValidPhoneNumber,
+} from '@/feature/commerce/utils/commerceRules';
 
 import styles from './SaleDetailPage.module.css';
 
@@ -176,7 +179,7 @@ function SaleDetailView() {
   const isOrderable =
     selectedOrderItems.length > 0 &&
     phoneNumber.length === 11 &&
-    /^010\d{8}$/.test(phoneNumber) &&
+    isValidPhoneNumber(phoneNumber) &&
     sale.notices
       .filter((notice) => notice.required)
       .every((notice) => noticeAcceptanceMap[notice.text]) &&

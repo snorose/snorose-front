@@ -61,12 +61,9 @@ export function isProductQuantityLimitReached(
   return draftProductQuantity >= product.remainingForBuyer;
 }
 
-export const isValidQuantityPolicy = (
-  variant: SaleResponse['products'][number]['variants'][number],
-  nextQuantity: number
-) => {
-  return nextQuantity <= variant.availableQuantity;
-};
+export function isValidPhoneNumber(value: string) {
+  return /^010\d{8}$/.test(value);
+}
 
 export function getSaleUnavailableTitle(sale: SaleResponse) {
   if (sale.status === 'CLOSED') {
