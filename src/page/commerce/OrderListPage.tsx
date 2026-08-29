@@ -42,7 +42,7 @@ function OrderListView() {
   if (orders.length === 0) {
     return (
       <div className={styles.noContentWrapper}>
-        <p className={styles.noContentMessage}>주문 내역이 없어요</p>
+        <p className={styles.noContentMessage}>아직 주문한 상품이 없어요</p>
         <div className={styles.imageWrapper}>
           <img
             src={noPostsIllustration}
