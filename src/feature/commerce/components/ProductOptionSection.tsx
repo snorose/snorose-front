@@ -5,7 +5,7 @@ import type {
   QuantityMap,
   SaleResponse,
 } from '@/feature/commerce/types';
-import { getProductQuantity } from '@/feature/commerce/utils/saleDetail';
+import { isPlusQuantityInvalid } from '@/feature/commerce/utils/commerceRules';
 
 import styles from '@/page/commerce/SaleDetailPage.module.css';
 
@@ -45,14 +45,17 @@ export default function ProductOptionSection({
           const product = products.find(
             ({ productId }) => productId === option.productId
           );
-          const quantity = quantityMap[option.productId][option.variantId];
-          const productTotalQuantity = getProductQuantity(
-            quantityMap[option.productId]
+          const variant = product.variants.find(
+            ({ variantId }) => variantId === option.variantId
           );
-          const isPlusQuantityInvalid =
-            product.inventoryPolicy === 'LIMITED_STOCK' &&
-            (quantity >= option.availableQuantity ||
-              productTotalQuantity >= product.remainingForBuyer);
+
+          const isInvalid = isPlusQuantityInvalid(
+            product,
+            variant,
+            quantityMap
+          );
+
+          const quantity = quantityMap[product.productId][variant.variantId];
 
           return (
             <ProductOptionItem
@@ -60,8 +63,8 @@ export default function ProductOptionSection({
               quantity={quantityMap[option.productId][option.variantId]}
               onIncrease={handlePlusQuantity}
               onDecrease={handleMinusQuantity}
-              decreaseDisabled={quantity === 0}
-              increaseDisabled={isPlusQuantityInvalid}
+              decreaseDisabled={quantity <= 0}
+              increaseDisabled={isInvalid}
               inventoryPolicy={product.inventoryPolicy}
             />
           );

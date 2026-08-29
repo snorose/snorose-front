@@ -3,7 +3,7 @@ import { SaleResponse } from '@/feature/commerce/types';
 import {
   getSaleUnavailableMessage,
   getSaleUnavailableTitle,
-} from '@/feature/commerce/utils/saleDetail';
+} from '@/feature/commerce/utils/commerceRules';
 
 type SaleOrderAreaProps = {
   sale: SaleResponse;

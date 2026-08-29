@@ -21,7 +21,7 @@ import type {
   ConfirmPickupSessionResponse,
   PairPickupDeviceRequest,
 } from '@/feature/commerce/types';
-import { getCommerceErrorCode } from '@/feature/commerce/utils/saleDetail';
+import { getCommerceErrorCode } from '@/feature/commerce/utils/commerceRules';
 
 import styles from './PickupDisplayPage.module.css';
 

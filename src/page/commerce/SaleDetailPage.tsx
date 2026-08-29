@@ -26,7 +26,7 @@ import {
   useSaleOrderForm,
 } from '@/feature/commerce/hooks';
 import useOrderConfirmModal from '@/feature/commerce/hooks/useOrderConfirmModal';
-import { getCommerceErrorCode } from '@/feature/commerce/utils/saleDetail';
+import { getCommerceErrorCode } from '@/feature/commerce/utils/commerceRules';
 
 import styles from './SaleDetailPage.module.css';
 

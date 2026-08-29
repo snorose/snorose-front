@@ -3,9 +3,8 @@ import { useState } from 'react';
 import { QuantityMap, SaleResponse } from '@/feature/commerce/types';
 import {
   getSelectedOrderItems,
-  isValidMaxPerBuyer,
-  isValidQuantityPolicy,
-} from '@/feature/commerce/utils/saleDetail';
+  isPlusQuantityInvalid,
+} from '@/feature/commerce/utils/commerceRules';
 
 export default function useSaleOrderForm(products: SaleResponse['products']) {
   const [quantityMap, setQuantityMap] = useState<QuantityMap>(() =>
@@ -30,11 +29,8 @@ export default function useSaleOrderForm(products: SaleResponse['products']) {
     );
 
     setQuantityMap((prev) => {
-      const isValid =
-        isValidMaxPerBuyer(product, prev) &&
-        isValidQuantityPolicy(variant, prev[productId][variantId] + 1);
-
-      if (product.inventoryPolicy === 'LIMITED_STOCK' && !isValid) {
+      const isInvalid = isPlusQuantityInvalid(product, variant, quantityMap);
+      if (isInvalid) {
         return prev;
       }
 
@@ -50,9 +46,7 @@ export default function useSaleOrderForm(products: SaleResponse['products']) {
 
   const handleMinusQuantity = (productId: number, variantId: number) => {
     setQuantityMap((prev) => {
-      const nextQuantity = prev[productId][variantId] ?? 0;
-
-      if (nextQuantity - 1 < 0) {
+      if (prev[productId][variantId] <= 0) {
         return prev;
       }
 

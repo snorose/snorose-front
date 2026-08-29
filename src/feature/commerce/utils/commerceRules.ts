@@ -31,22 +31,35 @@ export function getSelectedOrderItems(
     .filter(({ quantity }) => quantity > 0);
 }
 
-export const getProductQuantity = (quantityMap: QuantityMap[number]) => {
-  return Object.values(quantityMap).reduce(
-    (total, quantity) => total + quantity,
-    0
-  );
-};
-
-export const isValidMaxPerBuyer = (
+export function isPlusQuantityInvalid(
   product: SaleResponse['products'][number],
+  variant: SaleResponse['products'][number]['variants'][number],
   quantityMap: QuantityMap
-) => {
+) {
+  const quantity = quantityMap[product.productId][variant.variantId];
+
   return (
-    getProductQuantity(quantityMap[product.productId]) + 1 <=
-    product.remainingForBuyer
+    product.inventoryPolicy === 'LIMITED_STOCK' &&
+    (quantity >= variant.availableQuantity ||
+      isProductQuantityLimitReached(product, quantityMap))
   );
-};
+}
+
+type ProductQuantityLimit = Pick<
+  SaleResponse['products'][number],
+  'productId' | 'remainingForBuyer'
+>;
+
+export function isProductQuantityLimitReached(
+  product: ProductQuantityLimit,
+  quantityMap: QuantityMap
+) {
+  const draftProductQuantity = Object.values(
+    quantityMap[product.productId] ?? {}
+  ).reduce((acc, quantity) => acc + quantity, 0);
+
+  return draftProductQuantity >= product.remainingForBuyer;
+}
 
 export const isValidQuantityPolicy = (
   variant: SaleResponse['products'][number]['variants'][number],

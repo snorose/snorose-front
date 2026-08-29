@@ -22,7 +22,7 @@ import {
 import useCancelConfirmModal from '@/feature/commerce/hooks/useCancelConfirmModal';
 import useOrder from '@/feature/commerce/hooks/useOrder';
 import useOrderCancel from '@/feature/commerce/hooks/useOrderCancel';
-import { getCommerceErrorCode } from '@/feature/commerce/utils/saleDetail';
+import { getCommerceErrorCode } from '@/feature/commerce/utils/commerceRules';
 
 import styles from './OrderDetailPage.module.css';
 
