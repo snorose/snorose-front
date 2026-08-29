@@ -62,6 +62,7 @@ export default function ProductOptionSection({
               onDecrease={handleMinusQuantity}
               decreaseDisabled={quantity === 0}
               increaseDisabled={isPlusQuantityInvalid}
+              inventoryPolicy={product.inventoryPolicy}
             />
           );
         })}
@@ -70,13 +71,14 @@ export default function ProductOptionSection({
   );
 }
 
-function ProductOptionItem({
+export function ProductOptionItem({
   option,
   quantity,
   onIncrease,
   onDecrease,
   increaseDisabled,
   decreaseDisabled,
+  inventoryPolicy,
 }: {
   option: ProductOption;
   quantity: number;
@@ -84,8 +86,10 @@ function ProductOptionItem({
   onDecrease: (productId: number, variantId: number) => void;
   increaseDisabled: boolean;
   decreaseDisabled: boolean;
+  inventoryPolicy: SaleResponse['products'][number]['inventoryPolicy'];
 }) {
-  const isSoldOut = option.availableQuantity === 0;
+  const isSoldOut =
+    inventoryPolicy === 'LIMITED_STOCK' && option.availableQuantity === 0;
 
   return (
     <div
