@@ -142,10 +142,19 @@ function OrderDetailView() {
             <div className={styles.productItemList}>
               {order.items.map((item) => (
                 <dd>
-                  {item.name} · {item.optionLabel}
+                  <div className={styles.productItem}>
+                    <span>
+                      {item.name} · {item.optionLabel}
+                    </span>
+                    <span>{item.quantity}개</span>
+                  </div>
                 </dd>
               ))}
             </div>
+          </div>
+          <div className={styles.infoItem}>
+            <dt>금액</dt>
+            <dd>{formatNumber(order.totalAmount)}원</dd>
           </div>
           <div className={styles.infoItem}>
             <dt>결제</dt>
