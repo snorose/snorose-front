@@ -35,7 +35,7 @@ export async function createOrder({
     items,
   });
 
-  return response.data;
+  return response.data.result;
 }
 
 export async function readOrders(page: number = 0): Promise<OrdersResponse> {
