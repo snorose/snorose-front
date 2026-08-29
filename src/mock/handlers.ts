@@ -27,23 +27,45 @@ type MockCreateOrderErrorCode =
   | 7008
   | 7009
   | 7010;
+type MockReadSaleErrorCode = 7000;
+type MockReadOrderErrorCode = 7013 | 7014;
 type MockCancelOrderErrorCode = 7014 | 7015 | 7017;
 
-type MockCommerceErrorScenario = {
-  errorCode: MockCreateOrderErrorCode | MockCancelOrderErrorCode;
+type MockCommerceErrorCode =
+  | MockReadSaleErrorCode
+  | MockCreateOrderErrorCode
+  | MockReadOrderErrorCode
+  | MockCancelOrderErrorCode;
+
+type MockCommerceErrorScenario<
+  ErrorCode extends MockCommerceErrorCode = MockCommerceErrorCode,
+> = {
+  errorCode: ErrorCode;
   message: string;
   status: number;
 };
 
-type MockOrderErrorScenario = MockCommerceErrorScenario & {
-  saleId: string;
-  initialSale: SaleResponse;
-  refetchedSale: SaleResponse;
-};
+type MockOrderErrorScenario =
+  MockCommerceErrorScenario<MockCreateOrderErrorCode> & {
+    saleId: string;
+    initialSale: SaleResponse;
+    refetchedSale: SaleResponse;
+  };
 
-type MockOrderCancelErrorScenario = MockCommerceErrorScenario & {
-  orderNumber: string;
-};
+type MockSaleDetailErrorScenario =
+  MockCommerceErrorScenario<MockReadSaleErrorCode> & {
+    saleId: string;
+  };
+
+type MockOrderCancelErrorScenario =
+  MockCommerceErrorScenario<MockCancelOrderErrorCode> & {
+    orderNumber: string;
+  };
+
+type MockOrderDetailErrorScenario =
+  MockCommerceErrorScenario<MockReadOrderErrorCode> & {
+    orderNumber: string;
+  };
 
 type MockPickupDeviceStatus = 'IDLE' | 'ARMED' | 'CONFIRMED';
 
@@ -334,6 +356,19 @@ const mockOrderErrorScenarioBySaleId = new Map(
   mockOrderErrorScenarios.map((scenario) => [scenario.saleId, scenario])
 );
 
+const mockSaleDetailErrorScenarios: MockSaleDetailErrorScenario[] = [
+  {
+    saleId: 'draft',
+    errorCode: 7000,
+    message: '판매 정보를 찾을 수 없거나 공개되지 않은 판매입니다.',
+    status: 404,
+  },
+];
+
+const mockSaleDetailErrorScenarioBySaleId = new Map(
+  mockSaleDetailErrorScenarios.map((scenario) => [scenario.saleId, scenario])
+);
+
 const triggeredMockOrderErrorSaleIds = new Set<string>();
 
 const saleResponses: SaleResponse[] = [
@@ -518,6 +553,21 @@ const mockOrderListResponse: OrdersResponse = {
       paymentDueAt: '2026-08-18T18:00:00',
       createdAt: '2026-08-17T12:34:56',
     },
+    {
+      orderNumber: 'SR-20260818-000005',
+      saleId: 1,
+      sellerName: '눈송이',
+      saleTitle: '입금 확인 필요 mock',
+      thumbnailUrl:
+        'https://cdn.snorose.com/commerce/products/8f2c-order-thumbnail.png',
+      itemSummary: '스노로즈 파우치 블루 · 1개',
+      totalAmount: 15000,
+      orderStatus: 'ACTIVE',
+      paymentStatus: 'REVIEW_REQUIRED',
+      fulfillmentStatus: 'PENDING',
+      paymentDueAt: '2026-08-19T18:00:00',
+      createdAt: '2026-08-18T09:20:35',
+    },
   ],
 };
 
@@ -544,6 +594,28 @@ const mockOrderCancelErrorScenarios: MockOrderCancelErrorScenario[] = [
 
 const mockOrderCancelErrorScenarioByOrderNumber = new Map(
   mockOrderCancelErrorScenarios.map((scenario) => [
+    scenario.orderNumber,
+    scenario,
+  ])
+);
+
+const mockOrderDetailErrorScenarios: MockOrderDetailErrorScenario[] = [
+  {
+    orderNumber: 'SR-20260818-007013',
+    errorCode: 7013,
+    message: '주문 정보를 찾을 수 없습니다.',
+    status: 404,
+  },
+  {
+    orderNumber: 'SR-20260818-007014',
+    errorCode: 7014,
+    message: '본인의 주문만 조회할 수 있습니다.',
+    status: 403,
+  },
+];
+
+const mockOrderDetailErrorScenarioByOrderNumber = new Map(
+  mockOrderDetailErrorScenarios.map((scenario) => [
     scenario.orderNumber,
     scenario,
   ])
@@ -696,6 +768,20 @@ const mockOrderDetailResponses: OrderResponse[] = [
     cancellable: true,
     reviewNotice:
       '취소 요청 시 7015 이미 취소된 주문 에러를 반환하는 테스트 주문입니다.',
+  }),
+  createMockOrderDetail(mockOrderListResponse.data[7], {
+    items: [
+      {
+        productId: 501,
+        name: '스노로즈 파우치',
+        optionLabel: '블루',
+        price: 15000,
+        quantity: 1,
+      },
+    ],
+    cancellable: false,
+    reviewNotice:
+      '입금 내역 확인이 필요합니다. 판매자가 확인 후 상태를 변경할 예정입니다.',
   }),
 ];
 
@@ -867,20 +953,26 @@ export const handlers = [
     const saleId = Array.isArray(params.saleId)
       ? params.saleId[0]
       : params.saleId;
-    const saleResponse = saleResponseById.get(String(saleId));
+    const saleIdString = String(saleId);
+    const mockSaleDetailErrorScenario =
+      mockSaleDetailErrorScenarioBySaleId.get(saleIdString);
+
+    if (mockSaleDetailErrorScenario) {
+      return createCommerceErrorResponse(mockSaleDetailErrorScenario);
+    }
+
+    const saleResponse = saleResponseById.get(saleIdString);
 
     if (!saleResponse) {
-      return HttpResponse.json(
-        {
-          code: 'COMMERCE_SALE_NOT_FOUND',
-          message: '판매 정보를 찾을 수 없습니다.',
-        },
-        { status: 404 }
-      );
+      return createCommerceErrorResponse({
+        errorCode: 7000,
+        message: '판매 정보를 찾을 수 없거나 공개되지 않은 판매입니다.',
+        status: 404,
+      });
     }
 
     return HttpResponse.json({
-      result: getSaleResponseForMockScenario(String(saleId), saleResponse),
+      result: getSaleResponseForMockScenario(saleIdString, saleResponse),
     });
   }),
   http.post('*/v1/commerce/pickup-device/pair', async ({ request }) => {
@@ -997,18 +1089,23 @@ export const handlers = [
     const orderNumber = Array.isArray(params.orderNumber)
       ? params.orderNumber[0]
       : params.orderNumber;
-    const orderResponse = mockOrderDetailResponseByOrderNumber.get(
-      String(orderNumber)
-    );
+    const orderNumberString = String(orderNumber);
+    const mockOrderDetailErrorScenario =
+      mockOrderDetailErrorScenarioByOrderNumber.get(orderNumberString);
+
+    if (mockOrderDetailErrorScenario) {
+      return createCommerceErrorResponse(mockOrderDetailErrorScenario);
+    }
+
+    const orderResponse =
+      mockOrderDetailResponseByOrderNumber.get(orderNumberString);
 
     if (!orderResponse) {
-      return HttpResponse.json(
-        {
-          code: 'COMMERCE_ORDER_NOT_FOUND',
-          message: '주문 정보를 찾을 수 없습니다.',
-        },
-        { status: 404 }
-      );
+      return createCommerceErrorResponse({
+        errorCode: 7013,
+        message: '주문 정보를 찾을 수 없습니다.',
+        status: 404,
+      });
     }
 
     return HttpResponse.json({

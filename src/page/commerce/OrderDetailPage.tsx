@@ -4,11 +4,15 @@ import { useParams } from 'react-router-dom';
 
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
-import { BackAppBar, FetchLoading, PrimaryButton } from '@/shared/component';
+import {
+  BackAppBar,
+  FetchLoading,
+  PrimaryButton,
+  ServerErrorFallback,
+} from '@/shared/component';
 import { useToast } from '@/shared/hook';
 import { DateTime, formatNumber } from '@/shared/lib';
 
-import { PostListErrorFallback } from '@/feature/board/component';
 import CancelOrderConfirmModal from '@/feature/commerce/components/CancelOrderConfirmModal';
 import {
   FULFILLMENT_STATUS_LABEL,
@@ -26,10 +30,7 @@ export default function OrderDetailPage() {
   return (
     <QueryErrorResetBoundary>
       {({ reset }) => (
-        <ErrorBoundary
-          onReset={reset}
-          FallbackComponent={PostListErrorFallback}
-        >
+        <ErrorBoundary onReset={reset} FallbackComponent={ErrorFallback}>
           <Suspense
             fallback={<FetchLoading>주문 상세 불러오는 중...</FetchLoading>}
           >
@@ -141,10 +142,19 @@ function OrderDetailView() {
             <div className={styles.productItemList}>
               {order.items.map((item) => (
                 <dd>
-                  {item.name} · {item.optionLabel}
+                  <div className={styles.productItem}>
+                    <span>
+                      {item.name} · {item.optionLabel}
+                    </span>
+                    <span>{item.quantity}개</span>
+                  </div>
                 </dd>
               ))}
             </div>
+          </div>
+          <div className={styles.infoItem}>
+            <dt>금액</dt>
+            <dd>{formatNumber(order.totalAmount)}원</dd>
           </div>
           <div className={styles.infoItem}>
             <dt>결제</dt>
@@ -181,6 +191,10 @@ function OrderDetailView() {
         </section>
       )}
 
+      {orderStatus === 'ACTIVE' && paymentStatus === 'REVIEW_REQUIRED' && (
+        <div className={styles.feedback}>{order.reviewNotice}</div>
+      )}
+
       {order.cancellable && (
         <div className={styles.butttonWrapper}>
           <PrimaryButton
@@ -206,4 +220,23 @@ function OrderDetailView() {
       )}
     </div>
   );
+}
+
+function ErrorFallback({ error, resetErrorBoundary }) {
+  const errorCode = getCommerceErrorCode(error);
+
+  switch (errorCode) {
+    case 7013:
+    case 7014:
+      return (
+        <div className={styles.container}>
+          <BackAppBar title='내 주문' notFixed />
+          <section className={styles.feedback} aria-live='polite'>
+            존재하지 않는 주문이에요
+          </section>
+        </div>
+      );
+    default:
+      return <ServerErrorFallback reset={resetErrorBoundary} />;
+  }
 }
