@@ -42,23 +42,31 @@ export default function OrderConfirmModal({
             <section className={styles.orderConfirmSection}>
               <h4 className={styles.orderConfirmSectionTitle}>주문 상품</h4>
               <div className={styles.orderConfirmProductList}>
-                {selectedOrderItems.map(({ product, variant, quantity }) => (
-                  <div
-                    className={styles.orderConfirmProductItem}
-                    key={`${product.productId}-${variant.variantId}`}
-                  >
-                    <div className={styles.orderConfirmProductInfo}>
-                      <strong>{product.name}</strong>
-                      <span className={styles.orderConfirmProductDivider}>
-                        ·
-                      </span>
-                      <span>{variant.optionLabel}</span>
+                {selectedOrderItems.map(
+                  ({
+                    productId,
+                    productName,
+                    variantId,
+                    optionLabel,
+                    quantity,
+                  }) => (
+                    <div
+                      className={styles.orderConfirmProductItem}
+                      key={`${productId}-${variantId}`}
+                    >
+                      <div className={styles.orderConfirmProductInfo}>
+                        <strong>{productName}</strong>
+                        <span className={styles.orderConfirmProductDivider}>
+                          ·
+                        </span>
+                        <span>{optionLabel}</span>
+                      </div>
+                      <div className={styles.orderConfirmProductSummary}>
+                        <span>{quantity}개</span>
+                      </div>
                     </div>
-                    <div className={styles.orderConfirmProductSummary}>
-                      <span>{quantity}개</span>
-                    </div>
-                  </div>
-                ))}
+                  )
+                )}
               </div>
             </section>
 

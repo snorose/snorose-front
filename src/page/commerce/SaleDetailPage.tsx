@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
@@ -54,13 +54,13 @@ export default function SaleDetailPage() {
 
 function SaleDetailView() {
   const { saleId } = useParams();
+  const navigate = useNavigate();
 
   const { data: sale, refetch } = useSale(saleId);
 
   const {
     quantityMap,
     selectedOrderItems,
-    items,
     totalPaymentAmount,
     handlePlusQuantity,
     handleMinusQuantity,
@@ -103,12 +103,17 @@ function SaleDetailView() {
         clientRequestId: getClientRequestId(),
         buyerContact: phoneNumber,
         noticeAcceptances,
-        items,
+        items: selectedOrderItems.map(({ productId, variantId, quantity }) => ({
+          productId,
+          variantId,
+          quantity,
+        })),
       },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
           resetClientRequestId();
           toast({ message: '주문이 완료되었어요.' });
+          navigate(`/commerce/orders/${data.orderNumber}`, { replace: true });
         },
         onError: async (error) => {
           const errorCode = getCommerceErrorCode(error);
@@ -173,7 +178,7 @@ function SaleDetailView() {
   };
 
   const isOrderable =
-    items.length > 0 &&
+    selectedOrderItems.length > 0 &&
     phoneNumber.length === 11 &&
     /^010\d{8}$/.test(phoneNumber) &&
     sale.notices

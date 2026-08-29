@@ -19,8 +19,7 @@ export default function useSaleOrderForm(products: SaleResponse['products']) {
   const selectedOrderItems = getSelectedOrderItems(products, quantityMap);
 
   const totalPaymentAmount = selectedOrderItems.reduce(
-    (saleTotal, { product, variant, quantity }) =>
-      saleTotal + variant.unitPrice * quantity,
+    (saleTotal, { unitPrice, quantity }) => saleTotal + unitPrice * quantity,
     0
   );
 
@@ -70,11 +69,6 @@ export default function useSaleOrderForm(products: SaleResponse['products']) {
   return {
     quantityMap,
     selectedOrderItems,
-    items: selectedOrderItems.map(({ product, variant, quantity }) => ({
-      productId: product.productId,
-      variantId: variant.variantId,
-      quantity,
-    })),
     totalPaymentAmount,
     handlePlusQuantity,
     handleMinusQuantity,

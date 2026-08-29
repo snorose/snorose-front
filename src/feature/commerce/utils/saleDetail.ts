@@ -17,8 +17,13 @@ export function getSelectedOrderItems(
           quantityMap[product.productId]?.[variant.variantId] ?? 0;
 
         return {
-          product,
-          variant,
+          productId: product.productId,
+          productName: product.name,
+          inventoryPolicy: product.inventoryPolicy,
+          variantId: variant.variantId,
+          optionLabel: variant.optionLabel,
+          unitPrice: variant.unitPrice,
+          availableQuantity: variant.availableQuantity,
           quantity,
         };
       })
@@ -26,11 +31,8 @@ export function getSelectedOrderItems(
     .filter(({ quantity }) => quantity > 0);
 }
 
-export const getProductQuantity = (
-  productId: number,
-  quantityMap: QuantityMap
-) => {
-  return Object.values(quantityMap[productId]).reduce(
+export const getProductQuantity = (quantityMap: QuantityMap[number]) => {
+  return Object.values(quantityMap).reduce(
     (total, quantity) => total + quantity,
     0
   );
@@ -41,7 +43,7 @@ export const isValidMaxPerBuyer = (
   quantityMap: QuantityMap
 ) => {
   return (
-    getProductQuantity(product.productId, quantityMap) + 1 <=
+    getProductQuantity(quantityMap[product.productId]) + 1 <=
     product.remainingForBuyer
   );
 };

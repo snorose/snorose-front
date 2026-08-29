@@ -1,7 +1,7 @@
 import { formatNumber } from '@/shared/lib';
 
 import type {
-  ProductOptionItem,
+  ProductOption,
   QuantityMap,
   SaleResponse,
 } from '@/feature/commerce/types';
@@ -22,13 +22,16 @@ export default function ProductOptionSection({
   handlePlusQuantity,
   handleMinusQuantity,
 }: ProductOptionSectionProps) {
-  const productOptionItems: ProductOptionItem[] = products.flatMap((product) =>
+  const productOptionItems: ProductOption[] = products.flatMap((product) =>
     product.variants.map((variant) => {
       return {
-        product,
-        variant,
-        quantity: quantityMap[product.productId][variant.variantId],
-        isSoldOut: variant.availableQuantity === 0,
+        productId: product.productId,
+        productName: product.name,
+        inventoryPolicy: product.inventoryPolicy,
+        variantId: variant.variantId,
+        optionLabel: variant.optionLabel,
+        unitPrice: variant.unitPrice,
+        availableQuantity: variant.availableQuantity,
       };
     })
   );
@@ -38,64 +41,94 @@ export default function ProductOptionSection({
       <h2 className={styles.sectionTitle}>옵션/수량</h2>
 
       <div className={styles.optionList}>
-        {productOptionItems.map(({ product, variant, quantity, isSoldOut }) => {
-          const isPlusQuantityValid =
-            product.inventoryPolicy === 'PREORDER' ||
-            (product.inventoryPolicy === 'LIMITED_STOCK' &&
-              quantity < variant.availableQuantity &&
-              getProductQuantity(product.productId, quantityMap) <
-                product.remainingForBuyer);
+        {productOptionItems.map((option) => {
+          const product = products.find(
+            ({ productId }) => productId === option.productId
+          );
+          const quantity = quantityMap[option.productId][option.variantId];
+          const productTotalQuantity = getProductQuantity(
+            quantityMap[option.productId]
+          );
+          const isPlusQuantityInvalid =
+            product.inventoryPolicy === 'LIMITED_STOCK' &&
+            (quantity >= option.availableQuantity ||
+              productTotalQuantity >= product.remainingForBuyer);
 
           return (
-            <div
-              className={`${styles.optionItem} ${
-                isSoldOut ? styles.optionItemSoldOut : ''
-              }`}
-              key={`${product.productId} - ${variant.variantId}`}
-            >
-              <div className={styles.optionInfo}>
-                <div className={styles.optionLabel}>
-                  {product.name} · {variant.optionLabel}
-                </div>
-                <div className={styles.optionMeta}>
-                  {formatNumber(variant.unitPrice)}원
-                </div>
-              </div>
-
-              {isSoldOut && <span className={styles.soldOutBadge}>품절</span>}
-              {!isSoldOut && (
-                <div className={styles.quantityControl}>
-                  <button
-                    type='button'
-                    className={styles.quantityButton}
-                    aria-label={`${product.name} ${variant.optionLabel} 수량 감소`}
-                    disabled={quantity === 0}
-                    onClick={() =>
-                      handleMinusQuantity(product.productId, variant.variantId)
-                    }
-                  >
-                    -
-                  </button>
-
-                  <span className={styles.quantity}>{quantity}</span>
-
-                  <button
-                    type='button'
-                    className={styles.quantityButton}
-                    aria-label={`${product.name} ${variant.optionLabel} 수량 증가`}
-                    disabled={!isPlusQuantityValid}
-                    onClick={() =>
-                      handlePlusQuantity(product.productId, variant.variantId)
-                    }
-                  >
-                    +
-                  </button>
-                </div>
-              )}
-            </div>
+            <ProductOptionItem
+              option={option}
+              quantity={quantityMap[option.productId][option.variantId]}
+              onIncrease={handlePlusQuantity}
+              onDecrease={handleMinusQuantity}
+              decreaseDisabled={quantity === 0}
+              increaseDisabled={isPlusQuantityInvalid}
+            />
           );
         })}
       </div>
     </section>
+  );
+}
+
+function ProductOptionItem({
+  option,
+  quantity,
+  onIncrease,
+  onDecrease,
+  increaseDisabled,
+  decreaseDisabled,
+}: {
+  option: ProductOption;
+  quantity: number;
+  onIncrease: (productId: number, variantId: number) => void;
+  onDecrease: (productId: number, variantId: number) => void;
+  increaseDisabled: boolean;
+  decreaseDisabled: boolean;
+}) {
+  const isSoldOut = option.availableQuantity === 0;
+
+  return (
+    <div
+      className={`${styles.optionItem} ${
+        isSoldOut ? styles.optionItemSoldOut : ''
+      }`}
+      key={`${option.productId} - ${option.variantId}`}
+    >
+      <div className={styles.optionInfo}>
+        <div className={styles.optionLabel}>
+          {option.productName} · {option.optionLabel}
+        </div>
+        <div className={styles.optionMeta}>
+          {formatNumber(option.unitPrice)}원
+        </div>
+      </div>
+
+      {isSoldOut && <span className={styles.soldOutBadge}>품절</span>}
+      {!isSoldOut && (
+        <div className={styles.quantityControl}>
+          <button
+            type='button'
+            className={styles.quantityButton}
+            aria-label={`${option.productName} ${option.optionLabel} 수량 감소`}
+            disabled={decreaseDisabled}
+            onClick={() => onDecrease(option.productId, option.variantId)}
+          >
+            -
+          </button>
+
+          <span className={styles.quantity}>{quantity}</span>
+
+          <button
+            type='button'
+            className={styles.quantityButton}
+            aria-label={`${option.productName} ${option.optionLabel} 수량 증가`}
+            disabled={increaseDisabled}
+            onClick={() => onIncrease(option.productId, option.variantId)}
+          >
+            +
+          </button>
+        </div>
+      )}
+    </div>
   );
 }

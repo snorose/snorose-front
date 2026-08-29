@@ -34,14 +34,16 @@ export type QuantityMap = Partial<
   Record<number, Partial<Record<number, number>>>
 >;
 
-export type ProductOptionItem = {
-  product: SaleResponse['products'][number];
-  variant: SaleResponse['products'][number]['variants'][number];
-  quantity: number;
-  isSoldOut: boolean;
+export type ProductOption = {
+  productId: number;
+  productName: string;
+  variantId: number;
+  optionLabel: string;
+  unitPrice: number;
+  availableQuantity: number;
 };
 
-export type SelectedOrderItem = Omit<ProductOptionItem, 'isSoldOut'>;
+export type SelectedOrderItem = ProductOption & { quantity: number };
 
 export type OrderStatus = OrdersResponse['data'][number]['orderStatus'];
 export type PaymentStatus = OrdersResponse['data'][number]['paymentStatus'];
@@ -126,10 +128,8 @@ export type NoticeAcceptance = {
 export type NoticeAcceptanceMap = Partial<Record<number, boolean>>;
 
 export type CreateOrderResponse = {
-  result?: {
-    orderNumber?: string;
-    idempotentReplay?: boolean;
-  };
+  orderNumber: string;
+  idempotentReplay: boolean;
 };
 
 export type PickupDeviceOrderItem = {
