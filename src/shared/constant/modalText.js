@@ -259,11 +259,6 @@ const NOTICE_MODAL = {
     description: '내가 작성한 글이 아니에요',
     confirmText: '돌아가기',
   },
-  NOT_MY_ORDER: {
-    title: '접근 권한이 없어요',
-    description: '내 주문이 아니에요',
-    confirmText: '돌아가기',
-  },
   MAEKETING_NOTICE_MODAL: {
     id: 'marketing-notice',
     title: (isMarketingAgreed) =>

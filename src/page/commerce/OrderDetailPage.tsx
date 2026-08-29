@@ -1,17 +1,15 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import {
   BackAppBar,
   FetchLoading,
-  NoticeModal,
   PrimaryButton,
   ServerErrorFallback,
 } from '@/shared/component';
-import { NOTICE_MODAL_TEXT } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 import { DateTime, formatNumber } from '@/shared/lib';
 
@@ -216,12 +214,11 @@ function OrderDetailView() {
 }
 
 function ErrorFallback({ error, resetErrorBoundary }) {
-  const navigate = useNavigate();
-
   const errorCode = getCommerceErrorCode(error);
 
   switch (errorCode) {
     case 7013:
+    case 7014:
       return (
         <div className={styles.container}>
           <BackAppBar title='내 주문' notFixed />
@@ -229,13 +226,6 @@ function ErrorFallback({ error, resetErrorBoundary }) {
             존재하지 않는 주문이에요
           </section>
         </div>
-      );
-    case 7014:
-      return (
-        <NoticeModal
-          modalText={NOTICE_MODAL_TEXT.NOT_MY_ORDER}
-          onConfirm={() => navigate(-1)}
-        />
       );
     default:
       return <ServerErrorFallback reset={resetErrorBoundary} />;
