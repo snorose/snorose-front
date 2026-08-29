@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
-import { BackAppBar, ServerErrorFallback } from '@/shared/component';
+import { BackAppBar, Chip, ServerErrorFallback } from '@/shared/component';
 import { useToast } from '@/shared/hook';
 import { DateTime } from '@/shared/lib';
 
@@ -15,7 +15,7 @@ import PaymentSection from '@/feature/commerce/components/PaymentSection';
 import ProductCarouselSection from '@/feature/commerce/components/ProductCarouselSection';
 import ProductOptionSection from '@/feature/commerce/components/ProductOptionSection';
 import SaleClosedModal from '@/feature/commerce/components/SaleClosedModal';
-import SaleClosedSection from '@/feature/commerce/components/SaleClosedSection';
+import { SaleOrderArea } from '@/feature/commerce/components/SaleOrderArea';
 import {
   useCreateOrder,
   useNoticeAgreement,
@@ -26,11 +26,7 @@ import {
   useSaleOrderForm,
 } from '@/feature/commerce/hooks';
 import useOrderConfirmModal from '@/feature/commerce/hooks/useOrderConfirmModal';
-import {
-  getCommerceErrorCode,
-  getSaleUnavailableMessage,
-  getSaleUnavailableTitle,
-} from '@/feature/commerce/utils/saleDetail';
+import { getCommerceErrorCode } from '@/feature/commerce/utils/saleDetail';
 
 import styles from './SaleDetailPage.module.css';
 
@@ -193,9 +189,8 @@ function SaleDetailView() {
       <section className={styles.meta}>
         <div className={styles.metaHeader}>
           <span className={styles.sellerName}>{sale.sellerName}</span>
-          {!sale.orderable && (
-            <span className={styles.closedBadge}>주문 불가</span>
-          )}
+          {sale.status === 'CLOSED' && <Chip name='판매 마감' variant='grey' />}
+          {sale.status === 'OPEN' && <Chip name='판매 중' variant='gradient' />}
         </div>
         <h1 className={styles.title}>{sale.title}</h1>
         <p className={styles.description}>{sale.description}</p>
@@ -208,47 +203,39 @@ function SaleDetailView() {
 
       <div className={styles.border} />
 
-      {sale.status === 'CLOSED' ? (
-        <SaleClosedSection
-          sale={sale}
-          title={getSaleUnavailableTitle(sale)}
-          message={getSaleUnavailableMessage(sale)}
+      <SaleOrderArea sale={sale}>
+        <ProductOptionSection
+          products={sale.products}
+          quantityMap={quantityMap}
+          handlePlusQuantity={handlePlusQuantity}
+          handleMinusQuantity={handleMinusQuantity}
         />
-      ) : (
-        <>
-          <ProductOptionSection
-            products={sale.products}
-            quantityMap={quantityMap}
-            handlePlusQuantity={handlePlusQuantity}
-            handleMinusQuantity={handleMinusQuantity}
-          />
 
-          <div className={styles.border} />
+        <div className={styles.border} />
 
-          <OrdererInfoSection
-            name={name}
-            studentNumber={studentNumber}
-            phoneNumber={phoneNumber}
-            handlePhoneNumber={handlePhoneNumber}
-          />
+        <OrdererInfoSection
+          name={name}
+          studentNumber={studentNumber}
+          phoneNumber={phoneNumber}
+          handlePhoneNumber={handlePhoneNumber}
+        />
 
-          <div className={styles.border} />
+        <div className={styles.border} />
 
-          <NoticeAgreementSection
-            notices={sale.notices}
-            noticeAcceptanceMap={noticeAcceptanceMap}
-            handleNoticeAcceptance={handleNoticeAcceptance}
-          />
+        <NoticeAgreementSection
+          notices={sale.notices}
+          noticeAcceptanceMap={noticeAcceptanceMap}
+          handleNoticeAcceptance={handleNoticeAcceptance}
+        />
 
-          <div className={styles.border} />
+        <div className={styles.border} />
 
-          <PaymentSection
-            totalPaymentAmount={totalPaymentAmount}
-            isOrderButtonDisabled={!isOrderable}
-            onClick={() => openOrderConfirmModal()}
-          />
-        </>
-      )}
+        <PaymentSection
+          totalPaymentAmount={totalPaymentAmount}
+          isOrderButtonDisabled={!isOrderable}
+          onClick={() => openOrderConfirmModal()}
+        />
+      </SaleOrderArea>
 
       {isSaleClosedModalOpen && (
         <SaleClosedModal onClose={closeSaleClosedModal} />

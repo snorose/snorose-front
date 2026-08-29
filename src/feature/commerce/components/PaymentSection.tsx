@@ -34,17 +34,8 @@ export default function PaymentSection({
         disabled={isOrderButtonDisabled}
         onClick={onClick}
       >
-        구매 결정하기
+        주문하기
       </PrimaryButton>
     </section>
   );
 }
-
-// const handlePurchaseClick = () => {
-//   if (isSaleClosed) {
-//     setIsSaleClosedModalOpen(true);
-//     return;
-//   }
-
-//   setIsOrderConfirmModalOpen(true);
-// };
