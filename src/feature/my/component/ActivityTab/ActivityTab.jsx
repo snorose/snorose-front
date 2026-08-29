@@ -50,6 +50,22 @@ const ActivityTab = () => {
           </div>
         ))}
       </div>
+
+      <Link to={'/commerce/orders'}>
+        <div className={styles.order}>
+          <div className={styles.text}>
+            <span>내 주문 내역</span>
+            <span>지금까지 참여한 공구 주문을 확인해요</span>
+          </div>
+          <Icon
+            id='angle-right'
+            width={24}
+            height={24}
+            fill='#898989'
+            stroke='#898989'
+          />
+        </div>
+      </Link>
     </>
   );
 };
