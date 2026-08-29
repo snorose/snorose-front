@@ -1,4 +1,4 @@
-import { DimModalLayout } from '@/shared/component';
+import DimModalLayout from '@/shared/component/modal/DimModalLayout/DimModalLayout';
 import { formatNumber } from '@/shared/lib';
 
 import type { SelectedOrderItem } from '@/feature/commerce/types';
