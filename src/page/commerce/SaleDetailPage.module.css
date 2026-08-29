@@ -358,25 +358,6 @@
   overflow: hidden;
 }
 
-.accountModalScrollHint {
-  position: relative;
-}
-
-.accountModalScrollHint::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  bottom: 4.8rem;
-  left: 0;
-  height: 3.2rem;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(var(--white-rgb), 0),
-    var(--white)
-  );
-}
-
 .accountModalContent {
   min-height: 0;
   padding: 2.4rem 2rem 2rem;
@@ -393,7 +374,7 @@
 .accountModalTitle {
   margin-bottom: 1.8rem;
   text-align: center;
-  font: var(--text-headline-1-med);
+  font: var(--text-headline-1-bold);
   color: var(--grey-4);
 }
 
@@ -411,12 +392,6 @@
 
 .orderConfirmSection:first-of-type {
   margin-top: 0;
-}
-
-.orderConfirmSectionTitle {
-  margin-bottom: 0.8rem;
-  font: var(--text-body-1-bold);
-  color: var(--grey-4);
 }
 
 .orderConfirmProductList {
@@ -442,7 +417,7 @@
 }
 
 .orderConfirmProductInfo strong {
-  font: var(--text-body-1-bold);
+  font: var(--text-body-1-med);
   color: var(--grey-4);
   word-break: keep-all;
   overflow-wrap: anywhere;
@@ -487,18 +462,17 @@
 .accountInfoList {
   display: flex;
   flex-direction: column;
+  gap: 1.2rem;
 }
 
 .accountInfoItem {
   display: flex;
   justify-content: space-between;
-  gap: 1.2rem;
-  padding: 1.2rem 0;
 }
 
 .accountInfoItem dt {
   flex-shrink: 0;
-  font: var(--text-body-2-bold);
+  font: var(--text-body-2-med);
   color: var(--grey-3-1);
 }
 

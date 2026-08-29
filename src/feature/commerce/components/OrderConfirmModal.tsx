@@ -40,7 +40,6 @@ export default function OrderConfirmModal({
             </h3>
 
             <section className={styles.orderConfirmSection}>
-              <h4 className={styles.orderConfirmSectionTitle}>주문 상품</h4>
               <div className={styles.orderConfirmProductList}>
                 {selectedOrderItems.map(
                   ({
@@ -71,11 +70,10 @@ export default function OrderConfirmModal({
             </section>
 
             <section className={styles.orderConfirmSection}>
-              <h4 className={styles.orderConfirmSectionTitle}>주문자 연락처</h4>
               <dl className={styles.accountInfoList}>
                 <div className={styles.accountInfoItem}>
                   <dt>전화번호</dt>
-                  <dd>{phoneNumber}</dd>
+                  <dd>{`${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3, 7)}-${phoneNumber.slice(7)}`}</dd>
                 </div>
                 <div className={styles.accountInfoItem}>
                   <dt>총 결제 금액</dt>
