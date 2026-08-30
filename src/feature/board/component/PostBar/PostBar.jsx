@@ -3,7 +3,7 @@ import { ROLE } from '@/shared/constant';
 import { DateTime } from '@/shared/lib';
 
 import { htmlToText } from '@/feature/editor/lib';
-import { ConfirmedIcon } from '@/feature/exam/component';
+import { ConfirmedChip } from '@/feature/exam/component';
 
 import altImage from '@/assets/images/altImage.png';
 import cloudLogo from '@/assets/images/cloudLogo.svg';
@@ -161,4 +161,4 @@ function ActionContainer({
 }
 
 PostBar.Chip = Chip;
-PostBar.ConfirmedIcon = ConfirmedIcon;
+PostBar.ConfirmedChip = ConfirmedChip;

@@ -88,6 +88,9 @@ export default function WritePostPage() {
   );
   const [boardId, setBoardId] = useState(currentBoard?.id ?? '');
   const categoryConfig = BOARD_CATEGORY_MAP[boardId];
+  const hasCategory = Boolean(categoryConfig);
+  const isCategoryDisabled = hasCategory && isNotice;
+  const shouldIncludeCategory = hasCategory && !isCategoryDisabled;
 
   const boardTitles = BOARD_MENUS.filter((menu) =>
     [21, 22, 23, 41, 43].includes(menu.id)
@@ -138,15 +141,13 @@ export default function WritePostPage() {
   };
 
   const handleCategoryDropDownOpen = () => {
+    if (isCategoryDisabled) return;
+
     setCategoryDropDownOpen((prev) => !prev);
   };
 
-  const categoryOptions = Array.isArray(categoryConfig)
-    ? categoryConfig.map((name) => ({ id: name, name }))
-    : Object.entries(categoryConfig ?? {}).map(([id, name]) => ({ id, name }));
-  const selectedCategoryName = Array.isArray(categoryConfig)
-    ? category
-    : categoryConfig?.[category];
+  const categoryOptions =
+    categoryConfig?.map((name) => ({ id: name, name })) ?? [];
 
   const handleCategoryChange = (option) => {
     setCategory(option.id);
@@ -173,11 +174,18 @@ export default function WritePostPage() {
 
   // 공지 여부 선택 핸들러
   const handleIsNotice = () => {
-    setIsNotice((prev) => !prev);
+    const willBeNotice = !isNotice;
+
+    if (hasCategory && willBeNotice) {
+      setCategory(null);
+      setCategoryDropDownOpen(false);
+    }
+
+    setIsNotice(willBeNotice);
   };
 
   const data = {
-    category: categoryConfig ? category : '',
+    category: shouldIncludeCategory ? category : '',
     boardId,
     title,
     content: text,
@@ -240,7 +248,7 @@ export default function WritePostPage() {
       return;
     }
 
-    if (categoryConfig && !category) {
+    if (shouldIncludeCategory && !category) {
       toast({ message: TOAST.POST.selectCategory, variant: 'info' });
       return;
     }
@@ -359,7 +367,7 @@ export default function WritePostPage() {
                     />
                     <p className={styles.categorySelectText}>{boardTitle}</p>
                   </div>
-                  <Icon id='angle-down' width={16} height={9} />
+                  <Icon id='angle-down' width={24} height={24} />
                 </div>
                 {dropDownOpen && (
                   <DropdownList
@@ -378,22 +386,27 @@ export default function WritePostPage() {
                   <span className={styles.requiredDot} />
                 </div>
                 <div
-                  className={styles.subCategorySelect}
+                  className={`${styles.subCategorySelect} ${
+                    isCategoryDisabled ? styles.subCategorySelectDisabled : ''
+                  }`}
                   onClick={handleCategoryDropDownOpen}
+                  aria-disabled={isCategoryDisabled}
                 >
                   <div className={styles.subCategorySelectContainer}>
                     <p className={styles.subCategorySelectText}>
-                      {selectedCategoryName || '카테고리를 선택해주세요'}
+                      {isCategoryDisabled
+                        ? '공지글은 카테고리를 선택하지 않습니다'
+                        : category || '카테고리를 선택해주세요'}
                     </p>
                   </div>
-                  <Icon id='angle-down' width={16} height={9} />
+                  <Icon id='angle-down' width={24} height={24} />
                 </div>
-                {categoryDropDownOpen && (
+                {categoryDropDownOpen && !isCategoryDisabled && (
                   <DropdownList
                     options={categoryOptions}
                     select={{
                       id: category,
-                      name: selectedCategoryName ?? '',
+                      name: category ?? '',
                     }}
                     onSelect={handleCategoryChange}
                     className={styles.dropDownList}

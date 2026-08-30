@@ -1,6 +1,7 @@
 export { default as CategoryButton } from './CategoryButton/CategoryButton';
+export { default as ConfirmedChip } from './ConfirmedChip/ConfirmedChip';
+export { default as ExamReviewModalRenderer } from './ExamReviewModalRenderer/ExamReviewModalRenderer';
 export { default as CategoryFieldset } from './Fieldset/Fieldset';
-export { default as ConfirmedIcon } from './ConfirmedIcon/ConfirmedIcon';
 export { default as Filter } from './Filter/Filter';
 export { default as FilterList } from './FilterList/FilterList';
 export { default as InputItem } from './InputItem/InputItem';
@@ -8,4 +9,3 @@ export { default as InputList } from './InputList/InputList';
 export { default as ReviewContentItem } from './ReviewContentItem/ReviewContentItem';
 export { default as ReviewDownload } from './ReviewDownload/ReviewDownload';
 export { default as TextField } from './TextField/TextField';
-export { default as ExamReviewModalRenderer } from './ExamReviewModalRenderer/ExamReviewModalRenderer';

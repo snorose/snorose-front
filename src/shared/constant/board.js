@@ -463,16 +463,16 @@ export const COMMENT_REPORT_TYPE_MODAL_OPTION_CHILDREN = [
   },
 ];
 
-export const RESIDENCE_CATEGORY_KOREAN_ENUM = Object.freeze({
-  명재관: '명재관',
-  외부기숙사: '외부기숙',
-  자취: '자취',
-});
+export const RESIDENCE_CATEGORIES = Object.freeze([
+  '명재관',
+  '외부기숙사',
+  '자취',
+]);
 
 export const SOOKPLACE_CATEGORIES = Object.freeze(['교내', '교외']);
 
 // 게시판과 카테고리를 연결
 export const BOARD_CATEGORY_MAP = {
-  [BOARD_ID.residence]: RESIDENCE_CATEGORY_KOREAN_ENUM,
+  [BOARD_ID.residence]: RESIDENCE_CATEGORIES,
   [BOARD_ID.sookplace]: SOOKPLACE_CATEGORIES,
 };

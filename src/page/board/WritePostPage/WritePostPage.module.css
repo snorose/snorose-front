@@ -103,7 +103,6 @@
   z-index: 10;
 }
 
-
 .dropDownList {
   position: absolute;
   top: calc(100% + 0.7rem);
@@ -123,6 +122,11 @@
   width: 100%;
   background-color: var(--grey-1-1);
   padding: 1.6rem 2rem;
+}
+
+.subCategorySelectDisabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .subCategorySelectContainer {
@@ -146,7 +150,6 @@
   color: var(--grey-4);
   font: var(--text-headline-2-med);
 }
-
 
 .requiredDot {
   width: 0.6rem;
@@ -250,5 +253,3 @@
   left: 50%;
   transform: translate(-50%, 0);
 }
-
-
