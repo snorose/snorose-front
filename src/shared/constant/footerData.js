@@ -6,7 +6,7 @@ export const FOOTER_CONTACT_ITEMS = Object.freeze([
   },
   {
     type: 'bank',
-    label: '숙명여대 후원하기',
+    label: '스노로즈 후원하기',
     value: '신한 100-038-947719',
     accountHolder: '(예금주: 스노로즈)',
   },
