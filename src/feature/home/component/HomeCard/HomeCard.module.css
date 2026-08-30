@@ -45,9 +45,7 @@
 
 .noticeLabel {
   color: var(--Blue-Blue-4, #00368e);
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
+  font: var(--text-headline-2-med);
 }
 
 .noticeContent {
@@ -59,9 +57,8 @@
 
   white-space: pre-line;
 
-  font: var(--text-headline-1-med);
   color: var(--Grey-Grey-4, #484848);
-  font-size: 14px;
+  font: var(--text-body-1-med);
 }
 
 .noticeImage {
@@ -93,8 +90,7 @@
 
 .attendanceTitle {
   color: var(--White-White, #fff);
-  font-size: 16px;
-  font-weight: 500;
+  font: var(--text-headline-2-med);
 }
 
 .attendanceImage {
