@@ -396,7 +396,7 @@ export default function WritePostPage() {
                     <p className={styles.subCategorySelectText}>
                       {isCategoryDisabled
                         ? '공지글은 카테고리를 선택하지 않습니다'
-                        : selectedCategoryName || '카테고리를 선택해주세요'}
+                        : category || '카테고리를 선택해주세요'}
                     </p>
                   </div>
                   <Icon id='angle-down' width={24} height={24} />
