@@ -11,7 +11,8 @@
     background-color: var(--grey-1-1);
 
     .title,
-    .content {
+    .content,
+    .contentFull {
       color: var(--grey-4);
     }
   }
@@ -20,7 +21,8 @@
     background: var(--gradient-4);
 
     .title,
-    .content {
+    .content,
+    .contentFull {
       color: var(--blue-4);
     }
   }
@@ -31,20 +33,31 @@
 .top {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 0.8rem;
 
   & > div {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.6rem;
+    min-width: 0;
   }
 }
 
 .title {
   font: var(--text-body-1-med);
+  min-width: 0;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.title + * {
+  flex-shrink: 0;
 }
 
 .createdAt {
+  flex-shrink: 0;
   font: var(--text-body-1-reg);
   color: var(--grey-3-1);
 }
@@ -54,16 +67,19 @@
 .content {
   font: var(--text-body-1-reg);
 
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: keep-all;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: break-word;
 }
 
 .contentFull {
   font: var(--text-body-1-reg);
 
   white-space: normal;
+  word-break: keep-all;
   overflow: visible;
   text-overflow: clip;
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
