@@ -22,12 +22,7 @@ export default function HomeCard() {
 
   return (
     <div className={styles.layout}>
-      <NoticeCard
-        to='/board/notice'
-        title={notice.title}
-        iconId={isLogin ? 'blueMegaphone' : 'megaphone'}
-        isDark={!isLogin}
-      />
+      <NoticeCard to='/board/notice' title={notice.title} />
 
       {isLogin && <AttendanceCard iconId='flag' />}
     </div>
@@ -51,27 +46,26 @@ export function NewHomeCard() {
 
   return (
     <div className={styles.layout}>
-      <NoticeCard
-        to={toNoticeList('notice')}
-        title={notice.title}
-        iconId={isLogin ? 'blueMegaphone' : 'megaphone'}
-        isDark={!isLogin}
-      />
+      <NoticeCard to={toNoticeList('notice')} title={notice.title} />
 
       {isLogin && <AttendanceCard iconId='flag' />}
     </div>
   );
 }
 
-function NoticeCard({ to, title, iconId, isDark }) {
-  const imgSrc = require(`@/assets/images/${iconId}.svg`);
-
+function NoticeCard({ to, title }) {
   return (
     <Link className={styles.notice} to={to}>
-      <div className={`${styles.noticeCard} ${isDark ? styles.dark : ''}`}>
+      <div className={styles.noticeCard}>
         <div className={styles.noticeText}>
           <div className={styles.noticeHeader}>
-            <img className={styles.noticeImage} src={imgSrc} alt={iconId} />
+            <Icon
+              className={styles.noticeImage}
+              id='bell-fill'
+              width={18}
+              height={19}
+              aria-hidden='true'
+            />
             <span className={styles.noticeLabel}>공지사항</span>
           </div>
           <span className={styles.noticeContent}>{title}</span>
