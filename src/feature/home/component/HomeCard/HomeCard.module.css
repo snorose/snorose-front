@@ -3,12 +3,14 @@
 .layout {
   margin: 3rem var(--default-margin) 3rem var(--default-margin);
   display: flex;
-  gap: 1.1rem;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 .left,
 .right {
-  flex: 2;
+  display: block;
+  width: 100%;
 }
 
 /* Card */
