@@ -61,9 +61,9 @@ function NoticeCard({ to, title }) {
           <div className={styles.noticeHeader}>
             <Icon
               className={styles.noticeImage}
-              id='bell-fill'
-              width={18}
-              height={19}
+              id='notice-bell-blue'
+              width={13}
+              height={16}
               aria-hidden='true'
             />
             <span className={styles.noticeLabel}>공지사항</span>

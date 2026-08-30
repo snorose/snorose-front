@@ -54,7 +54,7 @@
   overflow: hidden;
 
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 
   white-space: pre-line;
@@ -65,8 +65,8 @@
 }
 
 .noticeImage {
-  width: 18px;
-  height: 19px;
+  width: 13px;
+  height: 16px;
 }
 
 .noticeArrow {
