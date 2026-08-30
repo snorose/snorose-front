@@ -91,10 +91,10 @@ const POPUP_CONTENTS = [
     endDate: '2026-08-10',
   },
   {
-    title: '[캘린더] 8월 스노로즈 일정',
+    title: '[캘린더] 9월 스노로즈 일정',
     image: calendarImage,
-    startDate: '2026-07-27',
-    endDate: '2026-08-10',
+    startDate: '2026-08-30',
+    endDate: '2026-09-10',
   },
   {
     title: '[공지] 시험후기 작성 기간 안내',
