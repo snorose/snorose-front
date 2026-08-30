@@ -83,6 +83,9 @@ export default function EditPostPage() {
   useBlocker(isBlock);
 
   const categoryConfig = BOARD_CATEGORY_MAP[currentBoard?.id];
+  const hasCategory = Boolean(categoryConfig);
+  const isCategoryDisabled = hasCategory && isNotice;
+  const shouldIncludeCategory = hasCategory && !isCategoryDisabled;
   const categoryOptions = Array.isArray(categoryConfig)
     ? categoryConfig.map((name) => ({ id: name, name }))
     : Object.entries(categoryConfig ?? {}).map(([id, name]) => ({ id, name }));
@@ -91,6 +94,8 @@ export default function EditPostPage() {
     : categoryConfig?.[category];
 
   const handleCategoryDropDownOpen = () => {
+    if (isCategoryDisabled) return;
+
     setCategoryDropDownOpen((prev) => !prev);
   };
 
@@ -196,7 +201,14 @@ export default function EditPostPage() {
 
   // 공지 여부 선택 핸들러
   const handleIsNotice = () => {
-    setIsNotice((prev) => !prev);
+    const willBeNotice = !isNotice;
+
+    if (hasCategory && willBeNotice) {
+      setCategory(null);
+      setCategoryDropDownOpen(false);
+    }
+
+    setIsNotice(willBeNotice);
   };
 
   // 제목 127자 제한
@@ -221,7 +233,7 @@ export default function EditPostPage() {
       toast({ message: TOAST.POST.emptyContent, variant: 'info' });
       return;
     }
-    if (categoryConfig && !category) {
+    if (shouldIncludeCategory && !category) {
       toast({ message: TOAST.POST.selectCategory, variant: 'info' });
       return;
     }
@@ -231,7 +243,7 @@ export default function EditPostPage() {
     mutation.mutate({
       boardId: currentBoard?.id,
       postId,
-      category: categoryConfig ? category : '',
+      category: shouldIncludeCategory ? category : '',
       title,
       content: sanitizeHtml(preserveEmptyParagraphs(editor?.getHTML() ?? '')),
       isNotice,
@@ -292,17 +304,22 @@ export default function EditPostPage() {
                   <span className={styles.requiredDot} />
                 </div>
                 <div
-                  className={styles.subCategorySelect}
+                  className={`${styles.subCategorySelect} ${
+                    isCategoryDisabled ? styles.subCategorySelectDisabled : ''
+                  }`}
                   onClick={handleCategoryDropDownOpen}
+                  aria-disabled={isCategoryDisabled}
                 >
                   <div className={styles.subCategorySelectContainer}>
                     <p className={styles.subCategorySelectText}>
-                      {selectedCategoryName || '카테고리를 선택해주세요'}
+                      {isCategoryDisabled
+                        ? '공지글은 카테고리를 선택하지 않습니다'
+                        : selectedCategoryName || '카테고리를 선택해주세요'}
                     </p>
                   </div>
                   <Icon id='angle-down' width={24} height={24} />
                 </div>
-                {categoryDropDownOpen && (
+                {categoryDropDownOpen && !isCategoryDisabled && (
                   <DropdownList
                     options={categoryOptions}
                     select={{
