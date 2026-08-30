@@ -126,11 +126,9 @@ export default function EditPostPage() {
       ? data.title?.match(/^\[([^\]]+)\]\s*/)
       : null;
 
-    const legacyCategory = Array.isArray(categoryConfig)
-      ? categoryConfig.find((name) => name === categoryMatch?.[1])
-      : Object.entries(categoryConfig ?? {}).find(
-          ([, name]) => name === categoryMatch?.[1]
-        )?.[0];
+    const legacyCategory = categoryConfig?.find(
+      (name) => name === categoryMatch?.[1]
+    );
 
     // API의 category를 우선 사용하고, 기존 게시글만 제목에서 추출
     const initialCategory = data.category || legacyCategory;
@@ -324,7 +322,7 @@ export default function EditPostPage() {
                     options={categoryOptions}
                     select={{
                       id: category,
-                      name: selectedCategoryName ?? '',
+                      name: category ?? '',
                     }}
                     onSelect={handleCategoryChange}
                   />
