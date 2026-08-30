@@ -71,7 +71,7 @@ export default function PostList() {
               }
               ref={index === postList.length - 1 ? ref : undefined}
             >
-              <PostBar {...post} category={post.category}>
+              <PostBar {...post}>
                 {post.boardName && (
                   <PostBar.Chip name={post.boardName} variant='grey' />
                 )}

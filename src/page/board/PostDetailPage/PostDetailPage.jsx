@@ -66,7 +66,6 @@ function PostDetailLoader() {
   return (
     <PostDetailView
       data={data}
-      categoryName={data.category}
       authorBadgeRoleId={
         ADMIN_BADGE_BOARD_IDS.includes(currentBoard.id) ? ROLE.admin : undefined
       }
