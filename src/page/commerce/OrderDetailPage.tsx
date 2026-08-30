@@ -14,15 +14,18 @@ import { useToast } from '@/shared/hook';
 import { DateTime, formatNumber } from '@/shared/lib';
 
 import CancelOrderConfirmModal from '@/feature/commerce/components/CancelOrderConfirmModal';
-import {
-  FULFILLMENT_STATUS_LABEL,
-  ORDER_STATUS_LABEL,
-  PAYMENT_STATUS_LABEL,
-} from '@/feature/commerce/constants';
 import useCancelConfirmModal from '@/feature/commerce/hooks/useCancelConfirmModal';
 import useOrder from '@/feature/commerce/hooks/useOrder';
 import useOrderCancel from '@/feature/commerce/hooks/useOrderCancel';
-import { getCommerceErrorCode } from '@/feature/commerce/utils/commerceRules';
+import {
+  getCommerceErrorCode,
+  isCanceled,
+  isExpired,
+  isPaymentPending,
+  isPickedUp,
+  isPickUpPending,
+  isReview,
+} from '@/feature/commerce/utils/commerceRules';
 
 import styles from './OrderDetailPage.module.css';
 
@@ -160,20 +163,22 @@ function OrderDetailView() {
             <dd>{formatNumber(order.totalAmount)}원</dd>
           </div>
           <div className={styles.infoItem}>
-            <dt>결제</dt>
-            <dd>
-              {orderStatus === 'CANCELLED'
-                ? ORDER_STATUS_LABEL[orderStatus]
-                : PAYMENT_STATUS_LABEL[order.paymentStatus]}
-            </dd>
+            <dt>상태</dt>
+            {isPaymentPending(
+              orderStatus,
+              paymentStatus,
+              fulfillmentStatus
+            ) && <dd>입금 대기</dd>}
+            {isPickUpPending(orderStatus, paymentStatus, fulfillmentStatus) && (
+              <dd>수령 대기</dd>
+            )}
+            {isPickedUp(orderStatus, paymentStatus, fulfillmentStatus) && (
+              <dd>수령 완료</dd>
+            )}
+            {isReview(paymentStatus) && <dd>검토 필요</dd>}
+            {isCanceled(orderStatus, paymentStatus) && <dd>주문 취소</dd>}
+            {isExpired(orderStatus, paymentStatus) && <dd>입금 만료</dd>}
           </div>
-
-          {orderStatus !== 'CANCELLED' && (
-            <div className={styles.infoItem}>
-              <dt>수령</dt>
-              <dd>{FULFILLMENT_STATUS_LABEL[fulfillmentStatus]}</dd>
-            </div>
-          )}
         </dl>
       </section>
 

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import type {
+  OrdersResponse,
   QuantityMap,
   SaleResponse,
   SelectedOrderItem,
@@ -63,6 +64,62 @@ export function isProductQuantityLimitReached(
 
 export function isValidPhoneNumber(value: string) {
   return /^010\d{8}$/.test(value);
+}
+
+export function isPaymentPending(
+  orderStatus: OrdersResponse['data'][number]['orderStatus'],
+  paymentStatus: OrdersResponse['data'][number]['paymentStatus'],
+  fulfillmentStatus: OrdersResponse['data'][number]['fulfillmentStatus']
+) {
+  return (
+    orderStatus === 'ACTIVE' &&
+    paymentStatus === 'WAITING' &&
+    fulfillmentStatus === 'PENDING'
+  );
+}
+
+export function isPickUpPending(
+  orderStatus: OrdersResponse['data'][number]['orderStatus'],
+  paymentStatus: OrdersResponse['data'][number]['paymentStatus'],
+  fulfillmentStatus: OrdersResponse['data'][number]['fulfillmentStatus']
+) {
+  return (
+    orderStatus === 'ACTIVE' &&
+    paymentStatus === 'PAID' &&
+    fulfillmentStatus === 'PENDING'
+  );
+}
+
+export function isPickedUp(
+  orderStatus: OrdersResponse['data'][number]['orderStatus'],
+  paymentStatus: OrdersResponse['data'][number]['paymentStatus'],
+  fulfillmentStatus: OrdersResponse['data'][number]['fulfillmentStatus']
+) {
+  return (
+    orderStatus === 'COMPLETED' &&
+    paymentStatus === 'PAID' &&
+    fulfillmentStatus === 'PICKED_UP'
+  );
+}
+
+export function isReview(
+  paymentStatus: OrdersResponse['data'][number]['paymentStatus']
+) {
+  return paymentStatus === 'REVIEW_REQUIRED';
+}
+
+export function isCanceled(
+  orderStatus: OrdersResponse['data'][number]['orderStatus'],
+  paymentStatus: OrdersResponse['data'][number]['paymentStatus']
+) {
+  return orderStatus === 'CANCELLED' && paymentStatus === 'CANCELLED';
+}
+
+export function isExpired(
+  orderStatus: OrdersResponse['data'][number]['orderStatus'],
+  paymentStatus: OrdersResponse['data'][number]['paymentStatus']
+) {
+  return orderStatus === 'CANCELLED' && paymentStatus === 'EXPIRED';
 }
 
 export function getSaleUnavailableTitle(sale: SaleResponse) {
