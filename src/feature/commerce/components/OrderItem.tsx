@@ -25,6 +25,27 @@ export default function OrderItem({
   OrdersResponse['data'][number],
   'saleId' | 'paymentDueAt' | 'createAt'
 >) {
+  const isPaymentPending =
+    orderStatus === 'ACTIVE' &&
+    paymentStatus === 'WAITING' &&
+    fulfillmentStatus === 'PENDING';
+  const isPickUpPending =
+    orderStatus === 'ACTIVE' &&
+    paymentStatus === 'PAID' &&
+    fulfillmentStatus === 'PENDING';
+
+  const isPickedUp =
+    orderStatus === 'COMPLETED' &&
+    paymentStatus === 'PAID' &&
+    fulfillmentStatus === 'PICKED_UP';
+
+  const isReview = paymentStatus === 'REVIEW_REQUIRED';
+
+  const isCanceled =
+    orderStatus === 'CANCELLED' && paymentStatus === 'CANCELLED';
+
+  const isExpired = orderStatus === 'CANCELLED' && paymentStatus === 'EXPIRED';
+
   return (
     <div className={styles.orderItem}>
       <div className={styles.thumbnailWrapper}>
@@ -46,25 +67,28 @@ export default function OrderItem({
           </div>
         </div>
         <div className={styles.statusList}>
-          {orderStatus === 'CANCELLED' && (
-            <Chip
-              name={ORDER_STATUS_LABEL[orderStatus]}
-              variant={'grey'}
-              size='sm'
-            />
+          {isPaymentPending && (
+            <Chip name={'입금 대기'} variant={'gradient'} size='sm' />
           )}
-          <Chip
-            name={PAYMENT_STATUS_LABEL[paymentStatus]}
-            variant={paymentStatus === 'PAID' ? 'gradient' : 'grey'}
-            size='sm'
-          />
-          <Chip
-            name={FULFILLMENT_STATUS_LABEL[fulfillmentStatus]}
-            variant={fulfillmentStatus === 'PICKED_UP' ? 'gradient' : 'grey'}
-            size='sm'
-          />
+          {isPickUpPending && (
+            <Chip name={'수령 대기'} variant={'gradient'} size='sm' />
+          )}
+          {isPickedUp && <Chip name={'수령 완료'} variant={'grey'} size='sm' />}
+          {isReview && (
+            <Chip name={'운영자 확인'} variant={'gradient'} size='sm' />
+          )}
+          {isCanceled && <Chip name={'주문 취소'} variant={'grey'} size='sm' />}
+          {isExpired && <Chip name={'입금 만료'} variant={'grey'} size='sm' />}
         </div>
       </div>
     </div>
   );
 }
+
+// 1. ACTIVE | WAITING | PENDING (입금 대기)
+// 2. ACTIVE | PAID | PENDIGN (수령 대기)
+// 3. ACTIVE | PAID | PICKUP (수령 완료)
+// 4. ACTIVE | REVIEW_REQUIRED | PENDING (운영자 확인)
+// 5. CANCELLED | CANCELLED (사용자 주문 취소)
+// 6. CANCELLED | EXPIRED (입금 기한 만료 취소)
+// 7. CANCELLED | ?? (운영 취소)

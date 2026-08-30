@@ -15,6 +15,7 @@ export const PAYMENT_STATUS_LABEL: Record<PaymentStatus, string> = {
   PAID: '입금 완료',
   REVIEW_REQUIRED: '운영자 확인 필요',
   EXPIRED: '입금 만료',
+  CANCELLED: '주문 취소',
 };
 
 export const FULFILLMENT_STATUS_LABEL: Record<FulfillmentStatus, string> = {

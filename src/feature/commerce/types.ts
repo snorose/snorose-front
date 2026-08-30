@@ -61,7 +61,12 @@ export type OrdersResponse = {
     itemSummary: string;
     totalAmount: number;
     orderStatus: 'ACTIVE' | 'CANCELLED' | 'COMPLETED';
-    paymentStatus: 'WAITING' | 'PAID' | 'REVIEW_REQUIRED' | 'EXPIRED';
+    paymentStatus:
+      | 'WAITING'
+      | 'PAID'
+      | 'REVIEW_REQUIRED'
+      | 'EXPIRED'
+      | 'CANCELLED';
     fulfillmentStatus: 'PENDING' | 'PICKED_UP';
     paymentDueAt: string;
     createdAt: string;

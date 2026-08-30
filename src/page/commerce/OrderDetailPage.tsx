@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
@@ -44,6 +44,7 @@ export default function OrderDetailPage() {
 
 function OrderDetailView() {
   const { orderNumber } = useParams();
+  const navigate = useNavigate();
 
   const { data: order, refetch } = useOrder(orderNumber);
   const { mutate: cancelOrder, isPending } = useOrderCancel();
@@ -166,14 +167,13 @@ function OrderDetailView() {
                 : PAYMENT_STATUS_LABEL[order.paymentStatus]}
             </dd>
           </div>
-          <div className={styles.infoItem}>
-            <dt>수령</dt>
-            <dd>
-              {orderStatus === 'CANCELLED'
-                ? ORDER_STATUS_LABEL[orderStatus]
-                : FULFILLMENT_STATUS_LABEL[fulfillmentStatus]}
-            </dd>
-          </div>
+
+          {orderStatus !== 'CANCELLED' && (
+            <div className={styles.infoItem}>
+              <dt>수령</dt>
+              <dd>{FULFILLMENT_STATUS_LABEL[fulfillmentStatus]}</dd>
+            </div>
+          )}
         </dl>
       </section>
 
@@ -200,7 +200,7 @@ function OrderDetailView() {
       {order.cancellable && (
         <div className={styles.butttonWrapper}>
           <PrimaryButton
-            className={styles.button}
+            className={`${styles.button} ${styles.cancel}`}
             disabled={isPending}
             onClick={() => {
               openCancelConfirmModal();
@@ -210,6 +210,18 @@ function OrderDetailView() {
           </PrimaryButton>
         </div>
       )}
+
+      <div className={styles.butttonWrapper}>
+        <PrimaryButton
+          className={styles.button}
+          disabled={isPending}
+          onClick={() => {
+            navigate('/commerce/orders');
+          }}
+        >
+          닫기
+        </PrimaryButton>
+      </div>
 
       {isCancelConfirmModalOpen && (
         <CancelOrderConfirmModal
