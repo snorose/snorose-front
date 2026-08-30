@@ -178,16 +178,14 @@ export default function WritePostPage() {
 
   // 공지 여부 선택 핸들러
   const handleIsNotice = () => {
-    setIsNotice((isCurrentlyNotice) => {
-      const willBeNotice = !isCurrentlyNotice;
+    const willBeNotice = !isNotice;
 
-      if (hasCategory && willBeNotice) {
-        setCategory(null);
-        setCategoryDropDownOpen(false);
-      }
+    if (hasCategory && willBeNotice) {
+      setCategory(null);
+      setCategoryDropDownOpen(false);
+    }
 
-      return willBeNotice;
-    });
+    setIsNotice(willBeNotice);
   };
 
   const data = {

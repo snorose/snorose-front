@@ -196,7 +196,14 @@ export default function EditPostPage() {
 
   // 공지 여부 선택 핸들러
   const handleIsNotice = () => {
-    setIsNotice((prev) => !prev);
+    const willBeNotice = !isNotice;
+
+    if (categoryConfig && willBeNotice) {
+      setCategory(null);
+      setCategoryDropDownOpen(false);
+    }
+
+    setIsNotice(willBeNotice);
   };
 
   // 제목 127자 제한
