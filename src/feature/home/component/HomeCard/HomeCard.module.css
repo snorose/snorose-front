@@ -7,15 +7,13 @@
   gap: 0.6rem;
 }
 
-.left,
-.right {
+.notice,
+.attendance {
   display: block;
   width: 100%;
 }
 
-/* Card */
-
-.card {
+.noticeCard {
   width: 100%;
   height: 11rem;
   padding: 1.4rem 0 1.2rem 1.4rem;
@@ -29,12 +27,12 @@
   overflow: hidden;
 }
 
-.dark .card {
+.noticeCard.dark {
   background: var(--gradient-5);
   color: var(--white);
 }
 
-.text {
+.noticeText {
   flex: 1;
   height: 100%;
   display: flex;
@@ -43,7 +41,7 @@
   word-break: keep-all;
 }
 
-.title {
+.noticeTitle {
   overflow: hidden;
 
   display: -webkit-box;
@@ -55,8 +53,40 @@
   font: var(--text-headline-1-med);
 }
 
-.image {
+.noticeImage {
   width: 5.8rem;
   height: auto;
   margin: 2.5rem 1.2rem 0rem 2.5rem;
+}
+
+.attendanceCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 4.7rem;
+  padding: 1.4rem;
+  background: var(--gradient-5);
+  border-radius: 5px;
+}
+
+.attendanceText {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.attendanceTitle {
+  color: var(--White-White, #fff);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.attendanceImage {
+  width: 18px;
+  height: 19px;
+}
+
+.attendanceArrow {
+  color: var(--White-White, #fff);
 }

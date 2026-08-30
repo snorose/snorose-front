@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { Icon } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
 import { useAuth, useBoardNavigate } from '@/shared/hook';
 
@@ -21,25 +22,14 @@ export default function HomeCard() {
 
   return (
     <div className={styles.layout}>
-      <Card
-        className={styles.notice}
+      <NoticeCard
         to='/board/notice'
         title={notice.title}
-        icon={{
-          id: isLogin ? 'blueMegaphone' : 'megaphone',
-        }}
-        isDark={isLogin ? false : true}
+        iconId={isLogin ? 'blueMegaphone' : 'megaphone'}
+        isDark={!isLogin}
       />
 
-      {isLogin && (
-        <Card
-          className={styles.attendance}
-          to='/attendance'
-          title='오늘의 출석체크'
-          icon={{ id: 'flag' }}
-          isDark
-        />
-      )}
+      {isLogin && <AttendanceCard iconId='flag' />}
     </div>
   );
 }
@@ -61,44 +51,51 @@ export function NewHomeCard() {
 
   return (
     <div className={styles.layout}>
-      <Card
-        className={styles.notice}
+      <NoticeCard
         to={toNoticeList('notice')}
         title={notice.title}
-        icon={{
-          id: isLogin ? 'blueMegaphone' : 'megaphone',
-        }}
-        isDark={isLogin ? false : true}
+        iconId={isLogin ? 'blueMegaphone' : 'megaphone'}
+        isDark={!isLogin}
       />
 
-      {isLogin && (
-        <Card
-          className={styles.attendance}
-          to='/attendance'
-          title='오늘의 출석체크'
-          icon={{ id: 'flag' }}
-          isDark
-        />
-      )}
+      {isLogin && <AttendanceCard iconId='flag' />}
     </div>
   );
 }
 
-function Card({ className, to, title, icon, isDark }) {
-  const { mixBlendMode, rotate } = icon;
-  const imgSrc = icon?.id ? require(`@/assets/images/${icon.id}.svg`) : '';
+function NoticeCard({ to, title, iconId, isDark }) {
+  const imgSrc = require(`@/assets/images/${iconId}.svg`);
 
   return (
-    <Link className={`${className} ${isDark && styles.dark}`} to={to}>
-      <div className={styles.card}>
-        <div className={styles.text}>
-          <span className={styles.title}>{title}</span>
+    <Link className={styles.notice} to={to}>
+      <div className={`${styles.noticeCard} ${isDark ? styles.dark : ''}`}>
+        <div className={styles.noticeText}>
+          <span className={styles.noticeTitle}>{title}</span>
         </div>
-        <img
-          className={styles.image}
-          style={{ mixBlendMode, transform: `rotateZ(${rotate ?? 0}deg)` }}
-          src={imgSrc}
-          alt={icon.id}
+        <img className={styles.noticeImage} src={imgSrc} alt={iconId} />
+      </div>
+    </Link>
+  );
+}
+
+function AttendanceCard({ iconId }) {
+  const imgSrc = require(`@/assets/images/${iconId}.svg`);
+
+  return (
+    <Link className={styles.attendance} to='/attendance'>
+      <div className={styles.attendanceCard}>
+        <div className={styles.attendanceText}>
+          <img className={styles.attendanceImage} src={imgSrc} alt={iconId} />
+          <span className={styles.attendanceTitle}>오늘의 출석체크</span>
+        </div>
+        <Icon
+          className={styles.attendanceArrow}
+          id='angle-right'
+          width={18}
+          height={18}
+          fill='white'
+          stroke='white'
+          aria-hidden='true'
         />
       </div>
     </Link>
