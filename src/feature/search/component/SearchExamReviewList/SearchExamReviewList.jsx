@@ -1,20 +1,19 @@
 import { Link, useSearchParams } from 'react-router-dom';
 
-import { getExamReviewList } from '@/apis';
-
-import { useSuspensePagination } from '@/shared/hook';
-import { deduplicatePaginatedData, flatPaginationCache } from '@/shared/lib';
 import { FetchLoading, List, PullToRefresh } from '@/shared/component';
 import { QUERY_KEY, STALE_TIME } from '@/shared/constant';
+import { useSuspensePagination } from '@/shared/hook';
+import { deduplicatePaginatedData, flatPaginationCache } from '@/shared/lib';
 
 import { PostBar } from '@/feature/board/component';
+
+import { getExamReviewList } from '@/apis';
 
 import styles from './SearchExamReviewList.module.css';
 
 export default function SearchExamReviewList() {
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
-  const paramsLength = Object.keys(params).length;
 
   const { data, ref, isFetching, refetch } = useSuspensePagination({
     queryKey: [QUERY_KEY.reviews, JSON.stringify(params)],
@@ -29,7 +28,9 @@ export default function SearchExamReviewList() {
   const examList = deduplicatePaginatedData(flatPaginationCache(data));
 
   if (examList.length === 0 && !isFetching) {
-    throw { status: 404 };
+    const error = new Error('검색 결과가 없습니다.');
+    error.status = 404;
+    throw error;
   }
 
   return (
@@ -43,7 +44,7 @@ export default function SearchExamReviewList() {
             to={`/board/exam-review/post/${post.postId}`}
           >
             <PostBar {...post} content={post.questionDetail}>
-              {post.isConfirmed && <PostBar.ConfirmedIcon />}
+              {post.isConfirmed && <PostBar.ConfirmedChip />}
             </PostBar>
           </Link>
         ))}
