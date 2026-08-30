@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { getHomeNotice } from '@/apis';
-
-import { useAuth, useBoardNavigate } from '@/shared/hook';
 import { QUERY_KEY } from '@/shared/constant';
+import { useAuth, useBoardNavigate } from '@/shared/hook';
+
+import { getHomeNotice } from '@/apis';
 
 import styles from './HomeCard.module.css';
 
@@ -22,7 +22,7 @@ export default function HomeCard() {
   return (
     <div className={styles.layout}>
       <Card
-        className={styles.left}
+        className={styles.notice}
         to='/board/notice'
         title={notice.title}
         icon={{
@@ -33,9 +33,9 @@ export default function HomeCard() {
 
       {isLogin && (
         <Card
-          className={styles.right}
+          className={styles.attendance}
           to='/attendance'
-          title={`오늘의\n출석체크`}
+          title='오늘의 출석체크'
           icon={{ id: 'flag' }}
           isDark
         />
@@ -62,7 +62,7 @@ export function NewHomeCard() {
   return (
     <div className={styles.layout}>
       <Card
-        className={styles.left}
+        className={styles.notice}
         to={toNoticeList('notice')}
         title={notice.title}
         icon={{
@@ -73,9 +73,9 @@ export function NewHomeCard() {
 
       {isLogin && (
         <Card
-          className={styles.right}
+          className={styles.attendance}
           to='/attendance'
-          title={`오늘의\n출석체크`}
+          title='오늘의 출석체크'
           icon={{ id: 'flag' }}
           isDark
         />
