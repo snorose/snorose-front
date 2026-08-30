@@ -1,7 +1,7 @@
 /* HomeCard */
 
 .layout {
-  margin: 3rem var(--default-margin) 3rem var(--default-margin);
+  margin: 3rem var(--default-margin);
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -10,11 +10,9 @@
 .notice,
 .attendance {
   display: block;
-  width: 100%;
 }
 
 .noticeCard {
-  width: 100%;
   height: 7rem;
   padding: 1.4rem 1.6rem;
   display: flex;
@@ -22,18 +20,13 @@
   align-items: center;
   background: var(--blue-0);
   border-radius: 0.6rem;
-  box-sizing: border-box;
-  color: var(--blue-4);
-  overflow: hidden;
 }
 
 .noticeText {
   flex: 1;
-  height: 100%;
   display: flex;
   flex-direction: column;
   min-width: 0;
-  word-break: keep-all;
   gap: 0.2rem;
 }
 
@@ -50,20 +43,11 @@
 
 .noticeContent {
   overflow: hidden;
-
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-
-  white-space: pre-line;
-
   color: var(--Grey-Grey-4, #484848);
   font: var(--text-body-1-med);
-}
-
-.noticeImage {
-  width: 13px;
-  height: 16px;
 }
 
 .noticeArrow {
@@ -72,12 +56,11 @@
 }
 
 .attendanceCard {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
   height: 4.7rem;
   padding: 1.4rem 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: var(--gradient-5);
   border-radius: 5px;
 }
