@@ -70,9 +70,21 @@ function NoticeCard({ to, title, iconId, isDark }) {
     <Link className={styles.notice} to={to}>
       <div className={`${styles.noticeCard} ${isDark ? styles.dark : ''}`}>
         <div className={styles.noticeText}>
-          <span className={styles.noticeTitle}>{title}</span>
+          <div className={styles.noticeHeader}>
+            <img className={styles.noticeImage} src={imgSrc} alt={iconId} />
+            <span className={styles.noticeLabel}>공지사항</span>
+          </div>
+          <span className={styles.noticeContent}>{title}</span>
         </div>
-        <img className={styles.noticeImage} src={imgSrc} alt={iconId} />
+        <Icon
+          className={styles.noticeArrow}
+          id='angle-right'
+          width={18}
+          height={18}
+          fill='var(--grey-4)'
+          stroke='var(--grey-4)'
+          aria-hidden='true'
+        />
       </div>
     </Link>
   );
