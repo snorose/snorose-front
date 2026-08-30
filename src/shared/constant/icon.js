@@ -46,6 +46,7 @@ export const STATIC_ICON_LIST = Object.freeze({
   nestedArrow: 'nested-arrow',
   notificationRed: 'notification-red',
   noticeBell: 'notice-bell',
+  noticeBellBlue: 'notice-bell-blue',
   point: 'point',
   pointCircle: 'point-circle',
   pointCircleBlue: 'point-circle-blue',
