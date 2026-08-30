@@ -102,8 +102,7 @@ function SaleDetailView() {
         clientRequestId: getClientRequestId(),
         buyerContact: phoneNumber,
         noticeAcceptances,
-        items: selectedOrderItems.map(({ productId, variantId, quantity }) => ({
-          productId,
+        items: selectedOrderItems.map(({ variantId, quantity }) => ({
           variantId,
           quantity,
         })),

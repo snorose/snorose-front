@@ -113,7 +113,6 @@ export type CreateOrderRequest = {
   buyerContact: string;
   noticeAcceptances: NoticeAcceptance[];
   items: Array<{
-    productId: number;
     variantId: number;
     quantity: number;
   }>;
