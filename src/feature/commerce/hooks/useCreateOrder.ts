@@ -10,7 +10,10 @@ export default function useCreateOrder() {
   return useMutation({
     mutationFn: createOrder,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY.commerceOrders });
+      queryClient.removeQueries({
+        queryKey: QUERY_KEY.commerceOrders,
+        exact: true,
+      });
     },
   });
 }
