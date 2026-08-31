@@ -22,3 +22,12 @@
 .sm {
   font: var(--text-caption-1-med);
 }
+
+.category {
+  /* 카테고리 아이콘 디자인 */
+  padding: 0 0.5rem;
+  border-radius: 0.4rem;
+
+  background-color: var(--blue-2);
+  color: var(--blue-4);
+}
