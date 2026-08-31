@@ -40,35 +40,49 @@ export default function ProductOptionSection({
     <section>
       <h2 className={styles.sectionTitle}>옵션/수량</h2>
 
-      <div className={styles.optionList}>
-        {productOptionItems.map((option) => {
-          const product = products.find(
-            ({ productId }) => productId === option.productId
-          );
-          const variant = product.variants.find(
-            ({ variantId }) => variantId === option.variantId
-          );
+      <div className={styles.products}>
+        {products.map((product) => (
+          <div className={styles.product}>
+            <div className={styles.productName}>
+              {product.name}
+              <span className={styles.productMaxPerBuyer}>
+                최대 {product.maxPerBuyer} 구매 가능
+              </span>
+            </div>
 
-          const isInvalid = isPlusQuantityInvalid(
-            product,
-            variant,
-            quantityMap
-          );
+            <div className={styles.optionList}>
+              {productOptionItems.map((option) => {
+                const product = products.find(
+                  ({ productId }) => productId === option.productId
+                );
+                const variant = product.variants.find(
+                  ({ variantId }) => variantId === option.variantId
+                );
 
-          const quantity = quantityMap[product.productId][variant.variantId];
+                const isInvalid = isPlusQuantityInvalid(
+                  product,
+                  variant,
+                  quantityMap
+                );
 
-          return (
-            <ProductOptionItem
-              option={option}
-              quantity={quantityMap[option.productId][option.variantId]}
-              onIncrease={handlePlusQuantity}
-              onDecrease={handleMinusQuantity}
-              decreaseDisabled={quantity <= 0}
-              increaseDisabled={isInvalid}
-              inventoryPolicy={product.inventoryPolicy}
-            />
-          );
-        })}
+                const quantity =
+                  quantityMap[product.productId][variant.variantId];
+
+                return (
+                  <ProductOptionItem
+                    option={option}
+                    quantity={quantityMap[product.productId][option.variantId]}
+                    onIncrease={handlePlusQuantity}
+                    onDecrease={handleMinusQuantity}
+                    decreaseDisabled={quantity <= 0}
+                    increaseDisabled={isInvalid}
+                    inventoryPolicy={product.inventoryPolicy}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -99,12 +113,10 @@ export function ProductOptionItem({
       className={`${styles.optionItem} ${
         isSoldOut ? styles.optionItemSoldOut : ''
       }`}
-      key={`${option.productId} - ${option.variantId}`}
+      key={option.variantId}
     >
       <div className={styles.optionInfo}>
-        <div className={styles.optionLabel}>
-          {option.productName} · {option.optionLabel}
-        </div>
+        <div className={styles.optionLabel}>{option.optionLabel}</div>
         <div className={styles.optionMeta}>
           {formatNumber(option.unitPrice)}원
         </div>
