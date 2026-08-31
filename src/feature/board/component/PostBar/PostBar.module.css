@@ -68,6 +68,19 @@
   color: var(--black);
 }
 
+.titleRow {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+/* titleRow 안에 있을 때만 기존 margin 제거 */
+.titleRow .title {
+  margin-bottom: 0;
+}
+
 .content {
   overflow: hidden;
   text-overflow: ellipsis;
