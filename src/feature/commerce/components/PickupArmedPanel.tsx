@@ -29,7 +29,7 @@ export default function PickupArmedPanel({
         <div className={styles.buyerInfo}>
           <span>{session.order.buyerName}</span>
           <span aria-hidden='true'>·</span>
-          <span>{session.order.studentNumberMasked}</span>
+          <span>{session.order.studentNumber}</span>
         </div>
       </div>
 
