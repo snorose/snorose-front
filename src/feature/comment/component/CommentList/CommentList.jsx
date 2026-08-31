@@ -1,9 +1,8 @@
 import { useParams } from 'react-router-dom';
 
-import { FetchLoading } from '@/shared/component';
+import { FetchLoading, InfiniteScrollSentinel } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
-import { useSuspensePagination } from '@/shared/hook';
-import { flatPaginationCache } from '@/shared/lib';
+import { useSuspenseInfiniteScroll } from '@/shared/hook';
 
 import { Comment } from '@/feature/comment/component';
 import { filterVisibleComments } from '@/feature/comment/lib';
@@ -15,24 +14,26 @@ import styles from './CommentList.module.css';
 export default function CommentList() {
   const { postId } = useParams();
 
-  const { data, isFetching, ref } = useSuspensePagination({
+  const {
+    items: commentList,
+    ref,
+    isFetchingNextPage,
+  } = useSuspenseInfiniteScroll({
     queryKey: [QUERY_KEY.comments, postId],
     queryFn: ({ pageParam }) => getComments({ postId, page: pageParam }),
+    getItemKey: (item) => item.id,
   });
 
-  const commentList = flatPaginationCache(data);
   const visibledCommentList = filterVisibleComments(commentList);
 
   return (
     <div className={styles.comments}>
       {visibledCommentList.map((comment, index) => (
-        <Comment
-          ref={index === visibledCommentList.length - 1 ? ref : undefined}
-          key={comment.id}
-          data={comment}
-        />
+        <Comment key={comment.id} data={comment} />
       ))}
-      {isFetching && <FetchLoading />}
+
+      <InfiniteScrollSentinel ref={ref} />
+      {isFetchingNextPage && <FetchLoading />}
     </div>
   );
 }
