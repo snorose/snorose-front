@@ -58,6 +58,7 @@ export { default as CarouselSkeleton } from './Carousel/CarouselSkeleton';
 export { default as CategoryFieldset } from './CategoryFieldset/CategoryFieldset';
 export { default as Chip } from './Chip/Chip';
 export { default as Icon } from './Icon/Icon';
+export { default as InfiniteScrollSentinel } from './InfiniteScrollSentinel/InfiniteScrollSentinel';
 export { default as List } from './List/List';
 export { default as MenuIcon } from './MenuIcon/MenuIcon';
 export { default as Portal } from './Portal/Portal';

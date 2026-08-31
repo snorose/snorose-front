@@ -7,13 +7,12 @@ import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import {
   BackAppBar,
   FetchLoading,
+  InfiniteScrollSentinel,
   ServerErrorFallback,
 } from '@/shared/component';
-import { flatPaginationCache } from '@/shared/lib';
 
 import OrderItem from '@/feature/commerce/components/OrderItem';
 import useOrders from '@/feature/commerce/hooks/useOrders';
-import type { OrdersResponse } from '@/feature/commerce/types';
 import { getCommerceErrorCode } from '@/feature/commerce/utils/commerceRules';
 
 import { noPostsIllustration } from '@/assets/illustrations';
@@ -37,8 +36,7 @@ export default function OrderListPage() {
 }
 
 function OrderListView() {
-  const { data, ref, isFetching } = useOrders();
-  const orders: OrdersResponse['data'] = flatPaginationCache(data);
+  const { items: orders, ref, isFetchingNextPage } = useOrders();
 
   if (orders.length === 0) {
     return (
@@ -65,15 +63,12 @@ function OrderListView() {
 
       <div className={styles.orderList}>
         {orders.map((order, index) => (
-          <Link
-            key={order.orderNumber}
-            to={order.orderNumber}
-            ref={index === orders.length - 1 ? ref : undefined}
-          >
+          <Link key={order.orderNumber} to={order.orderNumber}>
             <OrderItem {...order} />
           </Link>
         ))}
-        {isFetching && <FetchLoading />}
+        <InfiniteScrollSentinel ref={ref} />
+        {isFetchingNextPage && <FetchLoading />}
       </div>
     </div>
   );

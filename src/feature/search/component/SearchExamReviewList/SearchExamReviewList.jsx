@@ -1,9 +1,13 @@
 import { Link, useSearchParams } from 'react-router-dom';
 
-import { FetchLoading, List, PullToRefresh } from '@/shared/component';
+import {
+  FetchLoading,
+  InfiniteScrollSentinel,
+  List,
+  PullToRefresh,
+} from '@/shared/component';
 import { QUERY_KEY, STALE_TIME } from '@/shared/constant';
-import { useSuspensePagination } from '@/shared/hook';
-import { deduplicatePaginatedData, flatPaginationCache } from '@/shared/lib';
+import { useSuspenseInfiniteScroll } from '@/shared/hook';
 
 import { PostBar } from '@/feature/board/component';
 
@@ -15,7 +19,12 @@ export default function SearchExamReviewList() {
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
 
-  const { data, ref, isFetching, refetch } = useSuspensePagination({
+  const {
+    items: examList,
+    ref,
+    isFetchingNextPage,
+    refetch,
+  } = useSuspenseInfiniteScroll({
     queryKey: [QUERY_KEY.reviews, JSON.stringify(params)],
     queryFn: ({ pageParam }) =>
       getExamReviewList({
@@ -23,11 +32,10 @@ export default function SearchExamReviewList() {
         params,
       }),
     staleTime: STALE_TIME.searchList,
+    getItemKey: (item) => item.postId,
   });
 
-  const examList = deduplicatePaginatedData(flatPaginationCache(data));
-
-  if (examList.length === 0 && !isFetching) {
+  if (examList.length === 0 && !isFetchingNextPage) {
     const error = new Error('검색 결과가 없습니다.');
     error.status = 404;
     throw error;
@@ -36,10 +44,9 @@ export default function SearchExamReviewList() {
   return (
     <PullToRefresh onRefresh={refetch}>
       <List className={styles.examReviewList}>
-        {examList.map((post, index) => (
+        {examList.map((post) => (
           <Link
             className={styles.to}
-            ref={index === examList.length - 1 ? ref : undefined}
             key={post.postId}
             to={`/board/exam-review/post/${post.postId}`}
           >
@@ -48,7 +55,9 @@ export default function SearchExamReviewList() {
             </PostBar>
           </Link>
         ))}
-        {isFetching && <FetchLoading />}
+
+        <InfiniteScrollSentinel ref={ref} />
+        {isFetchingNextPage && <FetchLoading />}
       </List>
     </PullToRefresh>
   );

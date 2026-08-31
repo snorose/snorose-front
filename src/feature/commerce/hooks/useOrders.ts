@@ -1,12 +1,13 @@
 import { QUERY_KEY } from '@/shared/constant';
-import useSuspensePagination from '@/shared/hook/useSuspensePagination';
+import { useSuspenseInfiniteScroll } from '@/shared/hook';
 
 import { readOrders } from '@/feature/commerce/apis';
 import { OrdersResponse } from '@/feature/commerce/types';
 
 export default function useOrders() {
-  return useSuspensePagination<OrdersResponse>({
+  return useSuspenseInfiniteScroll<OrdersResponse['data'][number]>({
     queryKey: QUERY_KEY.commerceOrders,
     queryFn: ({ pageParam }) => readOrders(pageParam),
+    getItemKey: (item) => item.orderNumber,
   });
 }
