@@ -1,9 +1,9 @@
 import { Badge } from '@/shared/component';
 import { ROLE } from '@/shared/constant';
 
-import type { Role } from '@/types';
-
 import cloudLogo from '@/assets/images/cloudLogo.svg';
+
+import type { Role } from '@/types';
 
 import styles from './Profile.module.css';
 
