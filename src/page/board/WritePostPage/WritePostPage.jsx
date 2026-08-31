@@ -17,6 +17,7 @@ import {
 } from '@/shared/component';
 import {
   ATTACHMENT_MODAL_TEXT,
+  BOARD_CATEGORY_MAP,
   BOARD_MENUS,
   CONFIRM_MODAL_TEXT,
   QUERY_KEY,
@@ -60,6 +61,8 @@ export default function WritePostPage() {
 
   const [isNotice, setIsNotice] = useState(false);
   const [dropDownOpen, setDropDownOpen] = useState(false);
+  const [categoryDropDownOpen, setCategoryDropDownOpen] = useState(false);
+  const [category, setCategory] = useState(null);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const submitLockRef = useRef(false);
@@ -84,9 +87,13 @@ export default function WritePostPage() {
     currentBoard?.title ?? '게시판을 선택해주세요'
   );
   const [boardId, setBoardId] = useState(currentBoard?.id ?? '');
+  const categoryConfig = BOARD_CATEGORY_MAP[boardId];
+  const hasCategory = Boolean(categoryConfig);
+  const isCategoryDisabled = hasCategory && isNotice;
+  const shouldIncludeCategory = hasCategory && !isCategoryDisabled;
 
   const boardTitles = BOARD_MENUS.filter((menu) =>
-    [21, 22, 23].includes(menu.id)
+    [21, 22, 23, 41, 43].includes(menu.id)
   ).map((menu) => menu.title);
 
   // 공식 계정 일반글
@@ -133,10 +140,25 @@ export default function WritePostPage() {
     setDropDownOpen((prev) => !prev);
   };
 
+  const handleCategoryDropDownOpen = () => {
+    if (isCategoryDisabled) return;
+
+    setCategoryDropDownOpen((prev) => !prev);
+  };
+
+  const categoryOptions =
+    categoryConfig?.map((name) => ({ id: name, name })) ?? [];
+
+  const handleCategoryChange = (option) => {
+    setCategory(option.id);
+    setCategoryDropDownOpen(false);
+  };
+
   // 게시판 제목 선택 핸들러
   const handleBoardTitleChange = (option) => {
     setBoardTitle(option.name);
     setBoardId(option.id);
+    setCategory(null);
     setDropDownOpen(false);
   };
 
@@ -152,11 +174,18 @@ export default function WritePostPage() {
 
   // 공지 여부 선택 핸들러
   const handleIsNotice = () => {
-    setIsNotice((prev) => !prev);
+    const willBeNotice = !isNotice;
+
+    if (hasCategory && willBeNotice) {
+      setCategory(null);
+      setCategoryDropDownOpen(false);
+    }
+
+    setIsNotice(willBeNotice);
   };
 
   const data = {
-    category: null,
+    category: shouldIncludeCategory ? category : '',
     boardId,
     title,
     content: text,
@@ -216,6 +245,11 @@ export default function WritePostPage() {
 
     if (!boardId) {
       toast({ message: TOAST.POST.selectBoard, variant: 'info' });
+      return;
+    }
+
+    if (shouldIncludeCategory && !category) {
+      toast({ message: TOAST.POST.selectCategory, variant: 'info' });
       return;
     }
 
@@ -333,13 +367,48 @@ export default function WritePostPage() {
                     />
                     <p className={styles.categorySelectText}>{boardTitle}</p>
                   </div>
-                  <Icon id='angle-down' width={14} height={7} />
+                  <Icon id='angle-down' width={24} height={24} />
                 </div>
                 {dropDownOpen && (
                   <DropdownList
                     options={displayedOptions}
                     select={{ id: boardId, name: boardTitle }}
                     onSelect={handleBoardTitleChange}
+                    className={styles.dropDownList}
+                  />
+                )}
+              </div>
+            )}
+            {categoryConfig && (
+              <div className={styles.subCategoryDropdownContainer}>
+                <div className={styles.categoryLabel}>
+                  <p className={styles.subCategoryLabel}>카테고리</p>
+                  <span className={styles.requiredDot} />
+                </div>
+                <div
+                  className={`${styles.subCategorySelect} ${
+                    isCategoryDisabled ? styles.subCategorySelectDisabled : ''
+                  }`}
+                  onClick={handleCategoryDropDownOpen}
+                  aria-disabled={isCategoryDisabled}
+                >
+                  <div className={styles.subCategorySelectContainer}>
+                    <p className={styles.subCategorySelectText}>
+                      {isCategoryDisabled
+                        ? '공지글은 카테고리를 선택하지 않습니다'
+                        : category || '카테고리를 선택해주세요'}
+                    </p>
+                  </div>
+                  <Icon id='angle-down' width={24} height={24} />
+                </div>
+                {categoryDropDownOpen && !isCategoryDisabled && (
+                  <DropdownList
+                    options={categoryOptions}
+                    select={{
+                      id: category,
+                      name: category ?? '',
+                    }}
+                    onSelect={handleCategoryChange}
                     className={styles.dropDownList}
                   />
                 )}

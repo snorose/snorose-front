@@ -9,6 +9,8 @@ import largeSnow from '@/assets/images/largeSnow-board-page.svg';
 import largeSnowMain from '@/assets/images/largeSnow-main.svg';
 import permanentSnow from '@/assets/images/permanentSnow-board-page.svg';
 import permanentSnowMain from '@/assets/images/permanentSnow-main.svg';
+import residence from '@/assets/images/residence.svg';
+import sookplace from '@/assets/images/sookPlace.svg';
 import studentCouncil from '@/assets/images/studentCouncil-board-page.svg';
 
 export const BOARD_CATEGORY = {
@@ -23,6 +25,10 @@ export const BOARD_CATEGORY = {
   SNOROSE: {
     value: 'snorose',
     label: '스노로즈',
+  },
+  LIFE: {
+    value: 'life',
+    label: '라이프',
   },
   HIDDEN: {
     value: 'hidden',
@@ -39,9 +45,11 @@ export const BOARD_ID = Object.freeze({
   'large-snow': 22,
   'permanent-snow': 23,
   'exam-review': 32,
+  sookplace: 43,
   'student-council': 60,
   'graduation-preparation': 61,
   'finance-audit': 62,
+  residence: 41,
 });
 
 export const BOARDS = Object.freeze([
@@ -74,6 +82,11 @@ export const BOARDS = Object.freeze([
     mainImage: permanentSnowMain,
   },
   {
+    id: 43,
+    name: '숙플레이스',
+    path: '/board/sookplace',
+  },
+  {
     id: 60,
     name: '총학생회',
     path: '/board/student-council',
@@ -87,6 +100,11 @@ export const BOARDS = Object.freeze([
     id: 62,
     name: '재정감사위원회',
     path: '/board/finance-audit',
+  },
+  {
+    id: 41,
+    name: '주거',
+    path: '/board/residence',
   },
 ]);
 
@@ -173,6 +191,15 @@ export const BOARD_MENUS = [
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
+    id: 43,
+    to: '/board/sookplace',
+    textId: 'sookplace',
+    title: '숙플레이스',
+    desc: '눈송이 맛집 커뮤니티',
+    category: BOARD_CATEGORY.LIFE,
+    image: sookplace,
+  },
+  {
     id: 60,
     to: '/board/student-council',
     textId: 'student-council',
@@ -198,6 +225,15 @@ export const BOARD_MENUS = [
     desc: '재정감사 보고',
     image: financeAudit,
     category: BOARD_CATEGORY.OFFICIAL,
+  },
+  {
+    id: 41,
+    to: '/board/residence',
+    textId: 'residence',
+    title: '주거',
+    desc: '자취·주거 정보 커뮤니티',
+    image: residence,
+    category: BOARD_CATEGORY.LIFE,
   },
 ];
 
@@ -426,3 +462,17 @@ export const COMMENT_REPORT_TYPE_MODAL_OPTION_CHILDREN = [
     value: COMMENT_REPORT_TYPE_ENUM.COMMENT_OTHER,
   },
 ];
+
+export const RESIDENCE_CATEGORIES = Object.freeze([
+  '명재관',
+  '외부기숙사',
+  '자취',
+]);
+
+export const SOOKPLACE_CATEGORIES = Object.freeze(['교내', '교외']);
+
+// 게시판과 카테고리를 연결
+export const BOARD_CATEGORY_MAP = {
+  [BOARD_ID.residence]: RESIDENCE_CATEGORIES,
+  [BOARD_ID.sookplace]: SOOKPLACE_CATEGORIES,
+};

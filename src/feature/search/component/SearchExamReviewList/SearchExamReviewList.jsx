@@ -1,22 +1,30 @@
 import { Link, useSearchParams } from 'react-router-dom';
 
-import { getExamReviewList } from '@/apis';
-
-import { useSuspensePagination } from '@/shared/hook';
-import { deduplicatePaginatedData, flatPaginationCache } from '@/shared/lib';
-import { FetchLoading, List, PullToRefresh } from '@/shared/component';
+import {
+  FetchLoading,
+  InfiniteScrollSentinel,
+  List,
+  PullToRefresh,
+} from '@/shared/component';
 import { QUERY_KEY, STALE_TIME } from '@/shared/constant';
+import { useSuspenseInfiniteScroll } from '@/shared/hook';
 
 import { PostBar } from '@/feature/board/component';
+
+import { getExamReviewList } from '@/apis';
 
 import styles from './SearchExamReviewList.module.css';
 
 export default function SearchExamReviewList() {
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
-  const paramsLength = Object.keys(params).length;
 
-  const { data, ref, isFetching, refetch } = useSuspensePagination({
+  const {
+    items: examList,
+    ref,
+    isFetchingNextPage,
+    refetch,
+  } = useSuspenseInfiniteScroll({
     queryKey: [QUERY_KEY.reviews, JSON.stringify(params)],
     queryFn: ({ pageParam }) =>
       getExamReviewList({
@@ -24,30 +32,32 @@ export default function SearchExamReviewList() {
         params,
       }),
     staleTime: STALE_TIME.searchList,
+    getItemKey: (item) => item.postId,
   });
 
-  const examList = deduplicatePaginatedData(flatPaginationCache(data));
-
-  if (examList.length === 0 && !isFetching) {
-    throw { status: 404 };
+  if (examList.length === 0 && !isFetchingNextPage) {
+    const error = new Error('검색 결과가 없습니다.');
+    error.status = 404;
+    throw error;
   }
 
   return (
     <PullToRefresh onRefresh={refetch}>
       <List className={styles.examReviewList}>
-        {examList.map((post, index) => (
+        {examList.map((post) => (
           <Link
             className={styles.to}
-            ref={index === examList.length - 1 ? ref : undefined}
             key={post.postId}
             to={`/board/exam-review/post/${post.postId}`}
           >
             <PostBar {...post} content={post.questionDetail}>
-              {post.isConfirmed && <PostBar.ConfirmedIcon />}
+              {post.isConfirmed && <PostBar.ConfirmedChip />}
             </PostBar>
           </Link>
         ))}
-        {isFetching && <FetchLoading />}
+
+        <InfiniteScrollSentinel ref={ref} />
+        {isFetchingNextPage && <FetchLoading />}
       </List>
     </PullToRefresh>
   );

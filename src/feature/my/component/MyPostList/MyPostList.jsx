@@ -1,13 +1,9 @@
 import { Link } from 'react-router-dom';
 
-import { FetchLoading } from '@/shared/component';
+import { FetchLoading, InfiniteScrollSentinel } from '@/shared/component';
 import { STALE_TIME } from '@/shared/constant';
-import { useSuspensePagination } from '@/shared/hook';
-import {
-  deduplicatePaginatedData,
-  flatPaginationCache,
-  getBoardTextId,
-} from '@/shared/lib';
+import { useSuspenseInfiniteScroll } from '@/shared/hook';
+import { getBoardTextId } from '@/shared/lib';
 
 import { PostBar } from '@/feature/board/component';
 import { ACTIVITIES } from '@/feature/my/constant';
@@ -27,13 +23,16 @@ export default function MyPostList({
   hasLike = true,
   errorMessage,
 }) {
-  const { data, ref, isFetching } = useSuspensePagination({
+  const {
+    items: list,
+    ref,
+    isFetchingNextPage,
+  } = useSuspenseInfiniteScroll({
     queryKey: [queryKey],
     queryFn: ({ pageParam }) => queryFn({ page: pageParam }),
     staleTime: STALE_TIME.mypageActivity,
+    getItemKey: (item) => item.postId,
   });
-
-  const list = deduplicatePaginatedData(flatPaginationCache(data));
 
   const activity = ACTIVITIES.find(
     (activity) => activity.queryKey === queryKey
@@ -84,11 +83,10 @@ export default function MyPostList({
 
   return (
     <ul className={styles.posts}>
-      {list.map((post, index) => (
+      {list.map((post) => (
         <Link
           key={post.postId}
           className={styles.to}
-          ref={index === list.length - 1 ? ref : undefined}
           to={makePath({ ...post })}
         >
           <PostBar {...post} content={post.questionDetail ?? post.content}>
@@ -105,7 +103,9 @@ export default function MyPostList({
           </PostBar>
         </Link>
       ))}
-      {isFetching && <FetchLoading />}
+
+      <InfiniteScrollSentinel ref={ref} />
+      {isFetchingNextPage && <FetchLoading />}
     </ul>
   );
 }

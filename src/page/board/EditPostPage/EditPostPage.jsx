@@ -10,11 +10,13 @@ import {
   Badge,
   CloseAppBar,
   ConfirmModal,
+  DropdownList,
   FetchLoading,
   Icon,
 } from '@/shared/component';
 import {
   ATTACHMENT_MODAL_TEXT,
+  BOARD_CATEGORY_MAP,
   BOARD_MENUS,
   CONFIRM_MODAL_TEXT,
   MUTATION_KEY,
@@ -57,6 +59,9 @@ export default function EditPostPage() {
   const currentBoard = BOARD_MENUS.find((menu) => menu.textId === textId);
   const boardTitle = currentBoard?.title || '';
 
+  const [category, setCategory] = useState(null);
+  const [categoryDropDownOpen, setCategoryDropDownOpen] = useState(false);
+
   const [isNotice, setIsNotice] = useState(false);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -77,6 +82,28 @@ export default function EditPostPage() {
   // 페이지 이탈 방지 모달 노출
   useBlocker(isBlock);
 
+  const categoryConfig = BOARD_CATEGORY_MAP[currentBoard?.id];
+  const hasCategory = Boolean(categoryConfig);
+  const isCategoryDisabled = hasCategory && isNotice;
+  const shouldIncludeCategory = hasCategory && !isCategoryDisabled;
+  const categoryOptions = Array.isArray(categoryConfig)
+    ? categoryConfig.map((name) => ({ id: name, name }))
+    : Object.entries(categoryConfig ?? {}).map(([id, name]) => ({ id, name }));
+  const selectedCategoryName = Array.isArray(categoryConfig)
+    ? category
+    : categoryConfig?.[category];
+
+  const handleCategoryDropDownOpen = () => {
+    if (isCategoryDisabled) return;
+
+    setCategoryDropDownOpen((prev) => !prev);
+  };
+
+  const handleCategoryChange = (option) => {
+    setCategory(option.id);
+    setCategoryDropDownOpen(false);
+  };
+
   // 게시글 내용 가져오기
   const { data, isLoading, error } = useQuery({
     queryKey: QUERY_KEY.post(postId),
@@ -91,16 +118,33 @@ export default function EditPostPage() {
     editor.commands.setContent(data.content);
   }, [editor, data]);
 
-  // 데이터 화면 표시
   useEffect(() => {
     if (!data || Object.keys(data).length === 0) return;
 
-    setTitle(data.title);
+    // 기존 게시글의 제목에 포함된 카테고리 접두어 확인
+    const categoryMatch = categoryConfig
+      ? data.title?.match(/^\[([^\]]+)\]\s*/)
+      : null;
+
+    const legacyCategory = categoryConfig?.find(
+      (name) => name === categoryMatch?.[1]
+    );
+
+    // API의 category를 우선 사용하고, 기존 게시글만 제목에서 추출
+    const initialCategory = data.category || legacyCategory;
+
+    setCategory(initialCategory ?? null);
+
+    // 기존 제목에 실제 카테고리 접두어가 있는 경우에만 제거
+    setTitle(
+      legacyCategory ? data.title.replace(categoryMatch[0], '') : data.title
+    );
+
     setText(data.content);
     setIsNotice(data.isNotice);
     setUserDisplay(data.userDisplay);
     setAttachmentsInfo(data.attachments);
-  }, [data]);
+  }, [data, currentBoard?.id, categoryConfig]);
 
   // isBlock 업데이트
   useEffect(() => {
@@ -110,9 +154,19 @@ export default function EditPostPage() {
       data.title !== title.trim() ||
         data.content !== editor?.getHTML() ||
         data.isNotice !== isNotice ||
-        data.attachments !== attachmentsInfo
+        data.attachments !== attachmentsInfo ||
+        data.category !== category
     );
-  }, [title, text, isNotice, attachmentsInfo]);
+  }, [
+    title,
+    text,
+    isNotice,
+    attachmentsInfo,
+    category,
+    categoryConfig,
+    data,
+    editor,
+  ]);
 
   // 게시글 수정
   const mutation = useMutation({
@@ -145,7 +199,14 @@ export default function EditPostPage() {
 
   // 공지 여부 선택 핸들러
   const handleIsNotice = () => {
-    setIsNotice((prev) => !prev);
+    const willBeNotice = !isNotice;
+
+    if (hasCategory && willBeNotice) {
+      setCategory(null);
+      setCategoryDropDownOpen(false);
+    }
+
+    setIsNotice(willBeNotice);
   };
 
   // 제목 127자 제한
@@ -170,13 +231,17 @@ export default function EditPostPage() {
       toast({ message: TOAST.POST.emptyContent, variant: 'info' });
       return;
     }
-
+    if (shouldIncludeCategory && !category) {
+      toast({ message: TOAST.POST.selectCategory, variant: 'info' });
+      return;
+    }
     setSubmitDisabled(true);
     setIsBlock(false);
 
     mutation.mutate({
       boardId: currentBoard?.id,
       postId,
+      category: shouldIncludeCategory ? category : '',
       title,
       content: sanitizeHtml(preserveEmptyParagraphs(editor?.getHTML() ?? '')),
       isNotice,
@@ -229,6 +294,41 @@ export default function EditPostPage() {
                 <p className={styles.categorySelectText}>{boardTitle}</p>
               </div>
             </div>
+
+            {categoryConfig && (
+              <div className={styles.subCategoryDropdownContainer}>
+                <div>
+                  <p className={styles.subCategoryLabelEdit}>카테고리</p>
+                  <span className={styles.requiredDot} />
+                </div>
+                <div
+                  className={`${styles.subCategorySelect} ${
+                    isCategoryDisabled ? styles.subCategorySelectDisabled : ''
+                  }`}
+                  onClick={handleCategoryDropDownOpen}
+                  aria-disabled={isCategoryDisabled}
+                >
+                  <div className={styles.subCategorySelectContainer}>
+                    <p className={styles.subCategorySelectText}>
+                      {isCategoryDisabled
+                        ? '공지글은 카테고리를 선택하지 않습니다'
+                        : selectedCategoryName || '카테고리를 선택해주세요'}
+                    </p>
+                  </div>
+                  <Icon id='angle-down' width={24} height={24} />
+                </div>
+                {categoryDropDownOpen && !isCategoryDisabled && (
+                  <DropdownList
+                    options={categoryOptions}
+                    select={{
+                      id: category,
+                      name: category ?? '',
+                    }}
+                    onSelect={handleCategoryChange}
+                  />
+                )}
+              </div>
+            )}
             <div className={styles.profileBox}>
               <div className={styles.profileBoxLeft}>
                 {userInfo?.userRoleId !== ROLE.admin &&

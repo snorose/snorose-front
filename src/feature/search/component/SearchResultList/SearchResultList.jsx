@@ -1,6 +1,11 @@
 import { Link, useLocation } from 'react-router-dom';
 
-import { FetchLoading, List, PullToRefresh } from '@/shared/component';
+import {
+  FetchLoading,
+  InfiniteScrollSentinel,
+  List,
+  PullToRefresh,
+} from '@/shared/component';
 import { BOARDS, NEW_ROUTES, ROLE } from '@/shared/constant';
 import { useBoard } from '@/shared/hook';
 import {
@@ -21,16 +26,22 @@ export default function SearchResultList() {
   const { pathname } = useLocation();
   const boardId = BOARDS.find(({ path }) => pathname.includes(path)).id;
 
-  const { data, ref, isFetching, refetch } = useSearch({ boardId });
-  const postList = deduplicatePaginatedData(flatPaginationCache(data));
+  const {
+    items: postList,
+    ref,
+    isFetchingNextPage,
+    refetch,
+  } = useSearch({
+    boardId,
+    getItemKey: (item) => item.postId,
+  });
 
   return (
     <PullToRefresh onRefresh={refetch}>
       <List>
-        {postList.map((post, index) => (
+        {postList.map((post) => (
           <Link
             className={styles.to}
-            ref={index === postList.length - 1 ? ref : undefined}
             key={post.postId}
             to={`/board/${getBoardTitleToTextId(post.boardName)}/post/${post.postId}`}
           >
@@ -39,7 +50,9 @@ export default function SearchResultList() {
             </PostBar>
           </Link>
         ))}
-        {isFetching && <FetchLoading />}
+
+        <InfiniteScrollSentinel ref={ref} />
+        {isFetchingNextPage && <FetchLoading />}
       </List>
     </PullToRefresh>
   );

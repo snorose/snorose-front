@@ -3,7 +3,7 @@ import { ROLE } from '@/shared/constant';
 import { DateTime } from '@/shared/lib';
 
 import { htmlToText } from '@/feature/editor/lib';
-import { ConfirmedIcon } from '@/feature/exam/component';
+import { ConfirmedChip } from '@/feature/exam/component';
 
 import altImage from '@/assets/images/altImage.png';
 import cloudLogo from '@/assets/images/cloudLogo.svg';
@@ -17,6 +17,7 @@ export default function PostBar({
   userDisplay,
   createdAt,
   title,
+  category,
   content,
   hasMediaAttachment,
   thumbnailUrl,
@@ -40,7 +41,12 @@ export default function PostBar({
 
       <div className={styles.body}>
         <div className={styles.text}>
-          <div className={styles.title}>{title}</div>
+          <div className={styles.title}>
+            {category &&
+              !title?.startsWith(`[${category}]`) &&
+              `[${category}] `}
+            {title}
+          </div>
           <div className={styles.content}>{htmlToText(content)}</div>
         </div>
         {hasMediaAttachment && <Thumbnail thumbnailUrl={thumbnailUrl} />}
@@ -155,4 +161,4 @@ function ActionContainer({
 }
 
 PostBar.Chip = Chip;
-PostBar.ConfirmedIcon = ConfirmedIcon;
+PostBar.ConfirmedChip = ConfirmedChip;
