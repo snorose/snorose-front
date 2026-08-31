@@ -4,6 +4,7 @@ import { FetchLoading, InfiniteScrollSentinel } from '@/shared/component';
 import { STALE_TIME } from '@/shared/constant';
 import { useSuspenseInfiniteScroll } from '@/shared/hook';
 import { getBoardTextId } from '@/shared/lib';
+
 import { PostBar } from '@/feature/board/component';
 import { ACTIVITIES } from '@/feature/my/constant';
 import { INQUIRY_STATUS_MAP } from '@/feature/support/constant';
@@ -86,11 +87,7 @@ export default function MyPostList({
         <Link
           key={post.postId}
           className={styles.to}
-          to={makePath({
-            boardId: post.boardId,
-            postId: post.postId,
-            isNotice: post.isNotice,
-          })}
+          to={makePath({ ...post })}
         >
           <PostBar {...post} content={post.questionDetail ?? post.content}>
             {post.boardName && (

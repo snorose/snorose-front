@@ -1,5 +1,5 @@
-import { BOARD_REGISTRY } from '@/shared/lib';
 import { NEW_ROUTES } from '@/shared/constant/route';
+import { BOARD_REGISTRY } from '@/shared/lib';
 
 export const NAVBAR_MENUS = Object.freeze([
   {
