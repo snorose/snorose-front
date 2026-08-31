@@ -6,7 +6,7 @@ import {
   List,
   PullToRefresh,
 } from '@/shared/component';
-import { BOARD_CATEGORY_MAP, QUERY_KEY, STALE_TIME } from '@/shared/constant';
+import { QUERY_KEY, STALE_TIME } from '@/shared/constant';
 import { useSuspenseInfiniteScroll } from '@/shared/hook';
 import { getBoard, getBoardTitleToTextId } from '@/shared/lib';
 
@@ -73,10 +73,7 @@ export default function PostList() {
                   : `/board/${currentBoardTextId}/post/${post.postId}`
               }
             >
-              <PostBar
-                {...post}
-                category={BOARD_CATEGORY_MAP[currentBoard.id]?.[post.category]}
-              >
+              <PostBar {...post}>
                 {post.boardName && (
                   <PostBar.Chip name={post.boardName} variant='grey' />
                 )}

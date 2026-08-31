@@ -87,7 +87,10 @@ export default function WritePostPage() {
     currentBoard?.title ?? '게시판을 선택해주세요'
   );
   const [boardId, setBoardId] = useState(currentBoard?.id ?? '');
-  const categoryEnum = BOARD_CATEGORY_MAP[boardId];
+  const categoryConfig = BOARD_CATEGORY_MAP[boardId];
+  const hasCategory = Boolean(categoryConfig);
+  const isCategoryDisabled = hasCategory && isNotice;
+  const shouldIncludeCategory = hasCategory && !isCategoryDisabled;
 
   const boardTitles = BOARD_MENUS.filter((menu) =>
     [21, 22, 23, 41, 43].includes(menu.id)
@@ -138,15 +141,13 @@ export default function WritePostPage() {
   };
 
   const handleCategoryDropDownOpen = () => {
-    setCategoryDropDownOpen((prev) => !prev);
-  }
+    if (isCategoryDisabled) return;
 
-  const categoryOptions = categoryEnum
-  ? Object.entries(categoryEnum).map(([key, name]) => ({
-      id: key,
-      name,
-    }))
-  : [];
+    setCategoryDropDownOpen((prev) => !prev);
+  };
+
+  const categoryOptions =
+    categoryConfig?.map((name) => ({ id: name, name })) ?? [];
 
   const handleCategoryChange = (option) => {
     setCategory(option.id);
@@ -157,6 +158,7 @@ export default function WritePostPage() {
   const handleBoardTitleChange = (option) => {
     setBoardTitle(option.name);
     setBoardId(option.id);
+    setCategory(null);
     setDropDownOpen(false);
   };
 
@@ -172,11 +174,18 @@ export default function WritePostPage() {
 
   // 공지 여부 선택 핸들러
   const handleIsNotice = () => {
-    setIsNotice((prev) => !prev);
+    const willBeNotice = !isNotice;
+
+    if (hasCategory && willBeNotice) {
+      setCategory(null);
+      setCategoryDropDownOpen(false);
+    }
+
+    setIsNotice(willBeNotice);
   };
 
   const data = {
-    category: categoryEnum ? category : '',
+    category: shouldIncludeCategory ? category : '',
     boardId,
     title,
     content: text,
@@ -239,7 +248,7 @@ export default function WritePostPage() {
       return;
     }
 
-    if (categoryEnum && !category) {
+    if (shouldIncludeCategory && !category) {
       toast({ message: TOAST.POST.selectCategory, variant: 'info' });
       return;
     }
@@ -251,7 +260,7 @@ export default function WritePostPage() {
     if (!text.trim()) {
       toast({ message: TOAST.POST.emptyContent, variant: 'info' });
       return;
-    } 
+    }
 
     if (submitLockRef.current) return;
     submitLockRef.current = true;
@@ -358,7 +367,7 @@ export default function WritePostPage() {
                     />
                     <p className={styles.categorySelectText}>{boardTitle}</p>
                   </div>
-                  <Icon id='angle-down' width={16} height={9} />
+                  <Icon id='angle-down' width={24} height={24} />
                 </div>
                 {dropDownOpen && (
                   <DropdownList
@@ -370,31 +379,34 @@ export default function WritePostPage() {
                 )}
               </div>
             )}
-            {categoryEnum && (
+            {categoryConfig && (
               <div className={styles.subCategoryDropdownContainer}>
                 <div className={styles.categoryLabel}>
                   <p className={styles.subCategoryLabel}>카테고리</p>
                   <span className={styles.requiredDot} />
                 </div>
                 <div
-                  className={styles.subCategorySelect}
+                  className={`${styles.subCategorySelect} ${
+                    isCategoryDisabled ? styles.subCategorySelectDisabled : ''
+                  }`}
                   onClick={handleCategoryDropDownOpen}
+                  aria-disabled={isCategoryDisabled}
                 >
                   <div className={styles.subCategorySelectContainer}>
                     <p className={styles.subCategorySelectText}>
-                      {category
-                        ? categoryEnum[category]
-                        : '카테고리를 선택해주세요'}
+                      {isCategoryDisabled
+                        ? '공지글은 카테고리를 선택하지 않습니다'
+                        : category || '카테고리를 선택해주세요'}
                     </p>
                   </div>
-                  <Icon id='angle-down' width={16} height={9} />
+                  <Icon id='angle-down' width={24} height={24} />
                 </div>
-                {categoryDropDownOpen && (
+                {categoryDropDownOpen && !isCategoryDisabled && (
                   <DropdownList
                     options={categoryOptions}
                     select={{
                       id: category,
-                      name: category ? categoryEnum[category] : '',
+                      name: category ?? '',
                     }}
                     onSelect={handleCategoryChange}
                     className={styles.dropDownList}

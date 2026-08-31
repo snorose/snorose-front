@@ -6,8 +6,8 @@ export default function HomeCardSkeleton() {
   return (
     <ShimmerEffect>
       <div className={styles.layout}>
-        <div className={styles.left}></div>
-        <div className={styles.right}></div>
+        <div className={styles.notice}></div>
+        <div className={styles.attendance}></div>
       </div>
     </ShimmerEffect>
   );

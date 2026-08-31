@@ -1,11 +1,11 @@
 .layout {
-  margin: 2.4rem var(--default-margin) 2.8rem var(--default-margin);
+  margin: 3rem var(--default-margin);
   display: flex;
-  gap: 0.72rem;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 .layout div {
-  height: 11.2rem;
   border-radius: 0.6rem;
   background: linear-gradient(
     45deg,
@@ -16,10 +16,11 @@
   background-size: 200% 100%;
 }
 
-.left {
-  flex: 2;
+.notice {
+  height: 7rem;
 }
 
-.right {
-  flex: 3;
+.attendance {
+  height: 4.7rem;
+  border-radius: 5px;
 }

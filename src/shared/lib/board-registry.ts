@@ -91,7 +91,7 @@ const LIFE = [
   {
     key: 'sookplace',
     id: 43,
-    name: '숙플',
+    name: '숙플레이스',
     desc: '눈송이 맛집 커뮤니티',
   },
 ] as const satisfies readonly Board[];

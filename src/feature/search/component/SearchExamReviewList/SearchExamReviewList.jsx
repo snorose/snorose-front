@@ -36,7 +36,9 @@ export default function SearchExamReviewList() {
   });
 
   if (examList.length === 0 && !isFetchingNextPage) {
-    throw { status: 404 };
+    const error = new Error('검색 결과가 없습니다.');
+    error.status = 404;
+    throw error;
   }
 
   return (
@@ -49,7 +51,7 @@ export default function SearchExamReviewList() {
             to={`/board/exam-review/post/${post.postId}`}
           >
             <PostBar {...post} content={post.questionDetail}>
-              {post.isConfirmed && <PostBar.ConfirmedIcon />}
+              {post.isConfirmed && <PostBar.ConfirmedChip />}
             </PostBar>
           </Link>
         ))}

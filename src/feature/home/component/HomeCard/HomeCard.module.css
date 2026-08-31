@@ -1,60 +1,86 @@
 /* HomeCard */
 
 .layout {
-  margin: 3rem var(--default-margin) 3rem var(--default-margin);
+  margin: 3rem var(--default-margin);
   display: flex;
-  gap: 1.1rem;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
-.left,
-.right {
-  flex: 2;
+.notice,
+.attendance {
+  display: block;
 }
 
-/* Card */
-
-.card {
-  width: 100%;
-  height: 11rem;
-  padding: 1.4rem 0 1.2rem 1.4rem;
+.noticeCard {
+  height: 7rem;
+  padding: 1.4rem 1.6rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: var(--blue-0);
   border-radius: 0.6rem;
-  box-sizing: border-box;
-  color: var(--blue-4);
-  overflow: hidden;
 }
 
-.dark .card {
-  background: var(--gradient-5);
-  color: var(--white);
-}
-
-.text {
+.noticeText {
   flex: 1;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  word-break: keep-all;
+  min-width: 0;
+  gap: 0.2rem;
 }
 
-.title {
+.noticeHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.noticeLabel {
+  color: var(--Blue-Blue-4, #00368e);
+  font: var(--text-headline-2-med);
+}
+
+.noticeContent {
   overflow: hidden;
-
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-
-  white-space: pre-line;
-
-  font: var(--text-headline-1-med);
+  color: var(--Grey-Grey-4, #484848);
+  font: var(--text-body-1-med);
 }
 
-.image {
-  width: 5.8rem;
-  height: auto;
-  margin: 2.5rem 1.2rem 0rem 2.5rem;
+.noticeArrow {
+  flex: 0 0 auto;
+  color: var(--grey-4);
+}
+
+.attendanceCard {
+  height: 4.7rem;
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--gradient-5);
+  border-radius: 5px;
+}
+
+.attendanceText {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.attendanceTitle {
+  color: var(--White-White, #fff);
+  font: var(--text-headline-2-med);
+}
+
+.attendanceImage {
+  width: 18px;
+  height: 19px;
+}
+
+.attendanceArrow {
+  color: var(--White-White, #fff);
 }
