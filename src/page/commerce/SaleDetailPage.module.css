@@ -193,6 +193,15 @@
   color: var(--grey-3-1);
 }
 
+/* cache receipt */
+.cacheReceiptSection {
+  padding-bottom: 2rem;
+}
+
+.filed {
+  margin: 1rem var(--default-margin) 0;
+}
+
 /* closed */
 .closedSection {
   margin: 0 var(--default-margin);
@@ -304,20 +313,21 @@
 }
 
 .noticeAgreementList {
-  margin: 0 var(--default-margin);
   display: flex;
   flex-direction: column;
   gap: 0;
 }
 
-.noticeAgreementItem {
+.checkItem {
+  margin: 0 var(--default-margin);
+
   display: flex;
   align-items: flex-start;
   gap: 0.8rem;
   padding: 0.4rem 0;
 }
 
-.noticeAgreementItem > div {
+.checkItem > div {
   flex-shrink: 0;
 }
 

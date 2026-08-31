@@ -8,6 +8,7 @@ import { BackAppBar, Chip, ServerErrorFallback } from '@/shared/component';
 import { useToast } from '@/shared/hook';
 import { DateTime } from '@/shared/lib';
 
+import CacheReceiptSection from '@/feature/commerce/components/CacheReceiptSection';
 import NoticeAgreementSection from '@/feature/commerce/components/NoticeAgreementSection';
 import OrderConfirmModal from '@/feature/commerce/components/OrderConfirmModal';
 import OrdererInfoSection from '@/feature/commerce/components/OrdererInfoSection';
@@ -25,6 +26,7 @@ import {
   useSaleClosedModal,
   useSaleOrderForm,
 } from '@/feature/commerce/hooks';
+import useCacheReceipt from '@/feature/commerce/hooks/useCacheReceipt';
 import useOrderConfirmModal from '@/feature/commerce/hooks/useOrderConfirmModal';
 import {
   getCommerceErrorCode,
@@ -69,6 +71,15 @@ function SaleDetailView() {
   const { name, studentNumber, phoneNumber, handlePhoneNumber } =
     useOrdererInfo();
 
+  const {
+    isCacheReceiptHope,
+    handleCacheReceiptHope,
+    cacheReceiptPhoneNumber,
+    handleCacheReceiptPhoneNumber,
+    isCacheReceiptAgree,
+    handleCacheReceiptAgree,
+  } = useCacheReceipt();
+
   const { noticeAcceptanceMap, handleNoticeAcceptance, noticeAcceptances } =
     useNoticeAgreement(sale.notices);
 
@@ -101,6 +112,12 @@ function SaleDetailView() {
         saleId,
         clientRequestId: getClientRequestId(),
         buyerContact: phoneNumber,
+        cashReceiptRequest: isCacheReceiptHope
+          ? {
+              phoneNumber: cacheReceiptPhoneNumber,
+              privacyConsent: isCacheReceiptAgree,
+            }
+          : null,
         noticeAcceptances,
         items: selectedOrderItems.map(({ variantId, quantity }) => ({
           variantId,
@@ -175,7 +192,11 @@ function SaleDetailView() {
     );
   };
 
-  const isOrderable =
+  const isCacheReceiptOrderable =
+    !isCacheReceiptHope ||
+    (isCacheReceiptAgree && isValidPhoneNumber(cacheReceiptPhoneNumber));
+
+  const isBaseOrderable =
     selectedOrderItems.length > 0 &&
     phoneNumber.length === 11 &&
     isValidPhoneNumber(phoneNumber) &&
@@ -183,6 +204,8 @@ function SaleDetailView() {
       .filter((notice) => notice.required)
       .every((notice) => noticeAcceptanceMap[notice.text]) &&
     !isPendingCreateOrder;
+
+  const isOrderable = isBaseOrderable && isCacheReceiptOrderable;
 
   return (
     <div className={styles.container}>
@@ -220,6 +243,17 @@ function SaleDetailView() {
           studentNumber={studentNumber}
           phoneNumber={phoneNumber}
           handlePhoneNumber={handlePhoneNumber}
+        />
+
+        <div className={styles.border} />
+
+        <CacheReceiptSection
+          isCacheReceiptHope={isCacheReceiptHope}
+          handleCacheReceiptHope={handleCacheReceiptHope}
+          cacheReceiptPhoneNumber={cacheReceiptPhoneNumber}
+          handleCacheReceiptPhoneNumber={handleCacheReceiptPhoneNumber}
+          isCacheReceiptAgree={isCacheReceiptAgree}
+          handleCacheReceiptAgree={handleCacheReceiptAgree}
         />
 
         <div className={styles.border} />

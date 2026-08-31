@@ -116,6 +116,7 @@ export type CreateOrderRequest = {
   saleId: string;
   clientRequestId: string;
   buyerContact: string;
+  cashReceiptRequest: { phoneNumber: string; privacyConsent: boolean } | null;
   noticeAcceptances: NoticeAcceptance[];
   items: Array<{
     variantId: number;

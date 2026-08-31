@@ -27,7 +27,7 @@ export default function NoticeAgreementSection({
           const inputId = `commerceNotice-${notice.text}`;
 
           return (
-            <div className={styles.noticeAgreementItem} key={inputId}>
+            <div className={styles.checkItem} key={inputId}>
               <CheckBox
                 id={inputId}
                 checked={Boolean(noticeAcceptanceMap[notice.text])}
@@ -36,9 +36,9 @@ export default function NoticeAgreementSection({
                 }
               />
               <label className={styles.noticeAgreementLabel} htmlFor={inputId}>
-                {notice.required && (
-                  <span className={styles.noticeRequiredBadge}>필수</span>
-                )}
+                <span className={styles.noticeRequiredBadge}>
+                  {notice.required ? '필수' : '선택'}
+                </span>
                 <span className={styles.noticeAgreementText}>
                   {notice.text}
                 </span>
