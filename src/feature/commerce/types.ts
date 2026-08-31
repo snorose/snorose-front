@@ -165,7 +165,7 @@ export type PickupDeviceSessionResponse =
       remainingSeconds: number;
       order: {
         buyerName: string;
-        studentNumberMasked: string;
+        studentNumber: string;
         saleTitle: string;
         items: PickupDeviceOrderItem[];
       };
