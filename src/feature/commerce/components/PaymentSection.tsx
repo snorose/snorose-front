@@ -23,6 +23,8 @@ export default function PaymentSection({
         </strong>
       </div>
 
+      <div className={styles.borderBottom}></div>
+
       <ul className={styles.paymentNoticeList}>
         <li>주문 후 안내되는 학생단체 계좌로 직접 입금합니다.</li>
         <li>입금 확인 전까지만 구매자가 취소할 수 있습니다.</li>

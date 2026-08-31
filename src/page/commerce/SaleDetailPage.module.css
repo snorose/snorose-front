@@ -344,6 +344,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.borderBottom {
+  margin: 0 var(--default-margin);
   border-bottom: 0.1rem solid var(--grey-2);
 }
 
@@ -427,48 +431,24 @@
 }
 
 .orderConfirmProductItem {
-  display: flex;
-  justify-content: space-between;
-  gap: 1.2rem;
   padding: 1.2rem 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+
   border-bottom: 0.1rem solid var(--grey-2);
 }
 
-.orderConfirmProductInfo {
-  min-width: 0;
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.orderConfirmProductInfo strong {
+.orderConfirmProductItem {
   font: var(--text-body-1-med);
   color: var(--grey-4);
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
 
-.orderConfirmProductInfo span {
-  font: var(--text-body-2-reg);
-  color: var(--grey-3-1);
-  word-break: keep-all;
-  overflow-wrap: anywhere;
-}
-
-.orderConfirmProductDivider {
-  flex-shrink: 0;
-}
-
 .orderConfirmProductSummary {
-  flex-shrink: 0;
-  display: flex;
-  align-items: flex-end;
-  text-align: right;
-}
-
-.orderConfirmProductSummary span {
-  font: var(--text-body-2-reg);
+  font: var(--text-caption-1-reg);
   color: var(--grey-3-1);
 }
 
@@ -488,7 +468,7 @@
 .accountInfoList {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 0.6rem;
 }
 
 .accountInfoItem {

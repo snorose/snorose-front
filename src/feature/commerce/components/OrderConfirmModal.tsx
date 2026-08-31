@@ -53,15 +53,9 @@ export default function OrderConfirmModal({
                       className={styles.orderConfirmProductItem}
                       key={`${productId}-${variantId}`}
                     >
-                      <div className={styles.orderConfirmProductInfo}>
-                        <strong>{productName}</strong>
-                        <span className={styles.orderConfirmProductDivider}>
-                          ·
-                        </span>
-                        <span>{optionLabel}</span>
-                      </div>
+                      <div>{productName}</div>
                       <div className={styles.orderConfirmProductSummary}>
-                        <span>{quantity}개</span>
+                        {optionLabel} X {quantity}개
                       </div>
                     </div>
                   )
