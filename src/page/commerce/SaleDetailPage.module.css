@@ -381,6 +381,10 @@
   color: var(--grey-3-1);
 }
 
+.system {
+  margin-top: 1rem;
+}
+
 /* account modal */
 .accountModal {
   width: 100%;

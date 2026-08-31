@@ -46,7 +46,7 @@ export default function ProductOptionSection({
             <div className={styles.productName}>
               {product.name}
               <span className={styles.productMaxPerBuyer}>
-                최대 {product.maxPerBuyer} 구매 가능
+                최대 {product.maxPerBuyer}개 구매 가능
               </span>
             </div>
 

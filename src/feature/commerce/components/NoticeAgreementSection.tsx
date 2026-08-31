@@ -25,9 +25,14 @@ export default function NoticeAgreementSection({
       <div className={styles.noticeAgreementList}>
         {notices.map((notice) => {
           const inputId = `commerceNotice-${notice.text}`;
+          const systemClassName =
+            notice.type === 'SYSTEM_PRIVACY_CONSENT' ? `${styles.system}` : '';
 
           return (
-            <div className={styles.checkItem} key={inputId}>
+            <div
+              className={`${styles.checkItem} ${systemClassName}`}
+              key={inputId}
+            >
               <CheckBox
                 id={inputId}
                 checked={Boolean(noticeAcceptanceMap[notice.text])}
