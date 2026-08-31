@@ -127,6 +127,10 @@ function OrderDetailView() {
               <dd>{formatNumber(order.totalAmount)}원</dd>
             </div>
             <div className={styles.infoItem}>
+              <dt>입금자명</dt>
+              <dd>입금자명을 학번으로 입력해주세요</dd>
+            </div>
+            <div className={styles.infoItem}>
               <dt>입금 기한</dt>
               <dd>{DateTime.format(order.paymentDueAt, 'YMD_HM')}</dd>
             </div>
