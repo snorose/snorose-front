@@ -17,7 +17,7 @@ export default function PaymentSection({
   return (
     <section className={styles.paymentSection}>
       <div className={styles.totalPayment}>
-        <span className={styles.totalPaymentLabel}>총 결제 금액</span>
+        <h2 className={styles.sectionTitle}>총 결제 금액</h2>
         <strong className={styles.totalPaymentAmount}>
           {formatNumber(totalPaymentAmount)}원
         </strong>
@@ -29,13 +29,11 @@ export default function PaymentSection({
         <li>배송 없이 지정 장소에서 수령합니다.</li>
       </ul>
 
-      <PrimaryButton
-        className={styles.purchaseButton}
-        disabled={isOrderButtonDisabled}
-        onClick={onClick}
-      >
-        주문하기
-      </PrimaryButton>
+      <div className={styles.button}>
+        <PrimaryButton disabled={isOrderButtonDisabled} onClick={onClick}>
+          주문하기
+        </PrimaryButton>
+      </div>
     </section>
   );
 }
