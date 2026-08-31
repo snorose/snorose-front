@@ -57,7 +57,7 @@ const POPUP_CONTENTS = [
     link: [
       {
         title: '스노로즈 공지',
-        url: '/board/notice/post/1913883',
+        url: '/board/notice/post/1915197',
         isExternal: false,
       },
     ],
