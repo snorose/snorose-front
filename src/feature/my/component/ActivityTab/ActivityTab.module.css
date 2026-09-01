@@ -33,3 +33,40 @@
     height: 2.4rem;
   }
 }
+
+/* 바로가기 */
+.directList {
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.direct {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1.4rem 1.6rem;
+  margin: 0 var(--default-margin);
+
+  border: 1px solid var(--grey-3);
+  border-radius: 0.5rem;
+
+  & .text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  & .text span:first-child {
+    font: var(--text-headline-2-med);
+  }
+
+  & .text span:nth-child(2) {
+    font: var(--text-body-2-reg);
+    color: var(--grey-4);
+  }
+}

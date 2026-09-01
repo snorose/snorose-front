@@ -9,3 +9,9 @@
 
   background-color: var(--white);
 }
+
+@media (min-width: 768px) {
+  .pickupDisplayLayout {
+    max-width: none;
+  }
+}

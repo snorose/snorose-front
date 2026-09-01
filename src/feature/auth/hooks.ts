@@ -7,24 +7,28 @@ import { activateSession, clearAuthTokens } from '@/feature/auth/libs';
 
 import { UseMutationCallbacks } from '@/types';
 
-export function useLogin(callbacks?: UseMutationCallbacks) {
+type UseLoginOptions = UseMutationCallbacks & {
+  redirectTo?: string;
+};
+
+export function useLogin(options?: UseLoginOptions) {
   const navigate = useNavigate();
 
   return useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      if (callbacks?.onSuccess) {
-        callbacks.onSuccess();
+      if (options?.onSuccess) {
+        options.onSuccess();
       }
 
       const accessToken = data.tokenResponse.accessToken;
 
       activateSession(accessToken);
-      navigate('/');
+      navigate(options?.redirectTo ?? '/', { replace: true });
     },
     onError: (error) => {
-      if (callbacks?.onError) {
-        callbacks.onError(error);
+      if (options?.onError) {
+        options.onError(error);
       }
     },
   });

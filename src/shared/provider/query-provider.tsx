@@ -70,7 +70,16 @@ function handleGlobalError(
     queryClient.clear();
 
     alert('로그인이 만료되었습니다. 다시 로그인해 주세요.');
-    navigate('/login', { replace: true });
+    navigate('/login', {
+      state: {
+        from: {
+          pathname: window.location.pathname,
+          search: window.location.search,
+          hash: window.location.hash,
+        },
+      },
+      replace: true,
+    });
   }
 }
 

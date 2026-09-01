@@ -3,10 +3,7 @@ export { default as Accordion } from './Accordion/Accordion';
 export { default as AccordionListItem } from './AccordionListItem/AccordionListItem';
 export { default as AccordionTag } from './AccordionTag/AccordionTag';
 
-// Carousel
-export { default as Carousel } from './Carousel/Carousel';
-export { default as CarouselErrorFallback } from './Carousel/CarouselErrorFallback';
-export { default as CarouselSkeleton } from './Carousel/CarouselSkeleton';
+// 배너 슬라이드
 export { default as Slide } from './Slide/Slide';
 
 // 공지 / 출첵
@@ -23,10 +20,9 @@ export { default as HomeCommunity } from './HomeCommunity/HomeCommunity';
 
 // 베숙트
 export { default as HomeBesookt } from './HomeBesookt/HomeBesookt';
-export { default as HomeBesooktSkeleton } from './HomeBesookt/HomeBesooktSkeleton';
 export { default as HomeBesooktErrorFallback } from './HomeBesookt/HomeBesooktErrorFallback';
+export { default as HomeBesooktSkeleton } from './HomeBesookt/HomeBesooktSkeleton';
 
 // 팝업
-export { default as PopUp } from './PopUp/PopUp';
-
 export * from './HomeCard/HomeCard';
+export { default as PopUp } from './PopUp/PopUp';
