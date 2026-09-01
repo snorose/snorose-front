@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
+
 import { useQueryClient } from '@tanstack/react-query';
 
-import Carousel from './Carousel';
 import { QUERY_KEY } from '@/shared/constant';
+
+import Carousel from './Carousel';
 
 const meta = {
   title: 'Feature/Home/Carousel',

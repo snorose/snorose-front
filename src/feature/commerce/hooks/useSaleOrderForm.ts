@@ -1,0 +1,81 @@
+import { useState } from 'react';
+
+import { QuantityMap, SaleResponse } from '@/feature/commerce/types';
+import {
+  getSelectedOrderItems,
+  isPlusQuantityInvalid,
+} from '@/feature/commerce/utils/commerceRules';
+
+export default function useSaleOrderForm(products: SaleResponse['products']) {
+  const [quantityMap, setQuantityMap] = useState<QuantityMap>(() =>
+    createQuantityMap(products)
+  );
+
+  const resetQuantityMap = (newProducts: SaleResponse['products']) => {
+    setQuantityMap(createQuantityMap(newProducts));
+  };
+
+  const selectedOrderItems = getSelectedOrderItems(products, quantityMap);
+
+  const totalPaymentAmount = selectedOrderItems.reduce(
+    (saleTotal, { unitPrice, quantity }) => saleTotal + unitPrice * quantity,
+    0
+  );
+
+  const handlePlusQuantity = (productId: number, variantId: number) => {
+    const product = products.find((product) => product.productId === productId);
+    const variant = product.variants.find(
+      (variant) => variant.variantId === variantId
+    );
+
+    setQuantityMap((prev) => {
+      const isInvalid = isPlusQuantityInvalid(product, variant, quantityMap);
+      if (isInvalid) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        [productId]: {
+          ...(prev[productId] ?? {}),
+          [variantId]: prev[productId][variantId] + 1,
+        },
+      };
+    });
+  };
+
+  const handleMinusQuantity = (productId: number, variantId: number) => {
+    setQuantityMap((prev) => {
+      if (prev[productId][variantId] <= 0) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        [productId]: {
+          ...prev[productId],
+          [variantId]: prev[productId][variantId] - 1,
+        },
+      };
+    });
+  };
+
+  return {
+    quantityMap,
+    selectedOrderItems,
+    totalPaymentAmount,
+    handlePlusQuantity,
+    handleMinusQuantity,
+    resetQuantityMap,
+  };
+}
+
+function createQuantityMap(products: SaleResponse['products']) {
+  return products.reduce<QuantityMap>((acc, product) => {
+    acc[product.productId] = Object.fromEntries(
+      product.variants.map((variant) => [variant.variantId, 0])
+    );
+
+    return acc;
+  }, {});
+}

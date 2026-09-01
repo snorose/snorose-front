@@ -40,13 +40,16 @@ async function enableMocking() {
   if (process.env.NODE_ENV !== 'development') return;
 
   const { worker } = await import('@/mock/browser');
-  return worker.start();
+
+  return worker.start({
+    onUnhandledRequest: 'bypass',
+  });
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-enableMocking().then(() => {
-  const router = createBrowserRouter(routeList);
+const router = createBrowserRouter(routeList);
 
+enableMocking().then(() => {
   root.render(
     <React.StrictMode>
       <GrowthBookProvider growthbook={growthbook}>

@@ -32,6 +32,10 @@ import {
   PostListPage,
   WritePostPage,
 } from '@/page/board';
+import OrderDetailPage from '@/page/commerce/OrderDetailPage';
+import OrderListPage from '@/page/commerce/OrderListPage';
+import PickupDisplayPage from '@/page/commerce/PickupDisplayPage';
+import SaleDetailPage from '@/page/commerce/SaleDetailPage';
 import { ErrorPage, NotFoundPage } from '@/page/etc';
 import {
   EditEventPage,
@@ -651,6 +655,34 @@ export const routeList = [
       {
         path: '/my-page/service-policy',
         element: <ServicePolicyPage />,
+      },
+      {
+        path: '/commerce/sales/:saleId',
+        element: (
+          <ProtectedRoute>
+            <SaleDetailPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/commerce/orders',
+        element: (
+          <ProtectedRoute>
+            <OrderListPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/commerce/orders/:orderNumber',
+        element: (
+          <ProtectedRoute>
+            <OrderDetailPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/commerce/pickup-display',
+        element: <PickupDisplayPage />,
       },
       {
         path: '/about',

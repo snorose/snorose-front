@@ -1,7 +1,10 @@
-import { defaultAxios, authAxios } from '@/axios';
 import { IconItem } from '@storybook/blocks';
+
 import { getBoardUrl } from '@/shared/lib';
+
 import altImage from '@/assets/images/altImage.png';
+
+import { authAxios, defaultAxios } from '@/axios';
 
 // 게시글 리스트 가져오기
 export const getPosts = async (boardId, page = 0) => {

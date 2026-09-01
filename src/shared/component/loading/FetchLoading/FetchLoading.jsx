@@ -3,8 +3,8 @@ import cloudLogo from '@/assets/images/cloudLogo.svg';
 import styles from './FetchLoading.module.css';
 
 export default function FetchLoading({
-  className,
-  children,
+  className = '',
+  children = null,
   animation = true,
 }) {
   return (

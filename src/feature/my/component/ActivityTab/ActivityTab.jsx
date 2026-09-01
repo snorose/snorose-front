@@ -4,7 +4,7 @@ import { Icon } from '@/shared/component';
 
 import styles from './ActivityTab.module.css';
 
-const ActivityTab = () => {
+const ActivityTab = ({ userInfo }) => {
   return (
     <>
       <div className={styles.infoWrapper}>
@@ -49,6 +49,42 @@ const ActivityTab = () => {
             </Link>
           </div>
         ))}
+      </div>
+
+      <div className={styles.directList}>
+        <Link to={'/commerce/orders'}>
+          <div className={styles.direct}>
+            <div className={styles.text}>
+              <span>내 주문 내역</span>
+              <span>지금까지 참여한 공구 주문을 확인해요</span>
+            </div>
+            <Icon
+              id='angle-right'
+              width={24}
+              height={24}
+              fill='#898989'
+              stroke='#898989'
+            />
+          </div>
+        </Link>
+
+        {userInfo.userRoleId === 4 && (
+          <Link to={'/commerce/pickup-display'}>
+            <div className={styles.direct}>
+              <div className={styles.text}>
+                <span>수령 단말</span>
+                <span>수령 단말 준비를 시작하세요</span>
+              </div>
+              <Icon
+                id='angle-right'
+                width={24}
+                height={24}
+                fill='#898989'
+                stroke='#898989'
+              />
+            </div>
+          </Link>
+        )}
       </div>
     </>
   );

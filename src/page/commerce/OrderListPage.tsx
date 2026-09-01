@@ -1,0 +1,84 @@
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import { Link } from 'react-router-dom';
+
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
+
+import {
+  BackAppBar,
+  FetchLoading,
+  InfiniteScrollSentinel,
+  ServerErrorFallback,
+} from '@/shared/component';
+
+import OrderItem from '@/feature/commerce/components/OrderItem';
+import useOrders from '@/feature/commerce/hooks/useOrders';
+import { getCommerceErrorCode } from '@/feature/commerce/utils/commerceRules';
+
+import { noPostsIllustration } from '@/assets/illustrations';
+
+import styles from './OrderListPage.module.css';
+
+export default function OrderListPage() {
+  return (
+    <QueryErrorResetBoundary>
+      {({ reset }) => (
+        <ErrorBoundary onReset={reset} FallbackComponent={ErrorFallback}>
+          <Suspense
+            fallback={<FetchLoading>주문 내역 불러오는 중...</FetchLoading>}
+          >
+            <OrderListView />
+          </Suspense>
+        </ErrorBoundary>
+      )}
+    </QueryErrorResetBoundary>
+  );
+}
+
+function OrderListView() {
+  const { items: orders, ref, isFetchingNextPage } = useOrders();
+
+  if (orders.length === 0) {
+    return (
+      <div className={styles.container}>
+        <BackAppBar title='내 주문 목록' backNavTo={'/my-page'} />
+        <div className={styles.noContentWrapper}>
+          <div className={styles.imageWrapper}>
+            <img
+              src={noPostsIllustration}
+              width={220}
+              height={182}
+              alt='주문 목록이 없음'
+            />
+          </div>
+          <p className={styles.noContentMessage}>아직 주문한 상품이 없어요</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.container}>
+      <BackAppBar title='내 주문 목록' backNavTo={'/my-page'} />
+
+      <div className={styles.orderList}>
+        {orders.map((order, index) => (
+          <Link key={order.orderNumber} to={order.orderNumber}>
+            <OrderItem {...order} />
+          </Link>
+        ))}
+        <InfiniteScrollSentinel ref={ref} />
+        {isFetchingNextPage && <FetchLoading />}
+      </div>
+    </div>
+  );
+}
+
+function ErrorFallback({ error, resetErrorBoundary }) {
+  const errorCode = getCommerceErrorCode(error);
+
+  switch (errorCode) {
+    default:
+      return <ServerErrorFallback reset={resetErrorBoundary} />;
+  }
+}
