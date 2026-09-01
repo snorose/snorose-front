@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import { Link } from 'react-router-dom';
 
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
@@ -9,6 +10,7 @@ import {
   CarouselSkeleton,
   Footer,
   Header,
+  Icon,
 } from '@/shared/component';
 import { NEW_ROUTES } from '@/shared/constant';
 import { useAuth } from '@/shared/hook';
@@ -66,6 +68,20 @@ export default function MainPage() {
           </ErrorBoundary>
         )}
       </QueryErrorResetBoundary>
+
+      <Link to={'/commerce/sales/1'} className={styles.direct}>
+        <div className={styles.item}>
+          <span>판매 바로가기</span>
+          <span>청파제 굿즈를 주문하세요</span>
+        </div>
+        <Icon
+          id='angle-right'
+          width={24}
+          height={24}
+          fill='#898989'
+          stroke='#898989'
+        />
+      </Link>
 
       <ListHeader to={NEW_ROUTES.boardHome} title='게시판' />
       <HomeCommunity />

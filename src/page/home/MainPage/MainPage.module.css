@@ -11,3 +11,28 @@
   margin-bottom: 3rem;
   padding: 0 2rem;
 }
+
+.direct {
+  margin: 0 var(--default-margin) 3rem;
+  padding: 1.4rem 1.6rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--grey-3);
+  border-radius: 0.5rem;
+
+  & .item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  & .item span:first-child {
+    font: var(--text-headline-2-med);
+  }
+
+  & .item span:last-child {
+    font: var(--text-body-2-reg);
+  }
+}
