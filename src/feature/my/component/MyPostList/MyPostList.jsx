@@ -87,11 +87,7 @@ export default function MyPostList({
         <Link
           key={post.postId}
           className={styles.to}
-          to={makePath({
-            boardId: post.boardId,
-            postId: post.postId,
-            isNotice: post.isNotice,
-          })}
+          to={makePath({ ...post })}
         >
           <PostBar {...post} content={post.questionDetail ?? post.content}>
             {post.boardName && (

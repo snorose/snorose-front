@@ -28,7 +28,7 @@ export default function CommentList() {
 
   return (
     <div className={styles.comments}>
-      {visibledCommentList.map((comment, index) => (
+      {visibledCommentList.map((comment) => (
         <Comment key={comment.id} data={comment} />
       ))}
 

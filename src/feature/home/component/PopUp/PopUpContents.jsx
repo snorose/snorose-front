@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import calendarImage from './calendar.png';
 import eventImage from './event.png';
-import newFeatureImage from './hashtag.png';
+import newBoard from './newBoard.png';
 import styles from './PopUpContents.module.css';
 
 /**
@@ -45,19 +45,24 @@ const POPUP_CONTENTS = [
     endDate: '2026-05-04',
   },
   {
-    title: '[신규 기능] 해시태그 기능 오픈 안내',
+    title: '숙플레이스 및 주거 게시판 오픈 이벤트 안내',
     description:
-      '글 작성 시 #스노로즈, #꿀팁, #대학생활 등 관심 있는 키워드를 자유롭게 해시태그로 추가해 보세요! ✍️✨\n\n게시글에 등록된 해시태그를 클릭하면 같은 주제의 글을 한눈에 모아볼 수 있습니다. 🔍',
-    image: newFeatureImage,
+      '숙플레이스와 주거 게시판 오픈을 기념해 후기 이벤트가 진행됩니다.',
+    contentList: [
+      '참여 기간: 2026년 9월 1일(화) ~ 9월 22일(화)',
+      '참여 방법: 숙플레이스 또는 주거 게시판에 필수 해시태그와 조건에 맞춰 후기 작성',
+      '보상: 조건 충족 참여자 전원 10 point, 우수 작성자 추가 20 point 지급',
+    ],
+    image: newBoard,
     link: [
       {
         title: '스노로즈 공지',
-        url: '/board/notice/post/1913883',
+        url: '/board/notice/post/1915197',
         isExternal: false,
       },
     ],
-    startDate: '2026-08-17',
-    endDate: '2026-08-25',
+    startDate: '2026-08-30',
+    endDate: '2026-09-05',
   },
   {
     title: '[공지] 스노로즈 서버 점검 안내',
@@ -91,10 +96,10 @@ const POPUP_CONTENTS = [
     endDate: '2026-08-10',
   },
   {
-    title: '[캘린더] 8월 스노로즈 일정',
+    title: '[캘린더] 9월 스노로즈 일정',
     image: calendarImage,
-    startDate: '2026-07-27',
-    endDate: '2026-08-10',
+    startDate: '2026-08-30',
+    endDate: '2026-09-10',
   },
   {
     title: '[공지] 시험후기 작성 기간 안내',
