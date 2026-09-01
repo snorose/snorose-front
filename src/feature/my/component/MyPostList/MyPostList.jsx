@@ -99,7 +99,7 @@ export default function MyPostList({
                 variant={INQUIRY_STATUS_MAP[post.status].variant}
               />
             )}
-            {post.isConfirmed && <PostBar.ConfirmedIcon />}
+            {post.isConfirmed && <PostBar.ConfirmedChip />}
           </PostBar>
         </Link>
       ))}
