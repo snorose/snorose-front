@@ -51,12 +51,9 @@ export default function ProductOptionSection({
             </div>
 
             <div className={styles.optionList}>
-              {productOptionItems.map((option) => {
-                const product = products.find(
-                  ({ productId }) => productId === option.productId
-                );
-                const variant = product.variants.find(
-                  ({ variantId }) => variantId === option.variantId
+              {product.variants.map((variant) => {
+                const option = productOptionItems.find(
+                  (item) => item.variantId === variant.variantId
                 );
 
                 const isInvalid = isPlusQuantityInvalid(
