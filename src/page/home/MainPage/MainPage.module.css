@@ -34,5 +34,6 @@
 
   & .item span:last-child {
     font: var(--text-body-2-reg);
+    color: var(--grey-4);
   }
 }
