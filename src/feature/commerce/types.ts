@@ -24,7 +24,13 @@ type PreorderProduct = {
   name: string;
   description: string;
   images: Array<{ imageId: number; url: string }>;
-  variants: Array<Variant>;
+  variants: Array<{
+    variantId: number;
+    optionLabel: string;
+    unitPrice: number;
+    available: boolean;
+    availableQuantity: null;
+  }>;
 };
 
 type LimitedStockProduct = {
@@ -36,15 +42,13 @@ type LimitedStockProduct = {
   name: string;
   description: string;
   images: Array<{ imageId: number; url: string }>;
-  variants: Array<Variant>;
-};
-
-type Variant = {
-  variantId: number;
-  optionLabel: string;
-  unitPrice: number;
-  available: boolean;
-  availableQuantity: number | null;
+  variants: Array<{
+    variantId: number;
+    optionLabel: string;
+    unitPrice: number;
+    available: boolean;
+    availableQuantity: number;
+  }>;
 };
 
 export type QuantityMap = Partial<
