@@ -52,8 +52,8 @@ const sale: SaleResponse = {
       name: '스노로즈 레터링 티셔츠',
       description: '가벼운 면 소재의 교내 수령 전용 상품입니다.',
       inventoryPolicy: 'PREORDER',
-      maxPerBuyer: 30,
-      remainingForBuyer: 11,
+      maxPerBuyer: null,
+      remainingForBuyer: null,
       images: [
         {
           imageId: 100,
@@ -66,14 +66,14 @@ const sale: SaleResponse = {
           optionLabel: '네이비 · M',
           unitPrice: 12000,
           available: true,
-          availableQuantity: 30,
+          availableQuantity: null,
         },
         {
           variantId: 12,
           optionLabel: '아이보리 · M',
           unitPrice: 12000,
           available: true,
-          availableQuantity: 40,
+          availableQuantity: null,
         },
       ],
     },
