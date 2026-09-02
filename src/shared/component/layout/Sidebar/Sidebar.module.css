@@ -1,6 +1,7 @@
 .dim {
   width: 100vw;
   max-width: var(--default-width);
+  height: 100vh;
   height: 100dvh;
   position: fixed;
   top: 0;
