@@ -191,15 +191,6 @@ export const BOARD_MENUS = [
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
-    id: 43,
-    to: '/board/sookplace',
-    textId: 'sookplace',
-    title: '숙플레이스',
-    desc: '눈송이 맛집 커뮤니티',
-    category: BOARD_CATEGORY.LIFE,
-    image: sookplace,
-  },
-  {
     id: 60,
     to: '/board/student-council',
     textId: 'student-council',
@@ -225,6 +216,15 @@ export const BOARD_MENUS = [
     desc: '재정감사 보고',
     image: financeAudit,
     category: BOARD_CATEGORY.OFFICIAL,
+  },
+  {
+    id: 43,
+    to: '/board/sookplace',
+    textId: 'sookplace',
+    title: '숙플레이스',
+    desc: '눈송이 맛집 커뮤니티',
+    category: BOARD_CATEGORY.LIFE,
+    image: sookplace,
   },
   {
     id: 41,
