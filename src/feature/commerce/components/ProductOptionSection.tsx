@@ -45,9 +45,12 @@ export default function ProductOptionSection({
           <div className={styles.product}>
             <div className={styles.productName}>
               {product.name}
-              <span className={styles.productMaxPerBuyer}>
-                최대 {product.maxPerBuyer}개 구매 가능
-              </span>
+              {product.inventoryPolicy === 'LIMITED_STOCK' &&
+                product.maxPerBuyer && (
+                  <span className={styles.productMaxPerBuyer}>
+                    최대 {product.maxPerBuyer}개 구매 가능
+                  </span>
+                )}
             </div>
 
             <div className={styles.optionList}>
