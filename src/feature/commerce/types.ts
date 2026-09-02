@@ -7,27 +7,44 @@ export type SaleResponse = {
   orderable: boolean;
   opensAt: string;
   closesAt: string;
-  products: Array<{
-    productId: number;
-    name: string;
-    description: string;
-    inventoryPolicy: 'PREORDER' | 'LIMITED_STOCK';
-    maxPerBuyer: number | null;
-    remainingForBuyer: number | null;
-    images: Array<{ imageId: number; url: string }>;
-    variants: Array<{
-      variantId: number;
-      optionLabel: string;
-      unitPrice: number;
-      available: boolean;
-      availableQuantity: number | null;
-    }>;
-  }>;
+  products: Array<PreorderProduct | LimitedStockProduct>;
   notices: Array<{
     type: 'GENERAL' | 'SYSTEM_PRIVACY_CONSENT';
     text: string;
     required: boolean;
   }>;
+};
+
+type PreorderProduct = {
+  inventoryPolicy: 'PREORDER';
+  maxPerBuyer: null;
+  remainingForBuyer: null;
+
+  productId: number;
+  name: string;
+  description: string;
+  images: Array<{ imageId: number; url: string }>;
+  variants: Array<Variant>;
+};
+
+type LimitedStockProduct = {
+  inventoryPolicy: 'LIMITED_STOCK';
+  maxPerBuyer: number | null;
+  remainingForBuyer: number | null;
+
+  productId: number;
+  name: string;
+  description: string;
+  images: Array<{ imageId: number; url: string }>;
+  variants: Array<Variant>;
+};
+
+type Variant = {
+  variantId: number;
+  optionLabel: string;
+  unitPrice: number;
+  available: boolean;
+  availableQuantity: number | null;
 };
 
 export type QuantityMap = Partial<
