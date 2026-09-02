@@ -57,14 +57,16 @@ export default function Sidebar() {
           <Icon id='logo' width={180} height={30} />
         </Link>
 
-        {MENUS.map(({ to, title, items }) => (
-          <div key={title} onClick={close}>
-            <Link to={to}>
-              <h3 className={styles.title}>{title}</h3>
-            </Link>
-            <MenuList items={items} />
-          </div>
-        ))}
+        <div className={styles.menuScroll}>
+          {MENUS.map(({ to, title, items }) => (
+            <div key={title} onClick={close}>
+              <Link to={to}>
+                <h3 className={styles.title}>{title}</h3>
+              </Link>
+              <MenuList items={items} />
+            </div>
+          ))}
+        </div>
       </aside>
     </div>
   );
