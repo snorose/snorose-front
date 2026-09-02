@@ -29,7 +29,7 @@ export default function useSaleOrderForm(products: SaleResponse['products']) {
     );
 
     setQuantityMap((prev) => {
-      const isInvalid = isPlusQuantityInvalid(product, variant, quantityMap);
+      const isInvalid = isPlusQuantityInvalid(product, variant, prev);
       if (isInvalid) {
         return prev;
       }
