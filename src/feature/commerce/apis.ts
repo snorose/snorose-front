@@ -116,3 +116,22 @@ function generatePickupDeviceHeaders(deviceToken: string) {
     [PICKUP_DEVICE_TOKEN_HEADER]: deviceToken,
   };
 }
+
+type CommerceClickEvent =
+  | {
+      eventType: 'BANNER_CLICK';
+      saleId: number;
+      bannerId: number;
+    }
+  | {
+      eventType: 'SALE_SHORTCUT_CLICK';
+      saleId: number;
+      bannerId?: never;
+    };
+
+export async function recordCommerceClick(event: CommerceClickEvent) {
+  await authAxios.post('/v1/commerce/analytics/events', {
+    clientEventId: crypto.randomUUID(),
+    ...event,
+  });
+}
