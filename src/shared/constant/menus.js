@@ -68,6 +68,8 @@ export const SIDEBAR_MENUS = Object.freeze([
       { to: '/board/large-snow', name: '함박눈방' },
       { to: '/board/permanent-snow', name: '만년설방' },
       { to: '/board/besookt', name: '베숙트' },
+      { to: '/board/sookplace', name: '숙플레이스' },
+      { to: '/board/residence', name: '주거' },
     ],
   },
   {

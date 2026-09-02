@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useSidebarStore } from '@/shared/store';
-import { useAuth } from '@/shared/hook';
 import { Icon } from '@/shared/component';
 import {
   NEW_SIDEBAR_MENUS,
   NOT_LOGIN_MENUS,
   SIDEBAR_MENUS,
 } from '@/shared/constant';
+import { useAuth } from '@/shared/hook';
+import { useSidebarStore } from '@/shared/store';
 
 import styles from './Sidebar.module.css';
 
