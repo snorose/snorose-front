@@ -1,0 +1,92 @@
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.label {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font: var(--text-headline-2-med);
+  color: var(--grey-4);
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 5.6rem;
+  padding: 0 1.6rem;
+
+  background: var(--white);
+  border: 1px solid var(--blue-2);
+  border-radius: 0.8rem;
+
+  cursor: pointer;
+}
+
+.placeholder {
+  color: var(--grey-3-1);
+  font: var(--text-body-1-reg);
+}
+
+.value {
+  color: var(--grey-3-1);
+  font: var(--text-body-1-reg);
+}
+
+.arrow {
+  transition: transform 0.2s ease;
+}
+
+.arrowOpen {
+  transform: rotate(180deg);
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 0.8rem);
+  left: 0;
+  z-index: 10;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  background: var(--white);
+  border-radius: 0.8rem;
+  box-shadow: 0 0.4rem 1.6rem rgb(0 0 0 / 8%);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 5.6rem;
+  padding: 0 2rem;
+
+  color: var(--grey-6);
+  font-size: 1.6rem;
+  text-align: left;
+
+  background: var(--white);
+  border: 0;
+
+  cursor: pointer;
+}
+
+.item + .item {
+  border-top: 1px solid var(--blue-1);
+}
+
+.item:hover {
+  background: var(--blue-0);
+}
+
+.selected {
+  color: var(--blue-7);
+  background: var(--blue-0);
+}

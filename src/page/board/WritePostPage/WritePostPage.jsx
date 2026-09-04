@@ -11,6 +11,7 @@ import {
   CheckBox,
   CloseAppBar,
   ConfirmModal,
+  DropdownCategory,
   DropdownList,
   FetchLoading,
   Icon,
@@ -61,7 +62,6 @@ export default function WritePostPage() {
 
   const [isNotice, setIsNotice] = useState(false);
   const [dropDownOpen, setDropDownOpen] = useState(false);
-  const [categoryDropDownOpen, setCategoryDropDownOpen] = useState(false);
   const [category, setCategory] = useState(null);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -140,19 +140,8 @@ export default function WritePostPage() {
     setDropDownOpen((prev) => !prev);
   };
 
-  const handleCategoryDropDownOpen = () => {
-    if (isCategoryDisabled) return;
-
-    setCategoryDropDownOpen((prev) => !prev);
-  };
-
   const categoryOptions =
     categoryConfig?.map((name) => ({ id: name, name })) ?? [];
-
-  const handleCategoryChange = (option) => {
-    setCategory(option.id);
-    setCategoryDropDownOpen(false);
-  };
 
   // 게시판 제목 선택 핸들러
   const handleBoardTitleChange = (option) => {
@@ -178,7 +167,6 @@ export default function WritePostPage() {
 
     if (hasCategory && willBeNotice) {
       setCategory(null);
-      setCategoryDropDownOpen(false);
     }
 
     setIsNotice(willBeNotice);
@@ -379,42 +367,13 @@ export default function WritePostPage() {
                 )}
               </div>
             )}
-            {categoryConfig && (
-              <div className={styles.subCategoryDropdownContainer}>
-                <div className={styles.categoryLabel}>
-                  <p className={styles.subCategoryLabel}>카테고리</p>
-                  <span className={styles.requiredDot} />
-                </div>
-                <div
-                  className={`${styles.subCategorySelect} ${
-                    isCategoryDisabled ? styles.subCategorySelectDisabled : ''
-                  }`}
-                  onClick={handleCategoryDropDownOpen}
-                  aria-disabled={isCategoryDisabled}
-                >
-                  <div className={styles.subCategorySelectContainer}>
-                    <p className={styles.subCategorySelectText}>
-                      {isCategoryDisabled
-                        ? '공지글은 카테고리를 선택하지 않습니다'
-                        : category || '카테고리를 선택해주세요'}
-                    </p>
-                  </div>
-                  <Icon id='angle-down' width={24} height={24} />
-                </div>
-                {categoryDropDownOpen && !isCategoryDisabled && (
-                  <DropdownList
-                    options={categoryOptions}
-                    select={{
-                      id: category,
-                      name: category ?? '',
-                    }}
-                    onSelect={handleCategoryChange}
-                    className={styles.dropDownList}
-                  />
-                )}
-              </div>
+            {categoryConfig && !isCategoryDisabled && (
+              <DropdownCategory
+                options={categoryConfig}
+                value={category}
+                onChange={setCategory}
+              />
             )}
-
             <div className={styles.profileBox}>
               <div className={styles.profileBoxLeft}>
                 {userInfo?.userRoleId !== ROLE.admin &&
