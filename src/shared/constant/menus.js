@@ -72,6 +72,14 @@ export const SIDEBAR_MENUS = Object.freeze([
   },
   {
     to: '/board',
+    title: '라이프',
+    items: [
+      { to: '/board/sookplace', name: '숙플레이스' },
+      { to: '/board/residence', name: '주거' },
+    ],
+  },
+  {
+    to: '/board',
     title: '공식 게시판',
     items: [
       { to: '/board/student-council', name: '총학생회' },

@@ -2,6 +2,7 @@
   width: 100vw;
   max-width: var(--default-width);
   height: 100vh;
+  height: 100dvh;
   position: fixed;
   top: 0;
   left: 50%;
@@ -13,25 +14,31 @@
 }
 
 .sidebar {
-  overflow-y: auto;
-
+  display: flex;
+  flex-direction: column;
   width: 80%;
   height: 100%;
   padding-left: 3rem;
-  padding-bottom: 4rem;
   position: absolute;
   right: 0;
+  overflow: hidden;
   border-radius: 1.5rem 0 0 0;
   background-color: var(--white);
 }
 
 .logo {
-  position: sticky;
-  top: 0;
-  display: inline-block;
+  display: block;
+  flex-shrink: 0;
   width: 100%;
   padding: 2.6rem 0 0.6rem;
   background-color: white;
+}
+
+.menuScroll {
+  flex: 1;
+  min-height: 0;
+  padding-bottom: 4rem;
+  overflow-y: auto;
 }
 
 .title {
