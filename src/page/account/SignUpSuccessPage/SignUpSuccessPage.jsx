@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
-import { IllustrationTaskComplete } from '@snorose/icons';
+import { IconCheck, IllustrationTaskComplete } from '@snorose/icons';
 
-import { Button, Icon } from '@/shared/component';
+import { Button } from '@/shared/component';
 
 import styles from './SignUpSuccessPage.module.css';
 
@@ -12,8 +12,7 @@ export default function SignUpSuccessPage() {
   return (
     <div className={styles.container}>
       <div>
-        <Icon
-          id='check-thick'
+        <IconCheck
           width={'2.4rem'}
           height={'2.4rem'}
           className={styles.icon}
