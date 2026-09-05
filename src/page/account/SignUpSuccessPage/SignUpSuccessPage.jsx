@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Button, Icon } from '@/shared/component';
+import { IconCheck } from '@snorose/icons';
 
-import styles from './SignUpSuccessPage.module.css';
+import { Button } from '@/shared/component';
 
 import { taskCompleteIllustration } from '@/assets/illustrations';
 
+import styles from './SignUpSuccessPage.module.css';
 export default function SignUpSuccessPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -22,10 +23,9 @@ export default function SignUpSuccessPage() {
   return (
     <div className={styles.container}>
       <div>
-        <Icon
-          id='check-thick'
-          width={'2.4rem'}
-          height={'2.4rem'}
+        <IconCheck
+          width='2.4rem'
+          height='2.4rem'
           className={styles.icon}
         />
         <p className={styles.title}>스노로즈 가입이 완료되었어요!</p>
