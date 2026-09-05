@@ -4,14 +4,32 @@ import { Icon } from '@/shared/component';
 
 import styles from './BoardBar.module.css';
 
+function getImageStyle(layout) {
+  if (!layout) return undefined;
+
+  return {
+    '--board-image-top': layout.top,
+    '--board-image-right': layout.right,
+    '--board-image-bottom': layout.bottom ?? 'auto',
+    '--board-image-transform': 'none',
+  };
+}
+
 export default function BoardBar({
   data,
+  image,
+  imageLayout,
   isFavorite = false,
   onFavoriteClick = () => {},
 }) {
   return (
     <Link to={`/board/${data.textId}`} className={styles.container}>
-      <img className={styles.image} src={data.image} alt={data.textId} />
+      <img
+        className={styles.image}
+        src={image}
+        alt={data.textId}
+        style={getImageStyle(imageLayout)}
+      />
       <div className={styles.textBox}>
         <h3 className={styles.title}>{data.title}</h3>
         <p className={styles.description}>{data.desc}</p>
@@ -36,10 +54,15 @@ export default function BoardBar({
 /**
  * TODO(board): 라우트 개선 작업 완료 후 교체
  */
-export function NewBoardBar({ name, to, desc, image }) {
+export function NewBoardBar({ name, to, desc, image, imageLayout }) {
   return (
     <Link to={to} className={styles.container}>
-      <img className={styles.image} src={image} alt={name} />
+      <img
+        className={styles.image}
+        src={image}
+        alt={name}
+        style={getImageStyle(imageLayout)}
+      />
       <div className={styles.textBox}>
         <h3 className={styles.title}>{name}</h3>
         <p className={styles.description}>{desc}</p>

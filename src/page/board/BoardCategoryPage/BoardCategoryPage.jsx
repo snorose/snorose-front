@@ -3,8 +3,10 @@ import { useState } from 'react';
 import { Header } from '@/shared/component';
 import { BOARD_CATEGORY, BOARD_MENUS } from '@/shared/constant';
 
-import { BoardBar, AccordianBoards } from '@/feature/board/component';
+import { AccordianBoards, BoardBar } from '@/feature/board/component';
 import { Search } from '@/feature/search/component';
+
+import { BOARD_IMAGES } from '@/assets/map/board-assets';
 
 import styles from './BoardCategoryPage.module.css';
 
@@ -40,13 +42,19 @@ export default function BoardCategoryPage() {
             >
               <div className={styles.boardListBox}>
                 {BOARD_MENUS.filter((board) => board.category === category).map(
-                  (board, index) => (
-                    <BoardBar
-                      key={board.id}
-                      data={board}
-                      isFavorite={FAVORITE_BOARD_IDS.includes(board.id)}
-                    />
-                  )
+                  (board) => {
+                    const boardImage = BOARD_IMAGES[board.textId];
+
+                    return (
+                      <BoardBar
+                        key={board.id}
+                        data={board}
+                        image={boardImage?.category}
+                        imageLayout={boardImage?.categoryLayout}
+                        isFavorite={FAVORITE_BOARD_IDS.includes(board.id)}
+                      />
+                    );
+                  }
                 )}
               </div>
             </AccordianBoards>

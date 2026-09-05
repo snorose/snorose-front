@@ -24,17 +24,20 @@
 
 .image {
   position: absolute;
-  right: -0.2rem;
-  top: 55%;
-  transform: translateY(-50%);
+  top: var(--board-image-top, 55%);
+  right: var(--board-image-right, -0.2rem);
+  bottom: var(--board-image-bottom, auto);
+  transform: var(--board-image-transform, translateY(-50%));
 }
 
 .textBox {
   display: flex;
   flex-direction: column;
+  gap: 0.1rem;
   position: absolute;
+  left: 1.2rem;
+  bottom: 1.2rem;
   white-space: pre-wrap;
-  margin: 1.6rem 0 0 1.4rem;
 }
 
 .title {
