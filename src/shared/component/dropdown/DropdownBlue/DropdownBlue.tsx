@@ -8,6 +8,8 @@ import {
   useState,
 } from 'react';
 
+import { IconChevronDown } from '@snorose/icons';
+
 import { Icon } from '@/shared/component';
 
 import styles from './DropdownBlue.module.css';
@@ -132,7 +134,7 @@ const Trigger = ({ children }: { children: ReactNode }) => {
         <p>{children}</p>
       </div>
 
-      <Icon className={styles.angle} id='angle-down' width={24} height={24} />
+      <IconChevronDown className={styles.angle} width={24} height={24} />
     </div>
   );
 };

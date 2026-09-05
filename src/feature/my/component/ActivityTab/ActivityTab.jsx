@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
 
-import { Icon } from '@/shared/component';
+import { IconChevronRight } from '@snorose/icons';
 
 import styles from './ActivityTab.module.css';
-
 const ActivityTab = ({ userInfo }) => {
   return (
     <>
@@ -38,13 +37,7 @@ const ActivityTab = ({ userInfo }) => {
             <Link to={item.link}>
               <div className={styles.item}>
                 <span>{item.label}</span>
-                <Icon
-                  id='angle-right'
-                  width={16}
-                  height={16}
-                  fill='#898989'
-                  stroke='#898989'
-                />
+                <IconChevronRight />
               </div>
             </Link>
           </div>
@@ -58,13 +51,7 @@ const ActivityTab = ({ userInfo }) => {
               <span>내 주문 내역</span>
               <span>지금까지 참여한 공구 주문을 확인해요</span>
             </div>
-            <Icon
-              id='angle-right'
-              width={24}
-              height={24}
-              fill='#898989'
-              stroke='#898989'
-            />
+            <IconChevronRight />
           </div>
         </Link>
 
@@ -75,13 +62,7 @@ const ActivityTab = ({ userInfo }) => {
                 <span>수령 단말</span>
                 <span>수령 단말 준비를 시작하세요</span>
               </div>
-              <Icon
-                id='angle-right'
-                width={24}
-                height={24}
-                fill='#898989'
-                stroke='#898989'
-              />
+              <IconChevronRight />
             </div>
           </Link>
         )}

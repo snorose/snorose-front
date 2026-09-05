@@ -84,3 +84,7 @@
 .attendanceArrow {
   color: var(--White-White, #fff);
 }
+
+.attendanceArrow path {
+  fill: white;
+}

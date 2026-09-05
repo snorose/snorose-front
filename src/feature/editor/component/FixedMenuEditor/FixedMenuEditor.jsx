@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { IconChevronDown } from '@snorose/icons';
 import { useEditorState } from '@tiptap/react';
 
 import { Icon } from '@/shared/component';
@@ -106,10 +107,10 @@ export default function FixedMenuEditor({ editor }) {
           {HEADING_OPTIONS.find((o) => o.value === editorState.currentHeading)
             ?.label ?? '본문'}
 
-          <Icon
-            id='arrow-down'
-            width={12}
-            height={6.75}
+          <IconChevronDown
+            width={16}
+            height={16}
+            viewBox='0 0 24 24'
             className={styles.headingArrow}
           />
         </button>
