@@ -4,14 +4,31 @@ import { Icon } from '@/shared/component';
 
 import styles from './BoardBar.module.css';
 
+function getImageStyle(layout) {
+  if (!layout) return undefined;
+
+  return {
+    '--board-image-top': layout.top,
+    '--board-image-right': layout.right,
+    '--board-image-bottom': layout.bottom ?? 'auto',
+    '--board-image-transform': 'none',
+  };
+}
+
 export default function BoardBar({
   data,
+  image,
+  imageLayout,
   isFavorite = false,
   onFavoriteClick = () => {},
 }) {
   return (
     <Link to={`/board/${data.textId}`} className={styles.container}>
-      <BoardImage image={data.image} label={data.textId} />
+      <BoardImage
+        image={image}
+        label={data.textId}
+        style={getImageStyle(imageLayout)}
+      />
       <div className={styles.textBox}>
         <h3 className={styles.title}>{data.title}</h3>
         <p className={styles.description}>{data.desc}</p>
@@ -36,10 +53,14 @@ export default function BoardBar({
 /**
  * TODO(board): 라우트 개선 작업 완료 후 교체
  */
-export function NewBoardBar({ name, to, desc, image }) {
+export function NewBoardBar({ name, to, desc, image, imageLayout }) {
   return (
     <Link to={to} className={styles.container}>
-      <BoardImage image={image} label={name} />
+      <BoardImage
+        image={image}
+        label={name}
+        style={getImageStyle(imageLayout)}
+      />
       <div className={styles.textBox}>
         <h3 className={styles.title}>{name}</h3>
         <p className={styles.description}>{desc}</p>
@@ -54,17 +75,24 @@ export function NewBoardBar({ name, to, desc, image }) {
   );
 }
 
-function BoardImage({ image, label }) {
+function BoardImage({ image, label, style }) {
   if (!image) {
     return null;
   }
 
   // TODO: 모든 게시판 이미지를 @snorose/icons 컴포넌트로 교체하면 문자열 이미지 분기와 <img> 렌더링을 제거한다.
   if (typeof image === 'string') {
-    return <img className={styles.image} src={image} alt={label} />;
+    return <img className={styles.image} src={image} alt={label} style={style} />;
   }
 
   const Image = image;
 
-  return <Image className={styles.image} role='img' aria-label={label} />;
+  return (
+    <Image
+      className={styles.image}
+      role='img'
+      aria-label={label}
+      style={style}
+    />
+  );
 }
