@@ -6,6 +6,8 @@ import { Icon } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
 import { useAuth, useBoardNavigate } from '@/shared/hook';
 
+import flag from '@/assets/images/flag.svg';
+
 import { getHomeNotice } from '@/apis';
 
 import styles from './HomeCard.module.css';
@@ -24,7 +26,7 @@ export default function HomeCard() {
     <div className={styles.layout}>
       <NoticeCard to='/board/notice' title={notice.title} />
 
-      {isLogin && <AttendanceCard iconId='flag' />}
+      {isLogin && <AttendanceCard />}
     </div>
   );
 }
@@ -48,7 +50,7 @@ export function NewHomeCard() {
     <div className={styles.layout}>
       <NoticeCard to={toNoticeList('notice')} title={notice.title} />
 
-      {isLogin && <AttendanceCard iconId='flag' />}
+      {isLogin && <AttendanceCard />}
     </div>
   );
 }
@@ -84,14 +86,12 @@ function NoticeCard({ to, title }) {
   );
 }
 
-function AttendanceCard({ iconId }) {
-  const imgSrc = require(`@/assets/images/${iconId}.svg`);
-
+function AttendanceCard() {
   return (
     <Link className={styles.attendance} to='/attendance'>
       <div className={styles.attendanceCard}>
         <div className={styles.attendanceText}>
-          <img className={styles.attendanceImage} src={imgSrc} alt={iconId} />
+          <img className={styles.attendanceImage} src={flag} alt='출석체크' />
           <span className={styles.attendanceTitle}>오늘의 출석체크</span>
         </div>
         <Icon

@@ -3,20 +3,18 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { BackAppBar, Button } from '@/shared/component';
 
-import styles from './SignUpFailurePage.module.css';
-
 import { taskFailedIllustration } from '@/assets/illustrations';
+
+import styles from './SignUpFailurePage.module.css';
 
 export default function SignUpFailurePage() {
   const navigate = useNavigate();
   const { state } = useLocation();
   useEffect(() => {
-    try {
-      const checkAccess = state.message;
-    } catch (e) {
+    if (!state) {
       navigate('/login');
     }
-  }, []);
+  }, [navigate, state]);
 
   return (
     <div className={styles.container}>

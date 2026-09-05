@@ -3,21 +3,19 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { BackAppBar, NewButton } from '@/shared/component';
 
-import styles from './NotFoundIdPage.module.css';
-
 import { taskFailedIllustration } from '@/assets/illustrations';
+
+import styles from './NotFoundIdPage.module.css';
 
 export default function NotFoundIdPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
 
   useEffect(() => {
-    try {
-      const checkAccess = state.access;
-    } catch (e) {
+    if (!state) {
       navigate('/login');
     }
-  }, []);
+  }, [navigate, state]);
 
   return (
     <div className={styles.container}>

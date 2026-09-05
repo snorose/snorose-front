@@ -11,7 +11,7 @@ export default function BoardBar({
 }) {
   return (
     <Link to={`/board/${data.textId}`} className={styles.container}>
-      <img className={styles.image} src={data.image} alt={data.textId} />
+      <BoardImage image={data.image} label={data.textId} />
       <div className={styles.textBox}>
         <h3 className={styles.title}>{data.title}</h3>
         <p className={styles.description}>{data.desc}</p>
@@ -39,7 +39,7 @@ export default function BoardBar({
 export function NewBoardBar({ name, to, desc, image }) {
   return (
     <Link to={to} className={styles.container}>
-      <img className={styles.image} src={image} alt={name} />
+      <BoardImage image={image} label={name} />
       <div className={styles.textBox}>
         <h3 className={styles.title}>{name}</h3>
         <p className={styles.description}>{desc}</p>
@@ -52,4 +52,19 @@ export function NewBoardBar({ name, to, desc, image }) {
       />
     </Link>
   );
+}
+
+function BoardImage({ image, label }) {
+  if (!image) {
+    return null;
+  }
+
+  // TODO: 모든 게시판 이미지를 @snorose/icons 컴포넌트로 교체하면 문자열 이미지 분기와 <img> 렌더링을 제거한다.
+  if (typeof image === 'string') {
+    return <img className={styles.image} src={image} alt={label} />;
+  }
+
+  const Image = image;
+
+  return <Image className={styles.image} role='img' aria-label={label} />;
 }

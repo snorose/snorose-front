@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
-import { useAuth } from '@/shared/hook';
 import { USER_STATUS } from '@/shared/constant';
+import { useAuth } from '@/shared/hook';
 
 import lockImage from '@/assets/images/lock.svg';
 
@@ -24,7 +24,7 @@ export default function HomeBoardCard({ path, name, mainImage }) {
         <div className={`${styles.card} ${backgroundClass[name]}`}>
           <img
             src={isLogin ? mainImage : lockImage}
-            alt={name}
+            alt={isLogin ? name : '잠금'}
             className={isLogin ? styles.icon : ''}
           />
         </div>

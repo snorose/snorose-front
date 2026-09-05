@@ -1,23 +1,13 @@
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Button, Icon } from '@/shared/component';
 
-import styles from './SignUpSuccessPage.module.css';
-
 import { taskCompleteIllustration } from '@/assets/illustrations';
+
+import styles from './SignUpSuccessPage.module.css';
 
 export default function SignUpSuccessPage() {
   const navigate = useNavigate();
-  const { state } = useLocation();
-
-  useEffect(() => {
-    try {
-      const checkAccess = state.access;
-    } catch (e) {
-      //navigate('/login');
-    }
-  }, []);
 
   return (
     <div className={styles.container}>
