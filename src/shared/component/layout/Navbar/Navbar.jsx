@@ -1,11 +1,13 @@
 import { Link, useLocation } from 'react-router-dom';
+
+import { IconBell, IconBellFill } from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
 import { fetchUnreadAlertCount } from '@/apis/alert';
 
-import { useAuth } from '@/shared/hook';
 import { Icon } from '@/shared/component';
 import { NAVBAR_MENUS, QUERY_KEY } from '@/shared/constant';
+import { useAuth } from '@/shared/hook';
 
 import styles from './Navbar.module.css';
 
@@ -38,10 +40,18 @@ export default function Navbar() {
             <Link key={id} to={to}>
               <li className={styles.menu}>
                 <div className={styles.iconWrapper}>
-                  <Icon
-                    id={isActive({ id, to }) ? `${id}-fill` : id}
-                    {...props}
-                  />
+                  {id === 'bell' ? (
+                    isActive({ id, to }) ? (
+                      <IconBellFill {...props} />
+                    ) : (
+                      <IconBell {...props} />
+                    )
+                  ) : (
+                    <Icon
+                      id={isActive({ id, to }) ? `${id}-fill` : id}
+                      {...props}
+                    />
+                  )}
                   {id === 'bell' && unreadAlertCount > 0 && (
                     <div className={styles.badge}>
                       <span>
