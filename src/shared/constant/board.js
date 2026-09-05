@@ -1,10 +1,6 @@
+import { IllustrationBooksCap,IllustrationBoxStarsCircle, IllustrationBoxStarsOpen, IllustrationFolderSearch, IllustrationSnowfall, IllustrationSnowfallCircle } from '@snorose/icons';
+
 import besookt from '@/assets/images/besookt-board-page.svg';
-import event from '@/assets/images/event-board-page.svg';
-import eventMain from '@/assets/images/event-main.svg';
-import financeAudit from '@/assets/images/financeAudit-board-page.svg';
-import firstSnow from '@/assets/images/firstSnow-board-page.svg';
-import firstSnowMain from '@/assets/images/firstSnow-main.svg';
-import graduationPreparation from '@/assets/images/graduationPreparation-board-page.svg';
 import largeSnow from '@/assets/images/largeSnow-board-page.svg';
 import largeSnowMain from '@/assets/images/largeSnow-main.svg';
 import permanentSnow from '@/assets/images/permanentSnow-board-page.svg';
@@ -61,13 +57,13 @@ export const BOARDS = Object.freeze([
     id: 14,
     name: '이벤트',
     path: '/board/event',
-    mainImage: eventMain,
+    mainImage: IllustrationBoxStarsCircle,
   },
   {
     id: 21,
     name: '첫눈온방',
     path: '/board/first-snow',
-    mainImage: firstSnowMain,
+    mainImage: IllustrationSnowfallCircle,
   },
   {
     id: 22,
@@ -124,7 +120,7 @@ export const BOARD_MENUS = [
     textId: 'event',
     title: '스노로즈 이벤트',
     desc: '스노로즈 이벤트 게시판',
-    image: event,
+    image: IllustrationBoxStarsOpen,
     category: BOARD_CATEGORY.SNOROSE,
   },
   {
@@ -133,7 +129,7 @@ export const BOARD_MENUS = [
     textId: 'event-notice',
     title: '이벤트',
     desc: '이벤트 공지글',
-    image: event,
+    image: IllustrationBoxStarsOpen,
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
@@ -142,7 +138,7 @@ export const BOARD_MENUS = [
     textId: 'first-snow',
     title: '첫눈온방',
     desc: '새내기 전용 커뮤니티',
-    image: firstSnow,
+    image: IllustrationSnowfall,
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
@@ -205,7 +201,7 @@ export const BOARD_MENUS = [
     textId: 'graduation-preparation',
     title: '졸업준비위원회',
     desc: '졸업준비위원회 공지',
-    image: graduationPreparation,
+    image: IllustrationBooksCap,
     category: BOARD_CATEGORY.OFFICIAL,
   },
   {
@@ -214,7 +210,7 @@ export const BOARD_MENUS = [
     textId: 'finance-audit',
     title: '재정감사위원회',
     desc: '재정감사 보고',
-    image: financeAudit,
+    image: IllustrationFolderSearch,
     category: BOARD_CATEGORY.OFFICIAL,
   },
   {

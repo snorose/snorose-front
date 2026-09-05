@@ -48,6 +48,14 @@
   transition: opacity 0.2s ease;
 }
 
+
+.svgIcon {
+  width: 4.7rem;
+  height: 6.2rem;
+  padding-top: 0;
+  transform: translate(2rem, 1.5rem) scale(1.3);
+}
+
 .name {
   font: var(--text-body-1-med);
   margin-top: 1.2rem;
@@ -64,5 +72,11 @@
     width: 120%;
     height: 7.6rem;
     padding-top: 0.5rem;
+  }
+
+  .svgIcon {
+    width: 100%;
+    height: 100%;
+    padding-top: 0;
   }
 }

@@ -9,9 +9,22 @@ export default function BoardBar({
   isFavorite = false,
   onFavoriteClick = () => {},
 }) {
+  const BoardImage = data.image;
+
   return (
     <Link to={`/board/${data.textId}`} className={styles.container}>
-      <img className={styles.image} src={data.image} alt={data.textId} />
+      {typeof data.image === 'string' ? (
+        <img
+          className={styles.image}
+          src={data.image}
+          alt={data.textId}
+        />
+      ) : (
+        <BoardImage
+          className={styles.image}
+          aria-label={data.textId}
+        />
+      )}
       <div className={styles.textBox}>
         <h3 className={styles.title}>{data.title}</h3>
         <p className={styles.description}>{data.desc}</p>
