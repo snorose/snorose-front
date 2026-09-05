@@ -1,8 +1,10 @@
 import { useContext } from 'react';
 import { createPortal } from 'react-dom';
 
-import { ModalContext } from '@/shared/context/ModalContext';
+import { IconMultiShare } from '@snorose/icons';
+
 import { Icon } from '@/shared/component';
+import { ModalContext } from '@/shared/context/ModalContext';
 
 import { useCommentContext } from '@/feature/comment/context';
 
@@ -43,12 +45,20 @@ export default function MoreOptionModal({ title, optionList, functions, top }) {
               onClick={() => handleOptionClick(item, idx)}
             >
               <p>{item.label}</p>
-              <Icon
-                id={item.iconId}
-                className={styles.itemIcon}
-                width={item.width}
-                height={item.height}
-              />
+              {item.iconId === 'share' ? (
+                <IconMultiShare
+                  className={styles.itemIcon}
+                  width={item.width}
+                  height={item.height}
+                />
+              ) : (
+                <Icon
+                  id={item.iconId}
+                  className={styles.itemIcon}
+                  width={item.width}
+                  height={item.height}
+                />
+              )}
             </li>
           ))}
         </ul>

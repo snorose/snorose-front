@@ -686,12 +686,6 @@
   <symbol id="scrap-stroke" viewBox="0 0 13 17" fill="current" stroke="current">
     <path d="M2.66089 1.1123H10.6609C11.4893 1.11231 12.1609 1.78388 12.1609 2.6123V14.4229C12.1609 14.8138 11.7323 15.0541 11.3992 14.8496L7.44702 12.418C6.96506 12.1215 6.35672 12.1215 5.87476 12.418L1.92261 14.8496C1.58952 15.0541 1.16089 14.8138 1.16089 14.4229V2.6123C1.16089 1.78388 1.83246 1.1123 2.66089 1.1123Z" stroke="#AAD916"/>
   </symbol>
-  <symbol id="share" viewBox="0 0 18 19" fill="none" stroke="none">
-    <path d="M13.9995 4L3.49951 9.5L13.9995 15.5" stroke="#898989" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="14.5" cy="3.5" r="3.5" fill="#AAD916"/>
-    <circle cx="14.5" cy="15.5" r="3.5" fill="#AAD916"/>
-    <circle cx="3.5" cy="9.5" r="3.5" fill="#AAD916"/>
-  </symbol>
   <symbol id="calendar-stroke" viewBox="0 0 16 17" fill="current" stroke="current">
     <rect x="1.52531" y="3.19523" width="13.4488" height="12.3309" rx="1.4175" stroke="#484848" stroke-width="1.215"/>
     <path d="M1.58252 8.0293H14.9159" stroke="#484848" stroke-width="1.215"/>
