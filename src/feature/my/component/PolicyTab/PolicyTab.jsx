@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
 
-import { Icon } from '@/shared/component';
+import { IconChevronRight } from '@snorose/icons';
 
 import { useLogout } from '@/feature/auth/hooks';
 
 import styles from './PolicyTab.module.css';
-
 const PolicyTab = () => {
   const { mutate: logout } = useLogout();
 
@@ -21,7 +20,7 @@ const PolicyTab = () => {
             <Link to={item.link}>
               <div className={styles.item}>
                 <span>{item.label}</span>
-                <Icon id='angle-right' width={16} height={16} />
+                <IconChevronRight width={16} height={16} />
               </div>
             </Link>
           </div>

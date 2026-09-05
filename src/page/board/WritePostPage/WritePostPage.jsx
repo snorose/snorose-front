@@ -2,6 +2,7 @@ import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
+import { IconChevronDown } from '@snorose/icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -367,7 +368,7 @@ export default function WritePostPage() {
                     />
                     <p className={styles.categorySelectText}>{boardTitle}</p>
                   </div>
-                  <Icon id='angle-down' width={24} height={24} />
+                  <IconChevronDown width={24} height={24} />
                 </div>
                 {dropDownOpen && (
                   <DropdownList
@@ -399,7 +400,7 @@ export default function WritePostPage() {
                         : category || '카테고리를 선택해주세요'}
                     </p>
                   </div>
-                  <Icon id='angle-down' width={24} height={24} />
+                  <IconChevronDown width={24} height={24} />
                 </div>
                 {categoryDropDownOpen && !isCategoryDisabled && (
                   <DropdownList

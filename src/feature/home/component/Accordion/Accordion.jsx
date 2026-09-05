@@ -1,4 +1,6 @@
-import { Icon, PrimaryButton } from '@/shared/component';
+import { IconChevronDown } from '@snorose/icons';
+
+import { PrimaryButton } from '@/shared/component';
 
 import styles from './Accordion.module.css';
 
@@ -18,11 +20,9 @@ export default function Accordion({ title, children, isOpen, onClick }) {
     <div className={`${styles.accordion} ${isOpen && styles.opend}`}>
       <div className={`${styles.panelHeader}`} onClick={onClick}>
         <span>{title}</span>
-        <Icon
+        <IconChevronDown
           className={styles.toggleIcon}
-          id='angle-down-blue'
-          width={16}
-          height={9}
+          color='var(--blue-4)'
         />
       </div>
       <div className={`${styles.panelBody}`}>{children}</div>

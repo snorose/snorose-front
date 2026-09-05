@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import { IconChevronRight } from '@snorose/icons';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { Icon } from '@/shared/component';
@@ -70,13 +71,11 @@ function NoticeCard({ to, title }) {
           </div>
           <span className={styles.noticeContent}>{title}</span>
         </div>
-        <Icon
+        <IconChevronRight
           className={styles.noticeArrow}
-          id='angle-right'
           width={18}
           height={18}
-          fill='var(--grey-4)'
-          stroke='var(--grey-4)'
+          viewBox='0 0 24 24'
           aria-hidden='true'
         />
       </div>
@@ -94,13 +93,11 @@ function AttendanceCard({ iconId }) {
           <img className={styles.attendanceImage} src={imgSrc} alt={iconId} />
           <span className={styles.attendanceTitle}>오늘의 출석체크</span>
         </div>
-        <Icon
+        <IconChevronRight
           className={styles.attendanceArrow}
-          id='angle-right'
           width={18}
           height={18}
-          fill='white'
-          stroke='white'
+          viewBox='0 0 24 24'
           aria-hidden='true'
         />
       </div>

@@ -1,7 +1,6 @@
-import { Icon } from '@/shared/component';
+import { IconChevronDown } from '@snorose/icons';
 
 import styles from './SelectedItem.module.css';
-
 export default function SelectedItem({
   select,
   placeholder,
@@ -24,12 +23,8 @@ export default function SelectedItem({
         {select?.name || (
           <span className={styles.placeholder}>{placeholder}</span>
         )}
-        <Icon
-          id='arrow-down'
-          width={16}
-          height={9}
+        <IconChevronDown
           className={`${styles.arrow} ${isOpen ? styles.rotated : ''}`}
-          fill='currentColor'
         />
       </div>
     </div>
