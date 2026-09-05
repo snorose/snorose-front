@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { IconChevronRight } from '@snorose/icons';
+
 import {
   Dropdown,
   ErrorMessage,
@@ -215,7 +217,7 @@ function CheckTerms({
       </label>
 
       <div className={styles.termsLink} onClick={handlePrivacyTermClick}>
-        <Icon id='chevron-right' width={20} height={20} />
+        <IconChevronRight width={20} height={20} viewBox="0 0 24 24" />
       </div>
 
       {isModalOpen && id === 'privacyTerms' && (
