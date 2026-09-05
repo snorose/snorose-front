@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Link } from 'react-router-dom';
 
+import { IllustrationPostEmpty } from '@snorose/icons';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import {
@@ -14,8 +15,6 @@ import {
 import OrderItem from '@/feature/commerce/components/OrderItem';
 import useOrders from '@/feature/commerce/hooks/useOrders';
 import { getCommerceErrorCode } from '@/feature/commerce/utils/commerceRules';
-
-import { noPostsIllustration } from '@/assets/illustrations';
 
 import styles from './OrderListPage.module.css';
 
@@ -44,11 +43,11 @@ function OrderListView() {
         <BackAppBar title='내 주문 목록' backNavTo={'/my-page'} />
         <div className={styles.noContentWrapper}>
           <div className={styles.imageWrapper}>
-            <img
-              src={noPostsIllustration}
+            <IllustrationPostEmpty
               width={220}
               height={182}
-              alt='주문 목록이 없음'
+              role='img'
+              aria-label='주문 목록이 없음'
             />
           </div>
           <p className={styles.noContentMessage}>아직 주문한 상품이 없어요</p>

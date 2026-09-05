@@ -1,22 +1,20 @@
 import { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
+import { IllustrationTaskFailed } from '@snorose/icons';
+
 import { BackAppBar, Button } from '@/shared/component';
 
 import styles from './SignUpFailurePage.module.css';
-
-import { taskFailedIllustration } from '@/assets/illustrations';
 
 export default function SignUpFailurePage() {
   const navigate = useNavigate();
   const { state } = useLocation();
   useEffect(() => {
-    try {
-      const checkAccess = state.message;
-    } catch (e) {
+    if (!state) {
       navigate('/login');
     }
-  }, []);
+  }, [navigate, state]);
 
   return (
     <div className={styles.container}>
@@ -28,10 +26,10 @@ export default function SignUpFailurePage() {
       </div>
 
       <div className={styles.pageMiddleFrame}>
-        <img
-          src={taskFailedIllustration}
-          alt='회원가입 실패를 알리는 일러스트'
+        <IllustrationTaskFailed
           className={styles.illustration}
+          role='img'
+          aria-label='회원가입 실패를 알리는 일러스트'
         />
       </div>
 

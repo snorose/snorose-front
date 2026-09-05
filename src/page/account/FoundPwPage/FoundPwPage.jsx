@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { BackAppBar, Button, NewButton } from '@/shared/component';
+import { IllustrationEmailCheck } from '@snorose/icons';
 
-import { emailSendIllustration } from '@/assets/illustrations';
+import { BackAppBar, NewButton } from '@/shared/component';
 
 import styles from './FoundPwPage.module.css';
 
@@ -13,12 +13,13 @@ export default function FoundPwPage() {
   const [email, setEmail] = useState('');
 
   useEffect(() => {
-    try {
-      setEmail(state.email);
-    } catch (e) {
+    if (!state) {
       navigate('/login');
+      return;
     }
-  }, []);
+
+    setEmail(state.email);
+  }, [navigate, state]);
 
   return (
     <div className={styles.container}>
@@ -44,10 +45,10 @@ export default function FoundPwPage() {
         </div>
       </div>
       <div className={styles.pageMiddleFrame}>
-        <img
-          src={emailSendIllustration}
-          alt='이메일로 비밀번호를 전송했음을 알리는 일러스트'
+        <IllustrationEmailCheck
           className={styles.illustration}
+          role='img'
+          aria-label='이메일로 비밀번호를 전송했음을 알리는 일러스트'
         />
       </div>
       <div className={styles.pageBottomFrame}>

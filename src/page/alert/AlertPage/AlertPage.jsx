@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
+import { IllustrationBellEmpty } from '@snorose/icons';
 import {
   QueryErrorResetBoundary,
   useIsFetching,
@@ -23,8 +24,6 @@ import {
   useNotification,
   useReadNotifications,
 } from '@/feature/alert/hook/notification';
-
-import { noAlertIllustration } from '@/assets/illustrations';
 
 import style from './AlertPage.module.css';
 
@@ -161,10 +160,10 @@ function NotificationList({ category }) {
   if (notifications.length === 0) {
     return (
       <div className={style.noAlertContainer}>
-        <img
+        <IllustrationBellEmpty
           className={style.noAlertIllustration}
-          src={noAlertIllustration}
-          alt='새로운 알림이 없어요'
+          role='img'
+          aria-label='새로운 알림이 없어요'
         />
         <div className={style.noAlertText}>새로운 알림이 없어요</div>
       </div>

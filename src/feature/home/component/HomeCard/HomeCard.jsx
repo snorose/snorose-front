@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import { IllustrationFlag } from '@snorose/icons';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { Icon } from '@/shared/component';
@@ -24,7 +25,7 @@ export default function HomeCard() {
     <div className={styles.layout}>
       <NoticeCard to='/board/notice' title={notice.title} />
 
-      {isLogin && <AttendanceCard iconId='flag' />}
+      {isLogin && <AttendanceCard />}
     </div>
   );
 }
@@ -48,7 +49,7 @@ export function NewHomeCard() {
     <div className={styles.layout}>
       <NoticeCard to={toNoticeList('notice')} title={notice.title} />
 
-      {isLogin && <AttendanceCard iconId='flag' />}
+      {isLogin && <AttendanceCard />}
     </div>
   );
 }
@@ -84,14 +85,18 @@ function NoticeCard({ to, title }) {
   );
 }
 
-function AttendanceCard({ iconId }) {
-  const imgSrc = require(`@/assets/images/${iconId}.svg`);
-
+function AttendanceCard() {
   return (
     <Link className={styles.attendance} to='/attendance'>
       <div className={styles.attendanceCard}>
         <div className={styles.attendanceText}>
-          <img className={styles.attendanceImage} src={imgSrc} alt={iconId} />
+          <IllustrationFlag
+            width={18}
+            height={19}
+            viewBox='0 0 55 58'
+            role='img'
+            aria-label='출석체크'
+          />
           <span className={styles.attendanceTitle}>오늘의 출석체크</span>
         </div>
         <Icon

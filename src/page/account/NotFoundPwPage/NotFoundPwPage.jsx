@@ -1,23 +1,21 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { IllustrationTaskFailed } from '@snorose/icons';
+
 import { BackAppBar, NewButton } from '@/shared/component';
 
 import styles from './NotFoundPwPage.module.css';
-
-import { taskFailedIllustration } from '@/assets/illustrations';
 
 export default function NotFoundPwPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
 
   useEffect(() => {
-    try {
-      const checkAccess = state.access;
-    } catch (e) {
+    if (!state) {
       navigate('/login');
     }
-  }, []);
+  }, [navigate, state]);
 
   return (
     <div className={styles.container}>
@@ -30,10 +28,10 @@ export default function NotFoundPwPage() {
         </p>
       </div>
       <div className={styles.pageMiddleFrame}>
-        <img
-          src={taskFailedIllustration}
-          alt='비밀번호 찾기 실패를 알리는 일러스트'
+        <IllustrationTaskFailed
           className={styles.illustration}
+          role='img'
+          aria-label='비밀번호 찾기 실패를 알리는 일러스트'
         />
       </div>
       <div className={styles.pageBottomFrame}>
