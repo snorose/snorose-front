@@ -1,6 +1,7 @@
 import { useId } from 'react';
 
-import { Icon } from '@/shared/component';
+import { IconMultiClipboardBlue } from '@snorose/icons';
+
 import { useToast } from '@/shared/hook';
 
 import { INVALID_NAME_REGEX } from '@/feature/attachment/lib/attachment';
@@ -96,7 +97,7 @@ export default function FileUploadSection({
       />
 
       <div className={styles.left}>
-        <Icon id='clip-board-list' width={24} height={24} />
+        <IconMultiClipboardBlue width={24} height={24} />
         <div>첨부파일</div>
       </div>
 

@@ -77,7 +77,6 @@ export const STATIC_ICON_LIST = Object.freeze({
 export const FILL_ICON_LIST = Object.freeze({
   arrowLeft: 'arrow-left',
   bookmarkFill: 'bookmark-fill',
-  clipBoardList: 'clip-board-list',
   closedEye: 'closed-eye',
   like: 'like',
   openedEye: 'opened-eye',
