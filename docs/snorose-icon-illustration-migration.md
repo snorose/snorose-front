@@ -8,23 +8,24 @@
 
 - `@snorose/icons` 배포본에서 실제 export되는 컴포넌트만 사용했다.
 - 배포본에 없는 일러스트는 local asset을 유지했다.
+- 패키지 컴포넌트로 완전히 대체되어 더 이상 참조하지 않는 local SVG는 삭제했다.
 - 홈 게시판 원형 이미지는 4개 중 일부만 패키지에 있어 local asset을 유지했다. 모두 패키지에 추가되면 한꺼번에 교체한다.
 - 일부 local SVG는 `../snorose-icon` 소스 레포에는 있지만, 현재 설치된 `@snorose/icons@0.0.0` 배포본에는 없다. 해당 항목은 아래 "패키지에 없어 화면에 남긴 일러스트"에 포함했다.
 
 ## 교체한 일러스트
 
-| 기존 local asset                                            | 패키지 컴포넌트               | 변경 화면/파일                                                                                                        |
-| ----------------------------------------------------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `src/assets/illustrations/emailSendIllustration.svg`        | `IllustrationEmailCheck`      | `src/page/account/FoundIdPage/FoundIdPage.jsx`, `src/page/account/FoundPwPage/FoundPwPage.jsx`                        |
-| `src/assets/illustrations/maintenanceConfig.svg`            | `IllustrationClipboardSearch` | `src/page/maintenance/MaintenancePage/MaintenancePage.jsx`                                                            |
-| `src/assets/illustrations/noAlertIllustration.svg`          | `IllustrationBellEmpty`       | `src/page/alert/AlertPage/AlertPage.jsx`                                                                              |
-| `src/assets/illustrations/noPostsIllustration.svg`          | `IllustrationPostEmpty`       | `src/feature/my/component/MyPostList/MyPostList.jsx`, `src/page/commerce/OrderListPage.tsx`                           |
-| `src/assets/illustrations/noScrapedPostsIllustration.svg`   | `IllustrationScrapPostEmpty`  | `src/feature/my/component/MyPostList/MyPostList.jsx`                                                                  |
-| `src/assets/illustrations/noCommentedPostsIllustration.svg` | `IllustrationCommentEmpty`    | `src/feature/my/component/MyPostList/MyPostList.jsx`                                                                  |
-| `src/assets/illustrations/noParticipationIllustration.svg`  | `IllustrationCalendarEmpty`   | `src/feature/event/constant/guideModalOption.js`, `src/feature/event/component/GuideModal/GuideModal.jsx`             |
-| `src/assets/images/largeSnow-board-page.svg`                | `IllustrationSnowGround`      | `src/shared/constant/board.js`, `src/assets/map/board-assets.ts`, `src/feature/board/component/BoardBar/BoardBar.jsx` |
-| `src/assets/images/permanentSnow-board-page.svg`            | `IllustrationSnowMountain`    | `src/shared/constant/board.js`, `src/assets/map/board-assets.ts`, `src/feature/board/component/BoardBar/BoardBar.jsx` |
-| `src/assets/images/studentCouncil-board-page.svg`           | `IllustrationMicrophone`      | `src/shared/constant/board.js`, `src/assets/map/board-assets.ts`, `src/feature/board/component/BoardBar/BoardBar.jsx` |
+| 기존 local asset | 패키지 컴포넌트 | 변경 화면/파일 | 처리 |
+| --- | --- | --- | --- |
+| `src/assets/illustrations/emailSendIllustration.svg` | `IllustrationEmailCheck` | `src/page/account/FoundIdPage/FoundIdPage.jsx`, `src/page/account/FoundPwPage/FoundPwPage.jsx` | 삭제 |
+| `src/assets/illustrations/maintenanceConfig.svg` | `IllustrationClipboardSearch` | `src/page/maintenance/MaintenancePage/MaintenancePage.jsx` | 삭제 |
+| `src/assets/illustrations/noAlertIllustration.svg` | `IllustrationBellEmpty` | `src/page/alert/AlertPage/AlertPage.jsx` | 삭제 |
+| `src/assets/illustrations/noPostsIllustration.svg` | `IllustrationPostEmpty` | `src/feature/my/component/MyPostList/MyPostList.jsx`, `src/page/commerce/OrderListPage.tsx` | 삭제 |
+| `src/assets/illustrations/noScrapedPostsIllustration.svg` | `IllustrationScrapPostEmpty` | `src/feature/my/component/MyPostList/MyPostList.jsx` | 삭제 |
+| `src/assets/illustrations/noCommentedPostsIllustration.svg` | `IllustrationCommentEmpty` | `src/feature/my/component/MyPostList/MyPostList.jsx` | 삭제 |
+| `src/assets/illustrations/noParticipationIllustration.svg` | `IllustrationCalendarEmpty` | `src/feature/event/constant/guideModalOption.js`, `src/feature/event/component/GuideModal/GuideModal.jsx` | 삭제 |
+| `src/assets/images/largeSnow-board-page.svg` | `IllustrationSnowGround` | `src/shared/constant/board.js`, `src/assets/map/board-assets.ts`, `src/feature/board/component/BoardBar/BoardBar.jsx` | 삭제 |
+| `src/assets/images/permanentSnow-board-page.svg` | `IllustrationSnowMountain` | `src/shared/constant/board.js`, `src/assets/map/board-assets.ts`, `src/feature/board/component/BoardBar/BoardBar.jsx` | 삭제 |
+| `src/assets/images/studentCouncil-board-page.svg` | `IllustrationMicrophone` | `src/shared/constant/board.js`, `src/assets/map/board-assets.ts`, `src/feature/board/component/BoardBar/BoardBar.jsx` | 삭제 |
 
 ## 렌더링 변경
 
