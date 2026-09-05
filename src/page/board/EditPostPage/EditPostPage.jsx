@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { IconMultiClipboardBlue } from '@snorose/icons';
+import { IconChevronDown, IconMultiClipboardBlue } from '@snorose/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -311,7 +311,7 @@ export default function EditPostPage() {
                         : selectedCategoryName || '카테고리를 선택해주세요'}
                     </p>
                   </div>
-                  <Icon id='angle-down' width={24} height={24} />
+                  <IconChevronDown width={24} height={24} />
                 </div>
                 {categoryDropDownOpen && !isCategoryDisabled && (
                   <DropdownList

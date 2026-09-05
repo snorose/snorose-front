@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react';
 
-import { IconMultiClipboardBlue } from '@snorose/icons';
+import { IconChevronDown, IconMultiClipboardBlue } from '@snorose/icons';
 
 import { Icon } from '@/shared/component';
 
@@ -133,7 +133,7 @@ const Trigger = ({ children }: { children: ReactNode }) => {
         <p>{children}</p>
       </div>
 
-      <Icon className={styles.angle} id='angle-down' width={24} height={24} />
+      <IconChevronDown className={styles.angle} width={24} height={24} />
     </div>
   );
 };
