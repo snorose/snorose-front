@@ -9,11 +9,11 @@ import {
 } from 'react';
 
 import { IconChevronDown } from '@snorose/icons';
+import { IconCheck } from '@snorose/icons';
 
 import { Icon } from '@/shared/component';
 
 import styles from './DropdownBlue.module.css';
-
 interface AccessibilityContextType {
   triggerId: string;
   menuId: string;
@@ -242,7 +242,11 @@ const Item = ({
       tabIndex={-1}
     >
       {children}
-      {selected && <Icon id='check' width={14} height={11} />}
+      {selected && (
+        <IconCheck
+          className={styles.checkIconBlue}
+        />
+      )}
     </div>
   );
 };
