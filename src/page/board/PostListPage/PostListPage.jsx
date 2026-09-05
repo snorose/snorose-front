@@ -1,14 +1,16 @@
 import { Link, useLocation } from 'react-router-dom';
+
+import { IconMultiBellPink } from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
-import { getNoticeLine } from '@/apis';
-
-import { useAuth, useBoard } from '@/shared/hook';
-import { BackAppBar, Icon, WriteButton } from '@/shared/component';
-import { BOARD_REGISTRY, getBoard } from '@/shared/lib';
+import { BackAppBar, WriteButton } from '@/shared/component';
 import { NEW_ROUTES, OFFICIAL_BOARD, QUERY_KEY, ROLE } from '@/shared/constant';
+import { useAuth, useBoard } from '@/shared/hook';
+import { BOARD_REGISTRY, getBoard } from '@/shared/lib';
 
 import { PostListSuspense } from '@/feature/board/component';
+
+import { getNoticeLine } from '@/apis';
 
 import styles from './PostListPage.module.css';
 
@@ -53,7 +55,7 @@ export default function PostListPage() {
           className={styles.notificationBar}
           to={`/board/${currentBoardTextId}/notice`}
         >
-          <Icon id='notice-bell' width={13} height={16} />
+          <IconMultiBellPink width={13} height={16} />
           <p className={styles.notificationBarText}>
             [필독]&nbsp;&nbsp;{noticeLineData?.title}
           </p>
@@ -61,9 +63,7 @@ export default function PostListPage() {
       )}
       <PostListSuspense />
       {showWriteButton && (
-        <WriteButton
-          to={`/board/${currentBoardTextId}/post-write`}
-        />
+        <WriteButton to={`/board/${currentBoardTextId}/post-write`} />
       )}
     </section>
   );
@@ -112,18 +112,14 @@ export function NewPostListPage() {
           className={styles.notificationBar}
           to={NEW_ROUTES.notice.list(boardKey)}
         >
-          <Icon id='notice-bell' width={13} height={16} />
+          <IconMultiBellPink width={13} height={16} />
           <p className={styles.notificationBarText}>
             [필독]&nbsp;&nbsp;{noticeLineData?.title}
           </p>
         </Link>
       )}
       <PostListSuspense />
-      {showWriteButton && (
-        <WriteButton
-          to={NEW_ROUTES.post.write(boardKey)}
-        />
-      )}
+      {showWriteButton && <WriteButton to={NEW_ROUTES.post.write(boardKey)} />}
     </section>
   );
 }
