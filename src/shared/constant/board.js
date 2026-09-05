@@ -326,13 +326,6 @@ export const POST_REPORT_TYPE_MODAL_OPTION_CHILDREN = [
     text: POST_REPORT_TYPE_KOREAN_ENUM.POST_INSINCERE_CONTENT,
     value: POST_REPORT_TYPE_ENUM.POST_INSINCERE_CONTENT,
   },
-  {
-    iconId: 'user-disgust',
-    IconWidth: 19,
-    IconHeight: 21,
-    text: POST_REPORT_TYPE_KOREAN_ENUM.POST_HATEFUL_CONTENT,
-    value: POST_REPORT_TYPE_ENUM.POST_HATEFUL_CONTENT,
-  },
 ];
 
 // 유저 신고
@@ -354,25 +347,11 @@ export const USER_REPORT_TYPE_KOREAN_ENUM = Object.freeze({
 
 export const USER_REPORT_TYPE_MODAL_OPTION_CHILDREN = [
   {
-    iconId: 'user-sunglasses',
-    IconWidth: 18,
-    IconHeight: 21,
-    text: USER_REPORT_TYPE_KOREAN_ENUM.USER_IMPERSONATION,
-    value: USER_REPORT_TYPE_ENUM.USER_IMPERSONATION,
-  },
-  {
     iconId: 'ban',
     IconWidth: 18,
     IconHeight: 18,
     text: USER_REPORT_TYPE_KOREAN_ENUM.USER_FRAUD,
     value: USER_REPORT_TYPE_ENUM.USER_FRAUD,
-  },
-  {
-    iconId: 'user-stranger',
-    IconWidth: 18,
-    IconHeight: 21,
-    text: USER_REPORT_TYPE_KOREAN_ENUM.USER_EXTERNAL_PARTY,
-    value: USER_REPORT_TYPE_ENUM.USER_EXTERNAL_PARTY,
   },
   {
     iconId: 'abuse-comment',
