@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { BackAppBar, Button } from '@/shared/component';
+import { IllustrationTaskFailed } from '@snorose/icons';
 
-import { taskFailedIllustration } from '@/assets/illustrations';
+import { BackAppBar, Button } from '@/shared/component';
 
 import styles from './SignUpFailurePage.module.css';
 
@@ -26,10 +26,10 @@ export default function SignUpFailurePage() {
       </div>
 
       <div className={styles.pageMiddleFrame}>
-        <img
-          src={taskFailedIllustration}
-          alt='회원가입 실패를 알리는 일러스트'
+        <IllustrationTaskFailed
           className={styles.illustration}
+          role='img'
+          aria-label='회원가입 실패를 알리는 일러스트'
         />
       </div>
 

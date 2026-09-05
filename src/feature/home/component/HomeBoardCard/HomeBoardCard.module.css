@@ -42,10 +42,14 @@
 
 /* 아이콘 */
 .icon {
-  padding-top: 0.5rem;
   width: 100%;
-  height: 6rem;
+  height: 100%;
   transition: opacity 0.2s ease;
+}
+
+.lockIcon {
+  width: 4rem;
+  height: 4rem;
 }
 
 .name {
@@ -60,9 +64,8 @@
     height: 8rem;
   }
 
-  .icon {
-    width: 120%;
-    height: 7.6rem;
-    padding-top: 0.5rem;
+  .lockIcon {
+    width: 5rem;
+    height: 5rem;
   }
 }

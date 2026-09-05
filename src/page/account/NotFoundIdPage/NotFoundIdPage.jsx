@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { BackAppBar, NewButton } from '@/shared/component';
+import { IllustrationTaskFailed } from '@snorose/icons';
 
-import { taskFailedIllustration } from '@/assets/illustrations';
+import { BackAppBar, NewButton } from '@/shared/component';
 
 import styles from './NotFoundIdPage.module.css';
 
@@ -29,10 +29,10 @@ export default function NotFoundIdPage() {
       </div>
 
       <div className={styles.pageMiddleFrame}>
-        <img
-          src={taskFailedIllustration}
-          alt='아이디 찾기 실패를 알리는 일러스트'
+        <IllustrationTaskFailed
           className={styles.illustration}
+          role='img'
+          aria-label='아이디 찾기 실패를 알리는 일러스트'
         />
       </div>
 

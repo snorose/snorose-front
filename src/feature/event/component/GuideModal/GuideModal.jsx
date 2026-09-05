@@ -66,20 +66,11 @@ export default function GuideModal({
               return (
                 <SwiperSlide key={index}>
                   <div className={styles.illustration}>
-                    {/* TODO: 모든 가이드 이미지를 @snorose/icons 컴포넌트로 교체하면 문자열 이미지 분기와 <img> 렌더링을 제거한다. */}
-                    {typeof GuideIllustration === 'string' ? (
-                      <img
-                        src={GuideIllustration}
-                        alt={option.imageLabel ?? option.title}
-                        className={styles.image}
-                      />
-                    ) : (
-                      <GuideIllustration
-                        className={styles.image}
-                        role='img'
-                        aria-label={option.imageLabel ?? option.title}
-                      />
-                    )}
+                    <GuideIllustration
+                      className={styles.image}
+                      role='img'
+                      aria-label={option.imageLabel ?? option.title}
+                    />
                   </div>
                   <h2>{option.title}</h2>
                   <div className={styles.content}>{option.content}</div>

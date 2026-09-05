@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { BackAppBar, NewButton } from '@/shared/component';
+import { IllustrationTaskFailed } from '@snorose/icons';
 
-import { taskFailedIllustration } from '@/assets/illustrations';
+import { BackAppBar, NewButton } from '@/shared/component';
 
 import styles from './NotFoundPwPage.module.css';
 
@@ -28,10 +28,10 @@ export default function NotFoundPwPage() {
         </p>
       </div>
       <div className={styles.pageMiddleFrame}>
-        <img
-          src={taskFailedIllustration}
-          alt='비밀번호 찾기 실패를 알리는 일러스트'
+        <IllustrationTaskFailed
           className={styles.illustration}
+          role='img'
+          aria-label='비밀번호 찾기 실패를 알리는 일러스트'
         />
       </div>
       <div className={styles.pageBottomFrame}>

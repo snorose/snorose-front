@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
 
+import { IllustrationFlag } from '@snorose/icons';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { Icon } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
 import { useAuth, useBoardNavigate } from '@/shared/hook';
-
-import flag from '@/assets/images/flag.svg';
 
 import { getHomeNotice } from '@/apis';
 
@@ -91,7 +90,13 @@ function AttendanceCard() {
     <Link className={styles.attendance} to='/attendance'>
       <div className={styles.attendanceCard}>
         <div className={styles.attendanceText}>
-          <img className={styles.attendanceImage} src={flag} alt='출석체크' />
+          <IllustrationFlag
+            width={18}
+            height={19}
+            viewBox='0 0 55 58'
+            role='img'
+            aria-label='출석체크'
+          />
           <span className={styles.attendanceTitle}>오늘의 출석체크</span>
         </div>
         <Icon

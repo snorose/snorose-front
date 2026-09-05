@@ -1,18 +1,18 @@
 import {
+  IllustrationBooksCap,
+  IllustrationBoxStarsCircle,
+  IllustrationBoxStarsOpen,
+  IllustrationFolderSearch,
   IllustrationMicrophone,
+  IllustrationSnowfall,
+  IllustrationSnowfallCircle,
   IllustrationSnowGround,
+  IllustrationSnowGroundCircle,
   IllustrationSnowMountain,
+  IllustrationSnowMountainCircle,
+  IllustrationStarHonorBoard,
 } from '@snorose/icons';
 
-import besookt from '@/assets/images/besookt-board-page.svg';
-import event from '@/assets/images/event-board-page.svg';
-import eventMain from '@/assets/images/event-main.svg';
-import financeAudit from '@/assets/images/financeAudit-board-page.svg';
-import firstSnow from '@/assets/images/firstSnow-board-page.svg';
-import firstSnowMain from '@/assets/images/firstSnow-main.svg';
-import graduationPreparation from '@/assets/images/graduationPreparation-board-page.svg';
-import largeSnowMain from '@/assets/images/largeSnow-main.svg';
-import permanentSnowMain from '@/assets/images/permanentSnow-main.svg';
 import residence from '@/assets/images/residence.svg';
 import sookplace from '@/assets/images/sookPlace.svg';
 
@@ -64,28 +64,25 @@ export const BOARDS = Object.freeze([
     id: 14,
     name: '이벤트',
     path: '/board/event',
-    mainImage: eventMain,
+    mainImage: IllustrationBoxStarsCircle,
   },
   {
     id: 21,
     name: '첫눈온방',
     path: '/board/first-snow',
-    mainImage: firstSnowMain,
+    mainImage: IllustrationSnowfallCircle,
   },
   {
     id: 22,
     name: '함박눈방',
     path: '/board/large-snow',
-    // TODO: 홈 게시판 원형 이미지는 패키지 export가 일부만 있어서 로컬 SVG로 유지한다.
-    // IllustrationSnowGroundCircle, IllustrationSnowMountainCircle은 있고
-    // IllustrationSnowfallCircle, IllustrationBoxStarsCircle은 없으므로 모두 준비되면 한꺼번에 교체한다.
-    mainImage: largeSnowMain,
+    mainImage: IllustrationSnowGroundCircle,
   },
   {
     id: 23,
     name: '만년설방',
     path: '/board/permanent-snow',
-    mainImage: permanentSnowMain,
+    mainImage: IllustrationSnowMountainCircle,
   },
   {
     id: 43,
@@ -130,7 +127,7 @@ export const BOARD_MENUS = [
     textId: 'event',
     title: '스노로즈 이벤트',
     desc: '스노로즈 이벤트 게시판',
-    image: event,
+    image: IllustrationBoxStarsOpen,
     category: BOARD_CATEGORY.SNOROSE,
   },
   {
@@ -139,7 +136,7 @@ export const BOARD_MENUS = [
     textId: 'event-notice',
     title: '이벤트',
     desc: '이벤트 공지글',
-    image: event,
+    image: IllustrationBoxStarsOpen,
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
@@ -148,7 +145,7 @@ export const BOARD_MENUS = [
     textId: 'first-snow',
     title: '첫눈온방',
     desc: '새내기 전용 커뮤니티',
-    image: firstSnow,
+    image: IllustrationSnowfall,
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
@@ -175,7 +172,7 @@ export const BOARD_MENUS = [
     textId: 'besookt',
     title: '베숙트',
     desc: '추천을 가장 많이\n받은 게시물 모아보기',
-    image: besookt,
+    image: IllustrationStarHonorBoard,
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
@@ -184,7 +181,7 @@ export const BOARD_MENUS = [
     textId: 'exam-review',
     title: '시험후기',
     desc: '시험 정보를 조회할 수\n있는 게시판입니다.',
-    image: besookt,
+    image: IllustrationStarHonorBoard,
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
@@ -193,7 +190,7 @@ export const BOARD_MENUS = [
     textId: 'exam-review-notice',
     title: '시험후기',
     desc: '시험후기 공지글 게시판',
-    image: besookt,
+    image: IllustrationStarHonorBoard,
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
@@ -211,7 +208,7 @@ export const BOARD_MENUS = [
     textId: 'graduation-preparation',
     title: '졸업준비위원회',
     desc: '졸업준비위원회 공지',
-    image: graduationPreparation,
+    image: IllustrationBooksCap,
     category: BOARD_CATEGORY.OFFICIAL,
   },
   {
@@ -220,7 +217,7 @@ export const BOARD_MENUS = [
     textId: 'finance-audit',
     title: '재정감사위원회',
     desc: '재정감사 보고',
-    image: financeAudit,
+    image: IllustrationFolderSearch,
     category: BOARD_CATEGORY.OFFICIAL,
   },
   {

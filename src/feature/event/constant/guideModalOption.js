@@ -1,9 +1,8 @@
-import { IllustrationCalendarEmpty } from '@snorose/icons';
-
 import {
-  noSellIllustration,
-  noTransferIllustration,
-} from '@/assets/illustrations';
+  IllustrationCalendarEmpty,
+  IllustrationNoSales,
+  IllustrationNoTicketTransfer,
+} from '@snorose/icons';
 
 export const EVENT_GUIDE_MODAL_OPTIONS = [
   {
@@ -27,7 +26,7 @@ export const EVENT_GUIDE_MODAL_OPTIONS = [
         향후 모든 이벤트에 참여가 불가해요
       </>
     ),
-    image: noTransferIllustration,
+    image: IllustrationNoTicketTransfer,
     imageLabel: '양도와 대리수령 금지를 안내하는 일러스트',
   },
   {
@@ -39,7 +38,7 @@ export const EVENT_GUIDE_MODAL_OPTIONS = [
         영구 강등 처리돼요
       </>
     ),
-    image: noSellIllustration,
+    image: IllustrationNoSales,
     imageLabel: '입장권 금전 거래 금지를 안내하는 일러스트',
   },
 ];
