@@ -2,13 +2,13 @@ import {
   IconMultiShare,
   IconPencilFill,
   IconTrashcanFill,
+  IconMultiFlag,
 } from '@snorose/icons';
 
-// =================== More Option Modal =================4=
 const POST_MORE_OPTION_LIST = [
   {
     modalId: null,
-    iconId: 'flag-pink',
+    icon: IconMultiFlag,
     label: '게시글 신고',
     width: 19,
     height: 22,
@@ -62,10 +62,10 @@ const MY_POST_MORE_OPTION_LIST = [
 const EXAM_REVIEW_MORE_OPTION_LIST = [
   {
     modalId: null,
-    iconId: 'flag-pink',
+    icon: IconMultiFlag,
     label: '시험후기 신고',
-    width: 19,
-    height: 22,
+    width: 24,
+    height: 24,
   },
   {
     modalId: null,
