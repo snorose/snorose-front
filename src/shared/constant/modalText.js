@@ -1,8 +1,8 @@
 import {
+  IconMultiFlag,
   IconMultiShare,
   IconPencilFill,
   IconTrashcanFill,
-  IconMultiFlag,
 } from '@snorose/icons';
 
 const POST_MORE_OPTION_LIST = [

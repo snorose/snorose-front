@@ -53,12 +53,8 @@ export default function Calendar({ callback }) {
             .format(date)
             .slice(0, -1) + '월'
         }
-        nextLabel={
-          <IconChevronRight color='var(--White-White, #fff)' />
-        }
-        prevLabel={
-          <IconChevronLeft color='var(--White-White, #fff)' />
-        }
+        nextLabel={<IconChevronRight color='var(--White-White, #fff)' />}
+        prevLabel={<IconChevronLeft color='var(--White-White, #fff)' />}
         next2Label={null}
         prev2Label={null}
         showNeighboringMonth={false}

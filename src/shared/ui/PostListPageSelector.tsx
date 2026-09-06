@@ -2,9 +2,9 @@ import { useParams } from 'react-router-dom';
 
 import NavbarLayout from '@/shared/ui/NavbarLayout';
 
-import { ExamReviewListPage } from '@/page/exam';
-import { EventListPage } from '@/page/event';
 import { NewPostListPage } from '@/page/board';
+import { EventListPage } from '@/page/event';
+import { ExamReviewListPage } from '@/page/exam';
 
 export default function PostListPageSelector() {
   const { boardKey } = useParams();

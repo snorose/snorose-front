@@ -1,4 +1,5 @@
 import { Icon } from '@/shared/component';
+
 import styles from './CheckBox.module.css';
 
 export default function CheckBox({ id, checked, onChange }) {

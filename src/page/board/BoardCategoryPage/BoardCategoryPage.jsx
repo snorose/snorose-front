@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Header } from '@/shared/component';
 import { BOARD_CATEGORY, BOARD_MENUS } from '@/shared/constant';
 
-import { BoardBar, AccordianBoards } from '@/feature/board/component';
+import { AccordianBoards, BoardBar } from '@/feature/board/component';
 import { Search } from '@/feature/search/component';
 
 import styles from './BoardCategoryPage.module.css';

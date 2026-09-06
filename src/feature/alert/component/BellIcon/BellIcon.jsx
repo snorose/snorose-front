@@ -1,5 +1,5 @@
-import { useToast } from '@/shared/hook';
 import { Icon } from '@/shared/component';
+import { useToast } from '@/shared/hook';
 import { AppError } from '@/shared/lib';
 
 import { useUpdateCommentNotificationSetting } from '@/feature/alert/hook';

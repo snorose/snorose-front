@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 
-import { ExamReviewPage } from '@/page/exam';
-import { EventPage } from '@/page/event';
 import { PostDetailPage } from '@/page/board';
+import { EventPage } from '@/page/event';
+import { ExamReviewPage } from '@/page/exam';
 
 export default function PostPageSelector() {
   const { boardKey } = useParams();

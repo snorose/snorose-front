@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { BackAppBar, Icon } from '@/shared/component';
 
 import {
@@ -11,10 +13,10 @@ import {
   SNOROSE_MEMBERSHIP_LEVEL,
 } from '@/feature/home/constant';
 import HALL_OF_FAME_ADMINS from '@/feature/home/data/HallOfFrameAdmins.json';
+
 import HALL_OF_FAME from '@/assets/images/hallOfFame.svg';
 
 import styles from './AboutPage.module.css';
-import { useState } from 'react';
 
 const accordionItems = [
   {

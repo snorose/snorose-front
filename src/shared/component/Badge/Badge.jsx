@@ -1,6 +1,7 @@
+import { ROLE } from '@/shared/constant';
+
 import adminBadge from '@/assets/images/adminBadge.svg';
 import officialBadge from '@/assets/images/officialBadge.svg';
-import { ROLE } from '@/shared/constant';
 
 export default function Badge({ userRoleId, className = '' }) {
   if (userRoleId === ROLE.admin) {
