@@ -4,8 +4,12 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   IconBookmark,
   IconBookmarkFill,
+  IconBuilding,
+  IconClapperboard,
   IconHeart,
   IconHeartFill,
+  IconLocation,
+  IconPerson,
 } from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
@@ -188,21 +192,29 @@ export default function EventPage() {
         <div className={styles.eventContainer}>
           {['연극/뮤지컬'].includes(data.category) && (
             <div className={styles.host}>
-              <Icon id='movie' width={20} height={20} />
+              <IconClapperboard
+                width={20}
+                height={20}
+                color={'var(--grey-4)'}
+              />
               <p>공연명</p>
               <p className={styles.data}>{data.host}</p>
             </div>
           )}
           {['영화'].includes(data.category) && (
             <div className={styles.host}>
-              <Icon id='movie' width={20} height={20} />
+              <IconClapperboard
+                width={20}
+                height={20}
+                color={'var(--grey-4)'}
+              />
               <p>영화명</p>
               <p className={styles.data}>{data.host}</p>
             </div>
           )}
           {['기타'].includes(data.category) && (
             <div className={styles.host}>
-              <Icon id='host' width={20} height={20} />
+              <IconBuilding width={20} height={20} color={'var(--grey-4)'} />
               <p>주최</p>
               <p className={styles.data}>{data.host}</p>
             </div>
@@ -210,14 +222,14 @@ export default function EventPage() {
 
           {['연극/뮤지컬', '영화'].includes(data.category) && (
             <div className={styles.place}>
-              <Icon id='location' width={20} height={20} />
+              <IconLocation width={20} height={20} color={'var(--grey-4)'} />
               <p>장소</p>
               <p className={styles.data}>{data.place}</p>
             </div>
           )}
 
           <div className={styles.drawCount}>
-            <Icon id='person' width={20} height={20} />
+            <IconPerson width={20} height={20} color={'var(--grey-4)'} />
             <p>추첨 인원</p>
             <p className={styles.data}>{data.drawCount}</p>
           </div>
