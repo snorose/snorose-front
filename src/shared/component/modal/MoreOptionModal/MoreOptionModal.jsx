@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { createPortal } from 'react-dom';
 
-import { IconMultiShare } from '@snorose/icons';
+import { IconMultiShare, IconPencilFill } from '@snorose/icons';
 
 import { Icon } from '@/shared/component';
 import { ModalContext } from '@/shared/context/ModalContext';
@@ -50,6 +50,13 @@ export default function MoreOptionModal({ title, optionList, functions, top }) {
                   className={styles.itemIcon}
                   width={item.width}
                   height={item.height}
+                />
+              ) : item.iconId === 'pencil-blue' ? (
+                <IconPencilFill
+                  className={styles.itemIcon}
+                  width={item.width}
+                  height={item.height}
+                  color='var(--blue-3)'
                 />
               ) : (
                 <Icon
