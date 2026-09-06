@@ -1,6 +1,5 @@
 import { IconBookmarkFill, IconHeartFill } from '@snorose/icons';
 
-import { Icon } from '@/shared/component';
 import { DateTime } from '@/shared/lib';
 
 import { htmlToText } from '@/feature/editor/lib';

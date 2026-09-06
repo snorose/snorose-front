@@ -52,7 +52,6 @@ const Comment = forwardRef((props, ref) => {
     setContent,
     inputFocus,
     resetCommentState,
-    focusedItem,
     setFocusedItem,
   } = useCommentContext();
 

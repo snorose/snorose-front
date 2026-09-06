@@ -2,7 +2,6 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 import { IconChevronUpRight } from '@snorose/icons';
 
-import { Icon } from '@/shared/component';
 import { TOAST } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 
