@@ -11,6 +11,8 @@ function getImageStyle(layout) {
     '--board-image-top': layout.top,
     '--board-image-right': layout.right,
     '--board-image-bottom': layout.bottom ?? 'auto',
+    '--board-image-width': layout.width ?? 'auto',
+    '--board-image-height': layout.height ?? 'auto',
     '--board-image-transform': 'none',
   };
 }
