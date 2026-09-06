@@ -12,11 +12,7 @@ export default function SignUpSuccessPage() {
   return (
     <div className={styles.container}>
       <div>
-        <IconCheck
-          width={'2.4rem'}
-          height={'2.4rem'}
-          className={styles.icon}
-        />
+        <IconCheck width={'2.4rem'} height={'2.4rem'} className={styles.icon} />
         <p className={styles.title}>스노로즈 가입이 완료되었어요!</p>
         <p className={styles.explanation}>
           별도의 인증 절차 후<br />
