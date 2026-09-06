@@ -1,8 +1,8 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { IconSearch } from '@snorose/icons';
+import { IconArrowLeft, IconSearch } from '@snorose/icons';
 
-import { Icon, MenuIcon } from '@/shared/component';
+import { MenuIcon } from '@/shared/component';
 
 import styles from './BackAppBar.module.css';
 
@@ -39,12 +39,11 @@ export default function BackAppBar({
       }}
     >
       <div className={styles.backDiv}>
-        <Icon
+        <IconArrowLeft
           className={styles.back}
-          id='arrow-left'
           width={19}
           height={17}
-          fill={isDark && 'white'}
+          color={isDark && 'white'}
           onClick={() => (backNavTo ? navigate(backNavTo) : navigate(-1))}
         />
         {title && <span className={styles.title}>{title}</span>}

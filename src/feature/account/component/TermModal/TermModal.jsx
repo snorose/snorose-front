@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { Icon, NewButton } from '@/shared/component';
+import { IconArrowLeft } from '@snorose/icons';
+
+import { NewButton } from '@/shared/component';
 
 import styles from './TermModal.module.css';
 
@@ -37,11 +39,11 @@ export default function TermModal({
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.appBar}>
-        <Icon
+        <IconArrowLeft
           className={styles.closeIcon}
-          id='arrow-left'
           width={19}
           height={17}
+          color={'black'}
           onClick={onClose}
         />
       </div>
@@ -64,7 +66,6 @@ export default function TermModal({
       </section>
 
       <div className={styles.footer}>
-
         <NewButton disabled={!hasScrolledToEnd} onClick={onAgree}>
           동의하고 계속하기
         </NewButton>
