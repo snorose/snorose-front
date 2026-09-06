@@ -1,8 +1,10 @@
 import TextareaAutosize from 'react-textarea-autosize';
 
+import { IconChevronUpRight } from '@snorose/icons';
+
 import { Icon } from '@/shared/component';
-import { useToast } from '@/shared/hook';
 import { TOAST } from '@/shared/constant';
+import { useToast } from '@/shared/hook';
 
 import { useCommentContext } from '@/feature/comment/context';
 import { useComment } from '@/feature/comment/hook';
@@ -10,7 +12,6 @@ import { useComment } from '@/feature/comment/hook';
 import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import styles from './CommentInput.module.css';
-
 const CommentInput = () => {
   const { editComment, createComment, loading, setLoading } = useComment();
   const { toast } = useToast();
@@ -99,12 +100,11 @@ const CommentInput = () => {
           maxRows={5}
         />
       </div>
-      <Icon
+      <IconChevronUpRight
         className={styles.enter}
-        id='arrow-up-right'
         width={32}
         height={32}
-        fill='#898989'
+        color='var(--blue-4)'
         onClick={submitComment}
       />
     </div>

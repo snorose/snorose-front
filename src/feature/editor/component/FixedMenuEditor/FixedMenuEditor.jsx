@@ -110,8 +110,7 @@ export default function FixedMenuEditor({ editor }) {
           <IconChevronDown
             width={16}
             height={16}
-            viewBox='0 0 24 24'
-            className={styles.headingArrow}
+            color="var(--grey-3-1)"
           />
         </button>
 

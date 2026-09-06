@@ -14,8 +14,6 @@ import {
   IconMultiClipboardBlue,
 } from '@snorose/icons';
 
-import { Icon } from '@/shared/component';
-
 import styles from './DropdownBlue.module.css';
 interface AccessibilityContextType {
   triggerId: string;

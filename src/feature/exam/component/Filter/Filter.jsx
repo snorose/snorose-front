@@ -48,17 +48,15 @@ export default function Filter({ filterKey, options, placeholder }) {
       <div className={`${styles.display}`}>
         {isOpen ? (
           <IconChevronUp
-            className={styles.chevronIconBlue}
             width={18}
             height={18}
-            viewBox='0 0 24 24'
+            color='var(--blue-4)'
           />
         ) : (
           <IconChevronDown
-            className={styles.chevronIconBlue}
             width={18}
             height={18}
-            viewBox='0 0 24 24'
+            color='var(--blue-4)'
           />
         )}
         <span className={styles.displayOption}>

@@ -75,7 +75,6 @@ function NoticeCard({ to, title }) {
           className={styles.noticeArrow}
           width={18}
           height={18}
-          viewBox='0 0 24 24'
           aria-hidden='true'
         />
       </div>
@@ -91,18 +90,16 @@ function AttendanceCard() {
           <IllustrationFlag
             width={18}
             height={19}
-            viewBox='0 0 55 58'
             role='img'
             aria-label='출석체크'
           />
           <span className={styles.attendanceTitle}>오늘의 출석체크</span>
         </div>
         <IconChevronRight
-          className={styles.attendanceArrow}
           width={18}
           height={18}
-          viewBox='0 0 24 24'
           aria-hidden='true'
+          color='var(--White-White, #fff)'
         />
       </div>
     </Link>
