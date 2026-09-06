@@ -126,7 +126,7 @@ export default function FindIdPage() {
                 </li>
               </ol>
               <div className={styles.highlight}>
-                <IconChevronRight width={20} height={20} viewBox="0 0 24 24" />
+                <IconChevronRight width={20} height={20} />
                 <span>
                   구 스노로즈에 저장된 학번이 아래와 같은 경우,
                   <br /> 데이터 정합성을 위하여 임의로 ‘학번+숫자’로
@@ -140,7 +140,7 @@ export default function FindIdPage() {
                 <li>다른 유저가 같은 학번으로 입학한 경우</li>
               </ol>
               <div className={styles.highlight}>
-                <IconChevronRight width={20} height={20} viewBox="0 0 24 24" />
+                <IconChevronRight width={20} height={20} />
                 <span>
                   하나의 학번 당 한 유저만 가입 가능하므로 리자가 임의로 다른
                   학번으로 변경했어요.

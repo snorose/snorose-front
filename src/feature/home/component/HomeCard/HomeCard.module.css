@@ -75,11 +75,3 @@
   color: var(--White-White, #fff);
   font: var(--text-headline-2-med);
 }
-
-.attendanceArrow {
-  color: var(--White-White, #fff);
-}
-
-.attendanceArrow path {
-  fill: white;
-}

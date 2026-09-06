@@ -31,10 +31,9 @@ export default function MyInfo({ userInfo }) {
           <div className={styles.pointList}>
             포인트 내역 보기
             <IconChevronRight
-              className={styles.chevronIconBlue}
+              color='var(--blue-4)'
               width={18}
               height={18}
-              viewBox='0 0 24 24'
             />
           </div>
         </div>
