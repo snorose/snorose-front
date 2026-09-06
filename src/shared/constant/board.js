@@ -1,3 +1,11 @@
+import {
+  IllustrationMicrophone,
+  IllustrationSnowGround,
+  IllustrationSnowGroundCircle,
+  IllustrationSnowMountain,
+  IllustrationSnowMountainCircle,
+} from '@snorose/icons';
+
 import besookt from '@/assets/images/besookt-board-page.svg';
 import event from '@/assets/images/event-board-page.svg';
 import eventMain from '@/assets/images/event-main.svg';
@@ -5,13 +13,8 @@ import financeAudit from '@/assets/images/financeAudit-board-page.svg';
 import firstSnow from '@/assets/images/firstSnow-board-page.svg';
 import firstSnowMain from '@/assets/images/firstSnow-main.svg';
 import graduationPreparation from '@/assets/images/graduationPreparation-board-page.svg';
-import largeSnow from '@/assets/images/largeSnow-board-page.svg';
-import largeSnowMain from '@/assets/images/largeSnow-main.svg';
-import permanentSnow from '@/assets/images/permanentSnow-board-page.svg';
-import permanentSnowMain from '@/assets/images/permanentSnow-main.svg';
 import residence from '@/assets/images/residence.svg';
 import sookplace from '@/assets/images/sookPlace.svg';
-import studentCouncil from '@/assets/images/studentCouncil-board-page.svg';
 
 export const BOARD_CATEGORY = {
   COMMUNITY: {
@@ -73,13 +76,13 @@ export const BOARDS = Object.freeze([
     id: 22,
     name: '함박눈방',
     path: '/board/large-snow',
-    mainImage: largeSnowMain,
+    mainImage: IllustrationSnowGroundCircle,
   },
   {
     id: 23,
     name: '만년설방',
     path: '/board/permanent-snow',
-    mainImage: permanentSnowMain,
+    mainImage: IllustrationSnowMountainCircle,
   },
   {
     id: 43,
@@ -151,7 +154,7 @@ export const BOARD_MENUS = [
     textId: 'large-snow',
     title: '함박눈방',
     desc: '눈송이 모두의\n커뮤니티',
-    image: largeSnow,
+    image: IllustrationSnowGround,
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
@@ -160,7 +163,7 @@ export const BOARD_MENUS = [
     textId: 'permanent-snow',
     title: '만년설방',
     desc: '졸업생 전용 커뮤니티',
-    image: permanentSnow,
+    image: IllustrationSnowMountain,
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
@@ -196,7 +199,7 @@ export const BOARD_MENUS = [
     textId: 'student-council',
     title: '총학생회',
     desc: '총학생회 공지',
-    image: studentCouncil,
+    image: IllustrationMicrophone,
     category: BOARD_CATEGORY.OFFICIAL,
   },
   {
