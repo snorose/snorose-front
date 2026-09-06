@@ -1,15 +1,17 @@
-import { forwardRef, useContext, useRef, useState, useEffect } from 'react';
+import { forwardRef, useContext, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+
+import { IconHeart, IconHeartFill } from '@snorose/icons';
 
 import { Badge, Icon, MoreOptionModal } from '@/shared/component';
 import {
   LIKE_TYPE,
+  MORE_OPTION_MODAL_TEXT,
   ROLE,
   SHOW_BADGE_PATH,
-  MORE_OPTION_MODAL_TEXT,
 } from '@/shared/constant';
-import { renderTextWithLinks, DateTime } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
+import { DateTime, renderTextWithLinks } from '@/shared/lib';
 
 import {
   CommentModalRenderer,
@@ -182,13 +184,11 @@ const Comment = forwardRef((props, ref) => {
                 type='button'
                 onClick={() => (isLiked ? unlike.mutate() : like.mutate())}
               >
-                <Icon
-                  id='like-stroke'
-                  width={16}
-                  height={18}
-                  stroke='var(--pink-2)'
-                  fill={isLiked ? 'var(--pink-2)' : 'none'}
-                />
+                {isLiked ? (
+                  <IconHeartFill width={16} height={18} color='var(--pink-2)' />
+                ) : (
+                  <IconHeart width={16} height={18} color='var(--pink-2)' />
+                )}
                 <span>{likeCount.toLocaleString()}</span>
               </button>
             </>

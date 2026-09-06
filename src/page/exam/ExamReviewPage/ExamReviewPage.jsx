@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { IconBookmark, IconBookmarkFill } from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
 import {
@@ -205,6 +206,7 @@ export default function ExamReviewPage() {
 function ActionContainer({ commentCount, isScrapped, scrapCount }) {
   const { inputFocus, focusedItem } = useCommentContext();
   const { scrap, unscrap } = useScrap();
+  const IconComponent = isScrapped ? IconBookmarkFill : IconBookmark;
 
   return (
     <div className={styles.actionContainer}>
@@ -233,13 +235,7 @@ function ActionContainer({ commentCount, isScrapped, scrapCount }) {
         className={styles.count}
         onClick={() => (isScrapped ? unscrap.mutate() : scrap.mutate())}
       >
-        <Icon
-          id='scrap-stroke'
-          width={13}
-          height={17}
-          stroke={'var(--green-2)'}
-          fill={isScrapped ? 'var(--green-2)' : 'none'}
-        />
+        <IconComponent width={13} height={17} color={'var(--green-2)'} />
         <p>스크랩 {scrapCount.toLocaleString()}</p>
       </div>
     </div>
