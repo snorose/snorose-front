@@ -3,7 +3,6 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { IconMultiBellPink, IllustrationBellEmpty } from '@snorose/icons';
-
 import {
   QueryErrorResetBoundary,
   useIsFetching,
