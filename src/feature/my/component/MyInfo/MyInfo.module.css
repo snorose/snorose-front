@@ -24,6 +24,8 @@
 .middleDot {
   width: 0.4rem;
   height: 0.4rem;
+  border-radius: 50%;
+  background-color: var(--grey-4);
 }
 
 .badge {
