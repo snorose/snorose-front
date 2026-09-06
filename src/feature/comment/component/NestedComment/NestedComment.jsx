@@ -1,15 +1,17 @@
+import { useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Icon, Badge } from '@/shared/component';
-import { DateTime, renderTextWithLinks } from '@/shared/lib';
-import { LIKE_TYPE, ROLE, SHOW_BADGE_PATH } from '@/shared/constant';
 
+import { IconArrowCornerDownRight } from '@snorose/icons';
+
+import { Badge, Icon } from '@/shared/component';
+import { LIKE_TYPE, ROLE, SHOW_BADGE_PATH } from '@/shared/constant';
+import { DateTime, renderTextWithLinks } from '@/shared/lib';
+
+import styles from '@/feature/comment/component/Comment/Comment.module.css';
 import { useCommentContext } from '@/feature/comment/context';
 import { useLike } from '@/feature/like/hook';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
-
-import styles from '@/feature/comment/component/Comment/Comment.module.css';
-import { useRef } from 'react';
 
 export default function NestedComment({
   data,
@@ -58,7 +60,13 @@ export default function NestedComment({
       <div className={styles.nestedCommentTop}>
         <div className={styles.commentTopLeft}>
           <div className={styles.nestedIcon}>
-            {isFirst && <Icon id='nested-arrow' width={15} height={15} />}
+            {isFirst && (
+              <IconArrowCornerDownRight
+                width={15}
+                height={15}
+                color='var(--grey-3-1)'
+              />
+            )}
           </div>
           <div className={styles.cloud}>
             <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
