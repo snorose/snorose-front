@@ -91,7 +91,6 @@ function AttendanceCard() {
           <IllustrationFlag
             width={18}
             height={19}
-            viewBox='0 0 55 58'
             role='img'
             aria-label='출석체크'
           />
