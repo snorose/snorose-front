@@ -54,10 +54,10 @@ export default function Calendar({ callback }) {
             .slice(0, -1) + '월'
         }
         nextLabel={
-          <IconChevronRight color="white" />
+          <IconChevronRight color='var(--White-White, #fff)' />
         }
         prevLabel={
-          <IconChevronLeft color="white" />
+          <IconChevronLeft color='var(--White-White, #fff)' />
         }
         next2Label={null}
         prev2Label={null}
