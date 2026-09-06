@@ -48,6 +48,12 @@
   transition: opacity 0.2s ease;
 }
 
+.circleIcon {
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.2s ease;
+}
+
 .name {
   font: var(--text-body-1-med);
   margin-top: 1.2rem;
