@@ -1,8 +1,10 @@
 import React, { useRef } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+
 import { Scrollbar } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Icon } from '@/shared/component';
+
 import altImage from '@/assets/images/altImage.png';
 
 import styles from './AttachmentSwiper.module.css';

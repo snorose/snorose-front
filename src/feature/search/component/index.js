@@ -5,7 +5,6 @@ export { default as SearchResultListSuspense } from './SearchResultList/SearchRe
 
 // 시험후기 검색
 export { default as SearchExamReviewList } from './SearchExamReviewList/SearchExamReviewList';
-export { default as SearchExamReviewListSuspense } from './SearchExamReviewList/SearchExamReviewListSuspense';
 export { default as SearchExamReviewListErrorFallback } from './SearchExamReviewList/SearchExamReviewListErrorFallback';
-
+export { default as SearchExamReviewListSuspense } from './SearchExamReviewList/SearchExamReviewListSuspense';
 export * from './SearchResultList/SearchResultList';

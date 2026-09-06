@@ -242,11 +242,7 @@ const Item = ({
       tabIndex={-1}
     >
       {children}
-      {selected && (
-        <IconCheck
-          className={styles.checkIconBlue}
-        />
-      )}
+      {selected && <IconCheck className={styles.checkIconBlue} />}
     </div>
   );
 };

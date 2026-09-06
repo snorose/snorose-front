@@ -1,13 +1,17 @@
 import { React, useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Keyboard } from 'swiper/modules';
 
+import { Keyboard, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import { ChoiceModal, CloseAppBar, Icon } from '@/shared/component';
 import { useToast } from '@/shared/hook';
-import { Icon, ChoiceModal, CloseAppBar } from '@/shared/component';
+
 import { handleDownload, handleZipDownload } from '@/feature/attachment/lib';
+
 import altImage from '@/assets/images/altImage.png';
 
 import styles from './FullScreenAttachment.module.css';
+
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 

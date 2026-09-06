@@ -1,6 +1,6 @@
+import { NEW_ROUTES, USER_STATUS } from '@/shared/constant';
 import { useAuth } from '@/shared/hook';
 import { BOARD_REGISTRY } from '@/shared/lib';
-import { USER_STATUS, NEW_ROUTES } from '@/shared/constant';
 
 import { HomeBoardCard } from '@/feature/home/component';
 import { ACCESS_MESSAGES } from '@/feature/home/constant';
