@@ -18,8 +18,8 @@ const POST_MORE_OPTION_LIST = [
     modalId: 'share',
     iconId: 'share',
     label: '공유하기',
-    width: 18,
-    height: 19,
+    width: 24,
+    height: 24,
   },
 ];
 
@@ -42,8 +42,8 @@ const MY_POST_MORE_OPTION_LIST = [
     modalId: 'share',
     iconId: 'share',
     label: '공유하기',
-    width: 18,
-    height: 19,
+    width: 24,
+    height: 24,
   },
 ];
 
@@ -120,8 +120,8 @@ const EVENT_MORE_OPTION_LIST = [
     modalId: 'share',
     iconId: 'share',
     label: '공유하기',
-    width: 18,
-    height: 19,
+    width: 24,
+    height: 24,
   },
 ];
 

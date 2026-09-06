@@ -8,6 +8,8 @@ import {
   useState,
 } from 'react';
 
+import { IconMultiClipboardBlue } from '@snorose/icons';
+
 import { Icon } from '@/shared/component';
 
 import styles from './DropdownBlue.module.css';
@@ -123,9 +125,8 @@ const Trigger = ({ children }: { children: ReactNode }) => {
       aria-controls={menuId}
     >
       <div>
-        <Icon
+        <IconMultiClipboardBlue
           className={styles.icon}
-          id='clip-board-list'
           width={21}
           height={22}
         />

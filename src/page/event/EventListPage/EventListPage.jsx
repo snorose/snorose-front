@@ -2,12 +2,12 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
+import { IconMultiBellPink } from '@snorose/icons';
 import { QueryErrorResetBoundary, useQuery } from '@tanstack/react-query';
 
 import {
   BackAppBar,
   FetchLoading,
-  Icon,
   InfiniteScrollSentinel,
   List,
   PullToRefresh,
@@ -61,7 +61,7 @@ export default function EventListPage() {
 
       <div className={styles.notification}>
         <Link className={styles.notificationBar} to={`/board/event/notice`}>
-          <Icon id='notice-bell' width={11} height={13} />
+          <IconMultiBellPink width={13} height={16} />
           <p>[필독]&nbsp;&nbsp;{noticeLineData?.title}</p>
         </Link>
       </div>

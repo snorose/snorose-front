@@ -2,7 +2,8 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { IllustrationBellEmpty } from '@snorose/icons';
+import { IconMultiBellPink, IllustrationBellEmpty } from '@snorose/icons';
+
 import {
   QueryErrorResetBoundary,
   useIsFetching,
@@ -61,7 +62,7 @@ export default function AlertPage() {
 
       <div className={style.top}>
         <div className={style.notificationBar}>
-          <Icon id='notice-bell' width={13} height={16} />
+          <IconMultiBellPink width={13} height={16} />
           <p>모든 알림은 14일 후 자동으로 삭제돼요!</p>
         </div>
       </div>
