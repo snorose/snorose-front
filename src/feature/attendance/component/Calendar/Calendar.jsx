@@ -7,7 +7,7 @@ import {
 } from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
-import { FetchLoadingOverlay, Icon } from '@/shared/component';
+import { FetchLoadingOverlay } from '@/shared/component';
 import { LOADING_MESSAGE, QUERY_KEY } from '@/shared/constant';
 import { DateTime } from '@/shared/lib';
 
@@ -53,8 +53,12 @@ export default function Calendar({ callback }) {
             .format(date)
             .slice(0, -1) + '월'
         }
-        nextLabel={<IconChevronRight className={styles.whiteArrow} />}
-        prevLabel={<IconChevronLeft className={styles.whiteArrow} />}
+        nextLabel={
+          <IconChevronRight color="white" />
+        }
+        prevLabel={
+          <IconChevronLeft color="white" />
+        }
         next2Label={null}
         prev2Label={null}
         showNeighboringMonth={false}

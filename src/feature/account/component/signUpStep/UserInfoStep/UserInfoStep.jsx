@@ -217,7 +217,7 @@ function CheckTerms({
       </label>
 
       <div className={styles.termsLink} onClick={handlePrivacyTermClick}>
-        <IconChevronRight width={20} height={20} viewBox="0 0 24 24" />
+        <IconChevronRight width={20} height={20} />
       </div>
 
       {isModalOpen && id === 'privacyTerms' && (
