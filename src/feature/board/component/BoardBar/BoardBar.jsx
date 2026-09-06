@@ -11,6 +11,8 @@ function getImageStyle(layout) {
     '--board-image-top': layout.top,
     '--board-image-right': layout.right,
     '--board-image-bottom': layout.bottom ?? 'auto',
+    '--board-image-width': layout.width ?? 'auto',
+    '--board-image-height': layout.height ?? 'auto',
     '--board-image-transform': 'none',
   };
 }
@@ -82,7 +84,9 @@ function BoardImage({ image, label, style }) {
 
   // TODO: 모든 게시판 이미지를 @snorose/icons 컴포넌트로 교체하면 문자열 이미지 분기와 <img> 렌더링을 제거한다.
   if (typeof image === 'string') {
-    return <img className={styles.image} src={image} alt={label} style={style} />;
+    return (
+      <img className={styles.image} src={image} alt={label} style={style} />
+    );
   }
 
   const Image = image;

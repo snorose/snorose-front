@@ -25,6 +25,8 @@ export interface BoardImageLayout {
   top: string;
   right: string;
   bottom?: string;
+  width?: string;
+  height?: string;
 }
 
 interface BoardImages {
@@ -67,7 +69,12 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   },
   event: {
     category: IllustrationBoxStarsOpen,
-    categoryLayout: { top: '0rem', right: '0.2rem' },
+    categoryLayout: {
+      top: '-1.8rem',
+      right: '0.2rem',
+      width: '14.1rem',
+      height: '14.1rem',
+    },
     main: IllustrationBoxStarsCircle,
   },
   sookplace: {
