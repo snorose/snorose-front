@@ -1,4 +1,9 @@
-import { IconHeart, IconHeartFill } from '@snorose/icons';
+import {
+  IconBookmark,
+  IconBookmarkFill,
+  IconHeart,
+  IconHeartFill,
+} from '@snorose/icons';
 
 import { Icon } from '@/shared/component';
 import { LIKE_TYPE } from '@/shared/constant';
@@ -62,19 +67,14 @@ function LikeActionButton({ postId, isLiked, likeCount }) {
 
 function ScrapActionButton({ isScrapped, scrapCount }) {
   const { scrap, unscrap } = useScrap();
+  const IconComponent = isScrapped ? IconBookmarkFill : IconBookmark;
 
   return (
     <div
       className={styles.count}
       onClick={() => (isScrapped ? unscrap.mutate() : scrap.mutate())}
     >
-      <Icon
-        id='scrap-stroke'
-        width={13}
-        height={16}
-        stroke={'var(--green-2)'}
-        fill={isScrapped ? 'var(--green-2)' : 'none'}
-      />
+      <IconComponent width={13} height={16} color={'var(--green-2)'} />
       <p>스크랩 {scrapCount.toLocaleString()}</p>
     </div>
   );

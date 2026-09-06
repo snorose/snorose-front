@@ -227,8 +227,11 @@
   <symbol id="comment-stroke" viewBox="0 0 18 16" fill="current" stroke="current">
     <path d="M2 0.5H16C16.8284 0.5 17.5 1.17157 17.5 2V9.16797C17.5 9.9964 16.8284 10.668 16 10.668H5.2666C4.94224 10.668 4.67721 10.8025 4.48047 10.9434C4.38391 11.0125 4.29389 11.0906 4.21289 11.167L4 11.3799L1.35938 14.1094C1.04705 14.4318 0.500358 14.2109 0.5 13.7617V2C0.5 1.17157 1.17157 0.5 2 0.5Z" stroke="current" stroke-linejoin="round"/>
   </symbol>
-  <symbol id="scrap-stroke" viewBox="0 0 13 17" fill="current" stroke="current">
-    <path d="M2.66089 1.1123H10.6609C11.4893 1.11231 12.1609 1.78388 12.1609 2.6123V14.4229C12.1609 14.8138 11.7323 15.0541 11.3992 14.8496L7.44702 12.418C6.96506 12.1215 6.35672 12.1215 5.87476 12.418L1.92261 14.8496C1.58952 15.0541 1.16089 14.8138 1.16089 14.4229V2.6123C1.16089 1.78388 1.83246 1.1123 2.66089 1.1123Z" stroke="#AAD916"/>
+  <symbol id="share" viewBox="0 0 18 19" fill="none" stroke="none">
+    <path d="M13.9995 4L3.49951 9.5L13.9995 15.5" stroke="#898989" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="14.5" cy="3.5" r="3.5" fill="#AAD916"/>
+    <circle cx="14.5" cy="15.5" r="3.5" fill="#AAD916"/>
+    <circle cx="3.5" cy="9.5" r="3.5" fill="#AAD916"/>
   </symbol>
   <symbol id="calendar-stroke" viewBox="0 0 16 17" fill="current" stroke="current">
     <rect x="1.52531" y="3.19523" width="13.4488" height="12.3309" rx="1.4175" stroke="#484848" stroke-width="1.215"/>

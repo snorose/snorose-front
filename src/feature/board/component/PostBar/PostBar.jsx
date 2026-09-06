@@ -1,4 +1,9 @@
-import { IconHeart, IconHeartFill } from '@snorose/icons';
+import {
+  IconBookmark,
+  IconBookmarkFill,
+  IconHeart,
+  IconHeartFill,
+} from '@snorose/icons';
 
 import { Badge, Chip, Icon } from '@/shared/component';
 import { ROLE } from '@/shared/constant';
@@ -132,12 +137,13 @@ function ActionContainer({
       count: commentCount,
     },
     {
-      iconId: 'scrap-stroke',
       width: 11,
       height: 13,
       isActive: isScrapped,
       color: 'var(--green-2)',
       count: scrapCount,
+      ActiveIcon: IconBookmarkFill,
+      DefaultIcon: IconBookmark,
     },
   ];
 

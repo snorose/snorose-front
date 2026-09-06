@@ -1,7 +1,12 @@
 import { useContext, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { IconHeart, IconHeartFill } from '@snorose/icons';
+import {
+  IconBookmark,
+  IconBookmarkFill,
+  IconHeart,
+  IconHeartFill,
+} from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
 import {
@@ -437,13 +442,11 @@ function ActionContainer({
         className={styles.count}
         onClick={() => (isScrapped ? unscrap.mutate() : scrap.mutate())}
       >
-        <Icon
-          id='scrap-stroke'
-          width={13}
-          height={16}
-          stroke={'var(--green-2)'}
-          fill={isScrapped ? 'var(--green-2)' : 'none'}
-        />
+        {isScrapped ? (
+          <IconBookmarkFill width={13} height={16} color={'var(--green-2)'} />
+        ) : (
+          <IconBookmark width={13} height={16} color={'var(--green-2)'} />
+        )}
         <p>스크랩 {scrapCount.toLocaleString()}</p>
       </div>
     </div>
