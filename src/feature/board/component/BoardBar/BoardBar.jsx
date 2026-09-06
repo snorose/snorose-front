@@ -8,12 +8,10 @@ function getImageStyle(layout) {
   if (!layout) return undefined;
 
   return {
-    '--board-image-top': layout.top,
     '--board-image-right': layout.right,
-    '--board-image-bottom': layout.bottom ?? 'auto',
-    '--board-image-width': layout.width ?? 'auto',
-    '--board-image-height': layout.height ?? 'auto',
-    '--board-image-transform': 'none',
+    '--board-image-bottom': layout.bottom,
+    '--board-image-width': layout.width,
+    '--board-image-height': layout.height,
   };
 }
 
