@@ -1,7 +1,11 @@
 import { useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { IconArrowCornerDownRight } from '@snorose/icons';
+import {
+  IconArrowCornerDownRight,
+  IconHeart,
+  IconHeartFill,
+} from '@snorose/icons';
 
 import { Badge, Icon } from '@/shared/component';
 import { LIKE_TYPE, ROLE, SHOW_BADGE_PATH } from '@/shared/constant';
@@ -114,13 +118,11 @@ export default function NestedComment({
             type='button'
             onClick={() => (isLiked ? unlike.mutate() : like.mutate())}
           >
-            <Icon
-              id='like-stroke'
-              width={16}
-              height={18}
-              stroke='var(--pink-2)'
-              fill={isLiked ? 'var(--pink-2)' : 'none'}
-            />
+            {isLiked ? (
+              <IconHeartFill width={16} height={18} color='var(--pink-2)' />
+            ) : (
+              <IconHeart width={16} height={18} color='var(--pink-2)' />
+            )}
             <span>{likeCount.toLocaleString()}</span>
           </button>
         )}

@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import { IconHeart, IconHeartFill } from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
 import {
@@ -425,13 +426,11 @@ function ActionContainer({
         className={styles.count}
         onClick={() => (isLiked ? unlike.mutate() : like.mutate())}
       >
-        <Icon
-          id='like-stroke'
-          width={16}
-          height={15}
-          stroke={'var(--pink-2)'}
-          fill={isLiked ? 'var(--pink-2)' : 'none'}
-        />
+        {isLiked ? (
+          <IconHeartFill width={16} height={18} color='var(--pink-2)' />
+        ) : (
+          <IconHeart width={16} height={18} color='var(--pink-2)' />
+        )}
         <p>공감 {likeCount.toLocaleString()}</p>
       </div>
       <div

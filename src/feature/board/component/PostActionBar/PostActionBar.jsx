@@ -1,3 +1,5 @@
+import { IconHeart, IconHeartFill } from '@snorose/icons';
+
 import { Icon } from '@/shared/component';
 import { LIKE_TYPE } from '@/shared/constant';
 
@@ -45,18 +47,14 @@ function LikeActionButton({ postId, isLiked, likeCount }) {
     sourceId: postId,
   });
 
+  const IconComponent = isLiked ? IconHeartFill : IconHeart;
+
   return (
     <div
       className={styles.count}
       onClick={() => (isLiked ? unlike.mutate() : like.mutate())}
     >
-      <Icon
-        id='like-stroke'
-        width={16}
-        height={15}
-        stroke='var(--pink-2)'
-        fill={isLiked ? 'var(--pink-2)' : 'none'}
-      />
+      <IconComponent width={16} height={15} color={'var(--pink-2)'} />
       <p>공감 {likeCount.toLocaleString()}</p>
     </div>
   );
