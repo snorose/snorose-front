@@ -24,12 +24,10 @@
 
 .image {
   position: absolute;
-  top: var(--board-image-top, 55%);
   right: var(--board-image-right, -0.2rem);
   bottom: var(--board-image-bottom, auto);
   width: var(--board-image-width, auto);
   height: var(--board-image-height, auto);
-  transform: var(--board-image-transform, translateY(-50%));
 }
 
 .textBox {
