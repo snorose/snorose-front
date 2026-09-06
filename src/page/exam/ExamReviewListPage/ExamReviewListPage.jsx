@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 
+import { IconMultiBellPink } from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
-import { AppBar, Icon, MenuIcon, WriteButton } from '@/shared/component';
+import { AppBar, MenuIcon, WriteButton } from '@/shared/component';
 import { QUERY_KEY, ROLE, STALE_TIME } from '@/shared/constant';
 import { useAuth } from '@/shared/hook';
 
@@ -40,7 +41,7 @@ export default function ExamReviewListPage() {
       </AppBar>
 
       <Link className={styles.notificationBar} to={`/board/exam-review/notice`}>
-        <Icon id='notice-bell' width={13} height={16} />
+        <IconMultiBellPink width={13} height={16} />
         <p>[필독]&nbsp;&nbsp;{noticeLineData?.title}</p>
       </Link>
 

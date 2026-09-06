@@ -1,16 +1,16 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+
+import { IconMultiPointCircle } from '@snorose/icons';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
-import { useAuth } from '@/shared/hook';
 import { BackAppBar, FetchLoading } from '@/shared/component';
+import { useAuth } from '@/shared/hook';
 
 import {
   PointLogList,
   PointLogListErrorFallback,
 } from '@/feature/my/component';
-
-import { ReactComponent as PointCircleBlue } from '@/assets/images/pointCircleBlue.svg';
 
 import styles from './PointLogListPage.module.css';
 
@@ -27,7 +27,9 @@ export default function PointLogListPage() {
         <div className={styles.topContainer}>
           <h1 className={styles.title}>보유 포인트</h1>
           <div className={styles.totalPointWrapper}>
-            <PointCircleBlue
+            <IconMultiPointCircle
+              width={23}
+              height={23}
               role='img'
               aria-label='총 포인트'
               focusable='false'

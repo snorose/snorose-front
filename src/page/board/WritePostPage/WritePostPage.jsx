@@ -2,6 +2,7 @@ import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
+import { IconMultiClipboardBlue } from '@snorose/icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -343,12 +344,7 @@ export default function WritePostPage() {
             {textId === 'notice' ? (
               <div className={styles.categorySelect}>
                 <div className={styles.categorySelectContainer}>
-                  <Icon
-                    id='clip-board-list'
-                    width={21}
-                    height={22}
-                    fill='white'
-                  />
+                  <IconMultiClipboardBlue width={21} height={22} />
                   <p className={styles.categorySelectText}>{boardTitle}</p>
                 </div>
               </div>
@@ -359,12 +355,7 @@ export default function WritePostPage() {
                   onClick={handleDropDownOpen}
                 >
                   <div className={styles.categorySelectContainer}>
-                    <Icon
-                      id='clip-board-list'
-                      width={21}
-                      height={22}
-                      fill='white'
-                    />
+                    <IconMultiClipboardBlue width={21} height={22} />
                     <p className={styles.categorySelectText}>{boardTitle}</p>
                   </div>
                   <Icon id='angle-down' width={24} height={24} />
@@ -761,12 +752,7 @@ export function NewWritePostPage({ isNotice = false }) {
           <div className={styles.center}>
             <div className={styles.categorySelect}>
               <div className={styles.categorySelectContainer}>
-                <Icon
-                  id='clip-board-list'
-                  width={21}
-                  height={22}
-                  fill='white'
-                />
+                <IconMultiClipboardBlue width={21} height={22} />
                 <p className={styles.categorySelectText}>
                   {!isGlobalNotice && isNotice
                     ? `${boardName} 공지`
