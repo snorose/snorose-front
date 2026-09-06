@@ -76,11 +76,6 @@
   font: var(--text-headline-2-med);
 }
 
-.attendanceImage {
-  width: 18px;
-  height: 19px;
-}
-
 .attendanceArrow {
   color: var(--White-White, #fff);
 }

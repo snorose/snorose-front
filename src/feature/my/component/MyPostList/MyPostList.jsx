@@ -1,5 +1,11 @@
 import { Link } from 'react-router-dom';
 
+import {
+  IllustrationCommentEmpty,
+  IllustrationPostEmpty,
+  IllustrationScrapPostEmpty,
+} from '@snorose/icons';
+
 import { FetchLoading, InfiniteScrollSentinel } from '@/shared/component';
 import { STALE_TIME } from '@/shared/constant';
 import { useSuspenseInfiniteScroll } from '@/shared/hook';
@@ -8,12 +14,6 @@ import { getBoardTextId } from '@/shared/lib';
 import { PostBar } from '@/feature/board/component';
 import { ACTIVITIES } from '@/feature/my/constant';
 import { INQUIRY_STATUS_MAP } from '@/feature/support/constant';
-
-import {
-  noCommentsIllustration,
-  noPostsIllustration,
-  noScrapedPostsIllustration,
-} from '@/assets/illustrations';
 
 import styles from './MyPostList.module.css';
 
@@ -41,22 +41,24 @@ export default function MyPostList({
   const emptyStateIllustration =
     activity?.emptyStateIllustration || 'noScrapedPostsIllustration';
 
+  // TODO: 호출부에서 빈 상태 일러스트 컴포넌트를 직접 넘기도록 리팩토링하면 이 매핑을 제거한다.
   const illustrationMap = {
-    noPostsIllustration,
-    noScrapedPostsIllustration,
-    noCommentsIllustration,
+    noPostsIllustration: IllustrationPostEmpty,
+    noScrapedPostsIllustration: IllustrationScrapPostEmpty,
+    noCommentsIllustration: IllustrationCommentEmpty,
   };
+  const EmptyIllustration = illustrationMap[emptyStateIllustration];
 
   if (list.length === 0) {
     return (
       <div className={styles.noContentWrapper}>
         <p className={styles.noContentMessage}>{errorMessage}</p>
         <div className={styles.imageWrapper}>
-          <img
-            src={illustrationMap[emptyStateIllustration]}
+          <EmptyIllustration
             width={220}
             height={182}
-            alt={`${errorMessage}를 알리는 일러스트`}
+            role='img'
+            aria-label={`${errorMessage}를 알리는 일러스트`}
           />
         </div>
       </div>
