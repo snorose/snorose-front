@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import {
   IconChevronLeft,
   IconChevronRight,
-  IconMultiCheckCirclePink,
+  IconMultiCheckPinkCircle,
 } from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
@@ -93,7 +93,7 @@ function Tile({ date, data = [] }) {
   return (
     <div className={styles.tile}>
       {checked ? (
-        <IconMultiCheckCirclePink width={33} height={33} />
+        <IconMultiCheckPinkCircle width={33} height={33} />
       ) : (
         <div
           className={`${styles.day} ${DateTime.isToday(date) && styles.today}`}
