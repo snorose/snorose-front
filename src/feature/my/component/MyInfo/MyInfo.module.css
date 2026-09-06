@@ -24,6 +24,8 @@
 .middleDot {
   width: 0.4rem;
   height: 0.4rem;
+  border-radius: 50%;
+  background-color: var(--grey-4);
 }
 
 .badge {
@@ -73,4 +75,8 @@
     width: 2rem;
     height: 2rem;
   }
+}
+
+.chevronIconBlue path {
+  fill: var(--blue-4);
 }

@@ -2,6 +2,7 @@ import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
+import { IconChevronDown, IconMultiClipboardBlue } from '@snorose/icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -55,7 +56,7 @@ export default function WritePostPage() {
   const queryClient = useQueryClient();
   const { pathname } = useLocation();
   const { toast } = useToast();
-  const { userInfo, status } = useAuth();
+  const { userInfo } = useAuth();
   const { invalidUserInfoQuery } = useAuth();
   const { modal, setModal } = useContext(ModalContext);
 
@@ -343,12 +344,7 @@ export default function WritePostPage() {
             {textId === 'notice' ? (
               <div className={styles.categorySelect}>
                 <div className={styles.categorySelectContainer}>
-                  <Icon
-                    id='clip-board-list'
-                    width={21}
-                    height={22}
-                    fill='white'
-                  />
+                  <IconMultiClipboardBlue width={21} height={22} />
                   <p className={styles.categorySelectText}>{boardTitle}</p>
                 </div>
               </div>
@@ -359,15 +355,10 @@ export default function WritePostPage() {
                   onClick={handleDropDownOpen}
                 >
                   <div className={styles.categorySelectContainer}>
-                    <Icon
-                      id='clip-board-list'
-                      width={21}
-                      height={22}
-                      fill='white'
-                    />
+                    <IconMultiClipboardBlue width={21} height={22} />
                     <p className={styles.categorySelectText}>{boardTitle}</p>
                   </div>
-                  <Icon id='angle-down' width={24} height={24} />
+                  <IconChevronDown width={24} height={24} />
                 </div>
                 {dropDownOpen && (
                   <DropdownList
@@ -399,7 +390,7 @@ export default function WritePostPage() {
                         : category || '카테고리를 선택해주세요'}
                     </p>
                   </div>
-                  <Icon id='angle-down' width={24} height={24} />
+                  <IconChevronDown width={24} height={24} />
                 </div>
                 {categoryDropDownOpen && !isCategoryDisabled && (
                   <DropdownList
@@ -761,12 +752,7 @@ export function NewWritePostPage({ isNotice = false }) {
           <div className={styles.center}>
             <div className={styles.categorySelect}>
               <div className={styles.categorySelectContainer}>
-                <Icon
-                  id='clip-board-list'
-                  width={21}
-                  height={22}
-                  fill='white'
-                />
+                <IconMultiClipboardBlue width={21} height={22} />
                 <p className={styles.categorySelectText}>
                   {!isGlobalNotice && isNotice
                     ? `${boardName} 공지`

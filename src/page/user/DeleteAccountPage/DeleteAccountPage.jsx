@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import {
   CloseAppBar,
   ConfirmModal,
-  Icon,
   Label,
   PasswordInput,
 } from '@/shared/component';
@@ -41,16 +40,9 @@ export default function DeleteAccountPage() {
           <h1 className={styles.title}>탈퇴 시 아래 내용을 확인해주세요</h1>
           <div className={styles.descriptionWrapper}>
             {DESCRIPTION_LIST.map((desc, index) => (
-              <div className={styles.dotDescriptionList}>
-                <Icon
-                  className={styles.middleDot}
-                  id='middle-dot'
-                  width={6}
-                  height={6}
-                />
-                <p key={index} className={styles.description}>
-                  {desc}
-                </p>
+              <div key={index} className={styles.dotDescriptionList}>
+                <span className={styles.middleDot} aria-hidden='true' />
+                <p className={styles.description}>{desc}</p>
               </div>
             ))}
           </div>

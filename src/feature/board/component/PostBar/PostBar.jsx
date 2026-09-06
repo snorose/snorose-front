@@ -1,3 +1,10 @@
+import {
+  IconBookmark,
+  IconBookmarkFill,
+  IconHeart,
+  IconHeartFill,
+} from '@snorose/icons';
+
 import { Badge, Chip, Icon } from '@/shared/component';
 import { ROLE } from '@/shared/constant';
 import { DateTime } from '@/shared/lib';
@@ -114,12 +121,13 @@ function ActionContainer({
 }) {
   const actions = [
     {
-      iconId: 'like-stroke',
       width: 14,
       height: 13,
       isActive: isLiked,
       color: 'var(--pink-2)',
       count: likeCount,
+      ActiveIcon: IconHeartFill,
+      DefaultIcon: IconHeart,
     },
     {
       iconId: 'comment-stroke',
@@ -129,33 +137,59 @@ function ActionContainer({
       count: commentCount,
     },
     {
-      iconId: 'scrap-stroke',
       width: 11,
       height: 13,
       isActive: isScrapped,
       color: 'var(--green-2)',
       count: scrapCount,
+      ActiveIcon: IconBookmarkFill,
+      DefaultIcon: IconBookmark,
     },
   ];
 
   return (
     <div className={styles.actionContainer}>
-      {actions.map(({ iconId, width, height, isActive, color, count }) => {
-        if (count <= 0) return null;
+      {actions.map(
+        ({
+          iconId,
+          width,
+          height,
+          isActive,
+          color,
+          count,
+          ActiveIcon,
+          DefaultIcon,
+        }) => {
+          if (count <= 0) return null;
 
-        return (
-          <div key={iconId} className={styles.action}>
-            <Icon
-              id={iconId}
-              width={width}
-              height={height}
-              fill={isActive ? color : 'none'}
-              stroke={color}
-            />
-            <span>{count.toLocaleString()}</span>
-          </div>
-        );
-      })}
+          let IconComponent;
+
+          if (iconId) {
+            IconComponent = (
+              <Icon
+                id={iconId}
+                width={width}
+                height={height}
+                fill={isActive ? color : 'none'}
+                stroke={color}
+              />
+            );
+          } else {
+            IconComponent = isActive ? (
+              <ActiveIcon width={width} height={height} color={color} />
+            ) : (
+              <DefaultIcon width={width} height={height} color={color} />
+            );
+          }
+
+          return (
+            <div key={iconId} className={styles.action}>
+              {IconComponent}
+              <span>{count.toLocaleString()}</span>
+            </div>
+          );
+        }
+      )}
     </div>
   );
 }

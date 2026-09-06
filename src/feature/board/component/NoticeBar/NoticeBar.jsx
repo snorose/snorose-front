@@ -1,3 +1,5 @@
+import { IconBookmarkFill, IconHeartFill } from '@snorose/icons';
+
 import { Icon } from '@/shared/component';
 import { DateTime } from '@/shared/lib';
 
@@ -22,24 +24,20 @@ export default function NoticeBar({ data, onClick }) {
         <span>{formattedDate}</span>
         <div className={styles.postBottomRight}>
           <div className={styles.iconContainer}>
-            <Icon
-              id='like'
+            <IconHeartFill
               width={14}
               height={13}
-              fill={isLiked ? 'var(--pink-2)' : 'var(--grey-3)'}
-              stroke={isLiked ? 'var(--pink-2)' : 'var(--grey-3)'}
+              color={isLiked ? 'var(--pink-2)' : 'var(--grey-3)'}
             />
             <span className={styles.like_cnt}>
               {(data.likeCount ?? 0).toLocaleString()}
             </span>
           </div>
           <div className={styles.iconContainer}>
-            <Icon
-              id='bookmark-fill'
+            <IconBookmarkFill
               width={11}
               height={13}
-              fill={isScrapped ? 'var(--green-2)' : 'var(--grey-3)'}
-              stroke={isScrapped ? 'var(--green-2)' : 'var(--grey-3)'}
+              color={isScrapped ? 'var(--green-2)' : 'var(--grey-3)'}
             />
             <span className={styles.like_cnt}>
               {(data.scrapCount ?? 0).toLocaleString()}

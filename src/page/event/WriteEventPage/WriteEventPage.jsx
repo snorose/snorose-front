@@ -1,33 +1,35 @@
-import { useQueryClient } from '@tanstack/react-query';
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+import { IconChevronDown, IconMultiClipboardBlue } from '@snorose/icons';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {
   ActionButton,
   Badge,
   CloseAppBar,
-  FetchLoading,
-  Icon,
   ConfirmModal,
+  FetchLoading,
 } from '@/shared/component';
-import { QUERY_KEY, ROLE, CONFIRM_MODAL_TEXT } from '@/shared/constant';
+import { CONFIRM_MODAL_TEXT, QUERY_KEY, ROLE } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
 import { useAuth, useBlocker, useToast } from '@/shared/hook';
 import { DateTime, getBoard } from '@/shared/lib';
-import { ModalContext } from '@/shared/context/ModalContext';
 
-import { postEvent, postPost } from '@/apis';
 import { DropDownMenu } from '@/feature/board/component';
-
-import styles from './WriteEventPage.module.css';
-import cloudLogo from '@/assets/images/cloudLogo.svg';
-
 import { EventForm, NoticeForm } from '@/feature/event/component';
-import { validateOnSubmit } from '@/feature/event/lib';
 import {
   EVENT_FORM_DATA,
-  NOTICE_FORM_DATA,
   EVENT_TYPES,
+  NOTICE_FORM_DATA,
 } from '@/feature/event/constant';
+import { validateOnSubmit } from '@/feature/event/lib';
+
+import cloudLogo from '@/assets/images/cloudLogo.svg';
+
+import { postEvent, postPost } from '@/apis';
+
+import styles from './WriteEventPage.module.css';
 
 export default function WriteEventPage() {
   const navigate = useNavigate();
@@ -40,7 +42,7 @@ export default function WriteEventPage() {
   const [isNotice, setIsNotice] = useState(false);
   const textId = pathname.split('/')[2];
   const currentBoard = getBoard(textId);
-  const [boardId, setBoardId] = useState(currentBoard?.id ?? '');
+  const [boardId] = useState(currentBoard?.id ?? '');
   const { invalidUserInfoQuery } = useAuth();
   const [eventType, setEventType] = useState('유형을 선택해주세요');
 
@@ -220,12 +222,7 @@ export default function WriteEventPage() {
           {textId === 'notice' ? (
             <div className={styles.categorySelect}>
               <div className={styles.categorySelectContainer}>
-                <Icon
-                  id='clip-board-list'
-                  width={21}
-                  height={22}
-                  fill='white'
-                />
+                <IconMultiClipboardBlue width={21} height={22} />
                 <p className={styles.categorySelectText}>이벤트</p>
               </div>
             </div>
@@ -236,15 +233,10 @@ export default function WriteEventPage() {
                 onClick={handleDropDownOpen}
               >
                 <div className={styles.categorySelectContainer}>
-                  <Icon
-                    id='clip-board-list'
-                    width={21}
-                    height={22}
-                    fill='white'
-                  />
+                  <IconMultiClipboardBlue width={21} height={22} />
                   <p className={styles.categorySelectText}>{eventType}</p>
                 </div>
-                <Icon id='angle-down' width={14} height={7} />
+                <IconChevronDown width={24} height={24} />
               </div>
               <DropDownMenu
                 options={Object.keys(EVENT_TYPES)}

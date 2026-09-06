@@ -1,4 +1,4 @@
-import { Icon } from '@/shared/component';
+import { IconImage } from '@snorose/icons';
 
 import altImage from '@/assets/images/altImage.png';
 
@@ -26,7 +26,7 @@ export default function ProductCard({ src, alt }: ProductCardProps) {
   return (
     <div className={styles.container}>
       <div className={styles.imageFallback} aria-label='상품 이미지 없음'>
-        <Icon id='image' width={32} height={32} />
+        <IconImage width={32} height={32} color='var(--blue-3)' />
       </div>
     </div>
   );

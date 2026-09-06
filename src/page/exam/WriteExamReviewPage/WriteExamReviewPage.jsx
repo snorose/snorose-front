@@ -1,11 +1,9 @@
-import { useState, useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { IconMultiClipboardBlue } from '@snorose/icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { postExamReview, checkExamReviewDuplication } from '@/apis';
-
-import { useAuth, useBlocker, useToast } from '@/shared/hook';
-import { ModalContext } from '@/shared/context/ModalContext';
 import {
   ActionButton,
   CheckBox,
@@ -13,7 +11,6 @@ import {
   ConfirmModal,
   Dropdown,
   FetchLoadingOverlay,
-  Icon,
   Label,
   NumberInput,
   Textarea,
@@ -21,11 +18,13 @@ import {
 } from '@/shared/component';
 import {
   BOARD_ID,
+  CONFIRM_MODAL_TEXT,
   MUTATION_KEY,
   QUERY_KEY,
   TOAST,
-  CONFIRM_MODAL_TEXT,
 } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
+import { useAuth, useBlocker, useToast } from '@/shared/hook';
 
 import { CategoryButton } from '@/feature/exam/component';
 import {
@@ -35,6 +34,8 @@ import {
   SEMESTERS,
   YEARS,
 } from '@/feature/exam/constant';
+
+import { checkExamReviewDuplication, postExamReview } from '@/apis';
 
 import styles from './WriteExamReviewPage.module.css';
 
@@ -373,7 +374,7 @@ export default function WriteExamReviewPage() {
 
       <div className={styles.file}>
         <div className={styles.tag}>
-          <Icon id='clip-board-list' width={18} height={19} fill='#BFD7EC' />
+          <IconMultiClipboardBlue width={21} height={22} />
           <span className={styles.label}>첨부파일</span>
           <span className={styles.required}></span>
         </div>

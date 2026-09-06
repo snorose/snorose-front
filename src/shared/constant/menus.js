@@ -1,3 +1,13 @@
+import {
+  IconBell,
+  IconBellFill,
+  IconBook,
+  IconBookFill,
+  IconHomeFill,
+  IconMypage,
+  IconMypageFill,
+} from '@snorose/icons';
+
 import { NEW_ROUTES } from '@/shared/constant/route';
 import { BOARD_REGISTRY } from '@/shared/lib';
 
@@ -8,6 +18,8 @@ export const NAVBAR_MENUS = Object.freeze([
     label: '메인홈',
     width: 32,
     height: 32,
+    ActiveIcon: IconHomeFill,
+    DefaultIcon: IconHomeFill,
   },
   {
     id: 'board',
@@ -15,6 +27,8 @@ export const NAVBAR_MENUS = Object.freeze([
     label: '게시판',
     width: 32,
     height: 32,
+    ActiveIcon: null,
+    DefaultIcon: null,
   },
   {
     id: 'test',
@@ -22,6 +36,8 @@ export const NAVBAR_MENUS = Object.freeze([
     label: '시험후기',
     width: 32,
     height: 32,
+    ActiveIcon: IconBookFill,
+    DefaultIcon: IconBook,
   },
   {
     id: 'bell',
@@ -29,6 +45,8 @@ export const NAVBAR_MENUS = Object.freeze([
     label: '알림',
     width: 32,
     height: 32,
+    ActiveIcon: IconBellFill,
+    DefaultIcon: IconBell,
   },
   {
     id: 'mypage',
@@ -36,6 +54,8 @@ export const NAVBAR_MENUS = Object.freeze([
     label: '내정보',
     width: 32,
     height: 32,
+    ActiveIcon: IconMypageFill,
+    DefaultIcon: IconMypage,
   },
 ]);
 
@@ -68,6 +88,14 @@ export const SIDEBAR_MENUS = Object.freeze([
       { to: '/board/large-snow', name: '함박눈방' },
       { to: '/board/permanent-snow', name: '만년설방' },
       { to: '/board/besookt', name: '베숙트' },
+    ],
+  },
+  {
+    to: '/board',
+    title: '라이프',
+    items: [
+      { to: '/board/sookplace', name: '숙플레이스' },
+      { to: '/board/residence', name: '주거' },
     ],
   },
   {

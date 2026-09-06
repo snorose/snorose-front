@@ -1,10 +1,10 @@
+import { IllustrationTaskComplete } from '@snorose/icons';
+
 import { DateTime } from '@/shared/lib';
 
 import type { SaleResponse } from '@/feature/commerce/types';
 
 import styles from '@/page/commerce/SaleDetailPage.module.css';
-
-import { taskCompleteIllustration } from '@/assets/illustrations';
 
 type SaleClosedSectionProps = {
   sale: SaleResponse;
@@ -19,10 +19,9 @@ export default function SaleClosedSection({
 }: SaleClosedSectionProps) {
   return (
     <section className={styles.closedSection} aria-labelledby='saleClosedTitle'>
-      <img
-        src={taskCompleteIllustration}
-        alt=''
+      <IllustrationTaskComplete
         aria-hidden='true'
+        focusable='false'
         className={styles.closedIllustration}
       />
 

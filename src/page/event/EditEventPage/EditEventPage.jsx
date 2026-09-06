@@ -1,38 +1,41 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+
+import { IconMultiClipboardBlue } from '@snorose/icons';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import {
+  ActionButton,
   BackAppBar,
   Badge,
   CloseAppBar,
-  FetchLoading,
-  Icon,
-  ActionButton,
   ConfirmModal,
+  FetchLoading,
 } from '@/shared/component';
 import {
   BOARD_MENUS,
+  CONFIRM_MODAL_TEXT,
   MUTATION_KEY,
   QUERY_KEY,
   ROLE,
   TOAST,
-  CONFIRM_MODAL_TEXT,
 } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
 import { useAuth, useBlocker, useToast } from '@/shared/hook';
 import { DateTime } from '@/shared/lib';
-import { ModalContext } from '@/shared/context/ModalContext';
+
+import { EventForm, NoticeForm } from '@/feature/event/component';
+import {
+  EVENT_FORM_DATA,
+  EVENT_TYPES,
+  NOTICE_FORM_DATA,
+} from '@/feature/event/constant';
+import { validateOnSubmit } from '@/feature/event/lib';
+
+import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import { getEventContent, patchEvent } from '@/apis';
 
-import { EventForm, NoticeForm } from '@/feature/event/component';
-import { validateOnSubmit } from '@/feature/event/lib';
-import {
-  EVENT_FORM_DATA,
-  NOTICE_FORM_DATA,
-  EVENT_TYPES,
-} from '@/feature/event/constant';
-
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 import styles from './EditEventPage.module.css';
 
 export default function EditEventPage() {
@@ -238,7 +241,7 @@ export default function EditEventPage() {
         <div className={styles.center}>
           <div className={styles.categorySelect}>
             <div className={styles.categorySelectContainer}>
-              <Icon id='clip-board-list' width={21} height={22} fill='white' />
+              <IconMultiClipboardBlue width={21} height={22} />
               <p className={styles.categorySelectText}>{eventType}</p>
             </div>
           </div>

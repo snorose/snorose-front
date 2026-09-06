@@ -1,15 +1,21 @@
+import { useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Icon, Badge } from '@/shared/component';
-import { DateTime, renderTextWithLinks } from '@/shared/lib';
-import { LIKE_TYPE, ROLE, SHOW_BADGE_PATH } from '@/shared/constant';
 
+import {
+  IconArrowCornerDownRight,
+  IconHeart,
+  IconHeartFill,
+} from '@snorose/icons';
+
+import { Badge, Icon } from '@/shared/component';
+import { LIKE_TYPE, ROLE, SHOW_BADGE_PATH } from '@/shared/constant';
+import { DateTime, renderTextWithLinks } from '@/shared/lib';
+
+import styles from '@/feature/comment/component/Comment/Comment.module.css';
 import { useCommentContext } from '@/feature/comment/context';
 import { useLike } from '@/feature/like/hook';
 
 import cloudLogo from '@/assets/images/cloudLogo.svg';
-
-import styles from '@/feature/comment/component/Comment/Comment.module.css';
-import { useRef } from 'react';
 
 export default function NestedComment({
   data,
@@ -58,7 +64,13 @@ export default function NestedComment({
       <div className={styles.nestedCommentTop}>
         <div className={styles.commentTopLeft}>
           <div className={styles.nestedIcon}>
-            {isFirst && <Icon id='nested-arrow' width={15} height={15} />}
+            {isFirst && (
+              <IconArrowCornerDownRight
+                width={15}
+                height={15}
+                color='var(--grey-3-1)'
+              />
+            )}
           </div>
           <div className={styles.cloud}>
             <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
@@ -106,13 +118,11 @@ export default function NestedComment({
             type='button'
             onClick={() => (isLiked ? unlike.mutate() : like.mutate())}
           >
-            <Icon
-              id='like-stroke'
-              width={16}
-              height={18}
-              stroke='var(--pink-2)'
-              fill={isLiked ? 'var(--pink-2)' : 'none'}
-            />
+            {isLiked ? (
+              <IconHeartFill width={16} height={18} color='var(--pink-2)' />
+            ) : (
+              <IconHeart width={16} height={18} color='var(--pink-2)' />
+            )}
             <span>{likeCount.toLocaleString()}</span>
           </button>
         )}

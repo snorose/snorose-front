@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
+import { IconChevronDown, IconMultiClipboardBlue } from '@snorose/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -285,12 +286,7 @@ export default function EditPostPage() {
           <div className={styles.center}>
             <div className={styles.categorySelect}>
               <div className={styles.categorySelectContainer}>
-                <Icon
-                  id='clip-board-list'
-                  width={21}
-                  height={22}
-                  fill='white'
-                />
+                <IconMultiClipboardBlue width={21} height={22} />
                 <p className={styles.categorySelectText}>{boardTitle}</p>
               </div>
             </div>
@@ -315,7 +311,7 @@ export default function EditPostPage() {
                         : selectedCategoryName || '카테고리를 선택해주세요'}
                     </p>
                   </div>
-                  <Icon id='angle-down' width={24} height={24} />
+                  <IconChevronDown width={24} height={24} />
                 </div>
                 {categoryDropDownOpen && !isCategoryDisabled && (
                   <DropdownList
@@ -641,12 +637,7 @@ export function NewEditPostPage({ isNotice = false }) {
           <div className={styles.center}>
             <div className={styles.categorySelect}>
               <div className={styles.categorySelectContainer}>
-                <Icon
-                  id='clip-board-list'
-                  width={21}
-                  height={22}
-                  fill='white'
-                />
+                <IconMultiClipboardBlue width={21} height={22} />
                 <p className={styles.categorySelectText}>
                   {!isGlobalNotice && isNotice
                     ? `${boardName} 공지`

@@ -1,23 +1,21 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { IllustrationTaskFailed } from '@snorose/icons';
+
 import { BackAppBar, NewButton } from '@/shared/component';
 
 import styles from './NotFoundIdPage.module.css';
-
-import { taskFailedIllustration } from '@/assets/illustrations';
 
 export default function NotFoundIdPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
 
   useEffect(() => {
-    try {
-      const checkAccess = state.access;
-    } catch (e) {
+    if (!state) {
       navigate('/login');
     }
-  }, []);
+  }, [navigate, state]);
 
   return (
     <div className={styles.container}>
@@ -31,10 +29,10 @@ export default function NotFoundIdPage() {
       </div>
 
       <div className={styles.pageMiddleFrame}>
-        <img
-          src={taskFailedIllustration}
-          alt='아이디 찾기 실패를 알리는 일러스트'
+        <IllustrationTaskFailed
           className={styles.illustration}
+          role='img'
+          aria-label='아이디 찾기 실패를 알리는 일러스트'
         />
       </div>
 

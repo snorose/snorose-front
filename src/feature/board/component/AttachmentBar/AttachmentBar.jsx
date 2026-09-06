@@ -1,5 +1,7 @@
 import { React, useRef, useState } from 'react';
 
+import { IconImage, IconImageFill } from '@snorose/icons';
+
 import { Icon } from '@/shared/component';
 import { ATTACHMENT_EXTENSION_LIMIT } from '@/shared/constant';
 
@@ -43,17 +45,31 @@ export default function AttachmentBar({
         <FixedMenuEditor editor={editor} />
       )}
       <div className={styles.attachmentBar}>
-        <Icon
-          id={isImageIconHighlighted ? 'image-fill' : 'image'}
-          width={24}
-          height={24}
-          className={styles.image}
-          onClick={() => {
-            img.current.click();
-          }}
-          onPointerEnter={() => setIsImageIconHighlighted(true)}
-          onPointerLeave={() => setIsImageIconHighlighted(false)}
-        />
+        {isImageIconHighlighted ? (
+          <IconImageFill
+            width={24}
+            height={24}
+            color='var(--blue-3)'
+            className={styles.image}
+            onClick={() => {
+              img.current.click();
+            }}
+            onPointerEnter={() => setIsImageIconHighlighted(true)}
+            onPointerLeave={() => setIsImageIconHighlighted(false)}
+          />
+        ) : (
+          <IconImage
+            width={24}
+            height={24}
+            color='var(--blue-3)'
+            className={styles.image}
+            onClick={() => {
+              img.current.click();
+            }}
+            onPointerEnter={() => setIsImageIconHighlighted(true)}
+            onPointerLeave={() => setIsImageIconHighlighted(false)}
+          />
+        )}
         <input
           type='file'
           accept={ATTACHMENT_EXTENSION_LIMIT.imageExtensions.join(', ')}

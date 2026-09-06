@@ -1,16 +1,18 @@
 import { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
+import { IconFile } from '@snorose/icons';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useToast } from '@/shared/hook';
-import { FetchLoadingOverlay, Icon, ConfirmModal } from '@/shared/component';
+import { ConfirmModal,FetchLoadingOverlay, Icon } from '@/shared/component';
 import {
+  CONFIRM_MODAL_TEXT,
   LOADING_MESSAGE,
   QUERY_KEY,
   TOAST,
-  CONFIRM_MODAL_TEXT,
 } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
+import { useToast } from '@/shared/hook';
 
 import { getExamReview } from '@/apis';
 
@@ -91,7 +93,7 @@ export default function ReviewDownload({
           setModal({ id: 'exam-review-download', type: null });
         }}
       >
-        <Icon id='file' width={10} height={14} />
+        <IconFile width={10} height={14} viewBox="0 0 24 24" />
         <span className={styles.name}>{fileName}</span>
       </button>
       {modal.id === 'exam-review-download' && (

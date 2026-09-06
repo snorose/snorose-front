@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react';
+
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconMultiCheckPinkCircle,
+} from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
-import { getMonthlyAttendanceHistory } from '@/apis';
-
 import { FetchLoadingOverlay, Icon } from '@/shared/component';
-import { DateTime } from '@/shared/lib';
 import { LOADING_MESSAGE, QUERY_KEY } from '@/shared/constant';
+import { DateTime } from '@/shared/lib';
 
 import { StyledCalendar } from '@/feature/attendance/component/Calendar/Calendar.style.jsx';
+
+import { getMonthlyAttendanceHistory } from '@/apis';
 
 import styles from './Calendar.module.css';
 
@@ -47,8 +53,8 @@ export default function Calendar({ callback }) {
             .format(date)
             .slice(0, -1) + '월'
         }
-        nextLabel={<Icon id='calendar-next' width={11} height={18} />}
-        prevLabel={<Icon id='calendar-prev' width={11} height={18} />}
+        nextLabel={<IconChevronRight className={styles.whiteArrow} />}
+        prevLabel={<IconChevronLeft className={styles.whiteArrow} />}
         next2Label={null}
         prev2Label={null}
         showNeighboringMonth={false}
@@ -87,7 +93,7 @@ function Tile({ date, data = [] }) {
   return (
     <div className={styles.tile}>
       {checked ? (
-        <Icon id='check-circle-fill' width={33} height={33} />
+        <IconMultiCheckPinkCircle width={33} height={33} />
       ) : (
         <div
           className={`${styles.day} ${DateTime.isToday(date) && styles.today}`}

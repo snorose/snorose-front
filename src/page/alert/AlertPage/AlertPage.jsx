@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
+import { IconMultiBellPink, IllustrationBellEmpty } from '@snorose/icons';
 import {
   QueryErrorResetBoundary,
   useIsFetching,
@@ -23,8 +24,6 @@ import {
   useNotification,
   useReadNotifications,
 } from '@/feature/alert/hook/notification';
-
-import { noAlertIllustration } from '@/assets/illustrations';
 
 import style from './AlertPage.module.css';
 
@@ -62,7 +61,7 @@ export default function AlertPage() {
 
       <div className={style.top}>
         <div className={style.notificationBar}>
-          <Icon id='notice-bell' width={13} height={16} />
+          <IconMultiBellPink width={13} height={16} />
           <p>모든 알림은 14일 후 자동으로 삭제돼요!</p>
         </div>
       </div>
@@ -161,10 +160,10 @@ function NotificationList({ category }) {
   if (notifications.length === 0) {
     return (
       <div className={style.noAlertContainer}>
-        <img
+        <IllustrationBellEmpty
           className={style.noAlertIllustration}
-          src={noAlertIllustration}
-          alt='새로운 알림이 없어요'
+          role='img'
+          aria-label='새로운 알림이 없어요'
         />
         <div className={style.noAlertText}>새로운 알림이 없어요</div>
       </div>

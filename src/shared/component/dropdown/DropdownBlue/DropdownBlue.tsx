@@ -8,10 +8,15 @@ import {
   useState,
 } from 'react';
 
+import {
+  IconCheck,
+  IconChevronDown,
+  IconMultiClipboardBlue,
+} from '@snorose/icons';
+
 import { Icon } from '@/shared/component';
 
 import styles from './DropdownBlue.module.css';
-
 interface AccessibilityContextType {
   triggerId: string;
   menuId: string;
@@ -123,16 +128,15 @@ const Trigger = ({ children }: { children: ReactNode }) => {
       aria-controls={menuId}
     >
       <div>
-        <Icon
+        <IconMultiClipboardBlue
           className={styles.icon}
-          id='clip-board-list'
           width={21}
           height={22}
         />
         <p>{children}</p>
       </div>
 
-      <Icon className={styles.angle} id='angle-down' width={24} height={24} />
+      <IconChevronDown className={styles.angle} width={24} height={24} />
     </div>
   );
 };
@@ -240,7 +244,11 @@ const Item = ({
       tabIndex={-1}
     >
       {children}
-      {selected && <Icon id='check' width={14} height={11} />}
+      {selected && (
+        <IconCheck
+          className={styles.checkIconBlue}
+        />
+      )}
     </div>
   );
 };

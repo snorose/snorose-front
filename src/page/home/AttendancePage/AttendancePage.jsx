@@ -1,12 +1,12 @@
 import { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
+
+import { IconPointCircle } from '@snorose/icons';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useAuth, useToast } from '@/shared/hook';
-import { BackAppBar, FetchLoadingOverlay, Icon } from '@/shared/component';
+import { BackAppBar, FetchLoadingOverlay } from '@/shared/component';
 import { QUERY_KEY, TOAST } from '@/shared/constant';
-import { fireConfetti } from '@/feature/attendance/lib/confetti';
-
-import { updatePoint } from '@/apis';
+import { useAuth, useToast } from '@/shared/hook';
 
 import { SettingItem } from '@/feature/alert/component';
 import { Calendar } from '@/feature/attendance/component';
@@ -15,9 +15,11 @@ import {
   POINT_CATEGORY_ENUM,
   POINT_SOURCE_ENUM,
 } from '@/feature/attendance/constant';
+import { fireConfetti } from '@/feature/attendance/lib/confetti';
+
+import { updatePoint } from '@/apis';
 
 import styles from './AttendancePage.module.css';
-import { useLoaderData } from 'react-router-dom';
 
 export default function AttendancePage() {
   const [loading, setLoading] = useState();
@@ -45,7 +47,7 @@ export default function AttendancePage() {
             <span className={styles.label}>{title}</span>
             <p className={styles.description}>{content}</p>
           </div>
-          <Icon id='point-circle' width={32} height={32} />
+          <IconPointCircle width={32} height={32} color='var(--blue-4)' />
         </div>
 
         {/* <div style={{ margin: '0 2rem' }}>

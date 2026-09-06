@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useSidebarStore } from '@/shared/store';
-import { useAuth } from '@/shared/hook';
 import { Icon } from '@/shared/component';
 import {
   NEW_SIDEBAR_MENUS,
   NOT_LOGIN_MENUS,
   SIDEBAR_MENUS,
 } from '@/shared/constant';
+import { useAuth } from '@/shared/hook';
+import { useSidebarStore } from '@/shared/store';
 
 import styles from './Sidebar.module.css';
 
@@ -57,14 +57,16 @@ export default function Sidebar() {
           <Icon id='logo' width={180} height={30} />
         </Link>
 
-        {MENUS.map(({ to, title, items }) => (
-          <div key={title} onClick={close}>
-            <Link to={to}>
-              <h3 className={styles.title}>{title}</h3>
-            </Link>
-            <MenuList items={items} />
-          </div>
-        ))}
+        <div className={styles.menuScroll}>
+          {MENUS.map(({ to, title, items }) => (
+            <div key={title} onClick={close}>
+              <Link to={to}>
+                <h3 className={styles.title}>{title}</h3>
+              </Link>
+              <MenuList items={items} />
+            </div>
+          ))}
+        </div>
       </aside>
     </div>
   );

@@ -1,8 +1,14 @@
-// =================== More Option Modal ===================
+import {
+  IconMultiShare,
+  IconPencilFill,
+  IconTrashcanFill,
+  IconMultiFlag,
+} from '@snorose/icons';
+
 const POST_MORE_OPTION_LIST = [
   {
     modalId: null,
-    iconId: 'flag-pink',
+    icon: IconMultiFlag,
     label: '게시글 신고',
     width: 19,
     height: 22,
@@ -18,8 +24,9 @@ const POST_MORE_OPTION_LIST = [
     modalId: 'share',
     iconId: 'share',
     label: '공유하기',
-    width: 18,
-    height: 19,
+    width: 24,
+    height: 24,
+    icon: IconMultiShare,
   },
 ];
 
@@ -30,30 +37,35 @@ const MY_POST_MORE_OPTION_LIST = [
     label: '수정하기',
     width: 19,
     height: 22,
+    icon: IconPencilFill,
+    color: 'var(--blue-3)',
   },
   {
     modalId: 'confirm-post-delete',
     iconId: 'trash',
     label: '삭제하기',
-    width: 16,
-    height: 20,
+    width: 24,
+    height: 24,
+    icon: IconTrashcanFill,
+    color: 'var(--pink-2)',
   },
   {
     modalId: 'share',
     iconId: 'share',
     label: '공유하기',
-    width: 18,
-    height: 19,
+    width: 24,
+    height: 24,
+    icon: IconMultiShare,
   },
 ];
 
 const EXAM_REVIEW_MORE_OPTION_LIST = [
   {
     modalId: null,
-    iconId: 'flag-pink',
+    icon: IconMultiFlag,
     label: '시험후기 신고',
-    width: 19,
-    height: 22,
+    width: 24,
+    height: 24,
   },
   {
     modalId: null,
@@ -71,13 +83,17 @@ const MY_EXAM_REVIEW_MORE_OPTION_LIST = [
     label: '수정하기',
     width: 19,
     height: 22,
+    icon: IconPencilFill,
+    color: 'var(--blue-3)',
   },
   {
     modalId: 'confirm-exam-review-delete',
     iconId: 'trash',
     label: '삭제하기',
-    width: 16,
-    height: 20,
+    width: 24,
+    height: 24,
+    icon: IconTrashcanFill,
+    color: 'var(--pink-2)',
   },
 ];
 
@@ -105,13 +121,17 @@ const MY_COMMENT_MORE_OPTION_LIST = [
     label: '수정하기',
     width: 19,
     height: 22,
+    icon: IconPencilFill,
+    color: 'var(--blue-3)',
   },
   {
     modalId: 'confirm-comment-delete',
     iconId: 'trash',
     label: '삭제하기',
-    width: 16,
-    height: 20,
+    width: 24,
+    height: 24,
+    icon: IconTrashcanFill,
+    color: 'var(--pink-2)',
   },
 ];
 
@@ -120,8 +140,9 @@ const EVENT_MORE_OPTION_LIST = [
     modalId: 'share',
     iconId: 'share',
     label: '공유하기',
-    width: 18,
-    height: 19,
+    width: 24,
+    height: 24,
+    icon: IconMultiShare,
   },
 ];
 

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
-import { Icon } from '@/shared/component';
+import { IconSearch } from '@snorose/icons';
 
 import styles from './Search.module.css';
 
@@ -44,7 +44,7 @@ export default function Search({
 
   return (
     <div className={`${styles.container} ${className}`}>
-      <Icon id='search' width={14} height={14} />
+      <IconSearch width={14} height={14} color='var(--grey-3-1)' />
       <input
         ref={ref}
         className={styles.search}
