@@ -1,6 +1,16 @@
 import { useContext, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import {
+  IconBookmark,
+  IconBookmarkFill,
+  IconBuilding,
+  IconClapperboard,
+  IconHeart,
+  IconHeartFill,
+  IconLocation,
+  IconPerson,
+} from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
 import {
@@ -182,21 +192,29 @@ export default function EventPage() {
         <div className={styles.eventContainer}>
           {['연극/뮤지컬'].includes(data.category) && (
             <div className={styles.host}>
-              <Icon id='movie' width={20} height={20} />
+              <IconClapperboard
+                width={20}
+                height={20}
+                color={'var(--grey-4)'}
+              />
               <p>공연명</p>
               <p className={styles.data}>{data.host}</p>
             </div>
           )}
           {['영화'].includes(data.category) && (
             <div className={styles.host}>
-              <Icon id='movie' width={20} height={20} />
+              <IconClapperboard
+                width={20}
+                height={20}
+                color={'var(--grey-4)'}
+              />
               <p>영화명</p>
               <p className={styles.data}>{data.host}</p>
             </div>
           )}
           {['기타'].includes(data.category) && (
             <div className={styles.host}>
-              <Icon id='host' width={20} height={20} />
+              <IconBuilding width={20} height={20} color={'var(--grey-4)'} />
               <p>주최</p>
               <p className={styles.data}>{data.host}</p>
             </div>
@@ -204,14 +222,14 @@ export default function EventPage() {
 
           {['연극/뮤지컬', '영화'].includes(data.category) && (
             <div className={styles.place}>
-              <Icon id='location' width={20} height={20} />
+              <IconLocation width={20} height={20} color={'var(--grey-4)'} />
               <p>장소</p>
               <p className={styles.data}>{data.place}</p>
             </div>
           )}
 
           <div className={styles.drawCount}>
-            <Icon id='person' width={20} height={20} />
+            <IconPerson width={20} height={20} color={'var(--grey-4)'} />
             <p>추첨 인원</p>
             <p className={styles.data}>{data.drawCount}</p>
           </div>
@@ -425,26 +443,22 @@ function ActionContainer({
         className={styles.count}
         onClick={() => (isLiked ? unlike.mutate() : like.mutate())}
       >
-        <Icon
-          id='like-stroke'
-          width={16}
-          height={15}
-          stroke={'var(--pink-2)'}
-          fill={isLiked ? 'var(--pink-2)' : 'none'}
-        />
+        {isLiked ? (
+          <IconHeartFill width={16} height={18} color='var(--pink-2)' />
+        ) : (
+          <IconHeart width={16} height={18} color='var(--pink-2)' />
+        )}
         <p>공감 {likeCount.toLocaleString()}</p>
       </div>
       <div
         className={styles.count}
         onClick={() => (isScrapped ? unscrap.mutate() : scrap.mutate())}
       >
-        <Icon
-          id='scrap-stroke'
-          width={13}
-          height={16}
-          stroke={'var(--green-2)'}
-          fill={isScrapped ? 'var(--green-2)' : 'none'}
-        />
+        {isScrapped ? (
+          <IconBookmarkFill width={13} height={16} color={'var(--green-2)'} />
+        ) : (
+          <IconBookmark width={13} height={16} color={'var(--green-2)'} />
+        )}
         <p>스크랩 {scrapCount.toLocaleString()}</p>
       </div>
     </div>

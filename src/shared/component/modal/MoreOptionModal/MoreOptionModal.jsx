@@ -1,8 +1,6 @@
 import { useContext } from 'react';
 import { createPortal } from 'react-dom';
 
-import { IconMultiShare, IconPencilFill } from '@snorose/icons';
-
 import { Icon } from '@/shared/component';
 import { ModalContext } from '@/shared/context/ModalContext';
 
@@ -38,36 +36,26 @@ export default function MoreOptionModal({ title, optionList, functions, top }) {
       >
         <h3 className={styles.title}>{title}</h3>
         <ul className={styles.content}>
-          {optionList.map((item, idx) => (
-            <li
-              key={idx}
-              className={`${styles.contentItem} ${idx === optionList.length - 1 ? styles.lastItem : ''}`}
-              onClick={() => handleOptionClick(item, idx)}
-            >
-              <p>{item.label}</p>
-              {item.iconId === 'share' ? (
-                <IconMultiShare
-                  className={styles.itemIcon}
-                  width={item.width}
-                  height={item.height}
-                />
-              ) : item.iconId === 'pencil-blue' ? (
-                <IconPencilFill
-                  className={styles.itemIcon}
-                  width={item.width}
-                  height={item.height}
-                  color='var(--blue-3)'
-                />
-              ) : (
-                <Icon
+          {optionList.map((item, idx) => {
+            const IconComponent = item.icon ?? Icon;
+
+            return (
+              <li
+                key={idx}
+                className={`${styles.contentItem} ${idx === optionList.length - 1 ? styles.lastItem : ''}`}
+                onClick={() => handleOptionClick(item, idx)}
+              >
+                <p>{item.label}</p>
+                <IconComponent
                   id={item.iconId}
                   className={styles.itemIcon}
                   width={item.width}
                   height={item.height}
+                  color={item.color}
                 />
-              )}
-            </li>
-          ))}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>,
