@@ -51,6 +51,10 @@
   transition: 300ms transform ease;
 }
 
+.toggleIcon path {
+  fill: var(--blue-4);
+}
+
 .opend .toggleIcon {
   transform: rotate(180deg);
 }

@@ -74,3 +74,7 @@
     outline: none;
   }
 }
+
+.checkIconBlue path {
+  stroke: var(--blue-4);
+}

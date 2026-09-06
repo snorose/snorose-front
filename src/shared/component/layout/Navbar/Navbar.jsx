@@ -43,7 +43,7 @@ export default function Navbar() {
               let IconComponent;
 
               if (id === 'board') {
-                IconComponent = id === 'board' ? Icon : isActive({ id, to });
+                IconComponent = Icon;
               } else {
                 IconComponent = isActive({ id, to }) ? ActiveIcon : DefaultIcon;
               }

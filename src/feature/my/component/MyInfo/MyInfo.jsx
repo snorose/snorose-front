@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
-import { IconPointCircle } from '@snorose/icons';
+import { IconChevronRight, IconPointCircle } from '@snorose/icons';
 
-import { Badge, Icon } from '@/shared/component';
+import { Badge } from '@/shared/component';
 import { ROLE_NAME } from '@/shared/constant';
 
 import styles from './MyInfo.module.css';
@@ -30,12 +30,11 @@ export default function MyInfo({ userInfo }) {
           </div>
           <div className={styles.pointList}>
             포인트 내역 보기
-            <Icon
-              id='angle-right'
-              width={24}
-              height={24}
-              fill='#00368e'
-              stroke='#00368e'
+            <IconChevronRight
+              className={styles.chevronIconBlue}
+              width={18}
+              height={18}
+              viewBox='0 0 24 24'
             />
           </div>
         </div>

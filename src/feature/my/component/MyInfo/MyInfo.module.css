@@ -76,3 +76,7 @@
     height: 2rem;
   }
 }
+
+.chevronIconBlue path {
+  fill: var(--blue-4);
+}
