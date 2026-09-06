@@ -193,10 +193,6 @@
   </symbol>
 
   <!-- stroke icon -->
-  <symbol id="pencil-underline" viewBox="0 0 20 20" fill="none" stroke="current">
-    <path d="M1 18.7578H9.87793H18.7559" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M10.0973 3.79007L12.8874 1L17.77 5.88261L14.9799 8.67264M10.0973 3.79007L4.56675 9.32063C4.38176 9.50559 4.27783 9.75654 4.27783 10.0181V14.4921H8.75188C9.01349 14.4921 9.26434 14.3883 9.44939 14.2032L14.9799 8.67264M10.0973 3.79007L14.9799 8.67264" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-  </symbol>
   <symbol id="comment-stroke" viewBox="0 0 18 16" fill="current" stroke="current">
     <path d="M2 0.5H16C16.8284 0.5 17.5 1.17157 17.5 2V9.16797C17.5 9.9964 16.8284 10.668 16 10.668H5.2666C4.94224 10.668 4.67721 10.8025 4.48047 10.9434C4.38391 11.0125 4.29389 11.0906 4.21289 11.167L4 11.3799L1.35938 14.1094C1.04705 14.4318 0.500358 14.2109 0.5 13.7617V2C0.5 1.17157 1.17157 0.5 2 0.5Z" stroke="current" stroke-linejoin="round"/>
   </symbol>
