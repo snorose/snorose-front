@@ -9,7 +9,6 @@ import { FetchLoading } from '@/shared/component';
 import {
   SearchResultList,
   SearchResultListErrorFallback,
-  SearchResultListWrapper,
 } from '@/feature/search/component';
 
 /**

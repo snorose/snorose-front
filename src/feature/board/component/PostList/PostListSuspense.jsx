@@ -1,14 +1,11 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import { FetchLoading } from '@/shared/component';
 
-import {
-  NewPostList,
-  PostList,
-  PostListErrorFallback,
-} from '@/feature/board/component';
+import { PostList, PostListErrorFallback } from '@/feature/board/component';
 
 /**
  * TODO(board): 라우트 개선 작업 완료 후 교체

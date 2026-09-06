@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { IconFile } from '@snorose/icons';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { ConfirmModal,FetchLoadingOverlay, Icon } from '@/shared/component';
+import { ConfirmModal, FetchLoadingOverlay } from '@/shared/component';
 import {
   CONFIRM_MODAL_TEXT,
   LOADING_MESSAGE,
@@ -93,7 +93,7 @@ export default function ReviewDownload({
           setModal({ id: 'exam-review-download', type: null });
         }}
       >
-        <IconFile width={10} height={14} viewBox="0 0 24 24" />
+        <IconFile width={10} height={14} viewBox='0 0 24 24' />
         <span className={styles.name}>{fileName}</span>
       </button>
       {modal.id === 'exam-review-download' && (

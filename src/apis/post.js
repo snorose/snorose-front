@@ -1,5 +1,3 @@
-import { IconItem } from '@storybook/blocks';
-
 import { getBoardUrl } from '@/shared/lib';
 
 import altImage from '@/assets/images/altImage.png';

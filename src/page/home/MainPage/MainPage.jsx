@@ -11,7 +11,6 @@ import {
   CarouselSkeleton,
   Footer,
   Header,
-  Icon,
 } from '@/shared/component';
 import { NEW_ROUTES } from '@/shared/constant';
 import { useAuth } from '@/shared/hook';
@@ -86,8 +85,7 @@ export default function MainPage() {
             <span>판매 바로가기</span>
             <span>청파제 굿즈를 주문하세요</span>
           </div>
-          <IconChevronRight
-          />
+          <IconChevronRight />
         </Link>
       )}
 
