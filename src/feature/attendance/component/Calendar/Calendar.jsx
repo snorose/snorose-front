@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { IconChevronLeft,IconChevronRight } from '@snorose/icons';
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconMultiCheckCirclePink,
+} from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
 import { FetchLoadingOverlay, Icon } from '@/shared/component';
@@ -49,12 +53,8 @@ export default function Calendar({ callback }) {
             .format(date)
             .slice(0, -1) + '월'
         }
-        nextLabel={
-        <IconChevronRight className={styles.whiteArrow} />
-        }
-        prevLabel={
-          <IconChevronLeft className={styles.whiteArrow} />
-        }
+        nextLabel={<IconChevronRight className={styles.whiteArrow} />}
+        prevLabel={<IconChevronLeft className={styles.whiteArrow} />}
         next2Label={null}
         prev2Label={null}
         showNeighboringMonth={false}
@@ -93,7 +93,7 @@ function Tile({ date, data = [] }) {
   return (
     <div className={styles.tile}>
       {checked ? (
-        <Icon id='check-circle-fill' width={33} height={33} />
+        <IconMultiCheckCirclePink width={33} height={33} />
       ) : (
         <div
           className={`${styles.day} ${DateTime.isToday(date) && styles.today}`}
