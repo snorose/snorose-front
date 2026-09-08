@@ -1,3 +1,26 @@
+self.addEventListener('install', () => {
+  console.log('Notification SW installed');
+  self.skipWaiting();
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+
+  // const link = event.notification.data?.link ?? '/alert';
+
+  event.waitUntil(
+    self.clients
+      .matchAll({
+        type: 'window',
+        includeUncontrolled: true,
+      })
+      .then(() => {
+        return self.clients.openWindow('/alert');
+      })
+  );
+});
+
+// custom notificationclick을 먼저 등록한 뒤 Firebase Messaging 로드
 importScripts(
   'https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js'
 );
@@ -16,36 +39,15 @@ const app = firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging(app);
 
 messaging.onBackgroundMessage((payload) => {
-  const { title, body, link } = payload.data;
+  const { title, body, link } = payload.data ?? {};
 
-  const notificationOptions = {
+  if (!title) {
+    return;
+  }
+
+  return self.registration.showNotification(title, {
     body,
     icon: '/logos/snoroseLogo180.png',
     data: { link },
-  };
-
-  return self.registration.showNotification(title, notificationOptions);
-});
-
-self.addEventListener('notificationclick', (event) => {
-  event.notification.close();
-  // const targetUrl = event.notification.data?.link || '/alert';
-
-  event.waitUntil(
-    clients
-      .matchAll({ type: 'window', includeUncontrolled: true })
-      .then((clientList) => {
-        // 이미 열린 창이 있으면 focus
-        // for (const client of clientList) {
-        //   if (client.link.includes(targetUrl) && 'focus' in client) {
-        //     return client.focus();
-        //   }
-        // }
-        // 없으면 새 탭 열기
-        if (clients.openWindow) {
-          return clients.openWindow('/alert');
-          // return clients.openWindow(targetUrl);
-        }
-      })
-  );
+  });
 });
