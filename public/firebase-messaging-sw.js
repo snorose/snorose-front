@@ -24,7 +24,7 @@ messaging.onBackgroundMessage((payload) => {
     data: { link },
   };
 
-  self.registration.showNotification(title, notificationOptions);
+  return self.registration.showNotification(title, notificationOptions);
 });
 
 self.addEventListener('notificationclick', (event) => {
