@@ -92,27 +92,12 @@ export class PushNotificationManager {
   static async syncWithServer(token, deviceType) {
     try {
       await sendFCMToken(token, deviceType);
-      this.#setCachedToken(token);
     } catch (error) {
       throw new AppError(
         ERROR_CODE.FCM_TOKEN_SYNC_FAILED,
         ERROR_MESSAGE.FCM_TOKEN_SYNC_FAILED
       );
     }
-  }
-
-  static isTokenChanged(newToken) {
-    const saved = this.#getCachedToken();
-    return !saved || saved !== newToken;
-  }
-
-  static #getCachedToken() {
-    return localStorage.getItem(process.env.REACT_APP_FCM_TOKEN_KEY);
-  }
-
-  static #setCachedToken(token) {
-    const key = process.env.REACT_APP_FCM_TOKEN_KEY;
-    localStorage.setItem(key, token);
   }
 
   static onForegroundMessage(callback) {
