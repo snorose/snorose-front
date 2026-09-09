@@ -92,9 +92,7 @@ function NotificationSettings() {
       const token = await PushNotificationManager.issueToken();
       const deviceType = getDeviceType();
 
-      if (PushNotificationManager.isTokenChanged(token)) {
-        await PushNotificationManager.syncWithServer(token, deviceType);
-      }
+      await PushNotificationManager.syncWithServer(token, deviceType);
     } catch (error) {
       throw error;
     }
