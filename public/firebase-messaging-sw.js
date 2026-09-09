@@ -1,8 +1,4 @@
-self.addEventListener('install', () => {
-  console.log('Notification SW installed');
-  self.skipWaiting();
-});
-
+// 1. notificationclick을 Firebase보다 먼저 등록
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
@@ -20,7 +16,7 @@ self.addEventListener('notificationclick', (event) => {
   );
 });
 
-// custom notificationclick을 먼저 등록한 뒤 Firebase Messaging 로드
+// 2. Firebase 로드
 importScripts(
   'https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js'
 );
