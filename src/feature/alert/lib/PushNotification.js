@@ -1,6 +1,7 @@
 import { getToken, isSupported, onMessage } from 'firebase/messaging';
 
 import { AppError } from '@/shared/lib';
+import { waitUntilActive } from '@/shared/lib/service-worker';
 
 import { ERROR_CODE, ERROR_MESSAGE } from '@/feature/alert/constant';
 import { isIOSPWA } from '@/feature/alert/lib';
@@ -10,22 +11,15 @@ import { sendFCMToken } from '@/apis';
 import { messaging } from './firebase-config';
 
 export class PushNotificationManager {
-  static #registration = null;
-
   static async registerServiceWorker() {
-    this.#assertSupport();
+    await this.#assertSupport();
 
     try {
-      let registration = await navigator.serviceWorker.getRegistration();
-
-      if (registration) {
-        this.#registration = registration;
-        return;
-      }
-
-      this.#registration = await navigator.serviceWorker.register(
+      const registration = await navigator.serviceWorker.register(
         '/firebase-messaging-sw.js'
       );
+
+      return await waitUntilActive(registration);
     } catch (error) {
       throw new AppError(
         ERROR_CODE.SW_REGISTER_FAILED,
@@ -66,11 +60,11 @@ export class PushNotificationManager {
     throw new AppError(ERROR_CODE.PERMISSION_JUST_DENIED);
   }
 
-  static async issueToken() {
+  static async issueToken(registration) {
     try {
       const token = await getToken(messaging, {
         vapidKey: process.env.REACT_APP_VAPID_KEY,
-        serviceWorkerRegistration: this.#registration ?? undefined,
+        serviceWorkerRegistration: registration,
       });
 
       if (!token) {

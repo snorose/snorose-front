@@ -41,3 +41,39 @@ export async function getActiveRegistration(
       registration.active.state === 'activated'
   );
 }
+
+export function waitUntilActive(
+  registration: ServiceWorkerRegistration,
+  timeoutMs: number = 10_000
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (registration.active) {
+      return resolve();
+    }
+
+    const worker = registration.installing ?? registration.waiting;
+
+    if (!worker) {
+      return reject(new Error('Service Worker가 존재하지 않습니다.'));
+    }
+
+    const handleStateChange = () => {
+      if (worker.state === 'activated') {
+        cleanup();
+        resolve();
+      }
+    };
+
+    const cleanup = () => {
+      clearTimeout(timeoutId);
+      worker.removeEventListener('statechange', handleStateChange);
+    };
+
+    const timeoutId = setTimeout(() => {
+      cleanup();
+      reject(new Error('서비스 워커 활성화 타임아웃'));
+    }, timeoutMs);
+
+    worker.addEventListener('statechange', handleStateChange);
+  });
+}
