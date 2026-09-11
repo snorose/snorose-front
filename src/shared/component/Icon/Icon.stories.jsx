@@ -1,9 +1,5 @@
 import { Icon } from '@/shared/component';
-import {
-  STATIC_ICON_LIST,
-  STROKE_ICON_LIST,
-  ILLUSTRATION_ICON_LIST,
-} from '@/shared/constant';
+import { STATIC_ICON_LIST, STROKE_ICON_LIST } from '@/shared/constant';
 
 const iconStoryConfig = {
   title: 'Component/Icon',
@@ -135,25 +131,4 @@ Stroke.argTypes = {
     },
   },
   fill: { table: { disable: true } },
-};
-
-const IllustrationTemplate = (args) => (
-  <Icon {...args} style={{ width: '120px', height: '120px' }} />
-);
-
-export const Illustration = IllustrationTemplate.bind({});
-Illustration.args = {
-  id: ILLUSTRATION_ICON_LIST.starNoPost,
-};
-Illustration.argTypes = {
-  id: {
-    table: {
-      type: { summary: 'string' },
-      order: 1,
-    },
-    control: 'select',
-    options: Object.values(ILLUSTRATION_ICON_LIST),
-  },
-  fill: { table: { disable: true } },
-  stroke: { table: { disable: true } },
 };

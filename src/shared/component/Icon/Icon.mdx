@@ -13,12 +13,7 @@ import {
 
 import * as IconStories from './Icon.stories';
 import { Icon } from '@/shared/component';
-import {
-  STATIC_ICON_LIST,
-  FILL_ICON_LIST,
-  STROKE_ICON_LIST,
-  ILLUSTRATION_ICON_LIST,
-} from '@/shared/constant';
+import { STATIC_ICON_LIST, STROKE_ICON_LIST } from '@/shared/constant';
 
 <Meta of={IconStories} />
 
@@ -33,23 +28,6 @@ import {
 
 <IconGallery>
   {Object.values(STATIC_ICON_LIST).map((icon) => (
-    <IconItem name={icon} style={{ backgroundColor: '#333' }}>
-        <Icon id={icon} />
-    </IconItem>
-
-))}
-
-</IconGallery>
-<br/>
-
-<Subtitle>FILL ICON</Subtitle>
-<p>
-  <span style={{ color: '#00368E', fontWeight: 'bold' }}>fill</span> prop에
-  영향을 받는 아이콘입니다.
-</p>
-
-<IconGallery>
-  {Object.values(FILL_ICON_LIST).map((icon) => (
     <IconItem name={icon} style={{ backgroundColor: '#333' }}>
         <Icon id={icon} />
     </IconItem>
@@ -75,16 +53,3 @@ import {
 
 </IconGallery>
 <br/>
-
-<Subtitle>ILLUSTRATION</Subtitle>
-<p>일러스트입니다.</p>
-
-<IconGallery>
-  {Object.values(ILLUSTRATION_ICON_LIST).map((icon) => (
-    <IconItem name={icon} style={{ backgroundColor: '#333' }}>
-        <Icon id={icon} />
-    </IconItem>
-
-))}
-
-</IconGallery>
