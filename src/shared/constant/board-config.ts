@@ -23,5 +23,7 @@ export const UNSUPPORTED_BOARD_SECTIONS = {
 
   'exam-review': [BOARD_SECTION.SEARCH],
   event: [BOARD_SECTION.SEARCH],
+  sookplace: [],
+  residence: [],
   support: [BOARD_SECTION.SEARCH],
 };
