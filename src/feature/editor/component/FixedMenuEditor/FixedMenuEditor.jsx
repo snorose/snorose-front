@@ -6,10 +6,11 @@ import {
   IconListOrdered,
   IconMultiSlashCircle,
   IconMultiTextBackground,
-  IconMultiTextColor,
+  IconTextColor,
   IconMultiTextStrikethrough,
   IconMultiTextUnderline,
   IconTextBold,
+
 } from '@snorose/icons';
 import { useEditorState } from '@tiptap/react';
 
@@ -151,7 +152,7 @@ export default function FixedMenuEditor({ editor }) {
           }
           style={{ color: editorState.currentColor || 'var(--grey-4)' }}
         >
-          <IconMultiTextColor width={24} height={24} />
+          <IconTextColor width={24} height={24} />
         </button>
 
         <div
