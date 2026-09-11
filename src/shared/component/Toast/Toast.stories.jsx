@@ -1,4 +1,7 @@
+import { IconMultiCheckGreenCircle } from '@snorose/icons';
+
 import { Icon } from '@/shared/component';
+
 import styles from './Toast.module.css';
 
 const toastStoryConfig = {
@@ -41,13 +44,14 @@ const toastConfig = {
     className: styles.info,
   },
   success: {
-    icon: 'active-check-circle-outline',
+    iconComponent: IconMultiCheckGreenCircle,
     className: styles.success,
   },
 };
 
 const Template = ({ message, variant = 'info' }) => {
   const config = toastConfig[variant] || toastConfig.info;
+  const ToastIcon = config.iconComponent;
   const toastClassName = `${styles.toast} ${config.className || ''}`;
 
   return (
@@ -60,7 +64,16 @@ const Template = ({ message, variant = 'info' }) => {
       }}
     >
       <div className={toastClassName}>
-        <Icon className={styles.icon} id={config.icon} width={21} height={20} />
+        {ToastIcon ? (
+          <ToastIcon className={styles.icon} width={21} height={20} />
+        ) : (
+          <Icon
+            className={styles.icon}
+            id={config.icon}
+            width={21}
+            height={20}
+          />
+        )}
         <p className={styles.message}>{message}</p>
       </div>
     </div>

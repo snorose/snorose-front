@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Icon } from '@/shared/component';
+import { IconMultiLogo } from '@snorose/icons';
+
 import { NOT_LOGIN_MENUS, SIDEBAR_MENUS } from '@/shared/constant';
 import { useAuth } from '@/shared/hook';
 import { useSidebarStore } from '@/shared/store';
@@ -50,7 +51,7 @@ export default function Sidebar() {
     <div className={styles.dim}>
       <aside onClick={handleEventPropagation} className={styles.sidebar}>
         <Link className={styles.logo} to='/'>
-          <Icon id='logo' width={180} height={30} />
+          <IconMultiLogo width={180} height={30} />
         </Link>
 
         <div className={styles.menuScroll}>

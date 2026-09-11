@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { IconBookmark, IconBookmarkFill } from '@snorose/icons';
+import { IconBookmark, IconBookmarkFill, IconEllipsis } from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
 import {
@@ -135,9 +135,9 @@ export default function ExamReviewPage() {
             {isConfirmed && <ConfirmedChip />}
           </div>
 
-          <Icon
+          <IconEllipsis
             className={styles.more}
-            id='meat-ball'
+            color='var(--grey-3-1)'
             onClick={() =>
               isWriter
                 ? setModal({ id: 'my-exam-review-more-options' })
@@ -145,7 +145,6 @@ export default function ExamReviewPage() {
             }
             width={18}
             height={4}
-            stroke='none'
           />
         </div>
 
