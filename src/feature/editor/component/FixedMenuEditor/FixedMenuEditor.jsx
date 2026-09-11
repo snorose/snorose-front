@@ -250,19 +250,29 @@ export default function FixedMenuEditor({ editor }) {
       <button
         aria-label='밑줄'
         onClick={() => editor.chain().focus().toggleUnderline().run()}
-        style={
-          editorState.isUnderline ? { '--icon-stroke': 'var(--blue-4)' } : {}
-        }
+        style={{
+          color: editorState.isUnderline ? 'var(--blue-4)' : 'var(--grey-3-1)',
+        }}
       >
-        <IconTextUnderline width={24} height={24} />
+        <IconTextUnderline
+          width={24}
+          height={24}
+          color={editorState.isUnderline ? 'var(--blue-4)' : 'var(--grey-3-1)'}
+        />
       </button>
 
       <button
         aria-label='취소선'
         onClick={() => editor.chain().focus().toggleStrike().run()}
-        style={editorState.isStrike ? { '--icon-stroke': 'var(--blue-4)' } : {}}
+        style={{
+          color: editorState.isStrike ? 'var(--blue-4)' : 'var(--grey-3-1)',
+        }}
       >
-        <IconTextStrikethrough width={24} height={24} />
+        <IconTextStrikethrough
+          width={24}
+          height={24}
+          color={editorState.isStrike ? 'var(--blue-4)' : 'var(--grey-3-1)'}
+        />
       </button>
 
       <button
