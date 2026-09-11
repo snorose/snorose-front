@@ -2,8 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { IconChevronDown, IconMultiClipboardBlue } from '@snorose/icons';
-import { IconMultiCheckBlueCircle, IconMultiCheckGreyCircle } from '@snorose/icons';
+import { IconChevronDown, IconMultiCheckBlueCircle, IconMultiCheckGreyCircle, IconMultiClipboardBlue, IconMultiTrashcanCircle } from '@snorose/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -406,8 +405,7 @@ export default function EditPostPage() {
           />
         )}
 
-        <Icon
-          id='trashcan'
+        <IconMultiTrashcanCircle
           width='10rem'
           height='10rem'
           className={`${isTrashOverlapped ? styles.trashVisible : styles.trashInvisible}`}
@@ -702,8 +700,7 @@ export function NewEditPostPage({ isNotice = false }) {
           </div>
         </div>
 
-        <Icon
-          id='trashcan'
+        <IconMultiTrashcanCircle
           width='10rem'
           height='10rem'
           className={`${isTrashOverlapped ? styles.trashVisible : styles.trashInvisible}`}
