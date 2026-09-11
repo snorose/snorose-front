@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "craco start",
-    "build:app": "craco build",
+    "start": "vite",
+    "build:app": "vite build",
     "build:prod": "REACT_APP_ENV=production npm run build:app && npm run sentry:sourcemaps",
     "build:stage": "REACT_APP_SERVER_DOMAIN=https://stage.snorose.com REACT_APP_ENV=stage npm run build:app",
     "build": "if [ \"$CF_PAGES_BRANCH\" = \"stage\" ]; then npm run build:stage; else npm run build:prod; fi",
@@ -14,7 +14,6 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "craco test",
-    "eject": "craco eject",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepare": "husky"
