@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
-import { IconMultiCheckBlueCircle,IconMultiCheckGreyCircle } from '@snorose/icons';
+import {
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+} from '@snorose/icons';
 
 import { usePopUp } from '@/feature/home/hook';
 
@@ -58,13 +61,9 @@ export default function PopUp() {
                 className={styles.hideButton}
               >
                 {selectedPopupHideDuration === button.duration ? (
-                  <IconMultiCheckBlueCircle
-                    className={styles.hideButtonIcon}
-                      />
-                    ) : (
-                    <IconMultiCheckGreyCircle
-                      className={styles.hideButtonIcon}
-                    />
+                  <IconMultiCheckBlueCircle className={styles.hideButtonIcon} />
+                ) : (
+                  <IconMultiCheckGreyCircle className={styles.hideButtonIcon} />
                 )}
                 {button.label}
               </button>

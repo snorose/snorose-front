@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
 
-import { IconChevronRight, IconMultiBellLightBlue,IllustrationFlag } from '@snorose/icons';
+import {
+  IconChevronRight,
+  IconMultiBellLightBlue,
+  IllustrationFlag,
+} from '@snorose/icons';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { QUERY_KEY } from '@/shared/constant';

@@ -1,6 +1,7 @@
-import { IconMultiCheckBlueCircle, IconMultiCheckGreyCircle } from '@snorose/icons';
-
-import { Icon } from '@/shared/component';
+import {
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+} from '@snorose/icons';
 
 import styles from './CheckBox.module.css';
 

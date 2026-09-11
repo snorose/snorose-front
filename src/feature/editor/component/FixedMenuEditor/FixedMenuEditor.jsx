@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
 
-
 import {
   IconChevronDown,
-  IconMultiSlashCircle,
   IconListBullet,
   IconListOrdered,
+  IconMultiSlashCircle,
   IconMultiTextBackground,
   IconMultiTextColor,
   IconTextBold,
   IconTextStrikethrough,
   IconTextUnderline,
 } from '@snorose/icons';
-
 import { useEditorState } from '@tiptap/react';
-
-import { Icon } from '@/shared/component';
 
 import { convertListTypesInSelection } from '@/feature/editor/lib';
 

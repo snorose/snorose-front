@@ -2,7 +2,13 @@ import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { IconChevronDown, IconMultiCheckBlueCircle, IconMultiCheckGreyCircle, IconMultiClipboardBlue, IconMultiTrashcanCircle } from '@snorose/icons';
+import {
+  IconChevronDown,
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+  IconMultiClipboardBlue,
+  IconMultiTrashcanCircle,
+} from '@snorose/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -13,7 +19,6 @@ import {
   ConfirmModal,
   DropdownList,
   FetchLoading,
-  Icon,
 } from '@/shared/component';
 import {
   ATTACHMENT_MODAL_TEXT,

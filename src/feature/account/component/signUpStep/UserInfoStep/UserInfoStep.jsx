@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { IconChevronRight, IconMultiCheckBlueCircle, IconMultiCheckGreyCircle } from '@snorose/icons';
+import {
+  IconChevronRight,
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+} from '@snorose/icons';
 
 import {
   Dropdown,
