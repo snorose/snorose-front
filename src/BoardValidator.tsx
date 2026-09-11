@@ -23,6 +23,8 @@ const BOARD_NAMES = [
   'exam-review',
 
   'event',
+  'sookplace',
+  'residence',
   'support',
 ];
 
@@ -40,8 +42,9 @@ export default function BoardValidator({ children }: { children: ReactNode }) {
     .filter(Boolean)
     .at(-1);
 
-  const notFound =
-    UNSUPPORTED_BOARD_SECTIONS[boardKey].includes(currentFeature);
+  const notFound = (UNSUPPORTED_BOARD_SECTIONS[boardKey] ?? []).includes(
+    currentFeature
+  );
   if (notFound) {
     return <NotFoundPage />;
   }
