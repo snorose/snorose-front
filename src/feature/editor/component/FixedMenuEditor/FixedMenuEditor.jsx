@@ -6,8 +6,8 @@ import {
   IconListOrdered,
   IconMultiSlashCircle,
   IconMultiTextBackground,
-  IconMultiTextColor,
   IconTextBold,
+  IconTextColor,
   IconTextStrikethrough,
   IconTextUnderline,
 } from '@snorose/icons';
@@ -151,7 +151,7 @@ export default function FixedMenuEditor({ editor }) {
           }
           style={{ color: editorState.currentColor || 'var(--grey-4)' }}
         >
-          <IconMultiTextColor width={24} height={24} />
+          <IconTextColor width={24} height={24} />
         </button>
 
         <div
