@@ -18,10 +18,10 @@ import { routeList } from '@/router.jsx';
 import '@/index.css';
 
 Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DSN,
-  environment: process.env.REACT_APP_ENV,
-  enabled: process.env.REACT_APP_ENV === 'production',
-  debug: process.env.NODE_ENV === 'development',
+  dsn: import.meta.env.VITE_SENTRY_DSN,
+  environment: import.meta.env.MODE,
+  enabled: import.meta.env.MODE === 'production',
+  debug: import.meta.env.DEV,
   integrations: [
     Sentry.captureConsoleIntegration({ levels: ['error'] }),
     Sentry.replayIntegration({
@@ -37,7 +37,7 @@ Sentry.init({
 growthbook.init({ streaming: true });
 
 async function enableMocking() {
-  if (process.env.NODE_ENV !== 'development') return;
+  if (!import.meta.env.DEV) return;
 
   const { worker } = await import('@/mock/browser');
 
