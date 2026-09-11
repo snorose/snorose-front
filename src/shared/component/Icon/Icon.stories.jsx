@@ -1,5 +1,5 @@
 import { Icon } from '@/shared/component';
-import { STATIC_ICON_LIST, STROKE_ICON_LIST } from '@/shared/constant';
+import { STATIC_ICON_LIST } from '@/shared/constant';
 
 const iconStoryConfig = {
   title: 'Component/Icon',
@@ -64,7 +64,7 @@ const Template = (args) => (
 
 export const Static = Template.bind({});
 Static.args = {
-  id: STATIC_ICON_LIST.home,
+  id: STATIC_ICON_LIST.videoOpaque,
 };
 Static.argTypes = {
   id: {
@@ -77,58 +77,4 @@ Static.argTypes = {
   },
   fill: { table: { disable: true } },
   stroke: { table: { disable: true } },
-};
-
-export const Fill = Template.bind({});
-Fill.args = {
-  id: STATIC_ICON_LIST.homeFill,
-  fill: '#00368E',
-};
-Fill.argTypes = {
-  id: {
-    table: {
-      type: { summary: 'string' },
-      order: 1,
-    },
-    control: 'select',
-    options: Object.values(STATIC_ICON_LIST),
-  },
-  fill: {
-    table: {
-      defaultValue: { summary: 'black' },
-    },
-    control: {
-      type: 'color',
-    },
-  },
-  stroke: { table: { disable: true } },
-};
-
-const StrokeTemplate = (args) => (
-  <Icon {...args} style={{ width: '26px', height: '26px' }} />
-);
-
-export const Stroke = StrokeTemplate.bind({});
-Stroke.args = {
-  id: STROKE_ICON_LIST.x,
-  stroke: '#00368E',
-};
-Stroke.argTypes = {
-  id: {
-    table: {
-      type: { summary: 'string' },
-      order: 1,
-    },
-    control: 'select',
-    options: Object.values(STROKE_ICON_LIST),
-  },
-  stroke: {
-    table: {
-      defaultValue: { summary: 'black' },
-    },
-    control: {
-      type: 'color',
-    },
-  },
-  fill: { table: { disable: true } },
 };
