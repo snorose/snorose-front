@@ -486,8 +486,8 @@ export default function WritePostPage() {
         )}
 
         <IconMultiTrashcanCircle
-          width='10rem'
-          height='10rem'
+          width={21}
+          height={22}
           className={`${isTrashOverlapped ? styles.trashVisible : styles.trashInvisible}`}
           onDragEnter={(e) => {
             e.preventDefault();
@@ -816,8 +816,8 @@ export function NewWritePostPage({ isNotice = false }) {
         </div>
 
         <IconMultiTrashcanCircle
-          width='10rem'
-          height='10rem'
+          width={21}
+          height={22}
           className={`${isTrashOverlapped ? styles.trashVisible : styles.trashInvisible}`}
           onDragEnter={(e) => {
             e.preventDefault();

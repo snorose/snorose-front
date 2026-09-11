@@ -40,8 +40,8 @@ export default function FullScreenAttachment({
           ref={paginationRef}
         ></p>
         <IconDownload
-          width={'2.4rem'}
-          height={'2.4rem'}
+          width={24}
+          height={24}
           className={styles.download}
           onClick={() => {
             setIsChoiceModalOpen(true);
