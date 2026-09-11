@@ -4,8 +4,12 @@ import { Link, useLocation } from 'react-router-dom';
 import { IconMultiCheckGreyCircle } from '@snorose/icons';
 
 import {
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+} from '@snorose/icons';
+
+import {
   BackAppBar,
-  Icon,
   NewButton,
   PasswordInput,
   TextInput,
@@ -135,7 +139,7 @@ export default function Login() {
           onClick={() => setIsRememberId((prev) => !prev)}
         >
           {isRememberId ? (
-            <Icon id='inactive-check-circle' width={22} height={22} />
+            <IconMultiCheckBlueCircle width={22} height={22} />
           ) : (
             <IconMultiCheckGreyCircle width={22} height={22} />
           )}

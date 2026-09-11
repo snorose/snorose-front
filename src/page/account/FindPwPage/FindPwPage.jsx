@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { IconMultiInfoCircle, IconPaperclip } from '@snorose/icons';
 
-import { IconPaperclip } from '@snorose/icons';
 
 import {
   BackAppBar,
@@ -107,12 +107,7 @@ export default function FindPwPage() {
               aria-expanded={showAlert}
               aria-controls='find-pw-notice'
             >
-              <Icon
-                id='info-circle'
-                width='1.6rem'
-                height='1.6rem'
-                viewBox='0 0 20 20'
-              />
+              <IconMultiInfoCircle width={16} height={16} />
               <p>비밀번호 찾기</p>
             </button>
 

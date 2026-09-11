@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { IconGripHorizontal } from '@snorose/icons';
+
 import { Icon } from '@/shared/component';
 
 import { getSafeSrc } from '@/feature/attachment/lib';
@@ -77,13 +79,13 @@ function AttachmentList({ attachmentsInfo, setAttachmentsInfo }) {
               />
             </div>
           )}
-          <Icon
-            id='image-select-bar'
-            width={'3rem'}
-            height={'9.6rem'}
-            fill='white'
-            className={styles.imageSelectBar}
-          />
+          <div className={styles.imageSelectBar}>
+            <IconGripHorizontal
+              width={11}
+              height={18}
+              color='var(--blue-2, #bfd7ec)'
+            />
+          </div>
         </li>
       ))}
     </ul>

@@ -1,4 +1,5 @@
-import { Icon } from '@/shared/component';
+import { IconMultiBellBlue, IconMultiBellOff } from '@snorose/icons';
+
 import { useToast } from '@/shared/hook';
 import { AppError } from '@/shared/lib';
 
@@ -37,11 +38,11 @@ export default function BellIcon({ boardId, postId, isActive }) {
 
   return (
     <div className={styles.icon} onClick={updateSetting}>
-      <Icon
-        id={isActive ? 'comment-bell-fill' : 'comment-bell'}
-        width={18}
-        height={21}
-      />
+      {isActive ? (
+        <IconMultiBellBlue width={18} height={21} />
+      ) : (
+        <IconMultiBellOff width={18} height={21} />
+      )}
     </div>
   );
 }

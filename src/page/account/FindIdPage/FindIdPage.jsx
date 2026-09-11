@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { IconChevronRight, IconPaperclip } from '@snorose/icons';
-
+import { IconChevronRight, IconPaperclip, IconMultiInfoCircle } from '@snorose/icons';
 import {
   BackAppBar,
   ErrorMessage,
@@ -107,12 +105,8 @@ export default function FindIdPage() {
               aria-expanded={showAlert}
               aria-controls='find-id-notice'
             >
-              <Icon
-                id='info-circle'
-                width='1.6rem'
-                height='1.6rem'
-                viewBox='0 0 20 20'
-              />
+              <IconMultiInfoCircle width={16} height={16} />
+
               <p>아이디 찾기</p>
             </button>
 
@@ -160,6 +154,7 @@ export default function FindIdPage() {
                   target='_blank'
                   rel='noopener noreferrer'
                 >
+
                   <IconPaperclip
                     width={16}
                     height={16}

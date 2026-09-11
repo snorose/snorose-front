@@ -104,19 +104,6 @@
     <circle cx="10.5" cy="11.3418" r="10.5" fill="#BFD7EC"/>
     <path d="M5 12.4031L8.81526 16.3418L16.2 7.54181" stroke="#5F86BF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   </symbol>
-  <symbol id="comment-bell-fill" viewBox="0 0 17 21" fill="none" stroke="none">
-    <path opacity="0.7" d="M1.13379 9.70004C1.13379 5.63154 4.43196 2.33337 8.50046 2.33337C12.569 2.33337 15.8671 5.63154 15.8671 9.70004V12.9999C15.8671 13.5522 15.4194 13.9999 14.8671 13.9999H2.13379C1.5815 13.9999 1.13379 13.5522 1.13379 12.9999V9.70004Z" fill="#00368E"/>
-    <rect opacity="0.5" y="13.9996" width="17" height="3.49996" rx="1.74998" fill="#00368E"/>
-    <rect x="6.7998" y="17.5001" width="3.4" height="3.49996" rx="1.7" fill="#00368E"/>
-    <rect x="6.7998" width="3.4" height="3.49996" rx="1.7" fill="#00368E"/>
-  </symbol>
-  <symbol id="comment-bell" viewBox="0 0 20 21" fill="none" stroke="none">
-    <path opacity="0.7" d="M2.63379 9.70004C2.63379 5.63154 5.93196 2.33337 10.0005 2.33337C14.069 2.33337 17.3671 5.63154 17.3671 9.70004V12.9999C17.3671 13.5522 16.9194 13.9999 16.3671 13.9999H3.63379C3.0815 13.9999 2.63379 13.5522 2.63379 12.9999V9.70004Z" fill="#898989"/>
-    <rect opacity="0.5" x="1.5" y="13.9996" width="17" height="3.49996" rx="1.74998" fill="#898989"/>
-    <rect x="8.2998" y="17.5001" width="3.4" height="3.49996" rx="1.7" fill="#898989"/>
-    <rect x="8.2998" width="3.4" height="3.49996" rx="1.7" fill="#898989"/>
-    <path d="M19 1.50012L1 19.4998" stroke="#898989" stroke-width="1.5" stroke-linecap="round"/>
-  </symbol>
 
 
   <!-- fill icon -->
@@ -186,33 +173,9 @@
       </radialGradient>
     </defs>
   </symbol>
-
-  <symbol id="inactive-check-circle" viewBox="0 0 22 22" fill="none" stroke="none">
-    <circle cx="11" cy="11" r="11" fill="#DDEBF6"/>
-    <path d="M5.5 11.8613L9.31526 15.8L16.7 7" stroke="#5F86BF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-  </symbol>
-  <symbol id="info-circle"  width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="none">
-    <circle cx="10" cy="10" r="9.5" fill="#5F86BF" stroke="white"/>
-    <path d="M9.18105 14.8294V8.14741H10.8191V14.8294H9.18105ZM8.20605 14.8294V14.0754C8.20605 13.9541 8.23639 13.8631 8.29705 13.8024C8.36639 13.7417 8.46172 13.6984 8.58305 13.6724L9.32405 13.5164L9.49305 14.8294H8.20605ZM10.5071 14.8294L10.6761 13.5164L11.4171 13.6724C11.5384 13.6984 11.6294 13.7417 11.6901 13.8024C11.7594 13.8631 11.7941 13.9541 11.7941 14.0754V14.8294H10.5071ZM9.49305 8.14741L9.32405 9.46041L8.58305 9.30441C8.46172 9.27841 8.36639 9.23508 8.29705 9.17441C8.23639 9.11374 8.20605 9.02274 8.20605 8.90141V8.14741H9.49305ZM10.0261 7.22441C9.74872 7.22441 9.50605 7.12474 9.29805 6.92541C9.09005 6.72608 8.98605 6.48774 8.98605 6.21041C8.98605 5.92441 9.09005 5.68174 9.29805 5.48241C9.50605 5.27441 9.74872 5.17041 10.0261 5.17041C10.3121 5.17041 10.5591 5.27441 10.7671 5.48241C10.9751 5.68174 11.0791 5.92441 11.0791 6.21041C11.0791 6.48774 10.9751 6.72608 10.7671 6.92541C10.5591 7.12474 10.3121 7.22441 10.0261 7.22441Z" fill="white"/>
-  </symbol>
-
-
-  <symbol id="info-triangle" width="22" height="21" viewBox="0 0 22 21" fill="none" stroke="none">
-    <path d="M9.69043 2.15332C10.2629 1.12896 11.7371 1.12896 12.3096 2.15332L20.6055 16.998C21.1639 17.9978 20.441 19.2293 19.2959 19.2295H2.7041C1.55897 19.2293 0.836087 17.9978 1.39453 16.998L9.69043 2.15332Z" fill="#FF849A" stroke="white"/>
-    <path d="M10.281 13.1842L10.008 7.86718L9.943 6.06018H11.867L11.802 7.86718L11.529 13.1842H10.281ZM9.969 16.1222V14.2762H11.867V16.1222H9.969Z" fill="white"/>
-  </symbol>
   <symbol id="video-opaque" width="40" height="39" viewBox="0 0 40 39" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="20.1599" cy="19.4116" r="18.48" fill="#EAF5FD" fill-opacity="0.5" stroke="#EAF5FD" stroke-width="1.8"/>
     <path d="M25.8533 17.9576C26.9733 18.6043 26.9733 20.2208 25.8533 20.8675L18.5733 25.0706C17.4533 25.7172 16.0533 24.9089 16.0533 23.6157L16.0533 15.2094C16.0533 13.9162 17.4533 13.1079 18.5733 13.7545L25.8533 17.9576Z" fill="#EAF5FD"/>
-  </symbol>
-  <symbol id="image-select-bar" viewBox="0 0 31 96" fill="none" >
-    <path d="M0.5 0H18.5C25.1274 0 30.5 5.37258 30.5 12V84C30.5 90.6274 25.1274 96 18.5 96H0.5V0Z" fill="white"  stroke="white"/>
-    <circle cx="12.1587" cy="41" r="2" fill="#BFD7EC" stroke="none"/>
-    <circle cx="18.8413" cy="41" r="2" fill="#BFD7EC" stroke="none"/>
-    <circle cx="12.1587" cy="48" r="2" fill="#BFD7EC" stroke="none"/>
-    <circle cx="18.8413" cy="48" r="2" fill="#BFD7EC" stroke="none"/>
-    <circle cx="12.1587" cy="55" r="2" fill="#BFD7EC" stroke="none"/>
-    <circle cx="18.8413" cy="55" r="2" fill="#BFD7EC" stroke="none"/>
   </symbol>
   <symbol id="trashcan" viewBox="0 0 101 100" fill="none" stroke="white">
     <g clip-path="url(#clip0_4991_10310)">
@@ -254,21 +217,6 @@
       <path d="M22 11L2 11" stroke="var(--icon-stroke, #484848)" stroke-width="1.8" stroke-linecap="round"/>
     </symbol>
 
-    <symbol id = 'no-color' viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="14" cy="14" r="12.5" fill="#EAF5FD" stroke="white" stroke-width="3"/>
-      <path d="M21 7L7 21" stroke="#FF4B6C" stroke-width="0.8"/>
-      <circle cx="14" cy="14" r="12.5" stroke="white" stroke-width="3"/>
-    </symbol>
-
-    <symbol id="check-editor" viewBox="0 0 12 10" fill="none">
-      <path
-        d="M0.773438 5.19283L4.24186 8.77344L10.9553 0.773438"
-        stroke="currentColor"
-        stroke-width="1.54545"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </symbol>
 
   </svg>
 
