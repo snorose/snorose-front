@@ -145,7 +145,6 @@ export default function ExamReviewPage() {
             }
             width={18}
             height={4}
-            stroke='none'
           />
         </div>
 
