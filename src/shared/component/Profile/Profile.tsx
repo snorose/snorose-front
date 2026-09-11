@@ -21,7 +21,7 @@ export default function Profile({
   size = 'medium',
 }: ProfileProps) {
   const icon = badge.includes(userRoleId) ? (
-    <Badge userRoleId={userRoleId} />
+    <Badge userRoleId={userRoleId} width={24} height={24} />
   ) : (
     <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
   );

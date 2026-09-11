@@ -24,7 +24,7 @@ export default function AccordionListItem({ list, listName }) {
             <span className={styles.name}>
               {content.name}
               {content.badge && (
-                <Badge userRoleId={content.role} className={styles.badge} />
+                <Badge userRoleId={content.role} width={16} height={16} />
               )}
             </span>
             {listName === 'SNOROSE_HISTORY' ? <p>-</p> : <p>:</p>}

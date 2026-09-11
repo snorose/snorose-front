@@ -30,11 +30,6 @@
   flex-shrink: 0;
 }
 
-.badge {
-  width: 1.6rem;
-  height: 1.6rem;
-}
-
 .description {
   word-break: keep-all;
 }

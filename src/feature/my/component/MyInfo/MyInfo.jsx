@@ -19,7 +19,14 @@ export default function MyInfo({ userInfo }) {
         <div className={styles.memberType}>
           {ROLE_NAME[userInfo?.userRoleId]}
         </div>
-        {<Badge userRoleId={userInfo?.userRoleId} className={styles.badge} />}
+        {
+          <Badge
+            userRoleId={userInfo?.userRoleId}
+            className={styles.badge}
+            width={24}
+            height={24}
+          />
+        }
       </div>
 
       <Link to='view-point-list'>
@@ -30,11 +37,7 @@ export default function MyInfo({ userInfo }) {
           </div>
           <div className={styles.pointList}>
             포인트 내역 보기
-            <IconChevronRight
-              color='var(--blue-4)'
-              width={18}
-              height={18}
-            />
+            <IconChevronRight color='var(--blue-4)' width={18} height={18} />
           </div>
         </div>
       </Link>
