@@ -238,18 +238,32 @@
 .trashInvisible {
   opacity: 0%;
   pointer-events: all;
-  width: fit-content;
   position: fixed;
   bottom: 10.2rem;
   left: 50%;
   transform: translate(-50%, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 100%;
+  background-color: var(--white);
+  box-shadow: 0 0 1.8rem #ddebf6;
 }
 .trashVisible {
   opacity: 100%;
   pointer-events: all;
-  width: fit-content;
   position: fixed;
   bottom: 10.2rem;
   left: 50%;
   transform: translate(-50%, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 100%;
+  background-color: var(--white);
+  box-shadow: 0 0 1.8rem #ddebf6;
 }

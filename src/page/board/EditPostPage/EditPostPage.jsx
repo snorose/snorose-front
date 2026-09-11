@@ -2,7 +2,11 @@ import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { IconChevronDown, IconMultiClipboardBlue } from '@snorose/icons';
+import {
+  IconChevronDown,
+  IconMultiClipboardBlue,
+  IconTrashcanFill,
+} from '@snorose/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -405,10 +409,7 @@ export default function EditPostPage() {
           />
         )}
 
-        <Icon
-          id='trashcan'
-          width='10rem'
-          height='10rem'
+        <div
           className={`${isTrashOverlapped ? styles.trashVisible : styles.trashInvisible}`}
           onDragEnter={(e) => {
             e.preventDefault();
@@ -432,7 +433,9 @@ export default function EditPostPage() {
             setIsTrashOverlapped(false);
             trashImageConfirmModal.openModal();
           }}
-        />
+        >
+          <IconTrashcanFill width={30} height={30} color='var(--pink-2)' />
+        </div>
         <AttachmentBar
           attachmentsInfo={attachmentsInfo}
           setAttachmentsInfo={setAttachmentsInfo}
@@ -701,10 +704,7 @@ export function NewEditPostPage({ isNotice = false }) {
           </div>
         </div>
 
-        <Icon
-          id='trashcan'
-          width='10rem'
-          height='10rem'
+        <div
           className={`${isTrashOverlapped ? styles.trashVisible : styles.trashInvisible}`}
           onDragEnter={(e) => {
             e.preventDefault();
@@ -728,7 +728,9 @@ export function NewEditPostPage({ isNotice = false }) {
             setIsTrashOverlapped(false);
             trashImageConfirmModal.openModal();
           }}
-        />
+        >
+          <IconTrashcanFill width={30} height={30} color='var(--pink-2)' />
+        </div>
         <AttachmentBar
           attachmentsInfo={attachmentsInfo}
           setAttachmentsInfo={setAttachmentsInfo}

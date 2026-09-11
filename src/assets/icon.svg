@@ -294,30 +294,6 @@
     <circle cx="12.1587" cy="55" r="2" fill="#BFD7EC" stroke="none"/>
     <circle cx="18.8413" cy="55" r="2" fill="#BFD7EC" stroke="none"/>
   </symbol>
-  <symbol id="trashcan" viewBox="0 0 101 100" fill="none" stroke="white">
-    <g clip-path="url(#clip0_4991_10310)">
-    <g filter="url(#filter0_d_4991_10310)">
-    <circle cx="50.5" cy="50" r="45" fill="white"/>
-    </g>
-    <rect x="41.4043" y="45.5117" width="18.1915" height="16.456" rx="1.5" fill="#FF849A"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M52.7742 38.7792C52.7742 38.3661 52.4393 38.0312 52.0262 38.0312H48.9743C48.5612 38.0312 48.2263 38.3661 48.2263 38.7792C48.2263 39.1924 47.8914 39.5272 47.4783 39.5272H42.9003C42.0741 39.5272 41.4043 40.197 41.4043 41.0232C41.4043 41.8495 42.0741 42.5192 42.9003 42.5192H58.0998C58.926 42.5192 59.5958 41.8495 59.5958 41.0232C59.5958 40.197 58.926 39.5272 58.0998 39.5272H53.5222C53.1091 39.5272 52.7742 39.1924 52.7742 38.7792Z" fill="#FF849A"/>
-    </g>
-    <defs>
-    <filter id="filter0_d_4991_10310" x="-12.5" y="-13" width="126" height="126" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-    <feOffset/>
-    <feGaussianBlur stdDeviation="9"/>
-    <feComposite in2="hardAlpha" operator="out"/>
-    <feColorMatrix type="matrix" values="0 0 0 0 0.866667 0 0 0 0 0.921569 0 0 0 0 0.964706 0 0 0 1 0"/>
-    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_4991_10310"/>
-    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_4991_10310" result="shape"/>
-    </filter>
-    <clipPath id="clip0_4991_10310">
-    <rect width="100" height="100" fill="white" transform="translate(0.5)"/>
-    </clipPath>
-    </defs>
-  </symbol>
   <svg id="download" width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path d="M12 3V16M12 16L6 10.3478M12 16L18 10.3478" stroke="black" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M3 17V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V17" stroke="black" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/>
