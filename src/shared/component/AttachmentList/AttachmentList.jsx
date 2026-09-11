@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { IconGripHorizontal } from '@snorose/icons';
-
-import { Icon } from '@/shared/component';
+import { IconGripHorizontal, IconMultiVideo } from '@snorose/icons';
 
 import { getSafeSrc } from '@/feature/attachment/lib';
 
@@ -71,11 +69,10 @@ function AttachmentList({ attachmentsInfo, setAttachmentsInfo }) {
                   e.currentTarget.replaceWith(img);
                 }}
               />
-              <Icon
-                id='video-opaque'
-                width={'0.875rem'}
-                height={'0.875rem'}
+              <IconMultiVideo
                 className={styles.videoIcon}
+                width={16}
+                height={16}
               />
             </div>
           )}

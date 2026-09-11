@@ -1,14 +1,18 @@
 import { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { IconBookmark, IconBookmarkFill, IconEllipsis } from '@snorose/icons';
+import {
+  IconBookmark,
+  IconBookmarkFill,
+  IconComment,
+  IconEllipsis,
+} from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
 import {
   BackAppBar,
   FetchLoading,
   FetchLoadingOverlay,
-  Icon,
 } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
@@ -217,15 +221,13 @@ function ActionContainer({ commentCount, isScrapped, scrapCount }) {
         }}
         onClick={inputFocus}
       >
-        <Icon
-          id='comment-stroke'
+        <IconComment
           width={18}
           height={15}
+          color='var(--blue-3)'
           styles={{
             paddingTop: '0.1rem',
           }}
-          stroke='var(--blue-3)'
-          fill='none'
         />
         <p>댓글 {commentCount.toLocaleString()}</p>
       </div>

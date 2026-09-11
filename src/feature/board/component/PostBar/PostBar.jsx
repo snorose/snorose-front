@@ -164,25 +164,11 @@ function ActionContainer({
         }) => {
           if (count <= 0) return null;
 
-          let IconComponent;
-
-          if (iconId) {
-            IconComponent = (
-              <Icon
-                id={iconId}
-                width={width}
-                height={height}
-                fill={isActive ? color : 'none'}
-                stroke={color}
-              />
-            );
-          } else {
-            IconComponent = isActive ? (
-              <ActiveIcon width={width} height={height} color={color} />
-            ) : (
-              <DefaultIcon width={width} height={height} color={color} />
-            );
-          }
+          const IconComponent = isActive ? (
+            <ActiveIcon width={width} height={height} color={color} />
+          ) : (
+            <DefaultIcon width={width} height={height} color={color} />
+          );
 
           return (
             <div key={iconId} className={styles.action}>
