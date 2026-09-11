@@ -7,7 +7,6 @@ import {
   IconMultiInfoCircle,
 } from '@snorose/icons';
 
-import { Icon } from '@/shared/component';
 import { useToastContext } from '@/shared/context/ToastContext';
 
 import styles from './Toast.module.css';
@@ -18,11 +17,11 @@ export default function Toast({ toast }) {
 
   const toastConfig = {
     error: {
-      icon: 'info-triangle',
+      iconComponent: IconMultiExclamationTriangle,
       className: styles.error,
     },
     info: {
-      icon: 'info-circle',
+      iconComponent: IconMultiInfoCircle,
       className: styles.info,
     },
     success: {
@@ -33,7 +32,6 @@ export default function Toast({ toast }) {
 
   const variant = toast.variant || 'info';
   const config = toastConfig[variant] || toastConfig.info;
-  const iconId = config.icon;
   const ToastIcon = config.iconComponent;
   const toastClassName = `${styles.toast} ${config.className || ''}`;
 
@@ -59,19 +57,7 @@ export default function Toast({ toast }) {
 
   return createPortal(
     <div ref={toastRef} className={toastClassName}>
-      {iconId === 'info-triangle' && (
-        <IconMultiExclamationTriangle
-          className={styles.icon}
-          width={21}
-          height={20}
-        />
-      )}
-      {iconId === 'info-circle' && (
-        <IconMultiInfoCircle className={styles.icon} width={21} height={20} />
-      )}
-      {iconId !== 'info-triangle' && iconId !== 'info-circle' && (
-        <Icon className={styles.icon} id={iconId} width={21} height={20} />
-      )}
+      <ToastIcon className={styles.icon} width={21} height={20} />
       <p className={styles.message}>{toast.message}</p>
     </div>,
     root
