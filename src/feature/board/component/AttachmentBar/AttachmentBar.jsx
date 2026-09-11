@@ -1,8 +1,12 @@
 import { React, useRef, useState } from 'react';
 
 import {
+  IconHashtag,
+  IconHashtagFill,
   IconImage,
   IconImageFill,
+  IconOpenEditor,
+  IconOpenEditorFill,
   IconVideo,
   IconVideoFill,
 } from '@snorose/icons';
@@ -43,6 +47,10 @@ export default function AttachmentBar({
   const isEditorIconHighlighted =
     !isTitleFocused && (isEditorOpen || isEditorIconHovered);
   const isHashtagIconHighlighted = !isTitleFocused && isHashtagIconHovered;
+  const EditorIcon = isEditorIconHighlighted
+    ? IconOpenEditorFill
+    : IconOpenEditor;
+  const HashtagIcon = isHashtagIconHighlighted ? IconHashtagFill : IconHashtag;
 
   return (
     <div ref={attachmentBarRef} className={styles.bar}>
@@ -119,10 +127,10 @@ export default function AttachmentBar({
           multiple
         />
 
-        <Icon
-          id={isEditorIconHighlighted ? 'open-editor-fill' : 'open-editor'}
+        <EditorIcon
           width={27}
           height={21}
+          color='var(--blue-3)'
           className={`${styles.image} ${isTitleFocused ? styles.disabled : ''}`}
           onClick={() => {
             if (isTitleFocused) return;
@@ -133,10 +141,10 @@ export default function AttachmentBar({
           onMouseDown={(e) => e.preventDefault()}
         />
 
-        <Icon
-          id={isHashtagIconHighlighted ? 'hashtag-fill' : 'hashtag'}
+        <HashtagIcon
           width={23}
           height={21}
+          color='var(--blue-3)'
           className={`${styles.image} ${isTitleFocused ? styles.disabled : ''}`}
           onClick={() => {
             if (isTitleFocused || !editor) return;
