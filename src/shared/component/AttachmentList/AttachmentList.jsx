@@ -72,7 +72,7 @@ function AttachmentList({ attachmentsInfo, setAttachmentsInfo }) {
                 }}
               />
               <Icon
-                id='video-fill'
+                id='video-opaque'
                 width={'0.875rem'}
                 height={'0.875rem'}
                 className={styles.videoIcon}

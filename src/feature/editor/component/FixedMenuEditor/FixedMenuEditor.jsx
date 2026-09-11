@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 
-import { IconChevronDown, IconMultiSlashCircle } from '@snorose/icons';
+
+import {
+  IconChevronDown,
+  IconMultiSlashCircle,
+  IconListBullet,
+  IconListOrdered,
+  IconMultiTextBackground,
+  IconMultiTextColor,
+  IconTextBold,
+} from '@snorose/icons';
+
 import { useEditorState } from '@tiptap/react';
 
 import { Icon } from '@/shared/component';
@@ -144,7 +154,7 @@ export default function FixedMenuEditor({ editor }) {
           }
           style={{ color: editorState.currentColor || 'var(--grey-4)' }}
         >
-          <Icon id='font-color' width={24} height={24} />
+          <IconMultiTextColor width={24} height={24} />
         </button>
 
         <div
@@ -186,11 +196,11 @@ export default function FixedMenuEditor({ editor }) {
             setOpenedMenu((prev) => (prev === 'bgColor' ? null : 'bgColor'))
           }
           style={{
-            '--bg-icon-fill': editorState.currentBgColor || '#E6F7B1',
-            '--bg-icon-stroke': editorState.currentBgColor || '#AAD916',
+            '--background-icon-fill': editorState.currentBgColor || '#E6F7B1',
+            '--background-icon-stroke': editorState.currentBgColor || '#AAD916',
           }}
         >
-          <Icon id='bg-color' width={24} height={24} />
+          <IconMultiTextBackground width={24} height={24} />
         </button>
 
         <div
@@ -232,9 +242,12 @@ export default function FixedMenuEditor({ editor }) {
       <button
         aria-label='굵게'
         onClick={() => editor.chain().focus().toggleBold().run()}
-        style={editorState.isBold ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
-        <Icon id='bold' width={24} height={24} />
+        <IconTextBold
+          width={24}
+          height={24}
+          color={editorState.isBold ? 'var(--blue-4)' : 'var(--grey-3-1)'}
+        />
       </button>
 
       <button
@@ -258,21 +271,25 @@ export default function FixedMenuEditor({ editor }) {
       <button
         aria-label='글머리 기호 목록'
         onClick={() => toggleListStyle('bulletList')}
-        style={
-          editorState.isBulletList ? { '--icon-stroke': 'var(--blue-4)' } : {}
-        }
       >
-        <Icon id='list-bullet' width={24} height={24} />
+        <IconListBullet
+          width={24}
+          height={24}
+          color={editorState.isBulletList ? 'var(--blue-4)' : 'var(--grey-3-1)'}
+        />
       </button>
 
       <button
         aria-label='번호 매기기 목록'
         onClick={() => toggleListStyle('orderedList')}
-        style={
-          editorState.isOrderedList ? { '--icon-stroke': 'var(--blue-4)' } : {}
-        }
       >
-        <Icon id='list-ordered' width={24} height={24} />
+        <IconListOrdered
+          width={24}
+          height={24}
+          color={
+            editorState.isOrderedList ? 'var(--blue-4)' : 'var(--grey-3-1)'
+          }
+        />
       </button>
     </div>
   );

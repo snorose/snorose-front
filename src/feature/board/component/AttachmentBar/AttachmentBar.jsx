@@ -1,6 +1,15 @@
 import { React, useRef, useState } from 'react';
 
-import { IconImage, IconImageFill } from '@snorose/icons';
+import {
+  IconHashtag,
+  IconHashtagFill,
+  IconImage,
+  IconImageFill,
+  IconOpenEditor,
+  IconOpenEditorFill,
+  IconVideo,
+  IconVideoFill,
+} from '@snorose/icons';
 
 import { Icon } from '@/shared/component';
 import { ATTACHMENT_EXTENSION_LIMIT } from '@/shared/constant';
@@ -38,6 +47,10 @@ export default function AttachmentBar({
   const isEditorIconHighlighted =
     !isTitleFocused && (isEditorOpen || isEditorIconHovered);
   const isHashtagIconHighlighted = !isTitleFocused && isHashtagIconHovered;
+  const EditorIcon = isEditorIconHighlighted
+    ? IconOpenEditorFill
+    : IconOpenEditor;
+  const HashtagIcon = isHashtagIconHighlighted ? IconHashtagFill : IconHashtag;
 
   return (
     <div ref={attachmentBarRef} className={styles.bar}>
@@ -78,17 +91,33 @@ export default function AttachmentBar({
           onChange={changeImageUpload}
           multiple
         />
-        <Icon
-          id={isVideoIconHighlighted ? 'video-fill' : 'video'}
-          width={24}
-          height={24}
-          className={styles.image}
-          onClick={() => {
-            vid.current.click();
-          }}
-          onPointerEnter={() => setIsVideoIconHighlighted(true)}
-          onPointerLeave={() => setIsVideoIconHighlighted(false)}
-        />
+
+        {isVideoIconHighlighted ? (
+          <IconVideoFill
+            className={styles.image}
+            width={24}
+            height={24}
+            color={'var(--blue-3)'}
+            onClick={() => {
+              vid.current.click();
+            }}
+            onPointerEnter={() => setIsVideoIconHighlighted(true)}
+            onPointerLeave={() => setIsVideoIconHighlighted(false)}
+          />
+        ) : (
+          <IconVideo
+            className={styles.image}
+            width={24}
+            height={24}
+            color={'var(--blue-3)'}
+            onClick={() => {
+              vid.current.click();
+            }}
+            onPointerEnter={() => setIsVideoIconHighlighted(true)}
+            onPointerLeave={() => setIsVideoIconHighlighted(false)}
+          />
+        )}
+
         <input
           type='file'
           accept={ATTACHMENT_EXTENSION_LIMIT.videoExtensions.join(', ')}
@@ -98,10 +127,10 @@ export default function AttachmentBar({
           multiple
         />
 
-        <Icon
-          id={isEditorIconHighlighted ? 'open-editor-fill' : 'open-editor'}
+        <EditorIcon
           width={27}
           height={21}
+          color='var(--blue-3)'
           className={`${styles.image} ${isTitleFocused ? styles.disabled : ''}`}
           onClick={() => {
             if (isTitleFocused) return;
@@ -112,10 +141,10 @@ export default function AttachmentBar({
           onMouseDown={(e) => e.preventDefault()}
         />
 
-        <Icon
-          id={isHashtagIconHighlighted ? 'hashtag-fill' : 'hashtag'}
+        <HashtagIcon
           width={23}
           height={21}
+          color='var(--blue-3)'
           className={`${styles.image} ${isTitleFocused ? styles.disabled : ''}`}
           onClick={() => {
             if (isTitleFocused || !editor) return;

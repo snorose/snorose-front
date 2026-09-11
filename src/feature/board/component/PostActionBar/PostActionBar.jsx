@@ -1,6 +1,7 @@
 import {
   IconBookmark,
   IconBookmarkFill,
+  IconComment,
   IconHeart,
   IconHeartFill,
 } from '@snorose/icons';
@@ -31,15 +32,13 @@ export function CommentActionButton({ isNotice, commentCount }) {
       }}
       onClick={inputFocus}
     >
-      <Icon
-        id='comment-stroke'
+      <IconComment
         width={18}
         height={15}
+        color={'var(--blue-3)'}
         style={{
           paddingTop: '0.1rem',
         }}
-        stroke='var(--blue-3)'
-        fill='none'
       />
       <p>댓글 {commentCount.toLocaleString()}</p>
     </div>

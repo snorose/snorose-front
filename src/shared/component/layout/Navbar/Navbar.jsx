@@ -40,23 +40,16 @@ export default function Navbar() {
               const color = isActive({ id, to })
                 ? 'var(--blue-4)'
                 : 'var(--blue-2)';
-              let IconComponent;
 
-              if (id === 'board') {
-                IconComponent = Icon;
-              } else {
-                IconComponent = isActive({ id, to }) ? ActiveIcon : DefaultIcon;
-              }
+              const IconComponent = isActive({ id, to })
+                ? ActiveIcon
+                : DefaultIcon;
 
               return (
                 <Link key={id} to={to}>
                   <li className={styles.menu}>
                     <div className={styles.iconWrapper}>
-                      <IconComponent
-                        id={isActive({ id, to }) ? `${id}-fill` : id}
-                        color={color}
-                        {...props}
-                      />
+                      <IconComponent color={color} {...props} />
                       {id === 'bell' && unreadAlertCount > 0 && (
                         <div className={styles.badge}>
                           <span>
