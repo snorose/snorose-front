@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import { IconChevronDown, IconMultiClipboardBlue } from '@snorose/icons';
+import { IconMultiCheckBlueCircle, IconMultiCheckGreyCircle } from '@snorose/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -350,11 +351,11 @@ export default function EditPostPage() {
                   }
                   onClick={handleIsNotice}
                 >
-                  <Icon
-                    id={isNotice ? 'check-circle-blue' : 'check-circle-grey'}
-                    width={21}
-                    height={22}
-                  />
+                  {isNotice ? (
+                    <IconMultiCheckBlueCircle width={21} height={22} />
+                  ) : (
+                    <IconMultiCheckGreyCircle width={21} height={22} />
+                  )}
                   <p>공지글</p>
                 </div>
               )}
