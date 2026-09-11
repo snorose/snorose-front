@@ -13,7 +13,7 @@ import { QueryProvider } from '@/shared/provider/query-provider';
 import { CommentContextProvider } from '@/feature/comment/context';
 
 import reportWebVitals from '@/reportWebVitals';
-import { routeList } from '@/router.js';
+import { routeList } from '@/router.jsx';
 
 import '@/index.css';
 
