@@ -1,7 +1,7 @@
 import { forwardRef, useContext, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { IconHeart, IconHeartFill } from '@snorose/icons';
+import { IconComment, IconHeart, IconHeartFill } from '@snorose/icons';
 
 import { Badge, Icon, MoreOptionModal } from '@/shared/component';
 import {
@@ -166,15 +166,13 @@ const Comment = forwardRef((props, ref) => {
                 type='button'
                 onClick={handleReply}
               >
-                <Icon
-                  id='comment-stroke'
+                <IconComment
                   width={18}
                   height={15}
+                  color={'var(--blue-3)'}
                   style={{
                     paddingTop: '0.1rem',
                   }}
-                  stroke='var(--blue-3)'
-                  fill='none'
                 />
                 <p>{children.length}</p>
               </button>

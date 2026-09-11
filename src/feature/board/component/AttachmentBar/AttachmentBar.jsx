@@ -1,6 +1,11 @@
 import { React, useRef, useState } from 'react';
 
-import { IconImage, IconImageFill } from '@snorose/icons';
+import {
+  IconImage,
+  IconImageFill,
+  IconVideo,
+  IconVideoFill,
+} from '@snorose/icons';
 
 import { Icon } from '@/shared/component';
 import { ATTACHMENT_EXTENSION_LIMIT } from '@/shared/constant';
@@ -78,17 +83,33 @@ export default function AttachmentBar({
           onChange={changeImageUpload}
           multiple
         />
-        <Icon
-          id={isVideoIconHighlighted ? 'video-fill' : 'video'}
-          width={24}
-          height={24}
-          className={styles.image}
-          onClick={() => {
-            vid.current.click();
-          }}
-          onPointerEnter={() => setIsVideoIconHighlighted(true)}
-          onPointerLeave={() => setIsVideoIconHighlighted(false)}
-        />
+
+        {isVideoIconHighlighted ? (
+          <IconVideoFill
+            className={styles.image}
+            width={24}
+            height={24}
+            color={'var(--blue-3)'}
+            onClick={() => {
+              vid.current.click();
+            }}
+            onPointerEnter={() => setIsVideoIconHighlighted(true)}
+            onPointerLeave={() => setIsVideoIconHighlighted(false)}
+          />
+        ) : (
+          <IconVideo
+            className={styles.image}
+            width={24}
+            height={24}
+            color={'var(--blue-3)'}
+            onClick={() => {
+              vid.current.click();
+            }}
+            onPointerEnter={() => setIsVideoIconHighlighted(true)}
+            onPointerLeave={() => setIsVideoIconHighlighted(false)}
+          />
+        )}
+
         <input
           type='file'
           accept={ATTACHMENT_EXTENSION_LIMIT.videoExtensions.join(', ')}
