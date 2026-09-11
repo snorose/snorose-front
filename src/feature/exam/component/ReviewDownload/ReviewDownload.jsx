@@ -93,7 +93,7 @@ export default function ReviewDownload({
           setModal({ id: 'exam-review-download', type: null });
         }}
       >
-        <IconFile width={10} height={14} viewBox='0 0 24 24' />
+        <IconFile width={10} height={14} color="var(--blue-4)" />
         <span className={styles.name}>{fileName}</span>
       </button>
       {modal.id === 'exam-review-download' && (

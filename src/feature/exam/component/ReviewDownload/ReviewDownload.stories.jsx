@@ -23,7 +23,7 @@ function MockReviewDownload({ className, fileName }) {
       className={`${styles.layout} ${className || ''}`}
       onClick={handleDownload}
     >
-      <IconFile width={10} height={14} viewBox="0 0 24 24" />
+      <IconFile width={10} height={14} color="var(--blue-4)" />
       <span className={styles.name}>{fileName}</span>
     </button>
   );
