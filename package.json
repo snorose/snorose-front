@@ -13,7 +13,7 @@
     "lint:fix": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "craco test",
+    "test": "vitest",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepare": "husky"
@@ -25,7 +25,7 @@
     "@snorose/icons": "^0.1.1",
     "@svgr/webpack": "latest",
     "@tanstack/react-query": "^5.51.23",
-    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/user-event": "^13.2.1",
     "@tiptap/extension-bubble-menu": "^3.19.0",
     "@tiptap/extension-color": "^3.19.0",
@@ -68,7 +68,6 @@
   "devDependencies": {
     "@babel/core": "~7.29.0",
     "@chromatic-com/storybook": "^3.2.3",
-    "@craco/craco": "^7.1.0",
     "@sentry/cli": "^3.4.2",
     "@storybook/addon-docs": "^8.4.7",
     "@storybook/addon-essentials": "^8.4.7",
@@ -89,6 +88,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-storybook": "^0.11.2",
     "husky": "^9.1.7",
+    "jsdom": "^26.1.0",
     "lint-staged": "^15.5.2",
     "msw": "^2.15.0",
     "prettier": "^3.3.2",
@@ -97,6 +97,7 @@
     "storybook": "^8.4.7",
     "typescript": "^4.9.5",
     "vite": "^8.3.0",
+    "vitest": "^5.0.0",
     "webpack": "^5.97.1"
   },
   "overrides": {

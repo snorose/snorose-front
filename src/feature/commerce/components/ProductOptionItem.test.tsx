@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
 import { ProductOptionItem } from './ProductOptionSection';
 
@@ -17,8 +18,8 @@ describe('상품 옵션 재고 표시', () => {
       <ProductOptionItem
         option={soldOutOption}
         quantity={0}
-        onIncrease={jest.fn()}
-        onDecrease={jest.fn()}
+        onIncrease={vi.fn()}
+        onDecrease={vi.fn()}
         increaseDisabled={false}
         decreaseDisabled={false}
         inventoryPolicy='LIMITED_STOCK'

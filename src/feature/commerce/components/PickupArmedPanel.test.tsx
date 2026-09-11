@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import type { ButtonHTMLAttributes } from 'react';
+import { describe, expect, it, vi } from 'vitest';
 
 import PickupArmedPanel from '@/feature/commerce/components/PickupArmedPanel';
 import type { PickupDeviceSessionResponse } from '@/feature/commerce/types';
 
-jest.mock('@/shared/component', () => ({
+vi.mock('@/shared/component', () => ({
   PrimaryButton: ({
     children,
     ...props
@@ -32,7 +33,7 @@ describe('수령 단말 주문 확인 화면', () => {
       <PickupArmedPanel
         session={session}
         isConfirming={false}
-        onConfirm={jest.fn()}
+        onConfirm={vi.fn()}
       />
     );
 

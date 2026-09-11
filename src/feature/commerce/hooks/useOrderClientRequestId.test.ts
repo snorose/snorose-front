@@ -1,19 +1,19 @@
 import { renderHook } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import useOrderClientRequestId from '@/feature/commerce/hooks/useOrderClientRequestId';
 
-const randomUUID = jest.fn();
+const randomUUID = vi.fn();
 
 describe('주문 clientRequestId 생명주기', () => {
   beforeEach(() => {
     randomUUID.mockReset();
 
-    Object.defineProperty(globalThis, 'crypto', {
-      configurable: true,
-      value: {
-        randomUUID,
-      },
-    });
+    vi.stubGlobal('crypto', { randomUUID });
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
   it('reset 전에는 같은 clientRequestId를 유지한다', () => {
