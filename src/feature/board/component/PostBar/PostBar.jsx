@@ -89,7 +89,7 @@ function Meta({
       <div className={styles.userDisplay} title={userDisplay || undefined}>
         {userDisplay}
       </div>
-      {showBadge && <Badge className={styles.badge} userRoleId={badgeRoleId} />}
+      {showBadge && <Badge userRoleId={badgeRoleId} width={16} height={16} />}
       <div className={styles.dot}>·</div>
       <div>{DateTime.formatAdaptive(createdAt)}</div>
       {children}

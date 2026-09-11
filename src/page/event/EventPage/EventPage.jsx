@@ -369,7 +369,12 @@ function MetaContainer({
         <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
         <p>{userDisplay || 'Unknown'}</p>
         {showBadge && (
-          <Badge userRoleId={badgeRoleId} className={styles.badge} />
+          <Badge
+            userRoleId={badgeRoleId}
+            className={styles.badge}
+            width={18}
+            height={18}
+          />
         )}
         <p className={styles.dot}>·</p>
         <p>

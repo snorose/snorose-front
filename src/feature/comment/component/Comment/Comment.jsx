@@ -135,7 +135,12 @@ const Comment = forwardRef((props, ref) => {
               {isWriterWithdrawn ? '(알 수 없음)' : userDisplay}
             </p>
             {showBadge && (
-              <Badge userRoleId={userRoleId} className={styles.badge} />
+              <Badge
+                userRoleId={userRoleId}
+                className={styles.badge}
+                width={16}
+                height={16}
+              />
             )}
             <p className={styles.dot}>·</p>
             <p>

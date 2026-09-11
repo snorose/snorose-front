@@ -419,7 +419,8 @@ export default function WritePostPage() {
                 ) : (
                   <Badge
                     userRoleId={userInfo?.userRoleId}
-                    className={styles.badge}
+                    width={24}
+                    height={24}
                   />
                 )}
                 <p>{userInfo?.nickname}</p>
@@ -773,7 +774,8 @@ export function NewWritePostPage({ isNotice = false }) {
                 ) : (
                   <Badge
                     userRoleId={userInfo?.userRoleId}
-                    className={styles.badge}
+                    width={24}
+                    height={24}
                   />
                 )}
                 <p>{userInfo?.nickname}</p>
