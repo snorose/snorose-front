@@ -62,12 +62,16 @@ export default function FixedMenuEditor({ editor }) {
   });
 
   const [openedMenu, setOpenedMenu] = useState(null);
+  const [selectedTextColor, setSelectedTextColor] = useState('');
   const HEADING_OPTIONS = [
     { value: 'paragraph', label: '본문' },
     { value: '1', label: '소제목' },
   ];
 
   if (!editor) return null;
+
+  const textColorIconColor =
+    editorState.currentColor || selectedTextColor || '#5F86BF';
 
   const toggleListStyle = (listType) => {
     const nearestList = getNearestListType(editor);
@@ -151,9 +155,14 @@ export default function FixedMenuEditor({ editor }) {
           onClick={() =>
             setOpenedMenu((prev) => (prev === 'textColor' ? null : 'textColor'))
           }
-          style={{ color: editorState.currentColor || 'var(--grey-4)' }}
         >
-          <IconMultiTextColor width={24} height={24} />
+          <IconMultiTextColor
+            width={24}
+            height={24}
+            className={styles.textColorIcon}
+            color={textColorIconColor}
+            style={{ '--text-color-icon-fill': textColorIconColor }}
+          />
         </button>
 
         <div
@@ -164,6 +173,7 @@ export default function FixedMenuEditor({ editor }) {
             className={styles.colorSwatchNone}
             title='색상 없음'
             onClick={() => {
+              setSelectedTextColor('');
               editor.chain().focus().unsetColor().run();
             }}
           >
@@ -178,6 +188,7 @@ export default function FixedMenuEditor({ editor }) {
               style={{ backgroundColor: color.value }}
               title={color.label}
               onClick={() => {
+                setSelectedTextColor(color.value);
                 editor
                   .chain()
                   .focus()
@@ -194,12 +205,17 @@ export default function FixedMenuEditor({ editor }) {
           onClick={() =>
             setOpenedMenu((prev) => (prev === 'bgColor' ? null : 'bgColor'))
           }
-          style={{
-            '--background-icon-fill': editorState.currentBgColor || '#E6F7B1',
-            '--background-icon-stroke': editorState.currentBgColor || '#AAD916',
-          }}
         >
-          <IconMultiTextBackground width={24} height={24} />
+          <IconMultiTextBackground
+            width={24}
+            height={24}
+            color={editorState.currentBgColor || '#E6F7B1'}
+            style={{
+              '--background-icon-fill': editorState.currentBgColor || '#E6F7B1',
+              '--background-icon-stroke':
+                editorState.currentBgColor || '#AAD916',
+            }}
+          />
         </button>
 
         <div

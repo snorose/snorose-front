@@ -43,6 +43,10 @@
   vertical-align: middle;
 }
 
+.textColorIcon path:last-child {
+  fill: var(--text-color-icon-fill);
+}
+
 .toolbar button {
   cursor: pointer;
   padding: 0.3rem;
