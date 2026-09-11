@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { IconChevronDown } from '@snorose/icons';
+import { IconChevronDown, IconMultiSlashCircle } from '@snorose/icons';
 import { useEditorState } from '@tiptap/react';
 
 import { Icon } from '@/shared/component';
@@ -107,11 +107,7 @@ export default function FixedMenuEditor({ editor }) {
           {HEADING_OPTIONS.find((o) => o.value === editorState.currentHeading)
             ?.label ?? '본문'}
 
-          <IconChevronDown
-            width={16}
-            height={16}
-            color="var(--grey-3-1)"
-          />
+          <IconChevronDown width={16} height={16} color='var(--grey-3-1)' />
         </button>
 
         {openedMenu === 'heading' && (
@@ -162,7 +158,7 @@ export default function FixedMenuEditor({ editor }) {
               editor.chain().focus().unsetColor().run();
             }}
           >
-            <Icon id='no-color' width={28} height={28} />
+            <IconMultiSlashCircle width={28} height={28} />
           </button>
 
           {/* 고정 색상 */}
@@ -211,7 +207,7 @@ export default function FixedMenuEditor({ editor }) {
                 .run();
             }}
           >
-            <Icon id='no-color' width={28} height={28} />
+            <IconMultiSlashCircle width={28} height={28} />
           </button>
 
           {/* 고정 색상 */}
