@@ -11,11 +11,7 @@ export const STATIC_ICON_LIST = Object.freeze({
   download: 'download',
 });
 
-export const FILL_ICON_LIST = Object.freeze({});
-
 export const STROKE_ICON_LIST = Object.freeze({
   underline: 'underline',
   strikethrough: 'strikethrough',
 });
-
-export const ILLUSTRATION_ICON_LIST = Object.freeze({});
