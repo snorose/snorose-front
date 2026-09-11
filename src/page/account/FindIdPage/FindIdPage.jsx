@@ -107,7 +107,7 @@ export default function FindIdPage() {
               aria-expanded={showAlert}
               aria-controls='find-id-notice'
             >
-              <IconMultiInfoCircle width='1.6rem' height='1.6rem' />
+              <IconMultiInfoCircle width={16} height={16} />
               <p>아이디 찾기</p>
             </button>
 
