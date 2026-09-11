@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { IconChevronDown, IconChevronUp } from '@snorose/icons';
 
-import { ReactComponent as XIconsmall } from '@/assets/icons/Xsmall.svg';
+import XIconsmall from '@/assets/icons/Xsmall.svg?react';
 
 import styles from './Filter.module.css';
 
@@ -47,17 +47,9 @@ export default function Filter({ filterKey, options, placeholder }) {
     <div ref={ref} className={`${styles.filter} ${isOpen && styles.open}`}>
       <div className={`${styles.display}`}>
         {isOpen ? (
-          <IconChevronUp
-            width={18}
-            height={18}
-            color='var(--blue-4)'
-          />
+          <IconChevronUp width={18} height={18} color='var(--blue-4)' />
         ) : (
-          <IconChevronDown
-            width={18}
-            height={18}
-            color='var(--blue-4)'
-          />
+          <IconChevronDown width={18} height={18} color='var(--blue-4)' />
         )}
         <span className={styles.displayOption}>
           {selectedOptionName ?? placeholder}
