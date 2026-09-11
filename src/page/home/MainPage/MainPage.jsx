@@ -70,25 +70,6 @@ export default function MainPage() {
         )}
       </QueryErrorResetBoundary>
 
-      {new Date() > new Date('2026-09-02T10:00:00') && (
-        <Link
-          to={'/commerce/sales/1'}
-          className={styles.direct}
-          onClick={() => {
-            recordCommerceClick({
-              eventType: 'SALE_SHORTCUT_CLICK',
-              saleId: 1,
-            }).catch(() => {});
-          }}
-        >
-          <div className={styles.item}>
-            <span>판매 바로가기</span>
-            <span>청파제 굿즈를 주문하세요</span>
-          </div>
-          <IconChevronRight />
-        </Link>
-      )}
-
       <ListHeader to={NEW_ROUTES.boardHome} title='게시판' />
       <HomeCommunity />
 
