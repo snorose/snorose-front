@@ -16,7 +16,7 @@ const VARIANT = {
   solid: style.solid,
   outlined: style.outlined,
   outlinedSecondary: style.outlinedSecondary,
-};  
+};
 
 export default function Button({
   size = 'medium',
@@ -24,7 +24,7 @@ export default function Button({
   onClick,
   disabled = false,
   children,
-}: ButtonProps) {
+}) {
   return (
     <button
       className={`${style.button} ${SIZE[size]} ${VARIANT[variant]}`}
