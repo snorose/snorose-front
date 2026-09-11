@@ -5,8 +5,8 @@
   "scripts": {
     "start": "vite",
     "build:app": "vite build",
-    "build:prod": "REACT_APP_ENV=production npm run build:app && npm run sentry:sourcemaps",
-    "build:stage": "REACT_APP_SERVER_DOMAIN=https://stage.snorose.com REACT_APP_ENV=stage npm run build:app",
+    "build:prod": "npm run build:app -- --mode production && npm run sentry:sourcemaps",
+    "build:stage": "VITE_SERVER_DOMAIN=https://stage.snorose.com npm run build:app -- --mode stage",
     "build": "if [ \"$CF_PAGES_BRANCH\" = \"stage\" ]; then npm run build:stage; else npm run build:prod; fi",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject ./build && sentry-cli sourcemaps upload ./build && rimraf ./build/**/*.map",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",

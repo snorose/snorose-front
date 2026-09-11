@@ -69,7 +69,7 @@ export class PushNotificationManager {
   static async issueToken() {
     try {
       const token = await getToken(messaging, {
-        vapidKey: process.env.REACT_APP_VAPID_KEY,
+        vapidKey: import.meta.env.VITE_VAPID_KEY,
         serviceWorkerRegistration: this.#registration ?? undefined,
       });
 
@@ -107,11 +107,11 @@ export class PushNotificationManager {
   }
 
   static #getCachedToken() {
-    return localStorage.getItem(process.env.REACT_APP_FCM_TOKEN_KEY);
+    return localStorage.getItem(import.meta.env.VITE_FCM_TOKEN_KEY);
   }
 
   static #setCachedToken(token) {
-    const key = process.env.REACT_APP_FCM_TOKEN_KEY;
+    const key = import.meta.env.VITE_FCM_TOKEN_KEY;
     localStorage.setItem(key, token);
   }
 
