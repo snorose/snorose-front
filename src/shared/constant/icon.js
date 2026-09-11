@@ -1,58 +1,21 @@
 export const STATIC_ICON_LIST = Object.freeze({
-  angleDown: 'angle-down',
-  angleDownBlue: 'angle-down-blue',
-  angleRight: 'angle-right',
-  angleUpBlue: 'angle-up-blue',
-  arrowDown: 'arrow-down',
-  arrowUpRight: 'arrow-up-right',
-  bell: 'bell',
-  bellFill: 'bell-fill',
-  calendarNext: 'calendar-next',
-  calendarPrev: 'calendar-prev',
   check: 'check',
-  checkThick: 'check-thick',
-  chevronRight: 'chevron-right',
-  commentCircle: 'comment-circle',
-  file: 'file',
-  home: 'home',
-  homeFill: 'home-fill',
-  mypage: 'mypage',
-  mypageFill: 'mypage-fill',
-  nestedArrow: 'nested-arrow',
-  noticeBell: 'notice-bell',
+  checkboxBlue: 'checkbox-blue',
+  checkboxGrey: 'checkbox-grey',
+  checkCircleBlue: 'check-circle-blue',
+  checkCircleGrey: 'check-circle-grey',
   noticeBellBlue: 'notice-bell-blue',
-  pointCircle: 'point-circle',
-  pencil: 'pencil',
-  pencilBlue: 'pencil-blue',
-  search: 'search',
-  searchThick: 'search-thick',
-  share: 'share',
-  test: 'test',
-  testFill: 'test-fill',
-  trash: 'trash',
-  video: 'video',
-  videoFill: 'video-fill',
-  movie: 'movie',
-  location: 'location',
-  person: 'person',
-  host: 'host',
+  setting: 'setting',
+  videoOpaque: 'video-opaque',
+  trashcan: 'trashcan',
+  download: 'download',
 });
 
-export const FILL_ICON_LIST = Object.freeze({
-  arrowLeft: 'arrow-left',
-  bookmarkFill: 'bookmark-fill',
-  closedEye: 'closed-eye',
-  like: 'like',
-  openedEye: 'opened-eye',
-});
+export const FILL_ICON_LIST = Object.freeze({});
 
 export const STROKE_ICON_LIST = Object.freeze({
-  pencilUnderline: 'pencil-underline',
-  x: 'x',
+  underline: 'underline',
+  strikethrough: 'strikethrough',
 });
 
-export const ILLUSTRATION_ICON_LIST = Object.freeze({
-  starNoComment: 'star-no-comment',
-  starNoPost: 'star-no-post',
-  starNoReview: 'star-no-review',
-});
+export const ILLUSTRATION_ICON_LIST = Object.freeze({});
