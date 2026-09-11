@@ -3,11 +3,12 @@ import { useLocation } from 'react-router-dom';
 
 import {
   IconArrowCornerDownRight,
+  IconEllipsis,
   IconHeart,
   IconHeartFill,
 } from '@snorose/icons';
 
-import { Badge, Icon } from '@/shared/component';
+import { Badge } from '@/shared/component';
 import { LIKE_TYPE, ROLE, SHOW_BADGE_PATH } from '@/shared/constant';
 import { DateTime, renderTextWithLinks } from '@/shared/lib';
 
@@ -94,7 +95,7 @@ export default function NestedComment({
               onCommentOptionClick(data, nestedMoreOptionRef);
             }}
           >
-            <Icon id='meat-ball' width={18} height={4} stroke='none' />
+            <IconEllipsis width={18} height={4} color='var(--grey-3-1)' />
           </p>
         )}
       </div>

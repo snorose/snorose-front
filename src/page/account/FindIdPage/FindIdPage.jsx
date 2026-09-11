@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { IconChevronRight, IconMultiInfoCircle } from '@snorose/icons';
-
+import { IconChevronRight, IconPaperclip, IconMultiInfoCircle } from '@snorose/icons';
 import {
   BackAppBar,
   ErrorMessage,
@@ -108,6 +106,7 @@ export default function FindIdPage() {
               aria-controls='find-id-notice'
             >
               <IconMultiInfoCircle width={16} height={16} />
+
               <p>아이디 찾기</p>
             </button>
 
@@ -155,7 +154,12 @@ export default function FindIdPage() {
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-                  <Icon id='google-form' width='1.6rem' height='1.6rem' />
+
+                  <IconPaperclip
+                    width={16}
+                    height={16}
+                    color='var(--grey-3-1)'
+                  />
                   구글 폼
                 </a>
               </div>

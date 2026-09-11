@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-import { BackAppBar, Icon } from '@/shared/component';
+import { IconMultiLogoWithCloud } from '@snorose/icons';
+
+import { BackAppBar } from '@/shared/component';
 
 import {
   Accordion,
@@ -62,7 +64,7 @@ export default function AboutPage() {
   return (
     <section className={styles.container}>
       <BackAppBar hasMenu />
-      <Icon className={styles.logo} id='about-logo' width={221} height={25} />
+      <IconMultiLogoWithCloud className={styles.logo} width={221} height={25} />
       <div className={styles.accordionList}>
         {accordionItems.map((item, index) => (
           <Accordion

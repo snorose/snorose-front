@@ -16,7 +16,6 @@ export const STATIC_ICON_LIST = Object.freeze({
   file: 'file',
   home: 'home',
   homeFill: 'home-fill',
-  logo: 'logo',
   mypage: 'mypage',
   mypageFill: 'mypage-fill',
   nestedArrow: 'nested-arrow',

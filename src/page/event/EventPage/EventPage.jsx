@@ -7,6 +7,7 @@ import {
   IconBuilding,
   IconCalendar,
   IconClapperboard,
+  IconEllipsis,
   IconHeart,
   IconHeartFill,
   IconLocation,
@@ -380,7 +381,7 @@ function MetaContainer({
       <div className={styles.actions}>
         {showMeatBallIcon && (
           <div className={styles.meatBall} onClick={onMenuOpen}>
-            <Icon id='meat-ball' width={18} height={4} stroke='none' />
+            <IconEllipsis width={18} height={4} color='var(--grey-3-1)' />
           </div>
         )}
       </div>
