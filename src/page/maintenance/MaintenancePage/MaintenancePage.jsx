@@ -1,4 +1,7 @@
-import { IconMultiLogo, IllustrationClipboardSearch } from '@snorose/icons';
+import {
+  IllustrationClipboardSearch,
+  IllustrationLogoSnorose,
+} from '@snorose/icons';
 
 import {
   MAINTENANCE_END,
@@ -23,7 +26,11 @@ export default function MaintenancePage() {
           이용에 불편을 드리게 된 점 양해 부탁드립니다.
         </p>
       </div>
-      <IconMultiLogo className={styles.logo} width={221} height={25} />
+      <IllustrationLogoSnorose
+        className={styles.logo}
+        width={221}
+        height={25}
+      />
     </div>
   );
 }

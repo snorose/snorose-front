@@ -7,7 +7,7 @@ import {
   IconMultiCheckBlueCircle,
   IconMultiCheckGreyCircle,
   IconMultiClipboardBlue,
-  IconMultiTrashcanCircle,
+  IllustrationTrashcanCircle,
 } from '@snorose/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -411,7 +411,7 @@ export default function EditPostPage() {
           />
         )}
 
-        <IconMultiTrashcanCircle
+        <IllustrationTrashcanCircle
           width={21}
           height={22}
           className={`${isTrashOverlapped ? styles.trashVisible : styles.trashInvisible}`}
@@ -707,7 +707,7 @@ export function NewEditPostPage({ isNotice = false }) {
           </div>
         </div>
 
-        <IconMultiTrashcanCircle
+        <IllustrationTrashcanCircle
           width={21}
           height={22}
           className={`${isTrashOverlapped ? styles.trashVisible : styles.trashInvisible}`}
