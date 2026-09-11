@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 import OrderConfirmModal from '@/feature/commerce/components/OrderConfirmModal';
 
@@ -28,14 +29,13 @@ describe('주문 제출 전 확인 모달', () => {
         phoneNumber='01011112222'
         totalPaymentAmount={16000}
         isSubmitting={false}
-        onCancel={jest.fn()}
-        onConfirm={jest.fn()}
+        onCancel={vi.fn()}
+        onConfirm={vi.fn()}
       />
     );
 
     expect(screen.getByText('스노로즈 반다나')).toBeInTheDocument();
-    expect(screen.getByText('네이비 · M')).toBeInTheDocument();
-    expect(screen.getByText('2개')).toBeInTheDocument();
+    expect(screen.getByText('네이비 · M X 2개')).toBeInTheDocument();
     expect(screen.getByText('16,000원')).toBeInTheDocument();
     expect(screen.getByText('010-1111-2222')).toBeInTheDocument();
   });
