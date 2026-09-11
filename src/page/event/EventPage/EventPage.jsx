@@ -5,6 +5,7 @@ import {
   IconBookmark,
   IconBookmarkFill,
   IconBuilding,
+  IconCalendar,
   IconClapperboard,
   IconHeart,
   IconHeartFill,
@@ -236,13 +237,7 @@ export default function EventPage() {
 
           {(data.startAt != null || data.endAt != null) && (
             <div className={styles.applicationDate}>
-              <Icon
-                id='calendar-stroke'
-                width={20}
-                height={20}
-                fill='none'
-                stroke='#484848'
-              />
+              <IconCalendar width={20} height={20} color={'var(--grey-4)'} />
               <p>응모 날짜</p>
               <p className={styles.data}>
                 {data.startAt && (
@@ -260,13 +255,7 @@ export default function EventPage() {
 
           {data.announceAt && (
             <div className={styles.announceDate}>
-              <Icon
-                id='calendar-stroke'
-                width={20}
-                height={20}
-                fill='none'
-                stroke='#484848'
-              />
+              <IconCalendar width={20} height={20} color={'var(--grey-4)'} />
               <p>당첨자 발표일</p>
               <p className={styles.data}>
                 {DateTime.format(data.announceAt, 'YMD_HM')}

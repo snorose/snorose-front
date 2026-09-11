@@ -1,6 +1,7 @@
 import {
   IconBookmark,
   IconBookmarkFill,
+  IconComment,
   IconHeart,
   IconHeartFill,
 } from '@snorose/icons';
@@ -130,11 +131,12 @@ function ActionContainer({
       DefaultIcon: IconHeart,
     },
     {
-      iconId: 'comment-stroke',
       width: 16,
       height: 13,
       color: 'var(--blue-3)',
       count: commentCount,
+      ActiveIcon: IconComment,
+      DefaultIcon: IconComment,
     },
     {
       width: 11,

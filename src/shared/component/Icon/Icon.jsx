@@ -6,11 +6,19 @@ export default function Icon({
   id,
   fill = 'black',
   stroke = 'black',
+  width,
+  height,
   ...props
 }) {
   return (
-    <svg {...props}>
-      <use href={`${iconSvg}#${id}`} fill={fill} stroke={stroke} />
+    <svg width={width} height={height} {...props}>
+      <use
+        href={`${iconSvg}#${id}`}
+        width={width}
+        height={height}
+        fill={fill}
+        stroke={stroke}
+      />
     </svg>
   );
 }
