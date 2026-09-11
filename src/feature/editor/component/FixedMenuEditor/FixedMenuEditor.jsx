@@ -6,10 +6,11 @@ import {
   IconListOrdered,
   IconMultiSlashCircle,
   IconMultiTextBackground,
-  IconTextBold,
   IconTextColor,
-  IconTextStrikethrough,
-  IconTextUnderline,
+  IconMultiTextStrikethrough,
+  IconMultiTextUnderline,
+  IconTextBold,
+
 } from '@snorose/icons';
 import { useEditorState } from '@tiptap/react';
 
@@ -250,19 +251,17 @@ export default function FixedMenuEditor({ editor }) {
       <button
         aria-label='밑줄'
         onClick={() => editor.chain().focus().toggleUnderline().run()}
-        style={
-          editorState.isUnderline ? { '--icon-stroke': 'var(--blue-4)' } : {}
-        }
+        className={editorState.isUnderline ? styles.active : ''}
       >
-        <IconTextUnderline width={24} height={24} />
+        <IconMultiTextUnderline width={24} height={24} />
       </button>
 
       <button
         aria-label='취소선'
         onClick={() => editor.chain().focus().toggleStrike().run()}
-        style={editorState.isStrike ? { '--icon-stroke': 'var(--blue-4)' } : {}}
+        className={editorState.isStrike ? styles.active : ''}
       >
-        <IconTextStrikethrough width={24} height={24} />
+        <IconMultiTextStrikethrough width={24} height={24} />
       </button>
 
       <button
