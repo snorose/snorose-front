@@ -1,13 +1,12 @@
 export { default as BoardCategoryPage } from './BoardCategoryPage/BoardCategoryPage';
-export { default as EditPostPage } from './EditPostPage/EditPostPage';
-export { default as NoticeListPage } from './NoticeListPage/NoticeListPage';
-export { default as PostListPage } from './PostListPage/PostListPage';
-export { default as PostDetailPage } from './PostDetailPage/PostDetailPage';
-export { default as WritePostPage } from './WritePostPage/WritePostPage';
-
-export * from './NoticeListPage/NoticeListPage';
-export * from './WritePostPage/WritePostPage';
-export * from './PostDetailPage/PostDetailPage';
-export * from './EditPostPage/EditPostPage';
 export * from './BoardCategoryPage/BoardCategoryPage';
+export { default as EditPostPage } from './EditPostPage/EditPostPage';
+export * from './EditPostPage/EditPostPage';
+export { default as NoticeListPage } from './NoticeListPage/NoticeListPage';
+export * from './NoticeListPage/NoticeListPage';
+export { default as PostDetailPage } from './PostDetailPage/PostDetailPage';
+export * from './PostDetailPage/PostDetailPage';
+export { default as PostListPage } from './PostListPage/PostListPage';
 export * from './PostListPage/PostListPage';
+export { default as WritePostPage } from './WritePostPage/WritePostPage';
+export * from './WritePostPage/WritePostPage';

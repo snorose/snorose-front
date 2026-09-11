@@ -257,7 +257,8 @@ export default function EditEventPage() {
               ) : (
                 <Badge
                   userRoleId={userInfo?.userRoleId}
-                  className={styles.badge}
+                  width={24}
+                  height={24}
                 />
               )}
               <p>{userDisplay}</p>

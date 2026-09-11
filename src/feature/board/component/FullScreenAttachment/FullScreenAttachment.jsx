@@ -1,13 +1,18 @@
 import { React, useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Keyboard } from 'swiper/modules';
 
+import { IconDownload } from '@snorose/icons';
+import { Keyboard, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import { ChoiceModal, CloseAppBar } from '@/shared/component';
 import { useToast } from '@/shared/hook';
-import { Icon, ChoiceModal, CloseAppBar } from '@/shared/component';
+
 import { handleDownload, handleZipDownload } from '@/feature/attachment/lib';
+
 import altImage from '@/assets/images/altImage.png';
 
 import styles from './FullScreenAttachment.module.css';
+
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 
@@ -34,10 +39,9 @@ export default function FullScreenAttachment({
           className={`${styles.pagination} swiper-custom-pagination`}
           ref={paginationRef}
         ></p>
-        <Icon
-          id={'download'}
-          width={'2.4rem'}
-          height={'2.4rem'}
+        <IconDownload
+          width={24}
+          height={24}
           className={styles.download}
           onClick={() => {
             setIsChoiceModalOpen(true);

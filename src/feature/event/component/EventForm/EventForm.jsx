@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
-import { validateRequiredFields } from '@/feature/event/lib';
+
 import { DateTime } from '@/shared/lib';
-import { TextField, DateField } from '@/feature/event/component';
+
+import { DateField, TextField } from '@/feature/event/component';
+import { validateRequiredFields } from '@/feature/event/lib';
+
 import styles from './EventForm.module.css';
-import { func } from 'prop-types';
 
 export default function EventForm({
   formType,

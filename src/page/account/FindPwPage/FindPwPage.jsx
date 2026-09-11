@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { IconMultiInfoCircle, IconPaperclip } from '@snorose/icons';
 
-import { useFindPw } from '@/apis';
 
 import {
   BackAppBar,
@@ -16,6 +16,8 @@ import {
 import { LOADING_MESSAGE } from '@/shared/constant';
 
 import { validateEmail, validateId } from '@/feature/account/lib';
+
+import { useFindPw } from '@/apis';
 
 import styles from './FindPwPage.module.css';
 
@@ -105,12 +107,7 @@ export default function FindPwPage() {
               aria-expanded={showAlert}
               aria-controls='find-pw-notice'
             >
-              <Icon
-                id='info-circle'
-                width='1.6rem'
-                height='1.6rem'
-                viewBox='0 0 20 20'
-              />
+              <IconMultiInfoCircle width={16} height={16} />
               <p>비밀번호 찾기</p>
             </button>
 
@@ -143,7 +140,11 @@ export default function FindPwPage() {
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-                  <Icon id='google-form' width={'1.6rem'} height={'1.6rem'} />
+                  <IconPaperclip
+                    width={16}
+                    height={16}
+                    color='var(--grey-3-1)'
+                  />
                   구글 폼
                 </a>
               </div>

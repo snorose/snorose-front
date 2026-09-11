@@ -1,9 +1,14 @@
 import { forwardRef, useContext, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { IconHeart, IconHeartFill } from '@snorose/icons';
+import {
+  IconComment,
+  IconEllipsis,
+  IconHeart,
+  IconHeartFill,
+} from '@snorose/icons';
 
-import { Badge, Icon, MoreOptionModal } from '@/shared/component';
+import { Badge, MoreOptionModal } from '@/shared/component';
 import {
   LIKE_TYPE,
   MORE_OPTION_MODAL_TEXT,
@@ -52,7 +57,6 @@ const Comment = forwardRef((props, ref) => {
     setContent,
     inputFocus,
     resetCommentState,
-    focusedItem,
     setFocusedItem,
   } = useCommentContext();
 
@@ -131,7 +135,12 @@ const Comment = forwardRef((props, ref) => {
               {isWriterWithdrawn ? '(알 수 없음)' : userDisplay}
             </p>
             {showBadge && (
-              <Badge userRoleId={userRoleId} className={styles.badge} />
+              <Badge
+                userRoleId={userRoleId}
+                className={styles.badge}
+                width={16}
+                height={16}
+              />
             )}
             <p className={styles.dot}>·</p>
             <p>
@@ -144,7 +153,7 @@ const Comment = forwardRef((props, ref) => {
               className={styles.dot3}
               onClick={(e) => onCommentOptionClick(data)}
             >
-              <Icon id='meat-ball' width={18} height={4} stroke='none' />
+              <IconEllipsis width={18} height={4} color='var(--grey-3-1)' />
             </div>
           )}
         </div>
@@ -167,15 +176,13 @@ const Comment = forwardRef((props, ref) => {
                 type='button'
                 onClick={handleReply}
               >
-                <Icon
-                  id='comment-stroke'
+                <IconComment
                   width={18}
                   height={15}
+                  color={'var(--blue-3)'}
                   style={{
                     paddingTop: '0.1rem',
                   }}
-                  stroke='var(--blue-3)'
-                  fill='none'
                 />
                 <p>{children.length}</p>
               </button>

@@ -5,7 +5,10 @@ import {
   IconBookmark,
   IconBookmarkFill,
   IconBuilding,
+  IconCalendar,
   IconClapperboard,
+  IconComment,
+  IconEllipsis,
   IconHeart,
   IconHeartFill,
   IconLocation,
@@ -17,7 +20,6 @@ import {
   BackAppBar,
   Badge,
   FetchLoading,
-  Icon,
   PrimaryButton,
 } from '@/shared/component';
 import { LIKE_TYPE, QUERY_KEY, ROLE, TOAST } from '@/shared/constant';
@@ -236,13 +238,7 @@ export default function EventPage() {
 
           {(data.startAt != null || data.endAt != null) && (
             <div className={styles.applicationDate}>
-              <Icon
-                id='calendar-stroke'
-                width={20}
-                height={20}
-                fill='none'
-                stroke='#484848'
-              />
+              <IconCalendar width={20} height={20} color={'var(--grey-4)'} />
               <p>응모 날짜</p>
               <p className={styles.data}>
                 {data.startAt && (
@@ -260,13 +256,7 @@ export default function EventPage() {
 
           {data.announceAt && (
             <div className={styles.announceDate}>
-              <Icon
-                id='calendar-stroke'
-                width={20}
-                height={20}
-                fill='none'
-                stroke='#484848'
-              />
+              <IconCalendar width={20} height={20} color={'var(--grey-4)'} />
               <p>당첨자 발표일</p>
               <p className={styles.data}>
                 {DateTime.format(data.announceAt, 'YMD_HM')}
@@ -379,7 +369,12 @@ function MetaContainer({
         <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
         <p>{userDisplay || 'Unknown'}</p>
         {showBadge && (
-          <Badge userRoleId={badgeRoleId} className={styles.badge} />
+          <Badge
+            userRoleId={badgeRoleId}
+            className={styles.badge}
+            width={18}
+            height={18}
+          />
         )}
         <p className={styles.dot}>·</p>
         <p>
@@ -391,7 +386,7 @@ function MetaContainer({
       <div className={styles.actions}>
         {showMeatBallIcon && (
           <div className={styles.meatBall} onClick={onMenuOpen}>
-            <Icon id='meat-ball' width={18} height={4} stroke='none' />
+            <IconEllipsis width={18} height={4} color='var(--grey-3-1)' />
           </div>
         )}
       </div>
@@ -427,15 +422,13 @@ function ActionContainer({
         }}
         onClick={inputFocus}
       >
-        <Icon
-          id='comment-stroke'
+        <IconComment
           width={18}
           height={15}
+          color={'var(--blue-3)'}
           styles={{
             paddingTop: '0.1rem',
           }}
-          stroke={'var(--blue-3)'}
-          fill={'none'}
         />
         <p>댓글 {commentCount.toLocaleString()}</p>
       </div>

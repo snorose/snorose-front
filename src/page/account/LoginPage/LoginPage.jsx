@@ -2,8 +2,12 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import {
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+} from '@snorose/icons';
+
+import {
   BackAppBar,
-  Icon,
   NewButton,
   PasswordInput,
   TextInput,
@@ -132,11 +136,11 @@ export default function Login() {
           className={styles.rememberIdCheckbox}
           onClick={() => setIsRememberId((prev) => !prev)}
         >
-          <Icon
-            id={isRememberId ? 'inactive-check-circle' : 'active-check-circle'}
-            width={22}
-            height={22}
-          />
+          {isRememberId ? (
+            <IconMultiCheckBlueCircle width={22} height={22} />
+          ) : (
+            <IconMultiCheckGreyCircle width={22} height={22} />
+          )}
           <span>아이디 기억하기</span>
         </div>
 

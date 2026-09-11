@@ -1,8 +1,10 @@
 import {
+  IconCommentFill,
+  IconMultiFlag,
   IconMultiShare,
   IconPencilFill,
+  IconPersonFill,
   IconTrashcanFill,
-  IconMultiFlag,
 } from '@snorose/icons';
 
 const POST_MORE_OPTION_LIST = [
@@ -17,8 +19,10 @@ const POST_MORE_OPTION_LIST = [
     modalId: null,
     iconId: 'report-user',
     label: '이용자 신고하기',
-    width: 17,
-    height: 17,
+    width: 24,
+    height: 24,
+    icon: IconPersonFill,
+    color: 'var(--blue-3)',
   },
   {
     modalId: 'share',
@@ -71,8 +75,10 @@ const EXAM_REVIEW_MORE_OPTION_LIST = [
     modalId: null,
     iconId: 'report-user',
     label: '이용자 신고하기',
-    width: 17,
-    height: 17,
+    width: 24,
+    height: 24,
+    icon: IconPersonFill,
+    color: 'var(--blue-3)',
   },
 ];
 
@@ -104,13 +110,17 @@ const COMMENT_MORE_OPTION_LIST = [
     label: '댓글 신고',
     width: 21,
     height: 22,
+    icon: IconCommentFill,
+    color: 'var(--blue-3)',
   },
   {
     modalId: null,
     iconId: 'report-user',
     label: '이용자 신고하기',
-    width: 17,
-    height: 17,
+    width: 24,
+    height: 24,
+    icon: IconPersonFill,
+    color: 'var(--blue-3)',
   },
 ];
 

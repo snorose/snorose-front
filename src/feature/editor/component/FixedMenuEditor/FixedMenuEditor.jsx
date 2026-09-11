@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 
-import { IconChevronDown } from '@snorose/icons';
+import {
+  IconChevronDown,
+  IconListBullet,
+  IconListOrdered,
+  IconMultiSlashCircle,
+  IconMultiTextBackground,
+  IconMultiTextStrikethrough,
+  IconMultiTextUnderline,
+  IconTextBold,
+  IconTextColor,
+} from '@snorose/icons';
 import { useEditorState } from '@tiptap/react';
-
-import { Icon } from '@/shared/component';
 
 import { convertListTypesInSelection } from '@/feature/editor/lib';
 
 import styles from './FixedMenuEditor.module.css';
-
 const PRESET_COLORS = [
   { label: '회색', value: 'var(--grey-4)' },
   { label: '검정', value: 'black' },
@@ -107,11 +114,7 @@ export default function FixedMenuEditor({ editor }) {
           {HEADING_OPTIONS.find((o) => o.value === editorState.currentHeading)
             ?.label ?? '본문'}
 
-          <IconChevronDown
-            width={16}
-            height={16}
-            color="var(--grey-3-1)"
-          />
+          <IconChevronDown width={16} height={16} color='var(--grey-3-1)' />
         </button>
 
         {openedMenu === 'heading' && (
@@ -146,9 +149,12 @@ export default function FixedMenuEditor({ editor }) {
           onClick={() =>
             setOpenedMenu((prev) => (prev === 'textColor' ? null : 'textColor'))
           }
-          style={{ color: editorState.currentColor || 'var(--grey-4)' }}
         >
-          <Icon id='font-color' width={24} height={24} />
+          <IconTextColor
+            width={24}
+            height={24}
+            color={editorState.currentColor || 'var(--grey-4)'}
+          />
         </button>
 
         <div
@@ -162,7 +168,7 @@ export default function FixedMenuEditor({ editor }) {
               editor.chain().focus().unsetColor().run();
             }}
           >
-            <Icon id='no-color' width={28} height={28} />
+            <IconMultiSlashCircle width={28} height={28} />
           </button>
 
           {/* 고정 색상 */}
@@ -190,11 +196,11 @@ export default function FixedMenuEditor({ editor }) {
             setOpenedMenu((prev) => (prev === 'bgColor' ? null : 'bgColor'))
           }
           style={{
-            '--bg-icon-fill': editorState.currentBgColor || '#E6F7B1',
-            '--bg-icon-stroke': editorState.currentBgColor || '#AAD916',
+            '--background-icon-fill': editorState.currentBgColor || '#E6F7B1',
+            '--background-icon-stroke': editorState.currentBgColor || '#AAD916',
           }}
         >
-          <Icon id='bg-color' width={24} height={24} />
+          <IconMultiTextBackground width={24} height={24} />
         </button>
 
         <div
@@ -211,7 +217,7 @@ export default function FixedMenuEditor({ editor }) {
                 .run();
             }}
           >
-            <Icon id='no-color' width={28} height={28} />
+            <IconMultiSlashCircle width={28} height={28} />
           </button>
 
           {/* 고정 색상 */}
@@ -236,47 +242,52 @@ export default function FixedMenuEditor({ editor }) {
       <button
         aria-label='굵게'
         onClick={() => editor.chain().focus().toggleBold().run()}
-        style={editorState.isBold ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
-        <Icon id='bold' width={24} height={24} />
+        <IconTextBold
+          width={24}
+          height={24}
+          color={editorState.isBold ? 'var(--blue-4)' : 'var(--grey-3-1)'}
+        />
       </button>
 
       <button
         aria-label='밑줄'
         onClick={() => editor.chain().focus().toggleUnderline().run()}
-        style={
-          editorState.isUnderline ? { '--icon-stroke': 'var(--blue-4)' } : {}
-        }
+        className={editorState.isUnderline ? styles.active : ''}
       >
-        <Icon id='underline' width={24} height={24} />
+        <IconMultiTextUnderline width={24} height={24} />
       </button>
 
       <button
         aria-label='취소선'
         onClick={() => editor.chain().focus().toggleStrike().run()}
-        style={editorState.isStrike ? { '--icon-stroke': 'var(--blue-4)' } : {}}
+        className={editorState.isStrike ? styles.active : ''}
       >
-        <Icon id='strikethrough' width={24} height={24} />
+        <IconMultiTextStrikethrough width={24} height={24} />
       </button>
 
       <button
         aria-label='글머리 기호 목록'
         onClick={() => toggleListStyle('bulletList')}
-        style={
-          editorState.isBulletList ? { '--icon-stroke': 'var(--blue-4)' } : {}
-        }
       >
-        <Icon id='list-bullet' width={24} height={24} />
+        <IconListBullet
+          width={24}
+          height={24}
+          color={editorState.isBulletList ? 'var(--blue-4)' : 'var(--grey-3-1)'}
+        />
       </button>
 
       <button
         aria-label='번호 매기기 목록'
         onClick={() => toggleListStyle('orderedList')}
-        style={
-          editorState.isOrderedList ? { '--icon-stroke': 'var(--blue-4)' } : {}
-        }
       >
-        <Icon id='list-ordered' width={24} height={24} />
+        <IconListOrdered
+          width={24}
+          height={24}
+          color={
+            editorState.isOrderedList ? 'var(--blue-4)' : 'var(--grey-3-1)'
+          }
+        />
       </button>
     </div>
   );

@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 
-import { IconChevronRight, IllustrationFlag } from '@snorose/icons';
+import {
+  IconChevronRight,
+  IconMultiBellLightBlue,
+  IllustrationFlag,
+} from '@snorose/icons';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { Icon } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
 import { useAuth, useBoardNavigate } from '@/shared/hook';
 
@@ -60,9 +63,8 @@ function NoticeCard({ to, title }) {
       <div className={styles.noticeCard}>
         <div className={styles.noticeText}>
           <div className={styles.noticeHeader}>
-            <Icon
+            <IconMultiBellLightBlue
               className={styles.noticeImage}
-              id='notice-bell-blue'
               width={13}
               height={16}
               aria-hidden='true'

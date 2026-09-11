@@ -208,3 +208,7 @@ button.headingButton {
   justify-content: flex-start;
   background-color: var(--white);
 }
+
+.active svg path {
+  stroke: var(--blue-4);
+}

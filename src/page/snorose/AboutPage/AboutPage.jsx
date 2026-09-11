@@ -1,4 +1,8 @@
-import { BackAppBar, Icon } from '@/shared/component';
+import { useState } from 'react';
+
+import { IllustrationLogoAboutSnoroseCloud } from '@snorose/icons';
+
+import { BackAppBar } from '@/shared/component';
 
 import {
   Accordion,
@@ -11,10 +15,10 @@ import {
   SNOROSE_MEMBERSHIP_LEVEL,
 } from '@/feature/home/constant';
 import HALL_OF_FAME_ADMINS from '@/feature/home/data/HallOfFrameAdmins.json';
+
 import HALL_OF_FAME from '@/assets/images/hallOfFame.svg';
 
 import styles from './AboutPage.module.css';
-import { useState } from 'react';
 
 const accordionItems = [
   {
@@ -60,7 +64,11 @@ export default function AboutPage() {
   return (
     <section className={styles.container}>
       <BackAppBar hasMenu />
-      <Icon className={styles.logo} id='about-logo' width={221} height={25} />
+      <IllustrationLogoAboutSnoroseCloud
+        className={styles.logo}
+        width={221}
+        height={25}
+      />
       <div className={styles.accordionList}>
         {accordionItems.map((item, index) => (
           <Accordion

@@ -1,10 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { updateUserInfo } from '@/apis';
-
-import { useAuth, useToast } from '@/shared/hook';
 import {
   ActionButton,
   BackAppBar,
@@ -14,12 +12,15 @@ import {
 import {
   MAJORS,
   MUTATION_KEY,
-  QUERY_KEY,
   PRIVATE_USER_INFO_UPDATE_PERMISSION_ROLE_ID_LIST,
+  QUERY_KEY,
   TOAST,
 } from '@/shared/constant';
+import { useAuth, useToast } from '@/shared/hook';
 
 import defaultProfile from '@/assets/images/defaultProfile.svg';
+
+import { updateUserInfo } from '@/apis';
 
 import styles from './EditProfilePage.module.css';
 

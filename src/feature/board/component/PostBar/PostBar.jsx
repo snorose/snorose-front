@@ -1,6 +1,7 @@
 import {
   IconBookmark,
   IconBookmarkFill,
+  IconComment,
   IconHeart,
   IconHeartFill,
 } from '@snorose/icons';
@@ -88,7 +89,7 @@ function Meta({
       <div className={styles.userDisplay} title={userDisplay || undefined}>
         {userDisplay}
       </div>
-      {showBadge && <Badge className={styles.badge} userRoleId={badgeRoleId} />}
+      {showBadge && <Badge userRoleId={badgeRoleId} width={16} height={16} />}
       <div className={styles.dot}>·</div>
       <div>{DateTime.formatAdaptive(createdAt)}</div>
       {children}
@@ -130,11 +131,12 @@ function ActionContainer({
       DefaultIcon: IconHeart,
     },
     {
-      iconId: 'comment-stroke',
       width: 16,
       height: 13,
       color: 'var(--blue-3)',
       count: commentCount,
+      ActiveIcon: IconComment,
+      DefaultIcon: IconComment,
     },
     {
       width: 11,
@@ -162,25 +164,11 @@ function ActionContainer({
         }) => {
           if (count <= 0) return null;
 
-          let IconComponent;
-
-          if (iconId) {
-            IconComponent = (
-              <Icon
-                id={iconId}
-                width={width}
-                height={height}
-                fill={isActive ? color : 'none'}
-                stroke={color}
-              />
-            );
-          } else {
-            IconComponent = isActive ? (
-              <ActiveIcon width={width} height={height} color={color} />
-            ) : (
-              <DefaultIcon width={width} height={height} color={color} />
-            );
-          }
+          const IconComponent = isActive ? (
+            <ActiveIcon width={width} height={height} color={color} />
+          ) : (
+            <DefaultIcon width={width} height={height} color={color} />
+          );
 
           return (
             <div key={iconId} className={styles.action}>
