@@ -107,7 +107,7 @@ export default function FindPwPage() {
               aria-expanded={showAlert}
               aria-controls='find-pw-notice'
             >
-              <IconMultiInfoCircle width='1.6rem' height='1.6rem' />
+              <IconMultiInfoCircle width={16} height={16} />
               <p>비밀번호 찾기</p>
             </button>
 
