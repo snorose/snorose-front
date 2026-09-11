@@ -1,9 +1,8 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 
+import { IconMultiVideo } from '@snorose/icons';
 import { Scrollbar } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-import { Icon } from '@/shared/component';
 
 import altImage from '@/assets/images/altImage.png';
 
@@ -66,11 +65,10 @@ export default function AttachmentSwiper({ data, setClickedImageIndex }) {
                       e.currentTarget.replaceWith(img);
                     }}
                   />
-                  <Icon
-                    id='video-opaque'
-                    width={'4rem'}
-                    height={'4rem'}
+                  <IconMultiVideo
                     className={styles.videoIcon}
+                    width={32}
+                    height={32}
                   />
                 </div>
               )}
