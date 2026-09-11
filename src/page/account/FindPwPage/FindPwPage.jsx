@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { IconPaperclip } from '@snorose/icons';
+
 import {
   BackAppBar,
   EmailInput,
@@ -143,7 +145,11 @@ export default function FindPwPage() {
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-                  <Icon id='google-form' width={'1.6rem'} height={'1.6rem'} />
+                  <IconPaperclip
+                    width={16}
+                    height={16}
+                    color='var(--grey-3-1)'
+                  />
                   구글 폼
                 </a>
               </div>

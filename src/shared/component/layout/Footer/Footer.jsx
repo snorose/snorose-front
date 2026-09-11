@@ -1,7 +1,8 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Icon } from '@/shared/component';
+import { IconMultiLogo } from '@snorose/icons';
+
 import {
   FOOTER_CONTACT_ITEMS,
   FOOTER_MENUS,
@@ -28,7 +29,7 @@ export default function Footer() {
 
   return (
     <footer className={style.footer}>
-      <Icon id='logo' width={118} height={21} />
+      <IconMultiLogo width={118} height={21} />
 
       <div className={style.info}>
         {FOOTER_CONTACT_ITEMS.map(({ type, label, value, accountHolder }) => (
@@ -55,9 +56,9 @@ export default function Footer() {
           </Fragment>
         ))}
 
-        {FOOTER_SNS_LINKS.map(({ id, iconId, to }) => (
+        {FOOTER_SNS_LINKS.map(({ id, icon: IconComponent, to }) => (
           <Link key={id} to={to} target='_blank'>
-            <Icon id={iconId} width={16.5} height={16.5} />
+            <IconComponent width={16.5} height={16.5} color='var(--grey-3-1)' />
           </Link>
         ))}
       </div>

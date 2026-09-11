@@ -1,3 +1,5 @@
+import { IconInstagramFill } from '@snorose/icons';
+
 export const FOOTER_CONTACT_ITEMS = Object.freeze([
   {
     type: 'email',
@@ -30,7 +32,7 @@ export const FOOTER_MENUS = Object.freeze([
 export const FOOTER_SNS_LINKS = Object.freeze([
   {
     id: 'instagram',
-    iconId: 'instagram',
+    icon: IconInstagramFill,
     to: 'https://www.instagram.com/snorose1906/',
   },
 ]);

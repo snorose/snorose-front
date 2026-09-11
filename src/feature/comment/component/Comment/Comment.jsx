@@ -1,9 +1,14 @@
 import { forwardRef, useContext, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { IconComment, IconHeart, IconHeartFill } from '@snorose/icons';
+import {
+  IconComment,
+  IconEllipsis,
+  IconHeart,
+  IconHeartFill,
+} from '@snorose/icons';
 
-import { Badge, Icon, MoreOptionModal } from '@/shared/component';
+import { Badge, MoreOptionModal } from '@/shared/component';
 import {
   LIKE_TYPE,
   MORE_OPTION_MODAL_TEXT,
@@ -143,7 +148,7 @@ const Comment = forwardRef((props, ref) => {
               className={styles.dot3}
               onClick={(e) => onCommentOptionClick(data)}
             >
-              <Icon id='meat-ball' width={18} height={4} stroke='none' />
+              <IconEllipsis width={18} height={4} color='var(--grey-3-1)' />
             </div>
           )}
         </div>
