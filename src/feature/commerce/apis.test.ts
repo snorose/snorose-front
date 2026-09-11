@@ -1,3 +1,5 @@
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import { authAxios, defaultAxios } from '@/axios';
 
 import {
@@ -25,12 +27,12 @@ function successResponse(result: unknown) {
 
 describe('commerce API contracts', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('fetches sale details from GET /v1/commerce/sales/{saleId}', async () => {
     const result = { saleId: 42, title: 'Summer Goods' };
-    const getSpy = jest
+    const getSpy = vi
       .spyOn(authAxios, 'get')
       .mockResolvedValue(successResponse(result));
 
@@ -45,7 +47,7 @@ describe('commerce API contracts', () => {
       orderNumber: 'SR-20260829-000001',
       idempotentReplay: false,
     };
-    const postSpy = jest
+    const postSpy = vi
       .spyOn(authAxios, 'post')
       .mockResolvedValue(successResponse(result));
     const request = {
@@ -92,7 +94,7 @@ describe('commerce API contracts', () => {
 
   it('reads buyer orders from GET /v1/commerce/orders with the page query parameter', async () => {
     const result = { hasNext: false, data: [] };
-    const getSpy = jest
+    const getSpy = vi
       .spyOn(authAxios, 'get')
       .mockResolvedValue(successResponse(result));
 
@@ -106,7 +108,7 @@ describe('commerce API contracts', () => {
 
   it('reads an order from GET /v1/commerce/orders/{orderNumber}', async () => {
     const result = { orderNumber: 'SR-20260829-000001' };
-    const getSpy = jest
+    const getSpy = vi
       .spyOn(authAxios, 'get')
       .mockResolvedValue(successResponse(result));
 
@@ -124,7 +126,7 @@ describe('commerce API contracts', () => {
       code: 1000,
       message: '요청에 성공하였습니다.',
     };
-    const postSpy = jest.spyOn(authAxios, 'post').mockResolvedValue({ data });
+    const postSpy = vi.spyOn(authAxios, 'post').mockResolvedValue({ data });
 
     await expect(cancelOrder('SR-20260829-000001')).resolves.toBe(data);
 
@@ -141,7 +143,7 @@ describe('commerce API contracts', () => {
       name: 'Pickup iPad',
       heartbeatIntervalSeconds: 30,
     };
-    const postSpy = jest
+    const postSpy = vi
       .spyOn(defaultAxios, 'post')
       .mockResolvedValue(successResponse(result));
 
@@ -158,7 +160,7 @@ describe('commerce API contracts', () => {
 
   it('reads the pickup device session with X-Pickup-Device-Token', async () => {
     const result = { state: 'IDLE' };
-    const getSpy = jest
+    const getSpy = vi
       .spyOn(defaultAxios, 'get')
       .mockResolvedValue(successResponse(result));
 
@@ -179,7 +181,7 @@ describe('commerce API contracts', () => {
       items: [{ productName: 'T-shirt', optionLabel: 'M', quantity: 1 }],
       autoResetSeconds: 5,
     };
-    const postSpy = jest
+    const postSpy = vi
       .spyOn(defaultAxios, 'post')
       .mockResolvedValue(successResponse(result));
 
@@ -202,7 +204,7 @@ describe('commerce API contracts', () => {
       serverTime: '2026-08-29T13:59:41',
       state: 'ARMED',
     };
-    const postSpy = jest
+    const postSpy = vi
       .spyOn(defaultAxios, 'post')
       .mockResolvedValue(successResponse(result));
 
