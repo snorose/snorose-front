@@ -2,7 +2,13 @@ import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { IconChevronDown, IconMultiClipboardBlue } from '@snorose/icons';
+import {
+  IconChevronDown,
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+  IconMultiClipboardBlue,
+  IconMultiTrashcanCircle,
+} from '@snorose/icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -14,7 +20,6 @@ import {
   ConfirmModal,
   DropdownList,
   FetchLoading,
-  Icon,
 } from '@/shared/component';
 import {
   ATTACHMENT_MODAL_TEXT,
@@ -431,11 +436,11 @@ export default function WritePostPage() {
                   }
                   onClick={handleIsNotice}
                 >
-                  <Icon
-                    id={isNotice ? 'check-circle-blue' : 'check-circle-grey'}
-                    width={21}
-                    height={22}
-                  />
+                  {isNotice ? (
+                    <IconMultiCheckBlueCircle width={21} height={22} />
+                  ) : (
+                    <IconMultiCheckGreyCircle width={21} height={22} />
+                  )}
                   <p>공지글</p>
                 </div>
               )}
@@ -485,10 +490,9 @@ export default function WritePostPage() {
           />
         )}
 
-        <Icon
-          id='trashcan'
-          width='10rem'
-          height='10rem'
+        <IconMultiTrashcanCircle
+          width={21}
+          height={22}
           className={`${isTrashOverlapped ? styles.trashVisible : styles.trashInvisible}`}
           onDragEnter={(e) => {
             e.preventDefault();
@@ -816,10 +820,9 @@ export function NewWritePostPage({ isNotice = false }) {
           </div>
         </div>
 
-        <Icon
-          id='trashcan'
-          width='10rem'
-          height='10rem'
+        <IconMultiTrashcanCircle
+          width={21}
+          height={22}
           className={`${isTrashOverlapped ? styles.trashVisible : styles.trashInvisible}`}
           onDragEnter={(e) => {
             e.preventDefault();

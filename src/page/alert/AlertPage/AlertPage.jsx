@@ -2,7 +2,11 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { IconMultiBellPink, IllustrationBellEmpty } from '@snorose/icons';
+import {
+  IconGear,
+  IconMultiBellPink,
+  IllustrationBellEmpty,
+} from '@snorose/icons';
 import {
   QueryErrorResetBoundary,
   useIsFetching,
@@ -12,7 +16,6 @@ import {
 import {
   AppBar,
   FetchLoading,
-  Icon,
   NewButton,
   ServerErrorFallback,
 } from '@/shared/component';
@@ -50,9 +53,9 @@ export default function AlertPage() {
   return (
     <div className={style.container}>
       <AppBar title='알림'>
-        <Icon
+        <IconGear
           className={style.settingIcon}
-          id='setting'
+          color='var(--blue-4)'
           width='24'
           height='24'
           onClick={() => navigate('/alert/setting')}

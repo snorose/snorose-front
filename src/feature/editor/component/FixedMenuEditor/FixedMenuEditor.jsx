@@ -1,24 +1,21 @@
 import React, { useState } from 'react';
 
-
 import {
   IconChevronDown,
-  IconMultiSlashCircle,
   IconListBullet,
   IconListOrdered,
+  IconMultiSlashCircle,
   IconMultiTextBackground,
   IconMultiTextColor,
   IconTextBold,
+  IconTextStrikethrough,
+  IconTextUnderline,
 } from '@snorose/icons';
-
 import { useEditorState } from '@tiptap/react';
-
-import { Icon } from '@/shared/component';
 
 import { convertListTypesInSelection } from '@/feature/editor/lib';
 
 import styles from './FixedMenuEditor.module.css';
-
 const PRESET_COLORS = [
   { label: '회색', value: 'var(--grey-4)' },
   { label: '검정', value: 'black' },
@@ -257,7 +254,7 @@ export default function FixedMenuEditor({ editor }) {
           editorState.isUnderline ? { '--icon-stroke': 'var(--blue-4)' } : {}
         }
       >
-        <Icon id='underline' width={24} height={24} />
+        <IconTextUnderline width={24} height={24} />
       </button>
 
       <button
@@ -265,7 +262,7 @@ export default function FixedMenuEditor({ editor }) {
         onClick={() => editor.chain().focus().toggleStrike().run()}
         style={editorState.isStrike ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
-        <Icon id='strikethrough' width={24} height={24} />
+        <IconTextStrikethrough width={24} height={24} />
       </button>
 
       <button

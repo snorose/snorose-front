@@ -1,4 +1,7 @@
-import { Icon } from '@/shared/component';
+import {
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+} from '@snorose/icons';
 
 import styles from './CheckBox.module.css';
 
@@ -13,12 +16,19 @@ export default function CheckBox({ id, checked, onChange }) {
         onChange={(e) => onChange?.(e.target.checked, e)}
       />
       <label htmlFor={id}>
-        <Icon
-          className={styles.icon}
-          id={checked ? 'checkbox-blue' : 'checkbox-grey'}
-          width={22}
-          height={22}
-        />
+        {checked ? (
+          <IconMultiCheckBlueCircle
+            className={styles.icon}
+            width={22}
+            height={22}
+          />
+        ) : (
+          <IconMultiCheckGreyCircle
+            className={styles.icon}
+            width={22}
+            height={22}
+          />
+        )}
       </label>
     </div>
   );

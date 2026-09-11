@@ -13,7 +13,7 @@ import {
 
 import * as IconStories from './Icon.stories';
 import { Icon } from '@/shared/component';
-import { STATIC_ICON_LIST, STROKE_ICON_LIST } from '@/shared/constant';
+import { STATIC_ICON_LIST } from '@/shared/constant';
 
 <Meta of={IconStories} />
 
@@ -28,23 +28,6 @@ import { STATIC_ICON_LIST, STROKE_ICON_LIST } from '@/shared/constant';
 
 <IconGallery>
   {Object.values(STATIC_ICON_LIST).map((icon) => (
-    <IconItem name={icon} style={{ backgroundColor: '#333' }}>
-        <Icon id={icon} />
-    </IconItem>
-
-))}
-
-</IconGallery>
-<br/>
-
-<Subtitle>STROKE ICON</Subtitle>
-<p>
-  <span style={{ color: '#00368E', fontWeight: 'bold' }}>stroke</span> prop에
-  영향을 받는 아이콘입니다.
-</p>
-
-<IconGallery>
-  {Object.values(STROKE_ICON_LIST).map((icon) => (
     <IconItem name={icon} style={{ backgroundColor: '#333' }}>
         <Icon id={icon} />
     </IconItem>
