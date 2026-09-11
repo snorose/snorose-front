@@ -7,6 +7,8 @@ import {
   IconMultiSlashCircle,
   IconMultiTextBackground,
   IconMultiTextColor,
+  IconMultiTextStrikethrough,
+  IconMultiTextUnderline,
   IconTextBold,
   IconTextStrikethrough,
   IconTextUnderline,
@@ -250,19 +252,23 @@ export default function FixedMenuEditor({ editor }) {
       <button
         aria-label='밑줄'
         onClick={() => editor.chain().focus().toggleUnderline().run()}
-        style={
-          editorState.isUnderline ? { '--icon-stroke': 'var(--blue-4)' } : {}
-        }
       >
-        <IconTextUnderline width={24} height={24} />
+        {editorState.isUnderline ? (
+          <IconTextUnderline width={24} height={24} color='var(--blue-4)' />
+        ) : (
+          <IconMultiTextUnderline width={24} height={24} />
+        )}
       </button>
 
       <button
         aria-label='취소선'
         onClick={() => editor.chain().focus().toggleStrike().run()}
-        style={editorState.isStrike ? { '--icon-stroke': 'var(--blue-4)' } : {}}
       >
-        <IconTextStrikethrough width={24} height={24} />
+        {editorState.isStrike ? (
+          <IconTextStrikethrough width={24} height={24} color='var(--blue-4)' />
+        ) : (
+          <IconMultiTextStrikethrough width={24} height={24} />
+        )}
       </button>
 
       <button
