@@ -7,6 +7,7 @@ import {
   IconBuilding,
   IconCalendar,
   IconClapperboard,
+  IconComment,
   IconEllipsis,
   IconHeart,
   IconHeartFill,
@@ -19,7 +20,6 @@ import {
   BackAppBar,
   Badge,
   FetchLoading,
-  Icon,
   PrimaryButton,
 } from '@/shared/component';
 import { LIKE_TYPE, QUERY_KEY, ROLE, TOAST } from '@/shared/constant';
@@ -422,15 +422,13 @@ function ActionContainer({
         }}
         onClick={inputFocus}
       >
-        <Icon
-          id='comment-stroke'
+        <IconComment
           width={18}
           height={15}
+          color={'var(--blue-3)'}
           styles={{
             paddingTop: '0.1rem',
           }}
-          stroke={'var(--blue-3)'}
-          fill={'none'}
         />
         <p>댓글 {commentCount.toLocaleString()}</p>
       </div>

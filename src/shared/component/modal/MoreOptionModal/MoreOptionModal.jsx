@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { createPortal } from 'react-dom';
 
-import { Icon } from '@/shared/component';
 import { ModalContext } from '@/shared/context/ModalContext';
 
 import { useCommentContext } from '@/feature/comment/context';
@@ -37,7 +36,7 @@ export default function MoreOptionModal({ title, optionList, functions, top }) {
         <h3 className={styles.title}>{title}</h3>
         <ul className={styles.content}>
           {optionList.map((item, idx) => {
-            const IconComponent = item.icon ?? Icon;
+            const IconComponent = item.icon;
 
             return (
               <li
