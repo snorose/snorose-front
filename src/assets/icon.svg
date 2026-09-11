@@ -173,16 +173,9 @@
       </radialGradient>
     </defs>
   </symbol>
-
-
-
-
-  </symbol>
   <symbol id="video-opaque" width="40" height="39" viewBox="0 0 40 39" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="20.1599" cy="19.4116" r="18.48" fill="#EAF5FD" fill-opacity="0.5" stroke="#EAF5FD" stroke-width="1.8"/>
     <path d="M25.8533 17.9576C26.9733 18.6043 26.9733 20.2208 25.8533 20.8675L18.5733 25.0706C17.4533 25.7172 16.0533 24.9089 16.0533 23.6157L16.0533 15.2094C16.0533 13.9162 17.4533 13.1079 18.5733 13.7545L25.8533 17.9576Z" fill="#EAF5FD"/>
-  </symbol>
-
   </symbol>
   <symbol id="trashcan" viewBox="0 0 101 100" fill="none" stroke="white">
     <g clip-path="url(#clip0_4991_10310)">

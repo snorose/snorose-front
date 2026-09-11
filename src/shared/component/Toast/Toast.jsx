@@ -2,11 +2,10 @@ import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import {
+  IconMultiCheckGreenCircle,
   IconMultiExclamationTriangle,
   IconMultiInfoCircle,
-  IconMultiCheckGreenCircle
 } from '@snorose/icons';
-
 
 import { Icon } from '@/shared/component';
 import { useToastContext } from '@/shared/context/ToastContext';
@@ -71,7 +70,6 @@ export default function Toast({ toast }) {
         <IconMultiInfoCircle className={styles.icon} width={21} height={20} />
       )}
       {iconId !== 'info-triangle' && iconId !== 'info-circle' && (
-
         <Icon className={styles.icon} id={iconId} width={21} height={20} />
       )}
       <p className={styles.message}>{toast.message}</p>
