@@ -1,5 +1,9 @@
+import { useEffect, useState } from 'react';
+import { FiCopy } from 'react-icons/fi';
+
 import * as SnoroseIcons from '@snorose/icons';
 
+import IconDocs from './IconDocs';
 import styles from './IconGallery.stories.module.css';
 
 const iconEntries = Object.entries(SnoroseIcons)
@@ -40,17 +44,65 @@ const getFilteredGroups = (query, category) => {
     .filter((group) => group.entries.length > 0);
 };
 
+const CopyButton = ({ children, className, label, text }) => {
+  const [status, setStatus] = useState('');
+
+  useEffect(() => {
+    if (!status) return;
+    const timer = setTimeout(() => setStatus(''), 2000);
+    return () => clearTimeout(timer);
+  }, [status]);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setStatus('복사됨');
+    } catch {
+      setStatus('복사 실패. 다시 시도해 주세요.');
+    }
+  };
+
+  return (
+    <button
+      type='button'
+      className={className}
+      aria-label={label}
+      title={label}
+      onClick={copy}
+    >
+      {children}
+      <span className={styles.copyStatus} role='status'>
+        {status}
+      </span>
+    </button>
+  );
+};
+
 const IconTile = ({ IconComponent, color, name, size }) => (
   <li className={styles.tile}>
-    <div className={styles.preview} aria-hidden='true'>
-      <IconComponent
-        className={styles.icon}
-        width={size}
-        height={size}
-        color={color}
-      />
-    </div>
-    <span className={styles.name}>{name}</span>
+    <CopyButton
+      className={styles.copyTile}
+      label={`${name} JSX 복사`}
+      text={`<${name} width={${size}} height={${size}}${color ? ` color={${JSON.stringify(color)}}` : ''} />`}
+    >
+      <div className={styles.preview} aria-hidden='true'>
+        <IconComponent
+          className={styles.icon}
+          width={size}
+          height={size}
+          color={color}
+        />
+      </div>
+      <span className={styles.name}>{name}</span>
+    </CopyButton>
+    <CopyButton
+      className={styles.copyImport}
+      label={`${name} import 복사`}
+      text={`import { ${name} } from '@snorose/icons';`}
+    >
+      <FiCopy aria-hidden='true' />
+      <span>import</span>
+    </CopyButton>
   </li>
 );
 
@@ -81,7 +133,7 @@ const Gallery = ({ category, color, query, size }) => {
               <ul className={styles.grid}>
                 {group.entries.map(([name, IconComponent]) => (
                   <IconTile
-                    color={color}
+                    color={category === 'basic' ? color : undefined}
                     IconComponent={IconComponent}
                     key={name}
                     name={name}
@@ -105,10 +157,7 @@ const meta = {
   parameters: {
     canvasWidth: 'min(1120px, calc(100vw - 48px))',
     docs: {
-      description: {
-        component:
-          '@snorose/icons 패키지에서 export하는 React SVG 컴포넌트를 한 번에 확인하는 갤러리입니다.',
-      },
+      page: IconDocs,
     },
   },
   argTypes: {
@@ -117,7 +166,18 @@ const meta = {
       table: { disable: true },
     },
     color: {
-      control: 'color',
+      if: { arg: 'category', eq: 'basic' },
+      control: 'select',
+      options: [
+        'var(--grey-4)',
+        'var(--grey-3-1)',
+        'var(--grey-3)',
+        'var(--blue-4)',
+        'var(--blue-3)',
+        'var(--pink-3)',
+        'var(--pink-2)',
+        'var(--white)',
+      ],
       description: 'currentColor 기반 아이콘에 적용할 색상',
     },
     query: {
@@ -126,11 +186,11 @@ const meta = {
     },
     size: {
       control: { type: 'range', min: 16, max: 96, step: 4 },
-      description: 'SVG width/height',
+      description: 'SVG width/height (px)',
     },
   },
   args: {
-    color: '#484848',
+    color: 'var(--grey-4)',
     query: '',
     size: 32,
   },
