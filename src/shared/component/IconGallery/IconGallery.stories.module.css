@@ -132,6 +132,20 @@
   text-align: center;
 }
 
+.copyImport .copyStatus:not(:empty) {
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0 6px;
+  border-radius: inherit;
+  background: var(--white);
+  pointer-events: none;
+}
+
+.copyImport:hover .copyStatus:not(:empty) {
+  background: var(--grey-1);
+}
+
 .docs {
   max-width: 880px;
   margin: 0 auto;

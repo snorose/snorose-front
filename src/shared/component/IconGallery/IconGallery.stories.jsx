@@ -207,5 +207,5 @@ export const Multi = {
 };
 
 export const Illustration = {
-  args: { category: 'illustration' },
+  args: { category: 'illustration', size: 96 },
 };
