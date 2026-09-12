@@ -1,7 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { IconChevronDown, IconMultiClipboardBlue } from '@snorose/icons';
+import {
+  IconChevronDown,
+  IconMultiClipboardBlue,
+  IconMultiCloudLogo,
+} from '@snorose/icons';
 import { useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -24,8 +28,6 @@ import {
   NOTICE_FORM_DATA,
 } from '@/feature/event/constant';
 import { validateOnSubmit } from '@/feature/event/lib';
-
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import { postEvent, postPost } from '@/apis';
 
@@ -253,10 +255,11 @@ export default function WriteEventPage() {
             <div className={styles.profileBoxLeft}>
               {userInfo?.userRoleId !== ROLE.admin &&
               userInfo?.userRoleId !== ROLE.official ? (
-                <img
-                  className={styles.cloudLogoIcon}
-                  src={cloudLogo}
-                  alt='로고'
+                <IconMultiCloudLogo
+                  width={22}
+                  height={14}
+                  role='img'
+                  aria-label='로고'
                 />
               ) : (
                 <Badge

@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   IconMultiCheckBlueCircle,
   IconMultiCheckGreyCircle,
+  IllustrationLogoSnorose,
 } from '@snorose/icons';
 
 import {
@@ -16,8 +17,6 @@ import { TOAST } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 
 import { useLogin } from '@/feature/auth/hooks';
-
-import snoroseLogo from '@/assets/images/snoroseLogo.svg';
 
 import styles from './LoginPage.module.css';
 
@@ -105,7 +104,11 @@ export default function Login() {
       <BackAppBar />
 
       <form onSubmit={handleLoginSubmit}>
-        <img src={snoroseLogo} alt='스노로즈 로고' className={styles.logo} />
+        <IllustrationLogoSnorose
+          className={styles.logo}
+          role='img'
+          aria-label='스노로즈 로고'
+        />
 
         <p className={styles.title}>
           숙명인을 위한 커뮤니티,

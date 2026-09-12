@@ -7,6 +7,7 @@ import {
   IconMultiCheckBlueCircle,
   IconMultiCheckGreyCircle,
   IconMultiClipboardBlue,
+  IconMultiCloudLogo,
   IllustrationTrashcanCircle,
 } from '@snorose/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -44,8 +45,6 @@ import { AttachmentBar } from '@/feature/board/component';
 import { EditorContainer } from '@/feature/editor/component';
 import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
 import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
-
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import { createThumbnail } from '@/apis';
 import { getPostContent, patchPost } from '@/apis';
@@ -334,7 +333,12 @@ export default function EditPostPage() {
               <div className={styles.profileBoxLeft}>
                 {userInfo?.userRoleId !== ROLE.admin &&
                 userInfo?.userRoleId !== ROLE.official ? (
-                  <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
+                  <IconMultiCloudLogo
+                    width={25}
+                    height={16}
+                    role='img'
+                    aria-label='로고'
+                  />
                 ) : (
                   <Badge
                     userRoleId={userInfo?.userRoleId}
@@ -655,7 +659,12 @@ export function NewEditPostPage({ isNotice = false }) {
               <div className={styles.profileBoxLeft}>
                 {userInfo?.userRoleId !== ROLE.admin &&
                 userInfo?.userRoleId !== ROLE.official ? (
-                  <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
+                  <IconMultiCloudLogo
+                    width={25}
+                    height={16}
+                    role='img'
+                    aria-label='로고'
+                  />
                 ) : (
                   <Badge
                     userRoleId={userInfo?.userRoleId}

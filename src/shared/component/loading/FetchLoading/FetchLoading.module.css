@@ -25,7 +25,9 @@
 }
 
 .icon img,
-.iconStatic img {
+.icon svg,
+.iconStatic img,
+.iconStatic svg {
   display: block;
   width: 100%;
   height: 100%;

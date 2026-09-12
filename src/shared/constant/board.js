@@ -3,7 +3,9 @@ import {
   IllustrationBoxStarsCircle,
   IllustrationBoxStarsOpen,
   IllustrationFolderSearch,
+  IllustrationIceCupBowl,
   IllustrationMicrophone,
+  IllustrationResidence,
   IllustrationSnowfall,
   IllustrationSnowfallCircle,
   IllustrationSnowGround,
@@ -12,9 +14,6 @@ import {
   IllustrationSnowMountainCircle,
   IllustrationStarHonorBoard,
 } from '@snorose/icons';
-
-import residence from '@/assets/images/residence.svg';
-import sookplace from '@/assets/images/sookPlace.svg';
 
 export const BOARD_CATEGORY = {
   COMMUNITY: {
@@ -227,7 +226,7 @@ export const BOARD_MENUS = [
     title: '숙플레이스',
     desc: '눈송이 맛집 커뮤니티',
     category: BOARD_CATEGORY.LIFE,
-    image: sookplace,
+    image: IllustrationIceCupBowl,
   },
   {
     id: 41,
@@ -235,7 +234,7 @@ export const BOARD_MENUS = [
     textId: 'residence',
     title: '주거',
     desc: '자취·주거 정보 커뮤니티',
-    image: residence,
+    image: IllustrationResidence,
     category: BOARD_CATEGORY.LIFE,
   },
 ];

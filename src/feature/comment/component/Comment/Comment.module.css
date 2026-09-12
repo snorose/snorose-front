@@ -38,11 +38,6 @@
   align-items: center;
 }
 
-.cloudLogoIcon {
-  width: 2.2rem;
-  height: 1.4rem;
-}
-
 .isWriterWithdrawn {
   color: var(--grey-3-1);
 }

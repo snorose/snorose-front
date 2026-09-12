@@ -12,6 +12,7 @@ import {
   IconHeart,
   IconHeartFill,
   IconLocation,
+  IconMultiCloudLogo,
   IconPerson,
 } from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
@@ -39,8 +40,6 @@ import { useLike } from '@/feature/like/hook';
 import { useScrap } from '@/feature/scrap/hook';
 
 import { NotFoundPage } from '@/page/etc';
-
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import { getEventContent } from '@/apis';
 
@@ -366,7 +365,12 @@ function MetaContainer({
   return (
     <div className={styles.metaContainer}>
       <div className={styles.meta}>
-        <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
+        <IconMultiCloudLogo
+          width={25}
+          height={16}
+          role='img'
+          aria-label='로고'
+        />
         <p>{userDisplay || 'Unknown'}</p>
         {showBadge && (
           <Badge

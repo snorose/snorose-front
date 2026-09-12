@@ -6,6 +6,7 @@ import {
   IconEllipsis,
   IconHeart,
   IconHeartFill,
+  IconMultiCloudLogo,
 } from '@snorose/icons';
 
 import { Badge, MoreOptionModal } from '@/shared/component';
@@ -24,8 +25,6 @@ import {
 } from '@/feature/comment/component';
 import { useCommentContext } from '@/feature/comment/context';
 import { useLike } from '@/feature/like/hook';
-
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import styles from './Comment.module.css';
 
@@ -125,10 +124,11 @@ const Comment = forwardRef((props, ref) => {
         <div className={styles.commentTop}>
           <div className={styles.commentTopLeft}>
             <div className={styles.cloud}>
-              <img
-                className={styles.cloudLogoIcon}
-                src={cloudLogo}
-                alt='로고'
+              <IconMultiCloudLogo
+                width={22}
+                height={14}
+                role='img'
+                aria-label='로고'
               />
             </div>
             <p className={`${isWriterWithdrawn && styles.isWriterWithdrawn}`}>
