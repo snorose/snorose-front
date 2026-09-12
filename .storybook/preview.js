@@ -31,7 +31,12 @@ const preview = {
       storySort: {
         order: [
           'Foundations',
-          ['Iconography', ['Basic', 'Multi', 'Illustration', '*'], '*'],
+          [
+            'Colors',
+            'Iconography',
+            ['Basic', 'Multi', 'Illustration', '*'],
+            '*',
+          ],
           'Component',
           ['Button', 'Input', '*'],
           'Feature',
