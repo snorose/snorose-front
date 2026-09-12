@@ -44,7 +44,8 @@ const PackageVersion = () => {
 
   return (
     <p aria-live='polite'>
-      사용 버전: v{process.env.STORYBOOK_ICONS_VERSION} · 최신 배포 버전:{' '}
+      프로젝트 사용 버전: v{process.env.STORYBOOK_ICONS_VERSION} · 최신 배포
+      버전:{' '}
       <a
         href='https://www.npmjs.com/package/@snorose/icons'
         target='_blank'
@@ -62,20 +63,23 @@ const PackageVersion = () => {
 
 const IconDocs = () => (
   <article className={styles.docs}>
-    <h1>Icons</h1>
+    <h1>Iconography</h1>
     <PackageVersion />
     <p>
       @snorose/icons의 React SVG 컴포넌트입니다. 전체 목록은 Basic, Multi,
       Illustration에서 확인할 수 있습니다.
     </p>
     <nav aria-label='아이콘 갤러리' className={styles.docsLinks}>
-      <a href='./?path=/story/foundations-icons--basic' target='_top'>
+      <a href='./?path=/story/foundations-iconography--basic' target='_top'>
         Basic
       </a>
-      <a href='./?path=/story/foundations-icons--multi' target='_top'>
+      <a href='./?path=/story/foundations-iconography--multi' target='_top'>
         Multi
       </a>
-      <a href='./?path=/story/foundations-icons--illustration' target='_top'>
+      <a
+        href='./?path=/story/foundations-iconography--illustration'
+        target='_top'
+      >
         Illustration
       </a>
     </nav>
@@ -124,9 +128,9 @@ const IconDocs = () => (
             </td>
           </tr>
           <tr>
-            <td>className / style</td>
-            <td>string / object</td>
-            <td>SVG에 클래스 또는 인라인 스타일을 적용합니다.</td>
+            <td>className</td>
+            <td>string</td>
+            <td>SVG에 CSS 클래스를 적용합니다.</td>
           </tr>
           <tr>
             <td>aria-hidden / aria-label / role</td>
@@ -138,8 +142,7 @@ const IconDocs = () => (
     </div>
     <Source
       language='jsx'
-      code={`<IconSearch width={24} height={24} color='var(--grey-4)' className='search-icon' />
-<IconSearch width={32} height={32} style={{ color: 'var(--blue-4)' }} />`}
+      code={`<IconSearch width={24} height={24} color='var(--grey-4)' className='search-icon' />`}
     />
     <h2>종류와 색상</h2>
     <div className={styles.examples}>
