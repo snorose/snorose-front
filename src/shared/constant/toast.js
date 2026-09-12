@@ -16,6 +16,7 @@ const TOAST = Object.freeze({
     emptyExamType: '시험 종류를 선택해주세요',
     emptyQuestionDetail: '문항 수 및 시험 유형 설명을 입력해주세요',
     emptyFile: '첨부파일을 업로드해주세요',
+    invalidFileName: '파일 이름에 [ 또는 ] 문자는 사용할 수 없어요.',
   },
   POST: {
     create: '게시글을 등록했어요 (+2P)',
