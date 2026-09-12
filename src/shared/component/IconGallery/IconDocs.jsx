@@ -160,7 +160,7 @@ const IconDocs = () => (
         <figcaption>Multi</figcaption>
       </figure>
       <figure>
-        <IllustrationBellEmpty width={80} height={80} aria-hidden='true' />
+        <IllustrationBellEmpty width={96} height={96} aria-hidden='true' />
         <figcaption>Illustration</figcaption>
       </figure>
     </div>
