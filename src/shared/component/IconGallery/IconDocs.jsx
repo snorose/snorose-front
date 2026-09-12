@@ -66,8 +66,9 @@ const IconDocs = () => (
     <h1>Iconography</h1>
     <PackageVersion />
     <p>
-      @snorose/icons의 React SVG 컴포넌트입니다. 전체 목록은 Basic, Multi,
-      Illustration에서 확인할 수 있습니다.
+      @snorose/icons의 React SVG 컴포넌트입니다.
+      <br />
+      전체 목록은 Basic, Multi, Illustration에서 확인할 수 있습니다.
     </p>
     <nav aria-label='아이콘 갤러리' className={styles.docsLinks}>
       <a href='./?path=/story/foundations-iconography--basic' target='_top'>
@@ -98,8 +99,10 @@ const IconDocs = () => (
     />
     <h2>Props</h2>
     <p>
-      일반 SVG 속성을 SVG 요소에 전달합니다. size 전용 prop 대신 width와
-      height에 px 기준 숫자를 전달하세요.
+      아이콘 크기는 width와 height로 지정합니다.
+      <br />
+      color, className, aria-label처럼 SVG에서 사용할 수 있는 속성도 함께 전달할
+      수 있습니다.
     </p>
     <div className={styles.tableScroll}>
       <table>
@@ -165,9 +168,10 @@ const IconDocs = () => (
       </figure>
     </div>
     <p>
-      Basic은 color로 색상을 변경합니다. Multi와 Illustration은 고정 색상이나
-      그라데이션을 포함하므로 color만으로 전체 색상이 바뀌지 않습니다.
-      일러스트는 원본 viewBox 비율을 유지한 채 지정한 영역 안에 표시됩니다.
+      Basic은 color로 색상을 변경합니다. <br />
+      Multi와 Illustration은 고정 색상이나 그라데이션을 포함하므로 color만으로
+      전체 색상이 바뀌지 않습니다. 일러스트는 원본 viewBox 비율을 유지한 채
+      지정한 영역 안에 표시됩니다.
     </p>
     <Source
       language='jsx'
