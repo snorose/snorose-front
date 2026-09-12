@@ -1,6 +1,8 @@
 import { useContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { IconMultiCloudLogo } from '@snorose/icons';
+
 import {
   AttachmentSwiper,
   BackAppBar,
@@ -23,7 +25,6 @@ import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
 import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
 
 import sponsorBanner from '@/assets/banners/sponsorBanner.png';
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import editorStyles from '../../editor/component/EditorContainer/EditorContainer.module.css';
 import styles from './PostDetailView.module.css';
@@ -200,7 +201,12 @@ function MetaContainer({
   return (
     <div className={styles.metaContainer}>
       <div className={styles.meta}>
-        <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
+        <IconMultiCloudLogo
+          width={25}
+          height={16}
+          role='img'
+          aria-label='로고'
+        />
         <p>{userDisplay || 'Unknown'}</p>
         {showBadge && (
           <Badge

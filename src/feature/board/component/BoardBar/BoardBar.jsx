@@ -59,11 +59,6 @@ function BoardImage({ image, label }) {
     return null;
   }
 
-  // TODO: 모든 게시판 이미지를 @snorose/icons 컴포넌트로 교체하면 문자열 이미지 분기와 <img> 렌더링을 제거한다.
-  if (typeof image === 'string') {
-    return <img className={styles.image} src={image} alt={label} />;
-  }
-
   const Image = image;
 
   return <Image className={styles.image} role='img' aria-label={label} />;
