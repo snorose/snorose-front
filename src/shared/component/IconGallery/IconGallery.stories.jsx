@@ -83,7 +83,7 @@ const IconTile = ({ IconComponent, color, name, size }) => (
     <CopyButton
       className={styles.copyTile}
       label={`${name} JSX 복사`}
-      text={`<${name} width={${size}} height={${size}}${color ? ` color={${JSON.stringify(color)}}` : ''} />`}
+      text={`<${name} width={${size}} height={${size}}${color ? ` color="${color}"` : ''} />`}
     >
       <div className={styles.preview} aria-hidden='true'>
         <IconComponent
@@ -152,7 +152,7 @@ const Gallery = ({ category, color, query, size }) => {
 };
 
 const meta = {
-  title: 'Foundations/Icons',
+  title: 'Foundations/Iconography',
   component: Gallery,
   parameters: {
     canvasWidth: 'min(1120px, calc(100vw - 48px))',
