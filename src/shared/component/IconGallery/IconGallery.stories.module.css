@@ -63,7 +63,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
   gap: 10px;
   list-style: none;
 }
@@ -95,7 +95,7 @@
   gap: 8px;
   width: 100%;
   flex: 1;
-  text-align: left;
+  text-align: center;
 }
 
 .copyTile .preview {
@@ -112,7 +112,6 @@
   font-size: 12px;
 }
 
-.copyTile:hover,
 .copyImport:hover {
   background: var(--grey-1);
 }
@@ -224,9 +223,5 @@
 @media (max-width: 600px) {
   .page {
     padding: 24px 0 32px;
-  }
-
-  .grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   }
 }
