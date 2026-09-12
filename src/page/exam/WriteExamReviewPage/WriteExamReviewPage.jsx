@@ -30,6 +30,7 @@ import { CategoryButton } from '@/feature/exam/component';
 import {
   EXAM_TYPES,
   FILE_MAX_SIZE,
+  INVALID_FILE_NAME_REGEX,
   LECTURE_TYPES,
   SEMESTERS,
   YEARS,
@@ -139,6 +140,15 @@ export default function WriteExamReviewPage() {
       alert('파일은 최대 10MB까지 업로드 할 수 있습니다.');
       return;
     }
+
+    if (selectedFile?.name && INVALID_FILE_NAME_REGEX.test(selectedFile.name)) {
+      toast({
+        message: TOAST.EXAM_REVIEW.invalidFileName,
+        variant: 'info',
+      });
+      return;
+    }
+
     setFile(selectedFile);
   };
 
