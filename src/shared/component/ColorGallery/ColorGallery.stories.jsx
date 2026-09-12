@@ -43,33 +43,8 @@ const readColors = () => {
   }));
 };
 
-const ColorTile = ({ name, value, usage, onCopy }) => (
-  <li className={styles.tile}>
-    <button
-      type='button'
-      className={styles.copy}
-      aria-label={`${usage} 복사`}
-      title={`${usage} 복사`}
-      onClick={() => onCopy(usage)}
-    >
-      <span
-        className={styles.swatch}
-        style={{ background: usage }}
-        aria-hidden='true'
-      />
-      <span className={styles.name}>{name}</span>
-      <span className={styles.value}>{value}</span>
-    </button>
-  </li>
-);
-
-const ColorGallery = ({ query }) => {
-  const [colors, setColors] = useState([]);
+const ColorTile = ({ name, value, usage }) => {
   const [status, setStatus] = useState('');
-
-  useEffect(() => {
-    setColors(readColors());
-  }, []);
 
   useEffect(() => {
     if (!status) return;
@@ -77,14 +52,50 @@ const ColorGallery = ({ query }) => {
     return () => clearTimeout(timer);
   }, [status]);
 
-  const copy = async (usage) => {
+  const copy = async () => {
     try {
       await navigator.clipboard.writeText(usage);
-      setStatus(`${usage} 복사됨`);
+      setStatus('복사됨');
     } catch {
-      setStatus('복사하지 못했습니다. 다시 시도해 주세요.');
+      setStatus('복사 실패. 다시 시도해 주세요.');
     }
   };
+
+  return (
+    <li className={styles.tile}>
+      <span
+        className={styles.swatch}
+        style={{ background: usage }}
+        aria-hidden='true'
+      />
+      <button
+        type='button'
+        className={styles.copy}
+        aria-label={`${usage} 복사`}
+        title={`${usage} 복사`}
+        onClick={copy}
+      >
+        <span
+          className={styles.name}
+          style={{ visibility: status ? 'hidden' : undefined }}
+        >
+          {name}
+        </span>
+        <span className={styles.copyStatus} role='status'>
+          {status}
+        </span>
+      </button>
+      <span className={styles.value}>{value}</span>
+    </li>
+  );
+};
+
+const ColorGallery = ({ query }) => {
+  const [colors, setColors] = useState([]);
+
+  useEffect(() => {
+    setColors(readColors());
+  }, []);
 
   const filtered = colors.filter(({ name, value }) =>
     `${name} ${value}`.toLowerCase().includes(query.trim().toLowerCase())
@@ -96,9 +107,6 @@ const ColorGallery = ({ query }) => {
         <h1>Colors</h1>
         <span>{filtered.length} tokens</span>
       </header>
-      <p className={styles.status} role='status'>
-        {status}
-      </p>
       {groups.map(({ title, match }) => {
         const entries = filtered.filter(({ name }) => match.test(name));
         if (!entries.length) return null;
@@ -107,7 +115,7 @@ const ColorGallery = ({ query }) => {
             <h2>{title}</h2>
             <ul className={styles.grid}>
               {entries.map((entry) => (
-                <ColorTile key={entry.name} {...entry} onCopy={copy} />
+                <ColorTile key={entry.name} {...entry} />
               ))}
             </ul>
           </section>
