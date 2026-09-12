@@ -1,0 +1,122 @@
+.page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 3.2rem 0 4rem;
+  color: var(--grey-4);
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.6rem;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--grey-2);
+}
+
+.title {
+  font: var(--text-heading-1-bold);
+  letter-spacing: 0;
+}
+
+.description {
+  margin-top: 0.4rem;
+  color: var(--grey-3-1);
+  font: var(--text-body-2-reg);
+  letter-spacing: 0;
+}
+
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+  margin-top: 2.4rem;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.groupTitle {
+  font: var(--text-headline-2-bold);
+  letter-spacing: 0;
+}
+
+.count {
+  min-width: 2.4rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background-color: var(--grey-1);
+  color: var(--grey-3-1);
+  font: var(--text-caption-1-bold);
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1rem;
+  list-style: none;
+}
+
+.tile {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1.2rem;
+  border: 1px solid var(--grey-2);
+  border-radius: 0.8rem;
+  background-color: var(--white);
+}
+
+.preview {
+  display: grid;
+  min-height: 7.2rem;
+  place-items: center;
+  border-radius: 0.6rem;
+  background-color: var(--grey-1);
+}
+
+.icon {
+  display: block;
+  max-width: 100%;
+}
+
+.name {
+  overflow-wrap: anywhere;
+  color: var(--grey-4);
+  font: var(--text-caption-1-med);
+  letter-spacing: 0;
+}
+
+.empty {
+  display: grid;
+  min-height: 20rem;
+  margin-top: 2.4rem;
+  place-items: center;
+  border: 1px solid var(--grey-2);
+  border-radius: 0.8rem;
+  color: var(--grey-3-1);
+  font: var(--text-body-1-med);
+  letter-spacing: 0;
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 2.4rem 0 3.2rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  }
+}
