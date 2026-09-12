@@ -26,14 +26,11 @@ const groups = [
   },
 ];
 
-const getFilteredGroups = (query) => {
+const getFilteredGroups = (query, category) => {
   const normalizedQuery = query.trim().toLowerCase();
 
-  if (!normalizedQuery) {
-    return groups;
-  }
-
   return groups
+    .filter((group) => group.id === category)
     .map((group) => ({
       ...group,
       entries: group.entries.filter(([name]) =>
@@ -57,8 +54,8 @@ const IconTile = ({ IconComponent, color, name, size }) => (
   </li>
 );
 
-const Gallery = ({ color, query, size }) => {
-  const filteredGroups = getFilteredGroups(query);
+const Gallery = ({ category, color, query, size }) => {
+  const filteredGroups = getFilteredGroups(query, category);
   const iconCount = filteredGroups.reduce(
     (total, group) => total + group.entries.length,
     0
@@ -103,7 +100,7 @@ const Gallery = ({ color, query, size }) => {
 };
 
 const meta = {
-  title: 'Component/IconGallery',
+  title: 'Foundations/Icons',
   component: Gallery,
   parameters: {
     canvasWidth: 'min(1120px, calc(100vw - 48px))',
@@ -115,6 +112,10 @@ const meta = {
     },
   },
   argTypes: {
+    category: {
+      control: false,
+      table: { disable: true },
+    },
     color: {
       control: 'color',
       description: 'currentColor 기반 아이콘에 적용할 색상',
@@ -128,14 +129,23 @@ const meta = {
       description: 'SVG width/height',
     },
   },
-};
-
-export default meta;
-
-export const All = {
   args: {
     color: '#484848',
     query: '',
     size: 32,
   },
+};
+
+export default meta;
+
+export const Basic = {
+  args: { category: 'basic' },
+};
+
+export const Multi = {
+  args: { category: 'multi' },
+};
+
+export const Illustration = {
+  args: { category: 'illustration' },
 };

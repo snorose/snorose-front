@@ -29,7 +29,14 @@ const preview = {
     },
     options: {
       storySort: {
-        order: ['Component', ['Button', 'Input', '*'], 'Feature', '*'],
+        order: [
+          'Foundations',
+          ['Icons', ['Basic', 'Multi', 'Illustration', '*'], '*'],
+          'Component',
+          ['Button', 'Input', '*'],
+          'Feature',
+          '*',
+        ],
         method: 'alphabetical',
         locales: 'en-US',
       },
