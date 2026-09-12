@@ -1,0 +1,241 @@
+.page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 32px 0 40px;
+  color: var(--grey-4);
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--grey-2);
+}
+
+.title {
+  font: var(--text-heading-1-bold);
+  letter-spacing: 0;
+}
+
+.description {
+  margin-top: 4px;
+  color: var(--grey-3-1);
+  font: var(--text-body-2-reg);
+  letter-spacing: 0;
+}
+
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 24px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.groupTitle {
+  font: var(--text-headline-2-bold);
+  letter-spacing: 0;
+}
+
+.count {
+  min-width: 24px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background-color: var(--grey-1);
+  color: var(--grey-3-1);
+  font: var(--text-caption-1-bold);
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
+  gap: 10px;
+  list-style: none;
+}
+
+.tile {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--grey-2);
+  border-radius: 8px;
+  background-color: var(--white);
+}
+
+.copyTile,
+.copyImport {
+  position: relative;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.copyTile {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  flex: 1;
+  text-align: center;
+}
+
+.copyTile .preview {
+  width: 100%;
+  min-height: 104px;
+}
+
+.copyImport {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  font-size: 12px;
+}
+
+.copyImport:hover {
+  background: var(--grey-1);
+}
+
+.copyTile:focus-visible,
+.copyImport:focus-visible {
+  outline: 2px solid var(--blue-4);
+  outline-offset: 3px;
+}
+
+.copyStatus:not(:empty) {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 6px;
+  background: var(--white);
+  color: var(--blue-4);
+  font-size: 12px;
+  text-align: center;
+}
+
+.copyImport .copyStatus:not(:empty) {
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0 6px;
+  border-radius: inherit;
+  background: var(--white);
+  pointer-events: none;
+}
+
+.copyImport:hover .copyStatus:not(:empty) {
+  background: var(--grey-1);
+}
+
+.docs {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--grey-4);
+  overflow-wrap: anywhere;
+}
+
+.docs h1 {
+  font-size: 28px;
+}
+.docs h2 {
+  font-size: 20px;
+  margin: 28px 0 12px;
+}
+.docs p {
+  margin: 12px 0;
+}
+.docsLinks {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.docsLinks a {
+  color: var(--blue-4);
+  text-decoration: underline;
+}
+.examples {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.examples figure {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  margin: 0;
+}
+.tableScroll {
+  overflow-x: auto;
+}
+.docs table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 480px;
+}
+.docs th,
+.docs td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid var(--grey-2);
+}
+
+.preview {
+  display: grid;
+  min-height: 72px;
+  place-items: center;
+  border-radius: 6px;
+  background-color: var(--grey-1);
+}
+
+.icon {
+  display: block;
+  max-width: 100%;
+}
+
+.name {
+  overflow-wrap: anywhere;
+  color: var(--grey-4);
+  font: var(--text-caption-1-med);
+  letter-spacing: 0;
+}
+
+.empty {
+  display: grid;
+  min-height: 200px;
+  margin-top: 24px;
+  place-items: center;
+  border: 1px solid var(--grey-2);
+  border-radius: 8px;
+  color: var(--grey-3-1);
+  font: var(--text-body-1-med);
+  letter-spacing: 0;
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 24px 0 32px;
+  }
+}
