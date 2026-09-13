@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { IllustrationLogoSnorose } from '@snorose/icons';
+import { IllustrationLogoSnoroseCloud } from '@snorose/icons';
 
 import { MenuIcon } from '@/shared/component';
 import { useAuth } from '@/shared/hook';
@@ -17,7 +17,7 @@ export default function Header({ className }) {
     <>
       <header className={`${styles.header} ${className}`}>
         <Link to='/home'>
-          <IllustrationLogoSnorose width={151} height={27} />
+          <IllustrationLogoSnoroseCloud width={151} height={27} />
         </Link>
         <div className={styles.action}>
           {status === 'authenticated' ? (

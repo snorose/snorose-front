@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-import { IllustrationLogoSnorose } from '@snorose/icons';
+import { IllustrationLogoSnoroseCloud } from '@snorose/icons';
 
 import {
   FOOTER_CONTACT_ITEMS,
@@ -29,7 +29,7 @@ export default function Footer() {
 
   return (
     <footer className={style.footer}>
-      <IllustrationLogoSnorose width={118} height={21} />
+      <IllustrationLogoSnoroseCloud width={118} height={21} />
 
       <div className={style.info}>
         {FOOTER_CONTACT_ITEMS.map(({ type, label, value, accountHolder }) => (
