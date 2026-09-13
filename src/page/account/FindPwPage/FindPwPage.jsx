@@ -8,7 +8,6 @@ import {
   EmailInput,
   ErrorMessage,
   FetchLoadingOverlay,
-  Icon,
   Label,
   NewButton,
   TextInput,

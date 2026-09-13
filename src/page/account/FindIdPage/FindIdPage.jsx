@@ -11,7 +11,6 @@ import {
   BackAppBar,
   ErrorMessage,
   FetchLoadingOverlay,
-  Icon,
   Label,
   NewButton,
   NumberInput,
