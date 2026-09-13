@@ -1,8 +1,12 @@
 import { useState } from 'react';
-import PullToRefresh from './PullToRefresh';
+
 import { List } from '@/shared/component';
+
 import { PostBar } from '@/feature/board/component';
+
 import { POST_LIST } from '@/dummy/data/postList';
+
+import PullToRefresh from './PullToRefresh';
 
 const PTRWrapper = (props) => {
   const [postList, setPostList] = useState(POST_LIST.slice(0, 3));

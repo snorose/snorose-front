@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IconChevronRight, IconPaperclip, IconMultiInfoCircle } from '@snorose/icons';
+
+import {
+  IconChevronRight,
+  IconMultiInfoCircle,
+  IconPaperclip,
+} from '@snorose/icons';
+
 import {
   BackAppBar,
   ErrorMessage,
@@ -154,7 +160,6 @@ export default function FindIdPage() {
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-
                   <IconPaperclip
                     width={16}
                     height={16}

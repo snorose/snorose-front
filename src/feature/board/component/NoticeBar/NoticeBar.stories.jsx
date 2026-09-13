@@ -1,4 +1,5 @@
 import { action } from '@storybook/addon-actions';
+
 import NoticeBar from './NoticeBar';
 
 const meta = {
