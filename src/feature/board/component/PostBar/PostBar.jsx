@@ -4,9 +4,10 @@ import {
   IconComment,
   IconHeart,
   IconHeartFill,
+  IconMultiCloudLogo,
 } from '@snorose/icons';
 
-import { Badge, Chip, Icon } from '@/shared/component';
+import { Badge, Chip } from '@/shared/component';
 import { ROLE } from '@/shared/constant';
 import { DateTime } from '@/shared/lib';
 
@@ -14,7 +15,6 @@ import { htmlToText } from '@/feature/editor/lib';
 import { ConfirmedChip } from '@/feature/exam/component';
 
 import altImage from '@/assets/images/altImage.png';
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import styles from './PostBar.module.css';
 
@@ -85,7 +85,12 @@ function Meta({
 
   return (
     <div className={styles.meta}>
-      <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
+      <IconMultiCloudLogo
+        width={22}
+        height={14}
+        role='img'
+        aria-label='로고'
+      />
       <div className={styles.userDisplay} title={userDisplay || undefined}>
         {userDisplay}
       </div>

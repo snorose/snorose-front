@@ -25,7 +25,8 @@
   border-radius: 0.5rem;
 }
 
-.hallOfFame img {
+.hallOfFameImage {
+  display: block;
   margin: 0 auto;
   width: 80%;
 }

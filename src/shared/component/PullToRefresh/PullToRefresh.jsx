@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import cloudLogo from '@/assets/images/cloudLogo.svg';
+import { IconMultiCloudLogo } from '@snorose/icons';
 
 import styles from './PullToRefresh.module.css';
 
@@ -95,7 +95,7 @@ export default function PullToRefresh({ children, onRefresh }) {
       {refreshing ? (
         <div className={styles.refreshBox}>
           <div className={styles.refreshIcon}>
-            <img src={cloudLogo} alt='로고' />
+            <IconMultiCloudLogo role='img' aria-label='로고' />
           </div>
         </div>
       ) : (

@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
-import { IllustrationLogoAboutSnoroseCloud } from '@snorose/icons';
+import {
+  IllustrationHallOfFame,
+  IllustrationLogoAboutSnoroseCloud,
+} from '@snorose/icons';
 
 import { BackAppBar } from '@/shared/component';
 
@@ -15,8 +18,6 @@ import {
   SNOROSE_MEMBERSHIP_LEVEL,
 } from '@/feature/home/constant';
 import HALL_OF_FAME_ADMINS from '@/feature/home/data/HallOfFrameAdmins.json';
-
-import HALL_OF_FAME from '@/assets/images/hallOfFame.svg';
 
 import styles from './AboutPage.module.css';
 
@@ -44,7 +45,11 @@ const accordionItems = [
     title: '명예의 전당',
     content: (
       <section className={styles.hallOfFame}>
-        <img src={HALL_OF_FAME} alt='hallOfFame' />
+        <IllustrationHallOfFame
+          className={styles.hallOfFameImage}
+          role='img'
+          aria-label='명예의 전당'
+        />
         <div className={styles.tags}>
           {HALL_OF_FAME_ADMINS.map((admin, index) => (
             <AccordionTag key={`${admin.nickname}-${index}`} admin={admin} />
