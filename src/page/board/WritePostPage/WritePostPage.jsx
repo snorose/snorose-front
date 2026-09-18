@@ -328,45 +328,17 @@ export default function WritePostPage() {
             </CloseAppBar>
           </div>
           <div className={styles.center}>
-            {textId === 'notice' ? (
-              <div className={styles.categorySelect}>
-                <div className={styles.categorySelectContainer}>
-                  <Icon
-                    id='clip-board-list'
-                    width={21}
-                    height={22}
-                    fill='white'
-                  />
-                  <p className={styles.categorySelectText}>{boardTitle}</p>
-                </div>
+            <div className={styles.categorySelect}>
+              <div className={styles.categorySelectContainer}>
+                <Icon
+                  id='clip-board-list'
+                  width={21}
+                  height={22}
+                  fill='white'
+                />
+                <p className={styles.categorySelectText}>{boardTitle}</p>
               </div>
-            ) : (
-              <div className={styles.categoryDropdownContainer}>
-                <div
-                  className={styles.categorySelect}
-                  onClick={handleDropDownOpen}
-                >
-                  <div className={styles.categorySelectContainer}>
-                    <Icon
-                      id='clip-board-list'
-                      width={21}
-                      height={22}
-                      fill='white'
-                    />
-                    <p className={styles.categorySelectText}>{boardTitle}</p>
-                  </div>
-                  <Icon id='angle-down' width={24} height={24} />
-                </div>
-                {dropDownOpen && (
-                  <DropdownList
-                    options={displayedOptions}
-                    select={{ id: boardId, name: boardTitle }}
-                    onSelect={handleBoardTitleChange}
-                    className={styles.dropDownList}
-                  />
-                )}
-              </div>
-            )}
+            </div>
             {categoryConfig && !isCategoryDisabled && (
               <DropdownCategory
                 options={categoryConfig}
