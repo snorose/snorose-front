@@ -11,7 +11,6 @@ import {
   CloseAppBar,
   ConfirmModal,
   DropdownCategory,
-  DropdownList,
   FetchLoading,
   Icon,
 } from '@/shared/component';
@@ -86,7 +85,6 @@ export default function EditPostPage() {
   const hasCategory = Boolean(categoryConfig);
   const isCategoryDisabled = hasCategory && isNotice;
   const shouldIncludeCategory = hasCategory && !isCategoryDisabled;
-  
 
   // 게시글 내용 가져오기
   const { data, isLoading, error } = useQuery({

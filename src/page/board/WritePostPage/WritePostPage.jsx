@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
@@ -12,7 +12,6 @@ import {
   CloseAppBar,
   ConfirmModal,
   DropdownCategory,
-  DropdownList,
   FetchLoading,
   Icon,
 } from '@/shared/component';
@@ -56,12 +55,11 @@ export default function WritePostPage() {
   const queryClient = useQueryClient();
   const { pathname } = useLocation();
   const { toast } = useToast();
-  const { userInfo, status } = useAuth();
+  const { userInfo } = useAuth();
   const { invalidUserInfoQuery } = useAuth();
   const { modal, setModal } = useContext(ModalContext);
 
   const [isNotice, setIsNotice] = useState(false);
-  const [dropDownOpen, setDropDownOpen] = useState(false);
   const [category, setCategory] = useState(null);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -83,28 +81,12 @@ export default function WritePostPage() {
   const textId = pathname.split('/')[2];
   const currentBoard = getBoard(textId);
   const [isTitleFocused, setIsTitleFocused] = useState(false);
-  const [boardTitle, setBoardTitle] = useState(
-    currentBoard?.title ?? '게시판을 선택해주세요'
-  );
-  const [boardId, setBoardId] = useState(currentBoard?.id ?? '');
+  const boardTitle = currentBoard?.title;
+  const boardId = currentBoard?.id ?? '';
   const categoryConfig = BOARD_CATEGORY_MAP[boardId];
   const hasCategory = Boolean(categoryConfig);
   const isCategoryDisabled = hasCategory && isNotice;
   const shouldIncludeCategory = hasCategory && !isCategoryDisabled;
-
-  const boardTitles = BOARD_MENUS.filter((menu) =>
-    [21, 22, 23, 41, 43].includes(menu.id)
-  ).map((menu) => menu.title);
-
-  // 공식 계정 일반글
-  const officialTitles = BOARD_MENUS.filter((menu) =>
-    [21, 60, 61, 62].includes(menu.id)
-  ).map((menu) => menu.title);
-
-  // 공식 게시판 공지 (ROLE.official)
-  const officialNoticeTitles = BOARD_MENUS.filter((menu) =>
-    [60, 61, 62].includes(menu.id)
-  ).map((menu) => menu.title);
 
   // 페이지 이탈 방지 모달 노출
   useEffect(() => {
@@ -116,40 +98,6 @@ export default function WritePostPage() {
   }, [title, text, attachmentsInfo]);
 
   useBlocker(isBlock);
-
-  // 드롭다운 표시
-  const displayedOptions = useMemo(() => {
-    const getOptionObjects = (titles) =>
-      BOARD_MENUS.filter((menu) => titles.includes(menu.title)).map((menu) => ({
-        id: menu.id,
-        name: menu.title,
-      }));
-
-    const roleOptions = {
-      [ROLE.official]: isNotice
-        ? getOptionObjects(officialNoticeTitles)
-        : getOptionObjects(officialTitles),
-      [ROLE.admin]: getOptionObjects([...boardTitles, ...officialNoticeTitles]),
-    };
-
-    return roleOptions[userInfo?.userRoleId] || getOptionObjects(boardTitles);
-  }, [isNotice, userInfo?.userRoleId]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // 게시판 선택 핸들러
-  const handleDropDownOpen = () => {
-    setDropDownOpen((prev) => !prev);
-  };
-
-  const categoryOptions =
-    categoryConfig?.map((name) => ({ id: name, name })) ?? [];
-
-  // 게시판 제목 선택 핸들러
-  const handleBoardTitleChange = (option) => {
-    setBoardTitle(option.name);
-    setBoardId(option.id);
-    setCategory(null);
-    setDropDownOpen(false);
-  };
 
   // 게시글 작성 중 페이지 이탈
   const handleExitPage = () => {
