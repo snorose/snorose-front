@@ -6,6 +6,7 @@ import {
   IconBookmarkFill,
   IconComment,
   IconEllipsis,
+  IconMultiCloudLogo,
 } from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
@@ -33,8 +34,6 @@ import { convertToObject } from '@/feature/exam/lib';
 import { useScrap } from '@/feature/scrap/hook';
 
 import { NotFoundPage } from '@/page/etc';
-
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import { getReviewDetail } from '@/apis';
 
@@ -131,7 +130,12 @@ export default function ExamReviewPage() {
       <div className={styles.blueContainer}>
         <div className={styles.displayBox}>
           <div className={styles.displayBoxLeft}>
-            <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
+            <IconMultiCloudLogo
+              width={25}
+              height={16}
+              role='img'
+              aria-label='로고'
+            />
             <span>{userDisplay}</span>
             <span className={styles.dot}></span>
             <span>{DateTime.format(createdAt, 'YMD')}</span>

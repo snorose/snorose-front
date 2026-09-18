@@ -7,6 +7,7 @@ import {
   IconMultiCheckBlueCircle,
   IconMultiCheckGreyCircle,
   IconMultiClipboardBlue,
+  IconMultiCloudLogo,
   IllustrationTrashcanCircle,
 } from '@snorose/icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -50,7 +51,6 @@ import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
 
 import attachmentGuide1 from '@/assets/images/attachmentGuide1.png';
 import attachmentGuide2 from '@/assets/images/attachmentGuide2.png';
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import { createThumbnail, postPost } from '@/apis';
 
@@ -415,7 +415,12 @@ export default function WritePostPage() {
               <div className={styles.profileBoxLeft}>
                 {userInfo?.userRoleId !== ROLE.admin &&
                 userInfo?.userRoleId !== ROLE.official ? (
-                  <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
+                  <IconMultiCloudLogo
+                    width={25}
+                    height={16}
+                    role='img'
+                    aria-label='로고'
+                  />
                 ) : (
                   <Badge
                     userRoleId={userInfo?.userRoleId}
@@ -770,7 +775,12 @@ export function NewWritePostPage({ isNotice = false }) {
               <div className={styles.profileBoxLeft}>
                 {userInfo?.userRoleId !== ROLE.admin &&
                 userInfo?.userRoleId !== ROLE.official ? (
-                  <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
+                  <IconMultiCloudLogo
+                    width={25}
+                    height={16}
+                    role='img'
+                    aria-label='로고'
+                  />
                 ) : (
                   <Badge
                     userRoleId={userInfo?.userRoleId}

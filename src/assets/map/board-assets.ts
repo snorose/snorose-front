@@ -3,6 +3,7 @@ import {
   IllustrationBoxStarsCircle,
   IllustrationBoxStarsOpen,
   IllustrationFolderSearch,
+  IllustrationIceCupBowl,
   IllustrationMicrophone,
   IllustrationSnowfall,
   IllustrationSnowfallCircle,
@@ -13,8 +14,6 @@ import {
   IllustrationStarHonorBoard,
 } from '@snorose/icons';
 import type { ComponentType, SVGProps } from 'react';
-
-import sookPlace from '@/assets/images/sookPlace.svg';
 
 import type { BoardKey } from '@/types';
 
@@ -55,6 +54,6 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
     main: IllustrationBoxStarsCircle,
   },
   sookplace: {
-    category: sookPlace,
+    category: IllustrationIceCupBowl,
   },
 };

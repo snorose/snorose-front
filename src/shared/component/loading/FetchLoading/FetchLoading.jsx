@@ -1,4 +1,4 @@
-import cloudLogo from '@/assets/images/cloudLogo.svg';
+import { IconMultiCloudLogo } from '@snorose/icons';
 
 import styles from './FetchLoading.module.css';
 
@@ -11,7 +11,7 @@ export default function FetchLoading({
     <div className={`${styles.loading} ${className}`}>
       <div className={styles.centerBox}>
         <div className={animation ? styles.icon : styles.iconStatic}>
-          <img src={cloudLogo} alt='로고' />
+          <IconMultiCloudLogo role='img' aria-label='로고' />
         </div>
         <p>{children}</p>
       </div>

@@ -10,18 +10,8 @@
 
 .profile.medium {
   font: var(--text-body-1-reg);
-
-  & .cloudLogoIcon {
-    width: 2.5rem;
-    height: 1.6rem;
-  }
 }
 
 .profile.small {
   font: var(--text-body-2-reg);
-
-  & .cloudLogoIcon {
-    width: 2.2rem;
-    height: 1.4rem;
-  }
 }

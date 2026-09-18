@@ -29,7 +29,19 @@ const preview = {
     },
     options: {
       storySort: {
-        order: ['Component', ['Button', 'Input', '*'], 'Feature', '*'],
+        order: [
+          'Foundations',
+          [
+            'Colors',
+            'Iconography',
+            ['Basic', 'Multi', 'Illustration', '*'],
+            '*',
+          ],
+          'Component',
+          ['Button', 'Input', '*'],
+          'Feature',
+          '*',
+        ],
         method: 'alphabetical',
         locales: 'en-US',
       },
@@ -38,11 +50,11 @@ const preview = {
   tags: ['autodocs'],
   // 모든 스토리에 필요한 Provider 적용
   decorators: [
-    (Story) => (
+    (Story, context) => (
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <div style={{ width: '600px' }}>
+            <div style={{ width: context.parameters.canvasWidth || '600px' }}>
               <Story />
             </div>
           </ToastProvider>

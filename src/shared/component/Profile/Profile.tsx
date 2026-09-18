@@ -1,7 +1,7 @@
+import { IconMultiCloudLogo } from '@snorose/icons';
+
 import { Badge } from '@/shared/component';
 import { ROLE } from '@/shared/constant';
-
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import type { Role } from '@/types';
 
@@ -20,10 +20,19 @@ export default function Profile({
   nickname,
   size = 'medium',
 }: ProfileProps) {
+  const cloudLogoSize =
+    size === 'medium'
+      ? { width: 25, height: 16 }
+      : { width: 22, height: 14 };
+
   const icon = badge.includes(userRoleId) ? (
     <Badge userRoleId={userRoleId} width={24} height={24} />
   ) : (
-    <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
+    <IconMultiCloudLogo
+      {...cloudLogoSize}
+      role='img'
+      aria-label='로고'
+    />
   );
 
   return (
