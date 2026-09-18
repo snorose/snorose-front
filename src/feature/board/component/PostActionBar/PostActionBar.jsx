@@ -8,7 +8,6 @@ import {
   IconHeartFill,
 } from '@snorose/icons';
 
-import { Icon } from '@/shared/component';
 import { LIKE_TYPE } from '@/shared/constant';
 
 import { useCommentContext } from '@/feature/comment/context';
@@ -56,6 +55,8 @@ function LikeActionButton({ postId, isLiked, likeCount }) {
   });
 
   const displayedIsLiked = optimisticIsLiked ?? isLiked;
+  const displayedLikeCount =
+    likeCount + Number(displayedIsLiked) - Number(isLiked);
   const IconComponent = displayedIsLiked ? IconHeartFill : IconHeart;
 
   const handleLikeClick = () => {
@@ -91,7 +92,7 @@ function LikeActionButton({ postId, isLiked, likeCount }) {
         color={'var(--pink-2)'}
         onAnimationEnd={() => setIsLikeAnimating(false)}
       />
-      <p>공감 {likeCount.toLocaleString()}</p>
+      <p>공감 {displayedLikeCount.toLocaleString()}</p>
     </div>
   );
 }
