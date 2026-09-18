@@ -68,7 +68,6 @@
   min-height: 5.6rem;
   padding: 0 2rem;
 
-  color: var(--grey-6);
   font-size: 1.6rem;
   text-align: left;
 
@@ -76,6 +75,10 @@
   border: 0;
 
   cursor: pointer;
+}
+
+.item span {
+  color: var(--grey-3-1);
 }
 
 .item + .item {
