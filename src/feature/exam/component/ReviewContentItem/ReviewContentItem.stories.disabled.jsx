@@ -1,5 +1,6 @@
-import ReviewContentItem from './ReviewContentItem';
 import { FLEX_ALIGN } from '@/feature/exam/constant';
+
+import ReviewContentItem from './ReviewContentItem';
 
 const meta = {
   title: 'Feature/Exam/ReviewContentItem',

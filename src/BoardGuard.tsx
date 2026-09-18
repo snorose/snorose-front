@@ -1,8 +1,8 @@
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 
-import { useAuth } from '@/shared/hook';
 import { ConfirmModal, NoticeModal } from '@/shared/component';
 import { CONFIRM_MODAL_TEXT, PERMISSION_MATRIX, ROLE } from '@/shared/constant';
+import { useAuth } from '@/shared/hook';
 
 type BoardGuardProps =
   | { isAdminOnly: true; action?: never }

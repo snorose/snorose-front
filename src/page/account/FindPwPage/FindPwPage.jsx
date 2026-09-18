@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IconMultiInfoCircle, IconPaperclip } from '@snorose/icons';
 
+import { IconMultiInfoCircle, IconPaperclip } from '@snorose/icons';
 
 import {
   BackAppBar,
   EmailInput,
   ErrorMessage,
   FetchLoadingOverlay,
-  Icon,
   Label,
   NewButton,
   TextInput,

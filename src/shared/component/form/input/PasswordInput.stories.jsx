@@ -1,6 +1,8 @@
 import { useState } from 'react';
+
+import { ErrorMessage, Label } from '@/shared/component';
+
 import PasswordInput from './PasswordInput';
-import { Label, ErrorMessage } from '@/shared/component';
 
 const meta = {
   title: 'Component/Input/PasswordInput',

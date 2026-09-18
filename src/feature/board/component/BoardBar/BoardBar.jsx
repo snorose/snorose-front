@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { IconStarCircleFill } from '@snorose/icons';
+import { IconStar } from '@snorose/icons';
 
 import styles from './BoardBar.module.css';
 
@@ -44,7 +44,7 @@ export function NewBoardBar({ name, to, desc, image }) {
         <h3 className={styles.title}>{name}</h3>
         <p className={styles.description}>{desc}</p>
       </div>
-      <IconStarCircleFill
+      <IconStar
         className={styles.favoriteIcon}
         width={20}
         height={20}

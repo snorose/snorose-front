@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   IconMultiCheckBlueCircle,
   IconMultiCheckGreyCircle,
-  IllustrationLogoSnorose,
+  IllustrationLogoSnoroseCloud,
 } from '@snorose/icons';
 
 import {
@@ -104,7 +104,7 @@ export default function Login() {
       <BackAppBar />
 
       <form onSubmit={handleLoginSubmit}>
-        <IllustrationLogoSnorose
+        <IllustrationLogoSnoroseCloud
           className={styles.logo}
           role='img'
           aria-label='스노로즈 로고'

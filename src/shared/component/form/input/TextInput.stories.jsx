@@ -1,6 +1,8 @@
 import { useState } from 'react';
+
+import { ErrorMessage, Label } from '@/shared/component';
+
 import TextInput from './TextInput';
-import { Label, ErrorMessage } from '@/shared/component';
 
 const meta = {
   title: 'Component/Input/TextInput',

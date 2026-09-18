@@ -1,6 +1,6 @@
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { IconChevronUpRight, IconMultiCloudLogo } from '@snorose/icons';
+import { IconArrowUpRight, IconMultiCloudLogo } from '@snorose/icons';
 
 import { TOAST } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
@@ -102,11 +102,11 @@ const CommentInput = () => {
           maxRows={5}
         />
       </div>
-      <IconChevronUpRight
+      <IconArrowUpRight
         className={styles.enter}
         width={32}
         height={32}
-        color='var(--blue-4)'
+        color='var(--grey-3-1)'
         onClick={submitComment}
       />
     </div>
