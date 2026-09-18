@@ -5,6 +5,7 @@ import {
   AttachmentSwiper,
   BackAppBar,
   Badge,
+  Chip as CategoryChip,
   FetchLoading,
 } from '@/shared/component';
 import LinkAlertModal from '@/shared/component/modal/LinkAlertModal/LinkAlertModal';
@@ -122,12 +123,12 @@ export default function PostDetailView({
         />
 
         <div className={styles.titleContainer}>
-          <h1 className={styles.title}>
-            {data.category &&
-              !data.title?.startsWith(`[${data.category}]`) &&
-              `[${data.category}] `}
-            {data.title}
-          </h1>
+          <div className={styles.titleRow}>
+            {data.category && (
+              <CategoryChip name={data.category} variant='category' />
+            )}
+            <h1 className={styles.title}>{data.title}</h1>
+          </div>
 
           <span className={styles.views}>
             {(data.viewCount ?? 0).toLocaleString()} views

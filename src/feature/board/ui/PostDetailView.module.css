@@ -55,8 +55,16 @@
   gap: 0.4rem;
 }
 
-.title {
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   width: 100%;
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
   font: var(--text-title-1-bold);
   color: var(--grey-4);
   word-break: keep-all;
