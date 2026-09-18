@@ -106,7 +106,7 @@ const CommentInput = () => {
         className={styles.enter}
         width={32}
         height={32}
-        color='var(--blue-4)'
+        color='var(--grey-3-1)'
         onClick={submitComment}
       />
     </div>
