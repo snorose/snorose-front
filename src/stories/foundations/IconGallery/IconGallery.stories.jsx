@@ -7,10 +7,7 @@ import IconDocs from './IconDocs';
 import styles from './IconGallery.stories.module.css';
 
 const iconEntries = Object.entries(SnoroseIcons)
-  .filter(
-    ([name, Component]) =>
-      name !== 'IconTextAlign' && typeof Component === 'function'
-  )
+  .filter(([, Component]) => typeof Component === 'function')
   .sort(([firstName], [secondName]) => firstName.localeCompare(secondName));
 
 const groups = [
