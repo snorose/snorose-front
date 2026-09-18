@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
   IconBookmark,
   IconBookmarkFill,
@@ -6,7 +8,6 @@ import {
   IconHeartFill,
 } from '@snorose/icons';
 
-import { Icon } from '@/shared/component';
 import { LIKE_TYPE } from '@/shared/constant';
 
 import { useCommentContext } from '@/feature/comment/context';
@@ -46,20 +47,52 @@ export function CommentActionButton({ isNotice, commentCount }) {
 }
 
 function LikeActionButton({ postId, isLiked, likeCount }) {
+  const [isLikeAnimating, setIsLikeAnimating] = useState(false);
+  const [optimisticIsLiked, setOptimisticIsLiked] = useState(null);
   const { like, unlike } = useLike({
     type: LIKE_TYPE.post,
     sourceId: postId,
   });
 
-  const IconComponent = isLiked ? IconHeartFill : IconHeart;
+  const displayedIsLiked = optimisticIsLiked ?? isLiked;
+  const displayedLikeCount =
+    likeCount + Number(displayedIsLiked) - Number(isLiked);
+  const IconComponent = displayedIsLiked ? IconHeartFill : IconHeart;
+
+  const handleLikeClick = () => {
+    if (displayedIsLiked) {
+      setIsLikeAnimating(false);
+      setOptimisticIsLiked(false);
+      unlike.mutate(undefined, {
+        onSuccess: () => setOptimisticIsLiked(null),
+        onError: () => setOptimisticIsLiked(null),
+      });
+      return;
+    }
+
+    setOptimisticIsLiked(true);
+    setIsLikeAnimating(true);
+    like.mutate(undefined, {
+      onSuccess: () => setOptimisticIsLiked(null),
+      onError: () => {
+        setOptimisticIsLiked(null);
+        setIsLikeAnimating(false);
+      },
+    });
+  };
 
   return (
-    <div
-      className={styles.count}
-      onClick={() => (isLiked ? unlike.mutate() : like.mutate())}
-    >
-      <IconComponent width={16} height={15} color={'var(--pink-2)'} />
-      <p>공감 {likeCount.toLocaleString()}</p>
+    <div className={styles.count} onClick={handleLikeClick}>
+      <IconComponent
+        className={
+          displayedIsLiked && isLikeAnimating ? styles.heartLiked : styles.heart
+        }
+        width={16}
+        height={15}
+        color={'var(--pink-2)'}
+        onAnimationEnd={() => setIsLikeAnimating(false)}
+      />
+      <p>공감 {displayedLikeCount.toLocaleString()}</p>
     </div>
   );
 }
