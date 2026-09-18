@@ -1,6 +1,8 @@
 import { useState } from 'react';
+
+import { ErrorMessage, Label } from '@/shared/component';
+
 import NumberInput from './NumberInput';
-import { Label, ErrorMessage } from '@/shared/component';
 
 const meta = {
   title: 'Component/Input/NumberInput',
