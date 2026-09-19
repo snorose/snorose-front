@@ -62,7 +62,7 @@ const PackageVersion = () => {
 };
 
 const IconDocs = () => (
-  <article className={styles.docs}>
+  <article>
     <h1>Iconography</h1>
     <PackageVersion />
     <p>
