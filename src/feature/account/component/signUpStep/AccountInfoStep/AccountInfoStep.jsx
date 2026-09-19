@@ -1,4 +1,3 @@
-import { useToast } from '@/shared/hook';
 import {
   EmailInput,
   ErrorMessage,
@@ -7,13 +6,14 @@ import {
   PasswordInput,
   TextInput,
 } from '@/shared/component';
+import { useToast } from '@/shared/hook';
 
 import {
-  validateUserName,
-  validateSookmyungEmail,
+  validateCheckedPassword,
   validateId,
   validatePassword,
-  validateCheckedPassword,
+  validateSookmyungEmail,
+  validateUserName,
 } from '@/feature/account/lib';
 
 import styles from './AccountInfoStep.module.css';

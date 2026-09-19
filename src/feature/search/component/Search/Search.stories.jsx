@@ -1,5 +1,6 @@
-import Search from '@/feature/search/component/Search/Search';
 import { useNavigate } from 'react-router-dom';
+
+import Search from '@/feature/search/component/Search/Search';
 
 const SearchWrapper = (props) => {
   const navigate = useNavigate();

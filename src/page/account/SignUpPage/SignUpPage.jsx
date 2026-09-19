@@ -4,9 +4,9 @@ import { useSearchParams } from 'react-router-dom';
 import { BackAppBar } from '@/shared/component';
 
 import {
-  StageDots,
   AccountInfoStep,
   AuthorizationStep,
+  StageDots,
   UserInfoStep,
 } from '@/feature/account/component';
 

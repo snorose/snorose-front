@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { Icon } from '@/shared/component';
-import altImage from '@/assets/images/altImage.png';
+import { IconGripHorizontal, IconMultiVideo } from '@snorose/icons';
+
 import { getSafeSrc } from '@/feature/attachment/lib';
+
+import altImage from '@/assets/images/altImage.png';
 
 import styles from './AttachmentList.module.css';
 
@@ -67,21 +69,20 @@ function AttachmentList({ attachmentsInfo, setAttachmentsInfo }) {
                   e.currentTarget.replaceWith(img);
                 }}
               />
-              <Icon
-                id='video-fill'
-                width={'0.875rem'}
-                height={'0.875rem'}
+              <IconMultiVideo
                 className={styles.videoIcon}
+                width={16}
+                height={16}
               />
             </div>
           )}
-          <Icon
-            id='image-select-bar'
-            width={'3rem'}
-            height={'9.6rem'}
-            fill='white'
-            className={styles.imageSelectBar}
-          />
+          <div className={styles.imageSelectBar}>
+            <IconGripHorizontal
+              width={11}
+              height={18}
+              color='var(--blue-2, #bfd7ec)'
+            />
+          </div>
         </li>
       ))}
     </ul>

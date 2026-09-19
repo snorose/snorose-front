@@ -1,6 +1,6 @@
-import { authAxios } from '@/axios';
-
 import { BOARD_ID } from '@/shared/constant';
+
+import { authAxios } from '@/axios';
 
 export const searchByBoard = async ({ boardId, page, params }) => {
   const endpoint =

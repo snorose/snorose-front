@@ -1,4 +1,9 @@
-import { ConfirmModal, Icon } from '@/shared/component';
+import {
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+} from '@snorose/icons';
+
+import { ConfirmModal } from '@/shared/component';
 
 import styles from './LinkAlertModal.module.css';
 
@@ -25,11 +30,11 @@ export default function LinkAlertModal({
       confirmButtonClassName={styles.linkConfirmButton}
     >
       <div className={styles.checkRow} onClick={() => setChecked(!checked)}>
-        <div
-          className={`${styles.checkCircle} ${checked ? styles.checked : ''}`}
-        >
-          <Icon id='check-editor' className={styles.checkIcon} />
-        </div>
+        {checked ? (
+          <IconMultiCheckBlueCircle className={styles.checkIcon} />
+        ) : (
+          <IconMultiCheckGreyCircle className={styles.checkIcon} />
+        )}
 
         <span className={styles.checkText}>다시 보지 않기</span>
       </div>

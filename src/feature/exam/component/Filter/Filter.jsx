@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { Icon } from '@/shared/component';
-import { ReactComponent as XIconsmall } from '@/assets/icons/Xsmall.svg';
+import { IconChevronDown, IconChevronUp, IconX } from '@snorose/icons';
 
 import styles from './Filter.module.css';
 
@@ -45,11 +44,11 @@ export default function Filter({ filterKey, options, placeholder }) {
   return (
     <div ref={ref} className={`${styles.filter} ${isOpen && styles.open}`}>
       <div className={`${styles.display}`}>
-        <Icon
-          id={isOpen ? 'angle-up-blue' : 'angle-down-blue'}
-          width={8}
-          height={5}
-        />
+        {isOpen ? (
+          <IconChevronUp width={18} height={18} color='var(--blue-4)' />
+        ) : (
+          <IconChevronDown width={18} height={18} color='var(--blue-4)' />
+        )}
         <span className={styles.displayOption}>
           {selectedOptionName ?? placeholder}
         </span>
@@ -62,7 +61,7 @@ export default function Filter({ filterKey, options, placeholder }) {
               deleteOption();
             }}
           >
-            <XIconsmall width={8} height={8} />
+            <IconX width={8} height={8} color='var(--blue-4)' />
           </button>
         )}
       </div>

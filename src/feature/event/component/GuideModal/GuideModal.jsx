@@ -1,10 +1,9 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { IconX } from '@snorose/icons';
 import { Keyboard, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-import { Icon } from '@/shared/component';
 
 import styles from './GuideModal.module.css';
 
@@ -39,12 +38,11 @@ export default function GuideModal({
       <div className={styles.modal}>
         <div className={styles.modalTop}>
           <button className={styles.close} onClick={onClose}>
-            <Icon
+            <IconX
               className={styles.close}
-              id='x'
               width={18}
               height={18}
-              stroke={'grey'}
+              color={'grey'}
             />
           </button>
         </div>

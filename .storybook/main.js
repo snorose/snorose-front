@@ -1,5 +1,6 @@
 /** @type { import('@storybook/react-webpack5').StorybookConfig } */
 
+import { readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -7,6 +8,15 @@ const fileName = fileURLToPath(import.meta.url);
 const dirname = path.dirname(fileName);
 
 const config = {
+  env: (env) => ({
+    ...env,
+    STORYBOOK_ICONS_VERSION: JSON.parse(
+      readFileSync(
+        path.resolve(dirname, '../node_modules/@snorose/icons/package.json'),
+        'utf8'
+      )
+    ).version,
+  }),
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
     '@storybook/preset-create-react-app',

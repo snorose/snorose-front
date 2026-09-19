@@ -1,7 +1,6 @@
-import { Icon } from '@/shared/component';
+import { IconCheck } from '@snorose/icons';
 
 import styles from './DropdownList.module.css';
-
 export default function DropdownList({
   options,
   select,
@@ -20,7 +19,9 @@ export default function DropdownList({
         >
           {option.name}
           {select?.id === option.id && (
-            <Icon id='check' width={14} height={11} />
+            <IconCheck
+              className={styles.checkIconBlue} 
+            />
           )}
         </li>
       ))}

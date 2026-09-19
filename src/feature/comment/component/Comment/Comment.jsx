@@ -1,15 +1,23 @@
-import { forwardRef, useContext, useRef, useState, useEffect } from 'react';
+import { forwardRef, useContext, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { Badge, Icon, MoreOptionModal } from '@/shared/component';
+import {
+  IconComment,
+  IconEllipsis,
+  IconHeart,
+  IconHeartFill,
+  IconMultiCloudLogo,
+} from '@snorose/icons';
+
+import { Badge, MoreOptionModal } from '@/shared/component';
 import {
   LIKE_TYPE,
+  MORE_OPTION_MODAL_TEXT,
   ROLE,
   SHOW_BADGE_PATH,
-  MORE_OPTION_MODAL_TEXT,
 } from '@/shared/constant';
-import { renderTextWithLinks, DateTime } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
+import { DateTime, renderTextWithLinks } from '@/shared/lib';
 
 import {
   CommentModalRenderer,
@@ -17,8 +25,6 @@ import {
 } from '@/feature/comment/component';
 import { useCommentContext } from '@/feature/comment/context';
 import { useLike } from '@/feature/like/hook';
-
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import styles from './Comment.module.css';
 
@@ -50,7 +56,6 @@ const Comment = forwardRef((props, ref) => {
     setContent,
     inputFocus,
     resetCommentState,
-    focusedItem,
     setFocusedItem,
   } = useCommentContext();
 
@@ -119,17 +124,23 @@ const Comment = forwardRef((props, ref) => {
         <div className={styles.commentTop}>
           <div className={styles.commentTopLeft}>
             <div className={styles.cloud}>
-              <img
-                className={styles.cloudLogoIcon}
-                src={cloudLogo}
-                alt='로고'
+              <IconMultiCloudLogo
+                width={22}
+                height={14}
+                role='img'
+                aria-label='로고'
               />
             </div>
             <p className={`${isWriterWithdrawn && styles.isWriterWithdrawn}`}>
               {isWriterWithdrawn ? '(알 수 없음)' : userDisplay}
             </p>
             {showBadge && (
-              <Badge userRoleId={userRoleId} className={styles.badge} />
+              <Badge
+                userRoleId={userRoleId}
+                className={styles.badge}
+                width={16}
+                height={16}
+              />
             )}
             <p className={styles.dot}>·</p>
             <p>
@@ -142,7 +153,7 @@ const Comment = forwardRef((props, ref) => {
               className={styles.dot3}
               onClick={(e) => onCommentOptionClick(data)}
             >
-              <Icon id='meat-ball' width={18} height={4} stroke='none' />
+              <IconEllipsis width={18} height={4} color='var(--grey-3-1)' />
             </div>
           )}
         </div>
@@ -165,15 +176,13 @@ const Comment = forwardRef((props, ref) => {
                 type='button'
                 onClick={handleReply}
               >
-                <Icon
-                  id='comment-stroke'
+                <IconComment
                   width={18}
                   height={15}
+                  color={'var(--blue-3)'}
                   style={{
                     paddingTop: '0.1rem',
                   }}
-                  stroke='var(--blue-3)'
-                  fill='none'
                 />
                 <p>{children.length}</p>
               </button>
@@ -182,13 +191,11 @@ const Comment = forwardRef((props, ref) => {
                 type='button'
                 onClick={() => (isLiked ? unlike.mutate() : like.mutate())}
               >
-                <Icon
-                  id='like-stroke'
-                  width={16}
-                  height={18}
-                  stroke='var(--pink-2)'
-                  fill={isLiked ? 'var(--pink-2)' : 'none'}
-                />
+                {isLiked ? (
+                  <IconHeartFill width={16} height={18} color='var(--pink-2)' />
+                ) : (
+                  <IconHeart width={16} height={18} color='var(--pink-2)' />
+                )}
                 <span>{likeCount.toLocaleString()}</span>
               </button>
             </>

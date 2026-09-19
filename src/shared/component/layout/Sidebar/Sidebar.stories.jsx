@@ -1,5 +1,6 @@
-import Sidebar from './Sidebar';
 import { useSidebarStore } from '@/shared/store';
+
+import Sidebar from './Sidebar';
 
 const sidebarStoryConfig = {
   title: 'Component/Sidebar',

@@ -1,11 +1,12 @@
 import { forwardRef } from 'react';
 
+import {
+  IconMultiHeartMinusCircle,
+  IconMultiHeartPlusCircle,
+} from '@snorose/icons';
 import { format } from 'date-fns';
 
 import { POINT_CATEGORY_KOREAN_ENUM } from '@/feature/attendance/constant';
-
-import { ReactComponent as HeartPlus } from '@/assets/images/heartPlus.svg';
-import { ReactComponent as HeartMinus } from '@/assets/images/heartMinus.svg';
 
 import styles from './PointLog.module.css';
 
@@ -17,15 +18,19 @@ const PointLog = forwardRef((props, ref) => {
     <li ref={ref} className={styles.pointBox}>
       <div className={styles.pointIconContentWrapper}>
         {difference > 0 ? (
-          <HeartPlus
+          <IconMultiHeartPlusCircle
             className={styles.pointIcon}
+            width={40}
+            height={41}
             role='img'
             focusable='false'
             aria-label='포인트 증가'
           />
         ) : (
-          <HeartMinus
+          <IconMultiHeartMinusCircle
             className={styles.pointIcon}
+            width={40}
+            height={40}
             role='img'
             focusable='false'
             aria-label='포인트 감소'

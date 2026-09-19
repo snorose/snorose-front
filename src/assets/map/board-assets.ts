@@ -3,6 +3,7 @@ import {
   IllustrationBoxStarsCircle,
   IllustrationBoxStarsOpen,
   IllustrationFolderSearch,
+  IllustrationIceCupBowl,
   IllustrationMicrophone,
   IllustrationSnowfall,
   IllustrationSnowfallCircle,

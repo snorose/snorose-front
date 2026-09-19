@@ -2,7 +2,14 @@ import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { IconMultiClipboardBlue } from '@snorose/icons';
+import {
+  IconChevronDown,
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+  IconMultiClipboardBlue,
+  IconMultiCloudLogo,
+  IllustrationTrashcanCircle,
+} from '@snorose/icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -14,7 +21,6 @@ import {
   ConfirmModal,
   DropdownList,
   FetchLoading,
-  Icon,
 } from '@/shared/component';
 import {
   ATTACHMENT_MODAL_TEXT,
@@ -45,7 +51,6 @@ import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
 
 import attachmentGuide1 from '@/assets/images/attachmentGuide1.png';
 import attachmentGuide2 from '@/assets/images/attachmentGuide2.png';
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import { createThumbnail, postPost } from '@/apis';
 
@@ -56,7 +61,7 @@ export default function WritePostPage() {
   const queryClient = useQueryClient();
   const { pathname } = useLocation();
   const { toast } = useToast();
-  const { userInfo, status } = useAuth();
+  const { userInfo } = useAuth();
   const { invalidUserInfoQuery } = useAuth();
   const { modal, setModal } = useContext(ModalContext);
 
@@ -358,7 +363,7 @@ export default function WritePostPage() {
                     <IconMultiClipboardBlue width={21} height={22} />
                     <p className={styles.categorySelectText}>{boardTitle}</p>
                   </div>
-                  <Icon id='angle-down' width={24} height={24} />
+                  <IconChevronDown width={24} height={24} />
                 </div>
                 {dropDownOpen && (
                   <DropdownList
@@ -390,7 +395,7 @@ export default function WritePostPage() {
                         : category || '카테고리를 선택해주세요'}
                     </p>
                   </div>
-                  <Icon id='angle-down' width={24} height={24} />
+                  <IconChevronDown width={24} height={24} />
                 </div>
                 {categoryDropDownOpen && !isCategoryDisabled && (
                   <DropdownList
@@ -410,11 +415,17 @@ export default function WritePostPage() {
               <div className={styles.profileBoxLeft}>
                 {userInfo?.userRoleId !== ROLE.admin &&
                 userInfo?.userRoleId !== ROLE.official ? (
-                  <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
+                  <IconMultiCloudLogo
+                    width={25}
+                    height={16}
+                    role='img'
+                    aria-label='로고'
+                  />
                 ) : (
                   <Badge
                     userRoleId={userInfo?.userRoleId}
-                    className={styles.badge}
+                    width={24}
+                    height={24}
                   />
                 )}
                 <p>{userInfo?.nickname}</p>
@@ -431,11 +442,11 @@ export default function WritePostPage() {
                   }
                   onClick={handleIsNotice}
                 >
-                  <Icon
-                    id={isNotice ? 'check-circle-blue' : 'check-circle-grey'}
-                    width={21}
-                    height={22}
-                  />
+                  {isNotice ? (
+                    <IconMultiCheckBlueCircle width={21} height={22} />
+                  ) : (
+                    <IconMultiCheckGreyCircle width={21} height={22} />
+                  )}
                   <p>공지글</p>
                 </div>
               )}
@@ -485,10 +496,9 @@ export default function WritePostPage() {
           />
         )}
 
-        <Icon
-          id='trashcan'
-          width='10rem'
-          height='10rem'
+        <IllustrationTrashcanCircle
+          width={21}
+          height={22}
           className={`${isTrashOverlapped ? styles.trashVisible : styles.trashInvisible}`}
           onDragEnter={(e) => {
             e.preventDefault();
@@ -765,11 +775,17 @@ export function NewWritePostPage({ isNotice = false }) {
               <div className={styles.profileBoxLeft}>
                 {userInfo?.userRoleId !== ROLE.admin &&
                 userInfo?.userRoleId !== ROLE.official ? (
-                  <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
+                  <IconMultiCloudLogo
+                    width={25}
+                    height={16}
+                    role='img'
+                    aria-label='로고'
+                  />
                 ) : (
                   <Badge
                     userRoleId={userInfo?.userRoleId}
-                    className={styles.badge}
+                    width={24}
+                    height={24}
                   />
                 )}
                 <p>{userInfo?.nickname}</p>
@@ -816,10 +832,9 @@ export function NewWritePostPage({ isNotice = false }) {
           </div>
         </div>
 
-        <Icon
-          id='trashcan'
-          width='10rem'
-          height='10rem'
+        <IllustrationTrashcanCircle
+          width={21}
+          height={22}
           className={`${isTrashOverlapped ? styles.trashVisible : styles.trashInvisible}`}
           onDragEnter={(e) => {
             e.preventDefault();

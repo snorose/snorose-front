@@ -1,3 +1,15 @@
+import {
+  IconBell,
+  IconBellFill,
+  IconBook,
+  IconBookFill,
+  IconDocument,
+  IconDocumentFill,
+  IconHomeFill,
+  IconMypage,
+  IconMypageFill,
+} from '@snorose/icons';
+
 import { NEW_ROUTES } from '@/shared/constant/route';
 import { BOARD_REGISTRY } from '@/shared/lib';
 
@@ -8,6 +20,8 @@ export const NAVBAR_MENUS = Object.freeze([
     label: '메인홈',
     width: 32,
     height: 32,
+    ActiveIcon: IconHomeFill,
+    DefaultIcon: IconHomeFill,
   },
   {
     id: 'board',
@@ -15,6 +29,8 @@ export const NAVBAR_MENUS = Object.freeze([
     label: '게시판',
     width: 32,
     height: 32,
+    ActiveIcon: IconDocumentFill,
+    DefaultIcon: IconDocument,
   },
   {
     id: 'test',
@@ -22,6 +38,8 @@ export const NAVBAR_MENUS = Object.freeze([
     label: '시험후기',
     width: 32,
     height: 32,
+    ActiveIcon: IconBookFill,
+    DefaultIcon: IconBook,
   },
   {
     id: 'bell',
@@ -29,6 +47,8 @@ export const NAVBAR_MENUS = Object.freeze([
     label: '알림',
     width: 32,
     height: 32,
+    ActiveIcon: IconBellFill,
+    DefaultIcon: IconBell,
   },
   {
     id: 'mypage',
@@ -36,6 +56,8 @@ export const NAVBAR_MENUS = Object.freeze([
     label: '내정보',
     width: 32,
     height: 32,
+    ActiveIcon: IconMypageFill,
+    DefaultIcon: IconMypage,
   },
 ]);
 

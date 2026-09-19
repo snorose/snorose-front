@@ -2,8 +2,13 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import {
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+  IllustrationLogoSnoroseCloud,
+} from '@snorose/icons';
+
+import {
   BackAppBar,
-  Icon,
   NewButton,
   PasswordInput,
   TextInput,
@@ -12,8 +17,6 @@ import { TOAST } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 
 import { useLogin } from '@/feature/auth/hooks';
-
-import snoroseLogo from '@/assets/images/snoroseLogo.svg';
 
 import styles from './LoginPage.module.css';
 
@@ -101,7 +104,11 @@ export default function Login() {
       <BackAppBar />
 
       <form onSubmit={handleLoginSubmit}>
-        <img src={snoroseLogo} alt='스노로즈 로고' className={styles.logo} />
+        <IllustrationLogoSnoroseCloud
+          className={styles.logo}
+          role='img'
+          aria-label='스노로즈 로고'
+        />
 
         <p className={styles.title}>
           숙명인을 위한 커뮤니티,
@@ -132,11 +139,11 @@ export default function Login() {
           className={styles.rememberIdCheckbox}
           onClick={() => setIsRememberId((prev) => !prev)}
         >
-          <Icon
-            id={isRememberId ? 'inactive-check-circle' : 'active-check-circle'}
-            width={22}
-            height={22}
-          />
+          {isRememberId ? (
+            <IconMultiCheckBlueCircle width={22} height={22} />
+          ) : (
+            <IconMultiCheckGreyCircle width={22} height={22} />
+          )}
           <span>아이디 기억하기</span>
         </div>
 

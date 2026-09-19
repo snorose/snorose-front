@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
-import { IllustrationTaskComplete } from '@snorose/icons';
+import { IconCheck, IllustrationTaskComplete } from '@snorose/icons';
 
-import { Button, Icon } from '@/shared/component';
+import { Button } from '@/shared/component';
 
 import styles from './SignUpSuccessPage.module.css';
 
@@ -12,11 +12,11 @@ export default function SignUpSuccessPage() {
   return (
     <div className={styles.container}>
       <div>
-        <Icon
-          id='check-thick'
-          width={'2.4rem'}
-          height={'2.4rem'}
+        <IconCheck
+          width={24}
+          height={24}
           className={styles.icon}
+          color='var(--blue-4)'
         />
         <p className={styles.title}>스노로즈 가입이 완료되었어요!</p>
         <p className={styles.explanation}>

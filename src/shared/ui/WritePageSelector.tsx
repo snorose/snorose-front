@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
 
-import { WriteExamReviewPage } from '@/page/exam';
-import { WriteEventPage } from '@/page/event';
-import { WritePostPage } from '@/page/board';
-
 import { CheckExamPeriodRoute } from '@/feature/exam/lib';
+
+import { WritePostPage } from '@/page/board';
+import { WriteEventPage } from '@/page/event';
+import { WriteExamReviewPage } from '@/page/exam';
 
 export default function WritePageSelector() {
   const { boardKey } = useParams();

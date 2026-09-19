@@ -33,6 +33,14 @@
 }
 
 .imageSelectBar {
+  width: 3rem;
+  height: 9.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background-color: var(--white, #fff);
+  border-radius: 0 1.2rem 1.2rem 0;
   cursor: pointer;
 }
 

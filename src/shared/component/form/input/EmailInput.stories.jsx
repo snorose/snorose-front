@@ -1,6 +1,8 @@
 import { useState } from 'react';
+
+import { ErrorMessage, Label } from '@/shared/component';
+
 import EmailInput from './EmailInput';
-import { Label, ErrorMessage } from '@/shared/component';
 
 const meta = {
   title: 'Component/Input/EmailInput',

@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useSearchParams } from 'react-router-dom';
+
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import { FetchLoading } from '@/shared/component';

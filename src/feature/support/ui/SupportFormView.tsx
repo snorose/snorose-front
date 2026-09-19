@@ -1,9 +1,10 @@
 import { useContext } from 'react';
 
+import { IconX } from '@snorose/icons';
+
 import {
   CloseAppBar,
   DropdownBlue,
-  Icon,
   Profile,
   TextareaFieldBlue,
   TextFieldBlue,
@@ -196,7 +197,7 @@ function Item({ name, onClick }: { name: string; onClick: () => void }) {
         onClick={onClick}
         onKeyDown={(e) => e.key === 'Enter' && onClick()}
       >
-        <Icon id='x' width={12} height={12} />
+        <IconX width={12} height={12} />
       </span>
     </div>
   );

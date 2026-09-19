@@ -4,19 +4,19 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query';
 
+import { MUTATION_KEY, QUERY_KEY } from '@/shared/constant';
+import { AppError } from '@/shared/lib';
+
+import { CATEGORY, ERROR_CODE, ERROR_MESSAGE } from '@/feature/alert/constant';
+import { toNotificationItem } from '@/feature/alert/mapper';
+
 import {
   fetchNotificationList,
-  readNotifications,
   fetchNotificationSettings,
-  updateNotificationSettings,
+  readNotifications,
   updateCommentNotificationSetting,
+  updateNotificationSettings,
 } from '@/apis';
-
-import { AppError } from '@/shared/lib';
-import { MUTATION_KEY, QUERY_KEY } from '@/shared/constant';
-
-import { toNotificationItem } from '@/feature/alert/mapper';
-import { CATEGORY, ERROR_CODE, ERROR_MESSAGE } from '@/feature/alert/constant';
 
 export function useNotification(category) {
   return useSuspenseQuery({

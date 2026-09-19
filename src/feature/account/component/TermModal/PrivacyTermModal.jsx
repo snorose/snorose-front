@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+
 import { PRIVACY_TERM } from '@/feature/account/constant/privacyTerm';
 
 import styles from './PrivacyTermModal.module.css';

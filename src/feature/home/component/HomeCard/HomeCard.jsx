@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 
-import { IllustrationFlag } from '@snorose/icons';
+import {
+  IconChevronRight,
+  IconMultiBellLightBlue,
+  IllustrationFlag,
+} from '@snorose/icons';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { Icon } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
 import { useAuth, useBoardNavigate } from '@/shared/hook';
 
@@ -60,9 +63,8 @@ function NoticeCard({ to, title }) {
       <div className={styles.noticeCard}>
         <div className={styles.noticeText}>
           <div className={styles.noticeHeader}>
-            <Icon
+            <IconMultiBellLightBlue
               className={styles.noticeImage}
-              id='notice-bell-blue'
               width={13}
               height={16}
               aria-hidden='true'
@@ -71,13 +73,10 @@ function NoticeCard({ to, title }) {
           </div>
           <span className={styles.noticeContent}>{title}</span>
         </div>
-        <Icon
+        <IconChevronRight
           className={styles.noticeArrow}
-          id='angle-right'
           width={18}
           height={18}
-          fill='var(--grey-4)'
-          stroke='var(--grey-4)'
           aria-hidden='true'
         />
       </div>
@@ -93,20 +92,16 @@ function AttendanceCard() {
           <IllustrationFlag
             width={18}
             height={19}
-            viewBox='0 0 55 58'
             role='img'
             aria-label='출석체크'
           />
           <span className={styles.attendanceTitle}>오늘의 출석체크</span>
         </div>
-        <Icon
-          className={styles.attendanceArrow}
-          id='angle-right'
+        <IconChevronRight
           width={18}
           height={18}
-          fill='white'
-          stroke='white'
           aria-hidden='true'
+          color='var(--White-White, #fff)'
         />
       </div>
     </Link>

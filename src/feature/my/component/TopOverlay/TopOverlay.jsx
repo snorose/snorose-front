@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { Icon } from '@/shared/component';
+import { IconPencilUnderline } from '@snorose/icons';
 
 import styles from './TopOverlay.module.css';
 
@@ -9,12 +9,11 @@ export default function TopOverlay() {
     <div className={styles.myPageUpper}>
       <div className={styles.logoOverlay}>
         <Link to='edit-info'>
-          <Icon
+          <IconPencilUnderline
             className={styles.editIcon}
-            id='pencil-underline'
-            stroke='white'
             width={24}
             height={24}
+            color='white'
           />
         </Link>
       </div>

@@ -1,7 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { IconMultiClipboardBlue } from '@snorose/icons';
+import {
+  IconChevronDown,
+  IconMultiClipboardBlue,
+  IconMultiCloudLogo,
+} from '@snorose/icons';
 import { useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -10,7 +14,6 @@ import {
   CloseAppBar,
   ConfirmModal,
   FetchLoading,
-  Icon,
 } from '@/shared/component';
 import { CONFIRM_MODAL_TEXT, QUERY_KEY, ROLE } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
@@ -25,8 +28,6 @@ import {
   NOTICE_FORM_DATA,
 } from '@/feature/event/constant';
 import { validateOnSubmit } from '@/feature/event/lib';
-
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import { postEvent, postPost } from '@/apis';
 
@@ -43,7 +44,7 @@ export default function WriteEventPage() {
   const [isNotice, setIsNotice] = useState(false);
   const textId = pathname.split('/')[2];
   const currentBoard = getBoard(textId);
-  const [boardId, setBoardId] = useState(currentBoard?.id ?? '');
+  const [boardId] = useState(currentBoard?.id ?? '');
   const { invalidUserInfoQuery } = useAuth();
   const [eventType, setEventType] = useState('유형을 선택해주세요');
 
@@ -237,7 +238,7 @@ export default function WriteEventPage() {
                   <IconMultiClipboardBlue width={21} height={22} />
                   <p className={styles.categorySelectText}>{eventType}</p>
                 </div>
-                <Icon id='angle-down' width={14} height={7} />
+                <IconChevronDown width={24} height={24} />
               </div>
               <DropDownMenu
                 options={Object.keys(EVENT_TYPES)}
@@ -254,15 +255,17 @@ export default function WriteEventPage() {
             <div className={styles.profileBoxLeft}>
               {userInfo?.userRoleId !== ROLE.admin &&
               userInfo?.userRoleId !== ROLE.official ? (
-                <img
-                  className={styles.cloudLogoIcon}
-                  src={cloudLogo}
-                  alt='로고'
+                <IconMultiCloudLogo
+                  width={22}
+                  height={14}
+                  role='img'
+                  aria-label='로고'
                 />
               ) : (
                 <Badge
                   userRoleId={userInfo?.userRoleId}
-                  className={styles.badge}
+                  width={24}
+                  height={24}
                 />
               )}
               <p>{userInfo?.nickname}</p>

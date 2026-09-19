@@ -1,13 +1,26 @@
 import { useContext, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import {
+  IconBookmark,
+  IconBookmarkFill,
+  IconBuilding,
+  IconCalendar,
+  IconClapperboard,
+  IconComment,
+  IconEllipsis,
+  IconHeart,
+  IconHeartFill,
+  IconLocation,
+  IconMultiCloudLogo,
+  IconPerson,
+} from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
 import {
   BackAppBar,
   Badge,
   FetchLoading,
-  Icon,
   PrimaryButton,
 } from '@/shared/component';
 import { LIKE_TYPE, QUERY_KEY, ROLE, TOAST } from '@/shared/constant';
@@ -27,8 +40,6 @@ import { useLike } from '@/feature/like/hook';
 import { useScrap } from '@/feature/scrap/hook';
 
 import { NotFoundPage } from '@/page/etc';
-
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import { getEventContent } from '@/apis';
 
@@ -182,21 +193,29 @@ export default function EventPage() {
         <div className={styles.eventContainer}>
           {['연극/뮤지컬'].includes(data.category) && (
             <div className={styles.host}>
-              <Icon id='movie' width={20} height={20} />
+              <IconClapperboard
+                width={20}
+                height={20}
+                color={'var(--grey-4)'}
+              />
               <p>공연명</p>
               <p className={styles.data}>{data.host}</p>
             </div>
           )}
           {['영화'].includes(data.category) && (
             <div className={styles.host}>
-              <Icon id='movie' width={20} height={20} />
+              <IconClapperboard
+                width={20}
+                height={20}
+                color={'var(--grey-4)'}
+              />
               <p>영화명</p>
               <p className={styles.data}>{data.host}</p>
             </div>
           )}
           {['기타'].includes(data.category) && (
             <div className={styles.host}>
-              <Icon id='host' width={20} height={20} />
+              <IconBuilding width={20} height={20} color={'var(--grey-4)'} />
               <p>주최</p>
               <p className={styles.data}>{data.host}</p>
             </div>
@@ -204,27 +223,21 @@ export default function EventPage() {
 
           {['연극/뮤지컬', '영화'].includes(data.category) && (
             <div className={styles.place}>
-              <Icon id='location' width={20} height={20} />
+              <IconLocation width={20} height={20} color={'var(--grey-4)'} />
               <p>장소</p>
               <p className={styles.data}>{data.place}</p>
             </div>
           )}
 
           <div className={styles.drawCount}>
-            <Icon id='person' width={20} height={20} />
+            <IconPerson width={20} height={20} color={'var(--grey-4)'} />
             <p>추첨 인원</p>
             <p className={styles.data}>{data.drawCount}</p>
           </div>
 
           {(data.startAt != null || data.endAt != null) && (
             <div className={styles.applicationDate}>
-              <Icon
-                id='calendar-stroke'
-                width={20}
-                height={20}
-                fill='none'
-                stroke='#484848'
-              />
+              <IconCalendar width={20} height={20} color={'var(--grey-4)'} />
               <p>응모 날짜</p>
               <p className={styles.data}>
                 {data.startAt && (
@@ -242,13 +255,7 @@ export default function EventPage() {
 
           {data.announceAt && (
             <div className={styles.announceDate}>
-              <Icon
-                id='calendar-stroke'
-                width={20}
-                height={20}
-                fill='none'
-                stroke='#484848'
-              />
+              <IconCalendar width={20} height={20} color={'var(--grey-4)'} />
               <p>당첨자 발표일</p>
               <p className={styles.data}>
                 {DateTime.format(data.announceAt, 'YMD_HM')}
@@ -358,10 +365,20 @@ function MetaContainer({
   return (
     <div className={styles.metaContainer}>
       <div className={styles.meta}>
-        <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
+        <IconMultiCloudLogo
+          width={25}
+          height={16}
+          role='img'
+          aria-label='로고'
+        />
         <p>{userDisplay || 'Unknown'}</p>
         {showBadge && (
-          <Badge userRoleId={badgeRoleId} className={styles.badge} />
+          <Badge
+            userRoleId={badgeRoleId}
+            className={styles.badge}
+            width={18}
+            height={18}
+          />
         )}
         <p className={styles.dot}>·</p>
         <p>
@@ -373,7 +390,7 @@ function MetaContainer({
       <div className={styles.actions}>
         {showMeatBallIcon && (
           <div className={styles.meatBall} onClick={onMenuOpen}>
-            <Icon id='meat-ball' width={18} height={4} stroke='none' />
+            <IconEllipsis width={18} height={4} color='var(--grey-3-1)' />
           </div>
         )}
       </div>
@@ -409,15 +426,13 @@ function ActionContainer({
         }}
         onClick={inputFocus}
       >
-        <Icon
-          id='comment-stroke'
+        <IconComment
           width={18}
           height={15}
+          color={'var(--blue-3)'}
           styles={{
             paddingTop: '0.1rem',
           }}
-          stroke={'var(--blue-3)'}
-          fill={'none'}
         />
         <p>댓글 {commentCount.toLocaleString()}</p>
       </div>
@@ -425,26 +440,22 @@ function ActionContainer({
         className={styles.count}
         onClick={() => (isLiked ? unlike.mutate() : like.mutate())}
       >
-        <Icon
-          id='like-stroke'
-          width={16}
-          height={15}
-          stroke={'var(--pink-2)'}
-          fill={isLiked ? 'var(--pink-2)' : 'none'}
-        />
+        {isLiked ? (
+          <IconHeartFill width={16} height={18} color='var(--pink-2)' />
+        ) : (
+          <IconHeart width={16} height={18} color='var(--pink-2)' />
+        )}
         <p>공감 {likeCount.toLocaleString()}</p>
       </div>
       <div
         className={styles.count}
         onClick={() => (isScrapped ? unscrap.mutate() : scrap.mutate())}
       >
-        <Icon
-          id='scrap-stroke'
-          width={13}
-          height={16}
-          stroke={'var(--green-2)'}
-          fill={isScrapped ? 'var(--green-2)' : 'none'}
-        />
+        {isScrapped ? (
+          <IconBookmarkFill width={13} height={16} color={'var(--green-2)'} />
+        ) : (
+          <IconBookmark width={13} height={16} color={'var(--green-2)'} />
+        )}
         <p>스크랩 {scrapCount.toLocaleString()}</p>
       </div>
     </div>

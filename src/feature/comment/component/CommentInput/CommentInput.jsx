@@ -1,16 +1,14 @@
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { Icon } from '@/shared/component';
-import { useToast } from '@/shared/hook';
+import { IconArrowUpRight, IconMultiCloudLogo } from '@snorose/icons';
+
 import { TOAST } from '@/shared/constant';
+import { useToast } from '@/shared/hook';
 
 import { useCommentContext } from '@/feature/comment/context';
 import { useComment } from '@/feature/comment/hook';
 
-import cloudLogo from '@/assets/images/cloudLogo.svg';
-
 import styles from './CommentInput.module.css';
-
 const CommentInput = () => {
   const { editComment, createComment, loading, setLoading } = useComment();
   const { toast } = useToast();
@@ -86,7 +84,12 @@ const CommentInput = () => {
       onClick={(event) => event.stopPropagation()}
     >
       <div className={styles.inputBar}>
-        <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
+        <IconMultiCloudLogo
+          width={22}
+          height={14}
+          role='img'
+          aria-label='로고'
+        />
         <TextareaAutosize
           ref={inputRef}
           className={styles.inputZone}
@@ -99,12 +102,11 @@ const CommentInput = () => {
           maxRows={5}
         />
       </div>
-      <Icon
+      <IconArrowUpRight
         className={styles.enter}
-        id='arrow-up-right'
         width={32}
         height={32}
-        fill='#898989'
+        color='var(--grey-3-1)'
         onClick={submitComment}
       />
     </div>

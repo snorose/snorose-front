@@ -80,10 +80,6 @@ button.headingButton {
   gap: 8px;
 }
 
-.headingArrow {
-  color: var(--grey-3-1);
-}
-
 .headingDropdown {
   position: fixed;
   transform: translateY(-100%);
@@ -211,4 +207,8 @@ button.headingButton {
   padding: 8px 10px;
   justify-content: flex-start;
   background-color: var(--white);
+}
+
+.active svg path {
+  stroke: var(--blue-4);
 }

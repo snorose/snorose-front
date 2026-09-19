@@ -1,8 +1,8 @@
-import { Badge, Icon } from '@/shared/component';
-import styles from './AccordionListItem.module.css';
+import { IconMultiCloudBlack, IconMultiCloudLogo } from '@snorose/icons';
 
-import cloudLogo from '@/assets/images/cloudLogo.svg';
-import blackCloudLogo from '@/assets/images/blackCloudLogo.svg';
+import { Badge } from '@/shared/component';
+
+import styles from './AccordionListItem.module.css';
 
 export default function AccordionListItem({ list, listName }) {
   return (
@@ -10,15 +10,27 @@ export default function AccordionListItem({ list, listName }) {
       {list.map((content) => (
         <li key={content.name} className={styles.item}>
           {content.name === '블랙리스트' ? (
-            <img className={styles.icon} src={blackCloudLogo} alt='블랙로고' />
+            <IconMultiCloudBlack
+              className={styles.icon}
+              width={28}
+              height={17}
+              role='img'
+              aria-label='블랙로고'
+            />
           ) : (
-            <img className={styles.icon} src={cloudLogo} alt='로고' />
+            <IconMultiCloudLogo
+              className={styles.icon}
+              width={28}
+              height={17}
+              role='img'
+              aria-label='로고'
+            />
           )}
           <div className={styles.itemContainer}>
             <span className={styles.name}>
               {content.name}
               {content.badge && (
-                <Badge userRoleId={content.role} className={styles.badge} />
+                <Badge userRoleId={content.role} width={16} height={16} />
               )}
             </span>
             {listName === 'SNOROSE_HISTORY' ? <p>-</p> : <p>:</p>}

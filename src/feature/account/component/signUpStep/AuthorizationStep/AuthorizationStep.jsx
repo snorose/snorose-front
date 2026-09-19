@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import { useSendUser, useCertifyUser } from '@/apis';
-
+import { Label, NewButton, TextInput } from '@/shared/component';
 import { useToast } from '@/shared/hook';
-import { Label, TextInput, NewButton } from '@/shared/component';
+
+import { useCertifyUser, useSendUser } from '@/apis';
 
 import styles from './AuthorizationStep.module.css';
 

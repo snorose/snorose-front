@@ -1,17 +1,21 @@
 import { useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { IconArrowCornerDownRight } from '@snorose/icons';
+import {
+  IconArrowCornerDownRight,
+  IconEllipsis,
+  IconHeart,
+  IconHeartFill,
+  IconMultiCloudLogo,
+} from '@snorose/icons';
 
-import { Badge, Icon } from '@/shared/component';
+import { Badge } from '@/shared/component';
 import { LIKE_TYPE, ROLE, SHOW_BADGE_PATH } from '@/shared/constant';
 import { DateTime, renderTextWithLinks } from '@/shared/lib';
 
 import styles from '@/feature/comment/component/Comment/Comment.module.css';
 import { useCommentContext } from '@/feature/comment/context';
 import { useLike } from '@/feature/like/hook';
-
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 export default function NestedComment({
   data,
@@ -69,13 +73,23 @@ export default function NestedComment({
             )}
           </div>
           <div className={styles.cloud}>
-            <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
+            <IconMultiCloudLogo
+              width={22}
+              height={14}
+              role='img'
+              aria-label='로고'
+            />
           </div>
           <p className={`${isWriterWithdrawn && styles.isWriterWithdrawn}`}>
             {isWriterWithdrawn ? '(알 수 없음)' : userDisplay}
           </p>
           {showBadge && (
-            <Badge userRoleId={userRoleId} className={styles.badge} />
+            <Badge
+              userRoleId={userRoleId}
+              className={styles.badge}
+              width={16}
+              height={16}
+            />
           )}
           <p className={styles.dot}>·</p>
           <p>
@@ -90,7 +104,7 @@ export default function NestedComment({
               onCommentOptionClick(data, nestedMoreOptionRef);
             }}
           >
-            <Icon id='meat-ball' width={18} height={4} stroke='none' />
+            <IconEllipsis width={18} height={4} color='var(--grey-3-1)' />
           </p>
         )}
       </div>
@@ -114,13 +128,11 @@ export default function NestedComment({
             type='button'
             onClick={() => (isLiked ? unlike.mutate() : like.mutate())}
           >
-            <Icon
-              id='like-stroke'
-              width={16}
-              height={18}
-              stroke='var(--pink-2)'
-              fill={isLiked ? 'var(--pink-2)' : 'none'}
-            />
+            {isLiked ? (
+              <IconHeartFill width={16} height={18} color='var(--pink-2)' />
+            ) : (
+              <IconHeart width={16} height={18} color='var(--pink-2)' />
+            )}
             <span>{likeCount.toLocaleString()}</span>
           </button>
         )}

@@ -1,7 +1,7 @@
 import { useLocation, useParams } from 'react-router-dom';
 
-import { BOARD_REGISTRY } from '@/shared/lib';
 import { NEW_ROUTES } from '@/shared/constant';
+import { BOARD_REGISTRY } from '@/shared/lib';
 
 import type { BoardKey } from '@/types';
 

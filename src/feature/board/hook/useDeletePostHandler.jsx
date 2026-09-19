@@ -1,10 +1,13 @@
-import { useRef, useState, useContext } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useToast, useAuth } from '@/shared/hook';
-import { deletePost, deleteEvent } from '@/apis';
-import { TOAST, QUERY_KEY } from '@/shared/constant';
+
 import { useQueryClient } from '@tanstack/react-query';
+
+import { QUERY_KEY, TOAST } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
+import { useAuth, useToast } from '@/shared/hook';
+
+import { deleteEvent, deletePost } from '@/apis';
 
 export function useDeletePostHandler(boardId, currentBoardTextId) {
   const { postId } = useParams();

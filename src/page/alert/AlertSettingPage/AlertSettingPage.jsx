@@ -1,10 +1,8 @@
 import { Suspense, useContext, useReducer } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
-import { AppError, DateTime } from '@/shared/lib';
-import { useToast } from '@/shared/hook';
-import { ModalContext } from '@/shared/context/ModalContext';
 import {
   BackAppBar,
   ConfirmModal,
@@ -13,19 +11,22 @@ import {
   ServerErrorFallback,
 } from '@/shared/component';
 import { CONFIRM_MODAL_TEXT, NOTICE_MODAL_TEXT } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
+import { useToast } from '@/shared/hook';
+import { AppError, DateTime } from '@/shared/lib';
 
-import * as notificationSettingsStore from '@/feature/alert/store/notificationSettings';
-import {
-  PushNotificationManager,
-  getDeviceType,
-  canUseAlertSetting,
-} from '@/feature/alert/lib';
-import {
-  useUpdateNotificationSetting,
-  useNotificationSettings,
-} from '@/feature/alert/hook';
 import { SettingItem } from '@/feature/alert/component';
 import { ERROR_CODE } from '@/feature/alert/constant';
+import {
+  useNotificationSettings,
+  useUpdateNotificationSetting,
+} from '@/feature/alert/hook';
+import {
+  canUseAlertSetting,
+  getDeviceType,
+  PushNotificationManager,
+} from '@/feature/alert/lib';
+import * as notificationSettingsStore from '@/feature/alert/store/notificationSettings';
 
 import style from './AlertSettingPage.module.css';
 

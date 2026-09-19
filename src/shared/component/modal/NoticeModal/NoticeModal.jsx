@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
-import { ModalContext } from '@/shared/context/ModalContext';
 import { DimModalLayout } from '@/shared/component';
+import { ModalContext } from '@/shared/context/ModalContext';
 
 import styles from './NoticeModal.module.css';
 

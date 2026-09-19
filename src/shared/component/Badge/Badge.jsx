@@ -1,14 +1,26 @@
-import adminBadge from '@/assets/images/adminBadge.svg';
-import officialBadge from '@/assets/images/officialBadge.svg';
+import { IconMultiBadgeBlue, IconMultiBadgePink } from '@snorose/icons';
+
 import { ROLE } from '@/shared/constant';
 
-export default function Badge({ userRoleId, className = '' }) {
+export default function Badge({ userRoleId, className = '', ...iconProps }) {
   if (userRoleId === ROLE.admin) {
-    return <img src={adminBadge} alt='리자 뱃지' className={className} />;
+    return (
+      <IconMultiBadgeBlue
+        {...iconProps}
+        aria-label='리자 뱃지'
+        className={className}
+      />
+    );
   }
 
   if (userRoleId === ROLE.official) {
-    return <img src={officialBadge} alt='공식 뱃지' className={className} />;
+    return (
+      <IconMultiBadgePink
+        {...iconProps}
+        aria-label='공식 뱃지'
+        className={className}
+      />
+    );
   }
 
   return null;

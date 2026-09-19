@@ -29,8 +29,6 @@
 }
 
 .badge {
-  width: 1.6rem;
-  height: 1.6rem;
   margin-left: -0.6rem;
 }
 
@@ -38,11 +36,6 @@
   display: flex;
   height: 1.2rem;
   align-items: center;
-}
-
-.cloudLogoIcon {
-  width: 2.2rem;
-  height: 1.4rem;
 }
 
 .isWriterWithdrawn {

@@ -1,8 +1,16 @@
-// =================== More Option Modal ===================
+import {
+  IconCommentFill,
+  IconMultiFlag,
+  IconMultiShare,
+  IconPencilFill,
+  IconPersonFill,
+  IconTrashcanFill,
+} from '@snorose/icons';
+
 const POST_MORE_OPTION_LIST = [
   {
     modalId: null,
-    iconId: 'flag-pink',
+    icon: IconMultiFlag,
     label: '게시글 신고',
     width: 19,
     height: 22,
@@ -11,8 +19,10 @@ const POST_MORE_OPTION_LIST = [
     modalId: null,
     iconId: 'report-user',
     label: '이용자 신고하기',
-    width: 17,
-    height: 17,
+    width: 24,
+    height: 24,
+    icon: IconPersonFill,
+    color: 'var(--blue-3)',
   },
   {
     modalId: 'share',
@@ -20,6 +30,7 @@ const POST_MORE_OPTION_LIST = [
     label: '공유하기',
     width: 24,
     height: 24,
+    icon: IconMultiShare,
   },
 ];
 
@@ -30,13 +41,17 @@ const MY_POST_MORE_OPTION_LIST = [
     label: '수정하기',
     width: 19,
     height: 22,
+    icon: IconPencilFill,
+    color: 'var(--blue-3)',
   },
   {
     modalId: 'confirm-post-delete',
     iconId: 'trash',
     label: '삭제하기',
-    width: 16,
-    height: 20,
+    width: 24,
+    height: 24,
+    icon: IconTrashcanFill,
+    color: 'var(--pink-2)',
   },
   {
     modalId: 'share',
@@ -44,23 +59,26 @@ const MY_POST_MORE_OPTION_LIST = [
     label: '공유하기',
     width: 24,
     height: 24,
+    icon: IconMultiShare,
   },
 ];
 
 const EXAM_REVIEW_MORE_OPTION_LIST = [
   {
     modalId: null,
-    iconId: 'flag-pink',
+    icon: IconMultiFlag,
     label: '시험후기 신고',
-    width: 19,
-    height: 22,
+    width: 24,
+    height: 24,
   },
   {
     modalId: null,
     iconId: 'report-user',
     label: '이용자 신고하기',
-    width: 17,
-    height: 17,
+    width: 24,
+    height: 24,
+    icon: IconPersonFill,
+    color: 'var(--blue-3)',
   },
 ];
 
@@ -71,13 +89,17 @@ const MY_EXAM_REVIEW_MORE_OPTION_LIST = [
     label: '수정하기',
     width: 19,
     height: 22,
+    icon: IconPencilFill,
+    color: 'var(--blue-3)',
   },
   {
     modalId: 'confirm-exam-review-delete',
     iconId: 'trash',
     label: '삭제하기',
-    width: 16,
-    height: 20,
+    width: 24,
+    height: 24,
+    icon: IconTrashcanFill,
+    color: 'var(--pink-2)',
   },
 ];
 
@@ -88,13 +110,17 @@ const COMMENT_MORE_OPTION_LIST = [
     label: '댓글 신고',
     width: 21,
     height: 22,
+    icon: IconCommentFill,
+    color: 'var(--blue-3)',
   },
   {
     modalId: null,
     iconId: 'report-user',
     label: '이용자 신고하기',
-    width: 17,
-    height: 17,
+    width: 24,
+    height: 24,
+    icon: IconPersonFill,
+    color: 'var(--blue-3)',
   },
 ];
 
@@ -105,13 +131,17 @@ const MY_COMMENT_MORE_OPTION_LIST = [
     label: '수정하기',
     width: 19,
     height: 22,
+    icon: IconPencilFill,
+    color: 'var(--blue-3)',
   },
   {
     modalId: 'confirm-comment-delete',
     iconId: 'trash',
     label: '삭제하기',
-    width: 16,
-    height: 20,
+    width: 24,
+    height: 24,
+    icon: IconTrashcanFill,
+    color: 'var(--pink-2)',
   },
 ];
 
@@ -122,6 +152,7 @@ const EVENT_MORE_OPTION_LIST = [
     label: '공유하기',
     width: 24,
     height: 24,
+    icon: IconMultiShare,
   },
 ];
 

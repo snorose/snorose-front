@@ -51,6 +51,7 @@
   transition: 300ms transform ease;
 }
 
+
 .opend .toggleIcon {
   transform: rotate(180deg);
 }

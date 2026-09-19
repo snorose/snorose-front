@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { Icon } from '@/shared/component';
+import { IconEye, IconEyeFill } from '@snorose/icons';
+
 import InputLayout from '@/shared/component/form/input/InputLayout';
 
 import styles from './PasswordInput.module.css';
@@ -17,6 +18,7 @@ export default function PasswordInput({
     valid: '#00368E',
     error: '#FF4B6C',
   }[status];
+  const IconComponent = visible ? IconEyeFill : IconEye;
 
   return (
     <InputLayout status={status}>
@@ -29,10 +31,9 @@ export default function PasswordInput({
       />
 
       {value && (
-        <Icon
+        <IconComponent
           className={styles.icon}
-          id={visible ? 'opened-eye' : 'closed-eye'}
-          fill={fillColor}
+          color={fillColor}
           width={24}
           height={24}
           onClick={() => setVisible((prev) => !prev)}

@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect, useEffect } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export default function useScrollRestoration(scrollContainerRef) {

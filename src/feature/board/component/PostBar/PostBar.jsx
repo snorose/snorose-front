@@ -1,4 +1,13 @@
-import { Badge, Chip, Icon } from '@/shared/component';
+import {
+  IconBookmark,
+  IconBookmarkFill,
+  IconComment,
+  IconHeart,
+  IconHeartFill,
+  IconMultiCloudLogo,
+} from '@snorose/icons';
+
+import { Badge, Chip } from '@/shared/component';
 import { ROLE } from '@/shared/constant';
 import { DateTime } from '@/shared/lib';
 
@@ -6,7 +15,6 @@ import { htmlToText } from '@/feature/editor/lib';
 import { ConfirmedChip } from '@/feature/exam/component';
 
 import altImage from '@/assets/images/altImage.png';
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import styles from './PostBar.module.css';
 
@@ -77,11 +85,16 @@ function Meta({
 
   return (
     <div className={styles.meta}>
-      <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
+      <IconMultiCloudLogo
+        width={22}
+        height={14}
+        role='img'
+        aria-label='로고'
+      />
       <div className={styles.userDisplay} title={userDisplay || undefined}>
         {userDisplay}
       </div>
-      {showBadge && <Badge className={styles.badge} userRoleId={badgeRoleId} />}
+      {showBadge && <Badge userRoleId={badgeRoleId} width={16} height={16} />}
       <div className={styles.dot}>·</div>
       <div>{DateTime.formatAdaptive(createdAt)}</div>
       {children}
@@ -114,48 +127,62 @@ function ActionContainer({
 }) {
   const actions = [
     {
-      iconId: 'like-stroke',
       width: 14,
       height: 13,
       isActive: isLiked,
       color: 'var(--pink-2)',
       count: likeCount,
+      ActiveIcon: IconHeartFill,
+      DefaultIcon: IconHeart,
     },
     {
-      iconId: 'comment-stroke',
       width: 16,
       height: 13,
       color: 'var(--blue-3)',
       count: commentCount,
+      ActiveIcon: IconComment,
+      DefaultIcon: IconComment,
     },
     {
-      iconId: 'scrap-stroke',
       width: 11,
       height: 13,
       isActive: isScrapped,
       color: 'var(--green-2)',
       count: scrapCount,
+      ActiveIcon: IconBookmarkFill,
+      DefaultIcon: IconBookmark,
     },
   ];
 
   return (
     <div className={styles.actionContainer}>
-      {actions.map(({ iconId, width, height, isActive, color, count }) => {
-        if (count <= 0) return null;
+      {actions.map(
+        ({
+          iconId,
+          width,
+          height,
+          isActive,
+          color,
+          count,
+          ActiveIcon,
+          DefaultIcon,
+        }) => {
+          if (count <= 0) return null;
 
-        return (
-          <div key={iconId} className={styles.action}>
-            <Icon
-              id={iconId}
-              width={width}
-              height={height}
-              fill={isActive ? color : 'none'}
-              stroke={color}
-            />
-            <span>{count.toLocaleString()}</span>
-          </div>
-        );
-      })}
+          const IconComponent = isActive ? (
+            <ActiveIcon width={width} height={height} color={color} />
+          ) : (
+            <DefaultIcon width={width} height={height} color={color} />
+          );
+
+          return (
+            <div key={iconId} className={styles.action}>
+              {IconComponent}
+              <span>{count.toLocaleString()}</span>
+            </div>
+          );
+        }
+      )}
     </div>
   );
 }

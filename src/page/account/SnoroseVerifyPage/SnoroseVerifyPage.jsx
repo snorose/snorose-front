@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-import { BackAppBar, Icon } from '@/shared/component';
+import { IconCheck } from '@snorose/icons';
+
+import { BackAppBar } from '@/shared/component';
 
 import {
   CompleteStep,
@@ -20,11 +22,10 @@ export default function SnoroseVerifyPage() {
       <BackAppBar title='인증 신청' notFixed />
 
       {step === 'complete' ? (
-        <Icon
-          className={styles.check}
-          id='check-thick'
+        <IconCheck
           width={24}
           height={24}
+          className={styles.icon}
         />
       ) : (
         <div className={styles.indicator}>

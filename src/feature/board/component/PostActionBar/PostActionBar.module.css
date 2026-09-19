@@ -28,3 +28,38 @@
     background-color: var(--blue-1);
   }
 }
+
+.heart,
+.heartLiked {
+  flex-shrink: 0;
+  width: 16px;
+  height: 15px;
+}
+
+.heartLiked {
+  animation: heartPop 700ms ease-out;
+}
+
+@keyframes heartPop {
+  0% {
+    transform: scale(1);
+  }
+
+  15% {
+    transform: scale(1.25);
+  }
+
+  40% {
+    transform: scale(0.98);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heartLiked {
+    animation: none;
+  }
+}

@@ -2,9 +2,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
+  IconChevronRight,
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+} from '@snorose/icons';
+
+import {
   Dropdown,
   ErrorMessage,
-  Icon,
   Label,
   NewButton,
   NumberInput,
@@ -197,15 +202,13 @@ function CheckTerms({
         onChange={handleCheckboxChange}
       />
       <label htmlFor={id} className={styles.label}>
-        <Icon
+        <IconMultiCheckBlueCircle
           className={`${styles.blueBox} ${isChecked ? styles.checked : ''}`}
-          id='checkbox-blue'
           width={20}
           height={20}
         />
-        <Icon
+        <IconMultiCheckGreyCircle
           className={`${styles.greyBox} ${!isChecked ? styles.unchecked : ''}`}
-          id='checkbox-grey'
           width={20}
           height={20}
         />
@@ -215,7 +218,7 @@ function CheckTerms({
       </label>
 
       <div className={styles.termsLink} onClick={handlePrivacyTermClick}>
-        <Icon id='chevron-right' width={20} height={20} />
+        <IconChevronRight width={20} height={20} />
       </div>
 
       {isModalOpen && id === 'privacyTerms' && (

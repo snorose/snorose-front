@@ -1,13 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 import { useQuery } from '@tanstack/react-query';
 
 import { getNoticeList } from '@/apis/notice';
 
-import { useAuth, useBoard, useBoardNavigate } from '@/shared/hook';
 import { BackAppBar, FetchLoading, WriteButton } from '@/shared/component';
+import { QUERY_KEY, ROLE, STALE_TIME } from '@/shared/constant';
+import { useAuth, useBoard, useBoardNavigate } from '@/shared/hook';
 import { getBoard } from '@/shared/lib';
-import { QUERY_KEY, STALE_TIME, ROLE } from '@/shared/constant';
 
 import { NoticeBar } from '@/feature/board/component';
 
@@ -91,9 +92,7 @@ export default function NoticeListPage() {
       </div>
       {userInfo?.userRoleId === ROLE.admin &&
         currentBoardTextId === 'notice' && (
-          <WriteButton
-            to={`/board/${currentBoardTextId}/post-write`}
-          />
+          <WriteButton to={`/board/${currentBoardTextId}/post-write`} />
         )}
     </div>
   );
@@ -169,9 +168,7 @@ export function NewNoticeListPage() {
       )}
 
       {isGlobalNotice && isAdmin && (
-        <WriteButton
-          to={toNoticeWrite(boardKey)}
-        />
+        <WriteButton to={toNoticeWrite(boardKey)} />
       )}
     </div>
   );

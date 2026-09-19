@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { Icon } from '@/shared/component';
+import { IconStar } from '@snorose/icons';
 
 import styles from './BoardBar.module.css';
 
@@ -65,11 +65,11 @@ export function NewBoardBar({ name, to, desc, image, imageLayout }) {
         <h3 className={styles.title}>{name}</h3>
         <p className={styles.description}>{desc}</p>
       </div>
-      <Icon
+      <IconStar
         className={styles.favoriteIcon}
-        id='star-circle'
         width={20}
         height={20}
+        color='var(--blue-4)'
       />
     </Link>
   );

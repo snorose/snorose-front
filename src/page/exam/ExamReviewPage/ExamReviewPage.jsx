@@ -1,13 +1,19 @@
 import { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import {
+  IconBookmark,
+  IconBookmarkFill,
+  IconComment,
+  IconEllipsis,
+  IconMultiCloudLogo,
+} from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
 import {
   BackAppBar,
   FetchLoading,
   FetchLoadingOverlay,
-  Icon,
 } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
@@ -28,8 +34,6 @@ import { convertToObject } from '@/feature/exam/lib';
 import { useScrap } from '@/feature/scrap/hook';
 
 import { NotFoundPage } from '@/page/etc';
-
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import { getReviewDetail } from '@/apis';
 
@@ -126,7 +130,12 @@ export default function ExamReviewPage() {
       <div className={styles.blueContainer}>
         <div className={styles.displayBox}>
           <div className={styles.displayBoxLeft}>
-            <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
+            <IconMultiCloudLogo
+              width={25}
+              height={16}
+              role='img'
+              aria-label='로고'
+            />
             <span>{userDisplay}</span>
             <span className={styles.dot}></span>
             <span>{DateTime.format(createdAt, 'YMD')}</span>
@@ -134,9 +143,9 @@ export default function ExamReviewPage() {
             {isConfirmed && <ConfirmedChip />}
           </div>
 
-          <Icon
+          <IconEllipsis
             className={styles.more}
-            id='meat-ball'
+            color='var(--grey-3-1)'
             onClick={() =>
               isWriter
                 ? setModal({ id: 'my-exam-review-more-options' })
@@ -144,7 +153,6 @@ export default function ExamReviewPage() {
             }
             width={18}
             height={4}
-            stroke='none'
           />
         </div>
 
@@ -205,6 +213,7 @@ export default function ExamReviewPage() {
 function ActionContainer({ commentCount, isScrapped, scrapCount }) {
   const { inputFocus, focusedItem } = useCommentContext();
   const { scrap, unscrap } = useScrap();
+  const IconComponent = isScrapped ? IconBookmarkFill : IconBookmark;
 
   return (
     <div className={styles.actionContainer}>
@@ -216,15 +225,13 @@ function ActionContainer({ commentCount, isScrapped, scrapCount }) {
         }}
         onClick={inputFocus}
       >
-        <Icon
-          id='comment-stroke'
+        <IconComment
           width={18}
           height={15}
+          color='var(--blue-3)'
           styles={{
             paddingTop: '0.1rem',
           }}
-          stroke='var(--blue-3)'
-          fill='none'
         />
         <p>댓글 {commentCount.toLocaleString()}</p>
       </div>
@@ -233,13 +240,7 @@ function ActionContainer({ commentCount, isScrapped, scrapCount }) {
         className={styles.count}
         onClick={() => (isScrapped ? unscrap.mutate() : scrap.mutate())}
       >
-        <Icon
-          id='scrap-stroke'
-          width={13}
-          height={17}
-          stroke={'var(--green-2)'}
-          fill={isScrapped ? 'var(--green-2)' : 'none'}
-        />
+        <IconComponent width={13} height={17} color={'var(--green-2)'} />
         <p>스크랩 {scrapCount.toLocaleString()}</p>
       </div>
     </div>

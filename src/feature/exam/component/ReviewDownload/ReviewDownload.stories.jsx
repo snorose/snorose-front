@@ -1,4 +1,7 @@
+import { IconFile } from '@snorose/icons';
+
 import { Icon } from '@/shared/component';
+
 import styles from './ReviewDownload.module.css';
 
 // 스토리북용 Mock 컴포넌트 - 빈 PDF 다운로드
@@ -22,7 +25,7 @@ function MockReviewDownload({ className, fileName }) {
       className={`${styles.layout} ${className || ''}`}
       onClick={handleDownload}
     >
-      <Icon id='file' width={10} height={14} />
+      <IconFile width={10} height={14} color='var(--blue-4)' />
       <span className={styles.name}>{fileName}</span>
     </button>
   );
