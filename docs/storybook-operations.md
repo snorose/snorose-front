@@ -51,7 +51,8 @@ Storybook에 표시되는 버전은 전체 Storybook이나 개별 컴포넌트�
 Storybook
 ├── Foundations
 │   ├── Colors
-│   └── Iconography
+│   ├── Iconography
+│   └── Typography
 ├── Component
 │   ├── Button
 │   │   ├── ActionButton
