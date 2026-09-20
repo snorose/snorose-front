@@ -8,20 +8,22 @@
 }
 
 .header {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 12px;
-  border-bottom: 1px solid var(--grey-2);
   padding-bottom: 16px;
+  border-bottom: 1px solid var(--grey-2);
 }
 
-.header h1 {
-  font-size: 24px;
+.title {
+  font: var(--text-heading-1-bold);
+  letter-spacing: 0;
 }
-.header span {
+
+.description {
+  margin-top: 4px;
   color: var(--grey-3-1);
+  font: var(--text-body-2-reg);
+  letter-spacing: 0;
 }
+
 .group {
   margin-top: 24px;
   margin-bottom: 32px;
