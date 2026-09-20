@@ -138,7 +138,7 @@ export const BOARD_MENUS = [
     to: '/board/large-snow',
     textId: 'large-snow',
     title: '함박눈방',
-    desc: '눈송이 모두의\n커뮤니티',
+    desc: '눈송이 모두의 커뮤니티',
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
@@ -154,7 +154,7 @@ export const BOARD_MENUS = [
     to: '/board/besookt',
     textId: 'besookt',
     title: '베숙트',
-    desc: '추천을 가장 많이\n받은 게시물 모아보기',
+    desc: '추천을 가장 많이 받은 게시물 모아보기',
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
@@ -162,7 +162,7 @@ export const BOARD_MENUS = [
     to: '/board/exam-review',
     textId: 'exam-review',
     title: '시험후기',
-    desc: '시험 정보를 조회할 수\n있는 게시판입니다.',
+    desc: '시험 정보를 조회할 수 있는 게시판입니다.',
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
