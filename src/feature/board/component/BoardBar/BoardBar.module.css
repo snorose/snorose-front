@@ -28,6 +28,7 @@
   bottom: var(--board-image-bottom, auto);
   width: var(--board-image-width, auto);
   height: var(--board-image-height, auto);
+  overflow: var(--board-image-overflow, hidden);
 }
 
 .textBox {

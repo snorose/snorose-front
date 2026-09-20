@@ -12,6 +12,7 @@ function getImageStyle(layout) {
     '--board-image-bottom': layout.bottom,
     '--board-image-width': layout.width,
     '--board-image-height': layout.height,
+    '--board-image-overflow': layout.overflow,
   };
 }
 
@@ -19,6 +20,7 @@ export default function BoardBar({
   data,
   image,
   imageLayout,
+  imageViewBox,
   isFavorite = false,
   onFavoriteClick = () => {},
 }) {
@@ -28,6 +30,7 @@ export default function BoardBar({
         image={image}
         label={data.textId}
         style={getImageStyle(imageLayout)}
+        viewBox={imageViewBox}
       />
       <div className={styles.textBox}>
         <h3 className={styles.title}>{data.title}</h3>
@@ -75,7 +78,7 @@ export function NewBoardBar({ name, to, desc, image, imageLayout }) {
   );
 }
 
-function BoardImage({ image, label, style }) {
+function BoardImage({ image, label, style, viewBox }) {
   if (!image) {
     return null;
   }
@@ -88,6 +91,7 @@ function BoardImage({ image, label, style }) {
       role='img'
       aria-label={label}
       style={style}
+      {...(viewBox ? { viewBox } : {})}
     />
   );
 }

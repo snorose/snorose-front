@@ -51,6 +51,7 @@ export default function BoardCategoryPage() {
                         data={board}
                         image={boardImage?.category}
                         imageLayout={boardImage?.categoryLayout}
+                        imageViewBox={boardImage?.categoryViewBox}
                         isFavorite={FAVORITE_BOARD_IDS.includes(board.id)}
                       />
                     );

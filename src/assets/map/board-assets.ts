@@ -25,11 +25,13 @@ export interface BoardImageLayout {
   bottom: string;
   width: string;
   height: string;
+  overflow?: string;
 }
 
 interface BoardImages {
   category: BoardImage; // 게시판 카테고리 이미지
   categoryLayout: BoardImageLayout;
+  categoryViewBox?: string;
   main?: BoardImage; // 메인 화면용
 }
 
@@ -47,47 +49,47 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   'large-snow': {
     category: IllustrationSnowGround,
     categoryLayout: {
-      right: '0rem',
-      bottom: '0rem',
-      width: '21.9rem',
-      height: '9.8rem',
+      right: '-0.3rem',
+      bottom: '-0.2rem',
+      width: '22.2rem',
+      height: '10.6rem',
     },
     main: IllustrationSnowGroundCircle,
   },
   'permanent-snow': {
     category: IllustrationSnowMountain,
     categoryLayout: {
-      right: '0rem',
-      bottom: '0rem',
-      width: '21.5rem',
-      height: '9.8rem',
+      right: '-0.8rem',
+      bottom: '-2.2rem',
+      width: '22.3rem',
+      height: '12rem',
     },
     main: IllustrationSnowMountainCircle,
   },
   besookt: {
     category: IllustrationStarHonorBoard,
     categoryLayout: {
-      right: '2.7rem',
+      right: '3.1rem',
       bottom: '0rem',
-      width: '9rem',
+      width: '8.6rem',
       height: '7.2rem',
     },
   },
   'student-council': {
     category: IllustrationMicrophone,
     categoryLayout: {
-      right: '1.9rem',
-      bottom: '0rem',
-      width: '10.7rem',
-      height: '8.2rem',
+      right: '2.3rem',
+      bottom: '-0.2rem',
+      width: '10.3rem',
+      height: '8.4rem',
     },
   },
   'graduation-preparation': {
     category: IllustrationBooksCap,
     categoryLayout: {
-      right: '0.4rem',
+      right: '0.5rem',
       bottom: '0.4rem',
-      width: '14.3rem',
+      width: '14.2rem',
       height: '7.9rem',
     },
   },
@@ -102,11 +104,13 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   },
   event: {
     category: IllustrationBoxStarsOpen,
+    categoryViewBox: '0 0 141 111',
     categoryLayout: {
-      right: '0.2rem',
-      bottom: '0rem',
-      width: '14.1rem',
-      height: '11.1rem',
+      right: '0.3rem',
+      bottom: '0.15rem',
+      width: '14rem',
+      height: '12rem',
+      overflow: 'visible',
     },
     main: IllustrationBoxStarsCircle,
   },
@@ -123,9 +127,9 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
     category: IllustrationResidence,
     categoryLayout: {
       right: '2.5rem',
-      bottom: '0.9rem',
+      bottom: '1rem',
       width: '11.5rem',
-      height: '6.2rem',
+      height: '6.1rem',
     },
   },
 };
