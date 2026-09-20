@@ -9,6 +9,8 @@ import { useAuth, useBoard } from '@/shared/hook';
 import { BOARD_REGISTRY, getBoard } from '@/shared/lib';
 
 import { PostListSuspense } from '@/feature/board/component';
+import { POST_SORT_OPTIONS } from '@/feature/board/constant';
+import { Filter, FilterList } from '@/feature/exam/component';
 
 import { getNoticeLine } from '@/apis';
 
@@ -60,6 +62,17 @@ export default function PostListPage() {
             [필독]&nbsp;&nbsp;{noticeLineData?.title}
           </p>
         </Link>
+      )}
+      {isBesookt && (
+        <div className={styles.sortFilter}>
+          <FilterList>
+            <Filter
+              filterKey='sort'
+              options={POST_SORT_OPTIONS}
+              placeholder='최신순'
+            />
+          </FilterList>
+        </div>
       )}
       <PostListSuspense />
       {showWriteButton && (
@@ -117,6 +130,17 @@ export function NewPostListPage() {
             [필독]&nbsp;&nbsp;{noticeLineData?.title}
           </p>
         </Link>
+      )}
+      {isBesookt && (
+        <div className={styles.sortFilter}>
+          <FilterList>
+            <Filter
+              filterKey='sort'
+              options={POST_SORT_OPTIONS}
+              placeholder='최신순'
+            />
+          </FilterList>
+        </div>
       )}
       <PostListSuspense />
       {showWriteButton && <WriteButton to={NEW_ROUTES.post.write(boardKey)} />}
