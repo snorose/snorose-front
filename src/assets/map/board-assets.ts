@@ -70,7 +70,7 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
     category: IllustrationStarHonorBoard,
     categoryLayout: {
       right: '3.1rem',
-      bottom: '0rem',
+      bottom: '-0.2rem',
       width: '8.6rem',
       height: '7.2rem',
     },
