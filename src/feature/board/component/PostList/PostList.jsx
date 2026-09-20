@@ -11,6 +11,7 @@ import { useSuspenseInfiniteScroll } from '@/shared/hook';
 import { getBoard, getBoardTitleToTextId } from '@/shared/lib';
 
 import { PostBar } from '@/feature/board/component';
+import { POST_SORT_OPTIONS } from '@/feature/board/constant';
 
 import { getEventPosts, getPosts } from '@/apis';
 
@@ -25,6 +26,11 @@ export default function PostList() {
   const isBesookt = currentBoardTextId === 'besookt' ? true : false;
   const isEvent = currentBoardTextId === 'event' ? true : false;
   const progressType = searchParams.get('progressType') ?? 'ALL';
+  const rawSort = searchParams.get('sort');
+  const sort =
+    isBesookt && POST_SORT_OPTIONS.some(({ id }) => id === rawSort)
+      ? rawSort
+      : undefined;
 
   // 페이지네이션 관련 hook (일반 / 이벤트 )
   const {
@@ -35,14 +41,16 @@ export default function PostList() {
   } = useSuspenseInfiniteScroll({
     queryKey: isEvent
       ? [QUERY_KEY.events, currentBoard.id, progressType]
-      : [QUERY_KEY.posts, currentBoard.id],
+      : isBesookt
+        ? [QUERY_KEY.posts, currentBoard.id, sort ?? 'LATEST']
+        : [QUERY_KEY.posts, currentBoard.id],
     queryFn: ({ pageParam }) =>
       isEvent
         ? getEventPosts({
             page: pageParam,
             progressType: progressType === 'ALL' ? undefined : progressType,
           })
-        : getPosts(currentBoard.id, pageParam),
+        : getPosts(currentBoard.id, pageParam, sort),
     staleTime: STALE_TIME.boardPostList,
     getItemKey: (item) => item.postId,
   });
