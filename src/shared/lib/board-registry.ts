@@ -96,12 +96,52 @@ const LIFE = [
   },
 ] as const satisfies readonly Board[];
 
+const CULTURE = [
+  {
+    key: 'video-content',
+    id: 1001,
+    name: '영상 컨텐츠',
+    desc: '영상 컨텐츠 커뮤니티',
+  },
+  {
+    key: 'anime-comics',
+    id: 1002,
+    name: '애니·만화·웹툰·웹소설',
+    desc: '애니·만화·웹툰·웹소설 생활 커뮤니티',
+  },
+  {
+    key: 'book',
+    id: 1003,
+    name: '책',
+    desc: '독서 생활 커뮤니티',
+  },
+  {
+    key: 'music',
+    id: 1004,
+    name: '음악',
+    desc: '음악 생활 커뮤니티',
+  },
+  {
+    key: 'performance',
+    id: 1005,
+    name: '공연',
+    desc: '공연 관람·팬 활동 커뮤니티',
+  },
+  {
+    key: 'exhibition',
+    id: 1006,
+    name: '전시',
+    desc: '전시 관람·추천 커뮤니티',
+  },
+] as const satisfies readonly Board[];
+
 const ALL = [
   ...COMMUNITY,
   ...OFFICIAL,
   ...REVIEW,
   ...SNOROSE,
   ...LIFE,
+  ...CULTURE,
 ] as const;
 
 type BoardId = (typeof ALL)[number]['id'];
@@ -111,6 +151,7 @@ export const BOARD_REGISTRY = {
   communities: COMMUNITY,
   officials: OFFICIAL,
   life: LIFE,
+  culture: CULTURE,
   all: ALL,
 
   find(identifier: BoardId | BoardKey): Board {
