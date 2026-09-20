@@ -108,6 +108,12 @@ const getRolesForReadBoard = (boardPath) => {
     case 'finance-audit':
       return [ROLE.user, ROLE.admin, ROLE.official];
     case 'residence':
+    case 'video-content':
+    case 'anime-comics':
+    case 'book':
+    case 'music':
+    case 'performance':
+    case 'exhibition':
       return [ROLE.user, ROLE.admin, ROLE.official];
     default:
       return [];
@@ -121,8 +127,14 @@ const getRolesForWriteBoard = (boardPath) => {
     case 'large-snow':
     case 'permanent-snow':
     case 'sookplace':
-      return [ROLE.user, ROLE.admin];
+      return [ROLE.user, ROLE.admin, ROLE.official];
     case 'residence':
+    case 'video-content':
+    case 'anime-comics':
+    case 'book':
+    case 'music':
+    case 'performance':
+    case 'exhibition':
       return [ROLE.user, ROLE.admin, ROLE.official];
     case 'notice':
     case 'student-council':
@@ -146,6 +158,12 @@ const boardPaths = [
   'finance-audit',
   'residence',
   'sookplace',
+  'video-content',
+  'anime-comics',
+  'book',
+  'music',
+  'performance',
+  'exhibition',
 ];
 
 const boardRoutes = boardPaths.flatMap((boardPath) => [
