@@ -5,6 +5,7 @@ import {
   IllustrationFolderSearch,
   IllustrationIceCupBowl,
   IllustrationMicrophone,
+  IllustrationResidence,
   IllustrationSnowfall,
   IllustrationSnowfallCircle,
   IllustrationSnowGround,
@@ -27,9 +28,9 @@ export interface BoardImageLayout {
 }
 
 interface BoardImages {
-  category: BoardImage | string; // 게시판 카테고리 이미지
+  category: BoardImage; // 게시판 카테고리 이미지
   categoryLayout: BoardImageLayout;
-  main?: BoardImage | string; // 메인 화면용
+  main?: BoardImage; // 메인 화면용
 }
 
 export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
