@@ -104,8 +104,10 @@ const ColorGallery = ({ query }) => {
   return (
     <main className={styles.page}>
       <header className={styles.header}>
-        <h1>Colors</h1>
-        <span>{filtered.length} tokens</span>
+        <div>
+          <h1 className={styles.title}>Colors</h1>
+          <p className={styles.description}>{filtered.length} tokens</p>
+        </div>
       </header>
       {groups.map(({ title, match }) => {
         const entries = filtered.filter(({ name }) => match.test(name));

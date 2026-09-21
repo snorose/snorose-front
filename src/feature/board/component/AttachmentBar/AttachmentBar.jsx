@@ -2,11 +2,11 @@ import { React, useRef, useState } from 'react';
 
 import {
   IconHashtag,
-  IconHashtagFill,
+  IconHashtagThick,
   IconImage,
   IconImageFill,
   IconOpenEditor,
-  IconOpenEditorFill,
+  IconOpenEditorThick,
   IconVideo,
   IconVideoFill,
 } from '@snorose/icons';
@@ -48,9 +48,9 @@ export default function AttachmentBar({
     !isTitleFocused && (isEditorOpen || isEditorIconHovered);
   const isHashtagIconHighlighted = !isTitleFocused && isHashtagIconHovered;
   const EditorIcon = isEditorIconHighlighted
-    ? IconOpenEditorFill
+    ? IconOpenEditorThick
     : IconOpenEditor;
-  const HashtagIcon = isHashtagIconHighlighted ? IconHashtagFill : IconHashtag;
+  const HashtagIcon = isHashtagIconHighlighted ? IconHashtagThick : IconHashtag;
 
   return (
     <div ref={attachmentBarRef} className={styles.bar}>

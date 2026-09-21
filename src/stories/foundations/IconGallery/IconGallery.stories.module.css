@@ -146,60 +146,32 @@
   background: var(--grey-1);
 }
 
-.docs {
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 24px 16px;
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--grey-4);
-  overflow-wrap: anywhere;
-}
-
-.docs h1 {
-  font-size: 28px;
-}
-.docs h2 {
-  font-size: 20px;
-  margin: 28px 0 12px;
-}
-.docs p {
-  margin: 12px 0;
-}
 .docsLinks {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
 }
-.docsLinks a {
-  color: var(--blue-4);
-  text-decoration: underline;
-}
+
 .examples {
   display: flex;
   align-items: center;
   gap: 32px;
   flex-wrap: wrap;
 }
+
 .examples figure {
   display: grid;
   justify-items: center;
   gap: 8px;
   margin: 0;
 }
+
 .tableScroll {
   overflow-x: auto;
 }
-.docs table {
-  width: 100%;
-  border-collapse: collapse;
+
+.tableScroll table {
   min-width: 480px;
-}
-.docs th,
-.docs td {
-  text-align: left;
-  padding: 10px;
-  border-bottom: 1px solid var(--grey-2);
 }
 
 .preview {

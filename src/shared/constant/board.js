@@ -1,18 +1,8 @@
 import {
-  IllustrationBooksCap,
   IllustrationBoxStarsCircle,
-  IllustrationBoxStarsOpen,
-  IllustrationFolderSearch,
-  IllustrationIceCupBowl,
-  IllustrationMicrophone,
-  IllustrationResidence,
-  IllustrationSnowfall,
   IllustrationSnowfallCircle,
-  IllustrationSnowGround,
   IllustrationSnowGroundCircle,
-  IllustrationSnowMountain,
   IllustrationSnowMountainCircle,
-  IllustrationStarHonorBoard,
 } from '@snorose/icons';
 
 export const BOARD_CATEGORY = {
@@ -157,7 +147,6 @@ export const BOARD_MENUS = [
     textId: 'notice',
     title: '공지사항',
     desc: '',
-    image: '',
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
@@ -166,7 +155,6 @@ export const BOARD_MENUS = [
     textId: 'event',
     title: '스노로즈 이벤트',
     desc: '스노로즈 이벤트 게시판',
-    image: IllustrationBoxStarsOpen,
     category: BOARD_CATEGORY.SNOROSE,
   },
   {
@@ -175,7 +163,6 @@ export const BOARD_MENUS = [
     textId: 'event-notice',
     title: '이벤트',
     desc: '이벤트 공지글',
-    image: IllustrationBoxStarsOpen,
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
@@ -184,7 +171,6 @@ export const BOARD_MENUS = [
     textId: 'first-snow',
     title: '첫눈온방',
     desc: '새내기 전용 커뮤니티',
-    image: IllustrationSnowfall,
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
@@ -192,8 +178,7 @@ export const BOARD_MENUS = [
     to: '/board/large-snow',
     textId: 'large-snow',
     title: '함박눈방',
-    desc: '눈송이 모두의\n커뮤니티',
-    image: IllustrationSnowGround,
+    desc: '눈송이 모두의 커뮤니티',
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
@@ -202,7 +187,6 @@ export const BOARD_MENUS = [
     textId: 'permanent-snow',
     title: '만년설방',
     desc: '졸업생 전용 커뮤니티',
-    image: IllustrationSnowMountain,
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
@@ -210,8 +194,7 @@ export const BOARD_MENUS = [
     to: '/board/besookt',
     textId: 'besookt',
     title: '베숙트',
-    desc: '추천을 가장 많이\n받은 게시물 모아보기',
-    image: IllustrationStarHonorBoard,
+    desc: '추천을 가장 많이 받은 게시물 모아보기',
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
@@ -219,8 +202,7 @@ export const BOARD_MENUS = [
     to: '/board/exam-review',
     textId: 'exam-review',
     title: '시험후기',
-    desc: '시험 정보를 조회할 수\n있는 게시판입니다.',
-    image: IllustrationStarHonorBoard,
+    desc: '시험 정보를 조회할 수 있는 게시판입니다.',
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
@@ -229,7 +211,6 @@ export const BOARD_MENUS = [
     textId: 'exam-review-notice',
     title: '시험후기',
     desc: '시험후기 공지글 게시판',
-    image: IllustrationStarHonorBoard,
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
@@ -238,7 +219,6 @@ export const BOARD_MENUS = [
     textId: 'student-council',
     title: '총학생회',
     desc: '총학생회 공지',
-    image: IllustrationMicrophone,
     category: BOARD_CATEGORY.OFFICIAL,
   },
   {
@@ -247,7 +227,6 @@ export const BOARD_MENUS = [
     textId: 'graduation-preparation',
     title: '졸업준비위원회',
     desc: '졸업준비위원회 공지',
-    image: IllustrationBooksCap,
     category: BOARD_CATEGORY.OFFICIAL,
   },
   {
@@ -256,7 +235,6 @@ export const BOARD_MENUS = [
     textId: 'finance-audit',
     title: '재정감사위원회',
     desc: '재정감사 보고',
-    image: IllustrationFolderSearch,
     category: BOARD_CATEGORY.OFFICIAL,
   },
   {
@@ -266,7 +244,6 @@ export const BOARD_MENUS = [
     title: '숙플레이스',
     desc: '눈송이 맛집 커뮤니티',
     category: BOARD_CATEGORY.LIFE,
-    image: IllustrationIceCupBowl,
   },
   {
     id: 41,
@@ -274,7 +251,6 @@ export const BOARD_MENUS = [
     textId: 'residence',
     title: '주거',
     desc: '자취·주거 정보 커뮤니티',
-    image: IllustrationResidence,
     category: BOARD_CATEGORY.LIFE,
   },
   // TODO(culture): 문화생활 게시판 일러스트 수급 후 image 채우기
