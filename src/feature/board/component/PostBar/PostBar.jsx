@@ -49,11 +49,10 @@ export default function PostBar({
 
       <div className={styles.body}>
         <div className={styles.text}>
-          <div className={styles.title}>
-            {category &&
-              !title?.startsWith(`[${category}]`) &&
-              `[${category}] `}
-            {title}
+          <div className={styles.titleRow}>
+            {category && <Chip name={category} variant='category' />}
+
+            <div className={styles.title}>{title}</div>
           </div>
           <div className={styles.content}>{htmlToText(content)}</div>
         </div>
@@ -85,12 +84,7 @@ function Meta({
 
   return (
     <div className={styles.meta}>
-      <IconMultiCloudLogo
-        width={22}
-        height={14}
-        role='img'
-        aria-label='로고'
-      />
+      <IconMultiCloudLogo width={22} height={14} role='img' aria-label='로고' />
       <div className={styles.userDisplay} title={userDisplay || undefined}>
         {userDisplay}
       </div>
