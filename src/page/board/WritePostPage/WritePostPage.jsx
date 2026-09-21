@@ -6,7 +6,6 @@ import {
   IconMultiCheckBlueCircle,
   IconMultiCheckGreyCircle,
   IconMultiClipboardBlue,
-  IconMultiClipboardWhite,
   IconMultiCloudLogo,
   IllustrationTrashcanCircle,
 } from '@snorose/icons';
@@ -87,6 +86,7 @@ export default function WritePostPage() {
   const textId = pathname.split('/')[2];
   const currentBoard = getBoard(textId);
   const [isTitleFocused, setIsTitleFocused] = useState(false);
+  const boardTitle = currentBoard?.title;
   const boardId = currentBoard?.id ?? '';
   const categoryConfig = BOARD_CATEGORY_MAP[boardId];
   const hasCategory = Boolean(categoryConfig);
@@ -283,7 +283,8 @@ export default function WritePostPage() {
           <div className={styles.center}>
             <div className={styles.categorySelect}>
               <div className={styles.categorySelectContainer}>
-                <IconMultiClipboardWhite />
+                <IconMultiClipboardBlue />
+                <p className={styles.categorySelectText}>{boardTitle}</p>
               </div>
             </div>
             {categoryConfig && !isCategoryDisabled && (
