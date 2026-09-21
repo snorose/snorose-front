@@ -3,10 +3,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import {
-  IconChevronDown,
   IconMultiCheckBlueCircle,
   IconMultiCheckGreyCircle,
   IconMultiClipboardBlue,
+  IconMultiClipboardWhite,
   IconMultiCloudLogo,
   IllustrationTrashcanCircle,
 } from '@snorose/icons';
@@ -87,7 +87,6 @@ export default function WritePostPage() {
   const textId = pathname.split('/')[2];
   const currentBoard = getBoard(textId);
   const [isTitleFocused, setIsTitleFocused] = useState(false);
-  const boardTitle = currentBoard?.title;
   const boardId = currentBoard?.id ?? '';
   const categoryConfig = BOARD_CATEGORY_MAP[boardId];
   const hasCategory = Boolean(categoryConfig);
@@ -282,35 +281,11 @@ export default function WritePostPage() {
             </CloseAppBar>
           </div>
           <div className={styles.center}>
-            {textId === 'notice' ? (
-              <div className={styles.categorySelect}>
-                <div className={styles.categorySelectContainer}>
-                  <IconMultiClipboardBlue width={21} height={22} />
-                  <p className={styles.categorySelectText}>{boardTitle}</p>
-                </div>
+            <div className={styles.categorySelect}>
+              <div className={styles.categorySelectContainer}>
+                <IconMultiClipboardWhite />
               </div>
-            ) : (
-              <div className={styles.categoryDropdownContainer}>
-                <div
-                  className={styles.categorySelect}
-                  onClick={handleDropDownOpen}
-                >
-                  <div className={styles.categorySelectContainer}>
-                    <IconMultiClipboardBlue width={21} height={22} />
-                    <p className={styles.categorySelectText}>{boardTitle}</p>
-                  </div>
-                  <IconChevronDown width={24} height={24} />
-                </div>
-                {dropDownOpen && (
-                  <DropdownList
-                    options={displayedOptions}
-                    select={{ id: boardId, name: boardTitle }}
-                    onSelect={handleBoardTitleChange}
-                    className={styles.dropDownList}
-                  />
-                )}
-              </div>
-            )}
+            </div>
             {categoryConfig && !isCategoryDisabled && (
               <DropdownCategory
                 options={categoryConfig}
