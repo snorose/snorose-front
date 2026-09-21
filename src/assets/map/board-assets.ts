@@ -59,8 +59,8 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   'permanent-snow': {
     category: IllustrationSnowMountain,
     categoryLayout: {
-      right: '-0.8rem',
-      bottom: '-2.2rem',
+      right: '-0.1rem',
+      bottom: '-1rem',
       width: '22.3rem',
       height: '12rem',
     },
