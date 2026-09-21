@@ -223,7 +223,7 @@ function MetaContainer({
         {Chip}
 
         {category && (
-          <div className={styles.categoryChip}>
+          <div>
             <CategoryChip name={category} variant='category' />
           </div>
         )}
