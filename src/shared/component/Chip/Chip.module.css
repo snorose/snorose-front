@@ -25,8 +25,8 @@
 
 .category {
   /* 카테고리 아이콘 디자인 */
-  padding: 0 0.5rem;
-  border-radius: 0.4rem;
+  padding: 0 0.3rem;
+  border-radius: 0.5rem;
 
   background-color: var(--blue-2);
   color: var(--blue-4);

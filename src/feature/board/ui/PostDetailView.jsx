@@ -125,9 +125,6 @@ export default function PostDetailView({
 
         <div className={styles.titleContainer}>
           <div className={styles.titleRow}>
-            {data.category && (
-              <CategoryChip name={data.category} variant='category' />
-            )}
             <h1 className={styles.title}>{data.title}</h1>
           </div>
 
@@ -189,6 +186,7 @@ function MetaContainer({
   userDisplay,
   userRoleId,
   authorBadgeRoleId,
+  category,
   createdAt,
   isEdited,
   Chip = null,
@@ -223,6 +221,12 @@ function MetaContainer({
           {isEdited && ' (수정됨)'}
         </p>
         {Chip}
+
+        {category && (
+          <div className={styles.categoryChip}>
+            <CategoryChip name={category} variant='category' />
+          </div>
+        )}
       </div>
 
       {Actions && <div className={styles.actions}>{Actions}</div>}
