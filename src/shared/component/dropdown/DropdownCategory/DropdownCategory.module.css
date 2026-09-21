@@ -32,7 +32,7 @@
 }
 
 .value {
-  color: var(--grey-3-1);
+  color: var(--grey-4);
   font: var(--text-body-1-reg);
 }
 
@@ -88,8 +88,9 @@
 .item:hover {
   background: var(--blue-0);
 }
-
 .selected {
-  color: var(--blue-7);
-  background: var(--blue-0);
+  background-color: var(--blue-0);
+}
+.selected span {
+  color: var(--blue-4);
 }

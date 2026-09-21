@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { Icon } from '@/shared/component';
+import { IconCheck, IconChevronDown } from '@snorose/icons';
 
 import styles from './DropdownCategory.module.css';
-
 export default function DropdownCategory({
   options,
   value,
@@ -15,10 +14,7 @@ export default function DropdownCategory({
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setIsOpen(false);
       }
     };
@@ -48,8 +44,7 @@ export default function DropdownCategory({
           {value || placeholder}
         </span>
 
-        <Icon
-          id='angle-down'
+        <IconChevronDown
           width={24}
           height={24}
           className={`${styles.arrow} ${isOpen ? styles.arrowOpen : ''}`}
@@ -65,14 +60,14 @@ export default function DropdownCategory({
               <button
                 key={option}
                 type='button'
-                className={`${styles.item} ${
-                  selected ? styles.selected : ''
-                }`}
+                className={`${styles.item} ${selected ? styles.selected : ''}`}
                 onClick={() => handleSelect(option)}
               >
                 <span>{option}</span>
 
-                {selected && <Icon id='check' width={18} height={14} />}
+                {selected && (
+                  <IconCheck width={24} height={24} color='var(--blue-4)' />
+                )}
               </button>
             );
           })}
