@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
+import { useFeatureIsOn } from '@growthbook/growthbook-react';
+
 import { Header } from '@/shared/component';
-import { BOARD_CATEGORY, BOARD_MENUS } from '@/shared/constant';
+import { BOARD_CATEGORY, BOARD_MENUS, FEATURE_FLAG } from '@/shared/constant';
 
 import { AccordianBoards, BoardBar } from '@/feature/board/component';
 import { Search } from '@/feature/search/component';
@@ -14,8 +16,15 @@ const { HIDDEN, ...VISIBLE_BOARD_CATEGORY } = BOARD_CATEGORY;
 const FAVORITE_BOARD_IDS = [20, 61]; //즐겨찾기 더미 데이터
 
 export default function BoardCategoryPage() {
+  const isCultureBoardOn = useFeatureIsOn(FEATURE_FLAG.cultureBoard);
+
+  // 피처 플래그가 꺼진 대분류는 노출하지 않음
+  const boardCategories = Object.values(VISIBLE_BOARD_CATEGORY).filter(
+    (category) => category !== BOARD_CATEGORY.CULTURE || isCultureBoardOn
+  );
+
   const initialOpenBoards = Object.fromEntries(
-    Object.values(VISIBLE_BOARD_CATEGORY).map(({ value }) => [value, true])
+    boardCategories.map(({ value }) => [value, true])
   );
   const [openBoards, setOpenBoards] = useState(initialOpenBoards);
   const toggleBoard = (boardName) => {
@@ -33,11 +42,11 @@ export default function BoardCategoryPage() {
       </div>
 
       <div className={styles.paddingContainer}>
-        {Object.values(VISIBLE_BOARD_CATEGORY).map((category) => (
+        {boardCategories.map((category) => (
           <div key={category.value} className={styles.boardBox}>
             <AccordianBoards
               title={category.label}
-              isOpen={openBoards[category.value]}
+              isOpen={openBoards[category.value] ?? true}
               onClick={() => toggleBoard(category.value)}
             >
               <div className={styles.boardListBox}>
