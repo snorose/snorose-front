@@ -1,6 +1,7 @@
 export * from './attachment';
 export * from './board';
 export * from './board-config';
+export * from './feature-flag';
 export * from './footerData';
 export * from './icon';
 export * from './loading';

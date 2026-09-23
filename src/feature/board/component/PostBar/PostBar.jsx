@@ -84,12 +84,7 @@ function Meta({
 
   return (
     <div className={styles.meta}>
-      <IconMultiCloudLogo
-        width={22}
-        height={14}
-        role='img'
-        aria-label='로고'
-      />
+      <IconMultiCloudLogo width={22} height={14} role='img' aria-label='로고' />
       <div className={styles.userDisplay} title={userDisplay || undefined}>
         {userDisplay}
       </div>

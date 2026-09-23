@@ -10,6 +10,7 @@ import {
   IconMypageFill,
 } from '@snorose/icons';
 
+import { FEATURE_FLAG } from '@/shared/constant/feature-flag';
 import { NEW_ROUTES } from '@/shared/constant/route';
 import { BOARD_REGISTRY } from '@/shared/lib';
 
@@ -94,10 +95,23 @@ export const SIDEBAR_MENUS = Object.freeze([
   },
   {
     to: '/board',
-    title: '라이프',
+    title: '로즈 라이프',
     items: [
       { to: '/board/sookplace', name: '숙플레이스' },
       { to: '/board/residence', name: '주거' },
+    ],
+  },
+  {
+    to: '/board',
+    title: '문화생활',
+    feature: FEATURE_FLAG.cultureBoard,
+    items: [
+      { to: '/board/video-content', name: '영상 컨텐츠' },
+      { to: '/board/anime-comics', name: '애니·만화·웹툰·웹소설' },
+      { to: '/board/book', name: '책' },
+      { to: '/board/music', name: '음악' },
+      { to: '/board/performance', name: '공연' },
+      { to: '/board/exhibition', name: '전시' },
     ],
   },
   {
@@ -165,6 +179,15 @@ export const NEW_SIDEBAR_MENUS = Object.freeze([
     title: '공식 게시판',
     to: NEW_ROUTES.boardHome,
     items: BOARD_REGISTRY.officials.map(({ key, name }) => ({
+      name,
+      to: NEW_ROUTES.post.list(key),
+    })),
+  },
+  {
+    title: '문화생활',
+    to: NEW_ROUTES.boardHome,
+    feature: FEATURE_FLAG.cultureBoard,
+    items: BOARD_REGISTRY.culture.map(({ key, name }) => ({
       name,
       to: NEW_ROUTES.post.list(key),
     })),

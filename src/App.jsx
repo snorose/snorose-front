@@ -5,7 +5,7 @@ import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { Sidebar } from '@/shared/component';
-import { QUERY_KEY } from '@/shared/constant';
+import { FEATURE_FLAG, QUERY_KEY } from '@/shared/constant';
 import { useScrollRestoration } from '@/shared/hook';
 import { AppLayout } from '@/shared/ui';
 
@@ -22,7 +22,7 @@ function App() {
   const appRef = useRef();
   const location = useLocation();
   const queryClient = useQueryClient();
-  const isEnabled = useFeatureIsOn('push-notification');
+  const isEnabled = useFeatureIsOn(FEATURE_FLAG.pushNotification);
   const isPickupDisplayPage = location.pathname === '/commerce/pickup-display';
 
   // 푸시 알림 설정
