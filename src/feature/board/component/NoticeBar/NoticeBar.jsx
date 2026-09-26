@@ -4,6 +4,8 @@ import { DateTime } from '@/shared/lib';
 
 import { htmlToText } from '@/feature/editor/lib';
 
+import altImage from '@/assets/images/altImage.png';
+
 import styles from './NoticeBar.module.css';
 
 export default function NoticeBar({ data, onClick }) {
@@ -13,11 +15,27 @@ export default function NoticeBar({ data, onClick }) {
 
   return (
     <div className={styles.post} onClick={onClick}>
-      <div className={styles.post_top}>
-        <p className={styles.title}>{data.title}</p>
-      </div>
-      <div className={styles.post_center}>
-        <p className={styles.text}>{plainText}</p>
+      <div className={styles.body}>
+        <div className={styles.textContainer}>
+          <div className={styles.post_top}>
+            <p className={styles.title}>{data.title}</p>
+          </div>
+          <div className={styles.post_center}>
+            <p className={styles.text}>{plainText}</p>
+          </div>
+        </div>
+        {data.thumbnailUrl && (
+          <img
+            className={styles.thumbnail}
+            src={data.thumbnailUrl}
+            loading='lazy'
+            alt=''
+            onError={(event) => {
+              event.currentTarget.onerror = null;
+              event.currentTarget.src = altImage;
+            }}
+          />
+        )}
       </div>
       <div className={styles.postBottom}>
         <span>{formattedDate}</span>

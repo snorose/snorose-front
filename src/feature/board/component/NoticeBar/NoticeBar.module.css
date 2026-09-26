@@ -6,6 +6,25 @@
   cursor: pointer;
 }
 
+.body {
+  display: flex;
+  align-items: flex-start;
+}
+
+.textContainer {
+  flex: 1;
+  min-width: 0;
+}
+
+.thumbnail {
+  width: 7.4rem;
+  height: 7.4rem;
+  margin-left: 2rem;
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
 .post_top {
   display: flex;
   justify-content: space-between;
