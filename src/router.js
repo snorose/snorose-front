@@ -1,4 +1,4 @@
-import { ROLE } from '@/shared/constant';
+import { FEATURE_FLAG, ROLE } from '@/shared/constant';
 import { attendanceLoader } from '@/shared/loader';
 import { AppLayout, NavbarLayout } from '@/shared/ui';
 
@@ -76,6 +76,7 @@ import {
 } from '@/page/user';
 
 import App from '@/App';
+import FeatureGuard from '@/FeatureGuard';
 import ProtectedRoute from '@/ProtectedRoute';
 
 const getRolesForReadBoard = (boardPath) => {
@@ -108,6 +109,12 @@ const getRolesForReadBoard = (boardPath) => {
     case 'finance-audit':
       return [ROLE.user, ROLE.admin, ROLE.official];
     case 'residence':
+    case 'video-content':
+    case 'anime-comics':
+    case 'book':
+    case 'music':
+    case 'performance':
+    case 'exhibition':
       return [ROLE.user, ROLE.admin, ROLE.official];
     default:
       return [];
@@ -121,8 +128,14 @@ const getRolesForWriteBoard = (boardPath) => {
     case 'large-snow':
     case 'permanent-snow':
     case 'sookplace':
-      return [ROLE.user, ROLE.admin];
+      return [ROLE.user, ROLE.admin, ROLE.official];
     case 'residence':
+    case 'video-content':
+    case 'anime-comics':
+    case 'book':
+    case 'music':
+    case 'performance':
+    case 'exhibition':
       return [ROLE.user, ROLE.admin, ROLE.official];
     case 'notice':
     case 'student-council':
@@ -148,74 +161,101 @@ const boardPaths = [
   'sookplace',
 ];
 
-const boardRoutes = boardPaths.flatMap((boardPath) => [
-  {
-    path: `/board/${boardPath}`,
-    element: (
-      <ProtectedRoute
-        roles={getRolesForReadBoard(boardPath)}
-        message={'게시판 접근 권한이 없어요'}
-      >
-        {boardPath === 'notice' ? <NoticeListPage /> : <PostListPage />}
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: `/board/${boardPath}/notice`,
-    element: (
-      <ProtectedRoute
-        roles={getRolesForReadBoard(boardPath)}
-        message={'게시판 접근 권한이 없어요'}
-      >
-        <NoticeListPage />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: `/board/${boardPath}/post/:postId`,
-    element: (
-      <ProtectedRoute
-        roles={getRolesForReadBoard(boardPath)}
-        message={'게시글 접근 권한이 없어요'}
-      >
-        <PostDetailPage />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: `/board/${boardPath}/post-write`,
-    element: (
-      <ProtectedRoute
-        roles={getRolesForWriteBoard(boardPath)}
-        message={'게시글 작성 권한이 없어요'}
-      >
-        <WritePostPage />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: `/board/${boardPath}/post/:postId/edit`,
-    element: (
-      <ProtectedRoute
-        roles={getRolesForWriteBoard(boardPath)}
-        message={'게시글 편집 권한이 없어요'}
-      >
-        <EditPostPage />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: `/board/${boardPath}/search`,
-    element: (
-      <ProtectedRoute
-        roles={getRolesForReadBoard(boardPath)}
-        message={'게시판 접근 권한이 없어요'}
-      >
-        <SearchPage />
-      </ProtectedRoute>
-    ),
-  },
-]);
+// 피처 플래그로 노출을 제어하는 게시판
+const cultureBoardPaths = [
+  'video-content',
+  'anime-comics',
+  'book',
+  'music',
+  'performance',
+  'exhibition',
+];
+
+const createBoardRoutes = (paths, feature) => {
+  // 플래그가 없는 게시판은 가드 없이 그대로 렌더한다
+  const withFeatureGuard = (element) =>
+    feature ? (
+      <FeatureGuard feature={feature} fallbackTo='/board'>
+        {element}
+      </FeatureGuard>
+    ) : (
+      element
+    );
+
+  return paths.flatMap((boardPath) => [
+    {
+      path: `/board/${boardPath}`,
+      element: withFeatureGuard(
+        <ProtectedRoute
+          roles={getRolesForReadBoard(boardPath)}
+          message={'게시판 접근 권한이 없어요'}
+        >
+          {boardPath === 'notice' ? <NoticeListPage /> : <PostListPage />}
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: `/board/${boardPath}/notice`,
+      element: withFeatureGuard(
+        <ProtectedRoute
+          roles={getRolesForReadBoard(boardPath)}
+          message={'게시판 접근 권한이 없어요'}
+        >
+          <NoticeListPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: `/board/${boardPath}/post/:postId`,
+      element: withFeatureGuard(
+        <ProtectedRoute
+          roles={getRolesForReadBoard(boardPath)}
+          message={'게시글 접근 권한이 없어요'}
+        >
+          <PostDetailPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: `/board/${boardPath}/post-write`,
+      element: withFeatureGuard(
+        <ProtectedRoute
+          roles={getRolesForWriteBoard(boardPath)}
+          message={'게시글 작성 권한이 없어요'}
+        >
+          <WritePostPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: `/board/${boardPath}/post/:postId/edit`,
+      element: withFeatureGuard(
+        <ProtectedRoute
+          roles={getRolesForWriteBoard(boardPath)}
+          message={'게시글 편집 권한이 없어요'}
+        >
+          <EditPostPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: `/board/${boardPath}/search`,
+      element: withFeatureGuard(
+        <ProtectedRoute
+          roles={getRolesForReadBoard(boardPath)}
+          message={'게시판 접근 권한이 없어요'}
+        >
+          <SearchPage />
+        </ProtectedRoute>
+      ),
+    },
+  ]);
+};
+
+const boardRoutes = [
+  ...createBoardRoutes(boardPaths),
+  ...createBoardRoutes(cultureBoardPaths, FEATURE_FLAG.cultureBoard),
+];
 
 export const routeList = [
   {

@@ -20,7 +20,11 @@ export const BOARD_CATEGORY = {
   },
   LIFE: {
     value: 'life',
-    label: '라이프',
+    label: '로즈 라이프',
+  },
+  CULTURE: {
+    value: 'culture',
+    label: '문화생활',
   },
   HIDDEN: {
     value: 'hidden',
@@ -42,6 +46,12 @@ export const BOARD_ID = Object.freeze({
   'graduation-preparation': 61,
   'finance-audit': 62,
   residence: 41,
+  'video-content': 1001,
+  'anime-comics': 1002,
+  book: 1003,
+  music: 1004,
+  performance: 1005,
+  exhibition: 1006,
 });
 
 export const BOARDS = Object.freeze([
@@ -97,6 +107,36 @@ export const BOARDS = Object.freeze([
     id: 41,
     name: '주거',
     path: '/board/residence',
+  },
+  {
+    id: 1001,
+    name: '영상 컨텐츠',
+    path: '/board/video-content',
+  },
+  {
+    id: 1002,
+    name: '애니·만화·웹툰·웹소설',
+    path: '/board/anime-comics',
+  },
+  {
+    id: 1003,
+    name: '책',
+    path: '/board/book',
+  },
+  {
+    id: 1004,
+    name: '음악',
+    path: '/board/music',
+  },
+  {
+    id: 1005,
+    name: '공연',
+    path: '/board/performance',
+  },
+  {
+    id: 1006,
+    name: '전시',
+    path: '/board/exhibition',
   },
 ]);
 
@@ -213,6 +253,61 @@ export const BOARD_MENUS = [
     desc: '자취·주거 정보 커뮤니티',
     category: BOARD_CATEGORY.LIFE,
   },
+  // TODO(culture): 문화생활 게시판 일러스트 수급 후 image 채우기
+  {
+    id: 1001,
+    to: '/board/video-content',
+    textId: 'video-content',
+    title: '영상 컨텐츠',
+    desc: '영상 컨텐츠 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1002,
+    to: '/board/anime-comics',
+    textId: 'anime-comics',
+    title: '애니·만화·웹툰·웹소설',
+    desc: '애니·만화·웹툰·웹소설 생활 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1003,
+    to: '/board/book',
+    textId: 'book',
+    title: '책',
+    desc: '독서 생활 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1004,
+    to: '/board/music',
+    textId: 'music',
+    title: '음악',
+    desc: '음악 생활 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1005,
+    to: '/board/performance',
+    textId: 'performance',
+    title: '공연',
+    desc: '공연 관람·팬 활동 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1006,
+    to: '/board/exhibition',
+    textId: 'exhibition',
+    title: '전시',
+    desc: '전시 관람·추천 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
 ];
 
 // 공식게시판
@@ -239,8 +334,34 @@ export const RESIDENCE_CATEGORIES = Object.freeze([
 
 export const SOOKPLACE_CATEGORIES = Object.freeze(['교내', '교외']);
 
-// 게시판과 카테고리를 연결
+export const VIDEO_CONTENT_CATEGORIES = Object.freeze([
+  '영화',
+  '시리즈',
+  '예능',
+  'OTT',
+]);
+
+export const ANIME_COMICS_CATEGORIES = Object.freeze([
+  '애니',
+  '만화',
+  '웹툰',
+  '웹소설',
+]);
+
+export const MUSIC_CATEGORIES = Object.freeze(['국내', '해외']);
+
+export const PERFORMANCE_CATEGORIES = Object.freeze([
+  '콘서트',
+  '뮤지컬',
+  '연극',
+]);
+
+// 게시판과 카테고리를 연결 (책·전시는 카테고리 없음)
 export const BOARD_CATEGORY_MAP = {
   [BOARD_ID.residence]: RESIDENCE_CATEGORIES,
   [BOARD_ID.sookplace]: SOOKPLACE_CATEGORIES,
+  [BOARD_ID['video-content']]: VIDEO_CONTENT_CATEGORIES,
+  [BOARD_ID['anime-comics']]: ANIME_COMICS_CATEGORIES,
+  [BOARD_ID.music]: MUSIC_CATEGORIES,
+  [BOARD_ID.performance]: PERFORMANCE_CATEGORIES,
 };
