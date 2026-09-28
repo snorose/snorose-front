@@ -24,24 +24,6 @@ export async function registerServiceWorker(
   }
 }
 
-export async function getRegistration(): Promise<ServiceWorkerRegistration> {
-  return navigator.serviceWorker.ready;
-}
-
-export async function getActiveRegistration(
-  scriptUrl: string | URL
-): Promise<ServiceWorkerRegistration | undefined> {
-  const scriptURL = new URL(scriptUrl, window.location.origin).href;
-
-  const registrations = await navigator.serviceWorker.getRegistrations();
-
-  return registrations.find(
-    (registration) =>
-      registration.active?.scriptURL === scriptURL &&
-      registration.active.state === 'activated'
-  );
-}
-
 export function waitUntilActive(
   registration: ServiceWorkerRegistration,
   timeoutMs: number = 10_000
