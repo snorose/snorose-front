@@ -18,7 +18,9 @@ export class PushNotificationManager {
     await this.#assertSupport();
 
     try {
-      const registration = registerServiceWorker('/firebase-messaging-sw.js');
+      const registration = await registerServiceWorker(
+        '/firebase-messaging-sw.js'
+      );
       await waitUntilActive(registration);
       return registration;
     } catch (error) {
