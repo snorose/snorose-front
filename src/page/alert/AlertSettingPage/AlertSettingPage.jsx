@@ -88,9 +88,8 @@ function NotificationSettings() {
   const setupNotifications = async () => {
     try {
       await PushNotificationManager.ensurePermission();
-      const registration = PushNotificationManager.registerServiceWorker(
-        '/firebase-messaging-sw.js'
-      );
+      const registration =
+        await PushNotificationManager.registerServiceWorker();
       const token = await PushNotificationManager.issueToken(registration);
       const deviceType = getDeviceType();
 
