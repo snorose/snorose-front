@@ -26,7 +26,7 @@ authAxios.interceptors.response.use(
 
 export function createAxiosClient(config?: AxiosRequestConfig): AxiosInstance {
   return axios.create({
-    baseURL: process.env.REACT_APP_SERVER_DOMAIN,
+    baseURL: import.meta.env.VITE_SERVER_DOMAIN,
     headers: {
       'Content-Type': 'application/json',
     },
