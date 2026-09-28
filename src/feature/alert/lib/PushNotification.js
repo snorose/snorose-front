@@ -1,7 +1,10 @@
 import { getToken, isSupported, onMessage } from 'firebase/messaging';
 
 import { AppError } from '@/shared/lib';
-import { waitUntilActive } from '@/shared/lib/service-worker';
+import {
+  registerServiceWorker,
+  waitUntilActive,
+} from '@/shared/lib/service-worker';
 
 import { ERROR_CODE, ERROR_MESSAGE } from '@/feature/alert/constant';
 import { isIOSPWA } from '@/feature/alert/lib';
@@ -15,11 +18,9 @@ export class PushNotificationManager {
     await this.#assertSupport();
 
     try {
-      const registration = await navigator.serviceWorker.register(
-        '/firebase-messaging-sw.js'
-      );
-
-      return await waitUntilActive(registration);
+      const registration = registerServiceWorker('/firebase-messaging-sw.js');
+      await waitUntilActive(registration);
+      return registration;
     } catch (error) {
       throw new AppError(
         ERROR_CODE.SW_REGISTER_FAILED,
