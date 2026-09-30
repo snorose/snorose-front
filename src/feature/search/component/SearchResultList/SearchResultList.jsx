@@ -7,12 +7,13 @@ import {
   PullToRefresh,
 } from '@/shared/component';
 import { BOARDS, NEW_ROUTES, ROLE } from '@/shared/constant';
-import { useBoard } from '@/shared/hook';
+import { useBoard, useCultureBoard } from '@/shared/hook';
 import {
   deduplicatePaginatedData,
   flatPaginationCache,
   getBoard,
   getBoardTitleToTextId,
+  isCultureBoardPost,
 } from '@/shared/lib';
 
 import { PostBar } from '@/feature/board/component';
@@ -25,6 +26,7 @@ const NOTICE_BOARD_ID = getBoard('notice').id;
 export default function SearchResultList() {
   const { pathname } = useLocation();
   const boardId = BOARDS.find(({ path }) => pathname.includes(path)).id;
+  const isCultureBoardOn = useCultureBoard();
 
   const {
     items: postList,
@@ -36,10 +38,15 @@ export default function SearchResultList() {
     getItemKey: (item) => item.postId,
   });
 
+  // 미노출 게시판 게시글이 서버 응답에 섞여 들어오는 경우를 차단
+  const visiblePostList = isCultureBoardOn
+    ? postList
+    : postList.filter((post) => !isCultureBoardPost(post));
+
   return (
     <PullToRefresh onRefresh={refetch}>
       <List>
-        {postList.map((post) => (
+        {visiblePostList.map((post) => (
           <Link
             className={styles.to}
             key={post.postId}
@@ -81,15 +88,21 @@ function BoardSearchResultList() {
 
 function NewSearchResultList({ boardId }) {
   const { data, ref, isFetching, refetch } = useSearch({ boardId });
+  const isCultureBoardOn = useCultureBoard();
   const postList = deduplicatePaginatedData(flatPaginationCache(data));
+
+  // 미노출 게시판 게시글이 서버 응답에 섞여 들어오는 경우를 차단
+  const visiblePostList = isCultureBoardOn
+    ? postList
+    : postList.filter((post) => !isCultureBoardPost(post));
 
   return (
     <PullToRefresh onRefresh={refetch}>
       <List>
-        {postList.map((post, index) => (
+        {visiblePostList.map((post, index) => (
           <Link
             className={styles.to}
-            ref={index === postList.length - 1 ? ref : undefined}
+            ref={index === visiblePostList.length - 1 ? ref : undefined}
             key={post.postId}
             to={`/board/${getBoardTitleToTextId(post.boardName)}/post/${post.postId}`}
           >

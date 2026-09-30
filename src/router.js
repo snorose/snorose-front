@@ -1,4 +1,8 @@
-import { FEATURE_FLAG, ROLE } from '@/shared/constant';
+import {
+  CULTURE_BOARD_KILL_SWITCH,
+  FEATURE_FLAG,
+  ROLE,
+} from '@/shared/constant';
 import { attendanceLoader } from '@/shared/loader';
 import { AppLayout, NavbarLayout } from '@/shared/ui';
 
@@ -171,11 +175,11 @@ const cultureBoardPaths = [
   'exhibition',
 ];
 
-const createBoardRoutes = (paths, feature) => {
+const createBoardRoutes = (paths, feature, forceOff = false) => {
   // 플래그가 없는 게시판은 가드 없이 그대로 렌더한다
   const withFeatureGuard = (element) =>
     feature ? (
-      <FeatureGuard feature={feature} fallbackTo='/board'>
+      <FeatureGuard feature={feature} fallbackTo='/board' forceOff={forceOff}>
         {element}
       </FeatureGuard>
     ) : (
@@ -254,7 +258,11 @@ const createBoardRoutes = (paths, feature) => {
 
 const boardRoutes = [
   ...createBoardRoutes(boardPaths),
-  ...createBoardRoutes(cultureBoardPaths, FEATURE_FLAG.cultureBoard),
+  ...createBoardRoutes(
+    cultureBoardPaths,
+    FEATURE_FLAG.cultureBoard,
+    CULTURE_BOARD_KILL_SWITCH
+  ),
 ];
 
 export const routeList = [
