@@ -68,18 +68,18 @@ const POPUP_CONTENTS = [
     title: '[공지] 스노로즈 서버 점검 안내',
     description: '안정적인 서비스 제공을 위한 서버 점검이 진행됩니다.',
     contentList: [
-      '일시: 2026년 8월 29일 (토) 14:00 ~ 18:00',
+      '일시: 2026년 10월 3일 (토) 14:00 ~ 18:00',
       '점검 시간 동안 스노로즈 이용이 일시 중단됩니다.',
     ],
     link: [
       {
         title: '스노로즈 공지',
-        url: '/board/notice/post/1914738',
+        url: '/board/notice/post/1912079',
         isExternal: false,
       },
     ],
-    startDate: '2026-08-26',
-    endDate: '2026-08-29',
+    startDate: '2026-09-28',
+    endDate: '2026-10-03',
   },
   {
     title: '[블로그] 스노로즈 초청강연 - 유트루 편',
@@ -96,16 +96,22 @@ const POPUP_CONTENTS = [
     endDate: '2026-08-10',
   },
   {
-    title: '[캘린더] 9월 스노로즈 일정',
-    image: calendarImage,
-    startDate: '2026-08-30',
-    endDate: '2026-09-10',
+    title: '[공지] 포인트 미지급 기간',
+    contentList: ['일시: 2026/10/13(화) ~ 2026/10/26(월)'],
+    startDate: '2026-10-07',
+    endDate: '2026-10-14',
   },
   {
     title: '[공지] 시험후기 작성 기간 안내',
-    contentList: ['일시: 2026/06/23(화) ~ 2026/07/20(월)'],
-    startDate: '2026-06-21',
-    endDate: '2026-06-28',
+    contentList: ['일시: 2026/10/27(화) ~ 2026/11/02(월)'],
+    startDate: '2026-10-22',
+    endDate: '2026-10-29',
+  },
+  {
+    title: '[캘린더] 10월 스노로즈 일정',
+    image: calendarImage,
+    startDate: '2026-09-28',
+    endDate: '2026-10-10',
   },
 ];
 
