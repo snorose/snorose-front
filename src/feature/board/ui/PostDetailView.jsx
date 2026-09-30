@@ -7,6 +7,7 @@ import {
   AttachmentSwiper,
   BackAppBar,
   Badge,
+  Chip as CategoryChip,
   FetchLoading,
 } from '@/shared/component';
 import LinkAlertModal from '@/shared/component/modal/LinkAlertModal/LinkAlertModal';
@@ -123,12 +124,9 @@ export default function PostDetailView({
         />
 
         <div className={styles.titleContainer}>
-          <h1 className={styles.title}>
-            {data.category &&
-              !data.title?.startsWith(`[${data.category}]`) &&
-              `[${data.category}] `}
-            {data.title}
-          </h1>
+          <div className={styles.titleRow}>
+            <h1 className={styles.title}>{data.title}</h1>
+          </div>
 
           <span className={styles.views}>
             {(data.viewCount ?? 0).toLocaleString()} views
@@ -188,6 +186,7 @@ function MetaContainer({
   userDisplay,
   userRoleId,
   authorBadgeRoleId,
+  category,
   createdAt,
   isEdited,
   Chip = null,
@@ -222,6 +221,12 @@ function MetaContainer({
           {isEdited && ' (수정됨)'}
         </p>
         {Chip}
+
+        {category && (
+          <div>
+            <CategoryChip name={category} variant='category' />
+          </div>
+        )}
       </div>
 
       {Actions && <div className={styles.actions}>{Actions}</div>}

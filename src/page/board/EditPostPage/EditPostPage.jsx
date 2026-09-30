@@ -3,7 +3,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import {
-  IconChevronDown,
   IconMultiCheckBlueCircle,
   IconMultiCheckGreyCircle,
   IconMultiClipboardBlue,
@@ -18,7 +17,7 @@ import {
   Badge,
   CloseAppBar,
   ConfirmModal,
-  DropdownList,
+  DropdownCategory,
   FetchLoading,
 } from '@/shared/component';
 import {
@@ -65,7 +64,6 @@ export default function EditPostPage() {
   const boardTitle = currentBoard?.title || '';
 
   const [category, setCategory] = useState(null);
-  const [categoryDropDownOpen, setCategoryDropDownOpen] = useState(false);
 
   const [isNotice, setIsNotice] = useState(false);
   const [title, setTitle] = useState('');
@@ -91,23 +89,6 @@ export default function EditPostPage() {
   const hasCategory = Boolean(categoryConfig);
   const isCategoryDisabled = hasCategory && isNotice;
   const shouldIncludeCategory = hasCategory && !isCategoryDisabled;
-  const categoryOptions = Array.isArray(categoryConfig)
-    ? categoryConfig.map((name) => ({ id: name, name }))
-    : Object.entries(categoryConfig ?? {}).map(([id, name]) => ({ id, name }));
-  const selectedCategoryName = Array.isArray(categoryConfig)
-    ? category
-    : categoryConfig?.[category];
-
-  const handleCategoryDropDownOpen = () => {
-    if (isCategoryDisabled) return;
-
-    setCategoryDropDownOpen((prev) => !prev);
-  };
-
-  const handleCategoryChange = (option) => {
-    setCategory(option.id);
-    setCategoryDropDownOpen(false);
-  };
 
   // 게시글 내용 가져오기
   const { data, isLoading, error } = useQuery({
@@ -208,7 +189,6 @@ export default function EditPostPage() {
 
     if (hasCategory && willBeNotice) {
       setCategory(null);
-      setCategoryDropDownOpen(false);
     }
 
     setIsNotice(willBeNotice);
@@ -295,39 +275,12 @@ export default function EditPostPage() {
               </div>
             </div>
 
-            {categoryConfig && (
-              <div className={styles.subCategoryDropdownContainer}>
-                <div>
-                  <p className={styles.subCategoryLabelEdit}>카테고리</p>
-                  <span className={styles.requiredDot} />
-                </div>
-                <div
-                  className={`${styles.subCategorySelect} ${
-                    isCategoryDisabled ? styles.subCategorySelectDisabled : ''
-                  }`}
-                  onClick={handleCategoryDropDownOpen}
-                  aria-disabled={isCategoryDisabled}
-                >
-                  <div className={styles.subCategorySelectContainer}>
-                    <p className={styles.subCategorySelectText}>
-                      {isCategoryDisabled
-                        ? '공지글은 카테고리를 선택하지 않습니다'
-                        : selectedCategoryName || '카테고리를 선택해주세요'}
-                    </p>
-                  </div>
-                  <IconChevronDown width={24} height={24} />
-                </div>
-                {categoryDropDownOpen && !isCategoryDisabled && (
-                  <DropdownList
-                    options={categoryOptions}
-                    select={{
-                      id: category,
-                      name: category ?? '',
-                    }}
-                    onSelect={handleCategoryChange}
-                  />
-                )}
-              </div>
+            {categoryConfig && !isCategoryDisabled && (
+              <DropdownCategory
+                options={categoryConfig}
+                value={category}
+                onChange={setCategory}
+              />
             )}
             <div className={styles.profileBox}>
               <div className={styles.profileBoxLeft}>

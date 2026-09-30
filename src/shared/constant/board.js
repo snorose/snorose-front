@@ -1,18 +1,8 @@
 import {
-  IllustrationBooksCap,
   IllustrationBoxStarsCircle,
-  IllustrationBoxStarsOpen,
-  IllustrationFolderSearch,
-  IllustrationIceCupBowl,
-  IllustrationMicrophone,
-  IllustrationResidence,
-  IllustrationSnowfall,
   IllustrationSnowfallCircle,
-  IllustrationSnowGround,
   IllustrationSnowGroundCircle,
-  IllustrationSnowMountain,
   IllustrationSnowMountainCircle,
-  IllustrationStarHonorBoard,
 } from '@snorose/icons';
 
 export const BOARD_CATEGORY = {
@@ -30,7 +20,11 @@ export const BOARD_CATEGORY = {
   },
   LIFE: {
     value: 'life',
-    label: '라이프',
+    label: '로즈 라이프',
+  },
+  CULTURE: {
+    value: 'culture',
+    label: '문화생활',
   },
   HIDDEN: {
     value: 'hidden',
@@ -52,6 +46,12 @@ export const BOARD_ID = Object.freeze({
   'graduation-preparation': 61,
   'finance-audit': 62,
   residence: 41,
+  'video-content': 1001,
+  'anime-comics': 1002,
+  book: 1003,
+  music: 1004,
+  performance: 1005,
+  exhibition: 1006,
 });
 
 export const BOARDS = Object.freeze([
@@ -108,6 +108,36 @@ export const BOARDS = Object.freeze([
     name: '주거',
     path: '/board/residence',
   },
+  {
+    id: 1001,
+    name: '영상 컨텐츠',
+    path: '/board/video-content',
+  },
+  {
+    id: 1002,
+    name: '애니·만화·웹툰·웹소설',
+    path: '/board/anime-comics',
+  },
+  {
+    id: 1003,
+    name: '책',
+    path: '/board/book',
+  },
+  {
+    id: 1004,
+    name: '음악',
+    path: '/board/music',
+  },
+  {
+    id: 1005,
+    name: '공연',
+    path: '/board/performance',
+  },
+  {
+    id: 1006,
+    name: '전시',
+    path: '/board/exhibition',
+  },
 ]);
 
 export const BOARD_MENUS = [
@@ -117,7 +147,6 @@ export const BOARD_MENUS = [
     textId: 'notice',
     title: '공지사항',
     desc: '',
-    image: '',
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
@@ -126,7 +155,6 @@ export const BOARD_MENUS = [
     textId: 'event',
     title: '스노로즈 이벤트',
     desc: '스노로즈 이벤트 게시판',
-    image: IllustrationBoxStarsOpen,
     category: BOARD_CATEGORY.SNOROSE,
   },
   {
@@ -135,7 +163,6 @@ export const BOARD_MENUS = [
     textId: 'event-notice',
     title: '이벤트',
     desc: '이벤트 공지글',
-    image: IllustrationBoxStarsOpen,
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
@@ -144,7 +171,6 @@ export const BOARD_MENUS = [
     textId: 'first-snow',
     title: '첫눈온방',
     desc: '새내기 전용 커뮤니티',
-    image: IllustrationSnowfall,
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
@@ -152,8 +178,7 @@ export const BOARD_MENUS = [
     to: '/board/large-snow',
     textId: 'large-snow',
     title: '함박눈방',
-    desc: '눈송이 모두의\n커뮤니티',
-    image: IllustrationSnowGround,
+    desc: '눈송이 모두의 커뮤니티',
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
@@ -162,7 +187,6 @@ export const BOARD_MENUS = [
     textId: 'permanent-snow',
     title: '만년설방',
     desc: '졸업생 전용 커뮤니티',
-    image: IllustrationSnowMountain,
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
@@ -170,8 +194,7 @@ export const BOARD_MENUS = [
     to: '/board/besookt',
     textId: 'besookt',
     title: '베숙트',
-    desc: '추천을 가장 많이\n받은 게시물 모아보기',
-    image: IllustrationStarHonorBoard,
+    desc: '추천을 가장 많이 받은 게시물 모아보기',
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
@@ -179,8 +202,7 @@ export const BOARD_MENUS = [
     to: '/board/exam-review',
     textId: 'exam-review',
     title: '시험후기',
-    desc: '시험 정보를 조회할 수\n있는 게시판입니다.',
-    image: IllustrationStarHonorBoard,
+    desc: '시험 정보를 조회할 수 있는 게시판입니다.',
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
@@ -189,7 +211,6 @@ export const BOARD_MENUS = [
     textId: 'exam-review-notice',
     title: '시험후기',
     desc: '시험후기 공지글 게시판',
-    image: IllustrationStarHonorBoard,
     category: BOARD_CATEGORY.HIDDEN,
   },
   {
@@ -198,7 +219,6 @@ export const BOARD_MENUS = [
     textId: 'student-council',
     title: '총학생회',
     desc: '총학생회 공지',
-    image: IllustrationMicrophone,
     category: BOARD_CATEGORY.OFFICIAL,
   },
   {
@@ -207,7 +227,6 @@ export const BOARD_MENUS = [
     textId: 'graduation-preparation',
     title: '졸업준비위원회',
     desc: '졸업준비위원회 공지',
-    image: IllustrationBooksCap,
     category: BOARD_CATEGORY.OFFICIAL,
   },
   {
@@ -216,7 +235,6 @@ export const BOARD_MENUS = [
     textId: 'finance-audit',
     title: '재정감사위원회',
     desc: '재정감사 보고',
-    image: IllustrationFolderSearch,
     category: BOARD_CATEGORY.OFFICIAL,
   },
   {
@@ -226,7 +244,6 @@ export const BOARD_MENUS = [
     title: '숙플레이스',
     desc: '눈송이 맛집 커뮤니티',
     category: BOARD_CATEGORY.LIFE,
-    image: IllustrationIceCupBowl,
   },
   {
     id: 41,
@@ -234,8 +251,62 @@ export const BOARD_MENUS = [
     textId: 'residence',
     title: '주거',
     desc: '자취·주거 정보 커뮤니티',
-    image: IllustrationResidence,
     category: BOARD_CATEGORY.LIFE,
+  },
+  // TODO(culture): 문화생활 게시판 일러스트 수급 후 image 채우기
+  {
+    id: 1001,
+    to: '/board/video-content',
+    textId: 'video-content',
+    title: '영상 컨텐츠',
+    desc: '영상 컨텐츠 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1002,
+    to: '/board/anime-comics',
+    textId: 'anime-comics',
+    title: '애니·만화·웹툰·웹소설',
+    desc: '애니·만화·웹툰·웹소설 생활 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1003,
+    to: '/board/book',
+    textId: 'book',
+    title: '책',
+    desc: '독서 생활 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1004,
+    to: '/board/music',
+    textId: 'music',
+    title: '음악',
+    desc: '음악 생활 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1005,
+    to: '/board/performance',
+    textId: 'performance',
+    title: '공연',
+    desc: '공연 관람·팬 활동 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1006,
+    to: '/board/exhibition',
+    textId: 'exhibition',
+    title: '전시',
+    desc: '전시 관람·추천 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
   },
 ];
 
@@ -263,8 +334,34 @@ export const RESIDENCE_CATEGORIES = Object.freeze([
 
 export const SOOKPLACE_CATEGORIES = Object.freeze(['교내', '교외']);
 
-// 게시판과 카테고리를 연결
+export const VIDEO_CONTENT_CATEGORIES = Object.freeze([
+  '영화',
+  '시리즈',
+  '예능',
+  'OTT',
+]);
+
+export const ANIME_COMICS_CATEGORIES = Object.freeze([
+  '애니',
+  '만화',
+  '웹툰',
+  '웹소설',
+]);
+
+export const MUSIC_CATEGORIES = Object.freeze(['국내', '해외']);
+
+export const PERFORMANCE_CATEGORIES = Object.freeze([
+  '콘서트',
+  '뮤지컬',
+  '연극',
+]);
+
+// 게시판과 카테고리를 연결 (책·전시는 카테고리 없음)
 export const BOARD_CATEGORY_MAP = {
   [BOARD_ID.residence]: RESIDENCE_CATEGORIES,
   [BOARD_ID.sookplace]: SOOKPLACE_CATEGORIES,
+  [BOARD_ID['video-content']]: VIDEO_CONTENT_CATEGORIES,
+  [BOARD_ID['anime-comics']]: ANIME_COMICS_CATEGORIES,
+  [BOARD_ID.music]: MUSIC_CATEGORIES,
+  [BOARD_ID.performance]: PERFORMANCE_CATEGORIES,
 };
