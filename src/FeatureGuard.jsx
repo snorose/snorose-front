@@ -5,7 +5,17 @@ import { FeaturesReady, useFeatureIsOn } from '@growthbook/growthbook-react';
 // 피처 로드 전에는 모든 플래그가 off로 평가되므로, 로드를 기다렸다가 판단한다
 const FEATURES_TIMEOUT = 1000;
 
-export default function FeatureGuard({ feature, fallbackTo = '/', children }) {
+export default function FeatureGuard({
+  feature,
+  fallbackTo = '/',
+  forceOff = false,
+  children,
+}) {
+  // 강제 차단 상태에서는 피처 로드를 기다릴 이유가 없다
+  if (forceOff) {
+    return <Navigate to={fallbackTo} replace />;
+  }
+
   return (
     <FeaturesReady timeout={FEATURES_TIMEOUT} fallback={null}>
       <FeatureRoute feature={feature} fallbackTo={fallbackTo}>
