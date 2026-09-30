@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useFeatureIsOn } from '@growthbook/growthbook-react';
 import { IllustrationLogoSnoroseCloud } from '@snorose/icons';
 
 import {
@@ -9,7 +8,7 @@ import {
   NOT_LOGIN_MENUS,
   SIDEBAR_MENUS,
 } from '@/shared/constant';
-import { useAuth } from '@/shared/hook';
+import { useAuth, useCultureBoard } from '@/shared/hook';
 import { useSidebarStore } from '@/shared/store';
 
 import styles from './Sidebar.module.css';
@@ -18,7 +17,7 @@ export default function Sidebar() {
   const isOpen = useSidebarStore((state) => state.isOpen);
   const close = useSidebarStore((state) => state.close);
   const { status } = useAuth();
-  const isCultureBoardOn = useFeatureIsOn(FEATURE_FLAG.cultureBoard);
+  const isCultureBoardOn = useCultureBoard();
 
   // 피처 플래그가 꺼진 메뉴는 노출하지 않음
   const isFeatureOn = (menu) =>

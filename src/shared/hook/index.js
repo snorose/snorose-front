@@ -1,4 +1,5 @@
 export * from './board.hook';
+export * from './feature-flag.hook';
 export { default as useAuth } from './useAuth';
 export { default as useBlocker } from './useBlocker';
 export { useModalReset } from './useBlocker';
