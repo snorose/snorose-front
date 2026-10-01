@@ -52,6 +52,8 @@ export const BOARD_ID = Object.freeze({
   music: 1004,
   performance: 1005,
   exhibition: 1006,
+  pet: 1010,
+  health: 1011,
 });
 
 export const BOARDS = Object.freeze([
@@ -137,6 +139,16 @@ export const BOARDS = Object.freeze([
     id: 1006,
     name: '전시',
     path: '/board/exhibition',
+  },
+  {
+    id: 1010,
+    name: '반려동물',
+    path: '/board/pet',
+  },
+  {
+    id: 1011,
+    name: '건강',
+    path: '/board/health',
   },
 ]);
 
@@ -308,6 +320,24 @@ export const BOARD_MENUS = [
     image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
+  {
+    id: 1010,
+    to: '/board/pet',
+    textId: 'pet',
+    title: '반려동물',
+    desc: '반려동물 정보·일상 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1011,
+    to: '/board/health',
+    textId: 'health',
+    title: '건강',
+    desc: '건강 정보 공유 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
 ];
 
 // 공식게시판
@@ -356,6 +386,16 @@ export const PERFORMANCE_CATEGORIES = Object.freeze([
   '연극',
 ]);
 
+// 전체는 게시판 기본 목록이며 글 작성 카테고리에는 포함하지 않는다.
+export const PET_CATEGORIES = Object.freeze([
+  '개숙희',
+  '숙냥숙냥', // 숙묘지교에서 이관한 글 포함
+  '숙햄숙햄',
+  '자유',
+]);
+
+export const HEALTH_CATEGORIES = Object.freeze(['건강']);
+
 // 게시판과 카테고리를 연결 (책·전시는 카테고리 없음)
 export const BOARD_CATEGORY_MAP = {
   [BOARD_ID.residence]: RESIDENCE_CATEGORIES,
@@ -364,4 +404,6 @@ export const BOARD_CATEGORY_MAP = {
   [BOARD_ID['anime-comics']]: ANIME_COMICS_CATEGORIES,
   [BOARD_ID.music]: MUSIC_CATEGORIES,
   [BOARD_ID.performance]: PERFORMANCE_CATEGORIES,
+  [BOARD_ID.pet]: PET_CATEGORIES,
+  [BOARD_ID.health]: HEALTH_CATEGORIES,
 };
