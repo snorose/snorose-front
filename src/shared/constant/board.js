@@ -389,7 +389,7 @@ export const PERFORMANCE_CATEGORIES = Object.freeze([
 // 전체는 게시판 기본 목록이며 글 작성 카테고리에는 포함하지 않는다.
 export const PET_CATEGORIES = Object.freeze([
   '개숙희',
-  '숙냥숙냥', // 숙묘지교에서 이관한 글 포함
+  '숙냥숙냥',
   '숙햄숙햄',
   '자유',
 ]);
