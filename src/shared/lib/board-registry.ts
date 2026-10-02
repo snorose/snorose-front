@@ -135,6 +135,15 @@ const CULTURE = [
   },
 ] as const satisfies readonly Board[];
 
+const CAMPUS = [
+  {
+    key: 'studyabroad',
+    id: 71,
+    name: '교환학생·어학연수',
+    desc: '교환학생·어학연수 정보 공유 커뮤니티',
+  },
+] as const satisfies readonly Board[];
+
 const ALL = [
   ...COMMUNITY,
   ...OFFICIAL,
@@ -142,6 +151,7 @@ const ALL = [
   ...SNOROSE,
   ...LIFE,
   ...CULTURE,
+  ...CAMPUS,
 ] as const;
 
 type BoardId = (typeof ALL)[number]['id'];

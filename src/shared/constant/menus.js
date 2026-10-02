@@ -116,6 +116,11 @@ export const SIDEBAR_MENUS = Object.freeze([
   },
   {
     to: '/board',
+    title: '캠퍼스',
+    items: [{ to: '/board/studyabroad', name: '교환학생·어학연수' }],
+  },
+  {
+    to: '/board',
     title: '공식 게시판',
     items: [
       { to: '/board/student-council', name: '총학생회' },

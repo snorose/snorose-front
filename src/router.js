@@ -119,6 +119,7 @@ const getRolesForReadBoard = (boardPath) => {
     case 'music':
     case 'performance':
     case 'exhibition':
+    case 'studyabroad':
       return [ROLE.user, ROLE.admin, ROLE.official];
     default:
       return [];
@@ -140,6 +141,7 @@ const getRolesForWriteBoard = (boardPath) => {
     case 'music':
     case 'performance':
     case 'exhibition':
+    case 'studyabroad':
       return [ROLE.user, ROLE.admin, ROLE.official];
     case 'notice':
     case 'student-council':
@@ -163,6 +165,7 @@ const boardPaths = [
   'finance-audit',
   'residence',
   'sookplace',
+  'studyabroad',
 ];
 
 // 피처 플래그로 노출을 제어하는 게시판

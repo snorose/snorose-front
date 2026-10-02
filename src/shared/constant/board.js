@@ -26,6 +26,10 @@ export const BOARD_CATEGORY = {
     value: 'culture',
     label: '문화생활',
   },
+  CAMPUS: {
+    value: 'campus',
+    label: '캠퍼스',
+  },
   HIDDEN: {
     value: 'hidden',
     label: '숨김', //아직 게시글 리스트에 띄우지 않을 board들
@@ -52,6 +56,8 @@ export const BOARD_ID = Object.freeze({
   music: 1004,
   performance: 1005,
   exhibition: 1006,
+  studyabroad: 71,
+  trip: 1007,
 });
 
 export const BOARDS = Object.freeze([
@@ -137,6 +143,16 @@ export const BOARDS = Object.freeze([
     id: 1006,
     name: '전시',
     path: '/board/exhibition',
+  },
+  {
+    id: 71,
+    name: '교환학생·어학연수',
+    path: '/board/studyabroad',
+  },
+  {
+    id: 1007,
+    name: '여행',
+    path: '/board/trip',
   },
 ]);
 
@@ -308,6 +324,24 @@ export const BOARD_MENUS = [
     image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
+  {
+    id: 71,
+    to: '/board/studyabroad',
+    textId: 'studyabroad',
+    title: '교환학생·어학연수',
+    desc: '교환학생·어학연수 정보 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CAMPUS,
+  },
+  {
+    id: 71,
+    to: '/board/trip',
+    textId: 'trip',
+    title: '여행',
+    desc: '여행 정보·후기 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
 ];
 
 // 공식게시판
@@ -356,6 +390,8 @@ export const PERFORMANCE_CATEGORIES = Object.freeze([
   '연극',
 ]);
 
+export const STUDYABROAD_CATEGORIES = Object.freeze(['교환학생', '어학연수']);
+
 // 게시판과 카테고리를 연결 (책·전시는 카테고리 없음)
 export const BOARD_CATEGORY_MAP = {
   [BOARD_ID.residence]: RESIDENCE_CATEGORIES,
@@ -364,4 +400,5 @@ export const BOARD_CATEGORY_MAP = {
   [BOARD_ID['anime-comics']]: ANIME_COMICS_CATEGORIES,
   [BOARD_ID.music]: MUSIC_CATEGORIES,
   [BOARD_ID.performance]: PERFORMANCE_CATEGORIES,
+  [BOARD_ID.studyabroad]: STUDYABROAD_CATEGORIES,
 };
