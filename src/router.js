@@ -1,4 +1,9 @@
-import { FEATURE_FLAG, ROLE } from '@/shared/constant';
+import {
+  CAMPUS_BOARD_KILL_SWITCH,
+  CULTURE_BOARD_KILL_SWITCH,
+  FEATURE_FLAG,
+  ROLE,
+} from '@/shared/constant';
 import { attendanceLoader } from '@/shared/loader';
 import { AppLayout, NavbarLayout } from '@/shared/ui';
 
@@ -115,6 +120,10 @@ const getRolesForReadBoard = (boardPath) => {
     case 'music':
     case 'performance':
     case 'exhibition':
+    case 'studyabroad':
+    case 'trip':
+    case 'pet':
+    case 'health':
       return [ROLE.user, ROLE.admin, ROLE.official];
     default:
       return [];
@@ -136,6 +145,10 @@ const getRolesForWriteBoard = (boardPath) => {
     case 'music':
     case 'performance':
     case 'exhibition':
+    case 'studyabroad':
+    case 'trip':
+    case 'pet':
+    case 'health':
       return [ROLE.user, ROLE.admin, ROLE.official];
     case 'notice':
     case 'student-council':
@@ -169,13 +182,18 @@ const cultureBoardPaths = [
   'music',
   'performance',
   'exhibition',
+  'trip',
+  'pet',
+  'health',
 ];
 
-const createBoardRoutes = (paths, feature) => {
+const campusBoardPaths = ['studyabroad'];
+
+const createBoardRoutes = (paths, feature, forceOff = false) => {
   // 플래그가 없는 게시판은 가드 없이 그대로 렌더한다
   const withFeatureGuard = (element) =>
     feature ? (
-      <FeatureGuard feature={feature} fallbackTo='/board'>
+      <FeatureGuard feature={feature} fallbackTo='/board' forceOff={forceOff}>
         {element}
       </FeatureGuard>
     ) : (
@@ -254,7 +272,16 @@ const createBoardRoutes = (paths, feature) => {
 
 const boardRoutes = [
   ...createBoardRoutes(boardPaths),
-  ...createBoardRoutes(cultureBoardPaths, FEATURE_FLAG.cultureBoard),
+  ...createBoardRoutes(
+    cultureBoardPaths,
+    FEATURE_FLAG.cultureBoard,
+    CULTURE_BOARD_KILL_SWITCH
+  ),
+  ...createBoardRoutes(
+    campusBoardPaths,
+    FEATURE_FLAG.campusBoard,
+    CAMPUS_BOARD_KILL_SWITCH
+  ),
 ];
 
 export const routeList = [

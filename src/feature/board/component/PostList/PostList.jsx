@@ -7,8 +7,12 @@ import {
   PullToRefresh,
 } from '@/shared/component';
 import { QUERY_KEY, STALE_TIME } from '@/shared/constant';
-import { useSuspenseInfiniteScroll } from '@/shared/hook';
-import { getBoard, getBoardTitleToTextId } from '@/shared/lib';
+import { useCultureBoard, useSuspenseInfiniteScroll } from '@/shared/hook';
+import {
+  getBoard,
+  getBoardTitleToTextId,
+  isCultureBoardPost,
+} from '@/shared/lib';
 
 import { PostBar } from '@/feature/board/component';
 import { POST_SORT_OPTIONS } from '@/feature/board/constant';
@@ -20,6 +24,8 @@ import styles from './PostList.module.css';
 export default function PostList() {
   const { pathname } = useLocation();
   const [searchParams] = useSearchParams();
+
+  const isCultureBoardOn = useCultureBoard();
 
   const currentBoardTextId = pathname.split('/')[2];
   const currentBoard = getBoard(currentBoardTextId);
@@ -55,7 +61,12 @@ export default function PostList() {
     getItemKey: (item) => item.postId,
   });
 
-  if (!postList.length) {
+  // 미노출 게시판 게시글이 서버 응답에 섞여 들어오는 경우를 차단
+  const visiblePostList = isCultureBoardOn
+    ? postList
+    : postList.filter((post) => !isCultureBoardPost(post));
+
+  if (!visiblePostList.length) {
     return (
       <FetchLoading animation={false}>
         {isEvent
@@ -71,7 +82,7 @@ export default function PostList() {
     <div>
       <PullToRefresh onRefresh={refetch}>
         <List>
-          {postList.map((post) => (
+          {visiblePostList.map((post) => (
             <Link
               className={styles.to}
               key={post.postId}
