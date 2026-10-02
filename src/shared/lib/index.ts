@@ -2,6 +2,7 @@ export * from './AppError';
 export * from './board-registry';
 export * from './culture-board';
 export * as DateTime from './date-time';
+export * from './filter-option';
 export * from './getBoardTextId';
 export * from './getBoardUrl';
 export * from './GrowthBook';
