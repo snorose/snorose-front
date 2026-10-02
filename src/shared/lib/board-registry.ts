@@ -151,6 +151,18 @@ const CULTURE = [
     name: '여행',
     desc: '여행 정보 공유 커뮤니티',
   },
+  {
+    key: 'cooking',
+    id: 1008,
+    name: '요리',
+    desc: '요리·레시피 커뮤니티',
+  },
+  {
+    key: 'sport',
+    id: 1009,
+    name: '스포츠',
+    desc: '스포츠·운동 커뮤니티',
+  },
 ] as const satisfies readonly Board[];
 
 const CAMPUS = [

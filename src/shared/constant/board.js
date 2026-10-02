@@ -60,6 +60,8 @@ export const BOARD_ID = Object.freeze({
   trip: 1007,
   pet: 1010,
   health: 1011,
+  cooking: 1008,
+  sport: 1009,
 });
 
 export const BOARDS = Object.freeze([
@@ -146,11 +148,7 @@ export const BOARDS = Object.freeze([
     name: '전시',
     path: '/board/exhibition',
   },
-  {
-    id: 71,
-    name: '교환학생·어학연수',
-    path: '/board/studyabroad',
-  },
+  { id: 71, name: '교환학생·어학연수', path: '/board/studyabroad' },
   {
     id: 1007,
     name: '여행',
@@ -165,6 +163,16 @@ export const BOARDS = Object.freeze([
     id: 1011,
     name: '건강',
     path: '/board/health',
+  },
+  {
+    id: 1008,
+    name: '요리',
+    path: '/board/cooking',
+  },
+  {
+    id: 1009,
+    name: '스포츠',
+    path: '/board/sport',
   },
 ]);
 
@@ -369,6 +377,24 @@ export const BOARD_MENUS = [
     textId: 'health',
     title: '건강',
     desc: '건강 정보 공유 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1008,
+    to: '/board/cooking',
+    textId: 'cooking',
+    title: '요리',
+    desc: '요리·레시피 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1009,
+    to: '/board/sport',
+    textId: 'sport',
+    title: '스포츠',
+    desc: '스포츠·운동 커뮤니티',
     image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
