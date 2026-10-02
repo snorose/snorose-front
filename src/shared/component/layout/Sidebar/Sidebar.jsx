@@ -18,7 +18,7 @@ export default function Sidebar() {
   const close = useSidebarStore((state) => state.close);
   const { status } = useAuth();
   const isCultureBoardOn = useCultureBoard();
-  const isCampusBoardOn = useCampusBoard(); // 캠퍼스 게시판 피처 플래그 확인
+  const isCampusBoardOn = useCampusBoard();
 
   // 피처 플래그가 꺼진 메뉴는 노출하지 않음
   const isFeatureOn = (menu) =>
