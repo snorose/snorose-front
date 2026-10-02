@@ -133,6 +133,12 @@ const CULTURE = [
     name: '전시',
     desc: '전시 관람·추천 커뮤니티',
   },
+  {
+    key: 'trip',
+    id: 1007,
+    name: '여행',
+    desc: '여행 정보 공유 커뮤니티',
+  },
 ] as const satisfies readonly Board[];
 
 const CAMPUS = [

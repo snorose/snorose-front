@@ -334,7 +334,7 @@ export const BOARD_MENUS = [
     category: BOARD_CATEGORY.CAMPUS,
   },
   {
-    id: 71,
+    id: 1007,
     to: '/board/trip',
     textId: 'trip',
     title: '여행',
@@ -392,6 +392,8 @@ export const PERFORMANCE_CATEGORIES = Object.freeze([
 
 export const STUDYABROAD_CATEGORIES = Object.freeze(['교환학생', '어학연수']);
 
+export const TRIP_CATEGORIES = Object.freeze(['국내', '해외']);
+
 // 게시판과 카테고리를 연결 (책·전시는 카테고리 없음)
 export const BOARD_CATEGORY_MAP = {
   [BOARD_ID.residence]: RESIDENCE_CATEGORIES,
@@ -401,4 +403,5 @@ export const BOARD_CATEGORY_MAP = {
   [BOARD_ID.music]: MUSIC_CATEGORIES,
   [BOARD_ID.performance]: PERFORMANCE_CATEGORIES,
   [BOARD_ID.studyabroad]: STUDYABROAD_CATEGORIES,
+  [BOARD_ID.trip]: TRIP_CATEGORIES,
 };
