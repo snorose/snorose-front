@@ -118,6 +118,7 @@ export const SIDEBAR_MENUS = Object.freeze([
   {
     to: '/board',
     title: '캠퍼스',
+    feature: FEATURE_FLAG.campusBoard,
     items: [{ to: '/board/studyabroad', name: '교환학생·어학연수' }],
   },
   {

@@ -1,6 +1,7 @@
 export const FEATURE_FLAG = Object.freeze({
   pushNotification: 'push-notification',
   cultureBoard: 'culture-board',
+  campusBoard: 'campus-board',
 });
 
 export type FeatureFlag = (typeof FEATURE_FLAG)[keyof typeof FEATURE_FLAG];
@@ -13,3 +14,4 @@ export type FeatureFlag = (typeof FEATURE_FLAG)[keyof typeof FEATURE_FLAG];
  * GrowthBook에서 끌 수 있는 상황이라면 배포 없이 그쪽을 먼저 사용할 것.
  */
 export const CULTURE_BOARD_KILL_SWITCH = true;
+export const CAMPUS_BOARD_KILL_SWITCH = true;

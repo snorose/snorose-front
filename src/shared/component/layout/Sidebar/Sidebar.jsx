@@ -8,7 +8,7 @@ import {
   NOT_LOGIN_MENUS,
   SIDEBAR_MENUS,
 } from '@/shared/constant';
-import { useAuth, useCultureBoard } from '@/shared/hook';
+import { useAuth, useCampusBoard, useCultureBoard } from '@/shared/hook';
 import { useSidebarStore } from '@/shared/store';
 
 import styles from './Sidebar.module.css';
@@ -18,10 +18,12 @@ export default function Sidebar() {
   const close = useSidebarStore((state) => state.close);
   const { status } = useAuth();
   const isCultureBoardOn = useCultureBoard();
+  const isCampusBoardOn = useCampusBoard(); // 캠퍼스 게시판 피처 플래그 확인
 
   // 피처 플래그가 꺼진 메뉴는 노출하지 않음
   const isFeatureOn = (menu) =>
-    menu.feature !== FEATURE_FLAG.cultureBoard || isCultureBoardOn;
+    (menu.feature !== FEATURE_FLAG.cultureBoard || isCultureBoardOn) &&
+    (menu.feature !== FEATURE_FLAG.campusBoard || isCampusBoardOn);
 
   /**
    * TODO(board): 라우트 개선 작업 완료 후 교체 필요
