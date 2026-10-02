@@ -134,6 +134,12 @@ const CULTURE = [
     desc: '전시 관람·추천 커뮤니티',
   },
   {
+    key: 'health',
+    id: 1011,
+    name: '건강',
+    desc: '건강 정보 공유 커뮤니티',
+  },
+  {
     key: 'trip',
     id: 1007,
     name: '여행',
@@ -147,6 +153,10 @@ const CAMPUS = [
     id: 71,
     name: '교환학생·어학연수',
     desc: '교환학생·어학연수 정보 공유 커뮤니티',
+    key: 'pet',
+    id: 1010,
+    name: '반려동물',
+    desc: '반려동물 정보·일상 커뮤니티',
   },
 ] as const satisfies readonly Board[];
 

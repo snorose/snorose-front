@@ -58,6 +58,8 @@ export const BOARD_ID = Object.freeze({
   exhibition: 1006,
   studyabroad: 71,
   trip: 1007,
+  pet: 1010,
+  health: 1011,
 });
 
 export const BOARDS = Object.freeze([
@@ -153,6 +155,14 @@ export const BOARDS = Object.freeze([
     id: 1007,
     name: '여행',
     path: '/board/trip',
+    id: 1010,
+    name: '반려동물',
+    path: '/board/pet',
+  },
+  {
+    id: 1011,
+    name: '건강',
+    path: '/board/health',
   },
 ]);
 
@@ -339,6 +349,20 @@ export const BOARD_MENUS = [
     textId: 'trip',
     title: '여행',
     desc: '여행 정보·후기 커뮤니티',
+    id: 1010,
+    to: '/board/pet',
+    textId: 'pet',
+    title: '반려동물',
+    desc: '반려동물 정보·일상 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1011,
+    to: '/board/health',
+    textId: 'health',
+    title: '건강',
+    desc: '건강 정보 공유 커뮤니티',
     image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
@@ -393,6 +417,15 @@ export const PERFORMANCE_CATEGORIES = Object.freeze([
 export const STUDYABROAD_CATEGORIES = Object.freeze(['교환학생', '어학연수']);
 
 export const TRIP_CATEGORIES = Object.freeze(['국내', '해외']);
+// 전체는 게시판 기본 목록이며 글 작성 카테고리에는 포함하지 않는다.
+export const PET_CATEGORIES = Object.freeze([
+  '개숙희',
+  '숙냥숙냥',
+  '숙햄숙햄',
+  '자유',
+]);
+
+export const HEALTH_CATEGORIES = Object.freeze(['건강']);
 
 // 게시판과 카테고리를 연결 (책·전시는 카테고리 없음)
 export const BOARD_CATEGORY_MAP = {
@@ -404,4 +437,6 @@ export const BOARD_CATEGORY_MAP = {
   [BOARD_ID.performance]: PERFORMANCE_CATEGORIES,
   [BOARD_ID.studyabroad]: STUDYABROAD_CATEGORIES,
   [BOARD_ID.trip]: TRIP_CATEGORIES,
+  [BOARD_ID.pet]: PET_CATEGORIES,
+  [BOARD_ID.health]: HEALTH_CATEGORIES,
 };

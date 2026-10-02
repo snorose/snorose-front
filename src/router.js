@@ -122,6 +122,8 @@ const getRolesForReadBoard = (boardPath) => {
     case 'exhibition':
     case 'studyabroad':
     case 'trip':
+    case 'pet':
+    case 'health':
       return [ROLE.user, ROLE.admin, ROLE.official];
     default:
       return [];
@@ -145,6 +147,8 @@ const getRolesForWriteBoard = (boardPath) => {
     case 'exhibition':
     case 'studyabroad':
     case 'trip':
+    case 'pet':
+    case 'health':
       return [ROLE.user, ROLE.admin, ROLE.official];
     case 'notice':
     case 'student-council':
@@ -179,6 +183,8 @@ const cultureBoardPaths = [
   'performance',
   'exhibition',
   'trip',
+  'pet',
+  'health',
 ];
 
 const campusBoardPaths = ['studyabroad'];
