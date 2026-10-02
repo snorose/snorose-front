@@ -58,6 +58,8 @@ export { default as CarouselErrorFallback } from './Carousel/CarouselErrorFallba
 export { default as CarouselSkeleton } from './Carousel/CarouselSkeleton';
 export { default as CategoryFieldset } from './CategoryFieldset/CategoryFieldset';
 export { default as Chip } from './Chip/Chip';
+export { default as Filter } from './Filter/Filter';
+export { default as FilterList } from './FilterList/FilterList';
 export { default as InfiniteScrollSentinel } from './InfiniteScrollSentinel/InfiniteScrollSentinel';
 export { default as List } from './List/List';
 export { default as MenuIcon } from './MenuIcon/MenuIcon';
