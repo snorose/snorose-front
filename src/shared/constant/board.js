@@ -155,6 +155,8 @@ export const BOARDS = Object.freeze([
     id: 1007,
     name: '여행',
     path: '/board/trip',
+  },
+  {
     id: 1010,
     name: '반려동물',
     path: '/board/pet',
@@ -349,6 +351,10 @@ export const BOARD_MENUS = [
     textId: 'trip',
     title: '여행',
     desc: '여행 정보·후기 커뮤니티',
+    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
     id: 1010,
     to: '/board/pet',
     textId: 'pet',
