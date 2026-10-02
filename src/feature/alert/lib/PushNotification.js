@@ -1,6 +1,10 @@
 import { getToken, isSupported, onMessage } from 'firebase/messaging';
 
 import { AppError } from '@/shared/lib';
+import {
+  registerServiceWorker,
+  waitUntilActive,
+} from '@/shared/lib/service-worker';
 
 import { ERROR_CODE, ERROR_MESSAGE } from '@/feature/alert/constant';
 import { isIOSPWA } from '@/feature/alert/lib';
@@ -10,22 +14,15 @@ import { sendFCMToken } from '@/apis';
 import { messaging } from './firebase-config';
 
 export class PushNotificationManager {
-  static #registration = null;
-
   static async registerServiceWorker() {
-    this.#assertSupport();
+    await this.#assertSupport();
 
     try {
-      let registration = await navigator.serviceWorker.getRegistration();
-
-      if (registration) {
-        this.#registration = registration;
-        return;
-      }
-
-      this.#registration = await navigator.serviceWorker.register(
+      const registration = await registerServiceWorker(
         '/firebase-messaging-sw.js'
       );
+      await waitUntilActive(registration);
+      return registration;
     } catch (error) {
       throw new AppError(
         ERROR_CODE.SW_REGISTER_FAILED,
@@ -66,11 +63,11 @@ export class PushNotificationManager {
     throw new AppError(ERROR_CODE.PERMISSION_JUST_DENIED);
   }
 
-  static async issueToken() {
+  static async issueToken(registration) {
     try {
       const token = await getToken(messaging, {
         vapidKey: process.env.REACT_APP_VAPID_KEY,
-        serviceWorkerRegistration: this.#registration ?? undefined,
+        serviceWorkerRegistration: registration,
       });
 
       if (!token) {
@@ -92,27 +89,12 @@ export class PushNotificationManager {
   static async syncWithServer(token, deviceType) {
     try {
       await sendFCMToken(token, deviceType);
-      this.#setCachedToken(token);
     } catch (error) {
       throw new AppError(
         ERROR_CODE.FCM_TOKEN_SYNC_FAILED,
         ERROR_MESSAGE.FCM_TOKEN_SYNC_FAILED
       );
     }
-  }
-
-  static isTokenChanged(newToken) {
-    const saved = this.#getCachedToken();
-    return !saved || saved !== newToken;
-  }
-
-  static #getCachedToken() {
-    return localStorage.getItem(process.env.REACT_APP_FCM_TOKEN_KEY);
-  }
-
-  static #setCachedToken(token) {
-    const key = process.env.REACT_APP_FCM_TOKEN_KEY;
-    localStorage.setItem(key, token);
   }
 
   static onForegroundMessage(callback) {
