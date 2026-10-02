@@ -4,11 +4,15 @@ import altImage from '@/assets/images/altImage.png';
 
 import { authAxios, defaultAxios } from '@/axios';
 
-// 게시글 리스트 가져오기 (sort는 베숙트 전용: LATEST | OLDEST | VIEW | LIKE | SCRAP, 없으면 서버 기본값)
-export const getPosts = async (boardId, page = 0, sort) => {
-  const url = getBoardUrl(boardId, page, sort);
-
-  const response = await authAxios.get(url);
+// 게시글 리스트 가져오기
+export const getPosts = async (
+  boardId,
+  page = 0,
+  { sort, year, category } = {}
+) => {
+  const response = await authAxios.get(getBoardUrl(boardId), {
+    params: { page, sort, year, category },
+  });
 
   return response?.data.result;
 };

@@ -1,10 +1,8 @@
-export function getBoardUrl(boardId, page, sort) {
+export function getBoardUrl(boardId) {
   switch (boardId) {
     case 20:
-      return `/v1/best-posts?page=${page}${sort ? `&sort=${sort}` : ''}`;
-    case 14:
-      return `/v1/events?page=${page}`;
+      return '/v1/best-posts';
     default:
-      return `/v1/boards/${boardId}/posts/postlist?page=${page}`;
+      return `/v1/boards/${boardId}/posts/postlist`;
   }
 }
