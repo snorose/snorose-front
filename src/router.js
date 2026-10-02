@@ -1,4 +1,5 @@
 import {
+  CAMPUS_BOARD_KILL_SWITCH,
   CULTURE_BOARD_KILL_SWITCH,
   FEATURE_FLAG,
   ROLE,
@@ -119,6 +120,8 @@ const getRolesForReadBoard = (boardPath) => {
     case 'music':
     case 'performance':
     case 'exhibition':
+    case 'studyabroad':
+    case 'trip':
     case 'pet':
     case 'health':
       return [ROLE.user, ROLE.admin, ROLE.official];
@@ -142,6 +145,8 @@ const getRolesForWriteBoard = (boardPath) => {
     case 'music':
     case 'performance':
     case 'exhibition':
+    case 'studyabroad':
+    case 'trip':
     case 'pet':
     case 'health':
       return [ROLE.user, ROLE.admin, ROLE.official];
@@ -177,9 +182,12 @@ const cultureBoardPaths = [
   'music',
   'performance',
   'exhibition',
+  'trip',
   'pet',
   'health',
 ];
+
+const campusBoardPaths = ['studyabroad'];
 
 const createBoardRoutes = (paths, feature, forceOff = false) => {
   // 플래그가 없는 게시판은 가드 없이 그대로 렌더한다
@@ -268,6 +276,11 @@ const boardRoutes = [
     cultureBoardPaths,
     FEATURE_FLAG.cultureBoard,
     CULTURE_BOARD_KILL_SWITCH
+  ),
+  ...createBoardRoutes(
+    campusBoardPaths,
+    FEATURE_FLAG.campusBoard,
+    CAMPUS_BOARD_KILL_SWITCH
   ),
 ];
 
