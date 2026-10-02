@@ -119,6 +119,8 @@ const getRolesForReadBoard = (boardPath) => {
     case 'music':
     case 'performance':
     case 'exhibition':
+    case 'pet':
+    case 'health':
       return [ROLE.user, ROLE.admin, ROLE.official];
     default:
       return [];
@@ -140,6 +142,8 @@ const getRolesForWriteBoard = (boardPath) => {
     case 'music':
     case 'performance':
     case 'exhibition':
+    case 'pet':
+    case 'health':
       return [ROLE.user, ROLE.admin, ROLE.official];
     case 'notice':
     case 'student-council':
@@ -173,6 +177,8 @@ const cultureBoardPaths = [
   'music',
   'performance',
   'exhibition',
+  'pet',
+  'health',
 ];
 
 const createBoardRoutes = (paths, feature, forceOff = false) => {
