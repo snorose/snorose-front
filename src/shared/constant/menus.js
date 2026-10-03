@@ -112,7 +112,18 @@ export const SIDEBAR_MENUS = Object.freeze([
       { to: '/board/music', name: '음악' },
       { to: '/board/performance', name: '공연' },
       { to: '/board/exhibition', name: '전시' },
+      { to: '/board/trip', name: '여행' },
+      { to: '/board/pet', name: '반려동물' },
+      { to: '/board/health', name: '건강' },
+      { to: '/board/cooking', name: '요리' },
+      { to: '/board/sport', name: '스포츠' },
     ],
+  },
+  {
+    to: '/board',
+    title: '캠퍼스',
+    feature: FEATURE_FLAG.campusBoard,
+    items: [{ to: '/board/studyabroad', name: '교환학생·어학연수' }],
   },
   {
     to: '/board',

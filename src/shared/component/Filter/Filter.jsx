@@ -3,6 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 
 import { IconChevronDown, IconChevronUp, IconX } from '@snorose/icons';
 
+import { findOption } from '@/shared/lib';
+
 import styles from './Filter.module.css';
 
 export default function Filter({ filterKey, options, placeholder }) {
@@ -11,7 +13,7 @@ export default function Filter({ filterKey, options, placeholder }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedOption = searchParams.get(filterKey);
   const { name: selectedOptionName } =
-    options.find(({ id }) => id.toString() === selectedOption) ?? {};
+    findOption(options, selectedOption) ?? {};
 
   const updateOption = (event) => {
     const id = event.target.dataset.id;

@@ -15,6 +15,7 @@ import {
 } from '@/shared/lib';
 
 import { PostBar } from '@/feature/board/component';
+import { usePostListFilter } from '@/feature/board/hook/usePostListFilter';
 
 import { getEventPosts, getPosts } from '@/apis';
 
@@ -31,6 +32,8 @@ export default function PostList() {
   const isBesookt = currentBoardTextId === 'besookt' ? true : false;
   const isEvent = currentBoardTextId === 'event' ? true : false;
   const progressType = searchParams.get('progressType') ?? 'ALL';
+  const { sort, year, category } = usePostListFilter(currentBoard.id);
+  const isFiltered = Boolean(year || category);
 
   // 페이지네이션 관련 hook (일반 / 이벤트 )
   const {
@@ -41,14 +44,20 @@ export default function PostList() {
   } = useSuspenseInfiniteScroll({
     queryKey: isEvent
       ? [QUERY_KEY.events, currentBoard.id, progressType]
-      : [QUERY_KEY.posts, currentBoard.id],
+      : [
+          QUERY_KEY.posts,
+          currentBoard.id,
+          sort ?? 'LATEST',
+          year ?? 'ALL',
+          category ?? 'ALL',
+        ],
     queryFn: ({ pageParam }) =>
       isEvent
         ? getEventPosts({
             page: pageParam,
             progressType: progressType === 'ALL' ? undefined : progressType,
           })
-        : getPosts(currentBoard.id, pageParam),
+        : getPosts(currentBoard.id, pageParam, { sort, year, category }),
     staleTime: STALE_TIME.boardPostList,
     getItemKey: (item) => item.postId,
   });
@@ -65,7 +74,9 @@ export default function PostList() {
           ? progressType === 'ALL'
             ? '게시물이 없어요'
             : '해당 상태의 이벤트가 없어요'
-          : '게시물이 없어요'}
+          : isFiltered
+            ? '조건에 맞는 게시물이 없어요'
+            : '게시물이 없어요'}
       </FetchLoading>
     );
   }
