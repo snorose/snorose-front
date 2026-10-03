@@ -3,12 +3,22 @@ import { Link, useLocation } from 'react-router-dom';
 import { IconMultiBellPink } from '@snorose/icons';
 import { useQuery } from '@tanstack/react-query';
 
-import { BackAppBar, WriteButton } from '@/shared/component';
+import {
+  BackAppBar,
+  Filter,
+  FilterList,
+  WriteButton,
+} from '@/shared/component';
 import { NEW_ROUTES, OFFICIAL_BOARD, QUERY_KEY, ROLE } from '@/shared/constant';
 import { useAuth, useBoard } from '@/shared/hook';
 import { BOARD_REGISTRY, getBoard } from '@/shared/lib';
 
 import { PostListSuspense } from '@/feature/board/component';
+import {
+  getCategoryOptions,
+  getPostYearOptions,
+  POST_SORT_OPTIONS,
+} from '@/feature/board/constant';
 
 import { getNoticeLine } from '@/apis';
 
@@ -61,11 +71,39 @@ export default function PostListPage() {
           </p>
         </Link>
       )}
+      <PostListFilter boardId={currentBoard.id} />
       <PostListSuspense />
       {showWriteButton && (
         <WriteButton to={`/board/${currentBoardTextId}/post-write`} />
       )}
     </section>
+  );
+}
+
+// 카테고리가 있는 게시판에만 카테고리 필터를 노출
+function PostListFilter({ boardId }) {
+  const categoryOptions = getCategoryOptions(boardId);
+
+  return (
+    <FilterList>
+      {categoryOptions.length > 0 && (
+        <Filter
+          filterKey='category'
+          options={categoryOptions}
+          placeholder='카테고리'
+        />
+      )}
+      <Filter
+        filterKey='sort'
+        options={POST_SORT_OPTIONS}
+        placeholder='최신순'
+      />
+      <Filter
+        filterKey='year'
+        options={getPostYearOptions()}
+        placeholder='연도'
+      />
+    </FilterList>
   );
 }
 
@@ -118,6 +156,7 @@ export function NewPostListPage() {
           </p>
         </Link>
       )}
+      <PostListFilter boardId={boardId} />
       <PostListSuspense />
       {showWriteButton && <WriteButton to={NEW_ROUTES.post.write(boardKey)} />}
     </section>

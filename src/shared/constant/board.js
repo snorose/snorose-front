@@ -457,9 +457,7 @@ export const PET_CATEGORIES = Object.freeze([
   '자유',
 ]);
 
-export const HEALTH_CATEGORIES = Object.freeze(['건강']);
-
-// 게시판과 카테고리를 연결 (책·전시는 카테고리 없음)
+// 게시판과 카테고리를 연결 (책·전시·건강은 카테고리 없음)
 export const BOARD_CATEGORY_MAP = {
   [BOARD_ID.residence]: RESIDENCE_CATEGORIES,
   [BOARD_ID.sookplace]: SOOKPLACE_CATEGORIES,
@@ -470,5 +468,4 @@ export const BOARD_CATEGORY_MAP = {
   [BOARD_ID.studyabroad]: STUDYABROAD_CATEGORIES,
   [BOARD_ID.trip]: TRIP_CATEGORIES,
   [BOARD_ID.pet]: PET_CATEGORIES,
-  [BOARD_ID.health]: HEALTH_CATEGORIES,
 };
