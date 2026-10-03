@@ -1,5 +1,6 @@
 import { json, LoaderFunctionArgs } from 'react-router-dom';
 
+import { isMaintenanceBlockedError } from '@/feature/maintenance/access';
 import { readInquiry, readReport } from '@/feature/support/api';
 import { REPORT_TYPES, ReportType } from '@/feature/support/data';
 
@@ -27,7 +28,7 @@ export const inquiryEditLoader = async ({ params }: LoaderFunctionArgs) => {
 
     return post;
   } catch (error) {
-    if (error instanceof Response) {
+    if (isMaintenanceBlockedError(error) || error instanceof Response) {
       throw error;
     }
 
@@ -57,7 +58,7 @@ export const reportEditLoader = async ({ params }: LoaderFunctionArgs) => {
 
     return post;
   } catch (error) {
-    if (error instanceof Response) {
+    if (isMaintenanceBlockedError(error) || error instanceof Response) {
       throw error;
     }
 
