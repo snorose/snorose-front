@@ -1,4 +1,5 @@
 import type { Attachment } from '@/feature/attachment/types';
+import { isMaintenanceBlockedError } from '@/feature/maintenance/access';
 
 import { putFileInBucket } from '@/apis';
 import { authAxios } from '@/axios';
@@ -42,6 +43,7 @@ export const createInquiry = async ({
 
     return { postId };
   } catch (error) {
+    if (isMaintenanceBlockedError(error)) throw error;
     const response = error?.response;
 
     if (!response) {
@@ -114,6 +116,7 @@ export const updateInquiry = async ({
 
     return { postId: inquiryId };
   } catch (error) {
+    if (isMaintenanceBlockedError(error)) throw error;
     const response = error?.response;
 
     if (!response) {
@@ -139,6 +142,7 @@ export const deleteInquiry = async (postId: string) => {
 
     return response.data.result;
   } catch (error) {
+    if (isMaintenanceBlockedError(error)) throw error;
     const response = error?.response;
 
     if (!response) {
