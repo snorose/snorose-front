@@ -1,6 +1,8 @@
 import {
+  invalidateMaintenanceSession,
   MaintenanceBlockedError,
-  syncMaintenanceAccess,
+  refreshMaintenanceAccess,
+  setMaintenanceRoleVerifier,
 } from '@/feature/maintenance/access';
 import { MAINTENANCE_START } from '@/feature/maintenance/config';
 
@@ -15,7 +17,7 @@ describe('maintenance guard for attachment fetch', () => {
     jest.useFakeTimers();
     jest.setSystemTime(MAINTENANCE_START);
     localStorage.clear();
-    syncMaintenanceAccess();
+    invalidateMaintenanceSession();
     global.fetch = jest.fn().mockResolvedValue({ ok: true });
   });
   afterEach(() => {
@@ -30,12 +32,12 @@ describe('maintenance guard for attachment fetch', () => {
     expect(global.fetch).not.toHaveBeenCalled();
   });
 
-  it('also blocks downloads for existing admin sessions', async () => {
+  it('allows a verified admin to download', async () => {
     localStorage.setItem('accessToken', 'admin');
-    await expect(
-      downloadFromS3('https://bucket.example/file')
-    ).rejects.toBeInstanceOf(MaintenanceBlockedError);
-    expect(global.fetch).not.toHaveBeenCalled();
+    setMaintenanceRoleVerifier(jest.fn().mockResolvedValue(4));
+    await refreshMaintenanceAccess();
+    await downloadFromS3('https://bucket.example/file');
+    expect(global.fetch).toHaveBeenCalledTimes(1);
   });
 
   it('does not change downloads outside maintenance', async () => {

@@ -1,14 +1,15 @@
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 
 import { ModalProvider } from '@/shared/context/ModalContext';
 
-import { syncMaintenanceAccess } from '@/feature/maintenance/access';
 import {
-  MAINTENANCE_END,
-  MAINTENANCE_START,
-} from '@/feature/maintenance/config';
+  invalidateMaintenanceSession,
+  refreshMaintenanceAccess,
+  setMaintenanceRoleVerifier,
+} from '@/feature/maintenance/access';
+import { MAINTENANCE_START } from '@/feature/maintenance/config';
 
 import useBlocker from './useBlocker';
 
@@ -29,7 +30,7 @@ describe('writing page beforeunload during maintenance', () => {
     jest.useFakeTimers();
     jest.setSystemTime(MAINTENANCE_START.getTime() - 1);
     localStorage.clear();
-    syncMaintenanceAccess();
+    invalidateMaintenanceSession();
     router = createMemoryRouter([{ path: '/', element: <WritingPage /> }]);
   });
   afterEach(() => {
@@ -48,7 +49,7 @@ describe('writing page beforeunload during maintenance', () => {
     expect(beforeUnload()).toBe(false);
   });
 
-  it('bypasses confirmation for admin sessions too and restores it after maintenance', () => {
+  it('keeps the usual confirmation for verified admins', async () => {
     render(
       <ModalProvider>
         <RouterProvider router={router} />
@@ -56,8 +57,10 @@ describe('writing page beforeunload during maintenance', () => {
     );
     jest.setSystemTime(MAINTENANCE_START);
     localStorage.setItem('accessToken', 'admin');
-    expect(beforeUnload()).toBe(false);
-    jest.setSystemTime(MAINTENANCE_END.getTime() + 1);
+    setMaintenanceRoleVerifier(jest.fn().mockResolvedValue(4));
+    await act(async () => {
+      await refreshMaintenanceAccess();
+    });
     expect(beforeUnload()).toBe(true);
   });
 });

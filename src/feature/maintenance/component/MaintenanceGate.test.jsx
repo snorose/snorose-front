@@ -3,7 +3,11 @@ import { StrictMode } from 'react';
 
 import { act, fireEvent, render, screen } from '@testing-library/react';
 
-import { syncMaintenanceAccess } from '../access';
+import {
+  invalidateMaintenanceSession,
+  refreshMaintenanceAccess,
+  setMaintenanceRoleVerifier,
+} from '../access';
 import { MAINTENANCE_END, MAINTENANCE_START } from '../config';
 import MaintenanceGate from './MaintenanceGate';
 
@@ -16,7 +20,8 @@ describe('MaintenanceGate', () => {
     jest.useFakeTimers();
     jest.setSystemTime(MAINTENANCE_START.getTime() - 1000);
     localStorage.clear();
-    syncMaintenanceAccess();
+    invalidateMaintenanceSession();
+    setMaintenanceRoleVerifier(jest.fn().mockResolvedValue(2));
     ['modal', 'toast'].forEach((id) => {
       const element = document.createElement('div');
       element.id = id;
@@ -28,7 +33,7 @@ describe('MaintenanceGate', () => {
     jest.useRealTimers();
   });
 
-  it('reloads an existing tab exactly once, including Strict Mode', async () => {
+  it('reloads an existing non-admin tab exactly once, including Strict Mode', async () => {
     const reload = jest.fn();
     render(
       <StrictMode>
@@ -58,7 +63,7 @@ describe('MaintenanceGate', () => {
 
   it('does not reload a tab first opened during maintenance', async () => {
     jest.setSystemTime(MAINTENANCE_START);
-    syncMaintenanceAccess();
+    invalidateMaintenanceSession();
     const reload = jest.fn();
     render(
       <MaintenanceGate reload={reload}>
@@ -70,8 +75,9 @@ describe('MaintenanceGate', () => {
     expect(reload).not.toHaveBeenCalled();
   });
 
-  it('also blocks an existing admin session without an exception', async () => {
+  it('lets a verified admin continue without reloading', async () => {
     localStorage.setItem('accessToken', 'admin');
+    setMaintenanceRoleVerifier(jest.fn().mockResolvedValue(4));
     const reload = jest.fn();
     render(
       <MaintenanceGate reload={reload}>
@@ -81,11 +87,14 @@ describe('MaintenanceGate', () => {
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(screen.getByRole('heading')).toBeVisible();
-    expect(screen.queryByRole('button')).not.toBeInTheDocument();
-    expect(reload).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole('button')).toBeVisible();
+    expect(reload).not.toHaveBeenCalled();
     fireEvent.focus(window);
-    expect(reload).toHaveBeenCalledTimes(1);
+    await act(async () => {
+      await refreshMaintenanceAccess();
+    });
+    expect(screen.getByRole('button')).toBeVisible();
+    expect(reload).not.toHaveBeenCalled();
   });
 
   it('checks the clock on focus even before the delayed timer runs', async () => {
@@ -97,13 +106,16 @@ describe('MaintenanceGate', () => {
     );
     jest.setSystemTime(MAINTENANCE_START.getTime() + 60000);
     fireEvent.focus(window);
+    await act(async () => {
+      await refreshMaintenanceAccess();
+    });
     expect(screen.getByRole('heading')).toBeVisible();
     expect(reload).toHaveBeenCalledTimes(1);
   });
 
   it('restores the normal screen after maintenance ends', async () => {
     jest.setSystemTime(MAINTENANCE_START);
-    syncMaintenanceAccess();
+    invalidateMaintenanceSession();
     const reload = jest.fn();
     render(
       <MaintenanceGate reload={reload}>
@@ -112,6 +124,9 @@ describe('MaintenanceGate', () => {
     );
     jest.setSystemTime(MAINTENANCE_END.getTime() + 1);
     fireEvent.focus(window);
+    await act(async () => {
+      await refreshMaintenanceAccess();
+    });
     expect(screen.getByRole('button')).toBeVisible();
     expect(document.getElementById('modal').hidden).toBe(false);
     expect(reload).not.toHaveBeenCalled();
