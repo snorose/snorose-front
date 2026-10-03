@@ -1,7 +1,7 @@
 import Filter from './Filter';
 
 const meta = {
-  title: 'Shared/Filter',
+  title: 'Component/Filter',
   component: Filter,
   parameters: {
     docs: {
