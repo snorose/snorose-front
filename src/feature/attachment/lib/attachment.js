@@ -7,6 +7,11 @@ import {
   TOAST,
 } from '@/shared/constant';
 
+import {
+  isMaintenanceBlocked,
+  MaintenanceBlockedError,
+} from '@/feature/maintenance/access';
+
 const ALLOWED_CHARS_STR = "\\p{L}\\p{N} ~!@$^&()\\-_=\\[\\]{};`',.";
 
 export const INVALID_NAME_REGEX = new RegExp(`[^${ALLOWED_CHARS_STR}]`, 'gu');
@@ -26,14 +31,16 @@ export const isExtImg = (url) => {
 };
 
 // s3 url로부터 첨부파일 다운받는 함수
-export const downloadFromS3 = async (s3Url) =>
-  await fetch(s3Url, {
+export const downloadFromS3 = async (s3Url) => {
+  if (isMaintenanceBlocked()) throw new MaintenanceBlockedError();
+  return await fetch(s3Url, {
     mode: 'cors',
     cache: 'no-store',
     headers: {
       'Cache-Control': 'no-cache',
     },
   });
+};
 
 // 첨부파일이 한개일 시 사용하는 함수
 export const handleDownload = async (att) => {

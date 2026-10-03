@@ -6,6 +6,11 @@ import axios, {
 } from 'axios';
 
 import { activateSession, clearAuthTokens } from '@/feature/auth/libs';
+import {
+  isMaintenanceBlocked,
+  MaintenanceBlockedError,
+} from '@/feature/maintenance/access';
+import { isMaintenanceTime } from '@/feature/maintenance/config';
 
 type RetryableRequestConfig = InternalAxiosRequestConfig & {
   _retry?: boolean;
@@ -25,7 +30,7 @@ authAxios.interceptors.response.use(
 );
 
 export function createAxiosClient(config?: AxiosRequestConfig): AxiosInstance {
-  return axios.create({
+  const client = axios.create({
     baseURL: process.env.REACT_APP_SERVER_DOMAIN,
     headers: {
       'Content-Type': 'application/json',
@@ -33,6 +38,38 @@ export function createAxiosClient(config?: AxiosRequestConfig): AxiosInstance {
     timeout: 10000,
     ...config,
   });
+  client.interceptors.request.use((request) => {
+    if (!isMaintenanceTime()) return request;
+    const requestType = getMaintenanceRequestType(request);
+    if (
+      requestType === 'login' ||
+      (requestType === 'service' && isMaintenanceBlocked())
+    ) {
+      throw new MaintenanceBlockedError();
+    }
+    return request;
+  });
+  return client;
+}
+
+function getMaintenanceRequestType(config: InternalAxiosRequestConfig) {
+  const requestUrl = new URL(axios.getUri(config), window.location.origin);
+  const serverUrl = new URL(
+    process.env.REACT_APP_SERVER_DOMAIN || window.location.origin,
+    window.location.origin
+  );
+  if (requestUrl.origin !== serverUrl.origin) return 'service';
+
+  const method = config.method?.toUpperCase();
+  if (method === 'POST' && requestUrl.pathname === '/v2/users/login')
+    return 'login';
+  if (
+    (method === 'GET' && requestUrl.pathname === '/v1/users/mypage') ||
+    (method === 'POST' && requestUrl.pathname === '/v2/users/reissueToken') ||
+    (method === 'POST' && requestUrl.pathname === '/v2/users/logout')
+  )
+    return 'auth';
+  return 'service';
 }
 
 export function attachAccessToken(config: InternalAxiosRequestConfig) {
