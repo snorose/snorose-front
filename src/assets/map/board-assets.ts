@@ -1,10 +1,18 @@
 import {
   IllustrationBooksCap,
+  IllustrationBookshelf,
   IllustrationBoxStarsCircle,
   IllustrationBoxStarsOpen,
+  IllustrationDumbbellTowel,
   IllustrationFolderSearch,
+  IllustrationFrameRope,
+  IllustrationGlobe,
+  IllustrationHeartPill,
   IllustrationIceCupBowl,
   IllustrationMicrophone,
+  IllustrationPawBone,
+  IllustrationPhoneBooks,
+  IllustrationPotPaper,
   IllustrationResidence,
   IllustrationSnowfall,
   IllustrationSnowfallCircle,
@@ -12,7 +20,11 @@ import {
   IllustrationSnowGroundCircle,
   IllustrationSnowMountain,
   IllustrationSnowMountainCircle,
+  IllustrationSpeakerNotes,
+  IllustrationStage,
   IllustrationStarHonorBoard,
+  IllustrationSuitcase,
+  IllustrationTv,
 } from '@snorose/icons';
 import type { ComponentType, SVGProps } from 'react';
 
@@ -130,6 +142,114 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
       bottom: '1rem',
       width: '11.5rem',
       height: '6.1rem',
+    },
+  },
+  'video-content': {
+    category: IllustrationTv,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '8.6rem',
+      height: '6.1rem',
+    },
+  },
+  'anime-comics': {
+    category: IllustrationPhoneBooks,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '10.6rem',
+      height: '6.5rem',
+    },
+  },
+  book: {
+    category: IllustrationBookshelf,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '9.9rem',
+      height: '6.2rem',
+    },
+  },
+  music: {
+    category: IllustrationSpeakerNotes,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '10.1rem',
+      height: '7.5rem',
+    },
+  },
+  performance: {
+    category: IllustrationStage,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '8.8rem',
+      height: '6.5rem',
+    },
+  },
+  exhibition: {
+    category: IllustrationFrameRope,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '9.2rem',
+      height: '7rem',
+    },
+  },
+  health: {
+    category: IllustrationHeartPill,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '8.7rem',
+      height: '6.1rem',
+    },
+  },
+  pet: {
+    category: IllustrationPawBone,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '8rem',
+      height: '6.6rem',
+    },
+  },
+  trip: {
+    category: IllustrationSuitcase,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '0.5rem',
+      width: '6.3rem',
+      height: '8.3rem',
+    },
+  },
+  cooking: {
+    category: IllustrationPotPaper,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '10.1rem',
+      height: '7.5rem',
+    },
+  },
+  sport: {
+    category: IllustrationDumbbellTowel,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '9.6rem',
+      height: '5.5rem',
+    },
+  },
+  studyabroad: {
+    category: IllustrationGlobe,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '0.5rem',
+      width: '7.5rem',
+      height: '8.5rem',
     },
   },
 };
