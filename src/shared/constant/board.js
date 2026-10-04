@@ -1,10 +1,3 @@
-import {
-  IllustrationBoxStarsCircle,
-  IllustrationSnowfallCircle,
-  IllustrationSnowGroundCircle,
-  IllustrationSnowMountainCircle,
-} from '@snorose/icons';
-
 export const BOARD_CATEGORY = {
   COMMUNITY: {
     value: 'community',
@@ -73,25 +66,21 @@ export const BOARDS = Object.freeze([
     id: 14,
     name: '이벤트',
     path: '/board/event',
-    mainImage: IllustrationBoxStarsCircle,
   },
   {
     id: 21,
     name: '첫눈온방',
     path: '/board/first-snow',
-    mainImage: IllustrationSnowfallCircle,
   },
   {
     id: 22,
     name: '함박눈방',
     path: '/board/large-snow',
-    mainImage: IllustrationSnowGroundCircle,
   },
   {
     id: 23,
     name: '만년설방',
     path: '/board/permanent-snow',
-    mainImage: IllustrationSnowMountainCircle,
   },
   {
     id: 43,
@@ -171,7 +160,7 @@ export const BOARDS = Object.freeze([
   },
   {
     id: 1009,
-    name: '스포츠',
+    name: '스포츠·운동',
     path: '/board/sport',
   },
 ]);
@@ -289,14 +278,12 @@ export const BOARD_MENUS = [
     desc: '자취·주거 정보 커뮤니티',
     category: BOARD_CATEGORY.LIFE,
   },
-  // TODO(culture): 문화생활 게시판 일러스트 수급 후 image 채우기
   {
     id: 1001,
     to: '/board/video-content',
     textId: 'video-content',
     title: '영상 컨텐츠',
     desc: '영상 컨텐츠 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
   {
@@ -305,7 +292,6 @@ export const BOARD_MENUS = [
     textId: 'anime-comics',
     title: '애니·만화·웹툰·웹소설',
     desc: '애니·만화·웹툰·웹소설 생활 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
   {
@@ -314,7 +300,6 @@ export const BOARD_MENUS = [
     textId: 'book',
     title: '책',
     desc: '독서 생활 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
   {
@@ -323,7 +308,6 @@ export const BOARD_MENUS = [
     textId: 'music',
     title: '음악',
     desc: '음악 생활 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
   {
@@ -332,7 +316,6 @@ export const BOARD_MENUS = [
     textId: 'performance',
     title: '공연',
     desc: '공연 관람·팬 활동 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
   {
@@ -341,7 +324,6 @@ export const BOARD_MENUS = [
     textId: 'exhibition',
     title: '전시',
     desc: '전시 관람·추천 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
   {
@@ -350,7 +332,6 @@ export const BOARD_MENUS = [
     textId: 'studyabroad',
     title: '교환학생·어학연수',
     desc: '교환학생·어학연수 정보 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CAMPUS,
   },
   {
@@ -359,7 +340,6 @@ export const BOARD_MENUS = [
     textId: 'trip',
     title: '여행',
     desc: '여행 정보·후기 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
   {
@@ -368,7 +348,6 @@ export const BOARD_MENUS = [
     textId: 'pet',
     title: '반려동물',
     desc: '반려동물 정보·일상 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
   {
@@ -377,7 +356,6 @@ export const BOARD_MENUS = [
     textId: 'health',
     title: '건강',
     desc: '건강 정보 공유 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
   {
@@ -386,16 +364,14 @@ export const BOARD_MENUS = [
     textId: 'cooking',
     title: '요리',
     desc: '요리·레시피 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
   {
     id: 1009,
     to: '/board/sport',
     textId: 'sport',
-    title: '스포츠',
+    title: '스포츠·운동',
     desc: '스포츠·운동 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
 ];

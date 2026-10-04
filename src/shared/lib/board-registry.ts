@@ -160,7 +160,7 @@ const CULTURE = [
   {
     key: 'sport',
     id: 1009,
-    name: '스포츠',
+    name: '스포츠·운동',
     desc: '스포츠·운동 커뮤니티',
   },
 ] as const satisfies readonly Board[];
