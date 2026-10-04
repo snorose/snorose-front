@@ -171,7 +171,7 @@ export const BOARDS = Object.freeze([
   },
   {
     id: 1009,
-    name: '스포츠',
+    name: '스포츠·운동',
     path: '/board/sport',
   },
 ]);
@@ -393,7 +393,7 @@ export const BOARD_MENUS = [
     id: 1009,
     to: '/board/sport',
     textId: 'sport',
-    title: '스포츠',
+    title: '스포츠·운동',
     desc: '스포츠·운동 커뮤니티',
     image: '',
     category: BOARD_CATEGORY.CULTURE,
