@@ -1,10 +1,3 @@
-import {
-  IllustrationBoxStarsCircle,
-  IllustrationSnowfallCircle,
-  IllustrationSnowGroundCircle,
-  IllustrationSnowMountainCircle,
-} from '@snorose/icons';
-
 export const BOARD_CATEGORY = {
   COMMUNITY: {
     value: 'community',
@@ -25,6 +18,10 @@ export const BOARD_CATEGORY = {
   CULTURE: {
     value: 'culture',
     label: '문화생활',
+  },
+  CAMPUS: {
+    value: 'campus',
+    label: '캠퍼스',
   },
   HIDDEN: {
     value: 'hidden',
@@ -52,6 +49,12 @@ export const BOARD_ID = Object.freeze({
   music: 1004,
   performance: 1005,
   exhibition: 1006,
+  studyabroad: 71,
+  trip: 1007,
+  pet: 1010,
+  health: 1011,
+  cooking: 1008,
+  sport: 1009,
 });
 
 export const BOARDS = Object.freeze([
@@ -63,25 +66,21 @@ export const BOARDS = Object.freeze([
     id: 14,
     name: '이벤트',
     path: '/board/event',
-    mainImage: IllustrationBoxStarsCircle,
   },
   {
     id: 21,
     name: '첫눈온방',
     path: '/board/first-snow',
-    mainImage: IllustrationSnowfallCircle,
   },
   {
     id: 22,
     name: '함박눈방',
     path: '/board/large-snow',
-    mainImage: IllustrationSnowGroundCircle,
   },
   {
     id: 23,
     name: '만년설방',
     path: '/board/permanent-snow',
-    mainImage: IllustrationSnowMountainCircle,
   },
   {
     id: 43,
@@ -137,6 +136,32 @@ export const BOARDS = Object.freeze([
     id: 1006,
     name: '전시',
     path: '/board/exhibition',
+  },
+  { id: 71, name: '교환학생·어학연수', path: '/board/studyabroad' },
+  {
+    id: 1007,
+    name: '여행',
+    path: '/board/trip',
+  },
+  {
+    id: 1010,
+    name: '반려동물',
+    path: '/board/pet',
+  },
+  {
+    id: 1011,
+    name: '건강',
+    path: '/board/health',
+  },
+  {
+    id: 1008,
+    name: '요리',
+    path: '/board/cooking',
+  },
+  {
+    id: 1009,
+    name: '스포츠·운동',
+    path: '/board/sport',
   },
 ]);
 
@@ -253,14 +278,12 @@ export const BOARD_MENUS = [
     desc: '자취·주거 정보 커뮤니티',
     category: BOARD_CATEGORY.LIFE,
   },
-  // TODO(culture): 문화생활 게시판 일러스트 수급 후 image 채우기
   {
     id: 1001,
     to: '/board/video-content',
     textId: 'video-content',
     title: '영상 컨텐츠',
     desc: '영상 컨텐츠 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
   {
@@ -269,7 +292,6 @@ export const BOARD_MENUS = [
     textId: 'anime-comics',
     title: '애니·만화·웹툰·웹소설',
     desc: '애니·만화·웹툰·웹소설 생활 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
   {
@@ -278,7 +300,6 @@ export const BOARD_MENUS = [
     textId: 'book',
     title: '책',
     desc: '독서 생활 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
   {
@@ -287,7 +308,6 @@ export const BOARD_MENUS = [
     textId: 'music',
     title: '음악',
     desc: '음악 생활 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
   {
@@ -296,7 +316,6 @@ export const BOARD_MENUS = [
     textId: 'performance',
     title: '공연',
     desc: '공연 관람·팬 활동 커뮤니티',
-    image: '',
     category: BOARD_CATEGORY.CULTURE,
   },
   {
@@ -305,7 +324,54 @@ export const BOARD_MENUS = [
     textId: 'exhibition',
     title: '전시',
     desc: '전시 관람·추천 커뮤니티',
-    image: '',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 71,
+    to: '/board/studyabroad',
+    textId: 'studyabroad',
+    title: '교환학생·어학연수',
+    desc: '교환학생·어학연수 정보 커뮤니티',
+    category: BOARD_CATEGORY.CAMPUS,
+  },
+  {
+    id: 1007,
+    to: '/board/trip',
+    textId: 'trip',
+    title: '여행',
+    desc: '여행 정보·후기 커뮤니티',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1010,
+    to: '/board/pet',
+    textId: 'pet',
+    title: '반려동물',
+    desc: '반려동물 정보·일상 커뮤니티',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1011,
+    to: '/board/health',
+    textId: 'health',
+    title: '건강',
+    desc: '건강 정보 공유 커뮤니티',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1008,
+    to: '/board/cooking',
+    textId: 'cooking',
+    title: '요리',
+    desc: '요리·레시피 커뮤니티',
+    category: BOARD_CATEGORY.CULTURE,
+  },
+  {
+    id: 1009,
+    to: '/board/sport',
+    textId: 'sport',
+    title: '스포츠·운동',
+    desc: '스포츠·운동 커뮤니티',
     category: BOARD_CATEGORY.CULTURE,
   },
 ];
@@ -356,7 +422,18 @@ export const PERFORMANCE_CATEGORIES = Object.freeze([
   '연극',
 ]);
 
-// 게시판과 카테고리를 연결 (책·전시는 카테고리 없음)
+export const STUDYABROAD_CATEGORIES = Object.freeze(['교환학생', '어학연수']);
+
+export const TRIP_CATEGORIES = Object.freeze(['국내', '해외']);
+// 전체는 게시판 기본 목록이며 글 작성 카테고리에는 포함하지 않는다.
+export const PET_CATEGORIES = Object.freeze([
+  '개숙희',
+  '숙냥숙냥',
+  '숙햄숙햄',
+  '자유',
+]);
+
+// 게시판과 카테고리를 연결 (책·전시·건강은 카테고리 없음)
 export const BOARD_CATEGORY_MAP = {
   [BOARD_ID.residence]: RESIDENCE_CATEGORIES,
   [BOARD_ID.sookplace]: SOOKPLACE_CATEGORIES,
@@ -364,4 +441,7 @@ export const BOARD_CATEGORY_MAP = {
   [BOARD_ID['anime-comics']]: ANIME_COMICS_CATEGORIES,
   [BOARD_ID.music]: MUSIC_CATEGORIES,
   [BOARD_ID.performance]: PERFORMANCE_CATEGORIES,
+  [BOARD_ID.studyabroad]: STUDYABROAD_CATEGORIES,
+  [BOARD_ID.trip]: TRIP_CATEGORIES,
+  [BOARD_ID.pet]: PET_CATEGORIES,
 };

@@ -1,6 +1,10 @@
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
 
-import { CULTURE_BOARD_KILL_SWITCH, FEATURE_FLAG } from '@/shared/constant';
+import {
+  CAMPUS_BOARD_KILL_SWITCH,
+  CULTURE_BOARD_KILL_SWITCH,
+  FEATURE_FLAG,
+} from '@/shared/constant';
 
 /**
  * 문화생활 게시판 노출 여부.
@@ -10,4 +14,10 @@ export function useCultureBoard() {
   const isFeatureOn = useFeatureIsOn(FEATURE_FLAG.cultureBoard);
 
   return isFeatureOn && !CULTURE_BOARD_KILL_SWITCH;
+}
+
+export function useCampusBoard() {
+  const isFeatureOn = useFeatureIsOn(FEATURE_FLAG.campusBoard);
+
+  return isFeatureOn && !CAMPUS_BOARD_KILL_SWITCH;
 }
