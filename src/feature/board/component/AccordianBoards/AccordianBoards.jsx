@@ -7,17 +7,20 @@ import styles from './AccordianBoards.module.css';
 export default function DropDownBoards({ title, isOpen, onClick, children }) {
   return (
     <>
-      <div
+      <button
+        type='button'
         className={`${styles.dropdown} ${!isOpen ? styles.closedDropdown : ''}`}
+        aria-expanded={isOpen}
+        onClick={onClick}
       >
         <span className={styles.title}>{title}</span>
         <IconChevronDown
           width={24}
           height={24}
           className={`${styles.arrow} ${isOpen ? styles.rotated : ''}`}
-          onClick={onClick}
+          aria-hidden='true'
         />
-      </div>
+      </button>
       {isOpen && <div className={styles.content}>{children}</div>}
     </>
   );

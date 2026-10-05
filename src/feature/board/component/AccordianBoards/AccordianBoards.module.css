@@ -4,6 +4,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: inherit;
+  text-align: left;
+}
+
+.dropdown:focus-visible {
+  outline: 2px solid var(--blue-4);
+  outline-offset: 2px;
 }
 
 .closedDropdown {
