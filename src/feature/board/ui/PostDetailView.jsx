@@ -200,26 +200,28 @@ function MetaContainer({
   return (
     <div className={styles.metaContainer}>
       <div className={styles.meta}>
-        <IconMultiCloudLogo
-          width={25}
-          height={16}
-          role='img'
-          aria-label='로고'
-        />
-        <p>{userDisplay || 'Unknown'}</p>
-        {showBadge && (
-          <Badge
-            userRoleId={badgeRoleId}
-            className={styles.badge}
-            width={18}
-            height={18}
+        <div className={styles.info}>
+          <IconMultiCloudLogo
+            width={25}
+            height={16}
+            role='img'
+            aria-label='로고'
           />
-        )}
-        <p className={styles.dot}>·</p>
-        <p>
-          {DateTime.format(createdAt, 'YMD_HM')}
-          {isEdited && ' (수정됨)'}
-        </p>
+          <p className={styles.nickname}>{userDisplay || 'Unknown'}</p>
+          {showBadge && (
+            <Badge
+              userRoleId={badgeRoleId}
+              className={styles.badge}
+              width={18}
+              height={18}
+            />
+          )}
+          <p className={styles.dot}>·</p>
+          <p>
+            {DateTime.format(createdAt, 'YMD_HM')}
+            {isEdited && ' (수정됨)'}
+          </p>
+        </div>
         {Chip}
 
         {category && (
