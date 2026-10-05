@@ -155,7 +155,7 @@ export const BOARDS = Object.freeze([
   },
   {
     id: 1008,
-    name: '요리',
+    name: '요리·레시피',
     path: '/board/cooking',
   },
   {
@@ -362,7 +362,7 @@ export const BOARD_MENUS = [
     id: 1008,
     to: '/board/cooking',
     textId: 'cooking',
-    title: '요리',
+    title: '요리·레시피',
     desc: '요리·레시피 커뮤니티',
     category: BOARD_CATEGORY.CULTURE,
   },
