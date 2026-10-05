@@ -18,7 +18,7 @@ export default function DropDownBoards({ title, isOpen, onClick, children }) {
           onClick={onClick}
         />
       </div>
-      {isOpen && <div>{children}</div>}
+      {isOpen && <div className={styles.content}>{children}</div>}
     </>
   );
 }

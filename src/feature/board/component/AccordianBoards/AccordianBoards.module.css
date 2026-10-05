@@ -7,11 +7,17 @@
 }
 
 .closedDropdown {
+  height: auto;
+  padding: 1.2rem 0;
   border-bottom: 1px solid var(--blue-2);
 }
 
 .title {
   font: var(--text-headline-1-med);
+}
+
+.content {
+  padding-bottom: 1rem;
 }
 
 .arrow {
