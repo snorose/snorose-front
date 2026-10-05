@@ -22,6 +22,8 @@
 
 .arrow {
   transition: transform 0.2s ease;
+  transform-box: content-box;
+  transform-origin: center;
   cursor: pointer;
   padding-left: 1rem;
 }
