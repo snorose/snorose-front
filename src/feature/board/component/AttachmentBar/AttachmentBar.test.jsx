@@ -8,7 +8,8 @@ import AttachmentBar from './AttachmentBar';
 const mockToast = jest.fn();
 const MB = 1024 * 1024;
 
-// Jest가 import 전용 아이콘 패키지를 로드할 수 없어 그림만 대체한다.
+// 테스트 환경에서 아이콘 패키지를 불러올 수 없어,
+// 테스트할 때만 실제 아이콘 대신 빈 SVG를 사용한다.
 // 테스트는 아이콘 종류, DOM 유지 방식, CSS 값에 의존하지 않는다.
 jest.mock(
   '@snorose/icons',
