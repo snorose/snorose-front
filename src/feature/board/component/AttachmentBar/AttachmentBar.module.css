@@ -25,10 +25,52 @@
   cursor: not-allowed;
 }
 
-.imageInput {
-  display: none;
+.uploadControl {
+  position: relative;
+  display: inline-grid;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-right: 2.4rem;
+  cursor: pointer;
 }
 
-.videoInput {
-  display: none;
+.uploadControl:focus-within {
+  outline: 2px solid var(--blue-3);
+  outline-offset: 5px;
+  border-radius: 4px;
+}
+
+.uploadIcon,
+.uploadIconFill {
+  grid-area: 1 / 1;
+  pointer-events: none;
+}
+
+.uploadIconFill {
+  opacity: 0;
+}
+
+/* 터치 중 아이콘을 교체하지 않고, 마우스 hover에서만 강조한다. */
+@media (hover: hover) and (pointer: fine) {
+  .uploadControl:hover .uploadIcon {
+    opacity: 0;
+  }
+
+  .uploadControl:hover .uploadIconFill {
+    opacity: 1;
+  }
+}
+
+.uploadInput {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
+  touch-action: manipulation;
 }
