@@ -1,4 +1,4 @@
-import { React, useRef, useState } from 'react';
+import { useState } from 'react';
 
 import {
   IconHashtag,
@@ -11,7 +11,6 @@ import {
   IconVideoFill,
 } from '@snorose/icons';
 
-import { Icon } from '@/shared/component';
 import { ATTACHMENT_EXTENSION_LIMIT } from '@/shared/constant';
 
 import {
@@ -28,18 +27,13 @@ export default function AttachmentBar({
   editor,
   isTitleFocused,
 }) {
-  const img = useRef();
-  const vid = useRef();
-
   const attachmentBarRef = useAttachmentBarPosition();
   const { changeImageUpload, changeVideoUpload } = useAttachmentUpload({
     attachmentsInfo,
     setAttachmentsInfo,
   });
 
-  //이미지*영상* 에디터 첨부 버튼의 UI 상태를 좌우함
-  const [isImageIconHighlighted, setIsImageIconHighlighted] = useState(false);
-  const [isVideoIconHighlighted, setIsVideoIconHighlighted] = useState(false);
+  // 에디터와 해시태그 버튼의 UI 상태
   const [isEditorIconHovered, setIsEditorIconHovered] = useState(false);
   const [isHashtagIconHovered, setIsHashtagIconHovered] = useState(false);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
@@ -58,74 +52,56 @@ export default function AttachmentBar({
         <FixedMenuEditor editor={editor} />
       )}
       <div className={styles.attachmentBar}>
-        {isImageIconHighlighted ? (
-          <IconImageFill
-            width={24}
-            height={24}
-            color='var(--blue-3)'
-            className={styles.image}
-            onClick={() => {
-              img.current.click();
-            }}
-            onPointerEnter={() => setIsImageIconHighlighted(true)}
-            onPointerLeave={() => setIsImageIconHighlighted(false)}
-          />
-        ) : (
+        <label className={styles.uploadControl}>
           <IconImage
             width={24}
             height={24}
             color='var(--blue-3)'
-            className={styles.image}
-            onClick={() => {
-              img.current.click();
-            }}
-            onPointerEnter={() => setIsImageIconHighlighted(true)}
-            onPointerLeave={() => setIsImageIconHighlighted(false)}
+            className={styles.uploadIcon}
+            aria-hidden='true'
           />
-        )}
-        <input
-          type='file'
-          accept={ATTACHMENT_EXTENSION_LIMIT.imageExtensions.join(', ')}
-          className={styles.imageInput}
-          ref={img}
-          onChange={changeImageUpload}
-          multiple
-        />
-
-        {isVideoIconHighlighted ? (
-          <IconVideoFill
-            className={styles.image}
+          <IconImageFill
             width={24}
             height={24}
-            color={'var(--blue-3)'}
-            onClick={() => {
-              vid.current.click();
-            }}
-            onPointerEnter={() => setIsVideoIconHighlighted(true)}
-            onPointerLeave={() => setIsVideoIconHighlighted(false)}
+            color='var(--blue-3)'
+            className={styles.uploadIconFill}
+            aria-hidden='true'
           />
-        ) : (
+          {/* 입력칸을 아이콘 위에 유지해 터치 대상과 첨부 메뉴의 기준 위치를 고정한다. */}
+          <input
+            type='file'
+            aria-label='이미지 첨부'
+            accept={ATTACHMENT_EXTENSION_LIMIT.imageExtensions.join(', ')}
+            className={styles.uploadInput}
+            onChange={changeImageUpload}
+            multiple
+          />
+        </label>
+
+        <label className={styles.uploadControl}>
           <IconVideo
-            className={styles.image}
+            className={styles.uploadIcon}
             width={24}
             height={24}
-            color={'var(--blue-3)'}
-            onClick={() => {
-              vid.current.click();
-            }}
-            onPointerEnter={() => setIsVideoIconHighlighted(true)}
-            onPointerLeave={() => setIsVideoIconHighlighted(false)}
+            color='var(--blue-3)'
+            aria-hidden='true'
           />
-        )}
-
-        <input
-          type='file'
-          accept={ATTACHMENT_EXTENSION_LIMIT.videoExtensions.join(', ')}
-          className={styles.videoInput}
-          ref={vid}
-          onChange={changeVideoUpload}
-          multiple
-        />
+          <IconVideoFill
+            className={styles.uploadIconFill}
+            width={24}
+            height={24}
+            color='var(--blue-3)'
+            aria-hidden='true'
+          />
+          <input
+            type='file'
+            aria-label='동영상 첨부'
+            accept={ATTACHMENT_EXTENSION_LIMIT.videoExtensions.join(', ')}
+            className={styles.uploadInput}
+            onChange={changeVideoUpload}
+            multiple
+          />
+        </label>
 
         <EditorIcon
           width={27}
