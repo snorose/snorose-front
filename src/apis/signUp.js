@@ -1,6 +1,8 @@
 import { TOAST } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 
+import { isMaintenanceBlockedError } from '@/feature/maintenance/access';
+
 import { defaultAxios } from '@/axios';
 
 export const useRegister = () => {
@@ -16,6 +18,7 @@ export const useRegister = () => {
         state: { access: true },
       });
     } catch (e) {
+      if (isMaintenanceBlockedError(e)) return;
       if (e.response.status === 500) {
         toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
       } else {
@@ -37,6 +40,7 @@ export const useSendUser = () => {
     try {
       await defaultAxios.post(endpoint, data);
     } catch (e) {
+      if (isMaintenanceBlockedError(e)) return;
       if (e.response.status === 500) {
         toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
       }
