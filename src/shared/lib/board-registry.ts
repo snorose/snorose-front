@@ -154,7 +154,7 @@ const CULTURE = [
   {
     key: 'cooking',
     id: 1008,
-    name: '요리',
+    name: '요리·레시피',
     desc: '요리·레시피 커뮤니티',
   },
   {
