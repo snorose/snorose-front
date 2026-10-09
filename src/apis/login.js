@@ -1,6 +1,8 @@
 import { TOAST } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 
+import { isMaintenanceBlockedError } from '@/feature/maintenance/access';
+
 import { defaultAxios } from '@/axios';
 
 export const useFindId = () => {
@@ -20,6 +22,7 @@ export const useFindId = () => {
         });
       } catch (e) {
         setLoading(false);
+        if (isMaintenanceBlockedError(e)) return;
         const status = e.response?.status;
         if (status === 500) {
           toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
@@ -49,6 +52,7 @@ export const useFindPw = () => {
         });
       } catch (e) {
         setLoading(false);
+        if (isMaintenanceBlockedError(e)) return;
         const status = e.response?.status;
         if (status === 500) {
           toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
