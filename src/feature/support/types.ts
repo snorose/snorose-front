@@ -10,7 +10,7 @@ export type InquiryDTO = {
   title: string;
   link: string;
   content: string;
-  inquiryCategory:
+  subGroup:
     | 'EXAM_REVIEW_INQUIRY'
     | 'EVENT_INQUIRY'
     | 'NOTICE_INQUIRY'

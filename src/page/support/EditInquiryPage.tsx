@@ -78,7 +78,7 @@ export default function EditInquiryPage() {
   const [title, setTitle] = useState(post?.title ?? '');
   const [content, setContent] = useState(post?.content ?? '');
   const [selectedOption, setSelectedOption] = useState<Option | undefined>(
-    INQUIRY_OPTIONS.find((option) => option.key === post.inquiryCategory)
+    INQUIRY_OPTIONS.find((option) => option.key === post.subGroup)
   );
   const [attachments, setAttachments] = useState<Attachment[]>(
     post?.attachments ?? []
