@@ -6,24 +6,21 @@ import { authAxios } from '@/axios';
 export type InquiryCreateRequest = {
   title: string;
   content: string;
-  inquiryCategory: string;
-  target?: string;
+  subGroup: string;
   attachments?: (Attachment & { file: File })[];
 };
 
 export const createInquiry = async ({
   title,
   content,
-  inquiryCategory,
-  target,
+  subGroup,
   attachments = [],
 }: InquiryCreateRequest) => {
   try {
     const response = await authAxios.post('/v1/inquiries/inquiry', {
       title,
-      target,
       content,
-      inquiryCategory,
+      subGroup,
       attachments: attachments.map(({ fileName, fileComment, type }) => ({
         fileName,
         fileComment,
