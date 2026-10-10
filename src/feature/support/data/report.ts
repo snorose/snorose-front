@@ -36,17 +36,17 @@ const user = [
   { key: 'USER_ETC', label: '기타' },
 ] as const satisfies readonly Option[];
 
-export const REPORT_OPTIONS: Record<ReportType, readonly Option[]> = {
+export const REPORT_OPTIONS: Record<ReportSubGroup, readonly Option[]> = {
   post,
   exam,
   comment,
   user,
 };
 
-export const REPORT_TYPES = ['post', 'comment', 'exam', 'user'] as const;
-export type ReportType = (typeof REPORT_TYPES)[number];
+export const REPORT_SUB_GROUP = ['post', 'comment', 'exam', 'user'] as const;
+export type ReportSubGroup = (typeof REPORT_SUB_GROUP)[number];
 
-export const REPORT_TYPE_MAP = {
+export const REPORT_SUB_GROUP_MAP = {
   post: 'POST_REPORT',
   comment: 'COMMENT_REPORT',
   exam: 'EXAM_REVIEW_REPORT',

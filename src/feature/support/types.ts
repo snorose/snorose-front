@@ -26,6 +26,7 @@ export type InquiryDTO = {
 };
 
 export type ReportDTO = {
+  group: 'REPORT';
   postId: number;
   userRoleId: number;
   isWriter: boolean;
@@ -33,13 +34,17 @@ export type ReportDTO = {
   userDisplay: string;
   title: string;
   content: string;
-  reportType: 'POST' | 'COMMENT' | 'EXAM' | 'USER';
-  inquiryCategory: string;
+  subGroup: 'POST' | 'COMMENT' | 'EXAM' | 'USER';
+  reportCause: string;
   status: 'PENDING' | 'COMPLETED';
+  target: string;
+  targetPostId: number;
+  targetBoardId: number;
   commentCount: number;
   createdAt: string;
   updatedAt: string | null;
   isEdited: boolean;
   isWriterWithdrawn: boolean;
   attachments: Attachment[];
+  category: string;
 };

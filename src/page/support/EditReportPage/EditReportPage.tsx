@@ -18,9 +18,9 @@ import { Attachment, UploadFile } from '@/feature/attachment/types';
 import { updateReport } from '@/feature/support/api';
 import {
   REPORT_PLACEHOLDERS,
-  REPORT_TYPE_TAG,
+  REPORT_SUB_GROUP_TAG,
 } from '@/feature/support/constant';
-import { REPORT_OPTIONS, ReportType } from '@/feature/support/data';
+import { REPORT_OPTIONS, ReportSubGroup } from '@/feature/support/data';
 import type { ReportDTO } from '@/feature/support/types';
 import { SupportFormView } from '@/feature/support/ui';
 
@@ -29,7 +29,7 @@ import { Option } from '@/types';
 
 export default function EditReportPage() {
   const post = useLoaderData() as ReportDTO;
-  const reportType = post.reportType.split('_')[0].toLowerCase() as ReportType;
+  const subGroup = post.subGroup.split('_')[0].toLowerCase() as ReportSubGroup;
 
   const { postId } = useParams();
   const navigate = useNavigate();
@@ -82,9 +82,7 @@ export default function EditReportPage() {
   const [title, setTitle] = useState(post?.title ?? '');
   const [content, setContent] = useState(post?.content ?? '');
   const [selectedOption, setSelectedOption] = useState<Option | undefined>(
-    REPORT_OPTIONS[reportType].find(
-      (option) => option.key === post.inquiryCategory
-    )
+    REPORT_OPTIONS[subGroup].find((option) => option.key === post.reportCause)
   );
   const [attachments, setAttachments] = useState<Attachment[]>(
     post?.attachments ?? []
@@ -104,10 +102,10 @@ export default function EditReportPage() {
         setSelectedOption={setSelectedOption}
         setAttachments={setAttachments}
         setFiles={setFiles}
-        options={REPORT_OPTIONS[reportType]}
+        options={REPORT_OPTIONS[subGroup]}
         contentLabel={'신고 내용'}
-        placeholders={REPORT_PLACEHOLDERS[reportType]}
-        tag={REPORT_TYPE_TAG[reportType]}
+        placeholders={REPORT_PLACEHOLDERS[subGroup]}
+        tag={REPORT_SUB_GROUP_TAG[subGroup]}
         modalId='confirm-report-update'
       />
 
