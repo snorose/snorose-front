@@ -88,13 +88,12 @@ function NotificationSettings() {
   const setupNotifications = async () => {
     try {
       await PushNotificationManager.ensurePermission();
-
-      const token = await PushNotificationManager.issueToken();
+      const registration =
+        await PushNotificationManager.registerServiceWorker();
+      const token = await PushNotificationManager.issueToken(registration);
       const deviceType = getDeviceType();
 
-      if (PushNotificationManager.isTokenChanged(token)) {
-        await PushNotificationManager.syncWithServer(token, deviceType);
-      }
+      await PushNotificationManager.syncWithServer(token, deviceType);
     } catch (error) {
       throw error;
     }
