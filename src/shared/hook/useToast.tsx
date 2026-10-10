@@ -1,16 +1,15 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import { useToastContext } from '@/shared/context/ToastContext';
 
 export default function useToast() {
   const { setToasts } = useToastContext();
 
   const addToast = (message: string, variant: 'success' | 'error' | 'info') => {
-    const nextToast = { id: uuidv4(), message, variant };
+    const nextToast = { id: crypto.randomUUID(), message, variant };
 
-    setToasts((prev) => {
-      return [...prev.filter((item) => item.message !== message), nextToast];
-    });
+    setToasts((prev) => [
+      ...prev.filter((item) => item.message !== message),
+      nextToast,
+    ]);
   };
 
   const removeToast = (id: string) => {
