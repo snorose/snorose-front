@@ -83,7 +83,10 @@ function InquiryDetailLoader() {
       }
       CommentInputContainer={CommentInputContainer}
       Chip={
-        <Chip name={INQUIRY_STATUS_MAP[data.status].label} variant='gradient' />
+        <Chip
+          name={INQUIRY_STATUS_MAP[data.status].label}
+          variant={INQUIRY_STATUS_MAP[data.status].variant}
+        />
       }
       Actions={
         data.status === 'PENDING' && <MeatBallIcon onClick={onMenuOpen} />
