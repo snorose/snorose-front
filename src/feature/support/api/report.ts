@@ -7,8 +7,8 @@ export type ReportCreateRequest = {
   targetId: string;
   title: string;
   content: string;
-  reportCategory: string;
-  reportType: string;
+  subGroup: string;
+  reportCause: string;
   attachments: (Attachment & { file: File })[];
 };
 
@@ -16,8 +16,8 @@ export const createReport = async ({
   targetId,
   title,
   content,
-  reportCategory,
-  reportType,
+  subGroup,
+  reportCause,
   attachments,
 }: ReportCreateRequest) => {
   try {
@@ -25,8 +25,8 @@ export const createReport = async ({
       targetId,
       title,
       content,
-      inquiryCategory: reportCategory,
-      reportType,
+      subGroup,
+      reportCause,
       attachments: attachments.map(({ fileName, fileComment, type }) => ({
         fileName,
         fileComment,

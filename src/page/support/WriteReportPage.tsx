@@ -44,11 +44,11 @@ export default function WriteReportPage() {
   const { mutate: submitReport } = useMutation({
     mutationFn: () =>
       createReport({
-        reportType: REPORT_TYPE_MAP[reportType],
         targetId: targetId!,
         title,
         content,
-        reportCategory: selectedOption!.key,
+        subGroup: REPORT_TYPE_MAP[reportType],
+        reportCause: selectedOption!.key,
         attachments: files.map(mapFileToAttachment),
       }),
 
