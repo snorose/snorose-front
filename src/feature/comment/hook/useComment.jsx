@@ -68,7 +68,7 @@ export default function useComment() {
   };
 
   const onError = ({ response }) => {
-    toast({ message: response.data.message, variant: 'error' });
+    toast.error(response.data.message);
   };
 
   const onSettled = () => {
@@ -104,11 +104,8 @@ export default function useComment() {
       updateCommentCountCache({ type: COMMENT_ACTION_TYPE.create });
 
       !pointDifference
-        ? toast({
-            message: TOAST.COMMENT.createNoPoints,
-            variant: 'success',
-          })
-        : toast({ message: TOAST.COMMENT.create, variant: 'success' });
+        ? toast.success(TOAST.COMMENT.createNoPoints)
+        : toast.success(TOAST.COMMENT.create);
     },
     onError,
     onSettled,
@@ -134,11 +131,8 @@ export default function useComment() {
       updateCommentCountCache({ type: COMMENT_ACTION_TYPE.delete });
       // !pointDifference; // pointDifference값 백엔 수정 되면 이 코드로 다시 변경
       currentBoard.id === 23 || currentBoard.id === 32
-        ? toast({
-            message: TOAST.COMMENT.deleteNoPoints,
-            variant: 'success',
-          })
-        : toast({ message: TOAST.COMMENT.delete, variant: 'success' });
+        ? toast.success(TOAST.COMMENT.deleteNoPoints)
+        : toast.success(TOAST.COMMENT.delete);
     },
     onError,
     onSettled,
@@ -160,7 +154,7 @@ export default function useComment() {
         })
       );
 
-      toast({ message: TOAST.COMMENT.edit, variant: 'success' });
+      toast.success(TOAST.COMMENT.edit);
     },
     onError,
     onSettled,

@@ -21,18 +21,18 @@ export default function BellIcon({ boardId, postId, isActive }) {
     try {
       await updateNotificationSetting.mutateAsync(nextStatus);
 
-      toast({
-        message: nextStatus
+      toast.info(
+        nextStatus
           ? '댓글 알림이 설정되었습니다.'
-          : '댓글 알림이 해제되었습니다.',
-      });
+          : '댓글 알림이 해제되었습니다.'
+      );
     } catch (error) {
       const errorMessage =
         error instanceof AppError
           ? error.message
           : '잠시 후 다시 시도해주세요.';
 
-      toast({ message: errorMessage, variant: 'error' });
+      toast.error(errorMessage);
     }
   };
 

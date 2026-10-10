@@ -57,23 +57,19 @@ export default function EditProfilePage() {
           queryKey: [QUERY_KEY.userInfo],
         });
 
-        toast({ message: TOAST.USER.editUserInfo, variant: 'success' });
+        toast.success(TOAST.USER.editUserInfo);
         navigate('/my-page');
       },
       onError: ({ response }) => {
         const { data } = response;
 
-        toast(
+        toast.error(
           // data.userProfile ||
-          {
-            message:
-              data.userName ||
-              data.birthday ||
-              data.nickname ||
-              data.major ||
-              data.message,
-            variant: 'error',
-          }
+          data.userName ||
+            data.birthday ||
+            data.nickname ||
+            data.major ||
+            data.message
         );
       },
     });

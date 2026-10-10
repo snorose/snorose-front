@@ -54,12 +54,12 @@ function ReportDetailLoader() {
   const { mutate: deleteReportMutate } = useMutation({
     mutationFn: () => deleteReport(postId),
     onSuccess: () => {
-      toast({ message: TOAST.REPORT.delete, variant: 'success' });
+      toast.success(TOAST.REPORT.delete);
       queryClient.removeQueries(QUERY_KEY.post(postId));
       navigate(-1);
     },
     onError: (error) => {
-      toast({ message: error.message, variant: 'error' });
+      toast.error(error.message);
     },
   });
 

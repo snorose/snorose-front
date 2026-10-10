@@ -104,10 +104,7 @@ export default function AccountInfoStep({ formData, setFormData, setStage }) {
     if (isAllValid) {
       setStage(2);
     } else {
-      toast({
-        message: '모든 필드를 올바르게 입력해주세요.',
-        variant: 'error',
-      });
+      toast.error('모든 필드를 올바르게 입력해주세요.');
     }
   };
 

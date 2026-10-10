@@ -122,12 +122,12 @@ function AttendanceButton({ setLoading }) {
             }
           }
 
-          toast({ message, variant: 'success' });
+          toast.success(message);
         }
         setIsAttendance(true);
       })
       .catch(({ response }) => {
-        toast({ message: response.data.message, variant: 'error' });
+        toast.error(response.data.message);
       })
       .finally(() => {
         setDisabled(false);

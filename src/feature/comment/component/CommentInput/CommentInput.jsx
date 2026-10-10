@@ -40,12 +40,12 @@ const CommentInput = () => {
     }
 
     if (!content.trim()) {
-      toast({ message: TOAST.COMMENT.emptyContent, variant: 'info' });
+      toast.info(TOAST.COMMENT.emptyContent);
       return;
     }
 
     if (content.length > 1000) {
-      toast({ message: TOAST.COMMENT.tooLongContent, variant: 'info' });
+      toast.info(TOAST.COMMENT.tooLongContent);
       return;
     }
 

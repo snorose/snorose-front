@@ -52,7 +52,7 @@ export default function WriteInquiryPage() {
            */
         });
 
-      toast({ message: TOAST.INQUIRY.create, variant: 'success' });
+      toast.success(TOAST.INQUIRY.create);
 
       queryClient.removeQueries({
         queryKey: [QUERY_KEY.myInquiriesAndReports],
@@ -62,7 +62,7 @@ export default function WriteInquiryPage() {
     },
 
     onError: (error) => {
-      toast({ message: error.message, variant: 'error' });
+      toast.error(error.message);
     },
   });
 

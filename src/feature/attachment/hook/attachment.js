@@ -34,13 +34,10 @@ export function useAttachmentUpload({ attachmentsInfo, setAttachmentsInfo }) {
       const warningMessage =
         checkImageSize(newFiles) || checkIfFilesContainUnusableChar(newFiles);
       if (warningMessage) {
-        toast({
-          message: warningMessage,
-          variant: 'error',
-        });
+        toast.error(warningMessage);
       }
     } catch (err) {
-      toast({ message: err.message, variant: 'error' });
+      toast.error(err.message);
       return;
     }
 
@@ -73,13 +70,10 @@ export function useAttachmentUpload({ attachmentsInfo, setAttachmentsInfo }) {
       const warningMessage =
         checkVideoSize(newFiles) || checkIfFilesContainUnusableChar(newFiles);
       if (warningMessage) {
-        toast({
-          message: warningMessage,
-          variant: 'error',
-        });
+        toast.error(warningMessage);
       }
     } catch (err) {
-      toast({ message: err.message, variant: 'error' });
+      toast.error(err.message);
       return;
     }
 

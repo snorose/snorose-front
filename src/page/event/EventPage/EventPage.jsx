@@ -77,9 +77,9 @@ export default function EventPage() {
     try {
       const url = window.location.href;
       await navigator.clipboard.writeText(url);
-      toast({ message: '링크가 복사되었어요', variant: 'success' });
+      toast.success('링크가 복사되었어요');
     } catch (error) {
-      toast({ message: '링크 복사에 실패했어요', variant: 'error' });
+      toast.error('링크 복사에 실패했어요');
     }
   };
 
@@ -127,7 +127,7 @@ export default function EventPage() {
   // '신청하기'버튼 누르면 폼으로 이동
   const handleApplyClick = () => {
     if (!isUrlValid(data.link, { open: true })) {
-      toast({ message: TOAST.EVENT.FAIL, variant: 'error' });
+      toast.error(TOAST.EVENT.FAIL);
     }
   };
 

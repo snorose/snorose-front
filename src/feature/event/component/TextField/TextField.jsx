@@ -22,11 +22,11 @@ export default function TextField({
 
   const handleCheckLink = () => {
     if (!data.link?.trim()) {
-      toast({ message: TOAST.EVENT.EMPTY, variant: 'error' });
+      toast.error(TOAST.EVENT.EMPTY);
       return;
     }
     if (!isUrlValid(data.link, { open: true })) {
-      toast({ message: TOAST.EVENT.FAIL, variant: 'error' });
+      toast.error(TOAST.EVENT.FAIL);
     }
   };
 

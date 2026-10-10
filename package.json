@@ -14,6 +14,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "craco test",
+    "test:toast-migration": "node --test scripts/verify-toast-migration.test.cjs && craco test --watchAll=false --runInBand --runTestsByPath src/shared/hook/useToast.test.jsx src/shared/hook/useToast.migration.test.jsx src/feature/board/component/AttachmentBar/AttachmentBar.test.jsx",
     "eject": "craco eject",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",

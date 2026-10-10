@@ -22,7 +22,7 @@ export const useFindId = () => {
         setLoading(false);
         const status = e.response?.status;
         if (status === 500) {
-          toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
+          toast.error(TOAST.ERROR.SERVER);
         } else {
           navigate('/not-found-id', { state: { access: true } });
         }
@@ -51,7 +51,7 @@ export const useFindPw = () => {
         setLoading(false);
         const status = e.response?.status;
         if (status === 500) {
-          toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
+          toast.error(TOAST.ERROR.SERVER);
         } else {
           navigate('/not-found-pw', { state: { access: true } });
         }

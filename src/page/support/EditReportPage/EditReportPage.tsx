@@ -67,7 +67,7 @@ export default function EditReportPage() {
            */
         });
 
-      toast({ message: TOAST.REPORT.update, variant: 'success' });
+      toast.success(TOAST.REPORT.update);
 
       queryClient.invalidateQueries({ queryKey: QUERY_KEY.post(postId) });
 
@@ -75,7 +75,7 @@ export default function EditReportPage() {
     },
 
     onError: (error) => {
-      toast({ message: error.message, variant: 'error' });
+      toast.error(error.message);
     },
   });
 

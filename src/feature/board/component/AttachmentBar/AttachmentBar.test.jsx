@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 
 import AttachmentBar from './AttachmentBar';
 
-const mockToast = jest.fn();
+const mockToastError = jest.fn();
 const MB = 1024 * 1024;
 
 // 테스트 환경에서 아이콘 패키지를 불러올 수 없어,
@@ -32,7 +32,7 @@ jest.mock(
 );
 
 jest.mock('@/shared/hook', () => ({
-  useToast: () => ({ toast: mockToast }),
+  useToast: () => ({ toast: { error: mockToastError } }),
 }));
 
 // 무관한 화면 의존성만 제외하고 첨부 처리와 검증은 실제 함수를 사용한다.
@@ -81,16 +81,11 @@ function attachedNames() {
 }
 
 function expectErrorNotice() {
-  expect(mockToast).toHaveBeenCalledWith(
-    expect.objectContaining({
-      message: expect.any(String),
-      variant: 'error',
-    })
-  );
+  expect(mockToastError).toHaveBeenCalledWith(expect.any(String));
 }
 
 beforeEach(() => {
-  mockToast.mockClear();
+  mockToastError.mockClear();
 });
 
 describe('사진·동영상 첨부의 기본 동작', () => {
@@ -110,7 +105,7 @@ describe('사진·동영상 첨부의 기본 동작', () => {
       );
 
       expect(attachedNames()).toEqual([filename]);
-      expect(mockToast).not.toHaveBeenCalled();
+      expect(mockToastError).not.toHaveBeenCalled();
     }
   );
 
@@ -131,7 +126,7 @@ describe('사진·동영상 첨부의 기본 동작', () => {
       'first.jpg',
       'second.png',
     ]);
-    expect(mockToast).not.toHaveBeenCalled();
+    expect(mockToastError).not.toHaveBeenCalled();
   });
 
   it('여러 번 나누어 선택해도 앞서 첨부한 파일을 유지한다', async () => {
@@ -151,7 +146,7 @@ describe('사진·동영상 첨부의 기본 동작', () => {
     );
 
     expect(attachedNames()).toEqual(['first.jpg', 'second.png', 'video.mp4']);
-    expect(mockToast).not.toHaveBeenCalled();
+    expect(mockToastError).not.toHaveBeenCalled();
   });
 
   it.each(['이미지 첨부', '동영상 첨부'])(
@@ -169,7 +164,7 @@ describe('사진·동영상 첨부의 기본 동작', () => {
       fireEvent.change(screen.getByLabelText(name), { target: { files: [] } });
 
       expect(attachedNames()).toEqual(['photo.jpg', 'video.mp4']);
-      expect(mockToast).not.toHaveBeenCalled();
+      expect(mockToastError).not.toHaveBeenCalled();
     }
   );
 
@@ -205,7 +200,7 @@ describe('사진·동영상 첨부의 기본 동작', () => {
     await userEvent.upload(screen.getByLabelText('이미지 첨부'), file);
 
     expect(attachedNames()).toEqual(['photo.jpg', 'photo.jpg']);
-    expect(mockToast).not.toHaveBeenCalled();
+    expect(mockToastError).not.toHaveBeenCalled();
   });
 
   it('키보드로 사진과 동영상 첨부 입력칸에 접근할 수 있다', () => {
@@ -255,7 +250,7 @@ describe('현재 서비스의 첨부 정책', () => {
       );
 
       expect(attachedNames()).toEqual([filename]);
-      expect(mockToast).not.toHaveBeenCalled();
+      expect(mockToastError).not.toHaveBeenCalled();
     }
   );
 
@@ -298,7 +293,7 @@ describe('현재 서비스의 첨부 정책', () => {
     await userEvent.upload(screen.getByLabelText('이미지 첨부'), files);
 
     expect(attachedNames()).toEqual(files.map((file) => file.name));
-    expect(mockToast).not.toHaveBeenCalled();
+    expect(mockToastError).not.toHaveBeenCalled();
   });
 
   it('기존 사진을 포함해 5장을 초과하면 새 선택을 거부하고 기존 파일을 유지한다', async () => {
@@ -361,6 +356,6 @@ describe('현재 서비스의 첨부 정책', () => {
       ...photos.map((photo) => photo.fileName),
       'video.mp4',
     ]);
-    expect(mockToast).not.toHaveBeenCalled();
+    expect(mockToastError).not.toHaveBeenCalled();
   });
 });

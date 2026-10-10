@@ -122,15 +122,9 @@ export default function FullScreenAttachment({
               setIsChoiceModalOpen(false);
 
               await handleZipDownload(urls);
-              toast({
-                message: '첨부파일 저장이 완료되었어요.',
-                variant: 'success',
-              });
+              toast.success('첨부파일 저장이 완료되었어요.');
             } catch (e) {
-              toast({
-                message: '다운로드에 문제가 발생했습니다. 다시 시도해주세요.',
-                variant: 'error',
-              });
+              toast.error('다운로드에 문제가 발생했습니다. 다시 시도해주세요.');
             }
           },
           async () => {
@@ -142,15 +136,9 @@ export default function FullScreenAttachment({
               const currentIndex =
                 paginationRef.current?.textContent.split('/')[0] - 1;
               await handleDownload(attachmentUrls[currentIndex]);
-              toast({
-                message: '첨부파일 저장이 완료되었어요.',
-                variant: 'success',
-              });
+              toast.success('첨부파일 저장이 완료되었어요.');
             } catch (e) {
-              toast({
-                message: '다운로드에 문제가 발생했습니다. 다시 시도해주세요.',
-                variant: 'error',
-              });
+              toast.error('다운로드에 문제가 발생했습니다. 다시 시도해주세요.');
             }
           },
         ]}

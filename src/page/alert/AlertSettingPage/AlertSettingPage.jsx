@@ -111,7 +111,7 @@ function NotificationSettings() {
     } catch (error) {
       const rollbackAction = notificationSettingsStore.actions.hydrate(prev);
       dispatch(rollbackAction);
-      toast(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -153,7 +153,7 @@ function NotificationSettings() {
                 }
 
                 default: {
-                  toast({ message: error.message, variant: 'info' });
+                  toast.info(error.message);
                   return;
                 }
               }

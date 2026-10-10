@@ -54,12 +54,12 @@ function InquiryDetailLoader() {
   const { mutate: deleteInquiryMutate } = useMutation({
     mutationFn: () => deleteInquiry(postId),
     onSuccess: () => {
-      toast({ message: TOAST.INQUIRY.delete, variant: 'success' });
+      toast.success(TOAST.INQUIRY.delete);
       queryClient.removeQueries(QUERY_KEY.post(postId));
       navigate(-1);
     },
     onError: (error) => {
-      toast({ message: error.message, variant: 'error' });
+      toast.error(error.message);
     },
   });
 

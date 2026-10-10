@@ -117,40 +117,34 @@ export default function PickupDisplayPage() {
         switch (errorCode) {
           case 7062:
             handleDeviceUnauthorized();
-            toast({ message: '단말 인증에 실패했어요.', variant: 'error' });
+            toast.error('단말 인증에 실패했어요.');
             break;
           case 7063:
-            toast({ message: '표시 중인 주문이 없어요.', variant: 'error' });
+            toast.error('표시 중인 주문이 없어요.');
             queryClient.invalidateQueries({
               queryKey: QUERY_KEY.commercePickupDeviceSession,
             });
             break;
           case 7064:
-            toast({
-              message: '수령 확인 시간이 지났어요.',
-              variant: 'error',
-            });
+            toast.error('수령 확인 시간이 지났어요.');
             queryClient.invalidateQueries({
               queryKey: QUERY_KEY.commercePickupDeviceSession,
             });
             break;
           case 7066:
-            toast({ message: '이미 종료된 세션입니다.', variant: 'error' });
+            toast.error('이미 종료된 세션입니다.');
             queryClient.invalidateQueries({
               queryKey: QUERY_KEY.commercePickupDeviceSession,
             });
             break;
           case 7045:
-            toast({ message: '운영자에게 확인해주세요.', variant: 'error' });
+            toast.error('운영자에게 확인해주세요.');
             break;
           case 7046:
-            toast({
-              message: '이미 수령 완료된 주문입니다.',
-              variant: 'error',
-            });
+            toast.error('이미 수령 완료된 주문입니다.');
             break;
           default:
-            toast({ message: '수령 확인에 실패했어요.', variant: 'error' });
+            toast.error('수령 확인에 실패했어요.');
         }
       },
     });
