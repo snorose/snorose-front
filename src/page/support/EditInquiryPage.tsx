@@ -45,8 +45,7 @@ export default function EditInquiryPage() {
         postId: postId!,
         title,
         content,
-        targetUrl: url,
-        inquiryCategory: selectedOption!.key,
+        subGroup: selectedOption!.key,
         oldAttachments: attachments,
         newAttachments: files.map(mapFileToAttachment),
         deleteAttachments: deletedIds,
@@ -78,7 +77,6 @@ export default function EditInquiryPage() {
 
   const [title, setTitle] = useState(post?.title ?? '');
   const [content, setContent] = useState(post?.content ?? '');
-  const [url, setUrl] = useState(post.link ?? '');
   const [selectedOption, setSelectedOption] = useState<Option | undefined>(
     INQUIRY_OPTIONS.find((option) => option.key === post.inquiryCategory)
   );
@@ -92,20 +90,17 @@ export default function EditInquiryPage() {
       <SupportFormView
         title={title}
         content={content}
-        url={url}
         selectedOption={selectedOption}
         attachments={attachments}
         files={files}
         setTitle={setTitle}
         setContent={setContent}
-        setUrl={setUrl}
         setSelectedOption={setSelectedOption}
         setAttachments={setAttachments}
         setFiles={setFiles}
         options={INQUIRY_OPTIONS}
         contentLabel={'문의 내용'}
         placeholders={INQUIRY_PLACEHOLDERS}
-        showLinkField
         modalId='confirm-inquiry-update'
       />
 

@@ -66,8 +66,7 @@ export type InquiryUpdateRequest = {
   postId: string;
   title: string;
   content: string;
-  inquiryCategory: string;
-  targetUrl?: string;
+  subGroup: string;
   oldAttachments?: Attachment[];
   newAttachments?: (Attachment & { file: File })[];
   deleteAttachments?: number[];
@@ -77,8 +76,7 @@ export const updateInquiry = async ({
   postId,
   title,
   content,
-  inquiryCategory,
-  targetUrl,
+  subGroup,
   oldAttachments = [],
   newAttachments = [],
   deleteAttachments = [],
@@ -87,8 +85,7 @@ export const updateInquiry = async ({
     const response = await authAxios.patch(`/v1/inquiries/inquiry/${postId}`, {
       title,
       content,
-      inquiryCategory,
-      targetUrl,
+      subGroup,
       finalAttachments: [...oldAttachments, ...newAttachments].map(
         ({ id, fileName, fileComment, type }) => ({
           id,
