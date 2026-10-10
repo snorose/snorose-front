@@ -7,8 +7,8 @@ export type ReportCreateRequest = {
   targetId: string;
   title: string;
   content: string;
-  reportCategory: string;
-  reportType: string;
+  subGroup: string;
+  reportCause: string;
   attachments: (Attachment & { file: File })[];
 };
 
@@ -16,8 +16,8 @@ export const createReport = async ({
   targetId,
   title,
   content,
-  reportCategory,
-  reportType,
+  subGroup,
+  reportCause,
   attachments,
 }: ReportCreateRequest) => {
   try {
@@ -25,8 +25,8 @@ export const createReport = async ({
       targetId,
       title,
       content,
-      inquiryCategory: reportCategory,
-      reportType,
+      subGroup,
+      reportCause,
       attachments: attachments.map(({ fileName, fileComment, type }) => ({
         fileName,
         fileComment,
@@ -74,7 +74,7 @@ export type ReportUpdateRequest = {
   postId: string;
   title: string;
   content: string;
-  reportCategory: string;
+  reportCause: string;
   oldAttachments?: Attachment[];
   newAttachments?: (Attachment & { file: File })[];
   deleteAttachments?: number[];
@@ -84,7 +84,7 @@ export const updateReport = async ({
   postId,
   title,
   content,
-  reportCategory,
+  reportCause,
   oldAttachments = [],
   newAttachments = [],
   deleteAttachments = [],
@@ -93,7 +93,7 @@ export const updateReport = async ({
     const response = await authAxios.patch(`/v1/reports/report/${postId}`, {
       title,
       content,
-      inquiryCategory: reportCategory,
+      reportCause,
       finalAttachments: [...oldAttachments, ...newAttachments].map(
         ({ id, fileName, fileComment, type }) => ({
           id,

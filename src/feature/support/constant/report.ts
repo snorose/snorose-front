@@ -26,7 +26,7 @@ export const REPORT_STATUS_MAP = {
   COMPLETED: { label: '답변 완료', variant: 'gradient' },
 } as const;
 
-export const REPORT_TYPE_TAG = {
+export const REPORT_SUB_GROUP_TAG = {
   post: '게시글',
   exam: '시험후기',
   comment: '댓글',
