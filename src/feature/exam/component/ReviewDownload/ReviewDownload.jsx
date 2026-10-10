@@ -67,11 +67,11 @@ export default function ReviewDownload({
         balance: isDownloaded ? prev.balance : prev.balance - 50,
       }));
 
-      toast({ message: TOAST.EXAM_REVIEW.download, variant: 'success' });
+      toast.success(TOAST.EXAM_REVIEW.download);
     } catch ({ response }) {
       const text = await response.data.text();
       const { message } = JSON.parse(text);
-      toast({ message });
+      toast.error(message);
     } finally {
       setLoading(false);
       setModal({ id: null, type: null });
@@ -93,7 +93,7 @@ export default function ReviewDownload({
           setModal({ id: 'exam-review-download', type: null });
         }}
       >
-        <IconFile width={10} height={14} color="var(--blue-4)" />
+        <IconFile width={10} height={14} color='var(--blue-4)' />
         <span className={styles.name}>{fileName}</span>
       </button>
       {modal.id === 'exam-review-download' && (

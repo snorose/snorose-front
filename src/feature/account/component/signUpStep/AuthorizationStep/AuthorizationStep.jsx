@@ -28,10 +28,10 @@ export default function AuthorizationStep({ email, setStage }) {
       if (res) {
         setStage(3); // 직접 3단계로 설정
       } else {
-        toast({ message: '코드를 다시 한 번 확인해 주세요', variant: 'error' });
+        toast.error('코드를 다시 한 번 확인해 주세요');
       }
     } catch (error) {
-      toast({ message: '코드를 다시 한 번 확인해 주세요', variant: 'error' });
+      toast.error('코드를 다시 한 번 확인해 주세요');
     }
   };
 

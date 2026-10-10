@@ -42,7 +42,7 @@ export default function Login() {
         error.response?.data?.message || '네트워크 연결 상태를 확인해주세요.';
 
       if (status === 500) {
-        toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
+        toast.error(TOAST.ERROR.SERVER);
       } else {
         setErrorMessage(LOGIN_ERROR_MAP[serverMsg] ?? serverMsg);
       }
@@ -64,12 +64,12 @@ export default function Login() {
     e.preventDefault();
 
     if (!formData.loginId) {
-      toast({ message: TOAST.LOGIN.emptyId, variant: 'info' });
+      toast.info(TOAST.LOGIN.emptyId);
       return;
     }
 
     if (!formData.password) {
-      toast({ message: TOAST.LOGIN.emptyPw, variant: 'info' });
+      toast.info(TOAST.LOGIN.emptyPw);
       return;
     }
 

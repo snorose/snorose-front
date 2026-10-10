@@ -35,7 +35,7 @@ export default function FileUploadSection({
           if (selectedFiles.some((file) => !file.type.startsWith('image/'))) {
             e.target.value = '';
 
-            toast({ message: '이미지만 업로드할 수 있어요', variant: 'info' });
+            toast.info('이미지만 업로드할 수 있어요');
 
             return;
           }
@@ -43,10 +43,7 @@ export default function FileUploadSection({
           if (currentFileCount + selectedFiles.length > MAX_FILE_COUNT) {
             e.target.value = '';
 
-            toast({
-              message: `이미지는 ${MAX_FILE_COUNT}개까지 업로드할 수 있어요`,
-              variant: 'info',
-            });
+            toast.info(`이미지는 ${MAX_FILE_COUNT}개까지 업로드할 수 있어요`);
 
             return;
           }
@@ -56,10 +53,9 @@ export default function FileUploadSection({
           if (selectedFileSizes.some((size) => size > MAX_FILE_SIZE)) {
             e.target.value = '';
 
-            toast({
-              message: `${MAX_FILE_SIZE / (1024 * 1024)}MB 이하의 이미지만 업로드할 수 있어요`,
-              variant: 'info',
-            });
+            toast.info(
+              `${MAX_FILE_SIZE / (1024 * 1024)}MB 이하의 이미지만 업로드할 수 있어요`
+            );
 
             return;
           }
@@ -78,10 +74,9 @@ export default function FileUploadSection({
 
             const invalidCharsString = Array.from(invalidCharsFound).join(', ');
 
-            toast({
-              message: `앗! 파일 이름에서 다음 문자를 지워주세요 ${invalidCharsString} `,
-              variant: 'info',
-            });
+            toast.info(
+              `앗! 파일 이름에서 다음 문자를 지워주세요 ${invalidCharsString} `
+            );
 
             return;
           }

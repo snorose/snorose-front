@@ -64,7 +64,7 @@ export default function EditInquiryPage() {
            */
         });
 
-      toast({ message: TOAST.INQUIRY.update, variant: 'success' });
+      toast.success(TOAST.INQUIRY.update);
 
       queryClient.invalidateQueries({ queryKey: QUERY_KEY.post(postId) });
 
@@ -72,7 +72,7 @@ export default function EditInquiryPage() {
     },
 
     onError: (error) => {
-      toast({ message: error.message, variant: 'error' });
+      toast.error(error.message);
     },
   });
 

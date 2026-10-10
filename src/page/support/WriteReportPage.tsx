@@ -63,7 +63,7 @@ export default function WriteReportPage() {
            */
         });
 
-      toast({ message: TOAST.REPORT.create, variant: 'success' });
+      toast.success(TOAST.REPORT.create);
 
       queryClient.removeQueries({
         queryKey: [QUERY_KEY.myInquiriesAndReports],
@@ -73,7 +73,7 @@ export default function WriteReportPage() {
     },
 
     onError: (error) => {
-      toast({ message: error.message, variant: 'error' });
+      toast.error(error.message);
     },
   });
 

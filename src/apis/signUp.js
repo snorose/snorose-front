@@ -17,7 +17,7 @@ export const useRegister = () => {
       });
     } catch (e) {
       if (e.response.status === 500) {
-        toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
+        toast.error(TOAST.ERROR.SERVER);
       } else {
         navigate('/signup/failure', {
           state: { message: e.response.data.message, variant: 'error' },
@@ -38,7 +38,7 @@ export const useSendUser = () => {
       await defaultAxios.post(endpoint, data);
     } catch (e) {
       if (e.response.status === 500) {
-        toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
+        toast.error(TOAST.ERROR.SERVER);
       }
     }
   };
@@ -60,7 +60,7 @@ export const useCertifyUser = () => {
         }
       } catch (e) {
         if (e.response.status === 500) {
-          toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
+          toast.error(TOAST.ERROR.SERVER);
         }
         return false;
       }

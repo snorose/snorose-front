@@ -120,10 +120,10 @@ export default function EditExamReviewPage() {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY.post(postId));
       navigate(-1);
-      toast({ message: TOAST.EXAM_REVIEW.edit, variant: 'success' });
+      toast.success(TOAST.EXAM_REVIEW.edit);
     },
     onError: ({ response }) => {
-      toast({ message: response.data.message, variant: 'error' });
+      toast.error(response.data.message);
     },
     onSettled: () => {
       setLoading(false);
@@ -132,38 +132,35 @@ export default function EditExamReviewPage() {
 
   const handleSubmit = async () => {
     if (!lectureName.trim()) {
-      toast({ message: TOAST.EXAM_REVIEW.emptyLectureName, variant: 'info' });
+      toast.info(TOAST.EXAM_REVIEW.emptyLectureName);
       return;
     }
     if (!professor.trim()) {
-      toast({ message: TOAST.EXAM_REVIEW.emptyProfessor, variant: 'info' });
+      toast.info(TOAST.EXAM_REVIEW.emptyProfessor);
       return;
     }
     if (!classNumber.trim()) {
-      toast({ message: TOAST.EXAM_REVIEW.emptyClassNumber, variant: 'info' });
+      toast.info(TOAST.EXAM_REVIEW.emptyClassNumber);
       return;
     }
     if (Object.keys(lectureYear).length === 0) {
-      toast({ message: TOAST.EXAM_REVIEW.emptyLectureYear, variant: 'info' });
+      toast.info(TOAST.EXAM_REVIEW.emptyLectureYear);
       return;
     }
     if (Object.keys(semester).length === 0) {
-      toast({ message: TOAST.EXAM_REVIEW.emptySemester, variant: 'info' });
+      toast.info(TOAST.EXAM_REVIEW.emptySemester);
       return;
     }
     if (Object.keys(lectureType).length === 0) {
-      toast({ message: TOAST.EXAM_REVIEW.emptyLectureType, variant: 'info' });
+      toast.info(TOAST.EXAM_REVIEW.emptyLectureType);
       return;
     }
     if (Object.keys(examType).length === 0) {
-      toast({ message: TOAST.EXAM_REVIEW.emptyExamType, variant: 'info' });
+      toast.info(TOAST.EXAM_REVIEW.emptyExamType);
       return;
     }
     if (!questionDetail.trim()) {
-      toast({
-        message: TOAST.EXAM_REVIEW.emptyQuestionDetail,
-        variant: 'info',
-      });
+      toast.info(TOAST.EXAM_REVIEW.emptyQuestionDetail);
       return;
     }
 

@@ -102,11 +102,11 @@ export default function EditEventPage() {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY.post(postId));
       navigate(-1);
-      toast({ message: TOAST.POST.edit, variant: 'success' });
+      toast.success(TOAST.POST.edit);
       setSubmitDisabled(false);
     },
     onError: ({ response }) => {
-      toast({ message: response.data.message, variant: 'error' });
+      toast.error(response.data.message);
       setSubmitDisabled(false);
     },
   });

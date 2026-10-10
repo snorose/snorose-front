@@ -161,14 +161,14 @@ export default function EditPostPage() {
     onSuccess: async () => {
       queryClient.invalidateQueries(QUERY_KEY.post(postId));
       navigate(-1);
-      toast({ message: TOAST.POST.edit, variant: 'success' });
+      toast.success(TOAST.POST.edit);
       setSubmitDisabled(false);
 
       // post 수정 등록이 잘 되었으면 썸네일 생성하기
       await createThumbnail(currentBoard?.id, postId);
     },
     onError: ({ response }) => {
-      toast({ message: response.data.message, variant: 'error' });
+      toast.error(response.data.message);
       setSubmitDisabled(false);
     },
   });
@@ -209,15 +209,15 @@ export default function EditPostPage() {
     if (submitDisabled) return;
 
     if (!title.trim()) {
-      toast({ message: TOAST.POST.emptyTitle, variant: 'info' });
+      toast.info(TOAST.POST.emptyTitle);
       return;
     }
     if (!text.trim()) {
-      toast({ message: TOAST.POST.emptyContent, variant: 'info' });
+      toast.info(TOAST.POST.emptyContent);
       return;
     }
     if (shouldIncludeCategory && !category) {
-      toast({ message: TOAST.POST.selectCategory, variant: 'info' });
+      toast.info(TOAST.POST.selectCategory);
       return;
     }
     setSubmitDisabled(true);
@@ -522,14 +522,14 @@ export function NewEditPostPage({ isNotice = false }) {
     onSuccess: async () => {
       queryClient.invalidateQueries(QUERY_KEY.post(postId));
       navigate(-1);
-      toast({ message: TOAST.POST.edit, variant: 'success' });
+      toast.success(TOAST.POST.edit);
       setSubmitDisabled(false);
 
       // post 수정 등록이 잘 되었으면 썸네일 생성하기
       await createThumbnail(boardId, postId);
     },
     onError: ({ response }) => {
-      toast({ message: response.data.message, variant: 'error' });
+      toast.error(response.data.message);
       setSubmitDisabled(false);
     },
   });
@@ -541,11 +541,11 @@ export function NewEditPostPage({ isNotice = false }) {
     if (submitDisabled) return;
 
     if (!title.trim()) {
-      toast({ message: TOAST.POST.emptyTitle, variant: 'info' });
+      toast.info(TOAST.POST.emptyTitle);
       return;
     }
     if (!content.trim()) {
-      toast({ message: TOAST.POST.emptyContent, variant: 'info' });
+      toast.info(TOAST.POST.emptyContent);
       return;
     }
 

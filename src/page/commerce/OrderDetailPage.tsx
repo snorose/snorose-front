@@ -78,7 +78,7 @@ function OrderDetailView() {
 
     cancelOrder(orderNumber, {
       onSuccess: () => {
-        toast({ message: '주문이 취소되었어요', variant: 'success' });
+        toast.success('주문이 취소되었어요');
         refetch();
       },
       onError: (error) => {
@@ -86,19 +86,13 @@ function OrderDetailView() {
 
         switch (errorCode) {
           case 7014: // 타인 주문
-            toast({ message: '유효한 요청이 아닙니다', variant: 'error' });
+            toast.error('유효한 요청이 아닙니다');
             break;
           case 7017: // PAID / REVIEW_REQUIRED / PICKED_UP
-            toast({
-              message: '입금 전에만 취소할 수 있어요',
-              variant: 'error',
-            });
+            toast.error('입금 전에만 취소할 수 있어요');
             break;
           case 7015: // 이미 취소·완료됨 (재요청)
-            toast({
-              message: '이미 취소된 주문입니다',
-              variant: 'error',
-            });
+            toast.error('이미 취소된 주문입니다');
         }
       },
     });

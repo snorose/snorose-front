@@ -127,7 +127,7 @@ function SaleDetailView() {
       {
         onSuccess: (data) => {
           resetClientRequestId();
-          toast({ message: '주문이 완료되었어요.' });
+          toast.info('주문이 완료되었어요.');
           navigate(`/commerce/orders/${data.orderNumber}`, { replace: true });
         },
         onError: async (error) => {
@@ -135,10 +135,7 @@ function SaleDetailView() {
 
           switch (errorCode) {
             case 7000: // 판매 없음/DRAFT
-              toast({
-                message: '주문을 할 수 없습니다',
-                variant: 'error',
-              });
+              toast.error('주문을 할 수 없습니다');
               refetch();
               break;
             case 7001: // 기간 외/CLOSED
@@ -146,45 +143,30 @@ function SaleDetailView() {
               refetch();
               break;
             case 7003: // 비활성/삭제된 옵션
-              toast({
-                message: '삭제된 옵션이 포함되어 있습니다',
-                variant: 'error',
-              });
+              toast.error('삭제된 옵션이 포함되어 있습니다');
               refetchSaleAndResetProducts();
               break;
             case 7004: // 다른 판매의 옵션 포함
-              toast({
-                message: '다른 판매 옵션이 포함되어 있습니다',
-                variant: 'error',
-              });
+              toast.error('다른 판매 옵션이 포함되어 있습니다');
               refetchSaleAndResetProducts();
               break;
             case 7005: // 재고 부족
-              toast({
-                message: '품절 상품이 포함되었습니다',
-                variant: 'error',
-              });
+              toast.error('품절 상품이 포함되었습니다');
               refetchSaleAndResetProducts();
               break;
             case 7006: // 1인 최대 수량 초과
-              toast({
-                message: '인당 수량 제한이 초과되었습니다',
-                variant: 'error',
-              });
+              toast.error('인당 수량 제한이 초과되었습니다');
               break;
             case 7007: // 수량 오류
             case 7008: // 연락처 형식 오류
-              toast({ message: '다시 시도해주세요', variant: 'error' });
+              toast.error('다시 시도해주세요');
               break;
             case 7009: // 동의 누락
             case 7010: // 필수 확인 항목 누락
-              toast({
-                message: '필수 체크 항목을 확인해주세요',
-                variant: 'error',
-              });
+              toast.error('필수 체크 항목을 확인해주세요');
               break;
             case 7012:
-              toast({ message: '다시 시도해주세요', variant: 'error' });
+              toast.error('다시 시도해주세요');
               break;
           }
         },

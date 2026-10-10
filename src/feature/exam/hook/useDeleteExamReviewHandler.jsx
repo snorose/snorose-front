@@ -28,13 +28,13 @@ export function useDeleteExamReviewHandler() {
     try {
       const response = await deleteExamReview(postId);
       if (response.status === 200) {
-        toast({ message: TOAST.EXAM_REVIEW.delete, variant: 'success' });
+        toast.success(TOAST.EXAM_REVIEW.delete);
         navigate(-1);
         queryClient.removeQueries([QUERY_KEY.review, postId]);
         invalidUserInfoQuery();
       }
     } catch ({ response }) {
-      toast({ message: response.data.message });
+      toast.error(response.data.message);
     } finally {
       submitDisabledRef.current = false;
       setSubmitDisabled(false);

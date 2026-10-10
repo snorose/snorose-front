@@ -143,11 +143,8 @@ export default function WritePostPage() {
       if (response.status !== 201) return;
 
       !response.data.result.pointDifference
-        ? toast({
-            message: TOAST.POST.createNoPoints,
-            variant: 'success',
-          })
-        : toast({ message: TOAST.POST.create, variant: 'success' });
+        ? toast.success(TOAST.POST.createNoPoints)
+        : toast.success(TOAST.POST.create);
 
       const newPostId = response.data.result.postId;
       try {
@@ -156,10 +153,7 @@ export default function WritePostPage() {
           postId: newPostId,
         });
       } catch (err) {
-        toast({
-          message: '썸네일 생성 중 오류가 발생했습니다.',
-          variant: 'error',
-        });
+        toast.error('썸네일 생성 중 오류가 발생했습니다.');
       }
 
       queryClient.removeQueries(QUERY_KEY.post());
@@ -175,31 +169,28 @@ export default function WritePostPage() {
           );
     },
     onError: (err) => {
-      toast({
-        message: err.response?.data?.message,
-        variant: 'error',
-      });
+      toast.error(err.response?.data?.message);
     },
   });
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!boardId) {
-      toast({ message: TOAST.POST.selectBoard, variant: 'info' });
+      toast.info(TOAST.POST.selectBoard);
       return;
     }
 
     if (shouldIncludeCategory && !category) {
-      toast({ message: TOAST.POST.selectCategory, variant: 'info' });
+      toast.info(TOAST.POST.selectCategory);
       return;
     }
 
     if (!title.trim()) {
-      toast({ message: TOAST.POST.emptyTitle, variant: 'info' });
+      toast.info(TOAST.POST.emptyTitle);
       return;
     }
     if (!text.trim()) {
-      toast({ message: TOAST.POST.emptyContent, variant: 'info' });
+      toast.info(TOAST.POST.emptyContent);
       return;
     }
 
@@ -523,11 +514,8 @@ export function NewWritePostPage({ isNotice = false }) {
       if (response.status !== 201) return;
 
       !response.data.result.pointDifference
-        ? toast({
-            message: TOAST.POST.createNoPoints,
-            variant: 'success',
-          })
-        : toast({ message: TOAST.POST.create, variant: 'success' });
+        ? toast.success(TOAST.POST.createNoPoints)
+        : toast.success(TOAST.POST.create);
 
       const newPostId = response.data.result.postId;
       try {
@@ -536,10 +524,7 @@ export function NewWritePostPage({ isNotice = false }) {
           postId: newPostId,
         });
       } catch (err) {
-        toast({
-          message: '썸네일 생성 중 오류가 발생했습니다.',
-          variant: 'error',
-        });
+        toast.error('썸네일 생성 중 오류가 발생했습니다.');
       }
 
       queryClient.removeQueries(QUERY_KEY.post());
@@ -551,10 +536,7 @@ export function NewWritePostPage({ isNotice = false }) {
       navigate(path, { replace: true });
     },
     onError: (err) => {
-      toast({
-        message: err.response?.data?.message,
-        variant: 'error',
-      });
+      toast.error(err.response?.data?.message);
     },
   });
 
@@ -562,16 +544,16 @@ export function NewWritePostPage({ isNotice = false }) {
     e.preventDefault();
 
     if (!boardId) {
-      toast({ message: TOAST.POST.selectBoard, variant: 'info' });
+      toast.info(TOAST.POST.selectBoard);
       return;
     }
 
     if (!title.trim()) {
-      toast({ message: TOAST.POST.emptyTitle, variant: 'info' });
+      toast.info(TOAST.POST.emptyTitle);
       return;
     }
     if (!content.trim()) {
-      toast({ message: TOAST.POST.emptyContent, variant: 'info' });
+      toast.info(TOAST.POST.emptyContent);
       return;
     }
 

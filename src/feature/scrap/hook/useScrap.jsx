@@ -29,7 +29,7 @@ export default function useScrap() {
   };
 
   const onError = ({ response }) => {
-    toast({ message: response.data.message, variant: 'error' });
+    toast.error(response.data.message);
   };
 
   const scrap = useMutation({

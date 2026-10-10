@@ -265,9 +265,9 @@ function MoreModal({ deletePost, data }) {
     try {
       const url = window.location.href;
       await navigator.clipboard.writeText(url);
-      toast({ message: TOAST.COPY_AND_PASTE.linkSuccess, variant: 'success' });
+      toast.success(TOAST.COPY_AND_PASTE.linkSuccess);
     } catch (error) {
-      toast({ message: TOAST.COPY_AND_PASTE.linkFail, variant: 'error' });
+      toast.error(TOAST.COPY_AND_PASTE.linkFail);
     }
   };
 

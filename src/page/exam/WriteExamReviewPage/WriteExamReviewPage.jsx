@@ -60,18 +60,18 @@ export default function WriteExamReviewPage() {
 
       queryClient.removeQueries(QUERY_KEY.post());
       invalidUserInfoQuery();
-      toast({ message: TOAST.EXAM_REVIEW.create, variant: 'success' });
+      toast.success(TOAST.EXAM_REVIEW.create);
       navigate(`/board/exam-review/post/${postId}`, { replace: true });
     },
     onError: ({ response }) => {
       const { status } = response;
 
       if (status === 500) {
-        toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
+        toast.error(TOAST.ERROR.SERVER);
         return;
       }
 
-      toast({ message: response.data.message, variant: 'error' });
+      toast.error(response.data.message);
     },
     onSettled: () => {
       setLoading(false);
@@ -142,10 +142,7 @@ export default function WriteExamReviewPage() {
     }
 
     if (selectedFile?.name && INVALID_FILE_NAME_REGEX.test(selectedFile.name)) {
-      toast({
-        message: TOAST.EXAM_REVIEW.invalidFileName,
-        variant: 'info',
-      });
+      toast.info(TOAST.EXAM_REVIEW.invalidFileName);
       return;
     }
 
@@ -163,7 +160,7 @@ export default function WriteExamReviewPage() {
         examType: examType?.id,
       });
     } catch (error) {
-      toast({ message: error, variant: 'error' });
+      toast.error(error);
       setIsCalled(false);
       throw error;
     }
@@ -185,42 +182,39 @@ export default function WriteExamReviewPage() {
 
   const handleSubmit = async () => {
     if (!lectureName.trim()) {
-      toast({ message: TOAST.EXAM_REVIEW.emptyLectureName, variant: 'info' });
+      toast.info(TOAST.EXAM_REVIEW.emptyLectureName);
       return;
     }
     if (!professor.trim()) {
-      toast({ message: TOAST.EXAM_REVIEW.emptyProfessor, variant: 'info' });
+      toast.info(TOAST.EXAM_REVIEW.emptyProfessor);
       return;
     }
     if (!classNumber.trim()) {
-      toast({ message: TOAST.EXAM_REVIEW.emptyClassNumber, variant: 'info' });
+      toast.info(TOAST.EXAM_REVIEW.emptyClassNumber);
       return;
     }
     if (Object.keys(lectureYear).length === 0) {
-      toast({ message: TOAST.EXAM_REVIEW.emptyLectureYear, variant: 'info' });
+      toast.info(TOAST.EXAM_REVIEW.emptyLectureYear);
       return;
     }
     if (Object.keys(semester).length === 0) {
-      toast({ message: TOAST.EXAM_REVIEW.emptySemester, variant: 'info' });
+      toast.info(TOAST.EXAM_REVIEW.emptySemester);
       return;
     }
     if (Object.keys(lectureType).length === 0) {
-      toast({ message: TOAST.EXAM_REVIEW.emptyLectureType, variant: 'info' });
+      toast.info(TOAST.EXAM_REVIEW.emptyLectureType);
       return;
     }
     if (Object.keys(examType).length === 0) {
-      toast({ message: TOAST.EXAM_REVIEW.emptyExamType, variant: 'info' });
+      toast.info(TOAST.EXAM_REVIEW.emptyExamType);
       return;
     }
     if (!questionDetail.trim()) {
-      toast({
-        message: TOAST.EXAM_REVIEW.emptyQuestionDetail,
-        variant: 'info',
-      });
+      toast.info(TOAST.EXAM_REVIEW.emptyQuestionDetail);
       return;
     }
     if (!file) {
-      toast({ message: TOAST.EXAM_REVIEW.emptyFile, variant: 'info' });
+      toast.info(TOAST.EXAM_REVIEW.emptyFile);
       return;
     }
 
