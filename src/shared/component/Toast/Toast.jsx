@@ -7,12 +7,12 @@ import {
   IconMultiInfoCircle,
 } from '@snorose/icons';
 
-import { useToastContext } from '@/shared/context/ToastContext';
+import { useToast } from '@/shared/hook';
 
 import styles from './Toast.module.css';
 
 export default function Toast({ toast }) {
-  const { removeToast } = useToastContext();
+  const { removeToast } = useToast();
   const toastRef = useRef(null);
 
   const toastConfig = {
@@ -43,7 +43,7 @@ export default function Toast({ toast }) {
     }, 300000);
 
     const unmount = setTimeout(() => {
-      removeToast(toast.message);
+      removeToast(toast.id);
     }, 3500);
 
     return () => {
