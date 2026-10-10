@@ -49,7 +49,7 @@ export default function EditReportPage() {
         postId: postId!,
         title,
         content,
-        reportCategory: selectedOption!.key,
+        reportCause: selectedOption!.key,
         oldAttachments: attachments,
         newAttachments: files.map(mapFileToAttachment),
         deleteAttachments: deletedIds,
