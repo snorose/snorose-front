@@ -52,7 +52,7 @@ export default function AuthorizationStep({ email, setStage }) {
             id='authNum'
             placeholder='확인 코드를 입력해주세요'
             value={authNum}
-            onChange={(next) => setAuthNum(next)}
+            onChange={(next) => setAuthNum(next.replace(/\s/g, ''))}
           />
         </div>
       </div>
