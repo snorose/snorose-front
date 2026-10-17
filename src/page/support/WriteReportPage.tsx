@@ -18,12 +18,12 @@ import { Attachment, UploadFile } from '@/feature/attachment/types';
 import { createReport } from '@/feature/support/api';
 import {
   REPORT_PLACEHOLDERS,
-  REPORT_TYPE_TAG,
+  REPORT_SUB_GROUP_TAG,
 } from '@/feature/support/constant';
 import {
   REPORT_OPTIONS,
-  REPORT_TYPE_MAP,
-  ReportType,
+  REPORT_SUB_GROUP_MAP,
+  ReportSubGroup,
 } from '@/feature/support/data';
 import { SupportFormView } from '@/feature/support/ui';
 
@@ -31,7 +31,7 @@ import { createThumbnail } from '@/apis';
 import { Option } from '@/types';
 
 export default function WriteReportPage() {
-  const { reportType } = useLoaderData() as { reportType: ReportType };
+  const { subGroup } = useLoaderData() as { subGroup: ReportSubGroup };
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -44,11 +44,11 @@ export default function WriteReportPage() {
   const { mutate: submitReport } = useMutation({
     mutationFn: () =>
       createReport({
-        reportType: REPORT_TYPE_MAP[reportType],
         targetId: targetId!,
         title,
         content,
-        reportCategory: selectedOption!.key,
+        subGroup: REPORT_SUB_GROUP_MAP[subGroup],
+        reportCause: selectedOption!.key,
         attachments: files.map(mapFileToAttachment),
       }),
 
@@ -98,10 +98,10 @@ export default function WriteReportPage() {
         setSelectedOption={setSelectedOption}
         setAttachments={setAttachments}
         setFiles={setFiles}
-        options={REPORT_OPTIONS[reportType]}
+        options={REPORT_OPTIONS[subGroup]}
         contentLabel={'신고 내용'}
-        placeholders={REPORT_PLACEHOLDERS[reportType]}
-        tag={REPORT_TYPE_TAG[reportType]}
+        placeholders={REPORT_PLACEHOLDERS[subGroup]}
+        tag={REPORT_SUB_GROUP_TAG[subGroup]}
         modalId='confirm-report-write'
       />
 
