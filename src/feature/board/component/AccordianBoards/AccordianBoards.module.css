@@ -4,9 +4,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: inherit;
+  text-align: left;
+}
+
+.dropdown:focus-visible {
+  outline: 2px solid var(--blue-4);
+  outline-offset: 2px;
 }
 
 .closedDropdown {
+  height: auto;
+  padding: 1.2rem 0;
   border-bottom: 1px solid var(--blue-2);
 }
 
@@ -14,10 +23,13 @@
   font: var(--text-headline-1-med);
 }
 
+.content {
+  padding-bottom: 1rem;
+}
+
 .arrow {
   transition: transform 0.2s ease;
-  cursor: pointer;
-  padding-left: 1rem;
+  transform-origin: center;
 }
 
 .rotated {

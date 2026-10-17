@@ -25,10 +25,11 @@ export default function BoardCategoryPage() {
       (category !== BOARD_CATEGORY.CAMPUS || isCampusBoardOn)
   );
 
-  const initialOpenBoards = Object.fromEntries(
-    boardCategories.map(({ value }) => [value, true])
+  const [openBoards, setOpenBoards] = useState(() =>
+    Object.fromEntries(
+      Object.values(VISIBLE_BOARD_CATEGORY).map(({ value }) => [value, true])
+    )
   );
-  const [openBoards, setOpenBoards] = useState(initialOpenBoards);
   const toggleBoard = (boardName) => {
     setOpenBoards((prev) => ({
       ...prev,
@@ -48,7 +49,7 @@ export default function BoardCategoryPage() {
           <div key={category.value} className={styles.boardBox}>
             <AccordianBoards
               title={category.label}
-              isOpen={openBoards[category.value] ?? true}
+              isOpen={openBoards[category.value]}
               onClick={() => toggleBoard(category.value)}
             >
               <div className={styles.boardListBox}>
