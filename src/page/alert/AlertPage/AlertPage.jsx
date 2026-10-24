@@ -15,13 +15,14 @@ import {
 
 import {
   AppBar,
+  CategoryTab,
   FetchLoading,
   NewButton,
   ServerErrorFallback,
 } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
 
-import { CategoryTab, NotificationItem } from '@/feature/alert/component';
+import { NotificationItem } from '@/feature/alert/component';
 import { CATEGORY } from '@/feature/alert/constant';
 import {
   useNotification,
