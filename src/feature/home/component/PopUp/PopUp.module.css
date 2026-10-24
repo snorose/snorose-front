@@ -1,36 +1,47 @@
 .container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.3rem;
-  background-color: rgba(0, 0, 0, 0.3);
   position: fixed;
   top: 0;
   left: 0;
   z-index: var(--z-index-popup);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  font-size: 1.3rem;
+
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .popUp {
-  width: 80%;
-  max-width: 50rem;
-  max-height: 80%;
-  min-height: 60%;
   display: flex;
   flex-direction: column;
+  width: 80%;
+  max-width: 50rem;
+  min-height: 60%;
+  max-height: 80%;
 }
 
 .top {
+  display: flex;
+
   flex: 1;
-  padding: 1.6rem 1.8rem 0;
+
   width: 100%;
   height: 100%;
-  display: flex;
+
+  padding: 1.6rem 1.8rem 0;
+
+  overflow: auto;
+
+  scrollbar-width: none; /* Firefox */
+
   background-color: white;
   border-radius: 0.5rem 0.5rem 0 0;
-  overflow: auto;
-  scrollbar-width: none; /* Firefox */
 }
 
 .top::-webkit-scrollbar {
@@ -39,8 +50,8 @@
 
 .top::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 0.5rem;
   border: 0.2rem solid var(--blue-1);
+  border-radius: 0.5rem;
 }
 
 .top::-webkit-scrollbar-track {
@@ -48,41 +59,50 @@
 }
 
 .notice {
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   gap: 1.6rem;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .popupTitle {
-  color: var(--white);
-  font-size: 1.3rem;
-  font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: -0.5px;
   display: flex;
+
+  gap: 4px;
+
+  align-items: center;
+  justify-content: center;
+
   width: fit-content;
   height: 3rem;
+
   padding: 0.1rem 1rem;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  border-radius: 5px;
+
+  font-size: 1.3rem;
+  font-weight: 500;
+
+  line-height: 1.4;
+
+  color: var(--white);
+
+  letter-spacing: -0.5px;
+
   background: var(--gradient-5);
+  border-radius: 5px;
 }
 
 .popupContent {
-  color: var(--black);
   font: var(--text-headline-2-med);
+  color: var(--black);
 }
 
 .buttonContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
-  border-radius: 0 0 0.5rem 0.5rem;
   background-color: var(--white);
+  border-radius: 0 0 0.5rem 0.5rem;
 }
 
 .hideButtonContainer {
@@ -95,25 +115,25 @@
 
 .hideButton {
   display: flex;
-  align-items: center;
-  gap: 0.4rem;
   flex: 1;
-  color: var(--black);
+  gap: 0.4rem;
+  align-items: center;
   font-size: 1.3rem;
+  color: var(--black);
 }
 
 .hideButtonIcon {
+  flex-shrink: 0;
   width: 2rem;
   height: 2rem;
-  flex-shrink: 0;
 }
 
 .closeButton {
   width: 100%;
   height: 4.8rem;
   font: var(--text-headline-2-reg);
-  border-top: 1px solid var(--blue-0);
   color: var(--blue-4);
+  border-top: 1px solid var(--blue-0);
 }
 .closeButton:hover {
   background: var(--blue-0);
