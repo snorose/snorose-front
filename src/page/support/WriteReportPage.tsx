@@ -100,6 +100,11 @@ export default function WriteReportPage() {
         return;
       }
 
+      if (code === 6104) {
+        toast.error('동일한 대상에 대한 신고가 아직 처리중이에요');
+        return;
+      }
+
       toast.error('잠시 후 다시 시도해주세요');
     },
   });
