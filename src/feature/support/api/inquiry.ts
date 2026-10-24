@@ -7,24 +7,21 @@ import { authAxios } from '@/axios';
 export type InquiryCreateRequest = {
   title: string;
   content: string;
-  inquiryCategory: string;
-  target?: string;
+  subGroup: string;
   attachments?: (Attachment & { file: File })[];
 };
 
 export const createInquiry = async ({
   title,
   content,
-  inquiryCategory,
-  target,
+  subGroup,
   attachments = [],
 }: InquiryCreateRequest) => {
   try {
     const response = await authAxios.post('/v1/inquiries/inquiry', {
       title,
-      target,
       content,
-      inquiryCategory,
+      subGroup,
       attachments: attachments.map(({ fileName, fileComment, type }) => ({
         fileName,
         fileComment,
@@ -71,8 +68,7 @@ export type InquiryUpdateRequest = {
   postId: string;
   title: string;
   content: string;
-  inquiryCategory: string;
-  targetUrl?: string;
+  subGroup: string;
   oldAttachments?: Attachment[];
   newAttachments?: (Attachment & { file: File })[];
   deleteAttachments?: number[];
@@ -82,8 +78,7 @@ export const updateInquiry = async ({
   postId,
   title,
   content,
-  inquiryCategory,
-  targetUrl,
+  subGroup,
   oldAttachments = [],
   newAttachments = [],
   deleteAttachments = [],
@@ -92,8 +87,7 @@ export const updateInquiry = async ({
     const response = await authAxios.patch(`/v1/inquiries/inquiry/${postId}`, {
       title,
       content,
-      inquiryCategory,
-      targetUrl,
+      subGroup,
       finalAttachments: [...oldAttachments, ...newAttachments].map(
         ({ id, fileName, fileComment, type }) => ({
           id,

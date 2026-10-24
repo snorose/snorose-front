@@ -10,7 +10,7 @@ export type InquiryDTO = {
   title: string;
   link: string;
   content: string;
-  inquiryCategory:
+  subGroup:
     | 'EXAM_REVIEW_INQUIRY'
     | 'EVENT_INQUIRY'
     | 'NOTICE_INQUIRY'
@@ -26,6 +26,7 @@ export type InquiryDTO = {
 };
 
 export type ReportDTO = {
+  group: 'REPORT';
   postId: number;
   userRoleId: number;
   isWriter: boolean;
@@ -33,13 +34,21 @@ export type ReportDTO = {
   userDisplay: string;
   title: string;
   content: string;
-  reportType: 'POST' | 'COMMENT' | 'EXAM' | 'USER';
-  inquiryCategory: string;
-  status: 'PENDING' | 'COMPLETED';
+  subGroup:
+    | 'POST_REPORT'
+    | 'EXAM_REVIEW_REPORT'
+    | 'COMMENT_REPORT'
+    | 'USER_REPORT';
+  reportCause: string;
+  status: 'PENDING' | 'COMPLETED' | 'WITHDRAWN';
+  target: string;
+  targetPostId: number;
+  targetBoardId: number;
   commentCount: number;
   createdAt: string;
   updatedAt: string | null;
   isEdited: boolean;
   isWriterWithdrawn: boolean;
   attachments: Attachment[];
+  category: string;
 };

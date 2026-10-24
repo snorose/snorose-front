@@ -50,14 +50,12 @@ type SupportFormViewProps = {
 export default function SupportFormView({
   title,
   content,
-  url,
   selectedOption,
   attachments,
   files,
 
   setTitle,
   setContent,
-  setUrl,
   setSelectedOption,
   setAttachments,
   setFiles,
@@ -67,7 +65,6 @@ export default function SupportFormView({
   placeholders,
 
   tag,
-  showLinkField = false,
   modalId,
 }: SupportFormViewProps) {
   const { userInfo } = useAuth();
@@ -130,17 +127,6 @@ export default function SupportFormView({
             onChange={(next) => setTitle(next)}
           />
         </TextFieldBlue>
-
-        {showLinkField && (
-          <TextFieldBlue>
-            <TextFieldBlue.Label>게시글 링크</TextFieldBlue.Label>
-            <TextFieldBlue.Input
-              placeholder={'게시글 링크를 입력해주세요'}
-              value={url}
-              onChange={(next) => setUrl(next)}
-            />
-          </TextFieldBlue>
-        )}
 
         <TextareaFieldBlue>
           <TextareaFieldBlue.Label>{contentLabel}</TextareaFieldBlue.Label>

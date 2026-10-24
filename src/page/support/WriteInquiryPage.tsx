@@ -36,8 +36,7 @@ export default function WriteInquiryPage() {
       createInquiry({
         title,
         content,
-        inquiryCategory: selectedOption!.key,
-        target: url,
+        subGroup: selectedOption!.key,
         attachments: files.map(mapFileToAttachment),
       }),
 
@@ -68,7 +67,6 @@ export default function WriteInquiryPage() {
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [url, setUrl] = useState('');
   const [selectedOption, setSelectedOption] = useState<Option | undefined>();
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [files, setFiles] = useState<UploadFile[]>([]);
@@ -78,20 +76,17 @@ export default function WriteInquiryPage() {
       <SupportFormView
         title={title}
         content={content}
-        url={url}
         selectedOption={selectedOption}
         attachments={attachments}
         files={files}
         setTitle={setTitle}
         setContent={setContent}
-        setUrl={setUrl}
         setSelectedOption={setSelectedOption}
         setAttachments={setAttachments}
         setFiles={setFiles}
         options={INQUIRY_OPTIONS}
         contentLabel={'문의 내용'}
         placeholders={INQUIRY_PLACEHOLDERS}
-        showLinkField
         modalId='confirm-inquiry-write'
       />
 
