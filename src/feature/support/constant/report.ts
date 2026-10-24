@@ -27,7 +27,7 @@ export const REPORT_STATUS_MAP = {
   WITHDRAWN: { label: '철회', variant: 'grey' },
 } as const;
 
-export const REPORT_TYPE_TAG = {
+export const REPORT_SUB_GROUP_TAG = {
   post: '게시글',
   exam: '시험후기',
   comment: '댓글',
