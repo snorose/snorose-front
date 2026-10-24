@@ -1,49 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import { addDays } from 'date-fns';
+import { useQuery } from '@tanstack/react-query';
 
-import { DateTime } from '@/shared/lib';
+import { canLoadPopups, getPopups } from '@/apis/popup';
 
-const POP_UP_STATE_LOCAL_STORAGE_KEY = 'popUpState';
-const POP_UP_DATE_LOCAL_STORAGE_KEY = 'popUpDate';
-const POP_UP_DISPLAY = 'display';
-const POP_UP_HIDDEN = 'hidden';
-
-const initializePopupStorage = () => {
-  localStorage.setItem(POP_UP_STATE_LOCAL_STORAGE_KEY, POP_UP_DISPLAY);
-  localStorage.removeItem(POP_UP_DATE_LOCAL_STORAGE_KEY);
-};
+import { getActivePopups, hidePopups, isPopupHidden } from '../lib/popups';
 
 export default function usePopUp() {
-  const [isPopUpOpened, setIsPopUpOpened] = useState();
-
-  useEffect(() => {
-    const popUpState = localStorage.getItem(POP_UP_STATE_LOCAL_STORAGE_KEY);
-    const popUpDate = localStorage.getItem(POP_UP_DATE_LOCAL_STORAGE_KEY);
-
-    const initialStatus = popUpState === null || popUpDate === null;
-
-    if (initialStatus || DateTime.isDayOver(popUpDate)) {
-      initializePopupStorage();
-      setIsPopUpOpened(true);
-      return;
-    }
-
-    if (popUpState === POP_UP_DISPLAY) {
-      setIsPopUpOpened(true);
-    }
+  const [closed, setClosed] = useState(() => isPopupHidden());
+  const { data = [] } = useQuery({
+    queryKey: ['home', 'popups'],
+    queryFn: getPopups,
+    enabled: !closed && canLoadPopups(),
+    staleTime: 0,
+    retry: false,
+    // 부가 공지 조회 실패가 홈 화면 전체를 가리지 않도록 한다.
+    throwOnError: false,
+  });
+  const filteredContents = getActivePopups(data);
+  const closePopUp = useCallback(({ popupHideDuration } = {}) => {
+    hidePopups(popupHideDuration);
+    setClosed(true);
   }, []);
 
-  const closePopUp = ({ popupHideDuration }) => {
-    setIsPopUpOpened(false);
-
-    if (popupHideDuration !== undefined) {
-      const popupHideUntilDate = addDays(new Date(), popupHideDuration);
-
-      localStorage.setItem(POP_UP_STATE_LOCAL_STORAGE_KEY, POP_UP_HIDDEN);
-      localStorage.setItem(POP_UP_DATE_LOCAL_STORAGE_KEY, popupHideUntilDate);
-    }
+  return {
+    isPopUpOpened: !closed && filteredContents.length > 0,
+    closePopUp,
+    filteredContents,
   };
-
-  return { isPopUpOpened, closePopUp };
 }
