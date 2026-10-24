@@ -2,11 +2,7 @@ import { Suspense, useContext } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import {
   BackAppBar,
@@ -15,14 +11,13 @@ import {
   NoticeModal,
   ServerErrorFallback,
 } from '@/shared/component';
-import { NOTICE_MODAL_TEXT, QUERY_KEY, TOAST } from '@/shared/constant';
+import { NOTICE_MODAL_TEXT, QUERY_KEY } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
-import { useToast } from '@/shared/hook';
 
 import { MeatBallIcon, PostActionBar } from '@/feature/board/component';
 import { PostDetailView } from '@/feature/board/ui';
 import { CommentInputContainer } from '@/feature/comment/component';
-import { deleteReport, readReport } from '@/feature/support/api';
+import { readReport } from '@/feature/support/api';
 import { REPORT_STATUS_MAP } from '@/feature/support/constant';
 
 export default function ReportDetailPage() {
@@ -36,14 +31,10 @@ export default function ReportDetailPage() {
 }
 
 function ReportDetailLoader() {
-  const navigate = useNavigate();
   const { postId: postIdParam } = useParams();
   const postId = Number(postIdParam);
 
-  const queryClient = useQueryClient();
-
   const { setModal } = useContext(ModalContext);
-  const { toast } = useToast();
 
   const { data } = useSuspenseQuery({
     queryKey: QUERY_KEY.post(postId),
@@ -51,23 +42,9 @@ function ReportDetailLoader() {
     staleTime: 1000 * 60 * 5,
   });
 
-  const { mutate: deleteReportMutate } = useMutation({
-    mutationFn: () => deleteReport(postId),
-    onSuccess: () => {
-      toast.success(TOAST.REPORT.delete);
-      queryClient.removeQueries(QUERY_KEY.post(postId));
-      navigate(-1);
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
-
   const onMenuOpen = () => {
-    const id = data.isWriter ? 'my-post-more-options' : 'post-more-options';
-
     setModal({
-      id,
+      id: 'my-report-more-options',
       type: null,
     });
   };
@@ -75,7 +52,6 @@ function ReportDetailLoader() {
   return (
     <PostDetailView
       data={data}
-      deletePost={deleteReportMutate}
       PostActionBar={
         <PostActionBar>
           <PostActionBar.Comment {...data} />

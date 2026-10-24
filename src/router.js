@@ -6,7 +6,6 @@ import { AppLayout, NavbarLayout } from '@/shared/ui';
 import { CheckExamPeriodRoute } from '@/feature/exam/lib';
 import {
   inquiryEditLoader,
-  reportEditLoader,
   validateReportWriteLoader,
 } from '@/feature/support/loader';
 import SupportUpdateErrorPage from '@/feature/support/SupportUpdateErrorPage';
@@ -60,7 +59,6 @@ import {
 } from '@/page/snorose';
 import {
   EditInquiryPage,
-  EditReportPage,
   FAQPage,
   InquiryDetailPage,
   ReportDetailPage,
@@ -623,20 +621,6 @@ export const routeList = [
                 <ReportDetailPage />
               </ProtectedRoute>
             ),
-          },
-          {
-            path: ':postId/edit',
-            errorElement: (
-              <AppLayout>
-                <SupportUpdateErrorPage />
-              </AppLayout>
-            ),
-            element: (
-              <ProtectedRoute>
-                <EditReportPage />
-              </ProtectedRoute>
-            ),
-            loader: reportEditLoader,
           },
         ],
       },
