@@ -94,7 +94,6 @@ export const NEW_ROUTES = Object.freeze({
   reportWrite: (reportType: 'post' | 'exam' | 'comment' | 'user') =>
     `/report/write/${reportType}`,
   reportDetail: (reportId: string) => `/report/${reportId}`,
-  reportEdit: (reportId: string) => `/report/${reportId}/edit`,
 
   /* 마이페이지 */
   mypage: '/my-page',
