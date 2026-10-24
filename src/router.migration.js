@@ -44,7 +44,6 @@ import {
 } from '@/page/snorose';
 import {
   EditInquiryPage,
-  EditReportPage,
   FAQPage,
   WriteInquiryPage,
   WriteReportPage,

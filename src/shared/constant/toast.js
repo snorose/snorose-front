@@ -45,8 +45,6 @@ const TOAST = Object.freeze({
   },
   REPORT: {
     create: '신고글을 등록했어요',
-    update: '신고글을 수정했어요',
-    delete: '신고글이 삭제되었어요',
   },
   USER: {
     editPassword: '비밀번호가 수정되었어요',

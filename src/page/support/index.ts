@@ -1,5 +1,4 @@
 export { default as EditInquiryPage } from './EditInquiryPage';
-export { default as EditReportPage } from './EditReportPage/EditReportPage';
 export { default as FAQPage } from './FAQPage/FAQPage';
 export { default as InquiryDetailPage } from './InquiryDetailPage';
 export { default as ReportDetailPage } from './ReportDetailPage';
