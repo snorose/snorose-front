@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 
 import { ConfirmModal } from '@/shared/component';
 import {
@@ -76,7 +77,30 @@ export default function WriteReportPage() {
     },
 
     onError: (error) => {
-      toast.error(error.message);
+      if (!axios.isAxiosError(error) || !error.response) {
+        toast.error('요청 처리 중 오류가 발생했어요');
+        return;
+      }
+
+      const { code } = error.response.data;
+
+      if (code === 2007) {
+        toast.error('정회원 등업이 필요해요');
+        navigate(-1);
+        return;
+      }
+
+      if (code === 3032) {
+        toast.error('첨부 파일은 최대 3개까지 업로드할 수 있어요');
+        return;
+      }
+
+      if (code === 6103) {
+        toast.error('신고 대상이 존재하지 않아요');
+        return;
+      }
+
+      toast.error('잠시 후 다시 시도해주세요');
     },
   });
 
@@ -118,3 +142,5 @@ export default function WriteReportPage() {
     </>
   );
 }
+
+// http://localhost:3000/report/write/post?targetId=1725742
