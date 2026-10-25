@@ -76,3 +76,20 @@
 .form {
   padding-bottom: 2rem;
 }
+
+.trashInvisible,
+.trashVisible {
+  position: fixed;
+  bottom: 10.2rem;
+  left: 50%;
+  width: fit-content;
+  transform: translateX(-50%);
+}
+
+.trashInvisible {
+  opacity: 0;
+}
+
+.trashVisible {
+  opacity: 1;
+}
