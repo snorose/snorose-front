@@ -13,7 +13,10 @@ import {
 } from '@snorose/icons';
 import { useEditorState } from '@tiptap/react';
 
-import { convertListTypesInSelection } from '@/feature/editor/lib';
+import {
+  convertListTypesInSelection,
+  getNearestListType,
+} from '@/feature/editor/lib';
 
 import styles from './FixedMenuEditor.module.css';
 const PRESET_COLORS = [
@@ -30,33 +33,29 @@ const PRESET_BG_COLORS = [
   { label: '파랑', value: 'var(--blue-2)' },
 ];
 
-const getNearestListType = (editorInstance) => {
-  const { $from } = editorInstance.state.selection;
-  for (let depth = $from.depth; depth > 0; depth--) {
-    const name = $from.node(depth).type.name;
-    if (name === 'bulletList' || name === 'orderedList') {
-      return name;
-    }
-  }
-  return null;
-};
+const getSelectionListType = (editorInstance) =>
+  getNearestListType(editorInstance.state.selection.$from);
 
 export default function FixedMenuEditor({ editor }) {
   const editorState = useEditorState({
     editor,
-    selector: (ctx) => ({
-      isBold: ctx.editor.isActive('bold'),
-      isUnderline: ctx.editor.isActive('underline'),
-      isStrike: ctx.editor.isActive('strike'),
-      isBulletList: getNearestListType(ctx.editor) === 'bulletList',
-      isOrderedList: getNearestListType(ctx.editor) === 'orderedList',
-      currentColor: ctx.editor.getAttributes('textStyle').color || '',
-      currentBgColor:
-        ctx.editor.getAttributes('textStyle').backgroundColor || '',
-      currentHeading: ctx.editor.isActive('heading', { level: 1 })
-        ? '1'
-        : 'paragraph',
-    }),
+    selector: (ctx) => {
+      const listType = getSelectionListType(ctx.editor);
+
+      return {
+        isBold: ctx.editor.isActive('bold'),
+        isUnderline: ctx.editor.isActive('underline'),
+        isStrike: ctx.editor.isActive('strike'),
+        isBulletList: listType === 'bulletList',
+        isOrderedList: listType === 'orderedList',
+        currentColor: ctx.editor.getAttributes('textStyle').color || '',
+        currentBgColor:
+          ctx.editor.getAttributes('textStyle').backgroundColor || '',
+        currentHeading: ctx.editor.isActive('heading', { level: 1 })
+          ? '1'
+          : 'paragraph',
+      };
+    },
   });
 
   const [openedMenu, setOpenedMenu] = useState(null);
@@ -68,7 +67,7 @@ export default function FixedMenuEditor({ editor }) {
   if (!editor) return null;
 
   const toggleListStyle = (listType) => {
-    const nearestList = getNearestListType(editor);
+    const nearestList = getSelectionListType(editor);
     const inAnyList = nearestList !== null;
     const alreadyActive = nearestList === listType;
     const toggleCmd =

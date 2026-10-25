@@ -7,13 +7,13 @@
 }
 
 .fill {
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-direction: column;
 
   > div {
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-direction: column;
   }
 
@@ -23,9 +23,9 @@
 }
 
 .editor {
+  padding-bottom: 1.5rem;
   font: var(--text-headline-2-reg);
   color: var(--grey-4);
-  padding-bottom: 1.5rem;
   white-space: pre-wrap;
   cursor: text;
 
@@ -53,24 +53,30 @@
   :global(.editor-hashtag),
   :global(.post-hashtag) {
     display: inline;
+
+    padding: 0 5px;
+    margin: 0 2px;
+
+    font-weight: 400;
+
     line-height: 1.4;
+
+    color: var(--blue-4);
+
+    text-decoration: none;
+
     background-color: var(--blue-0);
     border: 1px solid var(--blue-2);
     border-radius: 5px;
-    padding: 0 5px;
-    margin: 0 2px;
     box-shadow: 0 0 0 2px var(--white-2);
-    color: var(--blue-4);
-    font-weight: 400;
-    text-decoration: none;
   }
 
   :global(.editor-hashtag) *,
   :global(.post-hashtag) * {
-    color: inherit !important;
-    background-color: transparent !important;
     font-weight: inherit !important;
+    color: inherit !important;
     text-decoration: none !important;
+    background-color: transparent !important;
   }
 
   :global(.post-hashtag) {
@@ -102,20 +108,54 @@
     list-style-type: square;
   }
 
-  ol,
-  ol ol ol ol,
-  ol ol ol ol ol ol ol {
-    list-style-type: decimal;
+  /* 번호는 목록 왼쪽 끝에서 시작해 오른쪽으로 늘어나고, 본문은 번호 다음부터 시작한다.
+     번호 칸(1열) 너비는 항목마다 자기 번호에 맞춰 정해지므로, 10. 처럼 자릿수가
+     늘어난 항목만 본문이 밀리고 1~9번 항목의 본문 위치는 그대로다. */
+  ol {
+    --ol-start: 0;
+    /* 번호 칸 최소 너비(본문 들여쓰기)와 번호-본문 사이 간격 */
+    --ol-indent: 2.4rem;
+    --ol-marker-gap: 0.8rem;
+    padding-left: 0;
+    list-style: none;
+    counter-reset: ordered-list var(--ol-start);
   }
-  ol ol,
-  ol ol ol ol ol,
-  ol ol ol ol ol ol ol ol {
-    list-style-type: lower-alpha;
+
+  /* 번호는 첫 줄 글자의 기준선(baseline)에 맞춘다. → 첫 블록의 글자 크기·줄 높이가 달라도 정렬된다. */
+  ol > li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: baseline;
+    counter-increment: ordered-list;
   }
-  ol ol ol,
-  ol ol ol ol ol ol,
-  ol ol ol ol ol ol ol ol ol {
-    list-style-type: lower-roman;
+
+  ol > li > * {
+    grid-column: 2;
+  }
+
+  ol > li::before {
+    box-sizing: border-box;
+    grid-row: 1;
+    grid-column: 1;
+    min-width: var(--ol-indent);
+    padding-right: var(--ol-marker-gap);
+    white-space: nowrap;
+    content: counter(ordered-list, decimal) '.';
+  }
+
+  /* 번호 형식은 data-format(에디터 데코레이션 / sanitizePostHtml에서 계산)을 따른다.
+     data-* 값은 type과 달리 대소문자를 구분하므로 a / A, i / I를 따로 그릴 수 있다. */
+  ol[data-format='a'] > li::before {
+    content: counter(ordered-list, lower-alpha) '.';
+  }
+  ol[data-format='A'] > li::before {
+    content: counter(ordered-list, upper-alpha) '.';
+  }
+  ol[data-format='i'] > li::before {
+    content: counter(ordered-list, lower-roman) '.';
+  }
+  ol[data-format='I'] > li::before {
+    content: counter(ordered-list, upper-roman) '.';
   }
 
   p {
@@ -127,8 +167,8 @@
   }
 
   h1 {
-    font-size: 2rem;
     margin: 12px 0;
+    font-size: 2rem;
   }
 
   & > h1:first-child,
@@ -144,27 +184,32 @@
     font-size: 2rem;
   }
 
+  /* 첫 줄이 소제목인 항목은 번호도 소제목 크기로 그린다. */
+  ol > li:has(> h1:first-child)::before {
+    font-size: 2rem;
+  }
+
   iframe {
     display: block;
     width: 100%;
-    border: none;
     margin: 1.5rem 0;
+    border: none;
   }
 
   iframe[data-embed-type='youtube-video'],
   iframe[data-embed-type='naver-tv'] {
-    aspect-ratio: 16 / 9;
     height: auto;
+    aspect-ratio: 16 / 9;
   }
 
   iframe[data-embed-type='youtube-shorts'] {
-    aspect-ratio: 9 / 16;
     height: auto;
+    aspect-ratio: 9 / 16;
   }
 
   iframe[data-embed-type='tiktok'] {
-    aspect-ratio: 9 / 16;
-    height: auto;
     max-width: 320px;
+    height: auto;
+    aspect-ratio: 9 / 16;
   }
 }

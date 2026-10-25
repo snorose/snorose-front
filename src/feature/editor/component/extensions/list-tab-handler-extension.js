@@ -2,22 +2,13 @@ import { Extension } from '@tiptap/core';
 import { liftListItem } from 'prosemirror-schema-list';
 import { TextSelection } from 'prosemirror-state';
 
-const isListNode = (node) =>
-  node?.type.name === 'bulletList' || node?.type.name === 'orderedList';
-
-const findListItemDepth = ($pos) => {
-  for (let depth = $pos.depth; depth > 0; depth -= 1) {
-    if ($pos.node(depth).type.name === 'listItem') return depth;
-  }
-  return null;
-};
-
-const findListDepth = ($pos) => {
-  for (let depth = $pos.depth; depth > 0; depth -= 1) {
-    if (isListNode($pos.node(depth))) return depth;
-  }
-  return null;
-};
+import {
+  findListItemDepth,
+  isExplicitOrderedFormat,
+  isListNode,
+  isolateListItem,
+  resolveOrderedFormatAt,
+} from '@/feature/editor/lib/listNode';
 
 export const sinkFirstListItem = (state, dispatch) => {
   const { $from } = state.selection;
@@ -55,7 +46,9 @@ export const sinkFirstListItem = (state, dispatch) => {
     tr.delete(itemStart, itemEnd);
   }
 
-  tr.insert(insertPos, list.type.create(list.attrs, item));
+  // 하위 목록이 되므로 시작 번호(start)는 1로 둔다.
+  // 직접 지정한 번호 형식(type)은 유지해 Shift-Tab으로 되돌려도 형식이 그대로 남는다.
+  tr.insert(insertPos, list.type.create({ ...list.attrs, start: 1 }, item));
 
   const cursor = insertPos + 1 + ($from.pos - itemStart);
   tr.setSelection(TextSelection.near(tr.doc.resolve(cursor)));
@@ -77,7 +70,13 @@ export const liftListItemKeepingType = (state, dispatch) => {
 
   if (!isListNode(list) || !isListNode(outerList)) return false;
   if (parentItem.type.name !== 'listItem') return false;
-  if (list.type === outerList.type) return false;
+  // 목록 종류가 같아도, 직접 지정한 번호 형식(a. / i. 등)이 바깥 목록 형식과 다르면
+  // 바깥 목록에 섞지 않고 그 형식 그대로 떼어 낸다. (Tab ↔ Shift-Tab이 대칭이 되도록)
+  const keepsOwnFormat =
+    list.type.name === 'orderedList' &&
+    isExplicitOrderedFormat(list.attrs.type) &&
+    list.attrs.type !== resolveOrderedFormatAt($from, itemDepth - 3);
+  if (list.type === outerList.type && !keepsOwnFormat) return false;
 
   let handled = false;
 
@@ -90,21 +89,13 @@ export const liftListItemKeepingType = (state, dispatch) => {
     const holder = $lifted.node(holderDepth);
     if (!isListNode(holder)) return;
 
-    const itemStart = $lifted.before(liftedDepth);
-    const itemEnd = $lifted.after(liftedDepth);
-    const index = $lifted.index(holderDepth);
+    // 올라온 항목을 바깥 목록에서 떼어 내 원래 목록 종류·형식 그대로 둔다.
+    // 바깥 목록의 뒤쪽 조각은 원래 이어지던 번호부터 시작한다.
+    const isolatedPos = isolateListItem(tr, $lifted.before(liftedDepth), {
+      continueNumbering: true,
+    });
+    tr.setNodeMarkup(isolatedPos, list.type, list.attrs);
 
-    const liftSteps = tr.steps.length;
-
-    if (index < holder.childCount - 1) tr.split(itemEnd, 1);
-    if (index > 0) tr.split(itemStart, 1);
-
-    const mapping = tr.mapping.slice(liftSteps);
-    const $isolated = tr.doc.resolve(mapping.map(itemStart + 2));
-    const isolatedDepth = findListDepth($isolated);
-    if (isolatedDepth === null) return;
-
-    tr.setNodeMarkup($isolated.before(isolatedDepth), list.type, list.attrs);
     tr.scrollIntoView();
 
     handled = true;

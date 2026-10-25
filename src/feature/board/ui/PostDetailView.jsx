@@ -23,7 +23,7 @@ import {
 } from '@/feature/board/component';
 import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
 import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
-import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
+import { sanitizePostHtml } from '@/feature/editor/lib/sanitize';
 
 import sponsorBanner from '@/assets/banners/sponsorBanner.png';
 
@@ -86,7 +86,7 @@ export default function PostDetailView({
 
   const sanitizedContent = useMemo(() => {
     if (!data?.content) return '';
-    return sanitizeHtml(
+    return sanitizePostHtml(
       hashtagifyHtml(linkifyHtml(preserveEmptyParagraphs(data.content)))
     );
   }, [data?.content]);

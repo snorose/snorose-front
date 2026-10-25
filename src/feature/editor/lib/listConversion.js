@@ -1,14 +1,13 @@
+import { isListNode } from './listNode.js';
+
 export function convertListTypesInSelection(tr, schema, targetTypeName) {
   const targetType = schema.nodes[targetTypeName];
-  const bulletType = schema.nodes.bulletList;
-  const orderedType = schema.nodes.orderedList;
-  const isListType = (type) => type === bulletType || type === orderedType;
 
   const { from, to } = tr.selection;
 
   const lists = [];
   tr.doc.nodesBetween(from, to, (node, pos) => {
-    if (isListType(node.type)) {
+    if (isListNode(node)) {
       lists.push({ pos });
     }
   });
@@ -19,7 +18,7 @@ export function convertListTypesInSelection(tr, schema, targetTypeName) {
 
   for (const { pos } of lists) {
     const listNode = tr.doc.nodeAt(pos);
-    if (!listNode || !isListType(listNode.type)) {
+    if (!isListNode(listNode)) {
       continue;
     }
 
@@ -68,7 +67,7 @@ export function convertListTypesInSelection(tr, schema, targetTypeName) {
     const anchor = tr.mapping.map(beforeFirst + 1);
     const $anchor = tr.doc.resolve(anchor);
     for (let depth = $anchor.depth; depth >= 0; depth--) {
-      if (isListType($anchor.node(depth).type)) {
+      if (isListNode($anchor.node(depth))) {
         tr.setNodeMarkup($anchor.before(depth), targetType);
         changed = true;
         break;

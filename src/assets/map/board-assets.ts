@@ -265,7 +265,7 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
       height: '5.7rem',
     },
   },
-  studyabroad: {
+  'study-abroad': {
     category: IllustrationGlobe,
     categoryLayout: {
       right: '2.5rem',

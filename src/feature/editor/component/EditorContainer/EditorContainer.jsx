@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 
 import TipTapImage from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
-import { ListItem } from '@tiptap/extension-list';
 import Placeholder from '@tiptap/extension-placeholder';
 import {
   BackgroundColor,
@@ -17,9 +16,7 @@ import { HASHTAG_REGEX } from '@/shared/lib';
 
 import { HashtagHighlight } from '@/feature/editor/component/extensions/hashtag-highlight-extension';
 import { Iframe } from '@/feature/editor/component/extensions/iframe-extension';
-import { ListBackspaceHandler } from '@/feature/editor/component/extensions/list-backspace-handler-extension';
-import { ListMergeHandler } from '@/feature/editor/component/extensions/list-merge-handler-extension';
-import { ListTabHandler } from '@/feature/editor/component/extensions/list-tab-handler-extension';
+import { LIST_EXTENSIONS } from '@/feature/editor/component/extensions/list-extensions';
 import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
 
 import { EMBED_SOURCES } from '../../constant';
@@ -82,15 +79,13 @@ export default function EditorContainer({
         link: false,
         blockquote: false,
         listItem: false,
+        orderedList: false,
       }),
-      ListItem.extend({ content: '(paragraph|heading) block*' }),
+      ...LIST_EXTENSIONS,
       Link.configure({
         openOnClick: false,
         autolink: true,
       }),
-      ListBackspaceHandler,
-      ListTabHandler,
-      ListMergeHandler,
       HashtagHighlight,
       Iframe,
       ReferrerSafeImage,

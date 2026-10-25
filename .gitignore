@@ -39,5 +39,5 @@ storybook-static/*
 # Sentry Config File
 .sentryclirc
 
-# Claude Code 개인 커밋 컨벤션
-.claude/commit-convention.md
+# Claude Code 개인 설정·작업 기록
+.claude/
