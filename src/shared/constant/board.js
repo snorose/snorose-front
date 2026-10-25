@@ -1,3 +1,5 @@
+import { FEATURE_FLAG } from './feature-flag';
+
 export const BOARD_CATEGORY = {
   COMMUNITY: {
     value: 'community',
@@ -53,7 +55,7 @@ export const BOARD_ID = Object.freeze({
   music: 1004,
   performance: 1005,
   exhibition: 1006,
-  studyabroad: 71,
+  'study-abroad': 71,
   trip: 1007,
   cooking: 1008,
   sport: 1009,
@@ -63,6 +65,10 @@ export const BOARD_ID = Object.freeze({
   game: 1014,
   finance: 1012,
   certification: 54,
+  club: 70,
+  promotion: 25,
+  living: 1015,
+  'women-studies': 1016,
 });
 
 export const BOARDS = Object.freeze([
@@ -145,7 +151,7 @@ export const BOARDS = Object.freeze([
     name: '전시',
     path: '/board/exhibition',
   },
-  { id: 71, name: '교환학생·어학연수', path: '/board/studyabroad' },
+  { id: 71, name: '교환학생·어학연수', path: '/board/study-abroad' },
   {
     id: 1007,
     name: '여행',
@@ -190,6 +196,26 @@ export const BOARDS = Object.freeze([
     id: 54,
     name: '어학·자격증',
     path: '/board/certification',
+  },
+  {
+    id: 70,
+    name: '동아리 이모저모',
+    path: '/board/club',
+  },
+  {
+    id: 25,
+    name: '홍보게시판',
+    path: '/board/promotion',
+  },
+  {
+    id: 1015,
+    name: '리빙·소품',
+    path: '/board/living',
+  },
+  {
+    id: 1016,
+    name: '여성학',
+    path: '/board/women-studies',
   },
 ]);
 
@@ -241,6 +267,15 @@ export const BOARD_MENUS = [
     title: '만년설방',
     desc: '졸업생 전용 커뮤니티',
     category: BOARD_CATEGORY.COMMUNITY,
+  },
+  {
+    id: 25,
+    to: '/board/promotion',
+    textId: 'promotion',
+    title: '홍보게시판',
+    desc: '홍보·소식 공유 커뮤니티',
+    category: BOARD_CATEGORY.COMMUNITY,
+    feature: FEATURE_FLAG.newBoard,
   },
   {
     id: 20,
@@ -355,9 +390,18 @@ export const BOARD_MENUS = [
     category: BOARD_CATEGORY.CULTURE,
   },
   {
+    id: 70,
+    to: '/board/club',
+    textId: 'club',
+    title: '동아리 이모저모',
+    desc: '동아리 정보·활동 커뮤니티',
+    category: BOARD_CATEGORY.CAMPUS,
+    feature: FEATURE_FLAG.newBoard,
+  },
+  {
     id: 71,
-    to: '/board/studyabroad',
-    textId: 'studyabroad',
+    to: '/board/study-abroad',
+    textId: 'study-abroad',
     title: '교환학생·어학연수',
     desc: '교환학생·어학연수 정보 커뮤니티',
     category: BOARD_CATEGORY.CAMPUS,
@@ -434,6 +478,24 @@ export const BOARD_MENUS = [
     desc: '어학·자격증 정보·공부 커뮤니티',
     category: BOARD_CATEGORY.CAREER,
   },
+  {
+    id: 1015,
+    to: '/board/living',
+    textId: 'living',
+    title: '리빙·소품',
+    desc: '생활용품·소품 정보·후기 커뮤니티',
+    category: BOARD_CATEGORY.CULTURE,
+    feature: FEATURE_FLAG.newBoard,
+  },
+  {
+    id: 1016,
+    to: '/board/women-studies',
+    textId: 'women-studies',
+    title: '여성학',
+    desc: '여성학 정보·토론 커뮤니티',
+    category: BOARD_CATEGORY.CULTURE,
+    feature: FEATURE_FLAG.newBoard,
+  },
 ];
 
 // 공식게시판
@@ -505,7 +567,7 @@ export const BOARD_CATEGORY_MAP = {
   [BOARD_ID['anime-comics']]: ANIME_COMICS_CATEGORIES,
   [BOARD_ID.music]: MUSIC_CATEGORIES,
   [BOARD_ID.performance]: PERFORMANCE_CATEGORIES,
-  [BOARD_ID.studyabroad]: STUDYABROAD_CATEGORIES,
+  [BOARD_ID['study-abroad']]: STUDYABROAD_CATEGORIES,
   [BOARD_ID.trip]: TRIP_CATEGORIES,
   [BOARD_ID.pet]: PET_CATEGORIES,
   [BOARD_ID.game]: GAME_CATEGORIES,

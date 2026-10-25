@@ -1,9 +1,5 @@
-import {
-  CAMPUS_BOARD_KILL_SWITCH,
-  CULTURE_BOARD_KILL_SWITCH,
-  FEATURE_FLAG,
-  ROLE,
-} from '@/shared/constant';
+import { FEATURE_FLAG, NEW_BOARD_KILL_SWITCH, ROLE } from '@/shared/constant';
+import { NEW_BOARD_KEYS } from '@/shared/lib';
 import { attendanceLoader } from '@/shared/loader';
 import { AppLayout, NavbarLayout } from '@/shared/ui';
 
@@ -82,6 +78,7 @@ import {
 
 import App from '@/App';
 import FeatureGuard from '@/FeatureGuard';
+import LegacyBoardRedirect from '@/LegacyBoardRedirect';
 import ProtectedRoute from '@/ProtectedRoute';
 
 const getRolesForReadBoard = (boardPath) => {
@@ -117,7 +114,7 @@ const getRolesForReadBoard = (boardPath) => {
     case 'cooking':
     case 'sport':
     case 'exhibition':
-    case 'studyabroad':
+    case 'study-abroad':
     case 'trip':
     case 'pet':
     case 'health':
@@ -125,6 +122,10 @@ const getRolesForReadBoard = (boardPath) => {
     case 'game':
     case 'finance':
     case 'certification':
+    case 'club':
+    case 'promotion':
+    case 'living':
+    case 'women-studies':
       return [ROLE.user, ROLE.admin, ROLE.official];
     // 그 외 경로는 아무도 열람할 수 없음
     default:
@@ -150,7 +151,7 @@ const getRolesForWriteBoard = (boardPath) => {
     case 'cooking':
     case 'sport':
     case 'exhibition':
-    case 'studyabroad':
+    case 'study-abroad':
     case 'trip':
     case 'pet':
     case 'health':
@@ -158,6 +159,10 @@ const getRolesForWriteBoard = (boardPath) => {
     case 'game':
     case 'finance':
     case 'certification':
+    case 'club':
+    case 'promotion':
+    case 'living':
+    case 'women-studies':
       return [ROLE.user, ROLE.admin, ROLE.official];
     // 리자·공식계정만 작성 가능 (공지사항·공식 게시판)
     case 'notice':
@@ -184,10 +189,6 @@ const boardPaths = [
   'residence',
   'sookplace',
   'certification',
-];
-
-// 피처 플래그로 노출을 제어하는 게시판
-const cultureBoardPaths = [
   'video-content',
   'anime-comics',
   'book',
@@ -202,9 +203,8 @@ const cultureBoardPaths = [
   'beauty',
   'sport',
   'game',
+  'study-abroad',
 ];
-
-const campusBoardPaths = ['studyabroad'];
 
 const createBoardRoutes = (paths, feature, forceOff = false) => {
   // 플래그가 없는 게시판은 가드 없이 그대로 렌더한다
@@ -289,15 +289,11 @@ const createBoardRoutes = (paths, feature, forceOff = false) => {
 
 const boardRoutes = [
   ...createBoardRoutes(boardPaths),
+  // 피처 플래그로 노출을 제어하는 게시판
   ...createBoardRoutes(
-    cultureBoardPaths,
-    FEATURE_FLAG.cultureBoard,
-    CULTURE_BOARD_KILL_SWITCH
-  ),
-  ...createBoardRoutes(
-    campusBoardPaths,
-    FEATURE_FLAG.campusBoard,
-    CAMPUS_BOARD_KILL_SWITCH
+    NEW_BOARD_KEYS,
+    FEATURE_FLAG.newBoard,
+    NEW_BOARD_KILL_SWITCH
   ),
 ];
 
@@ -336,6 +332,15 @@ export const routeList = [
         ),
       },
       ...boardRoutes,
+      {
+        path: '/board/studyabroad/*',
+        element: (
+          <LegacyBoardRedirect
+            from='/board/studyabroad'
+            to='/board/study-abroad'
+          />
+        ),
+      },
       {
         path: '/board/all/search',
         element: <SearchPage />,

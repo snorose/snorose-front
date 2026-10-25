@@ -13,6 +13,8 @@ import {
 import { FEATURE_FLAG } from '@/shared/constant/feature-flag';
 import { NEW_ROUTES } from '@/shared/constant/route';
 import { BOARD_REGISTRY } from '@/shared/lib';
+// 순환 참조로 초기화 전 값을 읽지 않도록 index를 거치지 않는다
+import { NEW_BOARD_KEYS } from '@/shared/lib/new-board';
 
 export const NAVBAR_MENUS = Object.freeze([
   {
@@ -86,6 +88,11 @@ export const SIDEBAR_MENUS = Object.freeze([
       { to: '/board/first-snow', name: '첫눈온방' },
       { to: '/board/large-snow', name: '함박눈방' },
       { to: '/board/permanent-snow', name: '만년설방' },
+      {
+        to: '/board/promotion',
+        name: '홍보게시판',
+        feature: FEATURE_FLAG.newBoard,
+      },
       { to: '/board/besookt', name: '베숙트' },
     ],
   },
@@ -113,7 +120,6 @@ export const SIDEBAR_MENUS = Object.freeze([
   {
     to: '/board',
     title: '문화생활',
-    feature: FEATURE_FLAG.cultureBoard,
     items: [
       { to: '/board/video-content', name: '영상 컨텐츠' },
       { to: '/board/anime-comics', name: '애니·만화·웹툰·웹소설' },
@@ -129,19 +135,34 @@ export const SIDEBAR_MENUS = Object.freeze([
       { to: '/board/beauty', name: '뷰티' },
       { to: '/board/game', name: '게임' },
       { to: '/board/finance', name: '금융' },
+      {
+        to: '/board/living',
+        name: '리빙·소품',
+        feature: FEATURE_FLAG.newBoard,
+      },
+      {
+        to: '/board/women-studies',
+        name: '여성학',
+        feature: FEATURE_FLAG.newBoard,
+      },
     ],
   },
   {
     to: '/board',
     title: '커리어',
-    feature: FEATURE_FLAG.careerBoard,
     items: [{ to: '/board/certification', name: '어학·자격증' }],
   },
   {
     to: '/board',
     title: '캠퍼스',
-    feature: FEATURE_FLAG.campusBoard,
-    items: [{ to: '/board/studyabroad', name: '교환학생·어학연수' }],
+    items: [
+      {
+        to: '/board/club',
+        name: '동아리 이모저모',
+        feature: FEATURE_FLAG.newBoard,
+      },
+      { to: '/board/study-abroad', name: '교환학생·어학연수' },
+    ],
   },
   {
     to: '/board/exam-review',
@@ -206,10 +227,10 @@ export const NEW_SIDEBAR_MENUS = Object.freeze([
   {
     title: '문화생활',
     to: NEW_ROUTES.boardHome,
-    feature: FEATURE_FLAG.cultureBoard,
     items: BOARD_REGISTRY.culture.map(({ key, name }) => ({
       name,
       to: NEW_ROUTES.post.list(key),
+      ...(NEW_BOARD_KEYS.includes(key) && { feature: FEATURE_FLAG.newBoard }),
     })),
   },
   {

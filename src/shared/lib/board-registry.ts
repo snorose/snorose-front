@@ -176,10 +176,28 @@ const CULTURE = [
     desc: '게임 정보·소통 커뮤니티',
   },
   { key: 'finance', id: 1012, name: '금융', desc: '금융 정보 공유 커뮤니티' },
+  {
+    key: 'living',
+    id: 1015,
+    name: '리빙·소품',
+    desc: '생활용품·소품 정보·후기 커뮤니티',
+  },
+  {
+    key: 'women-studies',
+    id: 1016,
+    name: '여성학',
+    desc: '여성학 정보·토론 커뮤니티',
+  },
 ] as const satisfies readonly Board[];
 const CAMPUS = [
   {
-    key: 'studyabroad',
+    key: 'club',
+    id: 70,
+    name: '동아리 이모저모',
+    desc: '동아리 정보·활동 커뮤니티',
+  },
+  {
+    key: 'study-abroad',
     id: 71,
     name: '교환학생·어학연수',
     desc: '교환학생·어학연수 정보 공유 커뮤니티',
@@ -195,6 +213,16 @@ const CAREER = [
   },
 ] as const satisfies readonly Board[];
 
+// 화면에서는 커뮤니티 대분류에 노출하지만, 홈 커뮤니티 카드에 섞이지 않도록 COMMUNITY와 분리한다
+const PROMOTION = [
+  {
+    key: 'promotion',
+    id: 25,
+    name: '홍보게시판',
+    desc: '홍보·소식 공유 커뮤니티',
+  },
+] as const satisfies readonly Board[];
+
 const ALL = [
   ...COMMUNITY,
   ...OFFICIAL,
@@ -204,6 +232,7 @@ const ALL = [
   ...CULTURE,
   ...CAMPUS,
   ...CAREER,
+  ...PROMOTION,
 ] as const;
 
 type BoardId = (typeof ALL)[number]['id'];

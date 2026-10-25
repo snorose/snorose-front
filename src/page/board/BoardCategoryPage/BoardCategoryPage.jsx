@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import { Header } from '@/shared/component';
-import { BOARD_CATEGORY, BOARD_MENUS } from '@/shared/constant';
-import { useCampusBoard, useCultureBoard } from '@/shared/hook';
+import { BOARD_CATEGORY, BOARD_MENUS, FEATURE_FLAG } from '@/shared/constant';
+import { useNewBoard } from '@/shared/hook';
 
 import { AccordianBoards, BoardBar } from '@/feature/board/component';
 import { Search } from '@/feature/search/component';
@@ -15,14 +15,11 @@ const { HIDDEN, ...VISIBLE_BOARD_CATEGORY } = BOARD_CATEGORY;
 const FAVORITE_BOARD_IDS = [20, 61]; //즐겨찾기 더미 데이터
 
 export default function BoardCategoryPage() {
-  const isCultureBoardOn = useCultureBoard();
-  const isCampusBoardOn = useCampusBoard();
+  const isNewBoardOn = useNewBoard();
 
-  // 피처 플래그가 꺼진 대분류는 노출하지 않음
-  const boardCategories = Object.values(VISIBLE_BOARD_CATEGORY).filter(
-    (category) =>
-      (category !== BOARD_CATEGORY.CULTURE || isCultureBoardOn) &&
-      (category !== BOARD_CATEGORY.CAMPUS || isCampusBoardOn)
+  // 피처 플래그가 꺼진 게시판은 노출하지 않음
+  const visibleBoardMenus = BOARD_MENUS.filter(
+    (board) => board.feature !== FEATURE_FLAG.newBoard || isNewBoardOn
   );
 
   const [openBoards, setOpenBoards] = useState(() =>
@@ -45,7 +42,7 @@ export default function BoardCategoryPage() {
       </div>
 
       <div className={styles.paddingContainer}>
-        {boardCategories.map((category) => (
+        {Object.values(VISIBLE_BOARD_CATEGORY).map((category) => (
           <div key={category.value} className={styles.boardBox}>
             <AccordianBoards
               title={category.label}
@@ -53,8 +50,9 @@ export default function BoardCategoryPage() {
               onClick={() => toggleBoard(category.value)}
             >
               <div className={styles.boardListBox}>
-                {BOARD_MENUS.filter((board) => board.category === category).map(
-                  (board) => {
+                {visibleBoardMenus
+                  .filter((board) => board.category === category)
+                  .map((board) => {
                     const boardImage = BOARD_IMAGES[board.textId];
 
                     return (
@@ -67,8 +65,7 @@ export default function BoardCategoryPage() {
                         isFavorite={FAVORITE_BOARD_IDS.includes(board.id)}
                       />
                     );
-                  }
-                )}
+                  })}
               </div>
             </AccordianBoards>
           </div>
