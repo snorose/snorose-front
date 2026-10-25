@@ -23,13 +23,12 @@ import {
   ROLE,
   TOAST,
 } from '@/shared/constant';
-import { ModalContext } from '@/shared/context/ModalContext';
+import { ModalContext } from '@/shared/context';
 import { useAuth, useBlocker, useModal, useToast } from '@/shared/hook';
 import { DateTime, getBoard } from '@/shared/lib';
 
 import { AttachmentBar, DropDownMenu } from '@/feature/board/component';
-import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
-import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
+import { preserveEmptyParagraphs, sanitizeHtml } from '@/feature/editor/lib';
 import { EventForm, NoticeForm } from '@/feature/event/component';
 import {
   EVENT_FORM_DATA,
@@ -153,6 +152,10 @@ export default function WriteEventPage() {
           onTitleFocusChange={setIsTitleFocused}
           attachmentsInfo={attachmentsInfo}
           setAttachmentsInfo={setAttachmentsInfo}
+          onDeleteAttachment={(index) => {
+            setTrashImageIndex(index);
+            trashImageConfirmModal.openModal();
+          }}
           withEditor
         />
       );

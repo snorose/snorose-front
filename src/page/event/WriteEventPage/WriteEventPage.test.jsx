@@ -2,7 +2,7 @@ import { MemoryRouter, useLocation } from 'react-router-dom';
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
-import { ModalContext } from '@/shared/context/ModalContext';
+import { ModalContext } from '@/shared/context';
 
 import { createThumbnail, postEvent, postPost } from '@/apis';
 
@@ -15,11 +15,13 @@ const mockToast = { error: jest.fn(), info: jest.fn() };
 jest.mock(
   '@snorose/icons',
   () => {
-    const Icon = () => <svg aria-hidden='true' />;
+    const Icon = (props) => <svg aria-hidden='true' {...props} />;
     return {
       IconChevronDown: Icon,
+      IconGripHorizontal: Icon,
       IconMultiClipboardBlue: Icon,
       IconMultiCloudLogo: Icon,
+      IconMultiVideo: Icon,
       IconHashtag: Icon,
       IconHashtagThick: Icon,
       IconImage: Icon,
@@ -28,7 +30,10 @@ jest.mock(
       IconOpenEditorThick: Icon,
       IconVideo: Icon,
       IconVideoFill: Icon,
-      IllustrationTrashcanCircle: Icon,
+      IconX: Icon,
+      IllustrationTrashcanCircle: (props) => (
+        <div data-testid='trash' {...props} />
+      ),
     };
   },
   { virtual: true }
@@ -40,10 +45,14 @@ jest.mock('@/shared/component', () => ({
   ActionButton: ({ children, ...props }) => (
     <button {...props}>{children}</button>
   ),
-  AttachmentList: () => <div data-testid='attachment-list' />,
+  AttachmentList: jest.requireActual(
+    '@/shared/component/AttachmentList/AttachmentList'
+  ).default,
   Badge: () => null,
   CloseAppBar: ({ children }) => <div>{children}</div>,
-  ConfirmModal: () => null,
+  ConfirmModal: ({ onConfirm }) => (
+    <button onClick={onConfirm}>삭제 확인</button>
+  ),
   FetchLoading: () => null,
 }));
 jest.mock('@/shared/constant', () => ({
@@ -173,6 +182,31 @@ test('공지사항 선택 시 같은 화면에 에디터와 하단 첨부 바를
     screen.getByText('영화', { selector: '.categorySelectText' })
   );
   fireEvent.click(screen.getByText('공지사항'));
+
+  const firstImage = new File(['first'], '첫번째.png', { type: 'image/png' });
+  const secondImage = new File(['second'], '두번째.png', { type: 'image/png' });
+  fireEvent.change(screen.getByLabelText('이미지 첨부'), {
+    target: { files: [firstImage, secondImage] },
+  });
+  fireEvent.click(screen.getByRole('button', { name: '첫번째.png 삭제' }));
+  fireEvent.click(screen.getByRole('button', { name: '삭제 확인' }));
+  expect(screen.getAllByRole('listitem')).toHaveLength(1);
+
+  const transfer = {
+    value: '',
+    setData(_, value) {
+      this.value = value;
+    },
+    getData() {
+      return this.value;
+    },
+  };
+  fireEvent.dragStart(screen.getByRole('listitem'), {
+    dataTransfer: transfer,
+  });
+  fireEvent.drop(screen.getByTestId('trash'), { dataTransfer: transfer });
+  fireEvent.click(screen.getByRole('button', { name: '삭제 확인' }));
+  expect(screen.queryByRole('listitem')).not.toBeInTheDocument();
 
   fireEvent.change(screen.getByPlaceholderText('제목을 입력해주세요'), {
     target: { value: '이벤트 공지' },

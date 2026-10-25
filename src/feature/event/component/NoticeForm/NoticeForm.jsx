@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { AttachmentList } from '@/shared/component';
-
 import { EditorContainer } from '@/feature/editor/component';
 import { preserveEmptyParagraphs, sanitizeHtml } from '@/feature/editor/lib';
 
+import NoticeAttachmentList from '../NoticeAttachmentList/NoticeAttachmentList';
 import styles from './NoticeForm.module.css';
 
 export default function NoticeForm({
@@ -17,6 +16,7 @@ export default function NoticeForm({
   onTitleFocusChange,
   attachmentsInfo,
   setAttachmentsInfo,
+  onDeleteAttachment,
   withEditor = false,
 }) {
   useEffect(() => {
@@ -55,9 +55,10 @@ export default function NoticeForm({
               )
             }
           />
-          <AttachmentList
+          <NoticeAttachmentList
             attachmentsInfo={attachmentsInfo}
             setAttachmentsInfo={setAttachmentsInfo}
+            onDelete={onDeleteAttachment}
           />
         </>
       ) : (
