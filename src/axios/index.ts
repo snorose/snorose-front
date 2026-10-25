@@ -8,6 +8,7 @@ import axios, {
 import { activateSession, clearAuthTokens } from '@/feature/auth/libs';
 import {
   isMaintenanceBlocked,
+  isMaintenanceBlockedError,
   MaintenanceBlockedError,
 } from '@/feature/maintenance/access';
 
@@ -85,7 +86,9 @@ async function handlePrivateClientError(error: unknown) {
 
     return authAxios(originalRequest);
   } catch (refreshError) {
-    clearAuthTokens();
+    if (!isMaintenanceBlockedError(refreshError)) {
+      clearAuthTokens();
+    }
 
     return Promise.reject(refreshError);
   }
