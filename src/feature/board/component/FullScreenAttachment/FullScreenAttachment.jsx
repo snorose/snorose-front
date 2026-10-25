@@ -13,8 +13,7 @@ import altImage from '@/assets/images/altImage.png';
 
 import styles from './FullScreenAttachment.module.css';
 
-import 'swiper/css';
-import 'swiper/swiper-bundle.css';
+import 'swiper/css/bundle';
 
 export default function FullScreenAttachment({
   attachmentUrls,
