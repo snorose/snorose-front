@@ -1,37 +1,48 @@
 .box {
   position: fixed;
   top: 0;
-  left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  left: 0;
+  z-index: 1000;
+
   display: flex;
+
+  flex-direction: column;
+
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  flex-direction: column;
+
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .close {
-  background: transparent;
-  border: none;
   color: gray;
   cursor: pointer;
+  background: transparent;
+  border: none;
 }
 
 .modal {
+  position: relative;
+
   display: flex;
+
   flex-direction: column;
-  background: var(--blue-0);
-  border-radius: 1.5rem;
+
   width: 90%;
   min-width: 27.6rem;
   max-width: 30rem;
   height: 36rem;
+
   padding: 2rem;
-  text-align: center;
-  position: relative;
+
   overflow: hidden;
+
+  text-align: center;
+
+  background: var(--blue-0);
+  border-radius: 1.5rem;
 }
 
 .modalTop {
@@ -62,39 +73,44 @@
 }
 
 .content {
-  margin-top: 1.2rem;
-  font: var(--text-body-1-reg);
   height: 3rem;
+  margin-top: 1.2rem;
+  margin-bottom: 2rem;
+  font: var(--text-body-1-reg);
   color: var(--blue-3);
   word-break: keep-all;
-  margin-bottom: 2rem;
 }
 
 .buttons {
   position: absolute;
   bottom: 0;
-  width: 90%;
-  display: flex;
-  padding: 1.5rem;
-  justify-content: space-between;
   left: 50%;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  width: 90%;
+
+  padding: 1.5rem;
+
   transform: translateX(-50%);
 }
 
 .goNotice {
+  padding: 1.5rem 0.9rem;
+  font: var(--text-headline-2-reg);
+  color: var(--blue-3);
+  cursor: pointer;
   background: transparent;
   border: none;
-  font: var(--text-headline-2-reg);
-  cursor: pointer;
-  color: var(--blue-3);
-  padding: 1.5rem 0.9rem;
 }
 
 .confirm {
+  padding: 1.5rem 0.9rem;
+  font: var(--text-headline-2-reg);
+  color: var(--blue-4);
+  cursor: pointer;
   background: transparent;
   border: none;
-  font: var(--text-headline-2-reg);
-  cursor: pointer;
-  color: var(--blue-4);
-  padding: 1.5rem 0.9rem;
 }

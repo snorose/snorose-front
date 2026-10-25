@@ -30,7 +30,7 @@ import {
   ROLE,
   TOAST,
 } from '@/shared/constant';
-import { ModalContext } from '@/shared/context/ModalContext';
+import { ModalContext } from '@/shared/context';
 import {
   useAuth,
   useBlocker,
@@ -42,11 +42,10 @@ import { DateTime } from '@/shared/lib';
 
 import { AttachmentBar } from '@/feature/board/component';
 import { EditorContainer } from '@/feature/editor/component';
-import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
-import { sanitizeHtml } from '@/feature/editor/lib/sanitize';
+import { preserveEmptyParagraphs, sanitizeHtml } from '@/feature/editor/lib';
+import { NoticeAttachmentList } from '@/feature/event/component';
 
-import { createThumbnail } from '@/apis';
-import { getPostContent, patchPost } from '@/apis';
+import { createThumbnail, getPostContent, patchPost } from '@/apis';
 
 import styles from './EditPostPage.module.css';
 
@@ -62,6 +61,8 @@ export default function EditPostPage() {
   const textId = pathname.split('/')[2];
   const currentBoard = BOARD_MENUS.find((menu) => menu.textId === textId);
   const boardTitle = currentBoard?.title || '';
+  const AttachmentListComponent =
+    textId === 'event-notice' ? NoticeAttachmentList : AttachmentList;
 
   const [category, setCategory] = useState(null);
 
@@ -352,9 +353,13 @@ export default function EditPostPage() {
                   setText(sanitized);
                 }}
               />
-              <AttachmentList
+              <AttachmentListComponent
                 attachmentsInfo={attachmentsInfo}
                 setAttachmentsInfo={setAttachmentsInfo}
+                onDelete={(index) => {
+                  setTrashImageIndex(index);
+                  trashImageConfirmModal.openModal();
+                }}
               />
             </div>
           </div>
@@ -435,6 +440,8 @@ export function NewEditPostPage({ isNotice = false }) {
   const navigate = useNavigate();
   const { postId } = useParams();
   const { id: boardId, name: boardName, isGlobalNotice } = useBoard();
+  const AttachmentListComponent =
+    boardId === 14 && isNotice ? NoticeAttachmentList : AttachmentList;
 
   const queryClient = useQueryClient();
 
@@ -661,9 +668,13 @@ export function NewEditPostPage({ isNotice = false }) {
                   setContent(sanitized);
                 }}
               />
-              <AttachmentList
+              <AttachmentListComponent
                 attachmentsInfo={attachmentsInfo}
                 setAttachmentsInfo={setAttachmentsInfo}
+                onDelete={(index) => {
+                  setTrashImageIndex(index);
+                  trashImageConfirmModal.openModal();
+                }}
               />
             </div>
           </div>
