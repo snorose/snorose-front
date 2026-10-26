@@ -22,6 +22,7 @@ import type {
   PairPickupDeviceRequest,
 } from '@/feature/commerce/types';
 import { getCommerceErrorCode } from '@/feature/commerce/utils/commerceRules';
+import { fulfillmentWord } from '@/feature/commerce/utils/saleLabels';
 
 import styles from './PickupDisplayPage.module.css';
 
@@ -63,7 +64,7 @@ export default function PickupDisplayPage() {
     clearSessionCache();
     setConfirmedPickup(null);
     setConnectionMessage('');
-    setPairingErrorMessage('단말 인증이 만료되었어요. 다시 페어링해주세요.');
+    setPairingErrorMessage('단말 인증이 만료되었어요. 다시 연결해주세요.');
   }, [clearPickupDevice, clearSessionCache]);
 
   const handleClearDevice = () => {
@@ -88,22 +89,25 @@ export default function PickupDisplayPage() {
         const errorCode = getCommerceErrorCode(error);
 
         if (errorCode === 7067) {
-          setPairingErrorMessage('페어링 코드가 올바르지 않거나 만료되었어요.');
+          setPairingErrorMessage('연결 코드가 올바르지 않거나 만료되었어요.');
           return;
         }
 
         if (errorCode === 7068) {
           setPairingErrorMessage(
-            '페어링 요청이 너무 많아요. 잠시 후 다시 시도해주세요.'
+            '연결 요청이 너무 많아요. 잠시 후 다시 시도해주세요.'
           );
           return;
         }
 
-        setPairingErrorMessage('단말 페어링에 실패했어요.');
+        setPairingErrorMessage('단말 연결에 실패했어요.');
       },
     });
   };
 
+  const fulfillment = fulfillmentWord(
+    session?.state === 'ARMED' ? session.order.saleType : undefined
+  );
   const handleConfirmPickup = () => {
     if (!deviceToken) return;
 
@@ -126,13 +130,13 @@ export default function PickupDisplayPage() {
             });
             break;
           case 7064:
-            toast.error('수령 확인 시간이 지났어요.');
+            toast.error(`${fulfillment} 확인 시간이 지났어요.`);
             queryClient.invalidateQueries({
               queryKey: QUERY_KEY.commercePickupDeviceSession,
             });
             break;
           case 7066:
-            toast.error('이미 종료된 세션입니다.');
+            toast.error('이미 종료된 확인 요청입니다.');
             queryClient.invalidateQueries({
               queryKey: QUERY_KEY.commercePickupDeviceSession,
             });
@@ -141,10 +145,10 @@ export default function PickupDisplayPage() {
             toast.error('운영자에게 확인해주세요.');
             break;
           case 7046:
-            toast.error('이미 수령 완료된 주문입니다.');
+            toast.error(`이미 ${fulfillment} 완료된 주문입니다.`);
             break;
           default:
-            toast.error('수령 확인에 실패했어요.');
+            toast.error(`${fulfillment} 확인에 실패했어요.`);
         }
       },
     });
@@ -160,7 +164,7 @@ export default function PickupDisplayPage() {
       return;
     }
 
-    setConnectionMessage('수령 세션 상태를 불러오지 못했어요.');
+    setConnectionMessage('확인 요청을 불러오지 못했어요.');
   }, [handleDeviceUnauthorized, sessionError]);
 
   useEffect(() => {
@@ -246,7 +250,7 @@ export default function PickupDisplayPage() {
     return (
       <div className={styles.container}>
         <section className={styles.panel} aria-live='polite'>
-          <FetchLoading>수령 화면 불러오는 중...</FetchLoading>
+          <FetchLoading>확인 화면 불러오는 중...</FetchLoading>
         </section>
       </div>
     );

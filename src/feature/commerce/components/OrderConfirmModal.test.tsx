@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react';
 
 import OrderConfirmModal from '@/feature/commerce/components/OrderConfirmModal';
 
+jest.mock('@/shared/lib', () => jest.requireActual('@/shared/lib/number'));
+
 const items = [
   {
     productId: 1,
@@ -34,8 +36,7 @@ describe('주문 제출 전 확인 모달', () => {
     );
 
     expect(screen.getByText('스노로즈 반다나')).toBeInTheDocument();
-    expect(screen.getByText('네이비 · M')).toBeInTheDocument();
-    expect(screen.getByText('2개')).toBeInTheDocument();
+    expect(screen.getByText('네이비 · M X 2개')).toBeInTheDocument();
     expect(screen.getByText('16,000원')).toBeInTheDocument();
     expect(screen.getByText('010-1111-2222')).toBeInTheDocument();
   });

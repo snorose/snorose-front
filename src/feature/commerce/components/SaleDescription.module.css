@@ -1,0 +1,44 @@
+.description {
+  overflow-wrap: anywhere;
+  font: var(--text-body-1-reg);
+  line-height: 1.8;
+  color: var(--grey-4);
+  white-space: pre-wrap;
+}
+
+.description p {
+  min-height: 1.8em;
+  margin: 0 0 0.7em;
+}
+
+.description h2 {
+  margin: 1.2em 0 0.6em;
+  font-size: 1.4em;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.description > :first-child {
+  margin-top: 0;
+}
+.description > :last-child {
+  margin-bottom: 0;
+}
+.description ul,
+.description ol {
+  padding-left: 1.7em;
+  margin: 0.7em 0;
+}
+.description ul {
+  list-style: disc;
+}
+.description ol {
+  list-style: decimal;
+}
+.description li p {
+  margin: 0;
+}
+.description a {
+  color: var(--blue-4);
+  text-decoration: underline;
+}

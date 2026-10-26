@@ -26,6 +26,7 @@ import {
   isPickUpPending,
   isReview,
 } from '@/feature/commerce/utils/commerceRules';
+import { fulfillmentWord } from '@/feature/commerce/utils/saleLabels';
 
 import styles from './OrderDetailPage.module.css';
 
@@ -60,16 +61,20 @@ function OrderDetailView() {
   } = useCancelConfirmModal();
 
   const { orderStatus, paymentStatus, fulfillmentStatus } = order;
+  const autoPaymentEnabled = order.autoPaymentEnabled !== false;
 
   const showBankInfo =
+    (orderStatus !== 'CANCELLED' && !autoPaymentEnabled) ||
     (orderStatus === 'ACTIVE' && paymentStatus === 'WAITING') ||
     (orderStatus === 'ACTIVE' && paymentStatus === 'REVIEW_REQUIRED');
 
+  const fulfillment = fulfillmentWord(order.saleType);
   const pickUpInfo =
-    (orderStatus === 'ACTIVE' &&
-      paymentStatus === 'PAID' &&
+    order.pickup.method === 'PICKUP' &&
+    ((orderStatus === 'ACTIVE' &&
+      (!autoPaymentEnabled || paymentStatus === 'PAID') &&
       fulfillmentStatus === 'PENDING') ||
-    orderStatus === 'COMPLETED';
+      orderStatus === 'COMPLETED');
 
   const handleCancelOrder = () => {
     if (!order.cancellable || isPending) {
@@ -89,7 +94,11 @@ function OrderDetailView() {
             toast.error('유효한 요청이 아닙니다');
             break;
           case 7017: // PAID / REVIEW_REQUIRED / PICKED_UP
-            toast.error('입금 전에만 취소할 수 있어요');
+            toast.error(
+              autoPaymentEnabled
+                ? '입금 전에만 취소할 수 있어요'
+                : `${fulfillment} 전에만 취소할 수 있어요`
+            );
             break;
           case 7015: // 이미 취소·완료됨 (재요청)
             toast.error('이미 취소된 주문입니다');
@@ -105,6 +114,9 @@ function OrderDetailView() {
       {showBankInfo && (
         <section className={`${styles.info} ${styles.paymentInfo}`}>
           <h2 className={styles.infoTitle}>입금 안내</h2>
+          {!autoPaymentEnabled && (
+            <p>이 판매는 입금 상태 조회를 제공하지 않아요.</p>
+          )}
           <dl className={styles.infoList}>
             <div className={styles.infoItem}>
               <dt>계좌</dt>
@@ -143,7 +155,7 @@ function OrderDetailView() {
             <dt>상품</dt>
             <div className={styles.productItemList}>
               {order.items.map((item) => (
-                <dd>
+                <dd key={`${item.productId}-${item.optionLabel}`}>
                   <div className={styles.productItem}>
                     <span>
                       {item.name} · {item.optionLabel}
@@ -162,27 +174,42 @@ function OrderDetailView() {
           </div>
           <div className={styles.infoItem}>
             <dt>상태</dt>
-            {isPaymentPending(
+            {autoPaymentEnabled &&
+              isPaymentPending(
+                orderStatus,
+                paymentStatus,
+                fulfillmentStatus
+              ) && <dd>입금 대기</dd>}
+            {isPickUpPending(
               orderStatus,
               paymentStatus,
-              fulfillmentStatus
-            ) && <dd>입금 대기</dd>}
-            {isPickUpPending(orderStatus, paymentStatus, fulfillmentStatus) && (
-              <dd>수령 대기</dd>
+              fulfillmentStatus,
+              autoPaymentEnabled
+            ) && <dd>{fulfillment} 대기</dd>}
+            {isPickedUp(
+              orderStatus,
+              paymentStatus,
+              fulfillmentStatus,
+              autoPaymentEnabled
+            ) && <dd>{fulfillment} 완료</dd>}
+            {orderStatus === 'COMPLETED' &&
+              fulfillmentStatus === 'NOT_REQUIRED' && <dd>신청 완료</dd>}
+            {autoPaymentEnabled && isReview(paymentStatus) && (
+              <dd>검토 필요</dd>
             )}
-            {isPickedUp(orderStatus, paymentStatus, fulfillmentStatus) && (
-              <dd>수령 완료</dd>
+            {isCanceled(orderStatus, paymentStatus, autoPaymentEnabled) && (
+              <dd>주문 취소</dd>
             )}
-            {isReview(paymentStatus) && <dd>검토 필요</dd>}
-            {isCanceled(orderStatus, paymentStatus) && <dd>주문 취소</dd>}
-            {isExpired(orderStatus, paymentStatus) && <dd>입금 만료</dd>}
+            {autoPaymentEnabled && isExpired(orderStatus, paymentStatus) && (
+              <dd>입금 만료</dd>
+            )}
           </div>
         </dl>
       </section>
 
       {pickUpInfo && (
         <section className={`${styles.info} ${styles.pickUpInfo}`}>
-          <h2 className={styles.infoTitle}>수령 안내</h2>
+          <h2 className={styles.infoTitle}>{fulfillment} 안내</h2>
           <dl className={styles.infoList}>
             <div className={styles.infoItem}>
               <dt>장소</dt>
@@ -196,9 +223,11 @@ function OrderDetailView() {
         </section>
       )}
 
-      {orderStatus === 'ACTIVE' && paymentStatus === 'REVIEW_REQUIRED' && (
-        <div className={styles.feedback}>{order.reviewNotice}</div>
-      )}
+      {autoPaymentEnabled &&
+        orderStatus === 'ACTIVE' &&
+        paymentStatus === 'REVIEW_REQUIRED' && (
+          <div className={styles.feedback}>{order.reviewNotice}</div>
+        )}
 
       {order.cancellable && (
         <div className={styles.butttonWrapper}>
