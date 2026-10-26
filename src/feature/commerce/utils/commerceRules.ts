@@ -7,6 +7,8 @@ import type {
   SelectedOrderItem,
 } from '@/feature/commerce/types';
 
+import { fulfillmentWord } from './saleLabels';
+
 export function getSelectedOrderItems(
   products: SaleResponse['products'],
   quantityMap: QuantityMap
@@ -55,6 +57,8 @@ export function isProductQuantityLimitReached(
   product: ProductQuantityLimit,
   quantityMap: QuantityMap
 ) {
+  if (product.remainingForBuyer === null) return false;
+
   const draftProductQuantity = Object.values(
     quantityMap[product.productId] ?? {}
   ).reduce((acc, quantity) => acc + quantity, 0);
@@ -74,18 +78,19 @@ export function isPaymentPending(
   return (
     orderStatus === 'ACTIVE' &&
     paymentStatus === 'WAITING' &&
-    fulfillmentStatus === 'PENDING'
+    (fulfillmentStatus === 'PENDING' || fulfillmentStatus === 'NOT_REQUIRED')
   );
 }
 
 export function isPickUpPending(
   orderStatus: OrdersResponse['data'][number]['orderStatus'],
   paymentStatus: OrdersResponse['data'][number]['paymentStatus'],
-  fulfillmentStatus: OrdersResponse['data'][number]['fulfillmentStatus']
+  fulfillmentStatus: OrdersResponse['data'][number]['fulfillmentStatus'],
+  autoPaymentEnabled = true
 ) {
   return (
     orderStatus === 'ACTIVE' &&
-    paymentStatus === 'PAID' &&
+    (autoPaymentEnabled === false || paymentStatus === 'PAID') &&
     fulfillmentStatus === 'PENDING'
   );
 }
@@ -93,11 +98,12 @@ export function isPickUpPending(
 export function isPickedUp(
   orderStatus: OrdersResponse['data'][number]['orderStatus'],
   paymentStatus: OrdersResponse['data'][number]['paymentStatus'],
-  fulfillmentStatus: OrdersResponse['data'][number]['fulfillmentStatus']
+  fulfillmentStatus: OrdersResponse['data'][number]['fulfillmentStatus'],
+  autoPaymentEnabled = true
 ) {
   return (
     orderStatus === 'COMPLETED' &&
-    paymentStatus === 'PAID' &&
+    (autoPaymentEnabled === false || paymentStatus === 'PAID') &&
     fulfillmentStatus === 'PICKED_UP'
   );
 }
@@ -110,9 +116,13 @@ export function isReview(
 
 export function isCanceled(
   orderStatus: OrdersResponse['data'][number]['orderStatus'],
-  paymentStatus: OrdersResponse['data'][number]['paymentStatus']
+  paymentStatus: OrdersResponse['data'][number]['paymentStatus'],
+  autoPaymentEnabled = true
 ) {
-  return orderStatus === 'CANCELLED' && paymentStatus === 'CANCELLED';
+  return (
+    orderStatus === 'CANCELLED' &&
+    (autoPaymentEnabled === false || paymentStatus === 'CANCELLED')
+  );
 }
 
 export function isExpired(
@@ -132,7 +142,7 @@ export function getSaleUnavailableTitle(sale: SaleResponse) {
 
 export function getSaleUnavailableMessage(sale: SaleResponse) {
   if (sale.status === 'CLOSED') {
-    return '이 상품은 새 주문을 받을 수 없어요. 기존 주문과 수령 안내는 판매자의 공지를 확인해주세요.';
+    return `이 상품은 새 주문을 받을 수 없어요. 기존 주문과 ${fulfillmentWord(sale.saleType)} 안내는 판매자의 공지를 확인해주세요.`;
   }
 
   return '현재 이 판매는 새 주문을 받을 수 없어요.';

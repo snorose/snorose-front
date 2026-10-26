@@ -49,7 +49,7 @@ const ActivityTab = ({ userInfo }) => {
           <div className={styles.direct}>
             <div className={styles.text}>
               <span>내 주문 내역</span>
-              <span>지금까지 참여한 공구 주문을 확인해요</span>
+              <span>물품 구매와 강연 신청 내역을 확인해요</span>
             </div>
             <IconChevronRight />
           </div>
@@ -59,8 +59,8 @@ const ActivityTab = ({ userInfo }) => {
           <Link to={'/commerce/pickup-display'}>
             <div className={styles.direct}>
               <div className={styles.text}>
-                <span>수령 단말</span>
-                <span>수령 단말 준비를 시작하세요</span>
+                <span>수령·입장 확인</span>
+                <span>현장에서 수령과 입장을 확인해요</span>
               </div>
               <IconChevronRight />
             </div>

@@ -51,3 +51,18 @@ describe('유효한 연락처', () => {
     expect(isValidPhoneNumber(phoneNumber)).toBe(false);
   });
 });
+
+it('구매 수량 제한이 없는 상품은 잔여 구매 한도를 초과하지 않는다', () => {
+  expect(
+    isProductQuantityLimitReached(
+      { productId: 1, remainingForBuyer: null },
+      { 1: { 1: 0 } }
+    )
+  ).toBe(false);
+  expect(
+    isProductQuantityLimitReached(
+      { productId: 1, remainingForBuyer: null },
+      { 1: { 1: 3 } }
+    )
+  ).toBe(false);
+});

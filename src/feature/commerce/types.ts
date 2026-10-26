@@ -1,4 +1,11 @@
+export type SaleType = 'CAMPAIGN' | 'LECTURE' | 'LISTING';
+export type FulfillmentMethod = 'PICKUP' | 'SHIPPING' | 'NONE';
+
 export type SaleResponse = {
+  saleType?: SaleType;
+  autoPaymentEnabled?: boolean;
+  cashReceiptEnabled?: boolean;
+  fulfillmentMethod?: FulfillmentMethod;
   saleId: number;
   sellerName: string;
   title: string;
@@ -78,6 +85,9 @@ export type OrdersResponse = {
     saleId: number;
     sellerName: string;
     saleTitle: string;
+    saleType?: SaleType;
+    autoPaymentEnabled?: boolean;
+    cashReceiptEnabled?: boolean;
     thumbnailUrl: string;
     itemSummary: string;
     totalAmount: number;
@@ -87,8 +97,9 @@ export type OrdersResponse = {
       | 'PAID'
       | 'REVIEW_REQUIRED'
       | 'EXPIRED'
-      | 'CANCELLED';
-    fulfillmentStatus: 'PENDING' | 'PICKED_UP';
+      | 'CANCELLED'
+      | null;
+    fulfillmentStatus: 'PENDING' | 'PICKED_UP' | 'NOT_REQUIRED';
     paymentDueAt: string;
     createdAt: string;
   }>;
@@ -101,6 +112,9 @@ export type OrderResponse = {
   saleId: number;
   sellerName: string;
   saleTitle: string;
+  saleType?: SaleType;
+  autoPaymentEnabled?: boolean;
+  cashReceiptEnabled?: boolean;
 
   orderStatus: OrderStatus;
   paymentStatus: PaymentStatus;
@@ -124,7 +138,7 @@ export type OrderResponse = {
   paymentDueAt: string;
 
   pickup: {
-    method: 'PICKUP';
+    method: FulfillmentMethod;
     pickupPlace: string;
     pickupInstructions: string;
   };
@@ -189,11 +203,13 @@ export type PickupDeviceSessionResponse =
         buyerName: string;
         studentNumber: string;
         saleTitle: string;
+        saleType?: SaleType;
         items: PickupDeviceOrderItem[];
       };
     };
 
 export type ConfirmPickupSessionResponse = {
+  saleType?: SaleType;
   state: 'CONFIRMED';
   buyerName: string;
   items: PickupDeviceOrderItem[];

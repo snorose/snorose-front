@@ -39,15 +39,15 @@ export default function PickupPairingForm({
 
   return (
     <form className={styles.pairingForm} onSubmit={handleSubmit}>
-      <div className={styles.statusBadge}>단말 페어링</div>
+      <div className={styles.statusBadge}>기기 연결</div>
       <div className={styles.panelHeader}>
-        <h1 className={styles.title}>수령 확인 단말</h1>
+        <h1 className={styles.title}>수령·입장 확인 기기</h1>
         <p className={styles.description}>운영자가 발급한 코드가 필요해요.</p>
       </div>
 
       <div className={styles.fieldList}>
         <div className={styles.field}>
-          <Label htmlFor='pickupPairingCode'>페어링 코드</Label>
+          <Label htmlFor='pickupPairingCode'>연결 코드</Label>
           <NumberInput
             id='pickupPairingCode'
             placeholder='6자리 숫자'
@@ -59,10 +59,10 @@ export default function PickupPairingForm({
         </div>
 
         <div className={styles.field}>
-          <Label htmlFor='pickupDeviceLabel'>단말 이름</Label>
+          <Label htmlFor='pickupDeviceLabel'>기기 이름</Label>
           <TextInput
             id='pickupDeviceLabel'
-            placeholder='예: 명신관 1층 iPad'
+            placeholder='예: 명신관 1층 태블릿'
             value={deviceLabel}
             onChange={setDeviceLabel}
           />
@@ -77,7 +77,7 @@ export default function PickupPairingForm({
         type='submit'
         onClick={() => {}}
       >
-        {isPairing ? '페어링 중...' : '페어링하기'}
+        {isPairing ? '연결 중...' : '연결하기'}
       </PrimaryButton>
     </form>
   );

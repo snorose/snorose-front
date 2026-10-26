@@ -1,3 +1,7 @@
+import {
+  getCashReceiptRequest,
+  isCashReceiptOrderable,
+} from '@/feature/commerce/utils/saleFeatures';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -16,6 +20,7 @@ import PaymentSection from '@/feature/commerce/components/PaymentSection';
 import ProductCarouselSection from '@/feature/commerce/components/ProductCarouselSection';
 import ProductOptionSection from '@/feature/commerce/components/ProductOptionSection';
 import SaleClosedModal from '@/feature/commerce/components/SaleClosedModal';
+import SaleDescription from '@/feature/commerce/components/SaleDescription';
 import { SaleOrderArea } from '@/feature/commerce/components/SaleOrderArea';
 import {
   useCreateOrder,
@@ -112,12 +117,12 @@ function SaleDetailView() {
         saleId,
         clientRequestId: getClientRequestId(),
         buyerContact: phoneNumber,
-        cashReceiptRequest: isCacheReceiptHope
-          ? {
-              phoneNumber: cacheReceiptPhoneNumber,
-              privacyConsent: isCacheReceiptAgree,
-            }
-          : null,
+        cashReceiptRequest: getCashReceiptRequest(
+          sale.cashReceiptEnabled,
+          isCacheReceiptHope,
+          cacheReceiptPhoneNumber,
+          isCacheReceiptAgree
+        ),
         noticeAcceptances,
         items: selectedOrderItems.map(({ variantId, quantity }) => ({
           variantId,
@@ -127,7 +132,11 @@ function SaleDetailView() {
       {
         onSuccess: (data) => {
           resetClientRequestId();
-          toast.info('주문이 완료되었어요.');
+          toast.info(
+            sale.saleType === 'LECTURE'
+              ? '신청이 접수되었어요.'
+              : '주문이 완료되었어요.'
+          );
           navigate(`/commerce/orders/${data.orderNumber}`, { replace: true });
         },
         onError: async (error) => {
@@ -151,7 +160,11 @@ function SaleDetailView() {
               refetchSaleAndResetProducts();
               break;
             case 7005: // 재고 부족
-              toast.error('품절 상품이 포함되었습니다');
+              toast.error(
+                sale.saleType === 'LECTURE'
+                  ? '정원이 찬 참가권이 포함되어 있어요'
+                  : '품절 상품이 포함되었습니다'
+              );
               refetchSaleAndResetProducts();
               break;
             case 7006: // 1인 최대 수량 초과
@@ -174,9 +187,12 @@ function SaleDetailView() {
     );
   };
 
-  const isCacheReceiptOrderable =
-    !isCacheReceiptHope ||
-    (isCacheReceiptAgree && isValidPhoneNumber(cacheReceiptPhoneNumber));
+  const isCacheReceiptOrderable = isCashReceiptOrderable(
+    sale.cashReceiptEnabled,
+    isCacheReceiptHope,
+    cacheReceiptPhoneNumber,
+    isCacheReceiptAgree
+  );
 
   const isBaseOrderable =
     selectedOrderItems.length > 0 &&
@@ -191,18 +207,32 @@ function SaleDetailView() {
 
   return (
     <div className={styles.container}>
-      <BackAppBar title='공구 상품' notFixed />
+      <BackAppBar
+        title={sale.saleType === 'LECTURE' ? '강연 신청' : '물품 판매'}
+        notFixed
+      />
 
       <section className={styles.meta}>
         <div className={styles.metaHeader}>
           <span className={styles.sellerName}>{sale.sellerName}</span>
-          {sale.status === 'CLOSED' && <Chip name='판매 마감' variant='grey' />}
-          {sale.status === 'OPEN' && <Chip name='판매 중' variant='gradient' />}
+          {sale.status === 'CLOSED' && (
+            <Chip
+              name={sale.saleType === 'LECTURE' ? '모집 마감' : '판매 마감'}
+              variant='grey'
+            />
+          )}
+          {sale.status === 'OPEN' && (
+            <Chip
+              name={sale.saleType === 'LECTURE' ? '모집 중' : '판매 중'}
+              variant='gradient'
+            />
+          )}
         </div>
         <h1 className={styles.title}>{sale.title}</h1>
-        <p className={styles.description}>{sale.description}</p>
+        <SaleDescription value={sale.description} />
         <span className={styles.deadline}>
-          {DateTime.format(sale.closesAt, 'MD_HM')} 판매 마감
+          {DateTime.format(sale.closesAt, 'MD_HM')}{' '}
+          {sale.saleType === 'LECTURE' ? '모집 마감' : '판매 마감'}
         </span>
       </section>
 
@@ -212,6 +242,7 @@ function SaleDetailView() {
 
       <SaleOrderArea sale={sale}>
         <ProductOptionSection
+          saleType={sale.saleType}
           products={sale.products}
           quantityMap={quantityMap}
           handlePlusQuantity={handlePlusQuantity}
@@ -229,17 +260,20 @@ function SaleDetailView() {
 
         <div className={styles.border} />
 
-        <CacheReceiptSection
-          isCacheReceiptHope={isCacheReceiptHope}
-          handleCacheReceiptHope={handleCacheReceiptHope}
-          cacheReceiptPhoneNumber={cacheReceiptPhoneNumber}
-          handleCacheReceiptPhoneNumber={handleCacheReceiptPhoneNumber}
-          isCacheReceiptAgree={isCacheReceiptAgree}
-          handleCacheReceiptAgree={handleCacheReceiptAgree}
-        />
+        {sale.cashReceiptEnabled !== false && (
+          <>
+            <CacheReceiptSection
+              isCacheReceiptHope={isCacheReceiptHope}
+              handleCacheReceiptHope={handleCacheReceiptHope}
+              cacheReceiptPhoneNumber={cacheReceiptPhoneNumber}
+              handleCacheReceiptPhoneNumber={handleCacheReceiptPhoneNumber}
+              isCacheReceiptAgree={isCacheReceiptAgree}
+              handleCacheReceiptAgree={handleCacheReceiptAgree}
+            />
 
-        <div className={styles.border} />
-
+            <div className={styles.border} />
+          </>
+        )}
         <NoticeAgreementSection
           notices={sale.notices}
           noticeAcceptanceMap={noticeAcceptanceMap}
@@ -249,6 +283,9 @@ function SaleDetailView() {
         <div className={styles.border} />
 
         <PaymentSection
+          autoPaymentEnabled={sale.autoPaymentEnabled}
+          saleType={sale.saleType}
+          fulfillmentMethod={sale.fulfillmentMethod}
           totalPaymentAmount={totalPaymentAmount}
           isOrderButtonDisabled={!isOrderable}
           onClick={() => openOrderConfirmModal()}
@@ -256,11 +293,15 @@ function SaleDetailView() {
       </SaleOrderArea>
 
       {isSaleClosedModalOpen && (
-        <SaleClosedModal onClose={closeSaleClosedModal} />
+        <SaleClosedModal
+          saleType={sale.saleType}
+          onClose={closeSaleClosedModal}
+        />
       )}
 
       {isOrderConfirmModalOpen && (
         <OrderConfirmModal
+          saleType={sale.saleType}
           selectedOrderItems={selectedOrderItems}
           phoneNumber={phoneNumber}
           totalPaymentAmount={totalPaymentAmount}
@@ -279,7 +320,7 @@ function SaleDetailView() {
 function SaleDetailFeedback({ message }: { message: string }) {
   return (
     <div className={styles.container}>
-      <BackAppBar title='공구 상품' notFixed />
+      <BackAppBar title='판매 안내' notFixed />
       <section className={styles.feedback} aria-live='polite'>
         {message}
       </section>
