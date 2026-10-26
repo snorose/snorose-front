@@ -1,215 +1,61 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import calendarImage from './calendar.png';
-import eventImage from './event.png';
-import newBoard from './newBoard.png';
+import { renderPopupMarkdown } from './markdown';
 import styles from './PopUpContents.module.css';
 
-/**
- * @typedef {Object} PopupLink
- * @property {string} title - 링크 텍스트
- * @property {string} url - 링크 URL
- * @property {boolean} [isExternal=false] - 외부 링크 여부 (true면 새 탭, false면 SPA 내부 이동)
- */
-
-/**
- * @typedef {Object} PopupContent
- * @property {string} title - 팝업 섹션 제목
- * @property {string | null} description - 팝업 섹션 설명
- * @property {string[] | null} contentList - 본문 내용 배열 (리스트 아이템)
- * @property {PopupLink[] | null} link - 링크 목록
- * @property {string | null} image - 이미지 경로
- * @property {string} startDate - 시작 날짜 (YYYY-MM-DD)
- * @property {string} endDate - 종료 날짜 (YYYY-MM-DD)
- */
-
-/** @type {PopupContent[]} */
-const POPUP_CONTENTS = [
-  {
-    title: '[EVENT] 스노로즈 X 웰라쥬 체험단 이벤트 🎁✨',
-    description: '무너진 피부에 #속수분텐션업할 시간!',
-    contentList: [
-      '모집 인원: 스노로즈 가입자 중 숙명여대 재학생, 휴학생, 졸업생 포함 총 50인',
-      '체험 제품: 웰라쥬 리얼 히알루로닉 수딩 크림 본품(80ml)',
-      '모집 기간: 4월 27일(월) ~ 5월 4일(월)',
-    ],
-    link: [
-      {
-        title: '이벤트 관련 링크 (스노로즈 공지)',
-        url: '/board/notice/post/1895414',
-        isExternal: false,
-      },
-    ],
-    image: eventImage,
-    startDate: '2026-04-28',
-    endDate: '2026-05-04',
-  },
-  {
-    title: '숙플레이스 및 주거 게시판 오픈 이벤트 안내',
-    description:
-      '숙플레이스와 주거 게시판 오픈을 기념해 후기 이벤트가 진행됩니다.',
-    contentList: [
-      '참여 기간: 2026년 9월 1일(화) ~ 9월 22일(화)',
-      '참여 방법: 숙플레이스 또는 주거 게시판에 필수 해시태그와 조건에 맞춰 후기 작성',
-      '보상: 조건 충족 참여자 전원 10 point, 우수 작성자 추가 20 point 지급',
-    ],
-    image: newBoard,
-    link: [
-      {
-        title: '스노로즈 공지',
-        url: '/board/notice/post/1915197',
-        isExternal: false,
-      },
-    ],
-    startDate: '2026-08-30',
-    endDate: '2026-09-05',
-  },
-  // {
-  //   title: '[공지] 스노로즈 서버 점검 안내',
-  //   description: '안정적인 서비스 제공을 위한 서버 점검이 진행됩니다.',
-  //   contentList: [
-  //     '일시: 2026년 10월 3일 (토) 14:00 ~ 18:00',
-  //     '점검 시간 동안 스노로즈 이용이 일시 중단됩니다.',
-  //   ],
-  //   link: [
-  //     {
-  //       title: '스노로즈 공지',
-  //       url: '/board/notice/post/1922743',
-  //       isExternal: false,
-  //     },
-  //   ],
-  //   startDate: '2026-09-28',
-  //   endDate: '2026-10-03',
-  // },
-  {
-    title: '[블로그] 스노로즈 초청강연 - 유트루 편',
-    description:
-      '지난 해 진행했던 첫 초청 강연의 비하인드와 강연 당일 현장을 담은 이벤트기획팀의 이야기를 확인해 보세요.',
-    link: [
-      {
-        title: '블로그 링크 (노션)',
-        url: 'https://snorose.notion.site/3a87ef0aa3bf80948861e5ab33627445',
-        isExternal: true,
-      },
-    ],
-    startDate: '2026-07-27',
-    endDate: '2026-08-10',
-  },
-  {
-    title: '[공지] 포인트 미지급 기간',
-    contentList: ['일시: 2026/10/13(화) ~ 2026/10/26(월)'],
-    startDate: '2026-10-07',
-    endDate: '2026-10-14',
-  },
-  {
-    title: '[공지] 시험후기 작성 기간 안내',
-    contentList: ['일시: 2026/10/27(화) ~ 2026/11/02(월)'],
-    startDate: '2026-10-22',
-    endDate: '2026-10-29',
-  },
-  {
-    title: '[캘린더] 10월 스노로즈 일정',
-    image: calendarImage,
-    startDate: '2026-09-28',
-    endDate: '2026-10-10',
-  },
-];
-
-/** @type {string[]} */
 const POPUP_INFO_CONTENTS = [
   '스노로즈 인스타그램(@snorose1906)에서 월별 스노로즈 일정을 확인할 수 있습니다.',
   '공식 문의 창구 [이메일(snorose1906@gmail.com), 카카오톡 1:1 문의] 이외의 문의는 받고 있지 않습니다. 공식 문의 창구 이외의 문의 글은 답변 없이 삭제될 수 있음을 알려드립니다.',
 ];
 
-// 한국 시간대 기준 오늘 날짜 객체 생성
-const getTodayInKorea = () => {
-  const now = new Date();
-  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-  const koreaTime = new Date(utc + 9 * 3600000); // UTC+9
-  koreaTime.setHours(0, 0, 0, 0);
-
-  return koreaTime;
-};
-
-// 날짜 범위 내에 오늘이 있는지 확인
-const isDateInRange = (today, startDate, endDate) => {
-  const startStr = startDate?.trim?.() ?? startDate;
-  const endStr = endDate?.trim?.() ?? endDate;
-
-  const start = new Date(`${startStr}T00:00:00`);
-  const end = new Date(`${endStr}T23:59:59`);
-
-  return start <= today && today <= end;
-};
-
-// 유효한 컨텐츠 필터링 (날짜 기반)
-export const getFilteredContents = () => {
-  const todayInKorea = getTodayInKorea();
-
-  return POPUP_CONTENTS.filter((section) =>
-    isDateInRange(todayInKorea, section.startDate, section.endDate)
-  );
-};
-
 export const PopUpContents = ({ filteredContents }) => {
-  if (!filteredContents.length) {
-    return null;
-  }
+  const navigate = useNavigate();
+  const handleLinkClick = (event) => {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    )
+      return;
+    const anchor = event.target.closest('a');
+    if (
+      !anchor ||
+      anchor.target ||
+      !anchor.hasAttribute('href') ||
+      anchor.origin !== window.location.origin
+    )
+      return;
+    event.preventDefault();
+    navigate(`${anchor.pathname}${anchor.search}${anchor.hash}`);
+  };
+  if (!filteredContents.length) return null;
 
   return (
     <div className={styles.popupSectionContainer}>
       {filteredContents.map((section) => (
-        <div key={section.title} className={styles.popupSection}>
-          {section.title && (
-            <h3 className={styles.popupSectionTitle}>{section.title}</h3>
-          )}
-
+        <section key={section.id} className={styles.popupSection}>
+          <h3 className={styles.popupSectionTitle}>{section.title}</h3>
           {section.description && (
-            <p className={styles.popupSectionContent}>{section.description}</p>
+            <div
+              className={styles.popupSectionContent}
+              onClick={handleLinkClick}
+              dangerouslySetInnerHTML={{
+                __html: renderPopupMarkdown(section.description),
+              }}
+            />
           )}
-
-          {(section.contentList || section.link) && (
-            <ul
-              className={`${styles.popupSectionContent} ${styles.popupSectionContentList}`}
-            >
-              {section.contentList?.map((content) => (
-                <li key={content} className={styles.popupSectionListItem}>
-                  {content}
-                </li>
-              ))}
-
-              {section.link?.map((link) => (
-                <li
-                  key={link.title}
-                  className={`${styles.popupSectionListItem} ${styles.popupSectionLink}`}
-                >
-                  {link.isExternal ? (
-                    <a
-                      href={link.url}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                    >
-                      {link.title}
-                    </a>
-                  ) : (
-                    <Link to={link.url}>{link.title}</Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-
-          {section.image && (
+          {section.imageUrl && (
             <img
-              src={section.image}
+              src={section.imageUrl}
               alt={section.title}
               className={styles.popupSectionImage}
             />
           )}
-        </div>
+        </section>
       ))}
-
-      {/* 유효한 컨텐츠가 있을 때만 표시 */}
       <div className={styles.popupSection}>
         <ul
           className={`${styles.popupSectionContentList} ${styles.popupSectionContent}`}

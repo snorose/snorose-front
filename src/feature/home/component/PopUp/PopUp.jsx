@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   IconMultiCheckBlueCircle,
   IconMultiCheckGreyCircle,
 } from '@snorose/icons';
 
-import { usePopUp } from '@/feature/home/hook';
+import usePopUp from '@/feature/home/hook/usePopUp';
 
 import styles from './PopUp.module.css';
-import { getFilteredContents, PopUpContents } from './PopUpContents';
+import { PopUpContents } from './PopUpContents';
 
 const POPUP_HIDE_BUTTONS = [
   { label: '오늘 하루 보지 않기', duration: 0 },
@@ -16,9 +16,55 @@ const POPUP_HIDE_BUTTONS = [
 ];
 
 export default function PopUp() {
-  const { isPopUpOpened, closePopUp } = usePopUp();
+  const { isPopUpOpened, closePopUp, filteredContents } = usePopUp();
   const [selectedPopupHideDuration, setSelectedPopupHideDuration] = useState();
-  const filteredContents = getFilteredContents();
+  const dialogRef = useRef(null);
+
+  useEffect(() => {
+    if (!isPopUpOpened) return;
+    const previousFocus = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const dialog = dialogRef.current;
+    dialog.focus();
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closePopUp();
+      }
+      if (event.key !== 'Tab') return;
+      const items = [
+        ...dialog.querySelectorAll(
+          'a[href], button:not(:disabled), [tabindex="0"]'
+        ),
+      ];
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (!first) {
+        event.preventDefault();
+        return;
+      }
+      if (
+        !dialog.contains(document.activeElement) ||
+        document.activeElement === dialog
+      ) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      } else if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      if (previousFocus?.isConnected) previousFocus.focus();
+    };
+  }, [isPopUpOpened, closePopUp]);
 
   const handleHideButtonClick = (popupHideDuration) => {
     setSelectedPopupHideDuration((prevDuration) =>
@@ -36,10 +82,19 @@ export default function PopUp() {
 
   return (
     <section className={styles.container}>
-      <div className={styles.popUp}>
+      <div
+        ref={dialogRef}
+        className={styles.popUp}
+        role='dialog'
+        aria-modal='true'
+        aria-labelledby='home-popup-title'
+        tabIndex={-1}
+      >
         <div className={styles.top}>
           <div className={styles.notice}>
-            <span className={styles.popupTitle}>스노로즈 공지</span>
+            <h2 id='home-popup-title' className={styles.popupTitle}>
+              스노로즈 공지
+            </h2>
             <p className={styles.popupContent}>
               안녕하세요!
               <br />
