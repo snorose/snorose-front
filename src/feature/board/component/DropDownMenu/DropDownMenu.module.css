@@ -1,14 +1,20 @@
 .container {
-  margin-top: 0.8rem;
-  width: calc(100% - 4rem);
-  padding: 1.3rem 0.6rem;
-  background-color: var(--grey-2);
-  border-radius: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  row-gap: 0.5rem;
   position: absolute;
   z-index: var(--z-index-dropdown);
+
+  display: flex;
+
+  flex-direction: column;
+
+  row-gap: 0.5rem;
+
+  width: calc(100% - 4rem);
+
+  padding: 1.3rem 0.6rem;
+  margin-top: 0.8rem;
+
+  background-color: var(--grey-2);
+  border-radius: 0.5rem;
 }
 
 .invisible {
@@ -16,27 +22,39 @@
 }
 
 .listBar {
+  display: flex;
+
+  align-items: center;
+
   width: 100%;
   height: 4rem;
-  display: flex;
-  align-items: center;
-  border-radius: 0.5rem;
-  background-color: transparent;
+
   padding: 0 1.3rem;
+
   color: var(--grey-3-1);
+
   cursor: pointer;
+
+  background-color: transparent;
+  border-radius: 0.5rem;
 }
 
 .SelectedlistBar {
+  display: flex;
+
+  align-items: center;
+
   width: 100%;
   height: 4rem;
-  display: flex;
-  align-items: center;
-  border-radius: 0.5rem;
-  background-color: var(--blue-1);
+
   padding: 0 1.3rem;
+
   color: var(--blue-4);
+
   cursor: pointer;
+
+  background-color: var(--blue-1);
+  border-radius: 0.5rem;
 }
 
 .item {
