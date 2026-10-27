@@ -230,7 +230,7 @@ export default function EditEventPage() {
     <>
       <div className={styles.container}>
         <div className={styles.top}>
-          <CloseAppBar backgroundColor={'#eaf5fd'}>
+          <CloseAppBar backgroundColor='var(--white-2)'>
             <ActionButton onClick={handleSubmit} disabled={!submitDisabled}>
               수정
             </ActionButton>
