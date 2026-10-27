@@ -1,4 +1,6 @@
 .carousel {
+  --swiper-navigation-sides-offset: 2rem;
+
   position: relative;
   display: flex;
   width: 100%;
@@ -17,16 +19,8 @@
   border-radius: 1rem;
 }
 
-.carousel :global(.swiper-button-prev) {
-  left: 2rem;
-}
-
-.carousel :global(.swiper-button-next) {
-  right: 2rem;
-}
-
-.carousel :global(.swiper-button-prev),
-.carousel :global(.swiper-button-next) {
+.carousel:global(.swiper-horizontal) :global(.swiper-button-prev),
+.carousel:global(.swiper-horizontal) :global(.swiper-button-next) {
   width: calc(var(--swiper-navigation-size) / 44 * 27);
   margin: 0;
   color: var(--blue-1);
