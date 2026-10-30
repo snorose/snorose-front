@@ -1,17 +1,22 @@
 .layout {
+  display: inline-flex;
+
+  gap: 1rem;
+
+  align-items: center;
+
   max-width: calc(100% - 2 * var(--default-margin));
+
   padding: 0.5rem 1.2rem;
 
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
+  font: var(--text-body-2-reg);
+
+  color: var(--blue-4);
+
+  word-break: keep-all;
 
   background: var(--blue-2);
   border-radius: 0.5rem;
-
-  font: var(--text-body-2-reg);
-  color: var(--blue-4);
-  word-break: keep-all;
 }
 
 .name {
