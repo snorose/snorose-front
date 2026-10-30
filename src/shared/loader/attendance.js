@@ -1,5 +1,7 @@
 import { json } from 'react-router-dom';
 
+import { isMaintenanceBlockedError } from '@/feature/maintenance/access';
+
 import { isAttendanceCheckedToday } from '@/apis';
 
 export const attendanceLoader = async () => {
@@ -14,6 +16,7 @@ export const attendanceLoader = async () => {
 
     return json({ attendance });
   } catch (error) {
+    if (isMaintenanceBlockedError(error)) throw error;
     if (error.response?.status === 401) {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');

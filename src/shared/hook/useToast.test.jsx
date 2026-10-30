@@ -4,6 +4,11 @@ import { act, cleanup, renderHook, screen } from '@testing-library/react';
 
 import { ToastProvider } from '@/shared/context/ToastContext';
 
+import {
+  MAINTENANCE_END,
+  MAINTENANCE_START,
+} from '@/feature/maintenance/config';
+
 import useToast from './useToast';
 
 // Keep the actual provider, hook and Toast; isolate only unrelated barrel exports/icons.
@@ -73,6 +78,24 @@ it('keeps one copy of a message when called repeatedly before a render', () => {
   expect(screen.queryByLabelText('success')).not.toBeInTheDocument();
   expect(screen.queryByLabelText('error')).not.toBeInTheDocument();
 });
+
+it.each(['success', 'error', 'info'])(
+  '%s is blocked during maintenance and resumes afterwards',
+  (variant) => {
+    jest.setSystemTime(MAINTENANCE_START.getTime() - 1);
+    const { result } = renderHook(() => useToast(), { wrapper });
+    act(() => result.current.toast[variant]('점검 전'));
+    expect(screen.getByText('점검 전')).toBeInTheDocument();
+
+    jest.setSystemTime(MAINTENANCE_START);
+    act(() => result.current.toast[variant]('점검 중'));
+    expect(screen.queryByText('점검 중')).not.toBeInTheDocument();
+
+    jest.setSystemTime(MAINTENANCE_END.getTime() + 1);
+    act(() => result.current.toast[variant]('점검 후'));
+    expect(screen.getByText('점검 후')).toBeInTheDocument();
+  }
+);
 
 it('restarts a replaced message timer without extending other messages', () => {
   const { result } = renderHook(() => useToast(), { wrapper });
