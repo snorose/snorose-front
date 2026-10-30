@@ -26,6 +26,31 @@ import styles from './PopUpContents.module.css';
 /** @type {PopupContent[]} */
 const POPUP_CONTENTS = [
   {
+    title: '2026 하반기 스노로즈 신입 리자 모집 안내',
+    description:
+      '오직 숙명인으로만 구성된 숙명인 커뮤니티, 스노로즈에서 신입 리자를 모집합니다. 많은 관심과 지원 부탁드립니다!',
+    contentList: [
+      '모집 분야: 운영기획팀(회계)',
+      '지원 자격: 스노로즈 정회원인 숙명인 모두 (재학, 휴학, 졸업 여부 무관)',
+      '지원 방법: 아래 구글폼을 통한 지원서 제출',
+      '서류 모집: 2026.10.27(화) ~ 11.05(목) 23:59',
+    ],
+    link: [
+      {
+        title: '모집 공고 자세히 보기',
+        url: 'https://snorose.notion.site/10c7ef0aa3bf8027a04ee35b7c521e12',
+        isExternal: true,
+      },
+      {
+        title: '지원서 제출하기 (구글폼)',
+        url: 'https://forms.gle/1h8JjJZgiPSNi9Ev5',
+        isExternal: true,
+      },
+    ],
+    startDate: '2026-10-27',
+    endDate: '2026-11-05',
+  },
+  {
     title: '[EVENT] 스노로즈 X 웰라쥬 체험단 이벤트 🎁✨',
     description: '무너진 피부에 #속수분텐션업할 시간!',
     contentList: [
