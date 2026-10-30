@@ -64,7 +64,7 @@ export default function ReviewDownload({
 
       queryClient.setQueryData([QUERY_KEY.userInfo], (prev) => ({
         ...prev,
-        balance: isDownloaded ? prev.balance : prev.balance - 50,
+        balance: isWriter || isDownloaded ? prev.balance : prev.balance - 50,
       }));
 
       toast.success(TOAST.EXAM_REVIEW.download);
