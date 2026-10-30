@@ -1,27 +1,8 @@
-import * as Sentry from '@sentry/react';
-
 export async function registerServiceWorker(
   scriptUrl: string | URL,
   option?: RegistrationOptions
 ): Promise<ServiceWorkerRegistration> {
-  try {
-    return await navigator.serviceWorker.register(scriptUrl, option);
-  } catch (error) {
-    Sentry.captureException(error, {
-      tags: {
-        operation: 'service_worker.register',
-      },
-      extra: {
-        scriptUrl: String(scriptUrl),
-        requestedScope: option?.scope,
-        workerType: option?.type ?? 'classic',
-        isSecureContext: window.isSecureContext,
-        online: navigator.onLine,
-      },
-    });
-
-    throw error;
-  }
+  return await navigator.serviceWorker.register(scriptUrl, option);
 }
 
 export function waitUntilActive(
