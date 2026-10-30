@@ -1,10 +1,13 @@
-import { useRef, useState, useContext } from 'react';
-import { TOAST, QUERY_KEY } from '@/shared/constant';
-import { useToast, useAuth } from '@/shared/hook';
+import { useContext, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
 import { useQueryClient } from '@tanstack/react-query';
-import { deleteExamReview } from '@/apis';
+
+import { QUERY_KEY, TOAST } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
+import { useAuth, useToast } from '@/shared/hook';
+
+import { deleteExamReview } from '@/apis';
 
 export function useDeleteExamReviewHandler() {
   const { postId } = useParams();
@@ -25,13 +28,13 @@ export function useDeleteExamReviewHandler() {
     try {
       const response = await deleteExamReview(postId);
       if (response.status === 200) {
-        toast({ message: TOAST.EXAM_REVIEW.delete, variant: 'success' });
+        toast.success(TOAST.EXAM_REVIEW.delete);
         navigate(-1);
         queryClient.removeQueries([QUERY_KEY.review, postId]);
         invalidUserInfoQuery();
       }
     } catch ({ response }) {
-      toast({ message: response.data.message });
+      toast.error(response.data.message);
     } finally {
       submitDisabledRef.current = false;
       setSubmitDisabled(false);

@@ -7,6 +7,16 @@ const TOAST = Object.freeze({
     delete: '시험후기가 삭제되었어요',
     edit: '시험후기가 수정되었어요',
     download: '다운로드가 완료되었어요',
+    emptyLectureName: '강의명을 입력해주세요',
+    emptyProfessor: '교수명을 입력해주세요',
+    emptyClassNumber: '수강 분반을 입력해주세요',
+    emptyLectureYear: '수강 연도를 선택해주세요',
+    emptySemester: '수강 학기를 선택해주세요',
+    emptyLectureType: '강의 종류를 선택해주세요',
+    emptyExamType: '시험 종류를 선택해주세요',
+    emptyQuestionDetail: '문항 수 및 시험 유형 설명을 입력해주세요',
+    emptyFile: '첨부파일을 업로드해주세요',
+    invalidFileName: '파일 이름에 [ 또는 ] 문자는 사용할 수 없어요.',
   },
   POST: {
     create: '게시글을 등록했어요 (+2P)',
@@ -16,6 +26,8 @@ const TOAST = Object.freeze({
     edit: '게시글이 수정되었어요',
     emptyTitle: '게시글 제목을 작성해주세요',
     emptyContent: '게시글 본문을 작성해주세요',
+    selectBoard: '게시판을 선택해주세요',
+    selectCategory: '카테고리를 선택해주세요',
   },
   COMMENT: {
     create: '댓글을 등록했어요 (+1P)',
@@ -26,13 +38,15 @@ const TOAST = Object.freeze({
     emptyContent: '댓글 내용을 입력하세요',
     tooLongContent: '댓글은 1,000자 이내로 작성해주세요',
   },
+  INQUIRY: {
+    create: '문의글을 등록했어요',
+    update: '문의글이 수정되었어요',
+    delete: '문의글이 삭제되었어요',
+  },
   REPORT: {
-    commentSuccess: '댓글이 신고되었어요',
-    commentFail: '댓글 신고에 실패했어요.',
-    postSuccess: '게시글이 신고되었어요',
-    postFail: '게시글 신고에 실패했어요',
-    userSuccess: '사용자가 신고되었어요',
-    userFail: '사용자 신고에 실패했어요',
+    create: '신고글을 등록했어요',
+    update: '신고글을 수정했어요',
+    delete: '신고글이 삭제되었어요',
   },
   USER: {
     editPassword: '비밀번호가 수정되었어요',
@@ -53,7 +67,9 @@ const TOAST = Object.freeze({
   },
   COPY_AND_PASTE: {
     success: '복사되었어요',
+    linkSuccess: '링크가 복사되었어요',
     fail: '복사에 실패했어요',
+    linkFail: '링크 복사에 실패했어요',
   },
   ATTACHMENT: {
     imageFileSizeError: '파일 크기는 최대 7MB까지 업로드할 수 있어요',

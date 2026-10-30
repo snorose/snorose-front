@@ -12,6 +12,11 @@
   margin-bottom: 1.9rem;
 }
 
+
+.icon path {
+  stroke-width: 2.4;
+}
+
 .title {
   font: var(--text-title-1-bold);
   margin-bottom: 0.6rem;

@@ -50,6 +50,28 @@ export const getDownloadedExamReviews = async (params = {}) => {
   return response?.data.result;
 };
 
+const INQUIRY_REPORT_BOARD_NAME = {
+  INQUIRY: '문의',
+  REPORT: '신고',
+};
+
+export const readInquiryAndReportList = async (params = {}) => {
+  const response = await authAxios.get('/v1/users/mypage/inquiries', {
+    params,
+  });
+
+  const result = response?.data.result;
+  const data = result.data.map((item) => ({
+    ...item,
+    boardName: INQUIRY_REPORT_BOARD_NAME[item.group],
+  }));
+
+  return {
+    hasNext: result.hasNext,
+    data,
+  };
+};
+
 export const getScrapedExamReviews = async (params) => {
   const response = await authAxios.get('/v1/scraps/reviews', {
     params,

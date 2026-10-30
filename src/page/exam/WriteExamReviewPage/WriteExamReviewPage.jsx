@@ -1,11 +1,9 @@
-import { useState, useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { IconMultiClipboardBlue } from '@snorose/icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { postExamReview, checkExamReviewDuplication } from '@/apis';
-
-import { useAuth, useBlocker, useToast } from '@/shared/hook';
-import { ModalContext } from '@/shared/context/ModalContext';
 import {
   ActionButton,
   CheckBox,
@@ -13,7 +11,6 @@ import {
   ConfirmModal,
   Dropdown,
   FetchLoadingOverlay,
-  Icon,
   Label,
   NumberInput,
   Textarea,
@@ -21,20 +18,25 @@ import {
 } from '@/shared/component';
 import {
   BOARD_ID,
+  CONFIRM_MODAL_TEXT,
   MUTATION_KEY,
   QUERY_KEY,
   TOAST,
-  CONFIRM_MODAL_TEXT,
 } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
+import { useAuth, useBlocker, useToast } from '@/shared/hook';
 
 import { CategoryButton } from '@/feature/exam/component';
 import {
   EXAM_TYPES,
   FILE_MAX_SIZE,
+  INVALID_FILE_NAME_REGEX,
   LECTURE_TYPES,
   SEMESTERS,
   YEARS,
 } from '@/feature/exam/constant';
+
+import { checkExamReviewDuplication, postExamReview } from '@/apis';
 
 import styles from './WriteExamReviewPage.module.css';
 
@@ -58,18 +60,18 @@ export default function WriteExamReviewPage() {
 
       queryClient.removeQueries(QUERY_KEY.post());
       invalidUserInfoQuery();
-      toast({ message: TOAST.EXAM_REVIEW.create, variant: 'success' });
+      toast.success(TOAST.EXAM_REVIEW.create);
       navigate(`/board/exam-review/post/${postId}`, { replace: true });
     },
     onError: ({ response }) => {
       const { status } = response;
 
       if (status === 500) {
-        toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
+        toast.error(TOAST.ERROR.SERVER);
         return;
       }
 
-      toast({ message: response.data.message, variant: 'error' });
+      toast.error(response.data.message);
     },
     onSettled: () => {
       setLoading(false);
@@ -91,17 +93,6 @@ export default function WriteExamReviewPage() {
 
   const [isCalled, setIsCalled] = useState();
   const [loading, setLoading] = useState();
-
-  const pass =
-    lectureName.trim() &&
-    professor.trim() &&
-    Object.keys(lectureType).length > 0 &&
-    Object.keys(examType).length > 0 &&
-    Object.keys(lectureYear).length > 0 &&
-    Object.keys(semester).length > 0 &&
-    classNumber &&
-    questionDetail.trim() &&
-    file;
 
   // navigation guard
 
@@ -149,6 +140,12 @@ export default function WriteExamReviewPage() {
       alert('파일은 최대 10MB까지 업로드 할 수 있습니다.');
       return;
     }
+
+    if (selectedFile?.name && INVALID_FILE_NAME_REGEX.test(selectedFile.name)) {
+      toast.info(TOAST.EXAM_REVIEW.invalidFileName);
+      return;
+    }
+
     setFile(selectedFile);
   };
 
@@ -163,7 +160,7 @@ export default function WriteExamReviewPage() {
         examType: examType?.id,
       });
     } catch (error) {
-      toast({ message: error, variant: 'error' });
+      toast.error(error);
       setIsCalled(false);
       throw error;
     }
@@ -183,38 +180,66 @@ export default function WriteExamReviewPage() {
     isOnline,
   };
 
+  const handleSubmit = async () => {
+    if (!lectureName.trim()) {
+      toast.info(TOAST.EXAM_REVIEW.emptyLectureName);
+      return;
+    }
+    if (!professor.trim()) {
+      toast.info(TOAST.EXAM_REVIEW.emptyProfessor);
+      return;
+    }
+    if (!classNumber.trim()) {
+      toast.info(TOAST.EXAM_REVIEW.emptyClassNumber);
+      return;
+    }
+    if (Object.keys(lectureYear).length === 0) {
+      toast.info(TOAST.EXAM_REVIEW.emptyLectureYear);
+      return;
+    }
+    if (Object.keys(semester).length === 0) {
+      toast.info(TOAST.EXAM_REVIEW.emptySemester);
+      return;
+    }
+    if (Object.keys(lectureType).length === 0) {
+      toast.info(TOAST.EXAM_REVIEW.emptyLectureType);
+      return;
+    }
+    if (Object.keys(examType).length === 0) {
+      toast.info(TOAST.EXAM_REVIEW.emptyExamType);
+      return;
+    }
+    if (!questionDetail.trim()) {
+      toast.info(TOAST.EXAM_REVIEW.emptyQuestionDetail);
+      return;
+    }
+    if (!file) {
+      toast.info(TOAST.EXAM_REVIEW.emptyFile);
+      return;
+    }
+
+    if (isCalled) return;
+    setIsCalled(true);
+
+    try {
+      const response = await checkDuplication();
+
+      if (response?.data.result.isDuplicated) {
+        setModal({ id: 'exam-review-duplication', type: null });
+        return;
+      }
+    } catch (error) {
+      return;
+    }
+
+    setLoading(true);
+    createExamReview.mutate({ data: formBody, file });
+  };
+
   return (
     <section className={styles.container}>
       <CloseAppBar>
-        <ActionButton
-          onClick={async () => {
-            if (isCalled) {
-              return;
-            }
-
-            setIsCalled(true);
-
-            try {
-              const response = await checkDuplication();
-
-              if (response?.data.result.isDuplicated) {
-                setModal({ id: 'exam-review-duplication', type: null });
-                return;
-              }
-            } catch (error) {
-              return;
-            }
-
-            setLoading(true);
-            createExamReview.mutate({
-              data: formBody,
-              file,
-            });
-          }}
-          disabled={!pass}
-        >
-          게시
-        </ActionButton>
+        <ActionButton onClick={handleSubmit}>게시</ActionButton>
       </CloseAppBar>
 
       <div className={styles.top}>
@@ -225,7 +250,7 @@ export default function WriteExamReviewPage() {
           <TextInput
             id='lectureName'
             value={lectureName}
-            onChange={(next) => setLectureName(next)}
+            onChange={(next) => setLectureName(next.replace(/\s/g, ''))}
             placeholder='강의명을 입력해주세요'
           />
         </div>
@@ -353,7 +378,7 @@ export default function WriteExamReviewPage() {
 
       <div className={styles.file}>
         <div className={styles.tag}>
-          <Icon id='clip-board-list' width={18} height={19} fill='#BFD7EC' />
+          <IconMultiClipboardBlue width={21} height={22} />
           <span className={styles.label}>첨부파일</span>
           <span className={styles.required}></span>
         </div>
@@ -389,7 +414,7 @@ export default function WriteExamReviewPage() {
       {/* 페이지 이탈 방지 모달 */}
       {modal.id === 'exit-page' && (
         <ConfirmModal
-          modalText={CONFIRM_MODAL_TEXT.EXIT_PAGE}
+          modalText={CONFIRM_MODAL_TEXT.EXAM_EXIT_PAGE}
           onConfirm={handleExitPage}
         />
       )}

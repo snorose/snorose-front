@@ -1,6 +1,12 @@
 import { Suspense } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import {
+  IconGear,
+  IconMultiBellPink,
+  IllustrationBellEmpty,
+} from '@snorose/icons';
 import {
   QueryErrorResetBoundary,
   useIsFetching,
@@ -10,20 +16,17 @@ import {
 import {
   AppBar,
   FetchLoading,
-  Icon,
   NewButton,
   ServerErrorFallback,
 } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
 
+import { CategoryTab, NotificationItem } from '@/feature/alert/component';
+import { CATEGORY } from '@/feature/alert/constant';
 import {
   useNotification,
   useReadNotifications,
 } from '@/feature/alert/hook/notification';
-import { CategoryTab, NotificationItem } from '@/feature/alert/component';
-import { CATEGORY } from '@/feature/alert/constant';
-
-import { noAlertIllustration } from '@/assets/illustrations';
 
 import style from './AlertPage.module.css';
 
@@ -50,9 +53,9 @@ export default function AlertPage() {
   return (
     <div className={style.container}>
       <AppBar title='알림'>
-        <Icon
+        <IconGear
           className={style.settingIcon}
-          id='setting'
+          color='var(--blue-4)'
           width='24'
           height='24'
           onClick={() => navigate('/alert/setting')}
@@ -61,7 +64,7 @@ export default function AlertPage() {
 
       <div className={style.top}>
         <div className={style.notificationBar}>
-          <Icon id='notice-bell' width={13} height={16} />
+          <IconMultiBellPink width={13} height={16} />
           <p>모든 알림은 14일 후 자동으로 삭제돼요!</p>
         </div>
       </div>
@@ -135,23 +138,37 @@ function NotificationList({ category }) {
   const { data: notifications } = useNotification(category);
   const { markNotificationAsRead } = useReadNotifications();
 
-  const read = async (item) => {
-    await markNotificationAsRead.mutate(item);
+  const openNotificationUrl = (url, isExternal = false) => {
+    const nextUrl = typeof url === 'string' ? url.trim() : '';
 
-    const url = typeof item.url === 'string' ? item.url.trim() : '';
-    if (!url || url === '/') return;
-    navigate(url);
+    if (!nextUrl || nextUrl === '/') return;
+
+    if (
+      isExternal ||
+      /^https?:\/\//i.test(nextUrl) ||
+      nextUrl.startsWith('mailto:')
+    ) {
+      window.open(nextUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    navigate(nextUrl);
+  };
+
+  const read = async (item) => {
+    await markNotificationAsRead.mutateAsync(item);
+    openNotificationUrl(item.url, item.isExternal);
   };
 
   if (notifications.length === 0) {
     return (
       <div className={style.noAlertContainer}>
-        <img
+        <IllustrationBellEmpty
           className={style.noAlertIllustration}
-          src={noAlertIllustration}
-          alt='새로운 알림이 없어요'
+          role='img'
+          aria-label='새로운 알림이 없어요'
         />
-        <div>새로운 알림이 없어요</div>
+        <div className={style.noAlertText}>새로운 알림이 없어요</div>
       </div>
     );
   }

@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom';
 
-import { EditExamReviewPage } from '@/page/exam';
-import { EditEventPage } from '@/page/event';
 import { EditPostPage } from '@/page/board';
+import { EditEventPage } from '@/page/event';
+import { EditExamReviewPage } from '@/page/exam';
 
 export default function EditPageSelector() {
-  const { boardName } = useParams();
+  const { boardKey } = useParams();
 
-  switch (boardName) {
+  switch (boardKey) {
     case 'exam-review': {
       return <EditExamReviewPage />;
     }

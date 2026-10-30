@@ -1,0 +1,19 @@
+name: 🧪 Test Request
+description: 테스트 코드를 작성하거나 테스트 범위·시나리오를 제안합니다.
+title: '[TEST] '
+labels: ['🧪 Test']
+body:
+  - type: input
+    id: test_target
+    attributes:
+      label: 테스트 대상
+      placeholder: 예) 게시판 API, 아이디 유효성 검사 등
+    validations:
+      required: true
+  - type: textarea
+    id: verification_content
+    attributes:
+      label: 검증 내용
+      description: 검증하고 싶은 동작, 시나리오, 경계 조건 등을 적어 주세요.
+    validations:
+      required: true

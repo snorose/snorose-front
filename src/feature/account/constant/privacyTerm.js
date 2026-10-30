@@ -1,5 +1,5 @@
 export const PRIVACY_TERM = Object.freeze({
-  title: '개인정보 수집·이용 동의',
+  title: '개인정보 수집 및 이용 동의',
 
   summary: `<주요사항 요약>
 1. 스노로즈의 가입 및 이용을 위해 귀하의 개인정보가 수집됩니다.

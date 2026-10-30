@@ -1,0 +1,25 @@
+name: 🛠️ Refactor Request
+description: 기능 변경 없이 코드 구조를 개선하는 요청입니다.
+title: '[REFACTOR] '
+labels: ['🛠️ Refactor']
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 🌱 리팩터링 대상 및 배경
+      description: 어떤 모듈/컴포넌트를 개선해야 하는지, 그리고 왜 개선이 필요한지 설명해주세요.
+      value: |
+        #### 📦 대상 모듈/컴포넌트
+
+
+        #### 💡 개선이 필요한 이유
+
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: ⚡️ 목적 및 기대 효과
+      description: 이 리팩터링으로 가독성, 유지보수성, 성능 등이 어떻게 좋아질지 작성해 주세요.
+    validations:
+      required: false

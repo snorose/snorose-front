@@ -1,5 +1,7 @@
 export const FILE_MAX_SIZE = 1024 * 1024 * 10;
 
+export const INVALID_FILE_NAME_REGEX = /[\x5B\x5D]/u;
+
 export const EXAM_TYPES = Object.freeze([
   { id: 'MIDTERM', name: '중간고사' },
   { id: 'FINALTERM', name: '기말고사' },
@@ -34,6 +36,7 @@ export const SEMESTERS = Object.freeze([
 
 export const YEARS = Object.freeze(
   [
+    { id: 2026, name: '2026' },
     { id: 2025, name: '2025' },
     { id: 2024, name: '2024' },
     { id: 2023, name: '2023' },

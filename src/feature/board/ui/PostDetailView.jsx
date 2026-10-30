@@ -1,0 +1,283 @@
+import { useContext, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { IconMultiCloudLogo } from '@snorose/icons';
+
+import {
+  AttachmentSwiper,
+  BackAppBar,
+  Badge,
+  Chip as CategoryChip,
+  FetchLoading,
+} from '@/shared/component';
+import LinkAlertModal from '@/shared/component/modal/LinkAlertModal/LinkAlertModal';
+import { ROLE, TOAST } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
+import { useModalReset, useToast } from '@/shared/hook';
+import useAuth from '@/shared/hook/useAuth';
+import { DateTime, hashtagifyHtml, linkifyHtml } from '@/shared/lib';
+
+import {
+  FullScreenAttachment,
+  PostModalRenderer,
+} from '@/feature/board/component';
+import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
+import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
+import { sanitizePostHtml } from '@/feature/editor/lib/sanitize';
+
+import sponsorBanner from '@/assets/banners/sponsorBanner.png';
+
+import editorStyles from '../../editor/component/EditorContainer/EditorContainer.module.css';
+import styles from './PostDetailView.module.css';
+
+export default function PostDetailView({
+  data,
+  authorBadgeRoleId,
+  deletePost,
+  PostActionBar,
+  CommentInputContainer,
+  Chip,
+  Actions,
+}) {
+  const { userInfo } = useAuth();
+  const navigate = useNavigate();
+
+  const [linkModalOpen, setLinkModalOpen] = useState(false);
+  const [selectedLink, setSelectedLink] = useState('');
+  const [dontShowAgain, setDontShowAgain] = useState(false);
+  const [clickedImageIndex, setClickedImageIndex] = useState(0);
+
+  // userInfo 로딩 전이면 storageKey를 null로
+  const storageKey = userInfo?.loginId
+    ? `hideLinkAlert_${userInfo.loginId}`
+    : null;
+
+  const handleLinkClick = (event) => {
+    const hashtag = event.target.closest('[data-hashtag]');
+    if (hashtag) {
+      event.preventDefault();
+      const keyword = hashtag.getAttribute('data-hashtag');
+      if (keyword) {
+        navigate(`/board/all/search?keyword=${encodeURIComponent(keyword)}`);
+      }
+      return;
+    }
+
+    const anchor = event.target.closest('a');
+    if (!anchor) return;
+    event.preventDefault();
+
+    const href = anchor.getAttribute('href');
+    if (!href) return;
+
+    // storageKey 없으면 항상 모달 표시
+    const shouldHide = storageKey
+      ? localStorage.getItem(storageKey) === 'true'
+      : false;
+
+    setSelectedLink(href);
+
+    if (shouldHide) {
+      window.open(href, '_blank', 'noopener,noreferrer');
+    } else {
+      setLinkModalOpen(true);
+    }
+  };
+
+  const sanitizedContent = useMemo(() => {
+    if (!data?.content) return '';
+    return sanitizePostHtml(
+      hashtagifyHtml(linkifyHtml(preserveEmptyParagraphs(data.content)))
+    );
+  }, [data?.content]);
+  useIframeAutoResize();
+
+  if (!data) {
+    return (
+      <>
+        <BackAppBar notFixed />
+        <FetchLoading animation={false}>
+          게시글을 찾을 수 없습니다.
+        </FetchLoading>
+      </>
+    );
+  }
+
+  return (
+    <div>
+      {clickedImageIndex === 0 ? (
+        <BackAppBar backgroundColor={'#fbfdff'} />
+      ) : (
+        <FullScreenAttachment
+          attachmentUrls={data.attachments}
+          clickedImageIndex={clickedImageIndex}
+          setClickedImageIndex={setClickedImageIndex}
+        />
+      )}
+
+      <div className={styles.blueContainer}>
+        <MetaContainer
+          {...data}
+          authorBadgeRoleId={authorBadgeRoleId}
+          Chip={Chip}
+          Actions={Actions}
+        />
+
+        <div className={styles.titleContainer}>
+          <div className={styles.titleRow}>
+            <h1 className={styles.title}>{data.title}</h1>
+          </div>
+
+          <span className={styles.views}>
+            {(data.viewCount ?? 0).toLocaleString()} views
+          </span>
+        </div>
+
+        <div
+          className={editorStyles.editor}
+          onClick={handleLinkClick}
+          dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+        />
+
+        {data.attachments.length !== 0 && (
+          <AttachmentSwiper
+            data={data}
+            setClickedImageIndex={setClickedImageIndex}
+          />
+        )}
+
+        <div className={styles.sponsorBannerWrapper}>
+          <img
+            src={sponsorBanner}
+            alt='스노로즈 후원하기'
+            className={styles.sponsorBanner}
+          />
+        </div>
+
+        {PostActionBar}
+      </div>
+
+      <CommentInputContainer isNotice={data.isNotice} />
+
+      <MoreModal deletePost={deletePost} data={data} />
+      <LinkAlertModal
+        isOpen={linkModalOpen}
+        checked={dontShowAgain}
+        setChecked={setDontShowAgain}
+        onClose={() => {
+          setLinkModalOpen(false);
+          setDontShowAgain(false);
+        }}
+        onConfirm={() => {
+          if (dontShowAgain && storageKey) {
+            localStorage.setItem(storageKey, 'true');
+          }
+
+          window.open(selectedLink, '_blank', 'noopener,noreferrer');
+          setLinkModalOpen(false);
+          setDontShowAgain(false);
+        }}
+      />
+    </div>
+  );
+}
+
+function MetaContainer({
+  userDisplay,
+  userRoleId,
+  authorBadgeRoleId,
+  category,
+  createdAt,
+  isEdited,
+  Chip = null,
+  Actions = null,
+}) {
+  const badgeRoleId = authorBadgeRoleId ?? userRoleId;
+  const showBadge =
+    badgeRoleId === ROLE.official ||
+    (badgeRoleId === ROLE.admin && userDisplay !== '익명송이');
+
+  return (
+    <div className={styles.metaContainer}>
+      <div className={styles.meta}>
+        <div className={styles.info}>
+          <IconMultiCloudLogo
+            width={25}
+            height={16}
+            role='img'
+            aria-label='로고'
+          />
+          <p className={styles.nickname}>{userDisplay || 'Unknown'}</p>
+          {showBadge && (
+            <Badge
+              userRoleId={badgeRoleId}
+              className={styles.badge}
+              width={18}
+              height={18}
+            />
+          )}
+          <p className={styles.dot}>·</p>
+          <p>
+            {DateTime.format(createdAt, 'YMD_HM')}
+            {isEdited && ' (수정됨)'}
+          </p>
+        </div>
+        {Chip}
+
+        {category && (
+          <div>
+            <CategoryChip name={category} variant='category' />
+          </div>
+        )}
+      </div>
+
+      {Actions && <div className={styles.actions}>{Actions}</div>}
+    </div>
+  );
+}
+
+function MoreModal({ deletePost, data }) {
+  const navigate = useNavigate();
+
+  const { modal, setModal } = useContext(ModalContext);
+
+  const { toast } = useToast();
+
+  // 페이지 언마운트 시 모달 상태 초기화
+  useModalReset();
+
+  const handleReport = (targetType) => {
+    if (targetType === 'post') {
+      navigate(`/report/write/${targetType}?targetId=${data.postId}`);
+    }
+
+    if (targetType === 'user') {
+      navigate(`/report/write/${targetType}?targetId=${data.encryptedUserId}`);
+    }
+  };
+
+  const handleEdit = () => {
+    setModal({ id: null, type: null });
+    navigate(`./edit`);
+  };
+
+  const handleShare = async () => {
+    try {
+      const url = window.location.href;
+      await navigator.clipboard.writeText(url);
+      toast.success(TOAST.COPY_AND_PASTE.linkSuccess);
+    } catch (error) {
+      toast.error(TOAST.COPY_AND_PASTE.linkFail);
+    }
+  };
+
+  return (
+    <PostModalRenderer
+      modal={modal}
+      handleEdit={handleEdit}
+      handleDelete={deletePost}
+      handleShare={handleShare}
+      handleReport={handleReport}
+    />
+  );
+}

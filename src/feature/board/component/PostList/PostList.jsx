@@ -1,17 +1,19 @@
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
-import { useSuspensePagination } from '@/shared/hook';
-import { FetchLoading, List, PullToRefresh } from '@/shared/component';
 import {
-  getBoard,
-  getBoardTitleToTextId,
-  deduplicatePaginatedData,
-  flatPaginationCache,
-} from '@/shared/lib';
+  FetchLoading,
+  InfiniteScrollSentinel,
+  List,
+  PullToRefresh,
+} from '@/shared/component';
 import { QUERY_KEY, STALE_TIME } from '@/shared/constant';
+import { useNewBoard, useSuspenseInfiniteScroll } from '@/shared/hook';
+import { getBoard, getBoardTitleToTextId, isNewBoardPost } from '@/shared/lib';
+
+import { PostBar } from '@/feature/board/component';
+import { usePostListFilter } from '@/feature/board/hook/usePostListFilter';
 
 import { getEventPosts, getPosts } from '@/apis';
-import { PostBar } from '@/feature/board/component';
 
 import styles from './PostList.module.css';
 
@@ -19,48 +21,67 @@ export default function PostList() {
   const { pathname } = useLocation();
   const [searchParams] = useSearchParams();
 
+  const isNewBoardOn = useNewBoard();
+
   const currentBoardTextId = pathname.split('/')[2];
   const currentBoard = getBoard(currentBoardTextId);
   const isBesookt = currentBoardTextId === 'besookt' ? true : false;
   const isEvent = currentBoardTextId === 'event' ? true : false;
   const progressType = searchParams.get('progressType') ?? 'ALL';
+  const { sort, year, category } = usePostListFilter(currentBoard.id);
+  const isFiltered = Boolean(year || category);
 
   // 페이지네이션 관련 hook (일반 / 이벤트 )
-  const { data, ref, isFetching, refetch } = useSuspensePagination({
+  const {
+    items: postList,
+    ref,
+    isFetchingNextPage,
+    refetch,
+  } = useSuspenseInfiniteScroll({
     queryKey: isEvent
       ? [QUERY_KEY.events, currentBoard.id, progressType]
-      : [QUERY_KEY.posts, currentBoard.id],
+      : [
+          QUERY_KEY.posts,
+          currentBoard.id,
+          sort ?? 'LATEST',
+          year ?? 'ALL',
+          category ?? 'ALL',
+        ],
     queryFn: ({ pageParam }) =>
       isEvent
         ? getEventPosts({
             page: pageParam,
             progressType: progressType === 'ALL' ? undefined : progressType,
           })
-        : getPosts(currentBoard.id, pageParam),
+        : getPosts(currentBoard.id, pageParam, { sort, year, category }),
     staleTime: STALE_TIME.boardPostList,
+    getItemKey: (item) => item.postId,
   });
 
-  const postList = deduplicatePaginatedData(flatPaginationCache(data));
+  // 미노출 게시판 게시글이 서버 응답에 섞여 들어오는 경우를 차단
+  const visiblePostList = isNewBoardOn
+    ? postList
+    : postList.filter((post) => !isNewBoardPost(post));
 
-  if (!postList.length) {
+  if (!visiblePostList.length) {
     return (
       <FetchLoading animation={false}>
         {isEvent
           ? progressType === 'ALL'
             ? '게시물이 없어요'
             : '해당 상태의 이벤트가 없어요'
-          : '게시물이 없어요'}
+          : isFiltered
+            ? '조건에 맞는 게시물이 없어요'
+            : '게시물이 없어요'}
       </FetchLoading>
     );
   }
 
   return (
     <div>
-      <PullToRefresh
-        onRefresh={() => refetch().then(() => console.log('Refreshed!'))}
-      >
+      <PullToRefresh onRefresh={refetch}>
         <List>
-          {postList.map((post, index) => (
+          {visiblePostList.map((post) => (
             <Link
               className={styles.to}
               key={post.postId}
@@ -69,12 +90,17 @@ export default function PostList() {
                   ? `/board/${getBoardTitleToTextId(post.boardName)}/post/${post.postId}`
                   : `/board/${currentBoardTextId}/post/${post.postId}`
               }
-              ref={index === postList.length - 1 ? ref : undefined}
             >
-              <PostBar data={{ ...post }} />
+              <PostBar {...post}>
+                {post.boardName && (
+                  <PostBar.Chip name={post.boardName} variant='grey' />
+                )}
+              </PostBar>
             </Link>
           ))}
-          {isFetching && <FetchLoading />}
+
+          <InfiniteScrollSentinel ref={ref} />
+          {isFetchingNextPage && <FetchLoading />}
         </List>
       </PullToRefresh>
     </div>

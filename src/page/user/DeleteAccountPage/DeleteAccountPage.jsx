@@ -1,10 +1,15 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useAuth } from '@/shared/hook';
-import { CloseAppBar, PwInput, Icon, ConfirmModal } from '@/shared/component';
-import { ModalContext } from '@/shared/context/ModalContext';
+import {
+  CloseAppBar,
+  ConfirmModal,
+  Label,
+  PasswordInput,
+} from '@/shared/component';
 import { CONFIRM_MODAL_TEXT } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
+import { useAuth } from '@/shared/hook';
 
 import styles from './DeleteAccountPage.module.css';
 
@@ -19,10 +24,6 @@ export default function DeleteAccountPage() {
 
   const { withdraw } = useAuth();
   const { modal, setModal } = useContext(ModalContext);
-
-  const handlePasswordInputChange = (event) => {
-    setPassword(event.target.value);
-  };
 
   const handleModalPrimaryButtonClick = () => {
     withdraw(password, {
@@ -39,27 +40,22 @@ export default function DeleteAccountPage() {
           <h1 className={styles.title}>탈퇴 시 아래 내용을 확인해주세요</h1>
           <div className={styles.descriptionWrapper}>
             {DESCRIPTION_LIST.map((desc, index) => (
-              <div className={styles.dotDescriptionList}>
-                <Icon
-                  className={styles.middleDot}
-                  id='middle-dot'
-                  width={6}
-                  height={6}
-                />
-                <p key={index} className={styles.description}>
-                  {desc}
-                </p>
+              <div key={index} className={styles.dotDescriptionList}>
+                <span className={styles.middleDot} aria-hidden='true' />
+                <p className={styles.description}>{desc}</p>
               </div>
             ))}
           </div>
 
-          <PwInput
-            title='비밀번호'
-            placeholder='비밀번호를 입력하세요'
-            value={password}
-            onChange={handlePasswordInputChange}
-            isStatic
-          />
+          <div>
+            <Label htmlFor={'pw'}>비밀번호</Label>
+            <PasswordInput
+              id={'pw'}
+              placeholder='비밀번호를 입력하세요'
+              value={password}
+              onChange={setPassword}
+            />
+          </div>
         </div>
 
         <div className={styles.buttonWrapper}>

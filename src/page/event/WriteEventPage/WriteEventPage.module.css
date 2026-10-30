@@ -19,15 +19,15 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 0 1.5rem 0;
+  cursor: pointer;
   border-bottom: 0.05rem solid var(--grey-3-1);
   stroke-width: 0.05rem;
-  cursor: pointer;
 }
 
 .categorySelectContainer {
   display: flex;
-  align-items: center;
   gap: 1.4rem;
+  align-items: center;
 }
 
 .categorySelectText {
@@ -39,30 +39,20 @@
   align-items: center;
   justify-content: space-between;
   padding: 2.2rem 0 1.8rem 0;
-  color: var(--grey-3-1);
   font: var(--text-body-1-reg);
+  color: var(--grey-3-1);
 }
 
 .profileBoxLeft {
   display: flex;
-  align-items: center;
   gap: 0.7rem;
-}
-
-.cloudLogoIcon {
-  width: 2.2rem;
-  height: 1.4rem;
-}
-
-.badge {
-  width: 2.4rem;
-  height: 2.4rem;
+  align-items: center;
 }
 
 .profileBoxRight {
   display: flex;
-  align-items: center;
   gap: 0.7rem;
+  align-items: center;
   color: var(--black);
   cursor: pointer;
 }
@@ -75,8 +65,8 @@
 .dot {
   width: 0.3rem;
   height: 0.3rem;
-  border-radius: 50%;
   background-color: var(--grey-3-1);
+  border-radius: 50%;
 }
 
 .bottom {
@@ -85,4 +75,21 @@
 
 .form {
   padding-bottom: 2rem;
+}
+
+.trashInvisible,
+.trashVisible {
+  position: fixed;
+  bottom: 10.2rem;
+  left: 50%;
+  width: fit-content;
+  transform: translateX(-50%);
+}
+
+.trashInvisible {
+  opacity: 0;
+}
+
+.trashVisible {
+  opacity: 1;
 }

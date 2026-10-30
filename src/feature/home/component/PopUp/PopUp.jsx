@@ -1,19 +1,33 @@
-import { usePopUp } from '@/feature/home/hook';
-import styles from './PopUp.module.css';
-import { PopUpContents, getFilteredContents } from './PopUpContents';
+import { useState } from 'react';
 
-const POPUP_FOOTER_BUTTONS = [
-  { label: '오늘 하루 보지 않기', duration: 0, className: 'hideButton' },
-  { label: '3일간 보지 않기', duration: 2, className: 'hideButton' },
-  { label: '닫기', duration: undefined, className: 'closeButton' },
+import {
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+} from '@snorose/icons';
+
+import { usePopUp } from '@/feature/home/hook';
+
+import styles from './PopUp.module.css';
+import { getFilteredContents, PopUpContents } from './PopUpContents';
+
+const POPUP_HIDE_BUTTONS = [
+  { label: '오늘 하루 보지 않기', duration: 0 },
+  { label: '3일간 보지 않기', duration: 2 },
 ];
 
 export default function PopUp() {
   const { isPopUpOpened, closePopUp } = usePopUp();
+  const [selectedPopupHideDuration, setSelectedPopupHideDuration] = useState();
   const filteredContents = getFilteredContents();
 
-  const handleCloseButtonClick = (popupHideDuration) => {
-    closePopUp({ popupHideDuration });
+  const handleHideButtonClick = (popupHideDuration) => {
+    setSelectedPopupHideDuration((prevDuration) =>
+      prevDuration === popupHideDuration ? undefined : popupHideDuration
+    );
+  };
+
+  const handleCloseButtonClick = () => {
+    closePopUp({ popupHideDuration: selectedPopupHideDuration });
   };
 
   if (!isPopUpOpened || filteredContents.length === 0) {
@@ -36,15 +50,32 @@ export default function PopUp() {
         </div>
 
         <div className={styles.buttonContainer}>
-          {POPUP_FOOTER_BUTTONS.map((button) => (
-            <button
-              key={button.label}
-              onClick={() => handleCloseButtonClick(button.duration)}
-              className={`${styles.button} ${styles[button.className]}`}
-            >
-              {button.label}
-            </button>
-          ))}
+          <div className={styles.hideButtonContainer}>
+            {POPUP_HIDE_BUTTONS.map((button) => (
+              <button
+                key={button.label}
+                type='button'
+                role='checkbox'
+                aria-checked={selectedPopupHideDuration === button.duration}
+                onClick={() => handleHideButtonClick(button.duration)}
+                className={styles.hideButton}
+              >
+                {selectedPopupHideDuration === button.duration ? (
+                  <IconMultiCheckBlueCircle className={styles.hideButtonIcon} />
+                ) : (
+                  <IconMultiCheckGreyCircle className={styles.hideButtonIcon} />
+                )}
+                {button.label}
+              </button>
+            ))}
+          </div>
+          <button
+            type='button'
+            onClick={() => handleCloseButtonClick()}
+            className={styles.closeButton}
+          >
+            닫기
+          </button>
         </div>
       </div>
     </section>

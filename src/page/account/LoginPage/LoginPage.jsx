@@ -1,50 +1,86 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-import { useLogin } from '@/apis';
+import {
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+  IllustrationLogoSnoroseCloud,
+} from '@snorose/icons';
 
 import {
   BackAppBar,
-  Icon,
   NewButton,
   PasswordInput,
   TextInput,
 } from '@/shared/component';
+import { TOAST } from '@/shared/constant';
+import { useToast } from '@/shared/hook';
 
-import snoroseLogo from '@/assets/images/snoroseLogo.svg';
+import { useLogin } from '@/feature/auth/hooks';
 
 import styles from './LoginPage.module.css';
 
+const LOGIN_ERROR_MAP = {
+  '아이디 또는 비밀번호가 틀립니다.': '아이디 혹은 비밀번호가 일치하지 않아요',
+};
+
 export default function Login() {
-  const navigate = useNavigate();
-  const login = useLogin();
+  const location = useLocation();
+  const redirectTo = getRedirectPath(location.state);
+
   const [formData, setFormData] = useState({ loginId: '', password: '' });
   const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isRememberId, setIsRememberId] = useState(false);
 
-  const [isChecked, setIsChecked] = useState(false);
+  const { toast } = useToast();
+  const { mutate: login } = useLogin({
+    redirectTo,
+    onError: (error) => {
+      const status = error.response?.status;
+      const serverMsg =
+        error.response?.data?.message || '네트워크 연결 상태를 확인해주세요.';
 
-  const toggleRememberId = () => {
-    setIsChecked((prev) => !prev);
-  };
+      if (status === 500) {
+        toast.error(TOAST.ERROR.SERVER);
+      } else {
+        setErrorMessage(LOGIN_ERROR_MAP[serverMsg] ?? serverMsg);
+      }
 
-  const handleLoginSubmit = (e) => {
-    if (isChecked) {
-      localStorage.setItem('rememberedLoginId', formData.loginId);
-    } else {
-      localStorage.removeItem('rememberedLoginId');
-    }
-
-    login(e, setIsError, formData, navigate);
-  };
+      setIsError(true);
+    },
+  });
 
   useEffect(() => {
     const savedId = localStorage.getItem('rememberedLoginId');
 
     if (savedId) {
       setFormData((prev) => ({ ...prev, loginId: savedId }));
-      setIsChecked(true);
+      setIsRememberId(true);
     }
   }, []);
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formData.loginId) {
+      toast.info(TOAST.LOGIN.emptyId);
+      return;
+    }
+
+    if (!formData.password) {
+      toast.info(TOAST.LOGIN.emptyPw);
+      return;
+    }
+
+    if (isRememberId) {
+      localStorage.setItem('rememberedLoginId', formData.loginId);
+    } else {
+      localStorage.removeItem('rememberedLoginId');
+    }
+
+    login(formData);
+  };
 
   const inputProps = [
     {
@@ -68,7 +104,11 @@ export default function Login() {
       <BackAppBar />
 
       <form onSubmit={handleLoginSubmit}>
-        <img src={snoroseLogo} alt='스노로즈 로고' className={styles.logo} />
+        <IllustrationLogoSnoroseCloud
+          className={styles.logo}
+          role='img'
+          aria-label='스노로즈 로고'
+        />
 
         <p className={styles.title}>
           숙명인을 위한 커뮤니티,
@@ -89,12 +129,21 @@ export default function Login() {
           })}
         </div>
 
-        <div className={styles.rememberIdCheckbox} onClick={toggleRememberId}>
-          <Icon
-            id={isChecked ? 'inactive-check-circle' : 'active-check-circle'}
-            width={22}
-            height={22}
-          />
+        {errorMessage && (
+          <p role='alert' className={styles.errorMessage}>
+            {errorMessage}
+          </p>
+        )}
+
+        <div
+          className={styles.rememberIdCheckbox}
+          onClick={() => setIsRememberId((prev) => !prev)}
+        >
+          {isRememberId ? (
+            <IconMultiCheckBlueCircle width={22} height={22} />
+          ) : (
+            <IconMultiCheckGreyCircle width={22} height={22} />
+          )}
           <span>아이디 기억하기</span>
         </div>
 
@@ -110,4 +159,23 @@ export default function Login() {
       </form>
     </div>
   );
+}
+
+function getRedirectPath(state) {
+  const from = state?.from;
+  const pathname = from?.pathname;
+
+  if (
+    typeof pathname !== 'string' ||
+    !pathname.startsWith('/') ||
+    pathname.startsWith('//') ||
+    pathname === '/login'
+  ) {
+    return '/';
+  }
+
+  const search = typeof from.search === 'string' ? from.search : '';
+  const hash = typeof from.hash === 'string' ? from.hash : '';
+
+  return `${pathname}${search}${hash}`;
 }

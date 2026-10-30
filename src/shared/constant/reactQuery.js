@@ -7,6 +7,7 @@ export const QUERY_KEY = Object.freeze({
   posts: 'posts',
   review: 'review',
   reviews: 'reviews',
+  reviewWritePeriodActive: 'reviewWritePeriodActive',
   comments: 'comments',
   noticeLine: 'noticeLine',
   notices: 'notices',
@@ -15,6 +16,7 @@ export const QUERY_KEY = Object.freeze({
   myPosts: 'myPosts',
   myCommentedPosts: 'myCommentedPosts',
   myDownloadedExamReviews: 'myDownloadedExamReviews',
+  myInquiriesAndReports: 'myInquiriesAndReports',
   myScrapedPosts: 'myScrapedPosts',
   myScrapedExamReviews: 'myScrapedExamReviews',
   best3: 'best3',
@@ -23,6 +25,10 @@ export const QUERY_KEY = Object.freeze({
   unreadNotificationCount: ['unreadNotificationCount'],
   notificationSettings: ['notificationSettings'],
   events: 'events',
+  commerceSale: (saleId) => ['commerceSale', saleId],
+  commerceOrders: ['commerceOrders'],
+  commerceOrder: (orderNumber) => ['commerceOrder', orderNumber],
+  commercePickupDeviceSession: ['commercePickupDeviceSession'],
 });
 
 export const MUTATION_KEY = Object.freeze({
@@ -50,6 +56,7 @@ export const MUTATION_KEY = Object.freeze({
 
 export const STALE_TIME = Object.freeze({
   examReview: 1000 * 60 * 5,
+  reviewWritePeriodActive: 1000 * 60 * 5,
   boardPostList: 1000 * 60 * 1,
   mypageActivity: 1000 * 60 * 5,
   noticeList: 1000 * 60 * 10,

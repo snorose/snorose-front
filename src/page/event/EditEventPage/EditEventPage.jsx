@@ -1,38 +1,39 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+
+import { IconMultiClipboardBlue, IconMultiCloudLogo } from '@snorose/icons';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import {
+  ActionButton,
   BackAppBar,
   Badge,
   CloseAppBar,
-  FetchLoading,
-  Icon,
-  ActionButton,
   ConfirmModal,
+  FetchLoading,
 } from '@/shared/component';
 import {
   BOARD_MENUS,
+  CONFIRM_MODAL_TEXT,
   MUTATION_KEY,
   QUERY_KEY,
   ROLE,
   TOAST,
-  CONFIRM_MODAL_TEXT,
 } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
 import { useAuth, useBlocker, useToast } from '@/shared/hook';
 import { DateTime } from '@/shared/lib';
-import { ModalContext } from '@/shared/context/ModalContext';
+
+import { EventForm, NoticeForm } from '@/feature/event/component';
+import {
+  EVENT_FORM_DATA,
+  EVENT_TYPES,
+  NOTICE_FORM_DATA,
+} from '@/feature/event/constant';
+import { validateOnSubmit } from '@/feature/event/lib';
 
 import { getEventContent, patchEvent } from '@/apis';
 
-import { EventForm, NoticeForm } from '@/feature/event/component';
-import { validateOnSubmit } from '@/feature/event/lib';
-import {
-  EVENT_FORM_DATA,
-  NOTICE_FORM_DATA,
-  EVENT_TYPES,
-} from '@/feature/event/constant';
-
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 import styles from './EditEventPage.module.css';
 
 export default function EditEventPage() {
@@ -101,11 +102,11 @@ export default function EditEventPage() {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY.post(postId));
       navigate(-1);
-      toast({ message: TOAST.POST.edit, variant: 'success' });
+      toast.success(TOAST.POST.edit);
       setSubmitDisabled(false);
     },
     onError: ({ response }) => {
-      toast({ message: response.data.message, variant: 'error' });
+      toast.error(response.data.message);
       setSubmitDisabled(false);
     },
   });
@@ -238,7 +239,7 @@ export default function EditEventPage() {
         <div className={styles.center}>
           <div className={styles.categorySelect}>
             <div className={styles.categorySelectContainer}>
-              <Icon id='clip-board-list' width={21} height={22} fill='white' />
+              <IconMultiClipboardBlue width={21} height={22} />
               <p className={styles.categorySelectText}>{eventType}</p>
             </div>
           </div>
@@ -246,15 +247,17 @@ export default function EditEventPage() {
             <div className={styles.profileBoxLeft}>
               {userInfo?.userRoleId !== ROLE.admin &&
               userInfo?.userRoleId !== ROLE.official ? (
-                <img
-                  className={styles.cloudLogoIcon}
-                  src={cloudLogo}
-                  alt='로고'
+                <IconMultiCloudLogo
+                  width={22}
+                  height={14}
+                  role='img'
+                  aria-label='로고'
                 />
               ) : (
                 <Badge
                   userRoleId={userInfo?.userRoleId}
-                  className={styles.badge}
+                  width={24}
+                  height={24}
                 />
               )}
               <p>{userDisplay}</p>

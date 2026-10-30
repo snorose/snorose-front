@@ -1,7 +1,7 @@
 import styles from './PrimaryButton.module.css';
 
 export default function PrimaryButton({
-  className,
+  className = '',
   onClick,
   children,
   ...rest

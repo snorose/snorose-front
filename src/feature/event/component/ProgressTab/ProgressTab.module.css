@@ -1,14 +1,20 @@
 .box {
   display: inline-flex;
-  height: 3.3rem;
-  width: 22%;
-  justify-content: center;
-  align-items: center;
+
   flex-shrink: 0;
-  border-radius: 2rem;
-  background: var(--blue-0);
-  color: var(--blue-4);
+
+  align-items: center;
+  justify-content: center;
+
+  width: 22%;
+  height: 3.3rem;
+
   font: var(--text-body-1-reg);
+
+  color: var(--blue-4);
+
+  background: var(--blue-0);
+  border-radius: 2rem;
 
   &.active {
     color: var(--blue-0);

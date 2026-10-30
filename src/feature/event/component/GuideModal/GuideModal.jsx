@@ -1,11 +1,12 @@
-import { useState, useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { IconX } from '@snorose/icons';
+import { Keyboard, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Keyboard } from 'swiper/modules';
 
-import { Icon } from '@/shared/component';
 import styles from './GuideModal.module.css';
+
 import 'swiper/css';
 import 'swiper/css/pagination';
 
@@ -37,12 +38,11 @@ export default function GuideModal({
       <div className={styles.modal}>
         <div className={styles.modalTop}>
           <button className={styles.close} onClick={onClose}>
-            <Icon
+            <IconX
               className={styles.close}
-              id='x'
               width={18}
               height={18}
-              stroke={'grey'}
+              color={'grey'}
             />
           </button>
         </div>
@@ -58,19 +58,23 @@ export default function GuideModal({
             onSwiper={(swipe) => (swiperRef.current = swipe)}
             onSlideChange={(swipe) => setStep(swipe.activeIndex)}
           >
-            {options.map((option, index) => (
-              <SwiperSlide key={index}>
-                <div className={styles.illustration}>
-                  <img
-                    src={option.image}
-                    alt={`illustration-${index}`}
-                    className={styles.image}
-                  />
-                </div>
-                <h2>{option.title}</h2>
-                <div className={styles.content}>{option.content}</div>
-              </SwiperSlide>
-            ))}
+            {options.map((option, index) => {
+              const GuideIllustration = option.image;
+
+              return (
+                <SwiperSlide key={index}>
+                  <div className={styles.illustration}>
+                    <GuideIllustration
+                      className={styles.image}
+                      role='img'
+                      aria-label={option.imageLabel ?? option.title}
+                    />
+                  </div>
+                  <h2>{option.title}</h2>
+                  <div className={styles.content}>{option.content}</div>
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
         </div>
 

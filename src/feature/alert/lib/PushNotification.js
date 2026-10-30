@@ -1,12 +1,13 @@
 import { getToken, isSupported, onMessage } from 'firebase/messaging';
-import { messaging } from './firebase-config';
-
-import { sendFCMToken } from '@/apis';
 
 import { AppError } from '@/shared/lib';
 
-import { isIOSPWA } from '@/feature/alert/lib';
 import { ERROR_CODE, ERROR_MESSAGE } from '@/feature/alert/constant';
+import { isIOSPWA } from '@/feature/alert/lib';
+
+import { sendFCMToken } from '@/apis';
+
+import { messaging } from './firebase-config';
 
 export class PushNotificationManager {
   static #registration = null;

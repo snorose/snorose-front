@@ -1,18 +1,23 @@
 import { Link } from 'react-router-dom';
 
+import { IllustrationLogoSnoroseCloud } from '@snorose/icons';
+
+import { MenuIcon } from '@/shared/component';
 import { useAuth } from '@/shared/hook';
-import { Icon, MenuIcon } from '@/shared/component';
+
+import { useLogout } from '@/feature/auth/hooks';
 
 import styles from './Header.module.css';
 
 export default function Header({ className }) {
-  const { status, logout } = useAuth();
+  const { status } = useAuth();
+  const { mutate: logout } = useLogout();
 
   return (
     <>
       <header className={`${styles.header} ${className}`}>
         <Link to='/home'>
-          <Icon id='logo' width={151} height={27} />
+          <IllustrationLogoSnoroseCloud width={151} height={27} />
         </Link>
         <div className={styles.action}>
           {status === 'authenticated' ? (

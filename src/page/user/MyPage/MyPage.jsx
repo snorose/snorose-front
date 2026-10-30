@@ -1,5 +1,5 @@
 import { useAuth } from '@/shared/hook';
-import { useTabView } from '@/feature/my/hook';
+
 import {
   AccountTab,
   ActivityTab,
@@ -8,6 +8,7 @@ import {
   PolicyTab,
   TopOverlay,
 } from '@/feature/my/component';
+import { useTabView } from '@/feature/my/hook';
 
 import styles from './MyPage.module.css';
 
@@ -53,7 +54,7 @@ export default function MyPage() {
             <AccountTab />
           </TabView.View>
           <TabView.View view='activity'>
-            <ActivityTab />
+            <ActivityTab userInfo={userInfo} />
           </TabView.View>
           <TabView.View view='policy'>
             <PolicyTab />

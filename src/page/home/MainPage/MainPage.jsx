@@ -1,13 +1,22 @@
-import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import { Link } from 'react-router-dom';
 
-import { Footer, Header } from '@/shared/component';
+import { IconChevronRight } from '@snorose/icons';
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
+
 import {
   Carousel,
   CarouselErrorFallback,
   CarouselSkeleton,
-  PopUp,
+  Footer,
+  Header,
+} from '@/shared/component';
+import { NEW_ROUTES } from '@/shared/constant';
+import { useAuth } from '@/shared/hook';
+
+import { recordCommerceClick } from '@/feature/commerce/apis';
+import {
   HomeBesookt,
   HomeBesooktErrorFallback,
   HomeBesooktSkeleton,
@@ -16,14 +25,24 @@ import {
   HomeCardSkeleton,
   HomeCommunity,
   ListHeader,
+  PopUp,
+  Slide,
 } from '@/feature/home/component';
+import { useBanner } from '@/feature/home/hook';
+import { Search } from '@/feature/search/component';
 
 import styles from './MainPage.module.css';
 
 export default function MainPage() {
+  const auth = useAuth();
+
   return (
-    <main>
+    <div>
       <Header className={styles.header} />
+
+      <div className={styles.search}>
+        <Search placeholder='전체 게시판 내 검색' to='/board/all/search' />
+      </div>
 
       <QueryErrorResetBoundary>
         {({ reset }) => (
@@ -32,7 +51,7 @@ export default function MainPage() {
             FallbackComponent={CarouselErrorFallback}
           >
             <Suspense fallback={<CarouselSkeleton />}>
-              <Carousel className={styles.carousel} />
+              <Banner />
             </Suspense>
           </ErrorBoundary>
         )}
@@ -51,18 +70,19 @@ export default function MainPage() {
         )}
       </QueryErrorResetBoundary>
 
-      <ListHeader to='/board' title='게시판' />
+      <ListHeader to={NEW_ROUTES.boardHome} title='게시판' />
       <HomeCommunity />
 
-      <ListHeader to='/board/besookt' title='베숙트' />
+      <ListHeader to={NEW_ROUTES.post.list('besookt')} title='베숙트' />
       <QueryErrorResetBoundary>
         {({ reset }) => (
           <ErrorBoundary
             onReset={reset}
+            resetKeys={[auth.status, auth.userInfo?.userRoleId]}
             FallbackComponent={HomeBesooktErrorFallback}
           >
             <Suspense fallback={<HomeBesooktSkeleton />}>
-              <HomeBesookt />
+              <HomeBesookt auth={auth} />
             </Suspense>
           </ErrorBoundary>
         )}
@@ -70,6 +90,20 @@ export default function MainPage() {
 
       <Footer />
       <PopUp />
-    </main>
+    </div>
+  );
+}
+
+function Banner() {
+  const { data: items } = useBanner();
+
+  return (
+    <Carousel
+      className={styles.banner}
+      items={items}
+      renderItem={({ imageUrl, redirectUrl }) => (
+        <Slide src={imageUrl} redirectUrl={redirectUrl} alt='banner' />
+      )}
+    />
   );
 }

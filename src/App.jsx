@@ -1,27 +1,24 @@
 import { useEffect, useRef } from 'react';
-import { Outlet } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import { useFeatureIsOn } from '@growthbook/growthbook-react';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { useScrollRestoration } from '@/shared/hook';
 import { Sidebar } from '@/shared/component';
-import { QUERY_KEY } from '@/shared/constant';
+import { FEATURE_FLAG, QUERY_KEY } from '@/shared/constant';
+import { useScrollRestoration } from '@/shared/hook';
+import { AppLayout } from '@/shared/ui';
 
 import { PushNotificationManager } from '@/feature/alert/lib';
-
-import {
-  MAINTENANCE_START,
-  MAINTENANCE_END,
-} from '@/feature/maintenance/hook/useMaintenance';
-import { MaintenancePage } from './page/maintenance';
 
 import styles from './App.module.css';
 
 function App() {
   const appRef = useRef();
+  const location = useLocation();
   const queryClient = useQueryClient();
-  const isEnabled = useFeatureIsOn('push-notification');
+  const isEnabled = useFeatureIsOn(FEATURE_FLAG.pushNotification);
+  const isPickupDisplayPage = location.pathname === '/commerce/pickup-display';
 
   // 푸시 알림 설정
   useEffect(() => {
@@ -37,22 +34,19 @@ function App() {
     PushNotificationManager.registerServiceWorker()
       .then(() => PushNotificationManager.onForegroundMessage(listen))
       .catch((error) => console.error(error));
-  }, [isEnabled]);
+  }, [isEnabled, queryClient]);
 
   useScrollRestoration(appRef);
 
-  // 서버 점검 페이지 처리
-  const now = new Date();
-  const isMaintenance = now >= MAINTENANCE_START && now <= MAINTENANCE_END;
-  if (isMaintenance) {
-    return <MaintenancePage />;
-  }
-
   return (
-    <div className={styles.app} ref={appRef}>
-      <Outlet />
-      <Sidebar />
-    </div>
+    <AppLayout variant={isPickupDisplayPage ? 'pickupDisplay' : 'default'}>
+      <div className={styles.app} ref={appRef}>
+        <main>
+          <Outlet />
+        </main>
+        <Sidebar />
+      </div>
+    </AppLayout>
   );
 }
 

@@ -39,7 +39,12 @@
 }
 
 .middleDot {
-  padding-top: 1rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  margin-top: 1rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: var(--grey-4);
 }
 
 .description {

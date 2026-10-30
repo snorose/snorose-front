@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom';
 
-import { ExamReviewPage } from '@/page/exam';
+import { PostDetailPage } from '@/page/board';
 import { EventPage } from '@/page/event';
-import { PostPage } from '@/page/board';
+import { ExamReviewPage } from '@/page/exam';
 
 export default function PostPageSelector() {
-  const { boardName } = useParams();
+  const { boardKey } = useParams();
 
-  switch (boardName) {
+  switch (boardKey) {
     case 'exam-review': {
       return <ExamReviewPage />;
     }
@@ -15,7 +15,7 @@ export default function PostPageSelector() {
       return <EventPage />;
     }
     default: {
-      return <PostPage />;
+      return <PostDetailPage />;
     }
   }
 }

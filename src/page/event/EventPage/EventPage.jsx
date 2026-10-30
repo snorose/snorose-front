@@ -1,37 +1,48 @@
-import { useQuery } from '@tanstack/react-query';
-import { useState, useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { getEventContent } from '@/apis';
-import { NotFoundPage } from '@/page/etc';
+import {
+  IconBookmark,
+  IconBookmarkFill,
+  IconBuilding,
+  IconCalendar,
+  IconClapperboard,
+  IconComment,
+  IconEllipsis,
+  IconHeart,
+  IconHeartFill,
+  IconLocation,
+  IconMultiCloudLogo,
+  IconPerson,
+} from '@snorose/icons';
+import { useQuery } from '@tanstack/react-query';
 
 import {
   BackAppBar,
   Badge,
   FetchLoading,
-  Icon,
   PrimaryButton,
 } from '@/shared/component';
 import { LIKE_TYPE, QUERY_KEY, ROLE, TOAST } from '@/shared/constant';
-import { renderTextWithLinks, DateTime, getBoard } from '@/shared/lib';
 import { ModalContext } from '@/shared/context/ModalContext';
-import { useModalReset } from '@/shared/hook/useBlocker';
 import { useAuth, useToast } from '@/shared/hook';
+import { useModalReset } from '@/shared/hook/useBlocker';
+import { DateTime, getBoard, renderTextWithLinks } from '@/shared/lib';
 
-import { GuideModal } from '@/feature/event/component';
-import { isUrlValid } from '@/feature/event/lib';
-import { EVENT_GUIDE_MODAL_OPTIONS } from '@/feature/event/constant';
-
-import { CommentInput, CommentListSuspense } from '@/feature/comment/component';
-import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { PostModalRenderer } from '@/feature/board/component';
-import { useReportHandler } from '@/feature/report/hook/useReport';
-
+import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
+import { CommentInput, CommentListSuspense } from '@/feature/comment/component';
+import { useCommentContext } from '@/feature/comment/context';
+import { GuideModal } from '@/feature/event/component';
+import { EVENT_GUIDE_MODAL_OPTIONS } from '@/feature/event/constant';
+import { isUrlValid } from '@/feature/event/lib';
 import { useLike } from '@/feature/like/hook';
 import { useScrap } from '@/feature/scrap/hook';
-import { useCommentContext } from '@/feature/comment/context';
 
-import cloudLogo from '@/assets/images/cloudLogo.svg';
+import { NotFoundPage } from '@/page/etc';
+
+import { getEventContent } from '@/apis';
+
 import styles from './EventPage.module.css';
 
 export default function EventPage() {
@@ -56,7 +67,6 @@ export default function EventPage() {
   });
 
   const { handleDelete } = useDeletePostHandler(currentBoard?.id);
-  const { handleReport } = useReportHandler(modal, setModal, data);
 
   const handleEdit = () => {
     setModal({ id: null, type: null });
@@ -67,9 +77,9 @@ export default function EventPage() {
     try {
       const url = window.location.href;
       await navigator.clipboard.writeText(url);
-      toast({ message: '링크가 복사되었어요', variant: 'success' });
+      toast.success('링크가 복사되었어요');
     } catch (error) {
-      toast({ message: '링크 복사에 실패했어요', variant: 'error' });
+      toast.error('링크 복사에 실패했어요');
     }
   };
 
@@ -117,7 +127,7 @@ export default function EventPage() {
   // '신청하기'버튼 누르면 폼으로 이동
   const handleApplyClick = () => {
     if (!isUrlValid(data.link, { open: true })) {
-      toast({ message: TOAST.EVENT.FAIL, variant: 'error' });
+      toast.error(TOAST.EVENT.FAIL);
     }
   };
 
@@ -165,6 +175,7 @@ export default function EventPage() {
         <MetaContainer
           userDisplay={data.userDisplay}
           userRoleId={data.userRoleId}
+          authorBadgeRoleId={ROLE.admin}
           createdAt={data.createdAt}
           isEdited={data.isEdited}
           isNotice={data.isNotice}
@@ -182,21 +193,29 @@ export default function EventPage() {
         <div className={styles.eventContainer}>
           {['연극/뮤지컬'].includes(data.category) && (
             <div className={styles.host}>
-              <Icon id='movie' width={20} height={20} />
+              <IconClapperboard
+                width={20}
+                height={20}
+                color={'var(--grey-4)'}
+              />
               <p>공연명</p>
               <p className={styles.data}>{data.host}</p>
             </div>
           )}
           {['영화'].includes(data.category) && (
             <div className={styles.host}>
-              <Icon id='movie' width={20} height={20} />
+              <IconClapperboard
+                width={20}
+                height={20}
+                color={'var(--grey-4)'}
+              />
               <p>영화명</p>
               <p className={styles.data}>{data.host}</p>
             </div>
           )}
           {['기타'].includes(data.category) && (
             <div className={styles.host}>
-              <Icon id='host' width={20} height={20} />
+              <IconBuilding width={20} height={20} color={'var(--grey-4)'} />
               <p>주최</p>
               <p className={styles.data}>{data.host}</p>
             </div>
@@ -204,27 +223,21 @@ export default function EventPage() {
 
           {['연극/뮤지컬', '영화'].includes(data.category) && (
             <div className={styles.place}>
-              <Icon id='location' width={20} height={20} />
+              <IconLocation width={20} height={20} color={'var(--grey-4)'} />
               <p>장소</p>
               <p className={styles.data}>{data.place}</p>
             </div>
           )}
 
           <div className={styles.drawCount}>
-            <Icon id='person' width={20} height={20} />
+            <IconPerson width={20} height={20} color={'var(--grey-4)'} />
             <p>추첨 인원</p>
             <p className={styles.data}>{data.drawCount}</p>
           </div>
 
           {(data.startAt != null || data.endAt != null) && (
             <div className={styles.applicationDate}>
-              <Icon
-                id='calendar-stroke'
-                width={20}
-                height={20}
-                fill='none'
-                stroke='#484848'
-              />
+              <IconCalendar width={20} height={20} color={'var(--grey-4)'} />
               <p>응모 날짜</p>
               <p className={styles.data}>
                 {data.startAt && (
@@ -242,13 +255,7 @@ export default function EventPage() {
 
           {data.announceAt && (
             <div className={styles.announceDate}>
-              <Icon
-                id='calendar-stroke'
-                width={20}
-                height={20}
-                fill='none'
-                stroke='#484848'
-              />
+              <IconCalendar width={20} height={20} color={'var(--grey-4)'} />
               <p>당첨자 발표일</p>
               <p className={styles.data}>
                 {DateTime.format(data.announceAt, 'YMD_HM')}
@@ -316,14 +323,12 @@ export default function EventPage() {
 
       <CommentContainer
         isNotice={data.isNotice}
-        commentCount={data.commentCount}
         userInfo={userInfo.userRoleId}
       />
 
       <PostModalRenderer
         modal={modal}
         handleEdit={handleEdit}
-        handleReport={handleReport}
         handleDelete={handleDelete}
         handleShare={handleShare}
       />
@@ -334,6 +339,7 @@ export default function EventPage() {
 function MetaContainer({
   userDisplay,
   userRoleId,
+  authorBadgeRoleId,
   createdAt,
   isEdited,
   isNotice,
@@ -350,19 +356,29 @@ function MetaContainer({
     });
   };
 
-  const showBadge =
-    userRoleId === ROLE.official ||
-    (userRoleId === ROLE.admin && userDisplay !== '익명송이');
-
   const showMeatBallIcon = !isNotice || isWriter;
+  const badgeRoleId = authorBadgeRoleId ?? userRoleId;
+  const showBadge =
+    badgeRoleId === ROLE.official ||
+    (badgeRoleId === ROLE.admin && userDisplay !== '익명송이');
 
   return (
     <div className={styles.metaContainer}>
       <div className={styles.meta}>
-        <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
+        <IconMultiCloudLogo
+          width={25}
+          height={16}
+          role='img'
+          aria-label='로고'
+        />
         <p>{userDisplay || 'Unknown'}</p>
         {showBadge && (
-          <Badge userRoleId={userRoleId} className={styles.badge} />
+          <Badge
+            userRoleId={badgeRoleId}
+            className={styles.badge}
+            width={18}
+            height={18}
+          />
         )}
         <p className={styles.dot}>·</p>
         <p>
@@ -374,7 +390,7 @@ function MetaContainer({
       <div className={styles.actions}>
         {showMeatBallIcon && (
           <div className={styles.meatBall} onClick={onMenuOpen}>
-            <Icon id='meat-ball' width={18} height={4} stroke='none' />
+            <IconEllipsis width={18} height={4} color='var(--grey-3-1)' />
           </div>
         )}
       </div>
@@ -410,15 +426,13 @@ function ActionContainer({
         }}
         onClick={inputFocus}
       >
-        <Icon
-          id='comment-stroke'
+        <IconComment
           width={18}
           height={15}
+          color={'var(--blue-3)'}
           styles={{
             paddingTop: '0.1rem',
           }}
-          stroke={'var(--blue-3)'}
-          fill={'none'}
         />
         <p>댓글 {commentCount.toLocaleString()}</p>
       </div>
@@ -426,40 +440,36 @@ function ActionContainer({
         className={styles.count}
         onClick={() => (isLiked ? unlike.mutate() : like.mutate())}
       >
-        <Icon
-          id='like-stroke'
-          width={16}
-          height={15}
-          stroke={'var(--pink-2)'}
-          fill={isLiked ? 'var(--pink-2)' : 'none'}
-        />
+        {isLiked ? (
+          <IconHeartFill width={16} height={18} color='var(--pink-2)' />
+        ) : (
+          <IconHeart width={16} height={18} color='var(--pink-2)' />
+        )}
         <p>공감 {likeCount.toLocaleString()}</p>
       </div>
       <div
         className={styles.count}
         onClick={() => (isScrapped ? unscrap.mutate() : scrap.mutate())}
       >
-        <Icon
-          id='scrap-stroke'
-          width={13}
-          height={16}
-          stroke={'var(--green-1)'}
-          fill={isScrapped ? 'var(--green-1)' : 'none'}
-        />
+        {isScrapped ? (
+          <IconBookmarkFill width={13} height={16} color={'var(--green-2)'} />
+        ) : (
+          <IconBookmark width={13} height={16} color={'var(--green-2)'} />
+        )}
         <p>스크랩 {scrapCount.toLocaleString()}</p>
       </div>
     </div>
   );
 }
 
-function CommentContainer({ isNotice, commentCount, userInfo }) {
+function CommentContainer({ isNotice, userInfo }) {
   return (
     <>
       {isNotice ? (
         <div className={styles.whiteBox} />
       ) : (
         <>
-          <CommentListSuspense commentCount={commentCount} />
+          <CommentListSuspense />
           {userInfo === 4 && <CommentInput />}
         </>
       )}

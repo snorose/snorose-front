@@ -1,5 +1,5 @@
-import { isNumber } from '@/shared/lib';
 import InputLayout from '@/shared/component/form/input/InputLayout';
+import { isNumber } from '@/shared/lib';
 
 export default function NumberInput({
   id,

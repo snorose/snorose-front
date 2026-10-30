@@ -3,12 +3,14 @@ import { useBlocker as useRouteBlocker } from 'react-router-dom';
 
 import { ModalContext } from '@/shared/context/ModalContext';
 
+import { isMaintenanceBlocked } from '@/feature/maintenance/access';
+
 export default function useBlocker(isBlock, actions = ['POP']) {
   const { setModal } = useContext(ModalContext);
 
   // 뒤로가기 시 커스텀 모달 노출
   const blocker = useRouteBlocker(({ historyAction }) => {
-    if (!isBlock) return false;
+    if (!isBlock || isMaintenanceBlocked()) return false;
 
     const actionType = actions.map((action) => action.toUpperCase());
 
@@ -29,7 +31,7 @@ export default function useBlocker(isBlock, actions = ['POP']) {
   // 새로고침, 브라우저 닫기, 외부 URL 이동 시 native confirm 노출
   useEffect(() => {
     const handleBeforeunload = (e) => {
-      if (isBlock) {
+      if (isBlock && !isMaintenanceBlocked()) {
         e.preventDefault();
         e.returnValue = 'aaaa';
       }

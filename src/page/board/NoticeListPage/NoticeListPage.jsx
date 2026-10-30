@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 import { useQuery } from '@tanstack/react-query';
 
-import { useAuth } from '@/shared/hook';
-import { BackAppBar, FetchLoading, WriteButton } from '@/shared/component';
-import { getBoard } from '@/shared/lib';
-import { QUERY_KEY, STALE_TIME, ROLE } from '@/shared/constant';
-
 import { getNoticeList } from '@/apis/notice';
+
+import { BackAppBar, FetchLoading, WriteButton } from '@/shared/component';
+import { QUERY_KEY, ROLE, STALE_TIME } from '@/shared/constant';
+import { useAuth, useBoard, useBoardNavigate } from '@/shared/hook';
+import { getBoard } from '@/shared/lib';
+
 import { NoticeBar } from '@/feature/board/component';
 
 import styles from './NoticeListPage.module.css';
@@ -90,11 +92,84 @@ export default function NoticeListPage() {
       </div>
       {userInfo?.userRoleId === ROLE.admin &&
         currentBoardTextId === 'notice' && (
-          <WriteButton
-            to={`/board/${currentBoardTextId}/post-write`}
-            className={styles.writeButton}
-          />
+          <WriteButton to={`/board/${currentBoardTextId}/post-write`} />
         )}
+    </div>
+  );
+}
+
+/**
+ * TODO: 라우트 개선 작업 완료 후 기존 컴포넌트와 교체 예정
+ */
+export function NewNoticeListPage() {
+  const navigate = useNavigate();
+  const { userInfo } = useAuth();
+  const {
+    key: boardKey,
+    id: boardId,
+    name: boardName,
+    isGlobalNotice,
+  } = useBoard();
+  const { toNoticeWrite } = useBoardNavigate();
+
+  const isAdmin = userInfo?.userRoleId === ROLE.admin;
+
+  const {
+    data: noticeList,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: [QUERY_KEY.notices, boardId],
+    queryFn: () => getNoticeList(boardId),
+    staleTime: STALE_TIME.noticeList,
+  });
+
+  if (isLoading) {
+    return (
+      <>
+        <BackAppBar notFixed />
+        <FetchLoading>공지글 불러오는 중...</FetchLoading>
+      </>
+    );
+  }
+
+  if (isError) {
+    return (
+      <>
+        <BackAppBar notFixed />
+        <FetchLoading animation={false}>
+          게시글을 불러오지 못했습니다.
+        </FetchLoading>
+      </>
+    );
+  }
+
+  return (
+    <div className={styles.container}>
+      <BackAppBar
+        title={isGlobalNotice ? boardName : `${boardName} 공지`}
+        hasNotice={true}
+      />
+
+      {noticeList.length === 0 && (
+        <FetchLoading animation={false}>공지글이 없습니다.</FetchLoading>
+      )}
+
+      {noticeList.length > 0 && (
+        <div className={styles.content}>
+          {noticeList.map((post) => (
+            <NoticeBar
+              key={post.postId}
+              data={post}
+              onClick={() => navigate(`./${post.postId}`)}
+            />
+          ))}
+        </div>
+      )}
+
+      {isGlobalNotice && isAdmin && (
+        <WriteButton to={toNoticeWrite(boardKey)} />
+      )}
     </div>
   );
 }

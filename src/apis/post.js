@@ -1,13 +1,18 @@
-import { defaultAxios, authAxios } from '@/axios';
-import { IconItem } from '@storybook/blocks';
 import { getBoardUrl } from '@/shared/lib';
+
 import altImage from '@/assets/images/altImage.png';
 
-// 게시글 리스트 가져오기
-export const getPosts = async (boardId, page = 0) => {
-  const url = getBoardUrl(boardId, page);
+import { authAxios, defaultAxios } from '@/axios';
 
-  const response = await authAxios.get(url);
+// 게시글 리스트 가져오기
+export const getPosts = async (
+  boardId,
+  page = 0,
+  { sort, year, category } = {}
+) => {
+  const response = await authAxios.get(getBoardUrl(boardId), {
+    params: { page, sort, year, category },
+  });
 
   return response?.data.result;
 };
@@ -84,6 +89,7 @@ export const patchPost = async ({
   boardId,
   postId,
   title,
+  category = '',
   content,
   isNotice,
   attachmentsInfo,
@@ -92,12 +98,10 @@ export const patchPost = async ({
   const response = await authAxios.patch(
     `/v1/boards/${boardId}/posts/${postId}/update`,
     {
-      category: '',
+      category,
       title,
       content,
       isNotice,
-      finalAttachments: [],
-      deleteAttachments: [],
       finalAttachments: attachmentsInfo.map(
         ({ id, fileName, fileComment, type }) => ({
           id,

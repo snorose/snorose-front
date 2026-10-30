@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
 
-import { useAuth } from '@/shared/hook';
-import { USER_STATUS } from '@/shared/constant';
+import { IllustrationPadlock } from '@snorose/icons';
 
-import lockImage from '@/assets/images/lock.svg';
+import { USER_STATUS } from '@/shared/constant';
+import { useAuth } from '@/shared/hook';
 
 import styles from './HomeBoardCard.module.css';
 
 export default function HomeBoardCard({ path, name, mainImage }) {
   const { status } = useAuth();
   const isLogin = status === USER_STATUS.isLogin;
+  const MainImage = isLogin ? mainImage : IllustrationPadlock;
 
   const backgroundClass = {
     첫눈온방: styles.firstSnow,
@@ -22,10 +23,10 @@ export default function HomeBoardCard({ path, name, mainImage }) {
     <Link className={`${styles.link}`} to={path}>
       <div className={styles.cardSection}>
         <div className={`${styles.card} ${backgroundClass[name]}`}>
-          <img
-            src={isLogin ? mainImage : lockImage}
-            alt={name}
-            className={isLogin ? styles.icon : ''}
+          <MainImage
+            className={isLogin ? styles.icon : styles.lockIcon}
+            role='img'
+            aria-label={isLogin ? name : '잠금'}
           />
         </div>
         {isLogin ? <p className={styles.name}>{name}</p> : ''}

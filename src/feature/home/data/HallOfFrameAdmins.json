@@ -706,5 +706,103 @@
     "team": ["디자인팀"],
     "position": null,
     "studentInformation": "(산업디자인과 22 김지인)"
+  },
+  {
+    "nickname": "_______________",
+    "role": null,
+    "team": ["운영기획팀"],
+    "position": ["운영·관리"],
+    "studentInformation": "(문헌정보학과 24 김은경)"
+  },
+  {
+    "nickname": "karen26",
+    "role": null,
+    "team": ["운영기획팀"],
+    "position": ["운영·관리"],
+    "studentInformation": "(소프트웨어융합 21 조유정)"
+  },
+  {
+    "nickname": "지비",
+    "role": null,
+    "team": ["운영기획팀"],
+    "position": ["이벤트 기획"],
+    "studentInformation": "(한국어문학부 25 배지원)"
+  },
+  {
+    "nickname": "전문이벤트팀송",
+    "role": null,
+    "team": ["운영기획팀"],
+    "position": ["이벤트 기획"],
+    "studentInformation": "(영어영문학부 24 이유진)"
+  },
+  {
+    "nickname": "nedijs",
+    "role": null,
+    "team": ["운영기획팀"],
+    "position": ["이벤트 기획"],
+    "studentInformation": "(르꼬르동블루외식경영 25 전은진)"
+  },
+  {
+    "nickname": "금귤사과",
+    "role": null,
+    "team": ["운영기획팀"],
+    "position": ["회계"],
+    "studentInformation": "(소비자경제학과 25 현서윤)"
+  },
+  {
+    "nickname": "간냥이",
+    "role": null,
+    "team": ["개발팀"],
+    "position": ["FE"],
+    "studentInformation": "(컴퓨터과학전공 23 김가인)"
+  },
+  {
+    "nickname": "하루",
+    "role": null,
+    "team": ["개발팀"],
+    "position": ["FE"],
+    "studentInformation": "(컴퓨터과학전공 22 하지민)"
+  },
+  {
+    "nickname": "예원은예옹예옹",
+    "role": null,
+    "team": ["개발팀"],
+    "position": ["BE"],
+    "studentInformation": "(경제학부 20 김예원)"
+  },
+  {
+    "nickname": "Mol챔",
+    "role": null,
+    "team": ["개발팀"],
+    "position": ["BE"],
+    "studentInformation": "(IT공학전공 22 손채민)"
+  },
+  {
+    "nickname": "소금빵먹고싶송이",
+    "role": null,
+    "team": ["개발팀"],
+    "position": ["BE"],
+    "studentInformation": "(문헌정보학과 22 이하늘)"
+  },
+  {
+    "nickname": "Deonne",
+    "role": null,
+    "team": ["개발팀"],
+    "position": ["DevOps"],
+    "studentInformation": "(컴퓨터과학전공 20 박채연)"
+  },
+  {
+    "nickname": "시몬스",
+    "role": null,
+    "team": ["개발팀"],
+    "position": ["DevOps"],
+    "studentInformation": "(IT공학전공 21 우지원)"
+  },
+  {
+    "nickname": "윚우",
+    "role": null,
+    "team": ["개발팀"],
+    "position": ["DevOps"],
+    "studentInformation": "(데이터사이언스전공 23 위지우)"
   }
 ]

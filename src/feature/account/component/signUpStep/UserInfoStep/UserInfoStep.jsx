@@ -1,26 +1,30 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useRegister } from '@/apis';
+import {
+  IconChevronRight,
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+} from '@snorose/icons';
 
 import {
-  Button,
   Dropdown,
-  Icon,
-  Label,
-  TextInput,
   ErrorMessage,
-  NumberInput,
+  Label,
   NewButton,
+  NumberInput,
+  TextInput,
 } from '@/shared/component';
 import { MAJORS } from '@/shared/constant';
 
+import { PrivacyTermModal } from '@/feature/account/component/TermModal';
 import {
+  validateBirthday,
   validateNickname,
   validateStudentNumber,
-  validateBirthday,
 } from '@/feature/account/lib';
-import { PRIVACY_TERM } from '@/feature/account/constant/privacyTerm';
+
+import { useRegister } from '@/apis';
 
 import styles from './UserInfoStep.module.css';
 
@@ -28,14 +32,14 @@ export default function UserInfoStep({ setFormData, formData }) {
   const navigate = useNavigate();
   const register = useRegister();
 
-  const [isTermsChecked, setIsTermsChecked] = useState(false);
+  const [isPrivacyTermsChecked, setIsPrivacyTermsChecked] = useState(false);
 
   const isFormValid =
     validateNickname(formData.nickname) === 'valid' &&
     validateStudentNumber(formData.studentNumber) === 'valid' &&
     validateBirthday(formData.birthday) === 'valid' &&
     formData.major &&
-    isTermsChecked;
+    isPrivacyTermsChecked;
 
   const inputList = [
     {
@@ -68,20 +72,6 @@ export default function UserInfoStep({ setFormData, formData }) {
       message: '학번은 7자리 숫자예요',
     },
     {
-      type: 'text',
-      label: '생년월일',
-      id: 'birthday',
-      placeholder: 'YYYY-MM-DD',
-      value: formData.birthday,
-      onChange: (next) =>
-        setFormData((prev) => ({
-          ...prev,
-          birthday: next,
-        })),
-      validate: validateBirthday,
-      message: '입력 형식을 확인해 주세요',
-    },
-    {
       type: 'dropdown',
       label: '전공',
       id: 'major',
@@ -94,6 +84,27 @@ export default function UserInfoStep({ setFormData, formData }) {
           major: option.name,
         }));
       },
+      value: formData.major,
+      validate: (value) => (value ? 'valid' : 'default'),
+    },
+    {
+      type: 'text',
+      label: '생년월일',
+      id: 'birthday',
+      placeholder: 'YYYY-MM-DD',
+      value: formData.birthday,
+      onChange: (next) => {
+        const digits = next.replace(/\D/g, '').slice(0, 8);
+        const formatted =
+          digits.length <= 4
+            ? digits
+            : digits.length <= 6
+              ? `${digits.slice(0, 4)}-${digits.slice(4)}`
+              : `${digits.slice(0, 4)}-${digits.slice(4, 6)}-${digits.slice(6)}`;
+        setFormData((prev) => ({ ...prev, birthday: formatted }));
+      },
+      validate: validateBirthday,
+      message: '입력 형식을 확인해 주세요',
     },
   ];
 
@@ -130,14 +141,15 @@ export default function UserInfoStep({ setFormData, formData }) {
           })}
         </div>
       </div>
-
-      <CheckTerms
-        label={'개인정보 수집 및 이용 동의'}
-        required
-        navigate={navigate}
-        isChecked={isTermsChecked}
-        setIsChecked={setIsTermsChecked}
-      />
+      <div className={styles.terms}>
+        <CheckTerms
+          id='privacyTerms'
+          label={'개인정보 수집 및 이용 동의'}
+          required
+          isChecked={isPrivacyTermsChecked}
+          setIsChecked={setIsPrivacyTermsChecked}
+        />
+      </div>
 
       <div className={styles.submit}>
         <NewButton
@@ -152,10 +164,10 @@ export default function UserInfoStep({ setFormData, formData }) {
 }
 
 function CheckTerms({
+  id = 'terms',
   label,
   isChecked = false,
   required = false,
-  navigate,
   setIsChecked,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -182,23 +194,21 @@ function CheckTerms({
   return (
     <div className={styles.checkTerms}>
       <input
-        id='terms'
+        id={id}
         className={styles.checkbox}
         type='checkbox'
         hidden
         checked={isChecked}
         onChange={handleCheckboxChange}
       />
-      <label htmlFor='terms' className={styles.label}>
-        <Icon
+      <label htmlFor={id} className={styles.label}>
+        <IconMultiCheckBlueCircle
           className={`${styles.blueBox} ${isChecked ? styles.checked : ''}`}
-          id='checkbox-blue'
           width={20}
           height={20}
         />
-        <Icon
+        <IconMultiCheckGreyCircle
           className={`${styles.greyBox} ${!isChecked ? styles.unchecked : ''}`}
-          id='checkbox-grey'
           width={20}
           height={20}
         />
@@ -208,90 +218,15 @@ function CheckTerms({
       </label>
 
       <div className={styles.termsLink} onClick={handlePrivacyTermClick}>
-        <Icon id='chevron-right' width={20} height={20} />
+        <IconChevronRight width={20} height={20} />
       </div>
 
-      {isModalOpen && (
+      {isModalOpen && id === 'privacyTerms' && (
         <PrivacyTermModal
           onAgree={handleModalAgree}
           onClose={handleModalClose}
         />
       )}
-    </div>
-  );
-}
-
-function PrivacyTermModal({ onAgree, onClose }) {
-  const [hasScrolledToEnd, setHasScrolledToEnd] = useState(false);
-  const descriptionRef = useRef(null);
-
-  const handleScroll = (e) => {
-    // 이미 한 번 끝까지 스크롤했다면 더 이상 확인하지 않음
-    if (hasScrolledToEnd) return;
-
-    const { scrollTop, scrollHeight, clientHeight } = e.target;
-    // 스크롤이 끝에 도달했는지 확인 (약간의 여유값 추가)
-    const isAtEnd = scrollTop + clientHeight >= scrollHeight - 5;
-
-    if (isAtEnd) {
-      setHasScrolledToEnd(true);
-    }
-  };
-
-  // 컨텐츠가 스크롤 없이도 모두 보이는 경우 처리
-  useEffect(() => {
-    if (descriptionRef.current) {
-      const { scrollHeight, clientHeight } = descriptionRef.current;
-      if (scrollHeight <= clientHeight) {
-        setHasScrolledToEnd(true);
-      }
-    }
-  }, []);
-
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
-
-  return (
-    <div className={styles.modalOverlay} onClick={handleOverlayClick}>
-      <div className={styles.modalContainer}>
-        <div className={styles.modalHeader}>
-          <h2 className={styles.modalTitle}>
-            {PRIVACY_TERM.title}
-            <span className={styles.modalRequired}>*</span>
-          </h2>
-          <button className={styles.closeButton} onClick={onClose}>
-            <Icon id='x' width={24} height={24} />
-          </button>
-        </div>
-
-        <div
-          className={styles.modalContent}
-          ref={descriptionRef}
-          onScroll={handleScroll}
-        >
-          <div className={styles.modalSummary}>{PRIVACY_TERM.summary}</div>
-          <div className={styles.modalGuide}>{PRIVACY_TERM.guide}</div>
-          {PRIVACY_TERM.details.map((section, idx) => (
-            <div key={idx} className={styles.modalDetails}>
-              <div className={styles.modalSubtitle}>{section.title}</div>
-              <div className={styles.modalText}>{section.content}</div>
-            </div>
-          ))}
-          <div className={styles.modalNotice}>{PRIVACY_TERM.notice}</div>
-        </div>
-
-        <div className={styles.modalFooter}>
-          <Button
-            btnName='동의하고 계속하기'
-            className={hasScrolledToEnd ? 'right' : 'ready'}
-            disabled={!hasScrolledToEnd}
-            onClick={onAgree}
-          />
-        </div>
-      </div>
     </div>
   );
 }

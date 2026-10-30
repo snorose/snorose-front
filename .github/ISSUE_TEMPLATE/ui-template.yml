@@ -1,0 +1,21 @@
+name: 🎨 UI Update Request
+description: UI 변경사항이 있는 경우에 사용합니다.
+title: '[STYLE] '
+labels: ['🎨 UI']
+body:
+  - type: textarea
+    id: design
+    attributes:
+      label: 🎨 디자인/시안
+      description: Figma 링크나 참고할 디자인 자료를 작성해 주세요.
+      value: |
+        - [Figma]()
+    validations:
+      required: false
+  - type: textarea
+    id: requirements
+    attributes:
+      label: ✅ 요구 사항
+      description: 반영해야 할 UI 요구 사항을 구체적으로 작성해 주세요. (예시 `모바일·태블릿 반응형 시 브레이크포인트 768px 이하에서 메뉴가 숨겨져야 한다.`)
+    validations:
+      required: true

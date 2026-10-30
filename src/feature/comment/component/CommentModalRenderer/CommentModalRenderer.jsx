@@ -1,21 +1,18 @@
-import { MoreOptionModal, ConfirmModal, OptionModal } from '@/shared/component';
-import { ModalContext } from '@/shared/context/ModalContext';
-import {
-  CONFIRM_MODAL_TEXT,
-  MORE_OPTION_MODAL_TEXT,
-  OPTION_MODAL_TEXT,
-} from '@/shared/constant';
-
-import { useLocation } from 'react-router-dom';
-import { useCommentContext } from '../../context';
-import { useReportHandler } from '@/feature/report/hook/useReport';
-import { useComment } from '../../hook';
 import { useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import { ConfirmModal, MoreOptionModal } from '@/shared/component';
+import { CONFIRM_MODAL_TEXT, MORE_OPTION_MODAL_TEXT } from '@/shared/constant';
+import { ModalContext } from '@/shared/context/ModalContext';
+
+import { useCommentContext } from '../../context';
+import { useComment } from '../../hook';
 
 export default function CommentModalRenderer({ data, moreOptionTop }) {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const { modal, setModal } = useContext(ModalContext);
-  const { handleReport } = useReportHandler(modal, setModal, data);
+
   const { deleteComment } = useComment();
 
   const { commentId, resetCommentState } = useCommentContext();
@@ -31,25 +28,16 @@ export default function CommentModalRenderer({ data, moreOptionTop }) {
               <MoreOptionModal
                 title='댓글'
                 optionList={MORE_OPTION_MODAL_TEXT.COMMENT_MORE_OPTION_LIST}
+                functions={[
+                  () => navigate(`/report/write/comment?targetId=${data.id}`),
+                  () =>
+                    navigate(
+                      `/report/write/user?targetId=${data.encryptedUserId}`
+                    ),
+                ]}
                 top={moreOptionTop}
               />
             ) : null;
-          // 댓글 신고하기 옵션 모달
-          case 'report-comment-types':
-            return (
-              <OptionModal
-                title='댓글 신고'
-                optionList={OPTION_MODAL_TEXT.REPORT_COMMENT_TYPE_LIST}
-              />
-            );
-          // 댓글 신고 확인 모달
-          case 'confirm-comment-report':
-            return (
-              <ConfirmModal
-                modalText={CONFIRM_MODAL_TEXT.REPORT_COMMENT}
-                onConfirm={handleReport}
-              />
-            );
           // 댓글 삭제 확인 모달
           case 'confirm-comment-delete':
             return (

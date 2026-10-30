@@ -1,0 +1,10 @@
+export const INQUIRY_PLACEHOLDERS = {
+  dropdown: '문의할 카테고리를 선택해주세요',
+  title: '문의 제목을 입력해주세요',
+  content: '상세 내용을 입력해주세요',
+} as const;
+
+export const INQUIRY_STATUS_MAP = {
+  PENDING: { label: '답변 전', variant: 'grey' },
+  COMPLETED: { label: '답변 완료', variant: 'gradient' },
+} as const;

@@ -1,9 +1,9 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useAuth } from '@/shared/hook';
 import { NoticeModal } from '@/shared/component';
 import { NOTICE_MODAL_TEXT, ROLE } from '@/shared/constant';
-import React from 'react';
+import { useAuth } from '@/shared/hook';
 
 export default function UnverifiedOnly({
   children,

@@ -12,8 +12,6 @@
 
 .icon {
   margin-top: 0.2rem;
-  width: 2.8rem;
-  height: 1.7rem;
 }
 
 .itemContainer {
@@ -28,11 +26,6 @@
   align-items: center;
   gap: 0.2rem;
   flex-shrink: 0;
-}
-
-.badge {
-  width: 1.6rem;
-  height: 1.6rem;
 }
 
 .description {

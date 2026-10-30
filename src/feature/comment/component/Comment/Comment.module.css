@@ -4,6 +4,8 @@
   flex-direction: column;
   border-radius: 0.5rem;
   background: var(--grey-1);
+
+  position: relative;
 }
 
 .comment.focused {
@@ -27,8 +29,6 @@
 }
 
 .badge {
-  width: 1.6rem;
-  height: 1.6rem;
   margin-left: -0.6rem;
 }
 
@@ -36,11 +36,6 @@
   display: flex;
   height: 1.2rem;
   align-items: center;
-}
-
-.cloudLogoIcon {
-  width: 2.2rem;
-  height: 1.4rem;
 }
 
 .isWriterWithdrawn {
@@ -56,7 +51,7 @@
 
 .dot3 {
   position: absolute;
-  right: 2.6rem;
+  right: 0.6rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -102,9 +97,11 @@
   background-color: transparent;
   font: var(--text-body-1-reg);
 
-  &:hover {
-    background-color: var(--white);
-    box-shadow: inset 0 0 0 0.03rem var(--blue-3);
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--white);
+      box-shadow: inset 0 0 0 0.03rem var(--blue-3);
+    }
   }
 }
 
@@ -119,9 +116,11 @@
   background-color: transparent;
   font: var(--text-body-1-reg);
 
-  &:hover {
-    background-color: var(--white, #fff);
-    box-shadow: inset 0 0 0 0.03rem var(--blue-3);
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--white, #fff);
+      box-shadow: inset 0 0 0 0.03rem var(--blue-3);
+    }
   }
 }
 

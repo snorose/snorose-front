@@ -2,14 +2,14 @@ import { useParams } from 'react-router-dom';
 
 import NavbarLayout from '@/shared/ui/NavbarLayout';
 
-import { ExamReviewListPage } from '@/page/exam';
+import { NewPostListPage } from '@/page/board';
 import { EventListPage } from '@/page/event';
-import { PostListPage } from '@/page/board';
+import { ExamReviewListPage } from '@/page/exam';
 
 export default function PostListPageSelector() {
-  const { boardName } = useParams();
+  const { boardKey } = useParams();
 
-  switch (boardName) {
+  switch (boardKey) {
     case 'exam-review': {
       return (
         <NavbarLayout>
@@ -21,7 +21,7 @@ export default function PostListPageSelector() {
       return <EventListPage />;
     }
     default: {
-      return <PostListPage />;
+      return <NewPostListPage />;
     }
   }
 }

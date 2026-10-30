@@ -1,0 +1,152 @@
+.page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 32px 0 40px;
+  color: var(--grey-4);
+}
+
+.header {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--grey-2);
+}
+
+.title {
+  font: var(--text-heading-1-bold);
+  letter-spacing: 0;
+}
+
+.description {
+  margin-top: 4px;
+  color: var(--grey-3-1);
+  font: var(--text-body-2-reg);
+  letter-spacing: 0;
+}
+
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 24px;
+}
+
+.group {
+  min-width: 0;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.groupTitle {
+  font: var(--text-headline-2-bold);
+  letter-spacing: 0;
+}
+
+.count {
+  min-width: 24px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background-color: var(--grey-1);
+  color: var(--grey-3-1);
+  font: var(--text-caption-1-bold);
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.tokenList {
+  border-top: 1px solid var(--grey-2);
+  list-style: none;
+}
+
+.token {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.7fr);
+  align-items: center;
+  gap: 32px;
+  min-width: 0;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--grey-2);
+}
+
+.preview {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  letter-spacing: 0;
+}
+
+.details {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+  justify-items: start;
+}
+
+.copyButton {
+  max-width: 100%;
+  padding: 4px 6px;
+  margin-left: -6px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--blue-4);
+  cursor: pointer;
+  text-align: left;
+}
+
+.copyButton:hover {
+  background-color: var(--grey-1);
+}
+
+.copyButton:focus-visible {
+  outline: 2px solid var(--blue-4);
+  outline-offset: 2px;
+}
+
+.copyButton code,
+.value {
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.value {
+  color: var(--grey-3-1);
+}
+
+.copyStatus {
+  position: absolute;
+  top: 4px;
+  right: 0;
+  color: var(--blue-4);
+  font: var(--text-caption-1-med);
+  letter-spacing: 0;
+}
+
+.empty {
+  display: grid;
+  min-height: 200px;
+  margin-top: 24px;
+  place-items: center;
+  border: 1px solid var(--grey-2);
+  border-radius: 8px;
+  color: var(--grey-3-1);
+  font: var(--text-body-1-med);
+  letter-spacing: 0;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 24px 0 32px;
+  }
+
+  .token {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    padding: 18px 0;
+  }
+}

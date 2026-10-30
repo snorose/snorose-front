@@ -2,9 +2,9 @@
 export { default as LoginPage } from './LoginPage/LoginPage';
 
 // 회원가입
+export { default as SignUpFailurePage } from './SignUpFailure/SignUpFailurePage';
 export { default as SignUpPage } from './SignUpPage/SignUpPage';
 export { default as SignUpSuccessPage } from './SignUpSuccessPage/SignUpSuccessPage';
-export { default as SignUpFailurePage } from './SignUpFailure/SignUpFailurePage';
 
 // 계정 찾기
 export { default as FindIdPage } from './FindIdPage/FindIdPage';

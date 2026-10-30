@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import { useSendUser, useCertifyUser } from '@/apis';
-
+import { Label, NewButton, TextInput } from '@/shared/component';
 import { useToast } from '@/shared/hook';
-import { Label, TextInput, NewButton } from '@/shared/component';
+
+import { useCertifyUser, useSendUser } from '@/apis';
 
 import styles from './AuthorizationStep.module.css';
 
@@ -28,10 +28,10 @@ export default function AuthorizationStep({ email, setStage }) {
       if (res) {
         setStage(3); // 직접 3단계로 설정
       } else {
-        toast({ message: '코드를 다시 한 번 확인해 주세요', variant: 'error' });
+        toast.error('코드를 다시 한 번 확인해 주세요');
       }
     } catch (error) {
-      toast({ message: '코드를 다시 한 번 확인해 주세요', variant: 'error' });
+      toast.error('코드를 다시 한 번 확인해 주세요');
     }
   };
 
@@ -40,7 +40,7 @@ export default function AuthorizationStep({ email, setStage }) {
       <div>
         <p className={styles.title}>
           이메일 인증을 <br />
-          완료해 주세요
+          완료해주세요
         </p>
         <p className={styles.text}>
           숙명 구글 이메일로 확인 코드를 보내드렸어요
@@ -50,9 +50,9 @@ export default function AuthorizationStep({ email, setStage }) {
           <Label htmlFor='authNum'>확인 코드</Label>
           <TextInput
             id='authNum'
-            placeholder='확인 코드를 입력해 주세요'
+            placeholder='확인 코드를 입력해주세요'
             value={authNum}
-            onChange={(next) => setAuthNum(next)}
+            onChange={(next) => setAuthNum(next.replace(/\s/g, ''))}
           />
         </div>
       </div>

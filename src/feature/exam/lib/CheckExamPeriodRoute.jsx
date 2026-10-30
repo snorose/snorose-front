@@ -1,32 +1,38 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/shared/hook';
-import { ROLE } from '@/shared/constant/role';
 
-// 시험 후기 작성 기간: 2025년 12월 22일 ~ 2026년 1월 18일
-const examStart = new Date(2025, 11, 22, 0, 0, 0);
-const examEnd = new Date(2026, 0, 18, 23, 59, 59);
+import { useQuery } from '@tanstack/react-query';
+
+import { QUERY_KEY, STALE_TIME } from '@/shared/constant';
+import { ROLE } from '@/shared/constant/role';
+import { useAuth } from '@/shared/hook';
+
+import { getReviewWritePeriodActive } from '@/apis';
 
 export default function CheckExamPeriodRoute({ children }) {
   const { userInfo } = useAuth();
   const navigate = useNavigate();
 
+  const { data: isReviewPeriodActive } = useQuery({
+    queryKey: [QUERY_KEY.reviewWritePeriodActive],
+    queryFn: getReviewWritePeriodActive,
+    staleTime: STALE_TIME.reviewWritePeriodActive,
+    enabled: !!userInfo && userInfo.userRoleId !== ROLE.admin,
+  });
+
   useEffect(() => {
     if (!userInfo) return;
-
     if (userInfo.userRoleId === ROLE.admin) {
       return;
     }
-
-    const now = new Date();
-
-    if (now >= examStart && now <= examEnd) {
+    if (isReviewPeriodActive === undefined) return;
+    if (isReviewPeriodActive) {
       return;
     }
 
     alert('시험후기 작성 기간이 아닙니다.');
     navigate('/', { replace: true });
-  }, [userInfo]);
+  }, [userInfo, isReviewPeriodActive, navigate]);
 
   return children;
 }

@@ -1,0 +1,19 @@
+.checkRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+
+  margin-top: 0.8rem;
+
+  cursor: pointer;
+}
+
+.checkText {
+  color: var(--grey-4);
+  font: var(--text-body-1-reg);
+}
+
+.linkConfirmButton {
+  color: var(--blue-4) !important;
+}

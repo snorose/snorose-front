@@ -1,7 +1,7 @@
 export const POST_LIST = [
   {
     postId: 1,
-    userId: 10,
+    encryptedUserId: 10,
     userDisplay: '송이1',
     category: 'tip', // 백엔드에서 추가 필요
     title: '모기 빨리 잡는 방법',
@@ -18,7 +18,7 @@ export const POST_LIST = [
   },
   {
     postId: 2,
-    userId: 11,
+    encryptedUserId: 11,
     userDisplay: '민수',
     category: 'my-major',
     title:
@@ -37,7 +37,7 @@ export const POST_LIST = [
   },
   {
     postId: 3,
-    userId: 12,
+    encryptedUserId: 12,
     userDisplay: '영희',
     category: 'life',
     title: '여름 휴가 계획',
@@ -54,7 +54,7 @@ export const POST_LIST = [
   },
   {
     postId: 4,
-    userId: 13,
+    encryptedUserId: 13,
     userDisplay: '지훈',
     category: 'life',
     title: '홈트레이닝 팁',
@@ -71,7 +71,7 @@ export const POST_LIST = [
   },
   {
     postId: 5,
-    userId: 14,
+    encryptedUserId: 14,
     userDisplay: '지혜',
     category: 'my-major',
     title: '컴퓨터과학의 이해',
@@ -88,7 +88,7 @@ export const POST_LIST = [
   },
   {
     postId: 6,
-    userId: 15,
+    encryptedUserId: 15,
     userDisplay: '재윤',
     category: 'tip',
     title: '공부하기 싫을 때 팁',

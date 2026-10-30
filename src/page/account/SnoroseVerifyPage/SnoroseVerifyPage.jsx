@@ -1,13 +1,15 @@
 import { useState } from 'react';
 
-import { BackAppBar, Icon } from '@/shared/component';
-import { TITLE_DES } from '@/feature/account/constant';
+import { IconCheck } from '@snorose/icons';
+
+import { BackAppBar } from '@/shared/component';
 
 import {
+  CompleteStep,
   TermsStep,
   VerifyStep,
-  CompleteStep,
 } from '@/feature/account/component';
+import { TITLE_DES } from '@/feature/account/constant';
 
 import styles from './SnoroseVerifyPage.module.css';
 
@@ -16,16 +18,11 @@ export default function SnoroseVerifyPage() {
   const { title, description } = TITLE_DES[step];
 
   return (
-    <dev className={styles.container}>
+    <div className={styles.container}>
       <BackAppBar title='인증 신청' notFixed />
 
       {step === 'complete' ? (
-        <Icon
-          className={styles.check}
-          id='check-thick'
-          width={24}
-          height={24}
-        />
+        <IconCheck width={24} height={24} className={styles.check} />
       ) : (
         <div className={styles.indicator}>
           <span
@@ -40,9 +37,10 @@ export default function SnoroseVerifyPage() {
       <div className={styles.title}>{title}</div>
 
       {description && <div className={styles.description}>{description}</div>}
+
       {step === 'terms' && <TermsStep setStep={setStep} />}
       {step === 'verify' && <VerifyStep setStep={setStep} />}
       {step === 'complete' && <CompleteStep />}
-    </dev>
+    </div>
   );
 }

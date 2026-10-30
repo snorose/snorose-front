@@ -1,5 +1,7 @@
 .container {
   flex: 1;
+  display: flex;
+  flex-direction: column;
 
   margin-bottom: 4rem;
 }
@@ -12,17 +14,24 @@
 .inputList {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.8rem;
+  margin-bottom: 2.5rem;
 }
 
 .field {
-  height: 10.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 /* checkbox */
+.terms {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  margin-bottom: 3.4rem;
+}
 .checkTerms {
-  margin-bottom: 7rem;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -76,168 +85,6 @@
   cursor: pointer;
 }
 
-/* 모달 오버레이 */
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: var(--z-index-popup);
-  padding: 2rem;
-  box-sizing: border-box;
-}
-
-/* 모달 컨테이너 */
-.modalContainer {
-  background: var(--white);
-  border-radius: 1.6rem;
-  width: 100%;
-  max-width: 50rem;
-  max-height: 80vh;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.15);
-}
-
-/* 모달 헤더 */
-.modalHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2rem;
-  border-bottom: 0.1rem solid var(--grey-3);
-  flex-shrink: 0;
-}
-
-.modalTitle {
-  font: var(--text-heading-1-bold);
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.modalRequired {
-  color: var(--pink-3);
-  font-size: var(--text-heading-1-bold);
-}
-
-.closeButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.4rem;
-  border-radius: 0.4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--blue-4);
-  transition: background-color 0.2s;
-}
-
-.closeButton:hover {
-  background-color: var(--grey-1-1);
-}
-
-/* 모달 콘텐츠 */
-.modalContent {
-  flex: 1;
-  overflow-y: auto;
-  padding: 2rem;
-}
-
-.modalSummary {
-  padding: 1.4rem;
-  margin-bottom: 2rem;
-
-  border-radius: 0.5rem;
-  background: var(--gradient-4);
-
-  font: var(--text-body-1-med);
-  color: var(--blue-4);
-  white-space: pre-line;
-}
-
-.modalGuide {
-  font: var(--text-body-1-med);
-  margin-bottom: 2rem;
-}
-
-.modalDetails {
-  margin-bottom: 2.4rem;
-}
-
-.modalSubtitle {
-  font: var(--text-body-1-bold);
-  margin-bottom: 0.8rem;
-  border-bottom: 0.1rem solid var(--grey-4);
-  padding-bottom: 0.4rem;
-}
-
-.modalText {
-  font: var(--text-body-2-reg);
-  white-space: pre-wrap;
-}
-
-.modalNotice {
-  padding: 1.4rem;
-
-  border-radius: 0.5rem;
-  background: var(--gradient-4);
-
-  font: var(--text-body-1-med);
-  color: var(--blue-4);
-  white-space: pre-line;
-}
-
-/* 모달 푸터 */
-.modalFooter {
-  padding: 2rem;
-  border-top: 0.1rem solid var(--grey-3);
-  flex-shrink: 0;
-}
-
-/* 스크롤바 스타일링 */
-.modalContent::-webkit-scrollbar {
-  width: 0.6rem;
-}
-
-.modalContent::-webkit-scrollbar-track {
-  background: var(--white);
-  border-radius: 0.3rem;
-}
-
-.modalContent::-webkit-scrollbar-thumb {
-  background: var(--grey-3);
-  border-radius: 0.3rem;
-}
-
-.modalContent::-webkit-scrollbar-thumb:hover {
-  background: var(--grey-3-1);
-}
-
-/* 반응형 대응 */
-@media (max-width: 768px) {
-  .modalOverlay {
-    padding: 1rem;
-  }
-
-  .modalContainer {
-    max-height: 90vh;
-  }
-
-  .modalHeader,
-  .modalContent,
-  .modalFooter {
-    padding: 1.6rem;
-  }
-
-  .modalTitle {
-    font: var(--text-headline-2-bold);
-  }
+.submit {
+  margin-top: auto;
 }

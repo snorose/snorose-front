@@ -35,3 +35,14 @@
   background: var(--green-1);
   color: var(--grey-4);
 }
+
+.button {
+  display: flex;
+  align-items: center;
+  height: 2.2rem;
+  padding: 0 0.4rem;
+  font: var(--text-body-1-reg);
+  color: var(--grey-4);
+  border-radius: 0.5rem;
+  background: var(--white);
+}

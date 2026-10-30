@@ -1,23 +1,21 @@
 import { useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { BackAppBar, Button } from '@/shared/component';
+import { IllustrationTaskFailed } from '@snorose/icons';
+
+import { BackAppBar, NewButton } from '@/shared/component';
 
 import styles from './NotFoundIdPage.module.css';
-
-import { taskFailedIllustration } from '@/assets/illustrations';
 
 export default function NotFoundIdPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
 
   useEffect(() => {
-    try {
-      const checkAccess = state.access;
-    } catch (e) {
+    if (!state) {
       navigate('/login');
     }
-  }, []);
+  }, [navigate, state]);
 
   return (
     <div className={styles.container}>
@@ -31,24 +29,18 @@ export default function NotFoundIdPage() {
       </div>
 
       <div className={styles.pageMiddleFrame}>
-        <img
-          src={taskFailedIllustration}
-          alt='아이디 찾기 실패를 알리는 일러스트'
+        <IllustrationTaskFailed
           className={styles.illustration}
+          role='img'
+          aria-label='아이디 찾기 실패를 알리는 일러스트'
         />
       </div>
 
       <div className={styles.pageBottomFrame}>
-        <Link to='/find-id'>
-          <div className={styles.goBackButton}>
-            <Button btnName='뒤로가기' className='wrong' />
-          </div>
-        </Link>
-        <Link to='/login'>
-          <div className={styles.loginButton}>
-            <Button btnName='로그인하기' className='right' />
-          </div>
-        </Link>
+        <NewButton variant='outlined' onClick={() => navigate('/find-id')}>
+          뒤로가기
+        </NewButton>
+        <NewButton onClick={() => navigate('/login')}>로그인하기</NewButton>
       </div>
     </div>
   );

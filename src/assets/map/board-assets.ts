@@ -1,53 +1,295 @@
+import {
+  IllustrationBarChartCoins,
+  IllustrationBooksCap,
+  IllustrationBooksCertificate,
+  IllustrationBookshelf,
+  IllustrationBoxStarsCircle,
+  IllustrationBoxStarsOpen,
+  IllustrationDumbbellTowel,
+  IllustrationFolderSearch,
+  IllustrationFrameRope,
+  IllustrationGamepad,
+  IllustrationGlobe,
+  IllustrationHeartPill,
+  IllustrationIceCupBowl,
+  IllustrationLipstick,
+  IllustrationMicrophone,
+  IllustrationPawBone,
+  IllustrationPhoneBooks,
+  IllustrationPotPaper,
+  IllustrationResidence,
+  IllustrationSnowfall,
+  IllustrationSnowfallCircle,
+  IllustrationSnowGround,
+  IllustrationSnowGroundCircle,
+  IllustrationSnowMountain,
+  IllustrationSnowMountainCircle,
+  IllustrationSpeakerNotes,
+  IllustrationStage,
+  IllustrationStarHonorBoard,
+  IllustrationSuitcase,
+  IllustrationTv,
+} from '@snorose/icons';
+import type { ComponentType, SVGProps } from 'react';
+
 import type { BoardKey } from '@/types';
 
-import firstSnowMain from '@/assets/images/firstSnow-main.svg';
-import largeSnowMain from '@/assets/images/largeSnow-main.svg';
-import permanentSnowMain from '@/assets/images/permanentSnow-main.svg';
-import eventMain from '@/assets/images/event-main.svg';
+type BoardImage = ComponentType<SVGProps<SVGSVGElement>>;
 
-import firstSnow from '@/assets/images/firstSnow-board-page.svg';
-import largeSnow from '@/assets/images/largeSnow-board-page.svg';
-import permanentSnow from '@/assets/images/permanentSnow-board-page.svg';
-import besookt from '@/assets/images/besookt-board-page.svg';
-
-import studentCouncil from '@/assets/images/studentCouncil-board-page.svg';
-import graduationPreparation from '@/assets/images/graduationPreparation-board-page.svg';
-import financeAudit from '@/assets/images/financeAudit-board-page.svg';
-
-import event from '@/assets/images/event-board-page.svg';
+export interface BoardImageLayout {
+  right: string;
+  bottom: string;
+  width: string;
+  height: string;
+  overflow?: string;
+}
 
 interface BoardImages {
-  category: string; // 게시판 카테고리 이미지
-  main?: string; // 메인 화면용
+  category: BoardImage; // 게시판 카테고리 이미지
+  categoryLayout: BoardImageLayout;
+  categoryViewBox?: string;
+  main?: BoardImage; // 메인 화면용
 }
 
 export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
-  'FIRST-SNOW': {
-    category: firstSnow,
-    main: firstSnowMain,
+  'first-snow': {
+    category: IllustrationSnowfall,
+    categoryLayout: {
+      right: '0.6rem',
+      bottom: '0.6rem',
+      width: '19.5rem',
+      height: '9.2rem',
+    },
+    main: IllustrationSnowfallCircle,
   },
-  'LARGE-SNOW': {
-    category: largeSnow,
-    main: largeSnowMain,
+  'large-snow': {
+    category: IllustrationSnowGround,
+    categoryLayout: {
+      right: '-0.3rem',
+      bottom: '-0.2rem',
+      width: '22.2rem',
+      height: '10.6rem',
+    },
+    main: IllustrationSnowGroundCircle,
   },
-  'PERMANENT-SNOW': {
-    category: permanentSnow,
-    main: permanentSnowMain,
+  'permanent-snow': {
+    category: IllustrationSnowMountain,
+    categoryLayout: {
+      right: '-0.1rem',
+      bottom: '-1rem',
+      width: '22.3rem',
+      height: '12rem',
+    },
+    main: IllustrationSnowMountainCircle,
   },
-  BESOOKT: {
-    category: besookt,
+  besookt: {
+    category: IllustrationStarHonorBoard,
+    categoryLayout: {
+      right: '3.1rem',
+      bottom: '-0.2rem',
+      width: '8.6rem',
+      height: '7.2rem',
+    },
   },
-  'STUDENT-COUNCIL': {
-    category: studentCouncil,
+  'student-council': {
+    category: IllustrationMicrophone,
+    categoryLayout: {
+      right: '2.3rem',
+      bottom: '-0.2rem',
+      width: '10.3rem',
+      height: '8.4rem',
+    },
   },
-  'GRADUATION-PREPARATION': {
-    category: graduationPreparation,
+  'graduation-preparation': {
+    category: IllustrationBooksCap,
+    categoryLayout: {
+      right: '0.5rem',
+      bottom: '0.4rem',
+      width: '14.2rem',
+      height: '7.9rem',
+    },
   },
-  'FINANCE-AUDIT': {
-    category: financeAudit,
+  'finance-audit': {
+    category: IllustrationFolderSearch,
+    categoryLayout: {
+      right: '1.2rem',
+      bottom: '0rem',
+      width: '13.2rem',
+      height: '6.9rem',
+    },
   },
-  EVENT: {
-    category: event,
-    main: eventMain,
+  event: {
+    category: IllustrationBoxStarsOpen,
+    categoryViewBox: '0 0 141 111',
+    categoryLayout: {
+      right: '0.3rem',
+      bottom: '0.15rem',
+      width: '14rem',
+      height: '12rem',
+      overflow: 'visible',
+    },
+    main: IllustrationBoxStarsCircle,
+  },
+  sookplace: {
+    category: IllustrationIceCupBowl,
+    categoryLayout: {
+      right: '3.1rem',
+      bottom: '1.2rem',
+      width: '8.7rem',
+      height: '7.2rem',
+    },
+  },
+  residence: {
+    category: IllustrationResidence,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '11.5rem',
+      height: '6.1rem',
+    },
+  },
+  'video-content': {
+    category: IllustrationTv,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '8.6rem',
+      height: '6.1rem',
+    },
+  },
+  'anime-comics': {
+    category: IllustrationPhoneBooks,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '10.6rem',
+      height: '6.5rem',
+    },
+  },
+  book: {
+    category: IllustrationBookshelf,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '9.9rem',
+      height: '6.2rem',
+    },
+  },
+  music: {
+    category: IllustrationSpeakerNotes,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '10.1rem',
+      height: '7.5rem',
+    },
+  },
+  performance: {
+    category: IllustrationStage,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '8.8rem',
+      height: '6.5rem',
+    },
+  },
+  exhibition: {
+    category: IllustrationFrameRope,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '9.2rem',
+      height: '7rem',
+    },
+  },
+  health: {
+    category: IllustrationHeartPill,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '8.7rem',
+      height: '6.1rem',
+    },
+  },
+  pet: {
+    category: IllustrationPawBone,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '8rem',
+      height: '6.6rem',
+    },
+  },
+  trip: {
+    category: IllustrationSuitcase,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '0.5rem',
+      width: '6.3rem',
+      height: '8.3rem',
+    },
+  },
+  cooking: {
+    category: IllustrationPotPaper,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '10.1rem',
+      height: '7.5rem',
+    },
+  },
+  sport: {
+    category: IllustrationDumbbellTowel,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '1rem',
+      width: '9.6rem',
+      height: '5.5rem',
+    },
+  },
+  beauty: {
+    category: IllustrationLipstick,
+    categoryLayout: {
+      right: '3.3rem',
+      bottom: '-0.05rem',
+      width: '8rem',
+      height: '8.9rem',
+    },
+  },
+  finance: {
+    category: IllustrationBarChartCoins,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '0.7rem',
+      width: '9.1rem',
+      height: '5.7rem',
+    },
+  },
+  'study-abroad': {
+    category: IllustrationGlobe,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '0.5rem',
+      width: '7.5rem',
+      height: '8.5rem',
+    },
+  },
+  game: {
+    category: IllustrationGamepad,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '0.5rem',
+      width: '9.5rem',
+      height: '8rem',
+    },
+  },
+  certification: {
+    category: IllustrationBooksCertificate,
+    categoryLayout: {
+      right: '2.5rem',
+      bottom: '0.5rem',
+      width: '9.5rem',
+      height: '8rem',
+    },
   },
 };

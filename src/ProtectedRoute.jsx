@@ -1,17 +1,18 @@
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
-import { useAuth } from '@/shared/hook';
+import { ConfirmModal, NoticeModal } from '@/shared/component';
 import {
-  USER_STATUS,
   CONFIRM_MODAL_TEXT,
   NOTICE_MODAL_TEXT,
+  USER_STATUS,
 } from '@/shared/constant';
-import { ConfirmModal, NoticeModal } from '@/shared/component';
+import { useAuth } from '@/shared/hook';
 
 // 토큰이 유효한지 확인하는 로직 필요
 export default function ProtectedRoute({ roles, message, children }) {
   const { status, userInfo } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   if (status === USER_STATUS.loading) {
     return null;
@@ -20,7 +21,7 @@ export default function ProtectedRoute({ roles, message, children }) {
   if (status === USER_STATUS.isLogout) {
     alert('로그인이 필요합니다.');
 
-    return <Navigate to='/login' replace />;
+    return <Navigate to='/login' state={{ from: location }} replace />;
   }
 
   if (roles && !roles.includes(userInfo?.userRoleId)) {

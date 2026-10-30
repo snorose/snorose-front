@@ -1,14 +1,26 @@
-import { useQuery } from '@tanstack/react-query';
 import { Link, useLocation } from 'react-router-dom';
 
-import { getNoticeLine } from '@/apis';
+import { IconMultiBellPink } from '@snorose/icons';
+import { useQuery } from '@tanstack/react-query';
 
-import { BackAppBar, Icon, WriteButton } from '@/shared/component';
-import { OFFICIAL_BOARD, QUERY_KEY, ROLE } from '@/shared/constant';
-import { useAuth } from '@/shared/hook';
-import { getBoard } from '@/shared/lib';
+import {
+  BackAppBar,
+  Filter,
+  FilterList,
+  WriteButton,
+} from '@/shared/component';
+import { NEW_ROUTES, OFFICIAL_BOARD, QUERY_KEY, ROLE } from '@/shared/constant';
+import { useAuth, useBoard } from '@/shared/hook';
+import { BOARD_REGISTRY, getBoard } from '@/shared/lib';
 
 import { PostListSuspense } from '@/feature/board/component';
+import {
+  getCategoryOptions,
+  getPostYearOptions,
+  POST_SORT_OPTIONS,
+} from '@/feature/board/constant';
+
+import { getNoticeLine } from '@/apis';
 
 import styles from './PostListPage.module.css';
 
@@ -53,19 +65,100 @@ export default function PostListPage() {
           className={styles.notificationBar}
           to={`/board/${currentBoardTextId}/notice`}
         >
-          <Icon id='notice-bell' width={13} height={16} />
+          <IconMultiBellPink width={13} height={16} />
           <p className={styles.notificationBarText}>
             [필독]&nbsp;&nbsp;{noticeLineData?.title}
           </p>
         </Link>
       )}
+      <PostListFilter boardId={currentBoard.id} />
       <PostListSuspense />
       {showWriteButton && (
-        <WriteButton
-          to={`/board/${currentBoardTextId}/post-write`}
-          className={styles.writeButton}
+        <WriteButton to={`/board/${currentBoardTextId}/post-write`} />
+      )}
+    </section>
+  );
+}
+
+// 카테고리가 있는 게시판에만 카테고리 필터를 노출
+function PostListFilter({ boardId }) {
+  const categoryOptions = getCategoryOptions(boardId);
+
+  return (
+    <FilterList>
+      {categoryOptions.length > 0 && (
+        <Filter
+          filterKey='category'
+          options={categoryOptions}
+          placeholder='카테고리'
         />
       )}
+      <Filter
+        filterKey='sort'
+        options={POST_SORT_OPTIONS}
+        placeholder='최신순'
+      />
+      <Filter
+        filterKey='year'
+        options={getPostYearOptions()}
+        placeholder='연도'
+      />
+    </FilterList>
+  );
+}
+
+/**
+ * TODO(board): 라우트 개선 작업 완료 후 교체
+ */
+export function NewPostListPage() {
+  const { key: boardKey, id: boardId, name: boardName } = useBoard();
+  const { userInfo } = useAuth();
+
+  const isBesookt = boardKey === 'besookt';
+  const isFirstSnow = boardKey === 'first-snow';
+  const isOfficialBoard = BOARD_REGISTRY.officials.some(
+    ({ key }) => key === boardKey
+  );
+
+  const isPreUser = userInfo?.userRoleId === ROLE.preUser;
+  const isUser = userInfo?.userRoleId === ROLE.user;
+  const isAdmin = userInfo?.userRoleId === ROLE.admin;
+  const isOfficial = userInfo?.userRoleId === ROLE.official;
+
+  const showWriteButton =
+    !isBesookt &&
+    (isAdmin ||
+      (isOfficial && (isOfficialBoard || isFirstSnow)) ||
+      (isUser && !isOfficialBoard) ||
+      (isPreUser && isFirstSnow));
+
+  const { data: noticeLineData } = useQuery({
+    queryKey: [QUERY_KEY.noticeLine, boardId],
+    queryFn: () => getNoticeLine(boardId),
+    staleTime: 0,
+  });
+
+  return (
+    <section className={styles.container}>
+      <BackAppBar
+        title={boardName}
+        hasMenu
+        {...(!isBesookt && { hasSearch: true })}
+      />
+      {!isBesookt && (
+        <Link
+          className={styles.notificationBar}
+          to={NEW_ROUTES.notice.list(boardKey)}
+        >
+          <IconMultiBellPink width={13} height={16} />
+          <p className={styles.notificationBarText}>
+            [필독]&nbsp;&nbsp;{noticeLineData?.title}
+          </p>
+        </Link>
+      )}
+      <PostListFilter boardId={boardId} />
+      <PostListSuspense />
+      {showWriteButton && <WriteButton to={NEW_ROUTES.post.write(boardKey)} />}
     </section>
   );
 }

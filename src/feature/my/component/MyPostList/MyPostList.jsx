@@ -1,23 +1,21 @@
 import { Link } from 'react-router-dom';
 
-import { useSuspensePagination } from '@/shared/hook';
-import { FetchLoading } from '@/shared/component';
 import {
-  getBoardTextId,
-  deduplicatePaginatedData,
-  flatPaginationCache,
-} from '@/shared/lib';
+  IllustrationCommentEmpty,
+  IllustrationPostEmpty,
+  IllustrationScrapPostEmpty,
+} from '@snorose/icons';
+
+import { FetchLoading, InfiniteScrollSentinel } from '@/shared/component';
 import { STALE_TIME } from '@/shared/constant';
+import { useSuspenseInfiniteScroll } from '@/shared/hook';
+import { getBoardTextId } from '@/shared/lib';
 
 import { PostBar } from '@/feature/board/component';
+import { ACTIVITIES } from '@/feature/my/constant';
+import { REPORT_STATUS_MAP } from '@/feature/support/constant';
 
 import styles from './MyPostList.module.css';
-import { ACTIVITIES } from '../../constant/activity';
-import {
-  noPostsIllustration,
-  noScrapedPostsIllustration,
-  noCommentsIllustration,
-} from '@/assets/illustrations';
 
 export default function MyPostList({
   queryKey,
@@ -25,13 +23,16 @@ export default function MyPostList({
   hasLike = true,
   errorMessage,
 }) {
-  const { data, ref, isFetching } = useSuspensePagination({
+  const {
+    items: list,
+    ref,
+    isFetchingNextPage,
+  } = useSuspenseInfiniteScroll({
     queryKey: [queryKey],
     queryFn: ({ pageParam }) => queryFn({ page: pageParam }),
     staleTime: STALE_TIME.mypageActivity,
+    getItemKey: (item) => item.postId,
   });
-
-  const list = deduplicatePaginatedData(flatPaginationCache(data));
 
   const activity = ACTIVITIES.find(
     (activity) => activity.queryKey === queryKey
@@ -40,29 +41,35 @@ export default function MyPostList({
   const emptyStateIllustration =
     activity?.emptyStateIllustration || 'noScrapedPostsIllustration';
 
+  // TODO: 호출부에서 빈 상태 일러스트 컴포넌트를 직접 넘기도록 리팩토링하면 이 매핑을 제거한다.
   const illustrationMap = {
-    noPostsIllustration,
-    noScrapedPostsIllustration,
-    noCommentsIllustration,
+    noPostsIllustration: IllustrationPostEmpty,
+    noScrapedPostsIllustration: IllustrationScrapPostEmpty,
+    noCommentsIllustration: IllustrationCommentEmpty,
   };
+  const EmptyIllustration = illustrationMap[emptyStateIllustration];
 
   if (list.length === 0) {
     return (
       <div className={styles.noContentWrapper}>
         <p className={styles.noContentMessage}>{errorMessage}</p>
         <div className={styles.imageWrapper}>
-          <img
-            src={illustrationMap[emptyStateIllustration]}
+          <EmptyIllustration
             width={220}
             height={182}
-            alt={`${errorMessage}를 알리는 일러스트`}
+            role='img'
+            aria-label={`${errorMessage}를 알리는 일러스트`}
           />
         </div>
       </div>
     );
   }
 
-  const makePath = ({ boardId, postId, isNotice }) => {
+  const makePath = ({ boardId, postId, isNotice, group }) => {
+    if (group) {
+      return `/${group.toLowerCase()}/${postId}`;
+    }
+
     if (boardId === 14) {
       return isNotice
         ? `/board/event-notice/post/${postId}`
@@ -78,21 +85,29 @@ export default function MyPostList({
 
   return (
     <ul className={styles.posts}>
-      {list.map((post, index) => (
+      {list.map((post) => (
         <Link
-          className={styles.to}
-          ref={index === list.length - 1 ? ref : undefined}
           key={post.postId}
-          to={makePath({
-            boardId: post.boardId,
-            postId: post.postId,
-            isNotice: post.isNotice,
-          })}
+          className={styles.to}
+          to={makePath({ ...post })}
         >
-          <PostBar data={post} hasLike={hasLike} />
+          <PostBar {...post} content={post.questionDetail ?? post.content}>
+            {post.boardName && (
+              <PostBar.Chip name={post.boardName} variant='grey' />
+            )}
+            {post.status && (
+              <PostBar.Chip
+                name={REPORT_STATUS_MAP[post.status].label}
+                variant={REPORT_STATUS_MAP[post.status].variant}
+              />
+            )}
+            {post.isConfirmed && <PostBar.ConfirmedChip />}
+          </PostBar>
         </Link>
       ))}
-      {isFetching && <FetchLoading />}
+
+      <InfiniteScrollSentinel ref={ref} />
+      {isFetchingNextPage && <FetchLoading />}
     </ul>
   );
 }

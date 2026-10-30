@@ -1,0 +1,9 @@
+.link {
+  color: var(--blue-3);
+  cursor: pointer;
+  word-break: break-all;
+}
+
+.link:hover {
+  color: var(--blue-4);
+}

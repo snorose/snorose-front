@@ -1,0 +1,31 @@
+name: 🪄 Modify Request
+description: 기존 기능의 동작, 구조, 또는 표현을 변경하는 요청입니다.
+title: '[MODIFY] '
+labels: ['🪄 Modify']
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 💡 기능 변경 개요
+      description: 변경하고자 하는 기능을 설명해 주세요.
+      value: |
+        - 대상 기능: 
+
+
+        - 변경 이유:
+
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: 🔄 변경 전후 비교
+      description: 변경 전과 변경 후의 차이를 비교해서 작성해 주세요.
+      value: |
+        - 기존 동작: 
+
+
+        - 변경 후 동작:
+
+    validations:
+      required: true

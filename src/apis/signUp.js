@@ -1,7 +1,9 @@
-import { defaultAxios } from '@/axios';
-
-import { useToast } from '@/shared/hook';
 import { TOAST } from '@/shared/constant';
+import { useToast } from '@/shared/hook';
+
+import { isMaintenanceBlockedError } from '@/feature/maintenance/access';
+
+import { defaultAxios } from '@/axios';
 
 export const useRegister = () => {
   const { toast } = useToast();
@@ -16,8 +18,9 @@ export const useRegister = () => {
         state: { access: true },
       });
     } catch (e) {
+      if (isMaintenanceBlockedError(e)) return;
       if (e.response.status === 500) {
-        toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
+        toast.error(TOAST.ERROR.SERVER);
       } else {
         navigate('/signup/failure', {
           state: { message: e.response.data.message, variant: 'error' },
@@ -37,8 +40,9 @@ export const useSendUser = () => {
     try {
       await defaultAxios.post(endpoint, data);
     } catch (e) {
+      if (isMaintenanceBlockedError(e)) return;
       if (e.response.status === 500) {
-        toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
+        toast.error(TOAST.ERROR.SERVER);
       }
     }
   };
@@ -60,7 +64,7 @@ export const useCertifyUser = () => {
         }
       } catch (e) {
         if (e.response.status === 500) {
-          toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
+          toast.error(TOAST.ERROR.SERVER);
         }
         return false;
       }

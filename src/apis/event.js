@@ -1,5 +1,6 @@
-import { authAxios } from '@/axios';
 import { DateTime } from '@/shared/lib';
+
+import { authAxios } from '@/axios';
 
 // 이벤트 게시글 목록 조회
 export const getEventPosts = async ({ page, progressType }) => {

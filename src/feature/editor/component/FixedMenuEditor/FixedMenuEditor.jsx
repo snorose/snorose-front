@@ -1,0 +1,293 @@
+import React, { useState } from 'react';
+
+import {
+  IconChevronDown,
+  IconListBullet,
+  IconListOrdered,
+  IconMultiSlashCircle,
+  IconMultiTextBackground,
+  IconMultiTextStrikethrough,
+  IconMultiTextUnderline,
+  IconTextBold,
+  IconTextColor,
+} from '@snorose/icons';
+import { useEditorState } from '@tiptap/react';
+
+import {
+  convertListTypesInSelection,
+  getNearestListType,
+} from '@/feature/editor/lib';
+
+import styles from './FixedMenuEditor.module.css';
+const PRESET_COLORS = [
+  { label: '회색', value: 'var(--grey-4)' },
+  { label: '검정', value: 'black' },
+  { label: '파랑', value: 'var(--blue-4)' },
+  { label: '핑크', value: 'var(--pink-3)' },
+];
+
+const PRESET_BG_COLORS = [
+  { label: '핑크', value: 'var(--pink-1)' },
+  { label: '노랑', value: '#FDFF6C' },
+  { label: '연두', value: 'var(--green-2)' },
+  { label: '파랑', value: 'var(--blue-2)' },
+];
+
+const getSelectionListType = (editorInstance) =>
+  getNearestListType(editorInstance.state.selection.$from);
+
+export default function FixedMenuEditor({ editor }) {
+  const editorState = useEditorState({
+    editor,
+    selector: (ctx) => {
+      const listType = getSelectionListType(ctx.editor);
+
+      return {
+        isBold: ctx.editor.isActive('bold'),
+        isUnderline: ctx.editor.isActive('underline'),
+        isStrike: ctx.editor.isActive('strike'),
+        isBulletList: listType === 'bulletList',
+        isOrderedList: listType === 'orderedList',
+        currentColor: ctx.editor.getAttributes('textStyle').color || '',
+        currentBgColor:
+          ctx.editor.getAttributes('textStyle').backgroundColor || '',
+        currentHeading: ctx.editor.isActive('heading', { level: 1 })
+          ? '1'
+          : 'paragraph',
+      };
+    },
+  });
+
+  const [openedMenu, setOpenedMenu] = useState(null);
+  const HEADING_OPTIONS = [
+    { value: 'paragraph', label: '본문' },
+    { value: '1', label: '소제목' },
+  ];
+
+  if (!editor) return null;
+
+  const toggleListStyle = (listType) => {
+    const nearestList = getSelectionListType(editor);
+    const inAnyList = nearestList !== null;
+    const alreadyActive = nearestList === listType;
+    const toggleCmd =
+      listType === 'bulletList' ? 'toggleBulletList' : 'toggleOrderedList';
+
+    const chain = editor.chain().focus();
+
+    const { selection, doc } = editor.state;
+    if (!selection.empty) {
+      const $to = doc.resolve(selection.to);
+      if ($to.parentOffset === 0) {
+        chain.setTextSelection({ from: selection.from, to: $to.before() });
+      }
+    }
+
+    if (alreadyActive) {
+      chain.liftListItem('listItem');
+    } else if (inAnyList) {
+      chain.command(({ tr, state }) =>
+        convertListTypesInSelection(tr, state.schema, listType)
+      );
+    } else {
+      chain[toggleCmd]();
+    }
+
+    chain.run();
+  };
+
+  return (
+    <div
+      className={styles.toolbar}
+      onMouseDown={(e) => {
+        e.preventDefault();
+      }}
+    >
+      <div className={styles.headingWrapper}>
+        <button
+          className={styles.headingButton}
+          onClick={() =>
+            setOpenedMenu((prev) => (prev === 'heading' ? null : 'heading'))
+          }
+        >
+          {HEADING_OPTIONS.find((o) => o.value === editorState.currentHeading)
+            ?.label ?? '본문'}
+
+          <IconChevronDown width={16} height={16} color='var(--grey-3-1)' />
+        </button>
+
+        {openedMenu === 'heading' && (
+          <div className={styles.headingDropdown}>
+            {HEADING_OPTIONS.map((option) => (
+              <button
+                key={option.value}
+                className={`${styles.headingOption} ${editorState.currentHeading === option.value ? styles.headingOptionActive : ''}`}
+                onClick={() => {
+                  if (option.value === 'paragraph') {
+                    editor.chain().focus().setParagraph().run();
+                  } else {
+                    editor
+                      .chain()
+                      .focus()
+                      .setHeading({ level: parseInt(option.value, 10) })
+                      .run();
+                  }
+                  setOpenedMenu(null);
+                }}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className={styles.colorPickerWrapper}>
+        {/* 폰트 색상 토글 버튼 */}
+        <button
+          onClick={() =>
+            setOpenedMenu((prev) => (prev === 'textColor' ? null : 'textColor'))
+          }
+        >
+          <IconTextColor
+            width={24}
+            height={24}
+            color={editorState.currentColor || 'var(--grey-4)'}
+          />
+        </button>
+
+        <div
+          className={`${styles.colorPaletteInline} ${openedMenu === 'textColor' ? styles.open : ''}`}
+        >
+          {/* 색상 없음 */}
+          <button
+            className={styles.colorSwatchNone}
+            title='색상 없음'
+            onClick={() => {
+              editor.chain().focus().unsetColor().run();
+            }}
+          >
+            <IconMultiSlashCircle width={28} height={28} />
+          </button>
+
+          {/* 고정 색상 */}
+          {PRESET_COLORS.map((color) => (
+            <button
+              key={color.label}
+              className={`${styles.colorSwatch} ${editorState.currentColor === color.value ? styles.selected : ''}`}
+              style={{ backgroundColor: color.value }}
+              title={color.label}
+              onClick={() => {
+                editor
+                  .chain()
+                  .focus()
+                  .setMark('textStyle', { color: color.value })
+                  .run();
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.colorPickerWrapper}>
+        <button
+          onClick={() =>
+            setOpenedMenu((prev) => (prev === 'bgColor' ? null : 'bgColor'))
+          }
+          style={{
+            '--background-icon-fill': editorState.currentBgColor || '#E6F7B1',
+            '--background-icon-stroke': editorState.currentBgColor || '#AAD916',
+          }}
+        >
+          <IconMultiTextBackground width={24} height={24} />
+        </button>
+
+        <div
+          className={`${styles.colorPaletteInline} ${openedMenu === 'bgColor' ? styles.open : ''}`}
+        >
+          <button
+            className={styles.colorSwatchNone}
+            title='배경색 없음'
+            onClick={() => {
+              editor
+                .chain()
+                .focus()
+                .setMark('textStyle', { backgroundColor: null })
+                .run();
+            }}
+          >
+            <IconMultiSlashCircle width={28} height={28} />
+          </button>
+
+          {/* 고정 색상 */}
+          {PRESET_BG_COLORS.map((color) => (
+            <button
+              key={color.label}
+              className={`${styles.colorSwatch} ${editorState.currentBgColor === color.value ? styles.selected : ''}`}
+              style={{ backgroundColor: color.value }}
+              title={color.label}
+              onClick={() => {
+                editor
+                  .chain()
+                  .focus()
+                  .setMark('textStyle', { backgroundColor: color.value })
+                  .run();
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      <button
+        aria-label='굵게'
+        onClick={() => editor.chain().focus().toggleBold().run()}
+      >
+        <IconTextBold
+          width={24}
+          height={24}
+          color={editorState.isBold ? 'var(--blue-4)' : 'var(--grey-3-1)'}
+        />
+      </button>
+
+      <button
+        aria-label='밑줄'
+        onClick={() => editor.chain().focus().toggleUnderline().run()}
+        className={editorState.isUnderline ? styles.active : ''}
+      >
+        <IconMultiTextUnderline width={24} height={24} />
+      </button>
+
+      <button
+        aria-label='취소선'
+        onClick={() => editor.chain().focus().toggleStrike().run()}
+        className={editorState.isStrike ? styles.active : ''}
+      >
+        <IconMultiTextStrikethrough width={24} height={24} />
+      </button>
+
+      <button
+        aria-label='글머리 기호 목록'
+        onClick={() => toggleListStyle('bulletList')}
+      >
+        <IconListBullet
+          width={24}
+          height={24}
+          color={editorState.isBulletList ? 'var(--blue-4)' : 'var(--grey-3-1)'}
+        />
+      </button>
+
+      <button
+        aria-label='번호 매기기 목록'
+        onClick={() => toggleListStyle('orderedList')}
+      >
+        <IconListOrdered
+          width={24}
+          height={24}
+          color={
+            editorState.isOrderedList ? 'var(--blue-4)' : 'var(--grey-3-1)'
+          }
+        />
+      </button>
+    </div>
+  );
+}

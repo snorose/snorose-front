@@ -1,16 +1,27 @@
-import { useQuery } from '@tanstack/react-query';
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
-import { getNoticeLine } from '@/apis';
+import { IconMultiBellPink } from '@snorose/icons';
+import { QueryErrorResetBoundary, useQuery } from '@tanstack/react-query';
 
-import { BackAppBar, Icon, WriteButton } from '@/shared/component';
-import { QUERY_KEY, ROLE } from '@/shared/constant';
-import { useAuth } from '@/shared/hook';
+import {
+  BackAppBar,
+  FetchLoading,
+  InfiniteScrollSentinel,
+  List,
+  PullToRefresh,
+  WriteButton,
+} from '@/shared/component';
+import { QUERY_KEY, ROLE, STALE_TIME } from '@/shared/constant';
+import { useAuth, useSuspenseInfiniteScroll } from '@/shared/hook';
 import { getBoard } from '@/shared/lib';
 
+import { PostBar, PostListErrorFallback } from '@/feature/board/component';
 import ProgressTab from '@/feature/event/component/ProgressTab/ProgressTab';
 import { PROGRESS } from '@/feature/event/constant';
-import { PostListSuspense } from '@/feature/board/component';
+
+import { getEventPosts, getNoticeLine } from '@/apis';
 
 import styles from './EventListPage.module.css';
 
@@ -47,9 +58,10 @@ export default function EventListPage() {
   return (
     <section className={styles.container}>
       <BackAppBar title='이벤트' hasMenu backNavTo='/home' />
+
       <div className={styles.notification}>
         <Link className={styles.notificationBar} to={`/board/event/notice`}>
-          <Icon id='notice-bell' width={11} height={13} />
+          <IconMultiBellPink width={13} height={16} />
           <p>[필독]&nbsp;&nbsp;{noticeLineData?.title}</p>
         </Link>
       </div>
@@ -67,13 +79,83 @@ export default function EventListPage() {
         ))}
       </div>
 
-      <PostListSuspense />
-      {isAdmin && (
-        <WriteButton
-          to={`/board/event/event-post-write`}
-          className={styles.writeButton}
-        />
-      )}
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            FallbackComponent={PostListErrorFallback}
+          >
+            <Suspense
+              fallback={<FetchLoading>게시글 불러오는 중...</FetchLoading>}
+            >
+              <PostList
+                currentBoardTextId={currentBoardTextId}
+                currentBoard={currentBoard}
+                activeProgress={activeProgress}
+              />
+              {/* <NewPostList /> */}
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
+
+      {isAdmin && <WriteButton to={`/board/event/event-post-write`} />}
     </section>
+  );
+}
+
+function PostList({ currentBoardTextId, currentBoard, activeProgress }) {
+  const {
+    items: postList,
+    ref,
+    isFetchingNextPage,
+    refetch,
+  } = useSuspenseInfiniteScroll({
+    queryKey: [QUERY_KEY.events, currentBoard.id, activeProgress],
+    queryFn: ({ pageParam }) =>
+      getEventPosts({
+        page: pageParam,
+        progressType: activeProgress === 'ALL' ? undefined : activeProgress,
+      }),
+    staleTime: STALE_TIME.boardPostList,
+    getItemKey: (item) => item.postId,
+  });
+
+  if (!postList.length) {
+    return (
+      <FetchLoading animation={false}>
+        {activeProgress === 'ALL'
+          ? '게시물이 없어요'
+          : '해당 상태의 이벤트가 없어요'}
+      </FetchLoading>
+    );
+  }
+
+  return (
+    <div>
+      <PullToRefresh onRefresh={refetch}>
+        <List>
+          {postList.map((post) => (
+            <Link
+              className={styles.to}
+              key={post.postId}
+              to={`/board/${currentBoardTextId}/post/${post.postId}`}
+            >
+              <PostBar {...post} authorBadgeRoleId={ROLE.admin}>
+                <PostBar.Chip
+                  name={PROGRESS[post.progressType]}
+                  variant={
+                    post.progressType === 'IN_PROGRESS' ? 'gradient' : 'grey'
+                  }
+                />
+              </PostBar>
+            </Link>
+          ))}
+
+          <InfiniteScrollSentinel ref={ref} />
+          {isFetchingNextPage && <FetchLoading />}
+        </List>
+      </PullToRefresh>
+    </div>
   );
 }

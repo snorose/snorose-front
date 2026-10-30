@@ -1,19 +1,27 @@
+import { FEATURE_FLAG, NEW_BOARD_KILL_SWITCH, ROLE } from '@/shared/constant';
+import { NEW_BOARD_KEYS } from '@/shared/lib';
 import { attendanceLoader } from '@/shared/loader';
-import { NavbarLayout } from '@/shared/ui';
-import { ROLE } from '@/shared/constant';
+import { AppLayout, NavbarLayout } from '@/shared/ui';
 
-import App from '@/App';
+import { CheckExamPeriodRoute } from '@/feature/exam/lib';
 import {
-  LoginPage,
+  inquiryEditLoader,
+  reportEditLoader,
+  validateReportWriteLoader,
+} from '@/feature/support/loader';
+import SupportUpdateErrorPage from '@/feature/support/SupportUpdateErrorPage';
+
+import {
   FindIdPage,
   FindPwPage,
   FoundIdPage,
   FoundPwPage,
+  LoginPage,
   NotFoundIdPage,
   NotFoundPwPage,
+  SignUpFailurePage,
   SignUpPage,
   SignUpSuccessPage,
-  SignUpFailurePage,
   SnoroseVerifyPage,
 } from '@/page/account';
 import { AlertPage, AlertSettingPage, MarketingTermsPage } from '@/page/alert';
@@ -21,16 +29,20 @@ import {
   BoardCategoryPage,
   EditPostPage,
   NoticeListPage,
+  PostDetailPage,
   PostListPage,
-  PostPage,
   WritePostPage,
 } from '@/page/board';
-import { NotFoundPage } from '@/page/etc';
+import OrderDetailPage from '@/page/commerce/OrderDetailPage';
+import OrderListPage from '@/page/commerce/OrderListPage';
+import PickupDisplayPage from '@/page/commerce/PickupDisplayPage';
+import SaleDetailPage from '@/page/commerce/SaleDetailPage';
+import { ErrorPage, NotFoundPage } from '@/page/etc';
 import {
-  WriteEventPage,
   EditEventPage,
   EventListPage,
   EventPage,
+  WriteEventPage,
 } from '@/page/event';
 import {
   EditExamReviewPage,
@@ -39,6 +51,7 @@ import {
   WriteExamReviewPage,
 } from '@/page/exam';
 import { AttendancePage, MainPage } from '@/page/home';
+import { MaintenancePage } from '@/page/maintenance';
 import { SearchPage } from '@/page/search';
 import {
   AboutPage,
@@ -46,11 +59,13 @@ import {
   ServicePolicyPage,
 } from '@/page/snorose';
 import {
-  WriteInquiryPage,
   EditInquiryPage,
-  WriteReportPage,
   EditReportPage,
   FAQPage,
+  InquiryDetailPage,
+  ReportDetailPage,
+  WriteInquiryPage,
+  WriteReportPage,
 } from '@/page/support';
 import {
   ActivityPage,
@@ -61,23 +76,14 @@ import {
   PointLogListPage,
 } from '@/page/user';
 
+import App from '@/App';
+import FeatureGuard from '@/FeatureGuard';
+import LegacyBoardRedirect from '@/LegacyBoardRedirect';
 import ProtectedRoute from '@/ProtectedRoute';
-import { MaintenancePage } from '@/page/maintenance';
-
-import { CheckExamPeriodRoute } from '@/feature/exam/lib';
 
 const getRolesForReadBoard = (boardPath) => {
   switch (boardPath) {
-    case 'first-snow':
-      return [ROLE.preUser, ROLE.user, ROLE.admin, ROLE.official];
-    case 'large-snow':
-      return [ROLE.user, ROLE.admin, ROLE.official];
-    case 'permanent-snow':
-      return [ROLE.user, ROLE.admin, ROLE.official];
-    case 'besookt':
-      return [ROLE.user, ROLE.admin, ROLE.official];
-    case 'all':
-      return [ROLE.preUser, ROLE.user, ROLE.admin, ROLE.official];
+    // 강등·광고주까지 열람 가능 (준회원·정회원·리자·공식계정·강등·광고주)
     case 'notice':
       return [
         ROLE.preUser,
@@ -87,12 +93,41 @@ const getRolesForReadBoard = (boardPath) => {
         ROLE.blacklist,
         ROLE.advertiser,
       ];
+    // 준회원부터 열람 가능 (준회원·정회원·리자·공식계정)
+    case 'first-snow':
+    case 'all':
+      return [ROLE.preUser, ROLE.user, ROLE.admin, ROLE.official];
+    // 정회원부터 열람 가능 (정회원·리자·공식계정)
+    case 'large-snow':
+    case 'permanent-snow':
+    case 'besookt':
+    case 'sookplace':
     case 'student-council':
-      return [ROLE.user, ROLE.admin, ROLE.official];
     case 'graduation-preparation':
-      return [ROLE.user, ROLE.admin, ROLE.official];
     case 'finance-audit':
+    case 'residence':
+    case 'video-content':
+    case 'anime-comics':
+    case 'book':
+    case 'music':
+    case 'performance':
+    case 'cooking':
+    case 'sport':
+    case 'exhibition':
+    case 'study-abroad':
+    case 'trip':
+    case 'pet':
+    case 'health':
+    case 'beauty':
+    case 'game':
+    case 'finance':
+    case 'certification':
+    case 'club':
+    case 'promotion':
+    case 'living':
+    case 'women-studies':
       return [ROLE.user, ROLE.admin, ROLE.official];
+    // 그 외 경로는 아무도 열람할 수 없음
     default:
       return [];
   }
@@ -100,17 +135,42 @@ const getRolesForReadBoard = (boardPath) => {
 
 const getRolesForWriteBoard = (boardPath) => {
   switch (boardPath) {
+    // 준회원부터 작성 가능 (준회원·정회원·리자·공식계정)
     case 'first-snow':
       return [ROLE.preUser, ROLE.user, ROLE.admin, ROLE.official];
+    // 정회원부터 작성 가능 (정회원·리자·공식계정)
     case 'large-snow':
-      return [ROLE.user, ROLE.admin];
     case 'permanent-snow':
-      return [ROLE.user, ROLE.admin];
+    case 'sookplace':
+    case 'residence':
+    case 'video-content':
+    case 'anime-comics':
+    case 'book':
+    case 'music':
+    case 'performance':
+    case 'cooking':
+    case 'sport':
+    case 'exhibition':
+    case 'study-abroad':
+    case 'trip':
+    case 'pet':
+    case 'health':
+    case 'beauty':
+    case 'game':
+    case 'finance':
+    case 'certification':
+    case 'club':
+    case 'promotion':
+    case 'living':
+    case 'women-studies':
+      return [ROLE.user, ROLE.admin, ROLE.official];
+    // 리자·공식계정만 작성 가능 (공지사항·공식 게시판)
     case 'notice':
     case 'student-council':
     case 'finance-audit':
     case 'graduation-preparation':
       return [ROLE.admin, ROLE.official];
+    // 그 외 게시판(베숙트·전체 등)은 아무도 작성할 수 없음
     default:
       return [];
   }
@@ -126,81 +186,126 @@ const boardPaths = [
   'student-council',
   'graduation-preparation',
   'finance-audit',
+  'residence',
+  'sookplace',
+  'certification',
+  'video-content',
+  'anime-comics',
+  'book',
+  'music',
+  'performance',
+  'exhibition',
+  'trip',
+  'pet',
+  'health',
+  'cooking',
+  'finance',
+  'beauty',
+  'sport',
+  'game',
+  'study-abroad',
 ];
 
-const boardRoutes = boardPaths.flatMap((boardPath) => [
-  {
-    path: `/board/${boardPath}`,
-    element: (
-      <ProtectedRoute
-        roles={getRolesForReadBoard(boardPath)}
-        message={'게시판 접근 권한이 없어요'}
-      >
-        {boardPath === 'notice' ? <NoticeListPage /> : <PostListPage />}
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: `/board/${boardPath}/notice`,
-    element: (
-      <ProtectedRoute
-        roles={getRolesForReadBoard(boardPath)}
-        message={'게시판 접근 권한이 없어요'}
-      >
-        <NoticeListPage />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: `/board/${boardPath}/post/:postId`,
-    element: (
-      <ProtectedRoute
-        roles={getRolesForReadBoard(boardPath)}
-        message={'게시글 접근 권한이 없어요'}
-      >
-        <PostPage />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: `/board/${boardPath}/post-write`,
-    element: (
-      <ProtectedRoute
-        roles={getRolesForWriteBoard(boardPath)}
-        message={'게시글 작성 권한이 없어요'}
-      >
-        <WritePostPage />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: `/board/${boardPath}/post/:postId/edit`,
-    element: (
-      <ProtectedRoute
-        roles={getRolesForWriteBoard(boardPath)}
-        message={'게시글 편집 권한이 없어요'}
-      >
-        <EditPostPage />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: `/board/${boardPath}/search`,
-    element: (
-      <ProtectedRoute
-        roles={getRolesForReadBoard(boardPath)}
-        message={'게시판 접근 권한이 없어요'}
-      >
-        <SearchPage />
-      </ProtectedRoute>
-    ),
-  },
-]);
+const createBoardRoutes = (paths, feature, forceOff = false) => {
+  // 플래그가 없는 게시판은 가드 없이 그대로 렌더한다
+  const withFeatureGuard = (element) =>
+    feature ? (
+      <FeatureGuard feature={feature} fallbackTo='/board' forceOff={forceOff}>
+        {element}
+      </FeatureGuard>
+    ) : (
+      element
+    );
+
+  return paths.flatMap((boardPath) => [
+    {
+      path: `/board/${boardPath}`,
+      element: withFeatureGuard(
+        <ProtectedRoute
+          roles={getRolesForReadBoard(boardPath)}
+          message={'게시판 접근 권한이 없어요'}
+        >
+          {boardPath === 'notice' ? <NoticeListPage /> : <PostListPage />}
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: `/board/${boardPath}/notice`,
+      element: withFeatureGuard(
+        <ProtectedRoute
+          roles={getRolesForReadBoard(boardPath)}
+          message={'게시판 접근 권한이 없어요'}
+        >
+          <NoticeListPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: `/board/${boardPath}/post/:postId`,
+      element: withFeatureGuard(
+        <ProtectedRoute
+          roles={getRolesForReadBoard(boardPath)}
+          message={'게시글 접근 권한이 없어요'}
+        >
+          <PostDetailPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: `/board/${boardPath}/post-write`,
+      element: withFeatureGuard(
+        <ProtectedRoute
+          roles={getRolesForWriteBoard(boardPath)}
+          message={'게시글 작성 권한이 없어요'}
+        >
+          <WritePostPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: `/board/${boardPath}/post/:postId/edit`,
+      element: withFeatureGuard(
+        <ProtectedRoute
+          roles={getRolesForWriteBoard(boardPath)}
+          message={'게시글 편집 권한이 없어요'}
+        >
+          <EditPostPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: `/board/${boardPath}/search`,
+      element: withFeatureGuard(
+        <ProtectedRoute
+          roles={getRolesForReadBoard(boardPath)}
+          message={'게시판 접근 권한이 없어요'}
+        >
+          <SearchPage />
+        </ProtectedRoute>
+      ),
+    },
+  ]);
+};
+
+const boardRoutes = [
+  ...createBoardRoutes(boardPaths),
+  // 피처 플래그로 노출을 제어하는 게시판
+  ...createBoardRoutes(
+    NEW_BOARD_KEYS,
+    FEATURE_FLAG.newBoard,
+    NEW_BOARD_KILL_SWITCH
+  ),
+];
 
 export const routeList = [
   {
     path: '/',
     element: <App />,
+    errorElement: (
+      <AppLayout>
+        <ErrorPage />
+      </AppLayout>
+    ),
     children: [
       {
         index: true,
@@ -227,6 +332,15 @@ export const routeList = [
         ),
       },
       ...boardRoutes,
+      {
+        path: '/board/studyabroad/*',
+        element: (
+          <LegacyBoardRedirect
+            from='/board/studyabroad'
+            to='/board/study-abroad'
+          />
+        ),
+      },
       {
         path: '/board/all/search',
         element: <SearchPage />,
@@ -262,7 +376,7 @@ export const routeList = [
             roles={[ROLE.user, ROLE.admin, ROLE.advertiser]}
             message={'공지글 접근 권한이 없어요'}
           >
-            <PostPage />
+            <PostDetailPage />
           </ProtectedRoute>
         ),
       },
@@ -367,7 +481,7 @@ export const routeList = [
             roles={[ROLE.user, ROLE.admin]}
             message={'공지글 접근 권한이 없어요'}
           >
-            <PostPage />
+            <PostDetailPage />
           </ProtectedRoute>
         ),
       },
@@ -466,55 +580,63 @@ export const routeList = [
             ),
           },
           {
-            path: ':inquiryId',
+            path: ':postId',
             element: (
               <ProtectedRoute>
-                <PostPage />
+                <InquiryDetailPage />
               </ProtectedRoute>
             ),
           },
           {
-            path: ':inquiryId/edit',
+            path: ':postId/edit',
+            errorElement: (
+              <AppLayout>
+                <SupportUpdateErrorPage />
+              </AppLayout>
+            ),
             element: (
               <ProtectedRoute>
                 <EditInquiryPage />
               </ProtectedRoute>
             ),
+            loader: inquiryEditLoader,
           },
         ],
       },
       {
         path: 'report',
         children: [
+          { index: true, element: <NotFoundPage /> },
           {
-            path: 'write',
-            children: [
-              { index: true, element: <NotFoundPage /> },
-              {
-                path: ':reportType',
-                element: (
-                  <ProtectedRoute>
-                    <WriteReportPage />
-                  </ProtectedRoute>
-                ),
-              },
-            ],
-          },
-          {
-            path: ':reportId',
+            path: 'write/:reportType',
             element: (
               <ProtectedRoute>
-                <PostPage />
+                <WriteReportPage />
+              </ProtectedRoute>
+            ),
+            loader: validateReportWriteLoader,
+          },
+          {
+            path: ':postId',
+            element: (
+              <ProtectedRoute>
+                <ReportDetailPage />
               </ProtectedRoute>
             ),
           },
           {
-            path: ':reportId/edit',
+            path: ':postId/edit',
+            errorElement: (
+              <AppLayout>
+                <SupportUpdateErrorPage />
+              </AppLayout>
+            ),
             element: (
               <ProtectedRoute>
                 <EditReportPage />
               </ProtectedRoute>
             ),
+            loader: reportEditLoader,
           },
         ],
       },
@@ -588,6 +710,14 @@ export const routeList = [
         ),
       },
       {
+        path: '/my-page/inquiry-report',
+        element: (
+          <ProtectedRoute>
+            <ActivityPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: '/my-page/scrap',
         element: (
           <ProtectedRoute>
@@ -614,6 +744,34 @@ export const routeList = [
       {
         path: '/my-page/service-policy',
         element: <ServicePolicyPage />,
+      },
+      {
+        path: '/commerce/sales/:saleId',
+        element: (
+          <ProtectedRoute>
+            <SaleDetailPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/commerce/orders',
+        element: (
+          <ProtectedRoute>
+            <OrderListPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/commerce/orders/:orderNumber',
+        element: (
+          <ProtectedRoute>
+            <OrderDetailPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/commerce/pickup-display',
+        element: <PickupDisplayPage />,
       },
       {
         path: '/about',

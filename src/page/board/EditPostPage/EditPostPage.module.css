@@ -1,17 +1,31 @@
 .container {
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh;
 
   padding-top: var(--default-appbar-height);
 
-  background-color: var(--blue-0);
+  background-color: var(--white-2);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.submitButton {
+  cursor: pointer;
+}
+
 .center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   padding: 0 var(--default-margin) 4rem;
-  background-color: var(--blue-0);
+  background-color: var(--white-2);
 }
 
 .categorySelect {
@@ -48,16 +62,6 @@
   gap: 0.7rem;
 }
 
-.logoIcon {
-  width: 2.5rem;
-  height: 1.6rem;
-}
-
-.badge {
-  width: 2.4rem;
-  height: 2.4rem;
-}
-
 .profileBoxRight {
   display: flex;
   align-items: center;
@@ -77,6 +81,7 @@
 }
 
 .content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   row-gap: 3.6rem;

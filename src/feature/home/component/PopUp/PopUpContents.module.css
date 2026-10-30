@@ -23,6 +23,7 @@
 .popupSectionContent {
   color: var(--grey-4);
   font: var(--text-body-2-reg);
+  white-space: pre-line;
   word-break: keep-all;
 }
 

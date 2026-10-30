@@ -1,35 +1,51 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { AttachmentBar } from '@/feature/board/component';
+import {
+  IconMultiCheckBlueCircle,
+  IconMultiCheckGreyCircle,
+  IconMultiClipboardBlue,
+  IconMultiCloudLogo,
+  IllustrationTrashcanCircle,
+} from '@snorose/icons';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import {
   AttachmentList,
   BackAppBar,
   Badge,
   CloseAppBar,
   ConfirmModal,
+  DropdownCategory,
   FetchLoading,
-  Icon,
 } from '@/shared/component';
 import {
+  ATTACHMENT_MODAL_TEXT,
+  BOARD_CATEGORY_MAP,
   BOARD_MENUS,
+  CONFIRM_MODAL_TEXT,
   MUTATION_KEY,
   QUERY_KEY,
   ROLE,
   TOAST,
-  CONFIRM_MODAL_TEXT,
-  ATTACHMENT_MODAL_TEXT,
 } from '@/shared/constant';
-import { useAuth, useBlocker, useModal, useToast } from '@/shared/hook';
+import { ModalContext } from '@/shared/context';
+import {
+  useAuth,
+  useBlocker,
+  useBoard,
+  useModal,
+  useToast,
+} from '@/shared/hook';
 import { DateTime } from '@/shared/lib';
-import { ModalContext } from '@/shared/context/ModalContext';
 
-import { createThumbnail } from '@/apis';
-import { getPostContent, patchPost } from '@/apis';
+import { AttachmentBar } from '@/feature/board/component';
+import { EditorContainer } from '@/feature/editor/component';
+import { preserveEmptyParagraphs, sanitizeHtml } from '@/feature/editor/lib';
+import { NoticeAttachmentList } from '@/feature/event/component';
 
-import cloudLogo from '@/assets/images/cloudLogo.svg';
+import { createThumbnail, getPostContent, patchPost } from '@/apis';
 
 import styles from './EditPostPage.module.css';
 
@@ -45,6 +61,10 @@ export default function EditPostPage() {
   const textId = pathname.split('/')[2];
   const currentBoard = BOARD_MENUS.find((menu) => menu.textId === textId);
   const boardTitle = currentBoard?.title || '';
+  const AttachmentListComponent =
+    textId === 'event-notice' ? NoticeAttachmentList : AttachmentList;
+
+  const [category, setCategory] = useState(null);
 
   const [isNotice, setIsNotice] = useState(false);
   const [title, setTitle] = useState('');
@@ -52,18 +72,24 @@ export default function EditPostPage() {
   const [userDisplay, setUserDisplay] = useState('');
   const [submitDisabled, setSubmitDisabled] = useState(false);
   const [isBlock, setIsBlock] = useState(false);
+  const [isTitleFocused, setIsTitleFocused] = useState(false);
 
   //'게시글 상세 조회' API에서 제공하는 기존 첨부파일 정보
-  const [isCheckModalOpen, setIsCheckModalOpen] = useState(false);
-
   const [attachmentsInfo, setAttachmentsInfo] = useState([]);
   const [deleteAttachments, setDeleteAttachments] = useState([]);
   const [isTrashOverlapped, setIsTrashOverlapped] = useState(false);
   const [trashImageIndex, setTrashImageIndex] = useState(null);
   const trashImageConfirmModal = useModal();
 
+  const [editor, setEditor] = useState(null);
+
   // 페이지 이탈 방지 모달 노출
   useBlocker(isBlock);
+
+  const categoryConfig = BOARD_CATEGORY_MAP[currentBoard?.id];
+  const hasCategory = Boolean(categoryConfig);
+  const isCategoryDisabled = hasCategory && isNotice;
+  const shouldIncludeCategory = hasCategory && !isCategoryDisabled;
 
   // 게시글 내용 가져오기
   const { data, isLoading, error } = useQuery({
@@ -73,16 +99,39 @@ export default function EditPostPage() {
     placeholderData: {},
   });
 
-  // 데이터 화면 표시
+  useEffect(() => {
+    if (!editor || !data?.content) return;
+
+    editor.commands.setContent(data.content);
+  }, [editor, data]);
+
   useEffect(() => {
     if (!data || Object.keys(data).length === 0) return;
 
-    setTitle(data.title);
+    // 기존 게시글의 제목에 포함된 카테고리 접두어 확인
+    const categoryMatch = categoryConfig
+      ? data.title?.match(/^\[([^\]]+)\]\s*/)
+      : null;
+
+    const legacyCategory = categoryConfig?.find(
+      (name) => name === categoryMatch?.[1]
+    );
+
+    // API의 category를 우선 사용하고, 기존 게시글만 제목에서 추출
+    const initialCategory = data.category || legacyCategory;
+
+    setCategory(initialCategory ?? null);
+
+    // 기존 제목에 실제 카테고리 접두어가 있는 경우에만 제거
+    setTitle(
+      legacyCategory ? data.title.replace(categoryMatch[0], '') : data.title
+    );
+
     setText(data.content);
     setIsNotice(data.isNotice);
     setUserDisplay(data.userDisplay);
     setAttachmentsInfo(data.attachments);
-  }, [data]);
+  }, [data, currentBoard?.id, categoryConfig]);
 
   // isBlock 업데이트
   useEffect(() => {
@@ -90,11 +139,21 @@ export default function EditPostPage() {
 
     setIsBlock(
       data.title !== title.trim() ||
-        data.content !== text.trim() ||
+        data.content !== editor?.getHTML() ||
         data.isNotice !== isNotice ||
-        data.attachments !== attachmentsInfo
+        data.attachments !== attachmentsInfo ||
+        data.category !== category
     );
-  }, [title, text, isNotice, attachmentsInfo]);
+  }, [
+    title,
+    text,
+    isNotice,
+    attachmentsInfo,
+    category,
+    categoryConfig,
+    data,
+    editor,
+  ]);
 
   // 게시글 수정
   const mutation = useMutation({
@@ -103,14 +162,14 @@ export default function EditPostPage() {
     onSuccess: async () => {
       queryClient.invalidateQueries(QUERY_KEY.post(postId));
       navigate(-1);
-      toast({ message: TOAST.POST.edit, variant: 'success' });
+      toast.success(TOAST.POST.edit);
       setSubmitDisabled(false);
 
       // post 수정 등록이 잘 되었으면 썸네일 생성하기
       await createThumbnail(currentBoard?.id, postId);
     },
     onError: ({ response }) => {
-      toast({ message: response.data.message, variant: 'error' });
+      toast.error(response.data.message);
       setSubmitDisabled(false);
     },
   });
@@ -127,7 +186,13 @@ export default function EditPostPage() {
 
   // 공지 여부 선택 핸들러
   const handleIsNotice = () => {
-    setIsNotice((prev) => !prev);
+    const willBeNotice = !isNotice;
+
+    if (hasCategory && willBeNotice) {
+      setCategory(null);
+    }
+
+    setIsNotice(willBeNotice);
   };
 
   // 제목 127자 제한
@@ -145,22 +210,26 @@ export default function EditPostPage() {
     if (submitDisabled) return;
 
     if (!title.trim()) {
-      toast({ message: TOAST.POST.emptyTitle, variant: 'info' });
+      toast.info(TOAST.POST.emptyTitle);
       return;
     }
     if (!text.trim()) {
-      toast({ message: TOAST.POST.emptyContent, variant: 'info' });
+      toast.info(TOAST.POST.emptyContent);
       return;
     }
-
+    if (shouldIncludeCategory && !category) {
+      toast.info(TOAST.POST.selectCategory);
+      return;
+    }
     setSubmitDisabled(true);
     setIsBlock(false);
 
     mutation.mutate({
       boardId: currentBoard?.id,
       postId,
+      category: shouldIncludeCategory ? category : '',
       title,
-      content: text,
+      content: sanitizeHtml(preserveEmptyParagraphs(editor?.getHTML() ?? '')),
       isNotice,
       attachmentsInfo,
       deleteAttachments,
@@ -188,34 +257,47 @@ export default function EditPostPage() {
   return (
     <>
       <div className={styles.container}>
-        <div>
+        <div className={styles.main}>
           <div className={styles.top}>
             <CloseAppBar
-              children={<p onClick={handleSubmit}>수정</p>}
-              backgroundColor={'#eaf5fd'}
+              children={
+                <p className={styles.submitButton} onClick={handleSubmit}>
+                  수정
+                </p>
+              }
+              backgroundColor={'#fbfdff'}
             />
           </div>
           <div className={styles.center}>
             <div className={styles.categorySelect}>
               <div className={styles.categorySelectContainer}>
-                <Icon
-                  id='clip-board-list'
-                  width={21}
-                  height={22}
-                  fill='white'
-                />
+                <IconMultiClipboardBlue width={21} height={22} />
                 <p className={styles.categorySelectText}>{boardTitle}</p>
               </div>
             </div>
+
+            {categoryConfig && !isCategoryDisabled && (
+              <DropdownCategory
+                options={categoryConfig}
+                value={category}
+                onChange={setCategory}
+              />
+            )}
             <div className={styles.profileBox}>
               <div className={styles.profileBoxLeft}>
                 {userInfo?.userRoleId !== ROLE.admin &&
                 userInfo?.userRoleId !== ROLE.official ? (
-                  <img className={styles.logoIcon} src={cloudLogo} alt='로고' />
+                  <IconMultiCloudLogo
+                    width={25}
+                    height={16}
+                    role='img'
+                    aria-label='로고'
+                  />
                 ) : (
                   <Badge
                     userRoleId={userInfo?.userRoleId}
-                    className={styles.badge}
+                    width={24}
+                    height={24}
                   />
                 )}
                 <p>{userDisplay}</p>
@@ -232,11 +314,11 @@ export default function EditPostPage() {
                   }
                   onClick={handleIsNotice}
                 >
-                  <Icon
-                    id={isNotice ? 'check-circle-blue' : 'check-circle-grey'}
-                    width={21}
-                    height={22}
-                  />
+                  {isNotice ? (
+                    <IconMultiCheckBlueCircle width={21} height={22} />
+                  ) : (
+                    <IconMultiCheckGreyCircle width={21} height={22} />
+                  )}
                   <p>공지글</p>
                 </div>
               )}
@@ -244,19 +326,40 @@ export default function EditPostPage() {
             <div className={styles.content}>
               <TextareaAutosize
                 className={styles.title}
-                placeholder='제목'
+                placeholder='제목을 입력해주세요'
                 value={title}
                 onChange={handleTitleChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+                    e.preventDefault();
+                  }
+                }}
+                onFocus={() => setIsTitleFocused(true)}
+                onBlur={() => setIsTitleFocused(false)}
               />
-              <TextareaAutosize
+              {/*<TextareaAutosize
                 className={styles.text}
-                placeholder='내용'
+                placeholder='내용을 작성해주세요'
                 value={text}
                 onChange={(e) => setText(e.target.value)}
+              />*/}
+              <EditorContainer
+                placeholder='내용'
+                onEditorReady={setEditor}
+                onChangeEditor={(editor) => {
+                  const sanitized = sanitizeHtml(
+                    preserveEmptyParagraphs(editor.getHTML())
+                  );
+                  setText(sanitized);
+                }}
               />
-              <AttachmentList
+              <AttachmentListComponent
                 attachmentsInfo={attachmentsInfo}
                 setAttachmentsInfo={setAttachmentsInfo}
+                onDelete={(index) => {
+                  setTrashImageIndex(index);
+                  trashImageConfirmModal.openModal();
+                }}
               />
             </div>
           </div>
@@ -270,10 +373,9 @@ export default function EditPostPage() {
           />
         )}
 
-        <Icon
-          id='trashcan'
-          width='10rem'
-          height='10rem'
+        <IllustrationTrashcanCircle
+          width={21}
+          height={22}
           className={`${isTrashOverlapped ? styles.trashVisible : styles.trashInvisible}`}
           onDragEnter={(e) => {
             e.preventDefault();
@@ -301,6 +403,8 @@ export default function EditPostPage() {
         <AttachmentBar
           attachmentsInfo={attachmentsInfo}
           setAttachmentsInfo={setAttachmentsInfo}
+          editor={editor}
+          isTitleFocused={isTitleFocused}
         />
       </div>
 
@@ -323,6 +427,321 @@ export default function EditPostPage() {
           onCancel={() => {
             trashImageConfirmModal.closeModal();
           }}
+        />
+      )}
+    </>
+  );
+}
+
+/**
+ * TODO: 라우트 개선 작업 완료 후 기존 컴포넌트와 교체 예정
+ */
+export function NewEditPostPage({ isNotice = false }) {
+  const navigate = useNavigate();
+  const { postId } = useParams();
+  const { id: boardId, name: boardName, isGlobalNotice } = useBoard();
+  const AttachmentListComponent =
+    boardId === 14 && isNotice ? NoticeAttachmentList : AttachmentList;
+
+  const queryClient = useQueryClient();
+
+  const { modal, setModal } = useContext(ModalContext);
+  const { userInfo, status } = useAuth();
+  const { toast } = useToast();
+
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [userDisplay, setUserDisplay] = useState('');
+  const [submitDisabled, setSubmitDisabled] = useState(false);
+  const [isBlock, setIsBlock] = useState(false);
+  const [isTitleFocused, setIsTitleFocused] = useState(false);
+
+  //'게시글 상세 조회' API에서 제공하는 기존 첨부파일 정보
+  const [attachmentsInfo, setAttachmentsInfo] = useState([]);
+  const [deleteAttachments, setDeleteAttachments] = useState([]);
+  const [isTrashOverlapped, setIsTrashOverlapped] = useState(false);
+  const [trashImageIndex, setTrashImageIndex] = useState(null);
+  const trashImageConfirmModal = useModal();
+
+  const [editor, setEditor] = useState(null);
+
+  // isBlock 업데이트
+  useEffect(() => {
+    if (!data || Object.keys(data).length === 0) return;
+
+    setIsBlock(
+      data.title !== title.trim() ||
+        data.content !== editor?.getHTML() ||
+        data.isNotice !== isNotice ||
+        data.attachments !== attachmentsInfo
+    );
+  }, [title, content, isNotice, attachmentsInfo]);
+
+  // 페이지 이탈 방지 모달 노출
+  useBlocker(isBlock);
+
+  // 게시글 수정 중 페이지 이탈
+  const handleExitPage = () => {
+    setModal({
+      id: null,
+      type: null,
+    });
+    setIsBlock(false);
+    navigate(-1);
+  };
+
+  // 제목 127자 제한
+  const handleTitleChange = (e) => {
+    const newValue = e.target.value;
+    if (newValue.length <= 127) {
+      setTitle(newValue);
+    }
+  };
+
+  // 게시글 내용 가져오기
+  const { data, isLoading, error } = useQuery({
+    queryKey: QUERY_KEY.post(postId),
+    queryFn: () => getPostContent(boardId, postId),
+    placeholderData: {},
+  });
+
+  // 데이터 화면 표시
+  useEffect(() => {
+    if (!data || Object.keys(data).length === 0) return;
+
+    setTitle(data.title);
+    setContent(data.content);
+    setUserDisplay(data.userDisplay);
+    setAttachmentsInfo(data.attachments);
+  }, [data]);
+
+  // 에디터에 기존 게시글 내용 반영
+  useEffect(() => {
+    if (!editor || !data?.content) return;
+
+    editor.commands.setContent(data.content);
+  }, [editor, data]);
+
+  // 게시글 수정
+  const mutation = useMutation({
+    mutationKey: [MUTATION_KEY.editPost],
+    mutationFn: patchPost,
+    onSuccess: async () => {
+      queryClient.invalidateQueries(QUERY_KEY.post(postId));
+      navigate(-1);
+      toast.success(TOAST.POST.edit);
+      setSubmitDisabled(false);
+
+      // post 수정 등록이 잘 되었으면 썸네일 생성하기
+      await createThumbnail(boardId, postId);
+    },
+    onError: ({ response }) => {
+      toast.error(response.data.message);
+      setSubmitDisabled(false);
+    },
+  });
+
+  // 게시글 수정 유효성 검사 및 제출
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (submitDisabled) return;
+
+    if (!title.trim()) {
+      toast.info(TOAST.POST.emptyTitle);
+      return;
+    }
+    if (!content.trim()) {
+      toast.info(TOAST.POST.emptyContent);
+      return;
+    }
+
+    setSubmitDisabled(true);
+    setIsBlock(false);
+
+    mutation.mutate({
+      boardId,
+      postId,
+      title,
+      content: sanitizeHtml(preserveEmptyParagraphs(editor?.getHTML() ?? '')),
+      isNotice,
+      attachmentsInfo,
+      deleteAttachments,
+    });
+  };
+
+  if (status === 'loading' || isLoading) {
+    return (
+      <>
+        <BackAppBar notFixed />
+        <FetchLoading>로딩 중...</FetchLoading>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <BackAppBar animation={false} notFixed />
+        <FetchLoading>게시글 정보를 불러오지 못했습니다</FetchLoading>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <div className={styles.container}>
+        <div className={styles.main}>
+          <div className={styles.top}>
+            <CloseAppBar
+              children={
+                <p className={styles.submitButton} onClick={handleSubmit}>
+                  수정
+                </p>
+              }
+              backgroundColor={'#fbfdff'}
+            />
+          </div>
+
+          <div className={styles.center}>
+            <div className={styles.categorySelect}>
+              <div className={styles.categorySelectContainer}>
+                <IconMultiClipboardBlue width={21} height={22} />
+                <p className={styles.categorySelectText}>
+                  {!isGlobalNotice && isNotice
+                    ? `${boardName} 공지`
+                    : boardName}
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.profileBox}>
+              <div className={styles.profileBoxLeft}>
+                {userInfo?.userRoleId !== ROLE.admin &&
+                userInfo?.userRoleId !== ROLE.official ? (
+                  <IconMultiCloudLogo
+                    width={25}
+                    height={16}
+                    role='img'
+                    aria-label='로고'
+                  />
+                ) : (
+                  <Badge
+                    userRoleId={userInfo?.userRoleId}
+                    width={24}
+                    height={24}
+                  />
+                )}
+                <p>{userDisplay}</p>
+                <p className={styles.dot}></p>
+                <p>{DateTime.format(new Date(), 'MD_HM')}</p>
+              </div>
+            </div>
+
+            <div className={styles.content}>
+              <TextareaAutosize
+                className={styles.title}
+                placeholder='제목을 입력해주세요'
+                value={title}
+                onChange={handleTitleChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+                    e.preventDefault();
+                  }
+                }}
+                onFocus={() => setIsTitleFocused(true)}
+                onBlur={() => setIsTitleFocused(false)}
+              />
+              {/*<TextareaAutosize
+                className={styles.text}
+                placeholder='내용을 작성해주세요'
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+              />*/}
+              <EditorContainer
+                placeholder='내용'
+                onEditorReady={setEditor}
+                onChangeEditor={(editor) => {
+                  const sanitized = sanitizeHtml(
+                    preserveEmptyParagraphs(editor.getHTML())
+                  );
+                  setContent(sanitized);
+                }}
+              />
+              <AttachmentListComponent
+                attachmentsInfo={attachmentsInfo}
+                setAttachmentsInfo={setAttachmentsInfo}
+                onDelete={(index) => {
+                  setTrashImageIndex(index);
+                  trashImageConfirmModal.openModal();
+                }}
+              />
+            </div>
+          </div>
+        </div>
+
+        <IllustrationTrashcanCircle
+          width={21}
+          height={22}
+          className={`${isTrashOverlapped ? styles.trashVisible : styles.trashInvisible}`}
+          onDragEnter={(e) => {
+            e.preventDefault();
+            setIsTrashOverlapped(true);
+          }}
+          onDragOver={(e) => {
+            setIsTrashOverlapped(true);
+            e.preventDefault();
+          }}
+          onDragLeave={(e) => {
+            e.preventDefault();
+            setIsTrashOverlapped(false);
+          }}
+          onDrop={(e) => {
+            e.preventDefault();
+            const draggedIndex = parseInt(
+              e.dataTransfer.getData('text/plain'),
+              10
+            );
+            setTrashImageIndex(draggedIndex);
+            setIsTrashOverlapped(false);
+            trashImageConfirmModal.openModal();
+          }}
+        />
+        <AttachmentBar
+          attachmentsInfo={attachmentsInfo}
+          setAttachmentsInfo={setAttachmentsInfo}
+          editor={editor}
+          isTitleFocused={isTitleFocused}
+        />
+      </div>
+
+      {trashImageConfirmModal.isOpen && (
+        <ConfirmModal
+          modalText={ATTACHMENT_MODAL_TEXT.DELETE_ATTACHMENT}
+          onConfirm={() => {
+            setDeleteAttachments((prev) =>
+              attachmentsInfo[trashImageIndex]?.id
+                ? [...prev, attachmentsInfo[trashImageIndex].id]
+                : prev
+            );
+            setAttachmentsInfo((prev) =>
+              prev
+                .slice(0, trashImageIndex)
+                .concat(prev.slice(trashImageIndex + 1))
+            );
+            trashImageConfirmModal.closeModal();
+          }}
+          onCancel={() => {
+            trashImageConfirmModal.closeModal();
+          }}
+        />
+      )}
+
+      {/* 페이지 이탈 방지 모달 */}
+      {modal.id === 'exit-page' && (
+        <ConfirmModal
+          modalText={CONFIRM_MODAL_TEXT.EXIT_PAGE}
+          onConfirm={handleExitPage}
         />
       )}
     </>

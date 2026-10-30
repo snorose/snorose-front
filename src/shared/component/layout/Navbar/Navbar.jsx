@@ -1,11 +1,11 @@
 import { Link, useLocation } from 'react-router-dom';
+
 import { useQuery } from '@tanstack/react-query';
 
 import { fetchUnreadAlertCount } from '@/apis/alert';
 
+import { NAVBAR_MENUS, NEW_ROUTES, QUERY_KEY } from '@/shared/constant';
 import { useAuth } from '@/shared/hook';
-import { Icon } from '@/shared/component';
-import { NAVBAR_MENUS, QUERY_KEY } from '@/shared/constant';
 
 import styles from './Navbar.module.css';
 
@@ -15,7 +15,7 @@ export default function Navbar() {
 
   const isActive = ({ id, to }) =>
     pathname === to ||
-    (id === 'home' && pathname === '/') ||
+    (id === 'home' && pathname === NEW_ROUTES.home) ||
     (id === 'test' && pathname.startsWith('/board/exam-review/search'));
 
   const { data: unreadAlertCount = 0 } = useQuery({
@@ -34,32 +34,41 @@ export default function Navbar() {
     <nav className={styles.nav}>
       <ul className={styles.menus}>
         {NAVBAR_MENUS &&
-          NAVBAR_MENUS.map(({ id, to, label, ...props }) => (
-            <Link key={id} to={to}>
-              <li className={styles.menu}>
-                <div className={styles.iconWrapper}>
-                  <Icon
-                    id={isActive({ id, to }) ? `${id}-fill` : id}
-                    {...props}
-                  />
-                  {id === 'bell' && unreadAlertCount > 0 && (
-                    <div className={styles.badge}>
-                      <span>
-                        {unreadAlertCount > 99 ? '99+' : unreadAlertCount}
-                      </span>
+          NAVBAR_MENUS.map(
+            ({ id, to, label, ActiveIcon, DefaultIcon, ...props }) => {
+              const color = isActive({ id, to })
+                ? 'var(--blue-4)'
+                : 'var(--blue-2)';
+
+              const IconComponent = isActive({ id, to })
+                ? ActiveIcon
+                : DefaultIcon;
+
+              return (
+                <Link key={id} to={to}>
+                  <li className={styles.menu}>
+                    <div className={styles.iconWrapper}>
+                      <IconComponent color={color} {...props} />
+                      {id === 'bell' && unreadAlertCount > 0 && (
+                        <div className={styles.badge}>
+                          <span>
+                            {unreadAlertCount > 99 ? '99+' : unreadAlertCount}
+                          </span>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-                <span
-                  style={{
-                    color: isActive({ id, to }) ? '#00368E' : '#5F86BF',
-                  }}
-                >
-                  {label}
-                </span>
-              </li>
-            </Link>
-          ))}
+                    <span
+                      style={{
+                        color: isActive({ id, to }) ? '#00368E' : '#5F86BF',
+                      }}
+                    >
+                      {label}
+                    </span>
+                  </li>
+                </Link>
+              );
+            }
+          )}
       </ul>
     </nav>
   );

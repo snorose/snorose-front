@@ -6,14 +6,14 @@ export const isAttendanceCheckedToday = async () => {
 };
 
 export const updatePoint = async ({
-  userId,
+  encryptedUserId,
   category,
   source,
   sourceId,
   difference,
 }) => {
-  const response = await authAxios.post('/v1/points', {
-    userId,
+  const response = await authAxios.post('/v2/points/attendance', {
+    encryptedUserId,
     category,
     source,
     ...(sourceId && { sourceId }),

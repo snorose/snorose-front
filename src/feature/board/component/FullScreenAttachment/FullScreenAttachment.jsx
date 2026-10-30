@@ -1,15 +1,19 @@
 import { React, useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Keyboard } from 'swiper/modules';
 
+import { IconDownload } from '@snorose/icons';
+import { Keyboard, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import { ChoiceModal, CloseAppBar } from '@/shared/component';
 import { useToast } from '@/shared/hook';
-import { Icon, ChoiceModal, CloseAppBar } from '@/shared/component';
+
 import { handleDownload, handleZipDownload } from '@/feature/attachment/lib';
+
 import altImage from '@/assets/images/altImage.png';
 
 import styles from './FullScreenAttachment.module.css';
-import 'swiper/css';
-import 'swiper/swiper-bundle.css';
+
+import 'swiper/css/bundle';
 
 export default function FullScreenAttachment({
   attachmentUrls,
@@ -34,10 +38,9 @@ export default function FullScreenAttachment({
           className={`${styles.pagination} swiper-custom-pagination`}
           ref={paginationRef}
         ></p>
-        <Icon
-          id={'download'}
-          width={'2.4rem'}
-          height={'2.4rem'}
+        <IconDownload
+          width={24}
+          height={24}
           className={styles.download}
           onClick={() => {
             setIsChoiceModalOpen(true);
@@ -118,15 +121,9 @@ export default function FullScreenAttachment({
               setIsChoiceModalOpen(false);
 
               await handleZipDownload(urls);
-              toast({
-                message: '첨부파일 저장이 완료되었어요.',
-                variant: 'success',
-              });
+              toast.success('첨부파일 저장이 완료되었어요.');
             } catch (e) {
-              toast({
-                message: '다운로드에 문제가 발생했습니다. 다시 시도해주세요.',
-                variant: 'error',
-              });
+              toast.error('다운로드에 문제가 발생했습니다. 다시 시도해주세요.');
             }
           },
           async () => {
@@ -138,15 +135,9 @@ export default function FullScreenAttachment({
               const currentIndex =
                 paginationRef.current?.textContent.split('/')[0] - 1;
               await handleDownload(attachmentUrls[currentIndex]);
-              toast({
-                message: '첨부파일 저장이 완료되었어요.',
-                variant: 'success',
-              });
+              toast.success('첨부파일 저장이 완료되었어요.');
             } catch (e) {
-              toast({
-                message: '다운로드에 문제가 발생했습니다. 다시 시도해주세요.',
-                variant: 'error',
-              });
+              toast.error('다운로드에 문제가 발생했습니다. 다시 시도해주세요.');
             }
           },
         ]}

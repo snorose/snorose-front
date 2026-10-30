@@ -1,11 +1,15 @@
-import styles from './PopUpContents.module.css';
-import accountingReport from './accountingReport.png';
 import { Link } from 'react-router-dom';
+
+import calendarImage from './calendar.png';
+import eventImage from './event.png';
+import newBoard from './newBoard.png';
+import styles from './PopUpContents.module.css';
 
 /**
  * @typedef {Object} PopupLink
  * @property {string} title - 링크 텍스트
  * @property {string} url - 링크 URL
+ * @property {boolean} [isExternal=false] - 외부 링크 여부 (true면 새 탭, false면 SPA 내부 이동)
  */
 
 /**
@@ -22,35 +26,93 @@ import { Link } from 'react-router-dom';
 /** @type {PopupContent[]} */
 const POPUP_CONTENTS = [
   {
-    title: '2025년 12월 회계 보고',
-    description:
-      '숙명 메일 계정으로 접속하시면 회계 내역을 확인하실 수 있습니다.',
+    title: '[EVENT] 스노로즈 X 웰라쥬 체험단 이벤트 🎁✨',
+    description: '무너진 피부에 #속수분텐션업할 시간!',
     contentList: [
-      // '내용',
-      // '추가 모집 분야: 이벤트기획, 프론트엔드',
+      '모집 인원: 스노로즈 가입자 중 숙명여대 재학생, 휴학생, 졸업생 포함 총 50인',
+      '체험 제품: 웰라쥬 리얼 히알루로닉 수딩 크림 본품(80ml)',
+      '모집 기간: 4월 27일(월) ~ 5월 4일(월)',
     ],
     link: [
       {
-        title: '스노로즈 회계 장부 (Google Sheets)',
-        url: 'https://docs.google.com/spreadsheets/d/1MzXAHemKqPwVj3PzPJch5cR5z49gFtzABPgJ_FVjCXM',
-      },
-      {
-        title: '스노로즈 공지 바로가기',
-        url: '/board/notice/post/1869660',
+        title: '이벤트 관련 링크 (스노로즈 공지)',
+        url: '/board/notice/post/1895414',
+        isExternal: false,
       },
     ],
-    image: accountingReport,
-    startDate: '2026-01-12',
-    endDate: '2026-01-20',
+    image: eventImage,
+    startDate: '2026-04-28',
+    endDate: '2026-05-04',
+  },
+  {
+    title: '숙플레이스 및 주거 게시판 오픈 이벤트 안내',
+    description:
+      '숙플레이스와 주거 게시판 오픈을 기념해 후기 이벤트가 진행됩니다.',
+    contentList: [
+      '참여 기간: 2026년 9월 1일(화) ~ 9월 22일(화)',
+      '참여 방법: 숙플레이스 또는 주거 게시판에 필수 해시태그와 조건에 맞춰 후기 작성',
+      '보상: 조건 충족 참여자 전원 10 point, 우수 작성자 추가 20 point 지급',
+    ],
+    image: newBoard,
+    link: [
+      {
+        title: '스노로즈 공지',
+        url: '/board/notice/post/1915197',
+        isExternal: false,
+      },
+    ],
+    startDate: '2026-08-30',
+    endDate: '2026-09-05',
   },
   // {
-  //   title: '1월 스노로즈 일정',
-  //   content: null,
-  //   link: null,
-  //   image: calendar,
-  //   startDate: '2025-12-31',
-  //   endDate: '2026-01-07',
+  //   title: '[공지] 스노로즈 서버 점검 안내',
+  //   description: '안정적인 서비스 제공을 위한 서버 점검이 진행됩니다.',
+  //   contentList: [
+  //     '일시: 2026년 10월 3일 (토) 14:00 ~ 18:00',
+  //     '점검 시간 동안 스노로즈 이용이 일시 중단됩니다.',
+  //   ],
+  //   link: [
+  //     {
+  //       title: '스노로즈 공지',
+  //       url: '/board/notice/post/1922743',
+  //       isExternal: false,
+  //     },
+  //   ],
+  //   startDate: '2026-09-28',
+  //   endDate: '2026-10-03',
   // },
+  {
+    title: '[블로그] 스노로즈 초청강연 - 유트루 편',
+    description:
+      '지난 해 진행했던 첫 초청 강연의 비하인드와 강연 당일 현장을 담은 이벤트기획팀의 이야기를 확인해 보세요.',
+    link: [
+      {
+        title: '블로그 링크 (노션)',
+        url: 'https://snorose.notion.site/3a87ef0aa3bf80948861e5ab33627445',
+        isExternal: true,
+      },
+    ],
+    startDate: '2026-07-27',
+    endDate: '2026-08-10',
+  },
+  {
+    title: '[공지] 포인트 미지급 기간',
+    contentList: ['일시: 2026/10/13(화) ~ 2026/10/26(월)'],
+    startDate: '2026-10-07',
+    endDate: '2026-10-14',
+  },
+  {
+    title: '[공지] 시험후기 작성 기간 안내',
+    contentList: ['일시: 2026/10/27(화) ~ 2026/11/02(월)'],
+    startDate: '2026-10-22',
+    endDate: '2026-10-29',
+  },
+  {
+    title: '[캘린더] 10월 스노로즈 일정',
+    image: calendarImage,
+    startDate: '2026-09-28',
+    endDate: '2026-10-10',
+  },
 ];
 
 /** @type {string[]} */
@@ -71,8 +133,11 @@ const getTodayInKorea = () => {
 
 // 날짜 범위 내에 오늘이 있는지 확인
 const isDateInRange = (today, startDate, endDate) => {
-  const start = new Date(`${startDate}T00:00:00`);
-  const end = new Date(`${endDate}T23:59:59`);
+  const startStr = startDate?.trim?.() ?? startDate;
+  const endStr = endDate?.trim?.() ?? endDate;
+
+  const start = new Date(`${startStr}T00:00:00`);
+  const end = new Date(`${endStr}T23:59:59`);
 
   return start <= today && today <= end;
 };
@@ -118,7 +183,17 @@ export const PopUpContents = ({ filteredContents }) => {
                   key={link.title}
                   className={`${styles.popupSectionListItem} ${styles.popupSectionLink}`}
                 >
-                  <Link to={link.url}>{link.title}</Link>
+                  {link.isExternal ? (
+                    <a
+                      href={link.url}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      {link.title}
+                    </a>
+                  ) : (
+                    <Link to={link.url}>{link.title}</Link>
+                  )}
                 </li>
               ))}
             </ul>

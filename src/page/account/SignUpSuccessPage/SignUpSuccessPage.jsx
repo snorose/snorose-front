@@ -1,32 +1,22 @@
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import { Button, Icon } from '@/shared/component';
+import { IconCheck, IllustrationTaskComplete } from '@snorose/icons';
+
+import { Button } from '@/shared/component';
 
 import styles from './SignUpSuccessPage.module.css';
 
-import { taskCompleteIllustration } from '@/assets/illustrations';
-
 export default function SignUpSuccessPage() {
   const navigate = useNavigate();
-  const { state } = useLocation();
-
-  useEffect(() => {
-    try {
-      const checkAccess = state.access;
-    } catch (e) {
-      //navigate('/login');
-    }
-  }, []);
 
   return (
     <div className={styles.container}>
       <div>
-        <Icon
-          id='check-thick'
-          width={'2.4rem'}
-          height={'2.4rem'}
+        <IconCheck
+          width={24}
+          height={24}
           className={styles.icon}
+          color='var(--blue-4)'
         />
         <p className={styles.title}>스노로즈 가입이 완료되었어요!</p>
         <p className={styles.explanation}>
@@ -35,10 +25,10 @@ export default function SignUpSuccessPage() {
         </p>
       </div>
       <div className={styles.img}>
-        <img
-          src={taskCompleteIllustration}
-          alt='회원가입 성공을 알리는 일러스트'
+        <IllustrationTaskComplete
           className={styles.illustration}
+          role='img'
+          aria-label='회원가입 성공을 알리는 일러스트'
         />
       </div>
 

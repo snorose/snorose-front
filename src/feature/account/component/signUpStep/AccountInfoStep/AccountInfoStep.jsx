@@ -1,4 +1,3 @@
-import { useToast } from '@/shared/hook';
 import {
   EmailInput,
   ErrorMessage,
@@ -7,23 +6,20 @@ import {
   PasswordInput,
   TextInput,
 } from '@/shared/component';
+import { useToast } from '@/shared/hook';
 
 import {
-  validateUserName,
-  validateSookmyungEmail,
+  validateCheckedPassword,
   validateId,
   validatePassword,
+  validateSookmyungEmail,
+  validateUserName,
 } from '@/feature/account/lib';
 
 import styles from './AccountInfoStep.module.css';
 
 export default function AccountInfoStep({ formData, setFormData, setStage }) {
   const { toast } = useToast();
-
-  const validateCheckedPassword = () => {
-    if (formData.checkedPassword === '') return 'default';
-    return formData.password === formData.checkedPassword ? 'valid' : 'error';
-  };
 
   const inputList = [
     {
@@ -42,9 +38,9 @@ export default function AccountInfoStep({ formData, setFormData, setStage }) {
     },
     {
       type: 'email',
-      label: '숙명 구글 이메일',
+      label: '숙명 이메일',
       id: 'email',
-      placeholder: 'example@sookmyung.ac.kr',
+      placeholder: 'sample@sookmyung.ac.kr',
       value: formData.email,
       onChange: (next) =>
         setFormData((prev) => ({
@@ -72,7 +68,7 @@ export default function AccountInfoStep({ formData, setFormData, setStage }) {
       type: 'password',
       label: '비밀번호',
       id: 'password',
-      placeholder: '비밀번호를 입력해 주세요',
+      placeholder: '비밀번호를 입력해주세요',
       value: formData.password,
       onChange: (next) =>
         setFormData((prev) => ({
@@ -94,7 +90,8 @@ export default function AccountInfoStep({ formData, setFormData, setStage }) {
           ...prev,
           checkedPassword: next,
         })),
-      validate: validateCheckedPassword,
+      validate: (checkedPassword) =>
+        validateCheckedPassword(formData.password, checkedPassword),
       message: '비밀번호가 일치하지 않아요',
     },
   ];
@@ -107,10 +104,7 @@ export default function AccountInfoStep({ formData, setFormData, setStage }) {
     if (isAllValid) {
       setStage(2);
     } else {
-      toast({
-        message: '모든 필드를 올바르게 입력해주세요.',
-        variant: 'error',
-      });
+      toast.error('모든 필드를 올바르게 입력해주세요.');
     }
   };
 

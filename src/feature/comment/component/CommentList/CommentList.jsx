@@ -1,41 +1,39 @@
 import { useParams } from 'react-router-dom';
 
-import { getComments } from '@/apis';
-
-import { useSuspensePagination } from '@/shared/hook';
-import { FetchLoading } from '@/shared/component';
-import { flatPaginationCache } from '@/shared/lib';
+import { FetchLoading, InfiniteScrollSentinel } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
+import { useSuspenseInfiniteScroll } from '@/shared/hook';
 
 import { Comment } from '@/feature/comment/component';
 import { filterVisibleComments } from '@/feature/comment/lib';
 
+import { getComments } from '@/apis';
+
 import styles from './CommentList.module.css';
 
-export default function CommentList({ commentCount }) {
+export default function CommentList() {
   const { postId } = useParams();
 
-  const { data, isFetching, ref } = useSuspensePagination({
+  const {
+    items: commentList,
+    ref,
+    isFetchingNextPage,
+  } = useSuspenseInfiniteScroll({
     queryKey: [QUERY_KEY.comments, postId],
     queryFn: ({ pageParam }) => getComments({ postId, page: pageParam }),
+    getItemKey: (item) => item.id,
   });
 
-  const commentList = flatPaginationCache(data);
   const visibledCommentList = filterVisibleComments(commentList);
 
   return (
     <div className={styles.comments}>
-      <p className={styles.commentsTitle}>
-        댓글 {commentCount.toLocaleString()}개
-      </p>
-      {visibledCommentList.map((comment, index) => (
-        <Comment
-          ref={index === visibledCommentList.length - 1 ? ref : undefined}
-          key={comment.id}
-          data={comment}
-        />
+      {visibledCommentList.map((comment) => (
+        <Comment key={comment.id} data={comment} />
       ))}
-      {isFetching && <FetchLoading />}
+
+      <InfiniteScrollSentinel ref={ref} />
+      {isFetchingNextPage && <FetchLoading />}
     </div>
   );
 }

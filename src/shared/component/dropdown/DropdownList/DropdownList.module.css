@@ -62,3 +62,7 @@
   background: var(--blue-0, #eaf5fd);
   color: var(--blue-4, #00368e);
 }
+
+.checkIconBlue path {
+  stroke: var(--blue-4);
+}

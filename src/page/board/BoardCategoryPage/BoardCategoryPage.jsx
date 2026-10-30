@@ -1,68 +1,75 @@
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 import { Header } from '@/shared/component';
-import { BOARD_MENUS } from '@/shared/constant';
+import { BOARD_CATEGORY, BOARD_MENUS, FEATURE_FLAG } from '@/shared/constant';
+import { useNewBoard } from '@/shared/hook';
 
-import { BoardBar } from '@/feature/board/component';
+import { AccordianBoards, BoardBar } from '@/feature/board/component';
 import { Search } from '@/feature/search/component';
 
-import cloudLogo from '@/assets/images/cloudLogo.svg';
+import { BOARD_IMAGES } from '@/assets/map/board-assets';
 
 import styles from './BoardCategoryPage.module.css';
 
+const { HIDDEN, ...VISIBLE_BOARD_CATEGORY } = BOARD_CATEGORY;
+const FAVORITE_BOARD_IDS = [20, 61]; //즐겨찾기 더미 데이터
+
 export default function BoardCategoryPage() {
-  const navigate = useNavigate();
-  const handleKeyDown = (event) => {
-    if (event.target.value.trim() === '') {
-      return;
-    }
+  const isNewBoardOn = useNewBoard();
 
-    navigate(`/board/all/search`);
+  // 피처 플래그가 꺼진 게시판은 노출하지 않음
+  const visibleBoardMenus = BOARD_MENUS.filter(
+    (board) => board.feature !== FEATURE_FLAG.newBoard || isNewBoardOn
+  );
+
+  const [openBoards, setOpenBoards] = useState(() =>
+    Object.fromEntries(
+      Object.values(VISIBLE_BOARD_CATEGORY).map(({ value }) => [value, true])
+    )
+  );
+  const toggleBoard = (boardName) => {
+    setOpenBoards((prev) => ({
+      ...prev,
+      [boardName]: !prev[boardName],
+    }));
   };
-
   return (
     <div className={styles.container}>
       <Header />
 
       <div className={styles.searchbarBox}>
-        <Search placeholder='전체 게시판 내 검색' onKeyDown={handleKeyDown} />
+        <Search placeholder='전체 게시판 내 검색' to='/board/all/search' />
       </div>
 
       <div className={styles.paddingContainer}>
-        <div className={styles.boardBox}>
-          <div className={styles.boardTitle}>커뮤니티</div>
-          <div className={styles.boardListBox}>
-            {BOARD_MENUS.filter((board) =>
-              [20, 21, 22, 23].includes(board.id)
-            ).map((board, index) => (
-              <BoardBar key={board.id} data={board} />
-            ))}
+        {Object.values(VISIBLE_BOARD_CATEGORY).map((category) => (
+          <div key={category.value} className={styles.boardBox}>
+            <AccordianBoards
+              title={category.label}
+              isOpen={openBoards[category.value]}
+              onClick={() => toggleBoard(category.value)}
+            >
+              <div className={styles.boardListBox}>
+                {visibleBoardMenus
+                  .filter((board) => board.category === category)
+                  .map((board) => {
+                    const boardImage = BOARD_IMAGES[board.textId];
+
+                    return (
+                      <BoardBar
+                        key={board.id}
+                        data={board}
+                        image={boardImage?.category}
+                        imageLayout={boardImage?.categoryLayout}
+                        imageViewBox={boardImage?.categoryViewBox}
+                        isFavorite={FAVORITE_BOARD_IDS.includes(board.id)}
+                      />
+                    );
+                  })}
+              </div>
+            </AccordianBoards>
           </div>
-        </div>
-        <div className={styles.boardBox}>
-          <div className={styles.boardTitle}>공식 게시판</div>
-          <div className={styles.boardListBox}>
-            {BOARD_MENUS.filter((board) => [60, 61, 62].includes(board.id)).map(
-              (board, index) => (
-                <BoardBar key={board.id} data={board} />
-              )
-            )}
-          </div>
-        </div>
-        <div className={styles.boardBox}>
-          <div className={styles.boardTitle}>스노로즈 게시판</div>
-          <div className={styles.boardListBox}>
-            {BOARD_MENUS.filter((board) =>
-              ['event'].includes(board.textId)
-            ).map((board, index) => (
-              <BoardBar key={board.id} data={board} />
-            ))}
-          </div>
-        </div>
-      </div>
-      <div className={styles.moreBoardBox}>
-        <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
-        <p>스노로즈에서 더 다양한 게시판을 준비하고 있어요</p>
+        ))}
       </div>
     </div>
   );

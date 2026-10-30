@@ -1,32 +1,63 @@
-import { Icon } from '@/shared/component';
+import { IconBookmarkFill, IconHeartFill } from '@snorose/icons';
+
 import { DateTime } from '@/shared/lib';
+
+import { htmlToText } from '@/feature/editor/lib';
+
+import altImage from '@/assets/images/altImage.png';
 
 import styles from './NoticeBar.module.css';
 
 export default function NoticeBar({ data, onClick }) {
   const formattedDate = DateTime.format(data.createdAt, 'YMD');
+  const plainText = htmlToText(data.content);
+  const { isLiked = false, isScrapped = false } = data;
 
   return (
     <div className={styles.post} onClick={onClick}>
-      <div className={styles.post_top}>
-        <p className={styles.title}>{data.title}</p>
-      </div>
-      <div className={styles.post_center}>
-        <p className={styles.text}>{data.content}</p>
+      <div className={styles.body}>
+        <div className={styles.textContainer}>
+          <div className={styles.post_top}>
+            <p className={styles.title}>{data.title}</p>
+          </div>
+          <div className={styles.post_center}>
+            <p className={styles.text}>{plainText}</p>
+          </div>
+        </div>
+        {data.thumbnailUrl && (
+          <img
+            className={styles.thumbnail}
+            src={data.thumbnailUrl}
+            loading='lazy'
+            alt={`${data.title} 썸네일`}
+            onError={(event) => {
+              event.currentTarget.onerror = null;
+              event.currentTarget.src = altImage;
+            }}
+          />
+        )}
       </div>
       <div className={styles.postBottom}>
         <span>{formattedDate}</span>
         <div className={styles.postBottomRight}>
           <div className={styles.iconContainer}>
-            <Icon id='like' width={14} height={13} fill='#D9D9D9' />
+            <IconHeartFill
+              width={14}
+              height={13}
+              color={isLiked ? 'var(--pink-2)' : 'var(--grey-3)'}
+            />
             <span className={styles.like_cnt}>
-              {data.likeCount.toLocaleString()}
+              {(data.likeCount ?? 0).toLocaleString()}
             </span>
           </div>
           <div className={styles.iconContainer}>
-            <Icon id='bookmark-fill' width={11} height={13} fill='#D9D9D9' />
+            <IconBookmarkFill
+              width={11}
+              height={13}
+              color={isScrapped ? 'var(--green-2)' : 'var(--grey-3)'}
+            />
             <span className={styles.like_cnt}>
-              {data.scrapCount.toLocaleString()}
+              {(data.scrapCount ?? 0).toLocaleString()}
             </span>
           </div>
         </div>

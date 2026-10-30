@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
 
-import { Icon } from '@/shared/component';
+import { IconChevronRight } from '@snorose/icons';
 
 import styles from './ActivityTab.module.css';
-
-const ActivityTab = () => {
+const ActivityTab = ({ userInfo }) => {
   return (
     <>
       <div className={styles.infoWrapper}>
@@ -22,6 +21,10 @@ const ActivityTab = () => {
             link: 'download-exam-review',
           },
           {
+            label: '내 문의 및 신고 모아보기',
+            link: 'inquiry-report',
+          },
+          {
             label: '스크랩한 시험 후기 모아보기',
             link: 'scrap-exam-review',
           },
@@ -34,17 +37,35 @@ const ActivityTab = () => {
             <Link to={item.link}>
               <div className={styles.item}>
                 <span>{item.label}</span>
-                <Icon
-                  id='angle-right'
-                  width={16}
-                  height={16}
-                  fill='#898989'
-                  stroke='#898989'
-                />
+                <IconChevronRight />
               </div>
             </Link>
           </div>
         ))}
+      </div>
+
+      <div className={styles.directList}>
+        <Link to={'/commerce/orders'}>
+          <div className={styles.direct}>
+            <div className={styles.text}>
+              <span>내 주문 내역</span>
+              <span>지금까지 참여한 공구 주문을 확인해요</span>
+            </div>
+            <IconChevronRight />
+          </div>
+        </Link>
+
+        {userInfo.userRoleId === 4 && (
+          <Link to={'/commerce/pickup-display'}>
+            <div className={styles.direct}>
+              <div className={styles.text}>
+                <span>수령 단말</span>
+                <span>수령 단말 준비를 시작하세요</span>
+              </div>
+              <IconChevronRight />
+            </div>
+          </Link>
+        )}
       </div>
     </>
   );

@@ -1,43 +1,9 @@
-import { defaultAxios } from '@/axios';
-
-import { useToast } from '@/shared/hook';
 import { TOAST } from '@/shared/constant';
+import { useToast } from '@/shared/hook';
 
-export const useLogin = () => {
-  const { toast } = useToast();
-  const login = async (e, setIsError, formData, navigate) => {
-    e.preventDefault();
-    const endpoint = '/v1/users/login';
+import { isMaintenanceBlockedError } from '@/feature/maintenance/access';
 
-    if (!formData.loginId) {
-      toast({ message: TOAST.LOGIN.emptyId, variant: 'info' });
-    } else if (!formData.password) {
-      toast({ message: TOAST.LOGIN.emptyPw, variant: 'info' });
-    } else {
-      try {
-        const response = await defaultAxios.post(endpoint, formData);
-        const { accessToken, refreshToken } =
-          response?.data.result.tokenResponse;
-
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
-
-        setIsError(false);
-        navigate('/');
-        window.location.reload();
-      } catch (e) {
-        if (e.response.status === 500) {
-          toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
-        } else {
-          toast({ message: e.response.data.message, variant: 'error' });
-        }
-        setIsError(true);
-      }
-    }
-  };
-
-  return login;
-};
+import { defaultAxios } from '@/axios';
 
 export const useFindId = () => {
   const { toast } = useToast();
@@ -56,8 +22,10 @@ export const useFindId = () => {
         });
       } catch (e) {
         setLoading(false);
-        if (e.response.status === 500) {
-          toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
+        if (isMaintenanceBlockedError(e)) return;
+        const status = e.response?.status;
+        if (status === 500) {
+          toast.error(TOAST.ERROR.SERVER);
         } else {
           navigate('/not-found-id', { state: { access: true } });
         }
@@ -84,8 +52,10 @@ export const useFindPw = () => {
         });
       } catch (e) {
         setLoading(false);
-        if (e.response.status === 500) {
-          toast({ message: TOAST.ERROR.SERVER, variant: 'error' });
+        if (isMaintenanceBlockedError(e)) return;
+        const status = e.response?.status;
+        if (status === 500) {
+          toast.error(TOAST.ERROR.SERVER);
         } else {
           navigate('/not-found-pw', { state: { access: true } });
         }

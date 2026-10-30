@@ -1,8 +1,9 @@
-export * from './account';
 export * from './alert';
 export * from './attendance';
 export * from './banner';
+export * from './besookt';
 export * from './comment';
+export * from './event';
 export * from './examReview';
 export * from './like';
 export * from './login';
@@ -14,5 +15,3 @@ export * from './search.js';
 export * from './signUp';
 export * from './userInfo';
 export * from './verify';
-export * from './besookt';
-export * from './event';

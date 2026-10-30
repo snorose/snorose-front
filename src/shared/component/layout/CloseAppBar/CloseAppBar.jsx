@@ -1,15 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 
-import { Icon } from '@/shared/component';
+import { IconX } from '@snorose/icons';
 
 import styles from './CloseAppBar.module.css';
 
 export default function CloseAppBar({
-  alignRight,
+  alignRight = false,
   children,
   stroke = 'black',
-  onClose,
-  notFixed,
+  onClose = undefined,
+  notFixed = false,
   backgroundColor,
 }) {
   const navigate = useNavigate();
@@ -23,14 +23,14 @@ export default function CloseAppBar({
         position: notFixed ? 'relative' : 'fixed',
       }}
     >
-      <Icon
+      <IconX
         className={styles.close}
-        id='x'
         width={22}
         height={22}
+        color={stroke}
         onClick={onClose ? onClose : () => navigate(-1)}
-        stroke={stroke}
       />
+
       {children}
     </div>
   );

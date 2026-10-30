@@ -1,8 +1,5 @@
 import { useState } from 'react';
 
-import { verifySookmyungPortal } from '@/apis';
-
-import { useToast } from '@/shared/hook';
 import {
   EmailInput,
   ErrorMessage,
@@ -12,8 +9,11 @@ import {
   NumberInput,
   PasswordInput,
 } from '@/shared/component';
+import { useToast } from '@/shared/hook';
 
 import { validateEmail, validateStudentNumber } from '@/feature/account/lib';
+
+import { verifySookmyungPortal } from '@/apis';
 
 import styles from './VerifyStep.module.css';
 
@@ -39,7 +39,7 @@ export default function VerifyStep({ setStep }) {
 
       setStep('complete');
     } catch ({ response }) {
-      toast({ message: response.data.message, variant: 'error' });
+      toast.error(response.data.message);
     } finally {
       setLoading(false);
     }
@@ -65,7 +65,7 @@ export default function VerifyStep({ setStep }) {
       type: 'password',
       label: '숙명포털 비밀번호',
       id: 'password',
-      placeholder: '닉네임을 입력해 주세요',
+      placeholder: '숙명포털 비밀번호를 입력해 주세요',
       value: formData.password,
       onChange: (next) =>
         setFormData((prev) => ({
@@ -77,7 +77,7 @@ export default function VerifyStep({ setStep }) {
       type: 'email',
       label: '이메일',
       id: 'email',
-      placeholder: 'YYYY-MM-DD',
+      placeholder: '이메일을 입력해 주세요.',
       value: formData.email,
       onChange: (next) =>
         setFormData((prev) => ({

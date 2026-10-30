@@ -1,105 +1,185 @@
-import { Badge, Icon } from '@/shared/component';
+import {
+  IconBookmark,
+  IconBookmarkFill,
+  IconComment,
+  IconHeart,
+  IconHeartFill,
+  IconMultiCloudLogo,
+} from '@snorose/icons';
+
+import { Badge, Chip } from '@/shared/component';
 import { ROLE } from '@/shared/constant';
 import { DateTime } from '@/shared/lib';
-import { Chip } from '@/feature/board/component';
+
+import { htmlToText } from '@/feature/editor/lib';
+import { ConfirmedChip } from '@/feature/exam/component';
+
 import altImage from '@/assets/images/altImage.png';
-import cloudLogo from '@/assets/images/cloudLogo.svg';
 
 import styles from './PostBar.module.css';
 
-export default function PostBar({ data, hasComment = true, hasLike = true }) {
-  // 뱃지가 보이는 ROLE
-  const showBadge =
-    data.userRoleId === ROLE.official ||
-    (data.userRoleId === ROLE.admin && data.userDisplay !== '익명송이');
-
+export default function PostBar({
+  className,
+  userRoleId,
+  authorBadgeRoleId,
+  userDisplay,
+  createdAt,
+  title,
+  category,
+  content,
+  hasMediaAttachment,
+  thumbnailUrl,
+  likeCount,
+  commentCount,
+  scrapCount,
+  isLiked,
+  isScrapped,
+  children,
+}) {
   return (
-    <div className={styles.post}>
-      <div className={styles.thumbnailContainer}>
-        <div className={styles.postBarLeft}>
-          <div className={styles.postBarTop}>
-            <img className={styles.cloudLogoIcon} src={cloudLogo} alt='로고' />
-            <p className={styles.author}>{data.userDisplay}</p>
-            {showBadge && (
-              <Badge userRoleId={data.userRoleId} className={styles.badge} />
-            )}
-            <p className={styles.dot}>·</p>
-            <p>{DateTime.formatAdaptive(data.createdAt)}</p>
-            {data.isEdited && <p className={styles.edited}>&nbsp;(수정됨)</p>}
-            {data.isConfirmed && (
-              <Icon
-                className={styles.checkCircleIcon}
-                id='check-circle'
-                width={12}
-                height={12}
-              />
-            )}
-            {data.boardName && <Chip type={'board'} label={data.boardName} />}
-            {data.progressType && (
-              <Chip type={'event'} label={data.progressType} />
-            )}
-          </div>
-          <div className={styles.postBarCenter}>
-            <p className={styles.title}>{data.title}</p>
-            <p className={styles.text}>{data.questionDetail ?? data.content}</p>
-          </div>
-        </div>
+    <div className={`${styles.container} ${className}`}>
+      <Meta
+        userRoleId={userRoleId}
+        authorBadgeRoleId={authorBadgeRoleId}
+        userDisplay={userDisplay}
+        createdAt={createdAt}
+      >
+        {children}
+      </Meta>
 
-        {data.hasMediaAttachment && (
-          <div className={styles.thumbnail}>
-            <img
-              className={styles.thumbnailImg}
-              src={data.thumbnailUrl || altImage}
-              loading='lazy'
-              onError={(e) => {
-                e.currentTarget.src = altImage;
-              }}
-            />
+      <div className={styles.body}>
+        <div className={styles.text}>
+          <div className={styles.titleRow}>
+            {category && <Chip name={category} variant='category' />}
+
+            <div className={styles.title}>{title}</div>
           </div>
-        )}
+          <div className={styles.content}>{htmlToText(content)}</div>
+        </div>
+        {hasMediaAttachment && <Thumbnail thumbnailUrl={thumbnailUrl} />}
       </div>
 
-      <div className={styles.postBarBottom}>
-        <div className={styles.iconListContainer}>
-          {data.likeCount > 0 && (
-            <div className={styles.iconContainer}>
-              <Icon
-                id='like-stroke'
-                width={14}
-                height={13}
-                fill={data.isLiked ? 'var(--pink-2)' : 'none'}
-                stroke={'var(--pink-2)'}
-              />
-              <span>{data.likeCount.toLocaleString()}</span>
-            </div>
-          )}
-          {data.commentCount > 0 && (
-            <div className={styles.iconContainer}>
-              <Icon
-                className={styles.comment}
-                id='comment-stroke'
-                width={16}
-                height={13}
-                fill='none'
-                stroke={'var(--blue-3)'}
-              />
-              <span>{data.commentCount.toLocaleString()}</span>
-            </div>
-          )}
-          {data.scrapCount > 0 && (
-            <div className={styles.iconContainer}>
-              <Icon
-                id='scrap-stroke'
-                width={11}
-                height={13}
-                fill={data.isScrapped ? 'var(--green-2)' : 'none'}
-                stroke={'var(--green-2)'}
-              />
-              <span>{data?.scrapCount.toLocaleString()}</span>
-            </div>
-          )}
-        </div>
-      </div>
+      <ActionContainer
+        likeCount={likeCount}
+        commentCount={commentCount}
+        scrapCount={scrapCount}
+        isLiked={isLiked}
+        isScrapped={isScrapped}
+      />
     </div>
   );
 }
+
+function Meta({
+  userRoleId,
+  authorBadgeRoleId,
+  userDisplay,
+  createdAt,
+  children,
+}) {
+  const badgeRoleId = authorBadgeRoleId ?? userRoleId;
+  const showBadge =
+    badgeRoleId === ROLE.official ||
+    (badgeRoleId === ROLE.admin && userDisplay !== '익명송이');
+
+  return (
+    <div className={styles.meta}>
+      <IconMultiCloudLogo width={22} height={14} role='img' aria-label='로고' />
+      <div className={styles.userDisplay} title={userDisplay || undefined}>
+        {userDisplay}
+      </div>
+      {showBadge && <Badge userRoleId={badgeRoleId} width={16} height={16} />}
+      <div className={styles.dot}>·</div>
+      <div>{DateTime.formatAdaptive(createdAt)}</div>
+      {children}
+    </div>
+  );
+}
+
+function Thumbnail({ thumbnailUrl }) {
+  return (
+    <div className={styles.thumbnail}>
+      <img
+        className={styles.thumbnailImg}
+        src={thumbnailUrl || altImage}
+        loading='lazy'
+        alt={'thumbnail'}
+        onError={(e) => {
+          e.currentTarget.src = altImage;
+        }}
+      />
+    </div>
+  );
+}
+
+function ActionContainer({
+  likeCount = 0,
+  commentCount = 0,
+  scrapCount = 0,
+  isLiked = false,
+  isScrapped = false,
+}) {
+  const actions = [
+    {
+      width: 14,
+      height: 13,
+      isActive: isLiked,
+      color: 'var(--pink-2)',
+      count: likeCount,
+      ActiveIcon: IconHeartFill,
+      DefaultIcon: IconHeart,
+    },
+    {
+      width: 16,
+      height: 13,
+      color: 'var(--blue-3)',
+      count: commentCount,
+      ActiveIcon: IconComment,
+      DefaultIcon: IconComment,
+    },
+    {
+      width: 11,
+      height: 13,
+      isActive: isScrapped,
+      color: 'var(--green-2)',
+      count: scrapCount,
+      ActiveIcon: IconBookmarkFill,
+      DefaultIcon: IconBookmark,
+    },
+  ];
+
+  return (
+    <div className={styles.actionContainer}>
+      {actions.map(
+        ({
+          iconId,
+          width,
+          height,
+          isActive,
+          color,
+          count,
+          ActiveIcon,
+          DefaultIcon,
+        }) => {
+          if (count <= 0) return null;
+
+          const IconComponent = isActive ? (
+            <ActiveIcon width={width} height={height} color={color} />
+          ) : (
+            <DefaultIcon width={width} height={height} color={color} />
+          );
+
+          return (
+            <div key={iconId} className={styles.action}>
+              {IconComponent}
+              <span>{count.toLocaleString()}</span>
+            </div>
+          );
+        }
+      )}
+    </div>
+  );
+}
+
+PostBar.Chip = Chip;
+PostBar.ConfirmedChip = ConfirmedChip;

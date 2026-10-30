@@ -1,8 +1,8 @@
 .content {
-  position: relative;
-
   margin: 0 var(--default-margin);
 
+  display: flex;
+  flex-direction: column;
   flex: 1;
 }
 
@@ -10,14 +10,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100% - 20rem);
+  flex: 1;
+  padding: 2rem 0;
+}
+
+.illustration svg {
+  width: 25rem;
+  height: auto;
+}
+
+.action {
+  margin: 3rem 0 4rem;
+  flex-shrink: 0;
 }
 
 /* button */
 .button {
-  position: absolute;
-  left: 0;
-  bottom: 4rem;
-
   height: 5.4rem;
 }

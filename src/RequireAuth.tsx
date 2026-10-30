@@ -1,8 +1,8 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-import { useAuth } from '@/shared/hook';
 import { NoticeModal } from '@/shared/component';
 import { USER_STATUS } from '@/shared/constant';
+import { useAuth } from '@/shared/hook';
 
 export default function RequireAuth({
   children,

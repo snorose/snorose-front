@@ -1,8 +1,8 @@
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 
-import { useAuth } from '@/shared/hook';
 import { ConfirmModal, NoticeModal } from '@/shared/component';
 import { CONFIRM_MODAL_TEXT, PERMISSION_MATRIX, ROLE } from '@/shared/constant';
+import { useAuth } from '@/shared/hook';
 
 type BoardGuardProps =
   | { isAdminOnly: true; action?: never }
@@ -15,7 +15,7 @@ const MESSAGE = {
 
 export default function BoardGuard(props: BoardGuardProps) {
   const navigate = useNavigate();
-  const { boardName } = useParams();
+  const { boardKey } = useParams();
   const { userInfo } = useAuth();
 
   if (!userInfo) {
@@ -40,7 +40,7 @@ export default function BoardGuard(props: BoardGuardProps) {
 
   const { action } = props;
 
-  const roles = PERMISSION_MATRIX[action][boardName] ?? [];
+  const roles = PERMISSION_MATRIX[action][boardKey] ?? [];
   if (!roles.includes(userInfo?.userRoleId)) {
     const modalText = {
       ...CONFIRM_MODAL_TEXT.ACCESS_DENIED,

@@ -99,10 +99,10 @@
   margin-left: auto;
 }
 
-.loginButton {
-  margin-bottom: 1.2rem;
-}
-
-.findIdButton {
+.pageBottomFrame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
   margin-bottom: 4rem;
 }

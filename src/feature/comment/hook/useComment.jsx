@@ -1,30 +1,31 @@
 import { useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useLocation, useParams } from 'react-router-dom';
+
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import {
-  deleteComment as remove,
-  postComment as post,
-  editComment as edit,
-} from '@/apis';
-
-import { useToast } from '@/shared/hook';
-import {
-  getBoard,
-  flatPaginationCache,
-  toPaginationCacheFormat,
-} from '@/shared/lib';
-import {
+  COMMENT_ACTION_TYPE,
   MUTATION_KEY,
   QUERY_KEY,
   TOAST,
-  COMMENT_ACTION_TYPE,
 } from '@/shared/constant';
+import { useToast } from '@/shared/hook';
+import {
+  flatPaginationCache,
+  getBoard,
+  toPaginationCacheFormat,
+} from '@/shared/lib';
 
 import {
   deleteIfTargetComment,
   editIfTargetComment,
 } from '@/feature/comment/lib';
+
+import {
+  deleteComment as remove,
+  editComment as edit,
+  postComment as post,
+} from '@/apis';
 
 export default function useComment() {
   const [loading, setLoading] = useState();
@@ -67,7 +68,7 @@ export default function useComment() {
   };
 
   const onError = ({ response }) => {
-    toast({ message: response.data.message, variant: 'error' });
+    toast.error(response.data.message);
   };
 
   const onSettled = () => {
@@ -103,11 +104,8 @@ export default function useComment() {
       updateCommentCountCache({ type: COMMENT_ACTION_TYPE.create });
 
       !pointDifference
-        ? toast({
-            message: TOAST.COMMENT.createNoPoints,
-            variant: 'success',
-          })
-        : toast({ message: TOAST.COMMENT.create, variant: 'success' });
+        ? toast.success(TOAST.COMMENT.createNoPoints)
+        : toast.success(TOAST.COMMENT.create);
     },
     onError,
     onSettled,
@@ -133,11 +131,8 @@ export default function useComment() {
       updateCommentCountCache({ type: COMMENT_ACTION_TYPE.delete });
       // !pointDifference; // pointDifference값 백엔 수정 되면 이 코드로 다시 변경
       currentBoard.id === 23 || currentBoard.id === 32
-        ? toast({
-            message: TOAST.COMMENT.deleteNoPoints,
-            variant: 'success',
-          })
-        : toast({ message: TOAST.COMMENT.delete, variant: 'success' });
+        ? toast.success(TOAST.COMMENT.deleteNoPoints)
+        : toast.success(TOAST.COMMENT.delete);
     },
     onError,
     onSettled,
@@ -159,7 +154,7 @@ export default function useComment() {
         })
       );
 
-      toast({ message: TOAST.COMMENT.edit, variant: 'success' });
+      toast.success(TOAST.COMMENT.edit);
     },
     onError,
     onSettled,

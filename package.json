@@ -4,30 +4,57 @@
   "private": true,
   "scripts": {
     "start": "craco start",
-    "build:origin": "craco build",
-    "build:stage": "REACT_APP_SERVER_DOMAIN=https://stage.snorose.com npm run build:origin",
-    "build": "if [ \"$CF_PAGES_BRANCH\" = \"stage\" ]; then npm run build:stage; else npm run build:origin; fi",
+    "build:app": "craco build",
+    "build:prod": "REACT_APP_ENV=production npm run build:app && npm run sentry:sourcemaps",
+    "build:stage": "REACT_APP_SERVER_DOMAIN=https://stage.snorose.com REACT_APP_ENV=stage npm run build:app",
+    "build": "if [ \"$CF_PAGES_BRANCH\" = \"stage\" ]; then npm run build:stage; else npm run build:prod; fi",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject ./build && sentry-cli sourcemaps upload ./build && rimraf ./build/**/*.map",
+    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
+    "lint:fix": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix",
+    "lint:css": "stylelint \"src/**/*.css\"",
+    "lint:css:fix": "stylelint \"src/**/*.css\" --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "craco test",
+    "test:toast-migration": "node --test scripts/verify-toast-migration.test.cjs && craco test --watchAll=false --runInBand --runTestsByPath src/shared/hook/useToast.test.jsx src/shared/hook/useToast.migration.test.jsx src/feature/board/component/AttachmentBar/AttachmentBar.test.jsx",
     "eject": "craco eject",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "prepare": "husky"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.7.5",
     "@growthbook/growthbook-react": "^1.6.0",
+    "@sentry/react": "^10.53.1",
+    "@snorose/icons": "^1.4.0",
     "@svgr/webpack": "latest",
     "@tanstack/react-query": "^5.51.23",
     "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
-    "axios": "^1.7.2",
+    "@tiptap/extension-bubble-menu": "^3.19.0",
+    "@tiptap/extension-color": "^3.19.0",
+    "@tiptap/extension-floating-menu": "^3.19.0",
+    "@tiptap/extension-image": "^3.19.0",
+    "@tiptap/extension-placeholder": "^3.19.0",
+    "@tiptap/extension-table": "^3.20.0",
+    "@tiptap/extension-table-cell": "^3.20.0",
+    "@tiptap/extension-table-header": "^3.20.0",
+    "@tiptap/extension-table-row": "^3.20.0",
+    "@tiptap/extension-text-style": "^3.19.0",
+    "@tiptap/pm": "^3.19.0",
+    "@tiptap/react": "^3.19.0",
+    "@tiptap/starter-kit": "^3.19.0",
+    "axios": "^1.18.0",
     "canvas-confetti": "^1.9.3",
     "date-fns": "^3.6.0",
+    "dompurify": "^3.3.3",
     "file-saver": "^2.0.5",
     "firebase": "^11.9.1",
     "jsconfig-paths-webpack-plugin": "^0.1.3",
     "jszip": "^3.10.1",
     "react": "^18.3.1",
     "react-calendar": "^5.0.0",
+    "react-color": "^2.19.3",
     "react-dom": "^18.3.1",
     "react-error-boundary": "^5.0.0",
     "react-icon": "^1.0.0",
@@ -38,7 +65,7 @@
     "react-simple-pull-to-refresh": "^1.3.3",
     "react-textarea-autosize": "^8.5.3",
     "styled-components": "^6.1.12",
-    "swiper": "^11.1.15",
+    "swiper": "^12.2.0",
     "uuid": "^10.0.0",
     "web-vitals": "^2.1.0",
     "zustand": "^5.0.2"
@@ -46,25 +73,39 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.3",
     "@craco/craco": "^7.1.0",
-    "@storybook/addon-docs": "^8.4.7",
-    "@storybook/addon-essentials": "^8.4.7",
-    "@storybook/addon-interactions": "^8.4.7",
-    "@storybook/addon-onboarding": "^8.4.7",
-    "@storybook/blocks": "^8.4.7",
-    "@storybook/preset-create-react-app": "^8.4.7",
-    "@storybook/react": "^8.4.7",
-    "@storybook/react-webpack5": "^8.4.7",
-    "@storybook/test": "^8.4.7",
+    "@sentry/cli": "^3.4.2",
+    "@storybook/addon-docs": "8.6.19",
+    "@storybook/addon-essentials": "8.6.19",
+    "@storybook/addon-interactions": "8.6.19",
+    "@storybook/addon-onboarding": "8.6.19",
+    "@storybook/blocks": "8.6.19",
+    "@storybook/preset-create-react-app": "8.6.19",
+    "@storybook/react": "8.6.19",
+    "@storybook/react-webpack5": "8.6.19",
+    "@storybook/test": "8.6.19",
     "@tanstack/react-query-devtools": "^5.51.23",
+    "@testing-library/react": "^14.3.1",
     "@types/node": "^24.10.1",
     "@types/react": "^18.3.27",
     "@types/react-dom": "^18.3.7",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-storybook": "^0.11.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
+    "msw": "^2.15.0",
     "prettier": "^3.3.2",
     "prop-types": "^15.8.1",
-    "storybook": "^8.4.7",
+    "rimraf": "^6.1.3",
+    "storybook": "8.6.19",
+    "stylelint": "^17.15.0",
+    "stylelint-config-recess-order": "^7.8.0",
+    "stylelint-order": "^8.1.1",
     "typescript": "^4.9.5",
     "webpack": "^5.97.1"
+  },
+  "overrides": {
+    "react-refresh": "0.11.0"
   },
   "browserslist": {
     "production": [
@@ -78,10 +119,20 @@
       "last 1 safari version"
     ]
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "**/*.css": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "**/*.{json,md,yml,yaml}": "prettier --write"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
     ]
   }
 }

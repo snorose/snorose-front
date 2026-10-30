@@ -1,51 +1,67 @@
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import {
+  IconChevronDown,
+  IconMultiClipboardBlue,
+  IconMultiCloudLogo,
+  IllustrationTrashcanCircle,
+} from '@snorose/icons';
 import { useQueryClient } from '@tanstack/react-query';
-import { useContext, useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
   ActionButton,
   Badge,
   CloseAppBar,
-  FetchLoading,
-  Icon,
   ConfirmModal,
+  FetchLoading,
 } from '@/shared/component';
-import { QUERY_KEY, ROLE, CONFIRM_MODAL_TEXT } from '@/shared/constant';
-import { useAuth, useBlocker, useToast } from '@/shared/hook';
+import {
+  ATTACHMENT_MODAL_TEXT,
+  CONFIRM_MODAL_TEXT,
+  QUERY_KEY,
+  ROLE,
+  TOAST,
+} from '@/shared/constant';
+import { ModalContext } from '@/shared/context';
+import { useAuth, useBlocker, useModal, useToast } from '@/shared/hook';
 import { DateTime, getBoard } from '@/shared/lib';
-import { ModalContext } from '@/shared/context/ModalContext';
 
-import { postEvent, postPost } from '@/apis';
-import { DropDownMenu } from '@/feature/board/component';
-
-import styles from './WriteEventPage.module.css';
-import cloudLogo from '@/assets/images/cloudLogo.svg';
-
+import { AttachmentBar, DropDownMenu } from '@/feature/board/component';
+import { preserveEmptyParagraphs, sanitizeHtml } from '@/feature/editor/lib';
 import { EventForm, NoticeForm } from '@/feature/event/component';
-import { validateOnSubmit } from '@/feature/event/lib';
 import {
   EVENT_FORM_DATA,
-  NOTICE_FORM_DATA,
   EVENT_TYPES,
+  NOTICE_FORM_DATA,
 } from '@/feature/event/constant';
+import { validateOnSubmit } from '@/feature/event/lib';
+
+import { createThumbnail, postEvent, postPost } from '@/apis';
+
+import styles from './WriteEventPage.module.css';
 
 export default function WriteEventPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { pathname } = useLocation();
   const { toast } = useToast();
   const { userInfo, status } = useAuth();
   const [dropDownOpen, setDropDownOpen] = useState(false);
-  const [submitDisabled, setSubmitDisabled] = useState(false);
-  const [isNotice, setIsNotice] = useState(false);
-  const textId = pathname.split('/')[2];
-  const currentBoard = getBoard(textId);
-  const [boardId, setBoardId] = useState(currentBoard?.id ?? '');
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { invalidUserInfoQuery } = useAuth();
   const [eventType, setEventType] = useState('유형을 선택해주세요');
+  const isNotice = eventType === '공지사항';
+  const boardId = getBoard('event')?.id;
 
   const [data, setData] = useState(() => EVENT_FORM_DATA(eventType));
   const [noticeData, setNoticeData] = useState(() => NOTICE_FORM_DATA(boardId));
+  const [attachmentsInfo, setAttachmentsInfo] = useState([]);
+  const [editor, setEditor] = useState(null);
+  const [isTitleFocused, setIsTitleFocused] = useState(false);
+  const [isTrashOverlapped, setIsTrashOverlapped] = useState(false);
+  const [trashImageIndex, setTrashImageIndex] = useState(null);
+  const trashImageConfirmModal = useModal();
   const [errors, setErrors] = useState({});
 
   const { modal, setModal } = useContext(ModalContext);
@@ -64,39 +80,31 @@ export default function WriteEventPage() {
     navigate(-1);
   };
 
-  // 폼 내용 입력 및 eventType 변경 시 초기화
+  // 이벤트 유형 변경 시 폼 초기화
   useEffect(() => {
-    const isNowNotice = eventType === '공지사항';
-    setIsNotice(isNowNotice);
-
-    if (isNowNotice) {
-      setNoticeData({
-        ...NOTICE_FORM_DATA(boardId),
-        isNotice: true,
-      });
-    } else {
+    if (!isNotice) {
       setData({
         ...EVENT_FORM_DATA(eventType),
         category: eventType,
         isNotice: false,
       });
+    } else {
+      setNoticeData((previous) => ({ ...previous, isNotice: true }));
     }
     setErrors({});
-  }, [eventType, boardId]);
+  }, [eventType, isNotice]);
 
   // 입력값 표시 및 즉시 유효성 검사 항목
   const handleChange = (field, value) => {
     if (isNotice) {
-      setNoticeData((prev) => ({
-        ...prev,
-        [field]: value,
-      }));
-    } else {
-      setData((prev) => ({
-        ...prev,
-        [field]: value,
-      }));
+      setNoticeData((previous) => ({ ...previous, [field]: value }));
+      return;
     }
+
+    setData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
 
     // title, host, place 유효성 검사 (즉시)
     const newErrors = { ...errors };
@@ -117,7 +125,7 @@ export default function WriteEventPage() {
     }
 
     setErrors(newErrors);
-    setSubmitDisabled(false);
+    setIsFormValid(false);
   };
 
   // 이벤트 유형 선택 핸들러
@@ -125,14 +133,30 @@ export default function WriteEventPage() {
     setDropDownOpen((prev) => !prev);
   };
 
+  const handleEventTypeSelect = (selectedType) => {
+    setIsFormValid(false);
+    if (selectedType !== '공지사항') setEditor(null);
+    setEventType(selectedType);
+  };
+
   // 이벤트 유형에 따른 폼 렌더링
   const renderForm = () => {
-    if (eventType === '공지사항') {
+    if (isNotice) {
       return (
         <NoticeForm
           data={noticeData}
+          editor={editor}
           onChange={handleChange}
-          onValid={setSubmitDisabled}
+          onValid={setIsFormValid}
+          onEditorReady={setEditor}
+          onTitleFocusChange={setIsTitleFocused}
+          attachmentsInfo={attachmentsInfo}
+          setAttachmentsInfo={setAttachmentsInfo}
+          onDeleteAttachment={(index) => {
+            setTrashImageIndex(index);
+            trashImageConfirmModal.openModal();
+          }}
+          withEditor
         />
       );
     }
@@ -145,7 +169,7 @@ export default function WriteEventPage() {
         formType={formType}
         data={data}
         onChange={handleChange}
-        onValid={setSubmitDisabled}
+        onValid={setIsFormValid}
         errors={errors}
       />
     );
@@ -153,48 +177,67 @@ export default function WriteEventPage() {
 
   // '등록' 클릭 이벤트와 유효성 검사
   const handleSubmit = (e) => {
-    // 날짜 설정, url 오류 검증
-    const submitErrors = validateOnSubmit(data);
-    let request;
-
     e.preventDefault();
+    if (!isFormValid || isSubmitting) return;
 
+    let request;
     if (isNotice) {
-      // 공지사항 등록
-      request = postPost(noticeData);
-    } else {
-      // 이벤트 등록
-      if (Object.keys(submitErrors).length > 0) {
-        setErrors(submitErrors);
-        setSubmitDisabled(false);
+      if (!noticeData.title.trim()) {
+        toast.info(TOAST.POST.emptyTitle);
         return;
       }
-
+      if (!editor?.getText().trim()) {
+        toast.info(TOAST.POST.emptyContent);
+        return;
+      }
+      request = postPost({
+        ...noticeData,
+        content: sanitizeHtml(preserveEmptyParagraphs(editor.getHTML())),
+        attachmentsInfo,
+      });
+    } else {
+      const submitErrors = validateOnSubmit(data);
+      if (Object.keys(submitErrors).length > 0) {
+        setErrors(submitErrors);
+        setIsFormValid(false);
+        return;
+      }
       request = postEvent(data);
     }
-    setSubmitDisabled(true);
+    setIsSubmitting(true);
 
     request
-      .then((response) => {
-        if (response.status === 201) {
-          const newPostId = response.data.result.postId;
+      .then(async (response) => {
+        if (response.status !== 200 && response.status !== 201) return;
 
-          queryClient.removeQueries([QUERY_KEY.post]);
-          invalidUserInfoQuery();
-          isNotice
-            ? navigate(`/board/event/notice`, {
-                replace: true,
-              })
-            : navigate(`/board/event/post/${newPostId}`, {
-                replace: true,
-              });
+        const newPostId = response.data.result.postId;
+        if (isNotice) {
+          try {
+            await createThumbnail(boardId, newPostId);
+          } catch {
+            toast.error('썸네일 생성 중 오류가 발생했습니다.');
+          }
+          queryClient.removeQueries({
+            queryKey: [QUERY_KEY.notices, boardId],
+          });
         }
+
+        queryClient.removeQueries({ queryKey: QUERY_KEY.post() });
+        invalidUserInfoQuery();
+        navigate(
+          isNotice ? '/board/event/notice' : `/board/event/post/${newPostId}`,
+          { replace: true }
+        );
       })
-      .catch(({ response }) => {
-        toast({ message: response.data.message, variant: 'error' });
+      .catch((error) => {
+        toast.error(
+          error.response?.data?.message ??
+            error.message ??
+            '게시글 등록에 실패했어요.'
+        );
       })
       .finally(() => {
-        setSubmitDisabled(false);
+        setIsSubmitting(false);
       });
   };
 
@@ -211,65 +254,46 @@ export default function WriteEventPage() {
       <div className={styles.container}>
         <div className={styles.top}>
           <CloseAppBar backgroundColor={'#eaf5fd'}>
-            <ActionButton onClick={handleSubmit} disabled={!submitDisabled}>
+            <ActionButton
+              onClick={handleSubmit}
+              disabled={!isFormValid || isSubmitting}
+            >
               등록
             </ActionButton>
           </CloseAppBar>
         </div>
         <div className={styles.center}>
-          {textId === 'notice' ? (
-            <div className={styles.categorySelect}>
-              <div className={styles.categorySelectContainer}>
-                <Icon
-                  id='clip-board-list'
-                  width={21}
-                  height={22}
-                  fill='white'
-                />
-                <p className={styles.categorySelectText}>이벤트</p>
-              </div>
+          <div className={styles.categorySelect} onClick={handleDropDownOpen}>
+            <div className={styles.categorySelectContainer}>
+              <IconMultiClipboardBlue width={21} height={22} />
+              <p className={styles.categorySelectText}>{eventType}</p>
             </div>
-          ) : (
-            <>
-              <div
-                className={styles.categorySelect}
-                onClick={handleDropDownOpen}
-              >
-                <div className={styles.categorySelectContainer}>
-                  <Icon
-                    id='clip-board-list'
-                    width={21}
-                    height={22}
-                    fill='white'
-                  />
-                  <p className={styles.categorySelectText}>{eventType}</p>
-                </div>
-                <Icon id='angle-down' width={14} height={7} />
-              </div>
-              <DropDownMenu
-                options={Object.keys(EVENT_TYPES)}
-                item={eventType}
-                setItem={setEventType}
-                dropDownOpen={dropDownOpen}
-                setDropDownOpen={setDropDownOpen}
-                backgroundColor={'#fff'}
-              />
-            </>
-          )}
+            <IconChevronDown width={24} height={24} />
+          </div>
+          <DropDownMenu
+            options={Object.keys(EVENT_TYPES)}
+            item={eventType}
+            setItem={handleEventTypeSelect}
+            dropDownOpen={dropDownOpen}
+            setDropDownOpen={setDropDownOpen}
+            backgroundColor={'#fff'}
+          />
 
           <div className={styles.profileBox}>
             <div className={styles.profileBoxLeft}>
               {userInfo?.userRoleId !== ROLE.admin &&
               userInfo?.userRoleId !== ROLE.official ? (
-                <img
-                  className={styles.cloudLogoIcon}
-                  src={cloudLogo}
-                  alt='로고'
+                <IconMultiCloudLogo
+                  width={22}
+                  height={14}
+                  role='img'
+                  aria-label='로고'
                 />
               ) : (
                 <Badge
                   userRoleId={userInfo?.userRoleId}
-                  className={styles.badge}
+                  width={24}
+                  height={24}
                 />
               )}
               <p>{userInfo?.nickname}</p>
@@ -280,6 +304,46 @@ export default function WriteEventPage() {
 
           <div className={styles.form}>{renderForm()}</div>
         </div>
+        {isNotice && (
+          <>
+            <IllustrationTrashcanCircle
+              width={21}
+              height={22}
+              className={
+                isTrashOverlapped ? styles.trashVisible : styles.trashInvisible
+              }
+              onDragEnter={(e) => {
+                e.preventDefault();
+                setIsTrashOverlapped(true);
+              }}
+              onDragOver={(e) => {
+                e.preventDefault();
+                setIsTrashOverlapped(true);
+              }}
+              onDragLeave={(e) => {
+                e.preventDefault();
+                setIsTrashOverlapped(false);
+              }}
+              onDrop={(e) => {
+                e.preventDefault();
+                const index = Number.parseInt(
+                  e.dataTransfer.getData('text/plain'),
+                  10
+                );
+                setIsTrashOverlapped(false);
+                if (!Number.isInteger(index) || !attachmentsInfo[index]) return;
+                setTrashImageIndex(index);
+                trashImageConfirmModal.openModal();
+              }}
+            />
+            <AttachmentBar
+              attachmentsInfo={attachmentsInfo}
+              setAttachmentsInfo={setAttachmentsInfo}
+              editor={editor}
+              isTitleFocused={isTitleFocused}
+            />
+          </>
+        )}
         {modal.id === 'exit-page' && (
           <ConfirmModal
             modalText={CONFIRM_MODAL_TEXT.EXIT_PAGE}
@@ -287,6 +351,18 @@ export default function WriteEventPage() {
           />
         )}
       </div>
+      {isNotice && trashImageConfirmModal.isOpen && (
+        <ConfirmModal
+          modalText={ATTACHMENT_MODAL_TEXT.DELETE_ATTACHMENT}
+          onConfirm={() => {
+            setAttachmentsInfo((previous) =>
+              previous.filter((_, index) => index !== trashImageIndex)
+            );
+            trashImageConfirmModal.closeModal();
+          }}
+          onCancel={trashImageConfirmModal.closeModal}
+        />
+      )}
     </>
   );
 }

@@ -1,7 +1,9 @@
 .container {
   height: 100vh;
-
   padding-top: var(--default-appbar-height);
+  display: flex;
+  flex-direction: column;
+
 }
 
 .notificationBar {

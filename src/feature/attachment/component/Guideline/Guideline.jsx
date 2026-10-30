@@ -1,10 +1,11 @@
 import { React } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
 
-import 'swiper/css';
+import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import styles from './Guideline.module.css';
+
+import 'swiper/css';
 
 export default function Guideline({ guideImages, guideStyle, children }) {
   return (

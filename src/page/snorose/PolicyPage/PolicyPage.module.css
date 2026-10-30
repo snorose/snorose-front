@@ -1,4 +1,5 @@
 .container {
+  --policy-title-height: 6.9rem;
   padding-top: var(--default-appbar-height);
 
   display: flex;
@@ -6,11 +7,10 @@
 }
 
 .contentWrapper {
-  padding: 0 var(--default-margin) 5.4rem;
+  padding: var(--policy-title-height) var(--default-margin) 5.4rem;
 
   display: flex;
   flex-direction: column;
-  gap: 2.4rem;
 }
 .contentWrapper section {
   margin-bottom: 2rem;
@@ -32,6 +32,14 @@
 }
 
 .title {
+  position: fixed;
+  top: var(--default-appbar-height);
+  height: var(--policy-title-height);
+  width: 100%;
+  max-width: var(--default-width);
+  background: #fff;
+  z-index: var(--z-index-appbar);
+  padding: 1.4rem var(--default-margin) 2.1rem;
   font: var(--text-title-1-bold);
 }
 

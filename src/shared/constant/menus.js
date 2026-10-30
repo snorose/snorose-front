@@ -1,38 +1,67 @@
+import {
+  IconBell,
+  IconBellFill,
+  IconBook,
+  IconBookFill,
+  IconDocument,
+  IconDocumentFill,
+  IconHome,
+  IconHomeFill,
+  IconPerson,
+  IconPersonFill,
+} from '@snorose/icons';
+
+import { FEATURE_FLAG } from '@/shared/constant/feature-flag';
+import { NEW_ROUTES } from '@/shared/constant/route';
+import { BOARD_REGISTRY } from '@/shared/lib';
+// 순환 참조로 초기화 전 값을 읽지 않도록 index를 거치지 않는다
+import { NEW_BOARD_KEYS } from '@/shared/lib/new-board';
+
 export const NAVBAR_MENUS = Object.freeze([
   {
     id: 'home',
-    to: '/home',
+    to: NEW_ROUTES.root,
     label: '메인홈',
     width: 32,
     height: 32,
+    ActiveIcon: IconHomeFill,
+    DefaultIcon: IconHome,
   },
   {
     id: 'board',
-    to: '/board',
+    to: NEW_ROUTES.boardHome,
     label: '게시판',
     width: 32,
     height: 32,
+    ActiveIcon: IconDocumentFill,
+    DefaultIcon: IconDocument,
   },
   {
     id: 'test',
-    to: '/board/exam-review',
+    to: NEW_ROUTES.post.list('exam-review'),
     label: '시험후기',
     width: 32,
     height: 32,
+    ActiveIcon: IconBookFill,
+    DefaultIcon: IconBook,
   },
   {
     id: 'bell',
-    to: '/alert',
+    to: NEW_ROUTES.alert,
     label: '알림',
     width: 32,
     height: 32,
+    ActiveIcon: IconBellFill,
+    DefaultIcon: IconBell,
   },
   {
     id: 'mypage',
-    to: '/my-page',
+    to: NEW_ROUTES.mypage,
     label: '내정보',
     width: 32,
     height: 32,
+    ActiveIcon: IconPersonFill,
+    DefaultIcon: IconPerson,
   },
 ]);
 
@@ -50,10 +79,6 @@ export const SIDEBAR_MENUS = Object.freeze([
     ],
   },
   {
-    to: '/board/event',
-    title: '이벤트',
-  },
-  {
     to: '/verify',
     title: '인증',
   },
@@ -64,6 +89,11 @@ export const SIDEBAR_MENUS = Object.freeze([
       { to: '/board/first-snow', name: '첫눈온방' },
       { to: '/board/large-snow', name: '함박눈방' },
       { to: '/board/permanent-snow', name: '만년설방' },
+      {
+        to: '/board/promotion',
+        name: '홍보게시판',
+        feature: FEATURE_FLAG.newBoard,
+      },
       { to: '/board/besookt', name: '베숙트' },
     ],
   },
@@ -77,29 +107,76 @@ export const SIDEBAR_MENUS = Object.freeze([
     ],
   },
   {
+    to: '/board/event',
+    title: '이벤트',
+  },
+  {
+    to: '/board',
+    title: '로즈 라이프',
+    items: [
+      { to: '/board/sookplace', name: '숙플레이스' },
+      { to: '/board/residence', name: '주거' },
+    ],
+  },
+  {
+    to: '/board',
+    title: '문화생활',
+    items: [
+      { to: '/board/video-content', name: '영상 컨텐츠' },
+      { to: '/board/anime-comics', name: '애니·만화·웹툰·웹소설' },
+      { to: '/board/book', name: '책' },
+      { to: '/board/music', name: '음악' },
+      { to: '/board/performance', name: '공연' },
+      { to: '/board/exhibition', name: '전시' },
+      { to: '/board/trip', name: '여행' },
+      { to: '/board/cooking', name: '요리·레시피' },
+      { to: '/board/sport', name: '스포츠·운동' },
+      { to: '/board/pet', name: '반려동물' },
+      { to: '/board/health', name: '건강' },
+      { to: '/board/beauty', name: '뷰티' },
+      { to: '/board/game', name: '게임' },
+      { to: '/board/finance', name: '금융' },
+      {
+        to: '/board/living',
+        name: '리빙·소품',
+        feature: FEATURE_FLAG.newBoard,
+      },
+      {
+        to: '/board/women-studies',
+        name: '여성학',
+        feature: FEATURE_FLAG.newBoard,
+      },
+    ],
+  },
+  {
+    to: '/board',
+    title: '커리어',
+    items: [{ to: '/board/certification', name: '어학·자격증' }],
+  },
+  {
+    to: '/board',
+    title: '캠퍼스',
+    items: [
+      {
+        to: '/board/club',
+        name: '동아리 이모저모',
+        feature: FEATURE_FLAG.newBoard,
+      },
+      { to: '/board/study-abroad', name: '교환학생·어학연수' },
+    ],
+  },
+  {
     to: '/board/exam-review',
     title: '시험후기',
   },
-  // 추후 "문의" 게시판 완성 전 ver
   {
-    to: '/support/faq',
-    title: '자주 묻는 질문',
+    title: '문의 및 신고',
+    to: '/my-page/inquiry-report',
+    items: [
+      { name: '문의하기', to: '/inquiry/write' },
+      { name: '자주 묻는 질문', to: '/support/faq' },
+    ],
   },
-  // 추후 "문의" 게시판 완성 후 ver
-  // {
-  //   to: '/support',
-  //   title: '문의',
-  //   items: [
-  //     {
-  //       to: '/support/inquiry',
-  //       name: '문의하기',
-  //     },
-  //     {
-  //       to: '/support/faq',
-  //       name: '자주 묻는 질문',
-  //     },
-  //   ],
-  // },
   {
     to: '/',
     title: '숙명여대',
@@ -110,6 +187,75 @@ export const SIDEBAR_MENUS = Object.freeze([
       },
       { to: 'https://portal.sookmyung.ac.kr/irj/portal', name: '숙명포털' },
       { to: 'https://snowe.sookmyung.ac.kr/bbs5/index', name: '스노위' },
+    ],
+  },
+]);
+
+/**
+ * TODO(board): 라우트 개선 작업 완료 후 교체 필요
+ */
+export const NEW_SIDEBAR_MENUS = Object.freeze([
+  {
+    title: '스노로즈',
+    to: NEW_ROUTES.root,
+    items: [
+      { name: 'About 스노로즈', to: NEW_ROUTES.about },
+      { name: '공지사항', to: NEW_ROUTES.globalNotice.list },
+      {
+        name: '스노로즈 블로그',
+        to: 'https://snorose.notion.site/1a37ef0aa3bf8071bcd0cb35c035636e?pvs=4',
+      },
+    ],
+  },
+  { title: '인증', to: NEW_ROUTES.verify },
+  {
+    title: '커뮤니티',
+    to: NEW_ROUTES.boardHome,
+    items: BOARD_REGISTRY.communities.map(({ key, name }) => ({
+      name,
+      to: NEW_ROUTES.post.list(key),
+    })),
+  },
+  {
+    title: '공식 게시판',
+    to: NEW_ROUTES.boardHome,
+    items: BOARD_REGISTRY.officials.map(({ key, name }) => ({
+      name,
+      to: NEW_ROUTES.post.list(key),
+    })),
+  },
+  { title: '이벤트', to: NEW_ROUTES.post.list('event') },
+  {
+    title: '문화생활',
+    to: NEW_ROUTES.boardHome,
+    items: BOARD_REGISTRY.culture.map(({ key, name }) => ({
+      name,
+      to: NEW_ROUTES.post.list(key),
+      ...(NEW_BOARD_KEYS.includes(key) && { feature: FEATURE_FLAG.newBoard }),
+    })),
+  },
+  {
+    title: BOARD_REGISTRY.find('exam-review').name,
+    to: NEW_ROUTES.post.list('exam-review'),
+  },
+  {
+    title: '문의 및 신고',
+    to: NEW_ROUTES.inquiryReport,
+    items: [
+      { name: '문의하기', to: NEW_ROUTES.inquiryWrite },
+      { name: '자주 묻는 질문', to: NEW_ROUTES.faq },
+    ],
+  },
+  {
+    title: '숙명여대',
+    to: NEW_ROUTES.root,
+    items: [
+      {
+        name: '숙명여대 홈페이지',
+        to: 'https://www.sookmyung.ac.kr/kr/index.do',
+      },
+      { name: '숙명포털', to: 'https://portal.sookmyung.ac.kr/irj/portal' },
+      { name: '스노위', to: 'https://snowe.sookmyung.ac.kr/bbs5/index' },
     ],
   },
 ]);

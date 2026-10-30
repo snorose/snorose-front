@@ -1,10 +1,13 @@
-import { useRef, useState, useContext } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useToast, useAuth } from '@/shared/hook';
-import { deletePost, deleteEvent } from '@/apis';
-import { TOAST, QUERY_KEY } from '@/shared/constant';
+
 import { useQueryClient } from '@tanstack/react-query';
+
+import { QUERY_KEY, TOAST } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
+import { useAuth, useToast } from '@/shared/hook';
+
+import { deleteEvent, deletePost } from '@/apis';
 
 export function useDeletePostHandler(boardId, currentBoardTextId) {
   const { postId } = useParams();
@@ -31,15 +34,15 @@ export function useDeletePostHandler(boardId, currentBoardTextId) {
 
       if (response.status === 200) {
         [21, 22].includes(boardId)
-          ? toast({ message: TOAST.POST.delete, variant: 'success' })
-          : toast({ message: TOAST.POST.deleteNoPoints, variant: 'success' });
+          ? toast.success(TOAST.POST.delete)
+          : toast.success(TOAST.POST.deleteNoPoints);
 
         navigate(-1);
         queryClient.removeQueries(QUERY_KEY.post(postId));
         invalidUserInfoQuery();
       }
     } catch ({ response }) {
-      toast({ message: response.data.message });
+      toast.info(response.data.message);
     } finally {
       submitDisabledRef.current = false;
       setSubmitDisabled(false);
