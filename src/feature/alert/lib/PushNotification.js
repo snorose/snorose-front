@@ -70,13 +70,6 @@ export class PushNotificationManager {
         serviceWorkerRegistration: registration,
       });
 
-      if (!token) {
-        throw new AppError(
-          ERROR_CODE.FCM_TOKEN_EMPTY,
-          ERROR_MESSAGE.FCM_TOKEN_EMPTY
-        );
-      }
-
       return token;
     } catch (error) {
       throw new AppError(
