@@ -1,6 +1,16 @@
-import React from 'react';
+import { ReactNode } from 'react';
 
 import styles from './hyperlink.module.css';
+
+interface UrlToken {
+  type: 'text' | 'url';
+  value: string;
+}
+
+interface HashtagToken {
+  type: 'text' | 'hashtag';
+  value: string;
+}
 
 export const URL_REGEX = /(https?:\/\/[^\s<]+[^.,:;?!\s<])/g;
 
@@ -15,8 +25,8 @@ export const LINK_ATTRS = {
 
 const SKIP_TAGS = new Set(['A', 'CODE', 'PRE', 'KBD']);
 
-export const tokenizeByUrl = (text) => {
-  const tokens = [];
+export const tokenizeByUrl = (text: string): UrlToken[] => {
+  const tokens: UrlToken[] = [];
   let lastIndex = 0;
 
   for (const match of text.matchAll(URL_REGEX)) {
@@ -34,7 +44,9 @@ export const tokenizeByUrl = (text) => {
   return tokens;
 };
 
-export const renderTextWithLinks = (text) => {
+export const renderTextWithLinks = (
+  text: string | null | undefined
+): ReactNode => {
   if (!text) return null;
 
   const tokens = tokenizeByUrl(text);
@@ -66,13 +78,15 @@ export const renderTextWithLinks = (text) => {
   );
 };
 
-export const linkifyHtml = (html) => {
+export const linkifyHtml = (
+  html: string | null | undefined
+): string | null | undefined => {
   if (typeof window === 'undefined' || !html) return html;
 
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
 
-  const walkTextNodes = (node) => {
+  const walkTextNodes = (node: Node): void => {
     if (node.nodeType === Node.TEXT_NODE) {
       const tokens = tokenizeByUrl(node.textContent);
       if (!tokens.some((t) => t.type === 'url')) return;
@@ -95,7 +109,10 @@ export const linkifyHtml = (html) => {
       return;
     }
 
-    if (node.nodeType === Node.ELEMENT_NODE && !SKIP_TAGS.has(node.tagName)) {
+    if (
+      node.nodeType === Node.ELEMENT_NODE &&
+      !SKIP_TAGS.has((node as Element).tagName)
+    ) {
       Array.from(node.childNodes).forEach(walkTextNodes);
     }
   };
@@ -104,8 +121,8 @@ export const linkifyHtml = (html) => {
   return doc.body.innerHTML;
 };
 
-const tokenizeByHashtag = (text) => {
-  const tokens = [];
+const tokenizeByHashtag = (text: string): HashtagToken[] => {
+  const tokens: HashtagToken[] = [];
   let lastIndex = 0;
 
   for (const match of text.matchAll(HASHTAG_REGEX)) {
@@ -123,13 +140,15 @@ const tokenizeByHashtag = (text) => {
   return tokens;
 };
 
-export const hashtagifyHtml = (html) => {
+export const hashtagifyHtml = (
+  html: string | null | undefined
+): string | null | undefined => {
   if (typeof window === 'undefined' || !html) return html;
 
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
 
-  const walkTextNodes = (node) => {
+  const walkTextNodes = (node: Node): void => {
     if (node.nodeType === Node.TEXT_NODE) {
       if (!node.textContent.includes('#')) return;
 
@@ -154,20 +173,22 @@ export const hashtagifyHtml = (html) => {
 
     if (node.nodeType !== Node.ELEMENT_NODE) return;
 
-    if (node.tagName === 'A') {
-      const tokens = tokenizeByHashtag(node.textContent.trim());
+    const element = node as Element;
+
+    if (element.tagName === 'A') {
+      const tokens = tokenizeByHashtag(element.textContent.trim());
       if (tokens.length === 1 && tokens[0].type === 'hashtag') {
         const span = doc.createElement('span');
         span.setAttribute('data-hashtag', tokens[0].value);
         span.setAttribute('class', HASHTAG_CLASS);
         span.textContent = tokens[0].value;
-        node.parentNode.replaceChild(span, node);
+        element.parentNode.replaceChild(span, element);
       }
       return;
     }
 
-    if (!SKIP_TAGS.has(node.tagName)) {
-      Array.from(node.childNodes).forEach(walkTextNodes);
+    if (!SKIP_TAGS.has(element.tagName)) {
+      Array.from(element.childNodes).forEach(walkTextNodes);
     }
   };
 
