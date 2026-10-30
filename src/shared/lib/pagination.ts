@@ -14,6 +14,10 @@ interface PaginationCache<T> {
   pageParams: number[];
 }
 
+interface PaginationCacheInput<T> {
+  pages: (PaginationPage<T> | undefined)[];
+}
+
 export const deduplicatePaginatedData = <T extends Post>(array: T[]): T[] => {
   const seen = new Set<string | number>();
   const uniquePages = array.filter(({ postId }) => {
@@ -25,9 +29,9 @@ export const deduplicatePaginatedData = <T extends Post>(array: T[]): T[] => {
 };
 
 export const flatPaginationCache = <T>(
-  data: PaginationCache<T> | null | undefined
+  data: PaginationCacheInput<T> | null | undefined
 ): T[] => {
-  return data && !data.pages.includes(undefined as any)
+  return data && !data.pages.includes(undefined)
     ? data.pages.flatMap((page) => page.data)
     : [];
 };
