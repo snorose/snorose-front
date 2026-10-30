@@ -47,6 +47,7 @@
 .tag {
   position: relative;
   display: flex;
+  flex-shrink: 0;
   gap: 0.8rem;
   align-items: center;
 }
@@ -68,21 +69,23 @@
 .label {
   font: var(--text-headline-2-med);
   color: var(--grey-4);
+  white-space: nowrap;
 }
 
 /* name */
 .name {
   flex: 1;
+  min-width: 0;
 }
 
 .name label[for='file'] {
   display: flex;
 
   align-items: center;
-  /* min-width: 0; */
+
   height: 4rem;
 
-  padding-left: 1.3rem;
+  padding: 0 1.3rem;
 
   font: var(--text-body-1-reg);
 
@@ -92,6 +95,12 @@
 
   background: var(--grey-2);
   border-radius: 0.5rem;
+}
+
+.name label[for='file'] span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .name input[type='file'] {
