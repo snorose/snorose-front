@@ -345,6 +345,70 @@ describe('시험후기 삭제의 실제 hook 소비자', () => {
 });
 
 describe('시험후기 다운로드 확인 모달', () => {
+  const { createObjectURL, revokeObjectURL } = window.URL;
+
+  afterEach(() => {
+    window.URL.createObjectURL = createObjectURL;
+    window.URL.revokeObjectURL = revokeObjectURL;
+  });
+
+  it.each([
+    ['본인 글 최초 다운로드', true, false, false, 100],
+    ['타인 글 최초 다운로드', false, false, true, 50],
+    ['타인 글 재다운로드', false, true, false, 100],
+  ])(
+    '%s 시 모달과 포인트 잔액을 올바르게 처리한다',
+    async (
+      _scenario,
+      isWriter,
+      isDownloaded,
+      requiresConfirmation,
+      expectedBalance
+    ) => {
+      getExamReview.mockResolvedValue({ data: new Blob(['review']) });
+      window.URL.createObjectURL = jest.fn(() => 'blob:review');
+      window.URL.revokeObjectURL = jest.fn();
+      const downloadClick = jest
+        .spyOn(HTMLAnchorElement.prototype, 'click')
+        .mockImplementation(() => {});
+      queryClient.setQueryData(QUERY_KEY.post('42'), {
+        isWriter,
+        isDownloaded,
+      });
+      renderConsumer(
+        <ReviewDownload
+          fileName='review.pdf'
+          isWriter={isWriter}
+          isDownloaded={isDownloaded}
+        />
+      );
+
+      userEvent.click(screen.getByRole('button', { name: 'review.pdf' }));
+
+      expect(Boolean(screen.queryByRole('button', { name: '확인' }))).toBe(
+        requiresConfirmation
+      );
+      expect(
+        Boolean(screen.queryByText('다운로드시 50 포인트가 차감돼요'))
+      ).toBe(requiresConfirmation);
+      expect(getExamReview).toHaveBeenCalledTimes(requiresConfirmation ? 0 : 1);
+
+      if (requiresConfirmation) {
+        userEvent.click(screen.getByRole('button', { name: '확인' }));
+      }
+
+      await expectToast('다운로드가 완료되었어요', 'success');
+      expect(getExamReview).toHaveBeenCalledWith('42', 'review.pdf');
+      expect(downloadClick).toHaveBeenCalledTimes(1);
+      expect(queryClient.getQueryData([QUERY_KEY.userInfo]).balance).toBe(
+        expectedBalance
+      );
+      expect(queryClient.getQueryData(QUERY_KEY.post('42')).isDownloaded).toBe(
+        true
+      );
+    }
+  );
+
   it('취소 시 다운로드와 Toast를 발생시키지 않는다', () => {
     renderConsumer(<ReviewDownload fileName='review.pdf' />);
     userEvent.click(screen.getByRole('button', { name: 'review.pdf' }));
