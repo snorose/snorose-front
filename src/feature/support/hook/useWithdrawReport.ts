@@ -1,19 +1,32 @@
 import { useNavigate } from 'react-router';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { QUERY_KEY } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 
 import { withdrawReport } from '@/feature/support/api';
 
 export default function useWithdrawReport() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { toast } = useToast();
 
   return useMutation({
     mutationFn: withdrawReport,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      const { postId } = data;
+
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEY.post(postId),
+        exact: true,
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.myInquiriesAndReports],
+      });
+
       toast.success('신고가 철회되었어요');
       navigate(-1);
     },
