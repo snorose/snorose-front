@@ -55,7 +55,7 @@ async function enableMocking() {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 let applicationRouter;
 function Application() {
-  // 점검 종료 후 최초로 생성합니다. Strict Mode에서도 라우터를 중복 생성하지 않습니다.
+  // 권한 확인 후 최초로 생성합니다. Strict Mode에서도 라우터를 중복 생성하지 않습니다.
   const [router] = React.useState(() => {
     if (!applicationRouter) applicationRouter = createBrowserRouter(routeList);
     return applicationRouter;
@@ -63,8 +63,10 @@ function Application() {
   React.useEffect(() => {
     // 점검 중 차단된 loader가 있다면 접근 복구 시 다시 실행합니다.
     const recoverLoader = () => {
+      const access = getMaintenanceAccess();
       if (
-        getMaintenanceAccess() === 'inactive' &&
+        access !== 'checking' &&
+        access !== 'blocked' &&
         router.state.revalidation === 'idle' &&
         Object.values(router.state.errors || {}).some(isMaintenanceBlockedError)
       ) {
@@ -73,7 +75,7 @@ function Application() {
     };
     recoverLoader();
     const unsubscribeAccess = subscribeMaintenanceAccess(recoverLoader);
-    // 점검 종료보다 늦게 도착한 loader 오류도 복구합니다.
+    // 권한 확인보다 늦게 도착한 loader 오류도 복구합니다.
     const unsubscribeRouter = router.subscribe(recoverLoader);
     return () => {
       unsubscribeAccess();

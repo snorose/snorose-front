@@ -1,9 +1,12 @@
 import axios from 'axios';
 
+import { invalidateMaintenanceSession } from '@/feature/maintenance/access';
+
 const REFRESH_TOKEN_EXPIRED_CODE = 2704;
 
 export function activateSession(accessToken: string) {
   localStorage.setItem('accessToken', accessToken);
+  invalidateMaintenanceSession();
   resetSessionExpiredHandling();
 }
 
@@ -23,6 +26,7 @@ export function shouldHandleSessionExpired() {
 export function clearAuthTokens() {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
+  invalidateMaintenanceSession();
 }
 
 export function isRefreshTokenExpiredError(error: unknown) {
