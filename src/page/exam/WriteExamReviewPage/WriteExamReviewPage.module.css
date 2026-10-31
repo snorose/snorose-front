@@ -5,11 +5,10 @@
 
 /* top */
 .top {
-  margin: 1.8rem 0 2.8rem;
-
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
+  margin: 1.8rem 0 2.8rem;
 }
 
 .field {
@@ -30,29 +29,27 @@
 
 /* bottom */
 .bottom {
-  margin-bottom: 1.8rem;
-
   display: flex;
   flex-direction: column;
   gap: 2.8rem;
+  margin-bottom: 1.8rem;
 }
 
 /* file */
 .file {
-  margin: 0 var(--default-margin);
-
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   gap: 2.4rem;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 var(--default-margin);
 }
 
 .tag {
   position: relative;
-
   display: flex;
-  align-items: center;
+  flex-shrink: 0;
   gap: 0.8rem;
+  align-items: center;
 }
 
 .tag .required {
@@ -60,40 +57,50 @@
   top: 0;
   right: -1.2rem;
 
-  width: 0.8rem;
-  height: 0.8rem;
   display: inline-block;
 
-  border-radius: 1rem;
+  width: 0.8rem;
+  height: 0.8rem;
+
   background-color: var(--pink-3);
+  border-radius: 1rem;
 }
 
 .label {
   font: var(--text-headline-2-med);
   color: var(--grey-4);
+  white-space: nowrap;
 }
 
 /* name */
 .name {
   flex: 1;
+  min-width: 0;
 }
 
 .name label[for='file'] {
-  /* min-width: 0; */
-  height: 4rem;
-
-  padding-left: 1.3rem;
-
   display: flex;
+
   align-items: center;
 
-  background: var(--grey-2);
-  border-radius: 0.5rem;
+  height: 4rem;
+
+  padding: 0 1.3rem;
 
   font: var(--text-body-1-reg);
+
   color: var(--grey-3-1);
 
   cursor: pointer;
+
+  background: var(--grey-2);
+  border-radius: 0.5rem;
+}
+
+.name label[for='file'] span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .name input[type='file'] {

@@ -4,28 +4,31 @@
 }
 
 .header {
-  margin-bottom: 0.8rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
 }
 
 .title {
-  font-weight: 500;
-  font-size: 1.4rem;
-  color: var(--grey-4);
   position: relative;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--grey-4);
 }
 
 .required {
-  width: 0.5rem;
-  height: 0.5rem;
-  display: inline-block;
   position: absolute;
   top: 0.2rem;
   right: -1rem;
-  border-radius: 1rem;
+
+  display: inline-block;
+
+  width: 0.5rem;
+  height: 0.5rem;
+
   background-color: var(--pink-3);
+  border-radius: 1rem;
 }
 
 .cagetories {
@@ -38,9 +41,9 @@
 .check {
   width: 2.1rem;
   height: 2.1rem;
-  border-radius: 2.1rem;
-  border: 0.4rem solid var(--grey-3);
   cursor: pointer;
+  border: 0.4rem solid var(--grey-3);
+  border-radius: 2.1rem;
 }
 
 .input {

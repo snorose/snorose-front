@@ -82,6 +82,7 @@ export default function ReviewDownload({
     <>
       <button
         className={` ${styles.layout} ${className}`}
+        title={fileName}
         onClick={(event) => {
           event.stopPropagation();
 

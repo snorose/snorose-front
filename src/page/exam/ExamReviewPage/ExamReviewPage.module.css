@@ -1,26 +1,24 @@
 .blueContainer {
-  padding-top: var(--default-appbar-height);
-
   display: flex;
   flex-direction: column;
+  padding-top: var(--default-appbar-height);
   background-color: var(--blue-0);
   border-radius: 0 0 1.5rem 1.5rem;
 }
 
 .displayBox {
-  margin: 0.9rem var(--default-margin) 0.7rem var(--default-margin);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-
+  justify-content: space-between;
+  margin: 0.9rem var(--default-margin) 0.7rem var(--default-margin);
   font: var(--text-body-2-reg);
   color: var(--grey-3-1);
 }
 
 .displayBoxLeft {
   display: flex;
-  align-items: center;
   gap: 0.6rem;
+  align-items: center;
 }
 
 .dot {
@@ -37,14 +35,13 @@
 
 .title {
   margin: 0 var(--default-margin);
-
   font: var(--text-title-1-bold);
   color: var(--grey-4);
 }
 
 .info {
-  margin: 2.6rem var(--default-margin) 0;
   padding: 0.6rem 1.3rem;
+  margin: 2.6rem var(--default-margin) 0;
   background: var(--white);
   border-radius: 0.5rem;
 }
@@ -68,9 +65,9 @@
 .questionDetailContent {
   font: var(--text-headline-2-reg);
   color: var(--grey-4);
-  white-space: pre-wrap;
   word-break: keep-all;
   overflow-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .content {
@@ -85,30 +82,36 @@
 
 /* action */
 .actionContainer {
+  display: flex;
+  gap: 1.6rem;
+  justify-content: space-between;
   height: 5.7rem;
   padding: 0.9rem 0;
   margin: 0 var(--default-margin);
-
-  display: flex;
-  justify-content: space-between;
-  gap: 1.6rem;
   border-top: 0.05rem solid rgba(var(--grey-3-1-rgb), 0.7);
 }
 
 .count {
   display: flex;
-  justify-content: center;
-  align-items: center;
+
   gap: 0.7rem;
-  padding: 0.8rem;
+
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
-  border-radius: 0.5rem;
-  transition: all 200ms ease-in-out;
+
+  padding: 0.8rem;
+
   cursor: pointer;
 
+  border-radius: 0.5rem;
+
+  transition: all 200ms ease-in-out;
+
   p {
-    color: var(--grey-3-1);
     font: var(--text-body-1-reg);
+    color: var(--grey-3-1);
   }
 
   &:hover {

@@ -1,8 +1,8 @@
 .item {
-  padding: 1rem 0;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
   border-bottom: 0.05rem solid var(--grey-3);
 }
 
@@ -12,7 +12,6 @@
 
 .tag {
   flex-shrink: 0;
-
   font: var(--text-body-1-reg);
   color: var(--grey-3-1);
 }
