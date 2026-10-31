@@ -345,6 +345,13 @@ describe('시험후기 삭제의 실제 hook 소비자', () => {
 });
 
 describe('시험후기 다운로드 확인 모달', () => {
+  const { createObjectURL, revokeObjectURL } = window.URL;
+
+  afterEach(() => {
+    window.URL.createObjectURL = createObjectURL;
+    window.URL.revokeObjectURL = revokeObjectURL;
+  });
+
   it.each([
     ['본인 글 최초 다운로드', true, false, false, 100],
     ['타인 글 최초 다운로드', false, false, true, 50],
