@@ -105,6 +105,7 @@
     "webpack": "^5.97.1"
   },
   "overrides": {
+    "body-parser": "1.20.9",
     "qs": "6.16.2",
     "react-refresh": "0.11.0"
   },
