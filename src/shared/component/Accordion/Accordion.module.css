@@ -1,0 +1,80 @@
+.accordion {
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.trigger {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  height: 5rem;
+
+  padding: 0 1.4rem 0 2rem;
+
+  cursor: pointer;
+
+  background: var(--blue-0);
+
+  transition: all 200ms ease;
+
+  & span {
+    font: var(--text-headline-2-reg);
+    color: var(--grey-4);
+  }
+
+  &.opened {
+    background: var(--blue-1);
+
+    span {
+      font: var(--text-headline-2-med);
+      color: var(--blue-4);
+    }
+
+    .toggleIcon {
+      transform: rotate(180deg);
+    }
+  }
+
+  & .toggleIcon {
+    transition: 200ms transform ease;
+  }
+}
+
+.content {
+  max-height: 0;
+
+  padding: 0 2rem;
+
+  overflow: hidden;
+
+  font: var(--text-body-1-reg);
+
+  line-height: 0;
+
+  color: var(--grey-4);
+
+  background: var(--blue-0);
+  border-bottom: 0.05rem solid var(--blue-2);
+
+  transition:
+    max-height 200ms ease,
+    padding 200ms ease,
+    background 200ms ease,
+    color 200ms ease,
+    line-height 200ms ease;
+
+  &.opened {
+    max-height: 250rem;
+    padding: 1.8rem 2rem;
+    overflow-y: auto;
+    line-height: normal;
+    background: var(--blue-1);
+    border-top: 0.05rem solid var(--blue-2);
+  }
+
+  &:nth-last-child(1 of .content) {
+    border-bottom: none;
+  }
+}

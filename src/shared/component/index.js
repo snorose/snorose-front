@@ -50,6 +50,7 @@ export { default as ServerErrorFallback } from './suspense/ServerErrorFallback/S
 export { default as ShimmerEffect } from './suspense/ShimmerEffect/ShimmerEffect';
 
 // etc
+export { default as Accordion } from './Accordion/Accordion';
 export { default as AttachmentList } from './AttachmentList/AttachmentList';
 export { default as AttachmentSwiper } from './AttachmentSwiper/AttachmentSwiper';
 export { default as Badge } from './Badge/Badge';
