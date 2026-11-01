@@ -1,3 +1,4 @@
+import { ComponentPropsWithoutRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import {
@@ -24,16 +25,15 @@ export default function CategoryTab({
   );
 }
 
-function Item({
-  category,
-  children,
-}: {
-  category: string;
+type CategoryTabItemProps = ComponentPropsWithoutRef<'button'> & {
   children: React.ReactNode;
-}) {
+  category: string;
+};
+
+function Item({ category, children, ...props }: CategoryTabItemProps) {
   const { currentCategory, setSearchParams } = useCategoryTab();
 
-  const selectedStyle = currentCategory === category ? 'selected' : '';
+  const isSelected = currentCategory === category;
 
   const handleClick = (category: string) => {
     setSearchParams((prev) => {
@@ -44,12 +44,14 @@ function Item({
   };
 
   return (
-    <div
-      className={`${styles.item} ${styles[selectedStyle]}`}
+    <button
+      {...props}
+      className={`${styles.item} ${isSelected ? styles.selected : ''}`}
       onClick={() => handleClick(category)}
+      aria-pressed={isSelected}
     >
       {children}
-    </div>
+    </button>
   );
 }
 

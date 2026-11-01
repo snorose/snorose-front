@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: space-between;
 
+  width: 100%;
   height: 5rem;
 
   padding: 0 1.4rem 0 2rem;
@@ -39,6 +40,11 @@
 
   & .toggleIcon {
     transition: 200ms transform ease;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--blue-4);
+    outline-offset: -2px;
   }
 }
 

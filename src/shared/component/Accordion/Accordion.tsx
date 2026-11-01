@@ -1,13 +1,13 @@
-import { type ComponentPropsWithoutRef, useState } from 'react';
+import { type ComponentPropsWithoutRef, useId, useState } from 'react';
 
 import { IconChevronDown } from '@snorose/icons';
 
 import {
   AccordionContext,
-  AccordionItemContext,
+  AccordionIdsContext,
   type AccordionOpenMap,
   useAccordion,
-  useAccordionItemId,
+  useAccordionIds,
 } from '@/shared/context/AccordionContext';
 
 import styles from './Accordion.module.css';
@@ -35,54 +35,69 @@ export default function Accordion({
   );
 }
 
-function AccordionItem({
-  id,
-  children,
-}: {
-  id: string | number;
-  children: React.ReactNode;
-}) {
+function AccordionItem({ children }: { children: React.ReactNode }) {
+  const domId = useId();
+
   return (
-    <AccordionItemContext.Provider value={id}>
+    <AccordionIdsContext.Provider
+      value={{
+        accordionId: domId,
+        triggerId: `${domId}-trigger`,
+        contentId: `${domId}-content`,
+      }}
+    >
       {children}
-    </AccordionItemContext.Provider>
+    </AccordionIdsContext.Provider>
   );
 }
 
 function AccordionTrigger({ children }: { children: React.ReactNode }) {
   const { isOpenMap, setIsOpenMap } = useAccordion();
-  const id = useAccordionItemId();
+  const { accordionId, triggerId, contentId } = useAccordionIds();
 
-  const isOpen = isOpenMap[id] ? `opened` : ``;
+  const isOpen = Boolean(isOpenMap[accordionId]);
 
   const handleClick = () => {
     setIsOpenMap((prev) => {
       const next = Object.fromEntries(
         Object.keys(prev).map((key) => [key, false])
       );
-      return { ...next, [id]: !prev[id] };
+      return { ...next, [accordionId]: !prev[accordionId] };
     });
   };
 
   return (
-    <div
-      className={`${styles.trigger} ${styles[isOpen]}`}
+    <button
+      type='button'
+      id={triggerId}
+      className={`${styles.trigger} ${isOpen ? styles.opened : ''}`}
       onClick={handleClick}
+      aria-expanded={isOpen}
+      aria-controls={contentId}
     >
       <span>{children}</span>
       <IconChevronDown className={styles.toggleIcon} color='var(--blue-4)' />
-    </div>
+    </button>
   );
 }
 
 function AccordionContent({ children }: { children: React.ReactNode }) {
   const { isOpenMap } = useAccordion();
-  const id = useAccordionItemId();
+  const { accordionId, triggerId, contentId } = useAccordionIds();
 
-  const isOpen = isOpenMap[id] ? `opened` : ``;
+  const isOpen = Boolean(isOpenMap[accordionId]);
 
   return (
-    <div className={`${styles.content} ${styles[isOpen]}`}>{children}</div>
+    <div
+      ref={(element) => {
+        element?.toggleAttribute('inert', !isOpen);
+      }}
+      id={contentId}
+      aria-labelledby={triggerId}
+      className={`${styles.content} ${isOpen ? styles.opened : ''}`}
+    >
+      {children}
+    </div>
   );
 }
 

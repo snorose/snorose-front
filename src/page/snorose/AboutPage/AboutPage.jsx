@@ -67,7 +67,7 @@ export default function AboutPage() {
       <div className={styles.accordionList}>
         <Accordion>
           {accordionItems.map((item, index) => (
-            <Accordion.Item key={item.title} id={item.title}>
+            <Accordion.Item key={item.title}>
               <Accordion.Trigger>{item.title}</Accordion.Trigger>
               <Accordion.Content>{item.content}</Accordion.Content>
             </Accordion.Item>

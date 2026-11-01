@@ -47,7 +47,11 @@ export default function FAQPage() {
 
       <QueryErrorResetBoundary>
         {({ reset }) => (
-          <ErrorBoundary onReset={reset} FallbackComponent={ErrorFallback}>
+          <ErrorBoundary
+            onReset={reset}
+            resetKeys={[currentCategory]}
+            FallbackComponent={ErrorFallback}
+          >
             <Suspense fallback={<FetchLoading />}>
               <FAQs currentCategory={currentCategory} />
             </Suspense>
@@ -64,7 +68,7 @@ function FAQs({ currentCategory }: { currentCategory: string }) {
   return (
     <Accordion className={styles.notice}>
       {faqList.map((faq) => (
-        <Accordion.Item key={faq.faqId} id={faq.faqId}>
+        <Accordion.Item key={faq.faqId}>
           <Accordion.Trigger>{faq.question}</Accordion.Trigger>
           <Accordion.Content>{faq.answer}</Accordion.Content>
         </Accordion.Item>

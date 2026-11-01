@@ -17,10 +17,14 @@ export function useAccordion() {
   return useContext(AccordionContext);
 }
 
-export const AccordionItemContext = createContext<string | number | null>(null);
+export const AccordionIdsContext = createContext<{
+  accordionId: string;
+  triggerId: string;
+  contentId: string;
+} | null>(null);
 
-export function useAccordionItemId() {
-  const context = useContext(AccordionItemContext);
+export function useAccordionIds() {
+  const context = useContext(AccordionIdsContext);
 
   if (!context) {
     throw new Error('Accordion.Item 내부에서 사용해야 합니다.');

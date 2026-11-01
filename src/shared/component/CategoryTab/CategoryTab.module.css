@@ -46,11 +46,17 @@
   cursor: pointer;
 
   background-color: var(--grey-2);
+  border: 0;
   border-radius: 2rem;
 
   &.selected {
     font: var(--text-body-1-med);
     color: var(--blue-4);
     background: var(--gradient-4);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--blue-4);
+    outline-offset: -2px;
   }
 }
