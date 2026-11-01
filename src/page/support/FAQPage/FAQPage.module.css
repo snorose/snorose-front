@@ -1,62 +1,27 @@
+.notice {
+  margin: 0 var(--default-margin) 5rem;
+}
+
 .noticeContainer {
-  margin: 1rem var(--default-margin);
   padding: 1.4rem;
-
-  border-radius: 0.5rem;
-  background: var(--gradient-4);
-
+  margin: 1rem var(--default-margin);
   font: var(--text-headline-2-reg);
   color: var(--blue-4);
   white-space: pre-line;
-}
-
-.noticeContainer div {
-  padding-top: 1rem;
-}
-
-.link {
-  color: inherit;
-  text-decoration: none;
-}
-
-.linkText {
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-}
-
-.faqLink {
-  color: var(--blue-3);
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-}
-
-.faqLink:hover {
-  color: var(--blue-4);
-}
-
-/* notice */
-.notice {
-  margin: 0 var(--default-margin) 5rem;
+  background: var(--gradient-4);
   border-radius: 0.5rem;
-}
 
-.noticeBody {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
+  & div {
+    padding-top: 1rem;
+  }
 
-.notice ul {
-  padding-left: 2rem;
-  list-style: disc;
-}
+  & .link {
+    color: inherit;
+    text-decoration: none;
+  }
 
-.notice .listStyleNone {
-  padding-left: 0;
-  list-style: none;
-}
-
-.title {
-  word-break: break-all;
-  white-space: pre-line;
+  & .linkText {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
 }
