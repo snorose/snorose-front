@@ -10,13 +10,8 @@ import { useScrollRestoration } from '@/shared/hook';
 import { AppLayout } from '@/shared/ui';
 
 import { PushNotificationManager } from '@/feature/alert/lib';
-import {
-  MAINTENANCE_END,
-  MAINTENANCE_START,
-} from '@/feature/maintenance/hook/useMaintenance';
 
 import styles from './App.module.css';
-import { MaintenancePage } from './page/maintenance';
 
 function App() {
   const appRef = useRef();
@@ -42,13 +37,6 @@ function App() {
   }, [isEnabled, queryClient]);
 
   useScrollRestoration(appRef);
-
-  // 서버 점검 페이지 처리
-  const now = new Date();
-  const isMaintenance = now >= MAINTENANCE_START && now <= MAINTENANCE_END;
-  if (isMaintenance) {
-    return <MaintenancePage />;
-  }
 
   return (
     <AppLayout variant={isPickupDisplayPage ? 'pickupDisplay' : 'default'}>

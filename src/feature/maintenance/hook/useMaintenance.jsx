@@ -1,7 +1,6 @@
 import { DateTime } from '@/shared/lib';
 
-export const MAINTENANCE_START = new Date('2026-10-03T14:00:00+09:00'); // 서버 점검 시작(년-월-일THH:MM:SS+한국기준)
-export const MAINTENANCE_END = new Date('2026-10-03T20:00:00+09:00'); // 서버 점검 끝
+export { MAINTENANCE_END, MAINTENANCE_START } from '../config';
 
 export function useMaintenance(MAINTENANCE_START, MAINTENANCE_END) {
   const isSameDate =

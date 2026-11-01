@@ -4,8 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { fetchUnreadAlertCount } from '@/apis/alert';
 
-import { Icon } from '@/shared/component';
-import { NAVBAR_MENUS, QUERY_KEY } from '@/shared/constant';
+import { NAVBAR_MENUS, NEW_ROUTES, QUERY_KEY } from '@/shared/constant';
 import { useAuth } from '@/shared/hook';
 
 import styles from './Navbar.module.css';
@@ -16,7 +15,7 @@ export default function Navbar() {
 
   const isActive = ({ id, to }) =>
     pathname === to ||
-    (id === 'home' && pathname === '/') ||
+    (id === 'home' && pathname === NEW_ROUTES.home) ||
     (id === 'test' && pathname.startsWith('/board/exam-review/search'));
 
   const { data: unreadAlertCount = 0 } = useQuery({

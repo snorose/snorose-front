@@ -1,6 +1,6 @@
 .form {
-  color: var(--grey-4);
   font: var(--text-headline-2-med);
+  color: var(--grey-4);
 }
 
 .section {
@@ -15,24 +15,24 @@
 
 .divider {
   height: 0.1rem;
-  border: 0;
   background: var(--blue-2);
+  border: 0;
 }
 
 .error {
-  border: 1px solid var(--pink-3);
   color: var(--pink-3);
   background-color: var(--pink-1);
+  border: 1px solid var(--pink-3);
 }
 
 .errorMessage {
-  color: var(--pink-3);
-  margin-top: 0.3rem;
   display: block;
+  margin-top: 0.3rem;
+  color: var(--pink-3);
 }
 
 .required {
-  color: var(--pink-3);
-  font: var(--text-headline-1-med);
   margin-left: 0.3rem;
+  font: var(--text-headline-1-med);
+  color: var(--pink-3);
 }

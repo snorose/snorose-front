@@ -1,16 +1,22 @@
 .textarea {
+  box-sizing: border-box;
+  display: block;
+
+  width: 100%;
+  min-height: 5rem;
+
+  padding: 1.5rem;
+
+  font: var(--text-body-1-reg);
+
+  line-height: 1.5;
+
+  resize: none;
   outline: none;
+
+  background-color: transparent;
   border: 0.1rem solid var(--blue-2);
   border-radius: 0.5rem;
-  background-color: transparent;
-  display: block;
-  width: 100%;
-  resize: none;
-  padding: 1.5rem;
-  line-height: 1.5;
-  min-height: 5rem;
-  box-sizing: border-box;
-  font: var(--text-body-1-reg);
 }
 
 .textarea:focus {
@@ -29,21 +35,21 @@
 }
 
 .button {
-  height: 5.5rem;
   width: 7rem;
+  height: 5.5rem;
   padding: unset;
   font: var(--text-body-1-reg);
 }
 
 .error {
-  border: 1px solid var(--pink-3);
   color: var(--pink-3);
   background-color: var(--pink-1);
+  border: 1px solid var(--pink-3);
 }
 
 .errorMessage {
-  color: var(--pink-3);
-  margin-top: 0.3rem;
   display: block;
+  margin-top: 0.3rem;
   font: var(--text-body-1-reg);
+  color: var(--pink-3);
 }

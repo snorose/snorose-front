@@ -6,24 +6,34 @@
 }
 
 .title {
-  color: var(--grey-4);
-  font: var(--text-title-1-bold);
-  outline: none;
-  border: none;
-  background-color: transparent;
   display: block;
+
   width: 100%;
+
+  font: var(--text-title-1-bold);
+
+  color: var(--grey-4);
+
   resize: none;
+  outline: none;
+
+  background-color: transparent;
+  border: none;
 }
 
 .content {
-  color: var(--grey-4);
-  font: var(--text-headline-2-reg);
-  outline: none;
-  border: none;
-  background-color: transparent;
   display: block;
+
   width: 100%;
   min-height: 10rem;
+
+  font: var(--text-headline-2-reg);
+
+  color: var(--grey-4);
+
   resize: none;
+  outline: none;
+
+  background-color: transparent;
+  border: none;
 }

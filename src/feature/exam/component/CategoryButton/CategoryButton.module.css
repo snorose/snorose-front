@@ -1,19 +1,21 @@
 .button {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
   height: 4.4rem;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font: var(--text-body-1-reg);
+
+  color: var(--grey-4);
 
   background: var(--grey-1-1);
   border-radius: 0.5rem;
-
-  font: var(--text-body-1-reg);
-  color: var(--grey-4);
 }
 
 .select {
-  background: var(--blue-4);
   color: var(--white);
+  background: var(--blue-4);
 }

@@ -1,35 +1,42 @@
 .dateSection {
   display: flex;
+
   flex-direction: row;
+
   gap: 1rem;
+
   align-items: center;
-  word-break: keep-all;
-  margin-top: 0.7rem;
-  font: var(--text-body-1-reg);
+
   width: 100%;
+
+  margin-top: 0.7rem;
+
+  font: var(--text-body-1-reg);
+
+  word-break: keep-all;
 }
 
 .dateSection p {
-  font: var(--text-headline-2-med);
-  flex: 0 0 auto;
-  min-width: 6rem;
   display: flex;
+  flex: 0 0 auto;
   justify-content: center;
+  min-width: 6rem;
+  font: var(--text-headline-2-med);
 }
 
 .dateSection > div {
-  flex: 1;
   display: flex;
+  flex: 1;
 }
 
 .dateInput {
   flex: 1;
+  width: 100%;
+  padding: 1.4rem;
+  color: var(--grey-3-1);
+  background-color: transparent;
   border: 1px solid var(--blue-2);
   border-radius: 0.5rem;
-  padding: 1.4rem;
-  background-color: transparent;
-  color: var(--grey-3-1);
-  width: 100%;
 }
 
 .dateInput:focus {
@@ -37,15 +44,15 @@
 }
 
 .error {
-  border: 1px solid var(--pink-3);
   color: var(--pink-3);
   background-color: var(--pink-1);
+  border: 1px solid var(--pink-3);
 }
 
 .errorMessage {
-  color: var(--pink-3);
-  margin-top: 0.3rem;
   display: block;
-  font: var(--text-body-1-reg);
+  margin-top: 0.3rem;
   margin-left: 7rem;
+  font: var(--text-body-1-reg);
+  color: var(--pink-3);
 }

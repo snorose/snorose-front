@@ -3,6 +3,8 @@ import {
   useToastContext,
 } from '@/shared/context/ToastContext';
 
+import { isMaintenanceBlocked } from '@/feature/maintenance/access';
+
 export default function useToast() {
   const { setToasts } = useToastContext();
 
@@ -11,6 +13,8 @@ export default function useToast() {
     variant: 'success' | 'error' | 'info',
     options?: ToastOptions
   ) => {
+    if (isMaintenanceBlocked()) return;
+
     const nextToast = { id: crypto.randomUUID(), message, variant, options };
 
     setToasts((prev) => [
