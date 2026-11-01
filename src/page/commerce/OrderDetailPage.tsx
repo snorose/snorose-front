@@ -202,7 +202,7 @@ function OrderDetailView() {
               fulfillmentStatus,
               order.pickup.method
             ) && <dd>신청 완료</dd>}
-            {autoPaymentEnabled && isReview(paymentStatus) && (
+            {autoPaymentEnabled && isReview(orderStatus, paymentStatus) && (
               <dd>검토 필요</dd>
             )}
             {isCanceled(orderStatus, paymentStatus, autoPaymentEnabled) && (

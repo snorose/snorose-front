@@ -89,7 +89,7 @@ export default function OrderItem({
             fulfillmentStatus,
             fulfillmentMethod
           ) && <Chip name='신청 완료' variant='grey' size='sm' />}
-          {autoPaymentEnabled && isReview(paymentStatus) && (
+          {autoPaymentEnabled && isReview(orderStatus, paymentStatus) && (
             <Chip name={'검토 필요'} variant={'gradient'} size='sm' />
           )}
           {isCanceled(orderStatus, paymentStatus, autoPaymentEnabled) && (

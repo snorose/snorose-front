@@ -128,9 +128,10 @@ export function isPickedUp(
 }
 
 export function isReview(
+  orderStatus: OrdersResponse['data'][number]['orderStatus'],
   paymentStatus: OrdersResponse['data'][number]['paymentStatus']
 ) {
-  return paymentStatus === 'REVIEW_REQUIRED';
+  return orderStatus === 'ACTIVE' && paymentStatus === 'REVIEW_REQUIRED';
 }
 
 export function isCanceled(
@@ -138,9 +139,10 @@ export function isCanceled(
   paymentStatus: OrdersResponse['data'][number]['paymentStatus'],
   autoPaymentEnabled = true
 ) {
+  // 운영 취소는 결제 상태를 바꾸지 않으므로, 입금 만료가 아닌 취소는 모두 주문 취소로 본다.
   return (
     orderStatus === 'CANCELLED' &&
-    (autoPaymentEnabled === false || paymentStatus === 'CANCELLED')
+    (autoPaymentEnabled === false || paymentStatus !== 'EXPIRED')
   );
 }
 

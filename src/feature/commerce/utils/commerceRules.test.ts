@@ -1,7 +1,10 @@
 import {
+  isCanceled,
+  isExpired,
   isPickUpPending,
   isProductQuantityLimitReached,
   isRegistrationComplete,
+  isReview,
   isValidPhoneNumber,
 } from '@/feature/commerce/utils/commerceRules';
 
@@ -95,5 +98,20 @@ describe('수령 절차가 없는 신청 상태', () => {
     expect(isRegistrationComplete('ACTIVE', 'PAID', 'PENDING', 'PICKUP')).toBe(
       false
     );
+  });
+});
+
+describe('취소된 주문 상태', () => {
+  it('운영 취소는 결제 상태가 남아 있어도 주문 취소로 표시하고 검토 필요로 보지 않는다', () => {
+    expect(isCanceled('CANCELLED', 'PAID', true)).toBe(true);
+    expect(isCanceled('CANCELLED', 'WAITING', true)).toBe(true);
+    expect(isCanceled('CANCELLED', 'REVIEW_REQUIRED', true)).toBe(true);
+    expect(isReview('CANCELLED', 'REVIEW_REQUIRED')).toBe(false);
+    expect(isReview('ACTIVE', 'REVIEW_REQUIRED')).toBe(true);
+  });
+
+  it('입금 기한 만료는 주문 취소가 아니라 입금 만료로 표시한다', () => {
+    expect(isCanceled('CANCELLED', 'EXPIRED', true)).toBe(false);
+    expect(isExpired('CANCELLED', 'EXPIRED')).toBe(true);
   });
 });
