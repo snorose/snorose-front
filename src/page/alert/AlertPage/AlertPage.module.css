@@ -31,36 +31,6 @@
   border-radius: 0.5rem;
 }
 
-.categoryTabs {
-  display: flex;
-
-  flex-wrap: nowrap;
-
-  gap: 0.8rem;
-
-  min-height: 3.2rem;
-
-  padding: 0 2rem;
-  margin-bottom: 2.2rem;
-
-  overflow-x: auto;
-
-  overscroll-behavior-x: contain;
-
-  scroll-snap-type: x proximity;
-  scroll-padding-left: 2rem;
-  -webkit-overflow-scrolling: touch;
-
-  /* 스크롤바 숨김 */
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  & {
-    scrollbar-width: none;
-  }
-}
-
 .readAllButton {
   display: flex;
   justify-content: flex-end;

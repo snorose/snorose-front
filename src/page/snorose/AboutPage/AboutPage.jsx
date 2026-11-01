@@ -1,17 +1,12 @@
-import { useState } from 'react';
-
 import {
   IllustrationHallOfFame,
   IllustrationLogoAboutSnoroseCloud,
 } from '@snorose/icons';
+import { IconMultiCloudBlack, IconMultiCloudLogo } from '@snorose/icons';
 
-import { BackAppBar } from '@/shared/component';
+import { Accordion, BackAppBar } from '@/shared/component';
+import { Badge } from '@/shared/component';
 
-import {
-  Accordion,
-  AccordionListItem,
-  AccordionTag,
-} from '@/feature/home/component';
 import {
   ABOUT_SNOROSE,
   SNOROSE_HISTORY,
@@ -61,11 +56,6 @@ const accordionItems = [
 ];
 
 export default function AboutPage() {
-  const [openIndex, setOpenIndex] = useState(null);
-  const toggle = (index) => {
-    setOpenIndex((prev) => (prev === index ? null : index));
-  };
-
   return (
     <section className={styles.container}>
       <BackAppBar hasMenu />
@@ -75,17 +65,76 @@ export default function AboutPage() {
         height={25}
       />
       <div className={styles.accordionList}>
-        {accordionItems.map((item, index) => (
-          <Accordion
-            key={item.title}
-            title={item.title}
-            isOpen={openIndex === index}
-            onClick={() => toggle(index)}
-          >
-            {item.content}
-          </Accordion>
-        ))}
+        <Accordion>
+          {accordionItems.map((item, index) => (
+            <Accordion.Item key={item.title}>
+              <Accordion.Trigger>{item.title}</Accordion.Trigger>
+              <Accordion.Content>{item.content}</Accordion.Content>
+            </Accordion.Item>
+          ))}
+        </Accordion>
       </div>
     </section>
+  );
+}
+
+function AccordionListItem({ list, listName }) {
+  return (
+    <ul className={styles.list}>
+      {list.map((content) => (
+        <li key={content.name} className={styles.item}>
+          {content.name === '블랙리스트' ? (
+            <IconMultiCloudBlack
+              className={styles.icon}
+              width={28}
+              height={17}
+              role='img'
+              aria-label='블랙로고'
+            />
+          ) : (
+            <IconMultiCloudLogo
+              className={styles.icon}
+              width={28}
+              height={17}
+              role='img'
+              aria-label='로고'
+            />
+          )}
+          <div className={styles.itemContainer}>
+            <span className={styles.name}>
+              {content.name}
+              {content.badge && (
+                <Badge userRoleId={content.role} width={16} height={16} />
+              )}
+            </span>
+            {listName === 'SNOROSE_HISTORY' ? <p>-</p> : <p>:</p>}
+            <span className={styles.description}>{content.description}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function AccordionTag({ admin }) {
+  const { nickname, role, team, position, studentInformation } = admin;
+  const roleArray = role ? [role] : [];
+  const teamArray = team ?? [];
+
+  return (
+    <div className={styles.tag}>
+      <div className={styles.top}>
+        <span className={styles.nickname}>{nickname}</span>
+        {(role || team || position) && (
+          <span className={styles.title}>
+            {`${[...roleArray, ...teamArray].join(', ')}`}
+            {position && `(${position.join(', ')})`}
+          </span>
+        )}
+      </div>
+      <div className={styles.bottom}>
+        <p className={styles.studentInfo}>{studentInformation}</p>
+      </div>
+    </div>
   );
 }

@@ -1,0 +1,62 @@
+.tabList {
+  display: flex;
+
+  flex-wrap: nowrap;
+
+  gap: 0.8rem;
+
+  min-height: 3.2rem;
+
+  padding: 0 2rem;
+  margin-bottom: 2.2rem;
+
+  overflow-x: auto;
+
+  overscroll-behavior-x: contain;
+
+  scroll-snap-type: x proximity;
+  scroll-padding-left: 2rem;
+  -webkit-overflow-scrolling: touch;
+
+  /* 스크롤바 숨김 */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & {
+    scrollbar-width: none;
+  }
+}
+
+.item {
+  display: inline-flex;
+
+  flex-shrink: 0;
+
+  align-items: center;
+
+  height: 3.2rem;
+
+  padding: 0 2rem;
+
+  font: var(--text-body-1-reg);
+
+  color: var(--grey-3-1);
+
+  cursor: pointer;
+
+  background-color: var(--grey-2);
+  border: 0;
+  border-radius: 2rem;
+
+  &.selected {
+    font: var(--text-body-1-med);
+    color: var(--blue-4);
+    background: var(--gradient-4);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--blue-4);
+    outline-offset: -2px;
+  }
+}

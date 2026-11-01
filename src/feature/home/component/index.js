@@ -1,8 +1,3 @@
-// About 스노로즈
-export { default as Accordion } from './Accordion/Accordion';
-export { default as AccordionListItem } from './AccordionListItem/AccordionListItem';
-export { default as AccordionTag } from './AccordionTag/AccordionTag';
-
 // 배너 슬라이드
 export { default as Slide } from './Slide/Slide';
 
