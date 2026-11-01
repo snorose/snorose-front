@@ -8,6 +8,7 @@ import {
   isPaymentPending,
   isPickedUp,
   isPickUpPending,
+  isRegistrationComplete,
   isReview,
 } from '@/feature/commerce/utils/commerceRules';
 import { fulfillmentWord } from '@/feature/commerce/utils/saleLabels';
@@ -20,6 +21,7 @@ export default function OrderItem({
   orderNumber,
   saleType,
   autoPaymentEnabled = true,
+  fulfillmentMethod,
   saleTitle,
   thumbnailUrl,
   itemSummary,
@@ -60,7 +62,8 @@ export default function OrderItem({
             orderStatus,
             paymentStatus,
             fulfillmentStatus,
-            autoPaymentEnabled
+            autoPaymentEnabled,
+            fulfillmentMethod
           ) && (
             <Chip
               name={`${fulfillmentWord(saleType)} 대기`}
@@ -80,10 +83,12 @@ export default function OrderItem({
               size='sm'
             />
           )}
-          {orderStatus === 'COMPLETED' &&
-            fulfillmentStatus === 'NOT_REQUIRED' && (
-              <Chip name='신청 완료' variant='grey' size='sm' />
-            )}
+          {isRegistrationComplete(
+            orderStatus,
+            paymentStatus,
+            fulfillmentStatus,
+            fulfillmentMethod
+          ) && <Chip name='신청 완료' variant='grey' size='sm' />}
           {autoPaymentEnabled && isReview(paymentStatus) && (
             <Chip name={'검토 필요'} variant={'gradient'} size='sm' />
           )}

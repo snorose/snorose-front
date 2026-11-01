@@ -1,10 +1,10 @@
-import { getCashReceiptRequest, isCashReceiptOrderable } from './saleFeatures';
 import {
   isCanceled,
+  isPaymentPending,
   isPickedUp,
   isPickUpPending,
-  isPaymentPending,
 } from './commerceRules';
+import { getCashReceiptRequest, isCashReceiptOrderable } from './saleFeatures';
 
 describe('판매별 신청 기능', () => {
   it('현금영수증 미사용 판매는 이전 입력이 남아 있어도 전송하지 않고 주문을 허용한다', () => {

@@ -1,4 +1,5 @@
 import type { CreateOrderRequest } from '@/feature/commerce/types';
+
 import { isValidPhoneNumber } from './commerceRules';
 
 export function getCashReceiptRequest(

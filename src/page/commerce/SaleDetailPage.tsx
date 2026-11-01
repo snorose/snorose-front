@@ -1,7 +1,3 @@
-import {
-  getCashReceiptRequest,
-  isCashReceiptOrderable,
-} from '@/feature/commerce/utils/saleFeatures';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -37,6 +33,10 @@ import {
   getCommerceErrorCode,
   isValidPhoneNumber,
 } from '@/feature/commerce/utils/commerceRules';
+import {
+  getCashReceiptRequest,
+  isCashReceiptOrderable,
+} from '@/feature/commerce/utils/saleFeatures';
 
 import styles from './SaleDetailPage.module.css';
 

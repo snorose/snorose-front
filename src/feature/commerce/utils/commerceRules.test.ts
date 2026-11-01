@@ -1,5 +1,7 @@
 import {
+  isPickUpPending,
   isProductQuantityLimitReached,
+  isRegistrationComplete,
   isValidPhoneNumber,
 } from '@/feature/commerce/utils/commerceRules';
 
@@ -65,4 +67,33 @@ it('구매 수량 제한이 없는 상품은 잔여 구매 한도를 초과하�
       { 1: { 1: 3 } }
     )
   ).toBe(false);
+});
+
+describe('수령 절차가 없는 신청 상태', () => {
+  it('입금 확인된 신청은 수령 대기가 아니라 신청 완료로 본다', () => {
+    expect(isPickUpPending('ACTIVE', 'PAID', 'PENDING', true, 'NONE')).toBe(
+      false
+    );
+    expect(isRegistrationComplete('ACTIVE', 'PAID', 'PENDING', 'NONE')).toBe(
+      true
+    );
+  });
+
+  it('입금 확인 없는 신청은 신청 즉시 완료로 보고, 취소되면 완료로 보지 않는다', () => {
+    expect(isRegistrationComplete('ACTIVE', null, 'NOT_REQUIRED', 'NONE')).toBe(
+      true
+    );
+    expect(
+      isRegistrationComplete('CANCELLED', null, 'NOT_REQUIRED', 'NONE')
+    ).toBe(false);
+  });
+
+  it('수령 절차가 있는 판매는 그대로 수령 대기로 본다', () => {
+    expect(isPickUpPending('ACTIVE', 'PAID', 'PENDING', true, 'PICKUP')).toBe(
+      true
+    );
+    expect(isRegistrationComplete('ACTIVE', 'PAID', 'PENDING', 'PICKUP')).toBe(
+      false
+    );
+  });
 });

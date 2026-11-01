@@ -24,6 +24,7 @@ import {
   isPaymentPending,
   isPickedUp,
   isPickUpPending,
+  isRegistrationComplete,
   isReview,
 } from '@/feature/commerce/utils/commerceRules';
 import { fulfillmentWord } from '@/feature/commerce/utils/saleLabels';
@@ -136,10 +137,12 @@ function OrderDetailView() {
               <dt>입금자명</dt>
               <dd>입금자명을 학번으로 입력해주세요</dd>
             </div>
-            <div className={styles.infoItem}>
-              <dt>입금 기한</dt>
-              <dd>{DateTime.format(order.paymentDueAt, 'YMD_HM')}</dd>
-            </div>
+            {autoPaymentEnabled && (
+              <div className={styles.infoItem}>
+                <dt>입금 기한</dt>
+                <dd>{DateTime.format(order.paymentDueAt, 'YMD_HM')}</dd>
+              </div>
+            )}
           </dl>
         </section>
       )}
@@ -184,7 +187,8 @@ function OrderDetailView() {
               orderStatus,
               paymentStatus,
               fulfillmentStatus,
-              autoPaymentEnabled
+              autoPaymentEnabled,
+              order.pickup.method
             ) && <dd>{fulfillment} 대기</dd>}
             {isPickedUp(
               orderStatus,
@@ -192,8 +196,12 @@ function OrderDetailView() {
               fulfillmentStatus,
               autoPaymentEnabled
             ) && <dd>{fulfillment} 완료</dd>}
-            {orderStatus === 'COMPLETED' &&
-              fulfillmentStatus === 'NOT_REQUIRED' && <dd>신청 완료</dd>}
+            {isRegistrationComplete(
+              orderStatus,
+              paymentStatus,
+              fulfillmentStatus,
+              order.pickup.method
+            ) && <dd>신청 완료</dd>}
             {autoPaymentEnabled && isReview(paymentStatus) && (
               <dd>검토 필요</dd>
             )}
@@ -215,10 +223,12 @@ function OrderDetailView() {
               <dt>장소</dt>
               <dd>{order.pickup.pickupPlace}</dd>
             </div>
-            <div className={styles.infoItem}>
-              <dt>안내</dt>
-              <dd>{order.pickup.pickupInstructions}</dd>
-            </div>
+            {order.pickup.pickupInstructions && (
+              <div className={styles.infoItem}>
+                <dt>안내</dt>
+                <dd>{order.pickup.pickupInstructions}</dd>
+              </div>
+            )}
           </dl>
         </section>
       )}
@@ -257,6 +267,11 @@ function OrderDetailView() {
 
       {isCancelConfirmModalOpen && (
         <CancelOrderConfirmModal
+          notice={
+            autoPaymentEnabled
+              ? undefined
+              : '이미 입금했다면 판매자에게 환불을 요청해주세요.'
+          }
           onClose={closeCancelConfirmModal}
           onConfirm={() => {
             closeCancelConfirmModal();

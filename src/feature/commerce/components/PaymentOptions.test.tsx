@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import PaymentSection from './PaymentSection';
+
 import OrderItem from './OrderItem';
+import PaymentSection from './PaymentSection';
 
 jest.mock('@/shared/lib', () => jest.requireActual('@/shared/lib/number'));
 jest.mock('@/shared/component', () => ({

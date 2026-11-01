@@ -1,8 +1,8 @@
 import { PrimaryButton } from '@/shared/component';
 import { formatNumber } from '@/shared/lib';
 
-import { fulfillmentWord } from '@/feature/commerce/utils/saleLabels';
 import type { FulfillmentMethod, SaleType } from '@/feature/commerce/types';
+import { fulfillmentWord } from '@/feature/commerce/utils/saleLabels';
 
 import styles from '@/page/commerce/SaleDetailPage.module.css';
 

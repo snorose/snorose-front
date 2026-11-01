@@ -88,6 +88,7 @@ export type OrdersResponse = {
     saleType?: SaleType;
     autoPaymentEnabled?: boolean;
     cashReceiptEnabled?: boolean;
+    fulfillmentMethod?: FulfillmentMethod;
     thumbnailUrl: string;
     itemSummary: string;
     totalAmount: number;

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import type {
+  FulfillmentMethod,
   OrdersResponse,
   QuantityMap,
   SaleResponse,
@@ -86,12 +87,30 @@ export function isPickUpPending(
   orderStatus: OrdersResponse['data'][number]['orderStatus'],
   paymentStatus: OrdersResponse['data'][number]['paymentStatus'],
   fulfillmentStatus: OrdersResponse['data'][number]['fulfillmentStatus'],
-  autoPaymentEnabled = true
+  autoPaymentEnabled = true,
+  fulfillmentMethod?: FulfillmentMethod
 ) {
   return (
+    fulfillmentMethod !== 'NONE' &&
     orderStatus === 'ACTIVE' &&
     (autoPaymentEnabled === false || paymentStatus === 'PAID') &&
     fulfillmentStatus === 'PENDING'
+  );
+}
+
+// 수령 절차가 없는 신청은 입금 확인(또는 입금 확인 없는 판매의 신청)으로 끝난다.
+export function isRegistrationComplete(
+  orderStatus: OrdersResponse['data'][number]['orderStatus'],
+  paymentStatus: OrdersResponse['data'][number]['paymentStatus'],
+  fulfillmentStatus: OrdersResponse['data'][number]['fulfillmentStatus'],
+  fulfillmentMethod?: FulfillmentMethod
+) {
+  if (orderStatus === 'CANCELLED') return false;
+  return (
+    fulfillmentStatus === 'NOT_REQUIRED' ||
+    (fulfillmentMethod === 'NONE' &&
+      orderStatus === 'ACTIVE' &&
+      paymentStatus === 'PAID')
   );
 }
 
