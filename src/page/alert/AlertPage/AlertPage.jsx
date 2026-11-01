@@ -21,6 +21,7 @@ import {
   ServerErrorFallback,
 } from '@/shared/component';
 import { QUERY_KEY } from '@/shared/constant';
+import useCategorySearchParam from '@/shared/hook/use-category-search-param.hook';
 
 import { NotificationItem } from '@/feature/alert/component';
 import { CATEGORY } from '@/feature/alert/constant';
@@ -34,8 +35,7 @@ import style from './AlertPage.module.css';
 export default function AlertPage() {
   const navigate = useNavigate();
 
-  const [searchParams] = useSearchParams();
-  const activeCategory = searchParams.get('category') ?? 'ALL';
+  const { currentCategory, setCategory } = useCategorySearchParam('ALL');
 
   return (
     <div className={style.container}>
@@ -56,7 +56,11 @@ export default function AlertPage() {
         </div>
       </div>
 
-      <CategoryTab defaultCategory='ALL'>
+      <CategoryTab
+        label='알림 카테고리'
+        currentCategory={currentCategory}
+        onValueChange={(category) => setCategory(category)}
+      >
         {Object.entries(CATEGORY).map(([key, value]) => (
           <CategoryTab.Item key={key} category={key}>
             {value}
@@ -64,7 +68,7 @@ export default function AlertPage() {
         ))}
       </CategoryTab>
 
-      <AllReadButton activeCategory={activeCategory} />
+      <AllReadButton activeCategory={currentCategory} />
 
       <QueryErrorResetBoundary>
         {({ reset }) => (
@@ -75,7 +79,7 @@ export default function AlertPage() {
             )}
           >
             <Suspense fallback={<FetchLoading />}>
-              <NotificationList category={activeCategory} />
+              <NotificationList category={currentCategory} />
             </Suspense>
           </ErrorBoundary>
         )}

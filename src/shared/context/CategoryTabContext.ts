@@ -1,9 +1,8 @@
 import { createContext, useContext } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 export const CategoryTabContext = createContext<{
   currentCategory: string;
-  setSearchParams: ReturnType<typeof useSearchParams>[1];
+  onValueChange: (category: string) => void;
 } | null>(null);
 
 export function useCategoryTab() {
