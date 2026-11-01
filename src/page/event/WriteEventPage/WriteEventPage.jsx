@@ -253,7 +253,7 @@ export default function WriteEventPage() {
     <>
       <div className={styles.container}>
         <div className={styles.top}>
-          <CloseAppBar backgroundColor={'#eaf5fd'}>
+          <CloseAppBar backgroundColor='var(--white-2)'>
             <ActionButton
               onClick={handleSubmit}
               disabled={!isFormValid || isSubmitting}
@@ -276,7 +276,7 @@ export default function WriteEventPage() {
             setItem={handleEventTypeSelect}
             dropDownOpen={dropDownOpen}
             setDropDownOpen={setDropDownOpen}
-            backgroundColor={'#fff'}
+            backgroundColor='var(--white-2)'
           />
 
           <div className={styles.profileBox}>

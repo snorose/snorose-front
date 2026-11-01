@@ -384,7 +384,9 @@ export default function WriteExamReviewPage() {
         </div>
 
         <div className={styles.name}>
-          <label htmlFor='file'>{file?.name ?? '첨부된 파일이 없어요'}</label>
+          <label htmlFor='file' title={file?.name}>
+            <span>{file?.name ?? 'PDF 파일을 첨부해 주세요'}</span>
+          </label>
           <input id='file' type='file' accept='.pdf' onChange={handleFile} />
         </div>
       </div>

@@ -1,24 +1,28 @@
 .container {
-  height: 100vh;
-  padding-top: var(--default-appbar-height);
   display: flex;
   flex-direction: column;
-
+  height: 100vh;
+  padding-top: var(--default-appbar-height);
 }
 
 .notificationBar {
   display: flex;
-  align-items: center;
+
   gap: 1rem;
-  margin: 1rem var(--default-margin);
-  border-radius: 0.5rem;
-  background-color: var(--pink-1);
+
+  align-items: center;
+
   padding: 1.2rem 1.5rem;
+  margin: 1rem var(--default-margin);
 
   font: var(--text-body-1-reg);
+
   color: var(--pink-3);
 
   cursor: pointer;
+
+  background-color: var(--pink-1);
+  border-radius: 0.5rem;
 }
 
 .search {

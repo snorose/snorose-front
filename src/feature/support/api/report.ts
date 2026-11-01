@@ -1,4 +1,5 @@
 import { Attachment } from '@/feature/attachment/types';
+import { isMaintenanceBlockedError } from '@/feature/maintenance/access';
 
 import { putFileInBucket } from '@/apis';
 import { authAxios } from '@/axios';
@@ -45,6 +46,7 @@ export const createReport = async ({
 
     return { postId };
   } catch (error) {
+    if (isMaintenanceBlockedError(error)) throw error;
     const response = error?.response;
 
     if (!response) {
@@ -116,6 +118,7 @@ export const updateReport = async ({
 
     return { postId: reportId };
   } catch (error) {
+    if (isMaintenanceBlockedError(error)) throw error;
     const response = error?.response;
 
     if (!response) {
@@ -143,6 +146,7 @@ export const deleteReport = async (postId: string) => {
 
     return response.data.result;
   } catch (error) {
+    if (isMaintenanceBlockedError(error)) throw error;
     const response = error?.response;
 
     if (!response) {
