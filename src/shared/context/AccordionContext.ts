@@ -1,10 +1,9 @@
 import { createContext, useContext } from 'react';
 
-export type AccordionOpenMap = Record<string | number, boolean>;
-
 export const AccordionContext = createContext<{
-  isOpenMap: AccordionOpenMap;
-  setIsOpenMap: React.Dispatch<React.SetStateAction<AccordionOpenMap>>;
+  openMap: Record<string, boolean>;
+  setOpenMap: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
+  headingLevel: 1 | 2 | 3 | 4 | 5 | 6;
 } | null>(null);
 
 export function useAccordion() {
@@ -14,14 +13,10 @@ export function useAccordion() {
     throw new Error('Accordion 내부에서 사용해야 합니다.');
   }
 
-  return useContext(AccordionContext);
+  return context;
 }
 
-export const AccordionIdsContext = createContext<{
-  accordionId: string;
-  triggerId: string;
-  contentId: string;
-} | null>(null);
+export const AccordionIdsContext = createContext<string | null>(null);
 
 export function useAccordionIds() {
   const context = useContext(AccordionIdsContext);
