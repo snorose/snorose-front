@@ -65,10 +65,10 @@ export default function AboutPage() {
         height={25}
       />
       <div className={styles.accordionList}>
-        <Accordion>
+        <Accordion headingLevel={1}>
           {accordionItems.map((item, index) => (
             <Accordion.Item key={item.title}>
-              <Accordion.Trigger>{item.title}</Accordion.Trigger>
+              <Accordion.Header>{item.title}</Accordion.Header>
               <Accordion.Content>{item.content}</Accordion.Content>
             </Accordion.Item>
           ))}

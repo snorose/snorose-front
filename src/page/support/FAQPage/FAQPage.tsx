@@ -66,10 +66,10 @@ function FAQs({ currentCategory }: { currentCategory: string }) {
   const { data: faqList } = useFAQ(currentCategory);
 
   return (
-    <Accordion className={styles.notice}>
+    <Accordion className={styles.notice} headingLevel={2}>
       {faqList.map((faq) => (
         <Accordion.Item key={faq.faqId}>
-          <Accordion.Trigger>{faq.question}</Accordion.Trigger>
+          <Accordion.Header>{faq.question}</Accordion.Header>
           <Accordion.Content>{faq.answer}</Accordion.Content>
         </Accordion.Item>
       ))}

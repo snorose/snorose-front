@@ -1,11 +1,15 @@
-import { type ComponentPropsWithoutRef, useId, useState } from 'react';
+import {
+  type ComponentPropsWithoutRef,
+  ElementType,
+  useId,
+  useState,
+} from 'react';
 
 import { IconChevronDown } from '@snorose/icons';
 
 import {
   AccordionContext,
   AccordionIdsContext,
-  type AccordionOpenMap,
   useAccordion,
   useAccordionIds,
 } from '@/shared/context/AccordionContext';
@@ -14,17 +18,19 @@ import styles from './Accordion.module.css';
 
 type AccordionProps = ComponentPropsWithoutRef<'div'> & {
   children: React.ReactNode;
+  headingLevel: 1 | 2 | 3 | 4 | 5 | 6;
 };
 
 export default function Accordion({
-  children,
+  headingLevel = 3,
   className,
+  children,
   ...props
 }: AccordionProps) {
-  const [isOpenMap, setIsOpenMap] = useState<AccordionOpenMap>({});
+  const [openMap, setOpenMap] = useState<Record<string, boolean>>({});
 
   return (
-    <AccordionContext.Provider value={{ isOpenMap, setIsOpenMap }}>
+    <AccordionContext.Provider value={{ openMap, setOpenMap, headingLevel }}>
       <div
         {...props}
         className={[styles.accordion, className].filter(Boolean).join(' ')}
@@ -36,64 +42,63 @@ export default function Accordion({
 }
 
 function AccordionItem({ children }: { children: React.ReactNode }) {
-  const domId = useId();
+  const id = useId();
 
   return (
-    <AccordionIdsContext.Provider
-      value={{
-        accordionId: domId,
-        triggerId: `${domId}-trigger`,
-        contentId: `${domId}-content`,
-      }}
-    >
+    <AccordionIdsContext.Provider value={id}>
       {children}
     </AccordionIdsContext.Provider>
   );
 }
 
-function AccordionTrigger({ children }: { children: React.ReactNode }) {
-  const { isOpenMap, setIsOpenMap } = useAccordion();
-  const { accordionId, triggerId, contentId } = useAccordionIds();
+function AccordionHeader({ children }: { children: React.ReactNode }) {
+  const id = useAccordionIds();
+  const { openMap, setOpenMap, headingLevel } = useAccordion();
 
-  const isOpen = Boolean(isOpenMap[accordionId]);
+  const isOpen = Boolean(openMap[id]);
 
   const handleClick = () => {
-    setIsOpenMap((prev) => {
+    setOpenMap((prev) => {
       const next = Object.fromEntries(
         Object.keys(prev).map((key) => [key, false])
       );
-      return { ...next, [accordionId]: !prev[accordionId] };
+      return { ...next, [id]: !prev[id] };
     });
   };
 
+  const Heading = `h${headingLevel}` as ElementType;
+
   return (
-    <button
-      type='button'
-      id={triggerId}
-      className={`${styles.trigger} ${isOpen ? styles.opened : ''}`}
-      onClick={handleClick}
-      aria-expanded={isOpen}
-      aria-controls={contentId}
-    >
-      <span>{children}</span>
-      <IconChevronDown className={styles.toggleIcon} color='var(--blue-4)' />
-    </button>
+    <Heading>
+      <button
+        type='button'
+        id={`${id}-header`}
+        aria-controls={`${id}-content`}
+        aria-expanded={isOpen}
+        className={`${styles.trigger} ${isOpen ? styles.opened : ''}`}
+        onClick={handleClick}
+      >
+        <span>{children}</span>
+        <IconChevronDown className={styles.toggleIcon} color='var(--blue-4)' />
+      </button>
+    </Heading>
   );
 }
 
 function AccordionContent({ children }: { children: React.ReactNode }) {
-  const { isOpenMap } = useAccordion();
-  const { accordionId, triggerId, contentId } = useAccordionIds();
+  const id = useAccordionIds();
+  const { openMap } = useAccordion();
 
-  const isOpen = Boolean(isOpenMap[accordionId]);
+  const isOpen = Boolean(openMap[id]);
 
   return (
     <div
       ref={(element) => {
         element?.toggleAttribute('inert', !isOpen);
       }}
-      id={contentId}
-      aria-labelledby={triggerId}
+      id={`${id}-content`}
+      aria-labelledby={`${id}-header`}
+      role='region'
       className={`${styles.content} ${isOpen ? styles.opened : ''}`}
     >
       {children}
@@ -102,5 +107,5 @@ function AccordionContent({ children }: { children: React.ReactNode }) {
 }
 
 Accordion.Item = AccordionItem;
-Accordion.Trigger = AccordionTrigger;
+Accordion.Header = AccordionHeader;
 Accordion.Content = AccordionContent;
