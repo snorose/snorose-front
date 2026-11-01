@@ -11,6 +11,7 @@ import {
   FetchLoading,
   ServerErrorFallback,
 } from '@/shared/component';
+import useCategorySearchParam from '@/shared/hook/use-category-search-param.hook';
 
 import { getCommerceErrorCode } from '@/feature/commerce/utils/commerceRules';
 import useFAQ from '@/feature/support/hook/useFAQ';
@@ -28,14 +29,17 @@ const CATEGORY_ITEMS = [
 ];
 
 export default function FAQPage() {
-  const [searchParams] = useSearchParams();
-  const currentCategory = searchParams.get('category') ?? '전체';
+  const { currentCategory, setCategory } = useCategorySearchParam('전체');
 
   return (
     <div>
       <BackAppBar title='자주 묻는 질문' notFixed />
 
-      <CategoryTab defaultCategory='전체'>
+      <CategoryTab
+        label='FAQ 카테고리'
+        currentCategory={currentCategory}
+        onValueChange={(category: string) => setCategory(category)}
+      >
         {CATEGORY_ITEMS.map((item) => (
           <CategoryTab.Item key={item} category={item}>
             {item}
