@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import {
@@ -17,6 +17,13 @@ import { TOAST } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 
 import { useLogin } from '@/feature/auth/hooks';
+import {
+  getMaintenanceAccess,
+  subscribeMaintenanceAccess,
+} from '@/feature/maintenance/access';
+import { isMaintenanceTime } from '@/feature/maintenance/config';
+
+import { MaintenancePage } from '@/page/maintenance';
 
 import styles from './LoginPage.module.css';
 
@@ -25,6 +32,8 @@ const LOGIN_ERROR_MAP = {
 };
 
 export default function Login() {
+  // 점검 시작·종료 시 기존 리자의 로그인 화면도 다시 렌더링합니다.
+  useSyncExternalStore(subscribeMaintenanceAccess, getMaintenanceAccess);
   const location = useLocation();
   const redirectTo = getRedirectPath(location.state);
 
@@ -98,6 +107,8 @@ export default function Login() {
       onChange: (next) => setFormData((prev) => ({ ...prev, password: next })),
     },
   ];
+
+  if (isMaintenanceTime()) return <MaintenancePage />;
 
   return (
     <div className={styles.container}>

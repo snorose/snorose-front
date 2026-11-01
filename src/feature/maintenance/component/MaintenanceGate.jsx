@@ -5,12 +5,15 @@ import {
   useSyncExternalStore,
 } from 'react';
 
+import { getMyPageUserInfo } from '@/apis/userInfo';
+
 import { MaintenancePage } from '@/page/maintenance';
 
 import {
   getMaintenanceAccess,
+  refreshMaintenanceAccess,
+  setMaintenanceRoleVerifier,
   subscribeMaintenanceAccess,
-  syncMaintenanceAccess,
 } from '../access';
 import { isMaintenanceTime } from '../config';
 
@@ -25,21 +28,34 @@ export default function MaintenanceGate({
 }) {
   const startedOutsideMaintenance = useRef(!isMaintenanceTime());
   const reloaded = useRef(false);
-  useSyncExternalStore(subscribeMaintenanceAccess, getMaintenanceAccess);
-  const blocked = isMaintenanceTime();
+  const admitted = useRef(false);
+  const status = useSyncExternalStore(
+    subscribeMaintenanceAccess,
+    getMaintenanceAccess
+  );
+  const current = isMaintenanceTime()
+    ? status === 'inactive'
+      ? 'checking'
+      : status
+    : 'inactive';
+  const blocked = current === 'checking' || current === 'blocked';
+  if (!blocked) admitted.current = true;
 
   useEffect(() => {
-    const check = () => syncMaintenanceAccess();
+    const check = () => refreshMaintenanceAccess();
+    const onFocus = () => refreshMaintenanceAccess(true);
     const onVisibility = () => {
-      if (document.visibilityState === 'visible') check();
+      if (document.visibilityState === 'visible') onFocus();
     };
     check();
     const interval = window.setInterval(check, 1000);
-    window.addEventListener('focus', check);
+    window.addEventListener('focus', onFocus);
+    window.addEventListener('storage', check);
     document.addEventListener('visibilitychange', onVisibility);
     return () => {
       window.clearInterval(interval);
-      window.removeEventListener('focus', check);
+      window.removeEventListener('focus', onFocus);
+      window.removeEventListener('storage', check);
       document.removeEventListener('visibilitychange', onVisibility);
     };
   }, []);
@@ -67,16 +83,32 @@ export default function MaintenanceGate({
   }, [blocked]);
 
   useEffect(() => {
-    if (blocked && startedOutsideMaintenance.current && !reloaded.current) {
+    if (
+      current === 'blocked' &&
+      startedOutsideMaintenance.current &&
+      !reloaded.current
+    ) {
       reloaded.current = true;
       reload();
     }
-  }, [blocked, reload]);
+  }, [current, reload]);
 
+  // 재검증 중에는 기존 리자 화면을 잠시 숨겨 상태를 유지합니다.
+  const showApp = !blocked || (current === 'checking' && admitted.current);
   return (
     <>
       {blocked && <MaintenancePage />}
-      {!blocked && <div style={{ height: '100%' }}>{children}</div>}
+      {showApp && (
+        <div style={{ height: '100%' }} hidden={blocked}>
+          {children}
+        </div>
+      )}
     </>
   );
 }
+
+// Axios는 점검 정책만 검사하고, 권한 조회는 기존 API 함수를 재사용합니다.
+setMaintenanceRoleVerifier(async () => {
+  const userInfo = await getMyPageUserInfo();
+  return userInfo?.userRoleId;
+});
