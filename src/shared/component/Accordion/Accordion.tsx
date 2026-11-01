@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { type ComponentPropsWithoutRef, useState } from 'react';
 
 import { IconChevronDown } from '@snorose/icons';
 
@@ -12,12 +12,25 @@ import {
 
 import styles from './Accordion.module.css';
 
-export default function Accordion({ children }: { children: React.ReactNode }) {
+type AccordionProps = ComponentPropsWithoutRef<'div'> & {
+  children: React.ReactNode;
+};
+
+export default function Accordion({
+  children,
+  className,
+  ...props
+}: AccordionProps) {
   const [isOpenMap, setIsOpenMap] = useState<AccordionOpenMap>({});
 
   return (
     <AccordionContext.Provider value={{ isOpenMap, setIsOpenMap }}>
-      <div className={styles.accordion}>{children}</div>
+      <div
+        {...props}
+        className={[styles.accordion, className].filter(Boolean).join(' ')}
+      >
+        {children}
+      </div>
     </AccordionContext.Provider>
   );
 }
