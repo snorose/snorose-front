@@ -93,6 +93,7 @@ jest.mock('@/feature/alert/lib', () => ({
   canUseAlertSetting: () => true,
   getDeviceType: () => 'ANDROID',
   PushNotificationManager: {
+    registerServiceWorker: jest.fn(),
     ensurePermission: jest.fn(),
     issueToken: jest.fn(),
     isTokenChanged: () => false,
