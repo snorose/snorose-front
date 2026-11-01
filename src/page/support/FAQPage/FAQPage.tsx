@@ -1,7 +1,18 @@
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useSearchParams } from 'react-router-dom';
 
-import { Accordion, BackAppBar, CategoryTab } from '@/shared/component';
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
+import {
+  Accordion,
+  BackAppBar,
+  CategoryTab,
+  FetchLoading,
+  ServerErrorFallback,
+} from '@/shared/component';
+
+import { getCommerceErrorCode } from '@/feature/commerce/utils/commerceRules';
 import useFAQ from '@/feature/support/hook/useFAQ';
 
 import styles from './FAQPage.module.css';
@@ -20,8 +31,6 @@ export default function FAQPage() {
   const [searchParams] = useSearchParams();
   const currentCategory = searchParams.get('category') ?? '전체';
 
-  const { data: faqList } = useFAQ(currentCategory);
-
   return (
     <div>
       <BackAppBar title='자주 묻는 질문' notFixed />
@@ -36,15 +45,31 @@ export default function FAQPage() {
 
       <Notice />
 
-      <Accordion className={styles.notice}>
-        {faqList.map((faq) => (
-          <Accordion.Item key={faq.faqId} id={faq.faqId}>
-            <Accordion.Trigger>{faq.question}</Accordion.Trigger>
-            <Accordion.Content>{faq.answer}</Accordion.Content>
-          </Accordion.Item>
-        ))}
-      </Accordion>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary onReset={reset} FallbackComponent={ErrorFallback}>
+            <Suspense fallback={<FetchLoading />}>
+              <FAQs currentCategory={currentCategory} />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
     </div>
+  );
+}
+
+function FAQs({ currentCategory }: { currentCategory: string }) {
+  const { data: faqList } = useFAQ(currentCategory);
+
+  return (
+    <Accordion className={styles.notice}>
+      {faqList.map((faq) => (
+        <Accordion.Item key={faq.faqId} id={faq.faqId}>
+          <Accordion.Trigger>{faq.question}</Accordion.Trigger>
+          <Accordion.Content>{faq.answer}</Accordion.Content>
+        </Accordion.Item>
+      ))}
+    </Accordion>
   );
 }
 
@@ -93,4 +118,13 @@ function Notice() {
       </div>
     </div>
   );
+}
+
+function ErrorFallback({ error, resetErrorBoundary }) {
+  const errorCode = getCommerceErrorCode(error);
+
+  switch (errorCode) {
+    default:
+      return <ServerErrorFallback reset={resetErrorBoundary} />;
+  }
 }

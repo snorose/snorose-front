@@ -1,4 +1,4 @@
-import { defaultAxios } from '@/axios';
+import { authAxios } from '@/axios';
 
 type FAQ = {
   faqId: number;
@@ -10,11 +10,11 @@ type FAQ = {
 };
 
 export const fetchFAQs = async (category: string): Promise<Array<FAQ>> => {
-  const response = await defaultAxios.get(`/v1/support/faq`, {
+  const response = await authAxios.get(`/v1/support/faq`, {
     params: {
       category,
     },
   });
 
-  return response.data.result;
+  return response.data.result.data;
 };

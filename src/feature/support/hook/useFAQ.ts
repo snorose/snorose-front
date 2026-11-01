@@ -1,9 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { fetchFAQs } from '@/feature/support/api';
 
 export default function useFAQ(category: string) {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['list', 'faqs', category],
     queryFn: () => fetchFAQs(category),
   });
