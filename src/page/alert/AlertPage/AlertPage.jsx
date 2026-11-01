@@ -34,22 +34,8 @@ import style from './AlertPage.module.css';
 export default function AlertPage() {
   const navigate = useNavigate();
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const activeCategory = searchParams.get('category') ?? 'ALL';
-
-  const updateCategory = (category) => {
-    setSearchParams((prev) => {
-      const newParams = new URLSearchParams(prev);
-
-      if (category === 'ALL') {
-        newParams.delete('category');
-      } else {
-        newParams.set('category', category);
-      }
-
-      return newParams;
-    });
-  };
 
   return (
     <div className={style.container}>
@@ -70,16 +56,13 @@ export default function AlertPage() {
         </div>
       </div>
 
-      <div className={style.categoryTabs}>
+      <CategoryTab defaultCategory='ALL'>
         {Object.entries(CATEGORY).map(([key, value]) => (
-          <CategoryTab
-            key={key}
-            label={value}
-            isSelected={key === activeCategory}
-            onClick={() => updateCategory(key)}
-          />
+          <CategoryTab.Item key={key} category={key}>
+            {value}
+          </CategoryTab.Item>
         ))}
-      </div>
+      </CategoryTab>
 
       <AllReadButton activeCategory={activeCategory} />
 
