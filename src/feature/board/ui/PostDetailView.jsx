@@ -151,7 +151,14 @@ export default function PostDetailView({
           />
         )}
 
-        <div className={styles.sponsorBannerWrapper}>
+        <div
+          className={[
+            styles.sponsorBannerWrapper,
+            !isGeminiBannerActive && styles.croppedBanner,
+          ]
+            .filter(Boolean)
+            .join(' ')}
+        >
           <img
             src={isGeminiBannerActive ? geminiBanner : sponsorBanner}
             alt={isGeminiBannerActive ? 'Gemini 프로모션' : '스노로즈 후원하기'}

@@ -1,41 +1,37 @@
 .blueContainer {
   padding: var(--default-appbar-height) var(--default-margin) 0;
-
-  border-radius: 0 0 1.5rem 1.5rem;
-  border-bottom: 1px solid var(--blue-0);
   background-color: var(--white-2);
+  border-bottom: 1px solid var(--blue-0);
+  border-radius: 0 0 1.5rem 1.5rem;
 }
 
 /* meta */
 
 .metaContainer {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
   gap: 1rem;
-
+  align-items: flex-start;
+  justify-content: space-between;
   font: var(--text-body-2-reg);
   color: var(--grey-3-1);
 }
 
 /* 한 줄에 넘치면 카테고리 칩이 아랫줄로 내려감 */
 .meta {
-  flex: 1;
-  min-width: 0;
-
   display: flex;
+  flex: 1;
   flex-wrap: wrap;
-  align-items: center;
   gap: 0.5rem;
+  align-items: center;
+  min-width: 0;
 }
 
 .info {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
   min-width: 0;
   min-height: 2.4rem;
-
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 
   & > :not(.nickname) {
     flex-shrink: 0;
@@ -57,27 +53,25 @@
 }
 
 .actions {
-  min-height: 2.4rem;
-
   display: flex;
   align-items: center;
+  min-height: 2.4rem;
 }
 
 /* title */
 
 .titleContainer {
-  margin: 0.7rem 0 2.6rem 0;
-
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 0.4rem;
+  align-items: flex-start;
+  margin: 0.7rem 0 2.6rem 0;
 }
 
 .titleRow {
   display: flex;
-  align-items: center;
   gap: 8px;
+  align-items: center;
   width: 100%;
 }
 
@@ -91,36 +85,35 @@
 }
 
 .views {
-  margin-left: 0.4rem;
   padding-bottom: 0.7rem;
-
-  white-space: nowrap;
-  color: var(--blue-3);
+  margin-left: 0.4rem;
   font-size: 1.1rem;
+  color: var(--blue-3);
+  white-space: nowrap;
 }
 
 .sponsorBannerWrapper {
-  margin: 0.2rem 0 1.7rem;
   width: 100%;
   height: auto;
+  margin: 0.2rem 0 1.7rem;
 }
 
 .sponsorBanner {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 0.5rem;
   object-fit: cover;
+  border-radius: 0.5rem;
 }
 
-/* 모바일: 특정 높이에서 사이드 크롭이 필요한 경우만 */
+/* 기존 후원 배너만 모바일에서 높이를 고정하고 양옆 크롭 */
 @media (max-width: 768px) {
-  .sponsorBannerWrapper {
+  .croppedBanner {
     height: 8rem;
     overflow: hidden;
   }
 
-  .sponsorBanner {
+  .croppedBanner .sponsorBanner {
     height: 100%;
     object-position: center;
   }
