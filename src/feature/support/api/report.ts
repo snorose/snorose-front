@@ -45,8 +45,16 @@ export const createReport = async ({
   return { postId };
 };
 
-export const readReport = async (postId: string) => {
-  const response = await authAxios.get(`/v1/reports/report/${postId}`);
+export const readReport = async (reportId: string) => {
+  const response = await authAxios.get(`/v1/reports/report/${reportId}`);
+
+  return response.data.result;
+};
+
+export const withdrawReport = async (reportId: number) => {
+  const response = await authAxios.patch(
+    `/v1/reports/report/withdraw/${reportId}`
+  );
 
   return response.data.result;
 };

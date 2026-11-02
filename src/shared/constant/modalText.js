@@ -63,7 +63,17 @@ const MY_POST_MORE_OPTION_LIST = [
   },
 ];
 
-const MY_REPORT_MORE_OPTION_LIST = [];
+const MY_REPORT_MORE_OPTION_LIST = [
+  {
+    modalId: 'confirm-report-withdraw',
+    iconId: 'trash',
+    label: '철회하기',
+    width: 24,
+    height: 24,
+    icon: IconTrashcanFill,
+    color: 'var(--pink-2)',
+  },
+];
 
 const EXAM_REVIEW_MORE_OPTION_LIST = [
   {
@@ -226,6 +236,12 @@ const CONFIRM_MODAL = {
     title: '신고를 완료할까요?',
     description: `관리자 답변이 등록되면\n철회가 불가능해요`,
     confirmText: '완료',
+    cancelText: '취소',
+  },
+  REPORT_WITHDRAW: {
+    title: '신고를 철회할까요?',
+    description: null,
+    confirmText: '철회',
     cancelText: '취소',
   },
 

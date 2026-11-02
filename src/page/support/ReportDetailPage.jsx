@@ -19,6 +19,7 @@ import { PostDetailView } from '@/feature/board/ui';
 import { CommentInputContainer } from '@/feature/comment/component';
 import { readReport } from '@/feature/support/api';
 import { REPORT_STATUS_MAP } from '@/feature/support/constant';
+import useWithdrawReport from '@/feature/support/hook/useWithdrawReport';
 
 export default function ReportDetailPage() {
   return (
@@ -42,6 +43,8 @@ function ReportDetailLoader() {
     staleTime: 1000 * 60 * 5,
   });
 
+  const { mutate: withdrawReport } = useWithdrawReport();
+
   const onMenuOpen = () => {
     setModal({
       id: 'my-report-more-options',
@@ -52,6 +55,7 @@ function ReportDetailLoader() {
   return (
     <PostDetailView
       data={data}
+      handleWithdrawReport={() => withdrawReport(postId)}
       PostActionBar={
         <PostActionBar>
           <PostActionBar.Comment {...data} />

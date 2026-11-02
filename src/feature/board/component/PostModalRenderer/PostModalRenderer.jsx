@@ -10,6 +10,7 @@ export default function PostModalRenderer({
   handleReport,
   handleDelete,
   handleShare,
+  handleWithdrawReport,
 }) {
   const { pathname } = useLocation();
   const currentBoardId =
@@ -80,6 +81,14 @@ export default function PostModalRenderer({
                     : CONFIRM_MODAL_TEXT.DELETE_POST_WITHOUT_POINT_DEDUCTION
                 }
                 onConfirm={handleDelete}
+              />
+            );
+          // 신고 철회 최종 확인 모달
+          case 'confirm-report-withdraw':
+            return (
+              <ConfirmModal
+                modalText={CONFIRM_MODAL_TEXT.REPORT_WITHDRAW}
+                onConfirm={handleWithdrawReport}
               />
             );
           default:
