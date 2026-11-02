@@ -23,4 +23,18 @@ module.exports = {
     ],
     'simple-import-sort/exports': 'warn',
   },
+  overrides: [
+    {
+      files: ['public/firebase-messaging-sw.js'],
+      env: {
+        serviceworker: true,
+      },
+      globals: {
+        firebase: 'readonly',
+      },
+      rules: {
+        'no-restricted-globals': 'off',
+      },
+    },
+  ],
 };

@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import geminiBanner from '@/assets/banners/gemini-banner.png';
+
 import calendarImage from './calendar.png';
 import eventImage from './event.png';
 import newBoard from './newBoard.png';
@@ -49,6 +51,21 @@ const POPUP_CONTENTS = [
     ],
     startDate: '2026-10-27',
     endDate: '2026-11-05',
+  },
+  {
+    title: '[EVENT] 제미나이 무료 가입 이벤트 🎁',
+    description:
+      '제미나이 무료 가입 시 네이버페이 1만 원 증정! 참여 방법과 자세한 조건은 이벤트 게시글을 확인해 주세요.',
+    image: geminiBanner,
+    link: [
+      {
+        title: '이벤트 자세히 보기',
+        url: '/board/event/post/1931493',
+        isExternal: false,
+      },
+    ],
+    startDate: '2026-11-02',
+    endDate: '2026-11-09',
   },
   {
     title: '[EVENT] 스노로즈 X 웰라쥬 체험단 이벤트 🎁✨',
