@@ -1,5 +1,5 @@
 import { useContext, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { IconMultiCloudLogo } from '@snorose/icons';
 
@@ -159,11 +159,21 @@ export default function PostDetailView({
             .filter(Boolean)
             .join(' ')}
         >
-          <img
-            src={isGeminiBannerActive ? geminiBanner : sponsorBanner}
-            alt={isGeminiBannerActive ? 'Gemini 프로모션' : '스노로즈 후원하기'}
-            className={styles.sponsorBanner}
-          />
+          {isGeminiBannerActive ? (
+            <Link to='/board/event/post/1931493'>
+              <img
+                src={geminiBanner}
+                alt='Gemini 프로모션 이벤트 게시글 보기'
+                className={styles.sponsorBanner}
+              />
+            </Link>
+          ) : (
+            <img
+              src={sponsorBanner}
+              alt='스노로즈 후원하기'
+              className={styles.sponsorBanner}
+            />
+          )}
         </div>
 
         {PostActionBar}
