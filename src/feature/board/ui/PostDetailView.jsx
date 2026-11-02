@@ -38,6 +38,7 @@ export default function PostDetailView({
   data,
   authorBadgeRoleId,
   deletePost,
+  handleWithdrawReport,
   PostActionBar,
   CommentInputContainer,
   Chip,
@@ -181,7 +182,11 @@ export default function PostDetailView({
 
       <CommentInputContainer isNotice={data.isNotice} />
 
-      <MoreModal deletePost={deletePost} data={data} />
+      <MoreModal
+        deletePost={deletePost}
+        handleWithdrawReport={handleWithdrawReport}
+        data={data}
+      />
       <LinkAlertModal
         isOpen={linkModalOpen}
         checked={dontShowAgain}
@@ -258,7 +263,7 @@ function MetaContainer({
   );
 }
 
-function MoreModal({ deletePost, data }) {
+function MoreModal({ deletePost, handleWithdrawReport, data }) {
   const navigate = useNavigate();
 
   const { modal, setModal } = useContext(ModalContext);
@@ -300,6 +305,7 @@ function MoreModal({ deletePost, data }) {
       handleDelete={deletePost}
       handleShare={handleShare}
       handleReport={handleReport}
+      handleWithdrawReport={handleWithdrawReport}
     />
   );
 }
