@@ -25,10 +25,14 @@ import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
 import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
 import { sanitizePostHtml } from '@/feature/editor/lib/sanitize';
 
+import geminiBanner from '@/assets/banners/gemini-banner.png';
 import sponsorBanner from '@/assets/banners/sponsorBanner.png';
 
 import editorStyles from '../../editor/component/EditorContainer/EditorContainer.module.css';
 import styles from './PostDetailView.module.css';
+
+// 한국 시간 기준 2026년 11월 27일까지 Gemini 배너 노출
+const GEMINI_BANNER_END_AT = new Date('2026-11-28T00:00:00+09:00').getTime();
 
 export default function PostDetailView({
   data,
@@ -41,6 +45,7 @@ export default function PostDetailView({
 }) {
   const { userInfo } = useAuth();
   const navigate = useNavigate();
+  const isGeminiBannerActive = Date.now() < GEMINI_BANNER_END_AT;
 
   const [linkModalOpen, setLinkModalOpen] = useState(false);
   const [selectedLink, setSelectedLink] = useState('');
@@ -148,8 +153,8 @@ export default function PostDetailView({
 
         <div className={styles.sponsorBannerWrapper}>
           <img
-            src={sponsorBanner}
-            alt='스노로즈 후원하기'
+            src={isGeminiBannerActive ? geminiBanner : sponsorBanner}
+            alt={isGeminiBannerActive ? 'Gemini 프로모션' : '스노로즈 후원하기'}
             className={styles.sponsorBanner}
           />
         </div>
