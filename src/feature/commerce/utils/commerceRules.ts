@@ -1,11 +1,14 @@
 import axios from 'axios';
 
 import type {
+  FulfillmentMethod,
   OrdersResponse,
   QuantityMap,
   SaleResponse,
   SelectedOrderItem,
 } from '@/feature/commerce/types';
+
+import { fulfillmentWord } from './saleLabels';
 
 export function getSelectedOrderItems(
   products: SaleResponse['products'],
@@ -55,6 +58,8 @@ export function isProductQuantityLimitReached(
   product: ProductQuantityLimit,
   quantityMap: QuantityMap
 ) {
+  if (product.remainingForBuyer === null) return false;
+
   const draftProductQuantity = Object.values(
     quantityMap[product.productId] ?? {}
   ).reduce((acc, quantity) => acc + quantity, 0);
@@ -74,45 +79,71 @@ export function isPaymentPending(
   return (
     orderStatus === 'ACTIVE' &&
     paymentStatus === 'WAITING' &&
-    fulfillmentStatus === 'PENDING'
+    (fulfillmentStatus === 'PENDING' || fulfillmentStatus === 'NOT_REQUIRED')
   );
 }
 
 export function isPickUpPending(
   orderStatus: OrdersResponse['data'][number]['orderStatus'],
   paymentStatus: OrdersResponse['data'][number]['paymentStatus'],
-  fulfillmentStatus: OrdersResponse['data'][number]['fulfillmentStatus']
+  fulfillmentStatus: OrdersResponse['data'][number]['fulfillmentStatus'],
+  autoPaymentEnabled = true,
+  fulfillmentMethod?: FulfillmentMethod
 ) {
   return (
+    fulfillmentMethod !== 'NONE' &&
     orderStatus === 'ACTIVE' &&
-    paymentStatus === 'PAID' &&
+    (autoPaymentEnabled === false || paymentStatus === 'PAID') &&
     fulfillmentStatus === 'PENDING'
+  );
+}
+
+// 수령 절차가 없는 신청은 입금 확인(또는 입금 확인 없는 판매의 신청)으로 끝난다.
+export function isRegistrationComplete(
+  orderStatus: OrdersResponse['data'][number]['orderStatus'],
+  paymentStatus: OrdersResponse['data'][number]['paymentStatus'],
+  fulfillmentStatus: OrdersResponse['data'][number]['fulfillmentStatus'],
+  fulfillmentMethod?: FulfillmentMethod
+) {
+  if (orderStatus === 'CANCELLED') return false;
+  return (
+    fulfillmentStatus === 'NOT_REQUIRED' ||
+    (fulfillmentMethod === 'NONE' &&
+      orderStatus === 'ACTIVE' &&
+      paymentStatus === 'PAID')
   );
 }
 
 export function isPickedUp(
   orderStatus: OrdersResponse['data'][number]['orderStatus'],
   paymentStatus: OrdersResponse['data'][number]['paymentStatus'],
-  fulfillmentStatus: OrdersResponse['data'][number]['fulfillmentStatus']
+  fulfillmentStatus: OrdersResponse['data'][number]['fulfillmentStatus'],
+  autoPaymentEnabled = true
 ) {
   return (
     orderStatus === 'COMPLETED' &&
-    paymentStatus === 'PAID' &&
+    (autoPaymentEnabled === false || paymentStatus === 'PAID') &&
     fulfillmentStatus === 'PICKED_UP'
   );
 }
 
 export function isReview(
+  orderStatus: OrdersResponse['data'][number]['orderStatus'],
   paymentStatus: OrdersResponse['data'][number]['paymentStatus']
 ) {
-  return paymentStatus === 'REVIEW_REQUIRED';
+  return orderStatus === 'ACTIVE' && paymentStatus === 'REVIEW_REQUIRED';
 }
 
 export function isCanceled(
   orderStatus: OrdersResponse['data'][number]['orderStatus'],
-  paymentStatus: OrdersResponse['data'][number]['paymentStatus']
+  paymentStatus: OrdersResponse['data'][number]['paymentStatus'],
+  autoPaymentEnabled = true
 ) {
-  return orderStatus === 'CANCELLED' && paymentStatus === 'CANCELLED';
+  // 운영 취소는 결제 상태를 바꾸지 않으므로, 입금 만료가 아닌 취소는 모두 주문 취소로 본다.
+  return (
+    orderStatus === 'CANCELLED' &&
+    (autoPaymentEnabled === false || paymentStatus !== 'EXPIRED')
+  );
 }
 
 export function isExpired(
@@ -132,7 +163,7 @@ export function getSaleUnavailableTitle(sale: SaleResponse) {
 
 export function getSaleUnavailableMessage(sale: SaleResponse) {
   if (sale.status === 'CLOSED') {
-    return '이 상품은 새 주문을 받을 수 없어요. 기존 주문과 수령 안내는 판매자의 공지를 확인해주세요.';
+    return `이 상품은 새 주문을 받을 수 없어요. 기존 주문과 ${fulfillmentWord(sale.saleType)} 안내는 판매자의 공지를 확인해주세요.`;
   }
 
   return '현재 이 판매는 새 주문을 받을 수 없어요.';

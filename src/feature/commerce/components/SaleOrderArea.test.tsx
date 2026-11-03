@@ -3,6 +3,15 @@ import { render, screen } from '@testing-library/react';
 import { SaleOrderArea } from '@/feature/commerce/components/SaleOrderArea';
 import { SaleResponse } from '@/feature/commerce/types';
 
+jest.mock(
+  '@snorose/icons',
+  () => ({ IllustrationTaskComplete: () => <svg /> }),
+  { virtual: true }
+);
+jest.mock('@/shared/lib', () => ({
+  DateTime: jest.requireActual('@/shared/lib/date-time'),
+}));
+
 const sale: SaleResponse = {
   saleId: 1,
   sellerName: '스노로즈 운영팀',

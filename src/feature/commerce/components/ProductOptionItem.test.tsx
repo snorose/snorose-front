@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react';
 
 import { ProductOptionItem } from './ProductOptionSection';
 
+jest.mock('@/shared/lib', () => jest.requireActual('@/shared/lib/number'));
+
 const soldOutOption = {
   productId: 1,
   productName: '스노로즈 반다나',

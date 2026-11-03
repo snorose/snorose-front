@@ -2,9 +2,11 @@ import { DimModalLayout } from '@/shared/component';
 import styles from '@/shared/component/modal/ConfirmModal/ConfirmModal.module.css';
 
 export default function CancelOrderConfirmModal({
+  notice,
   onClose,
   onConfirm,
 }: {
+  notice?: string;
   onClose: () => void;
   onConfirm: () => void;
 }) {
@@ -13,6 +15,7 @@ export default function CancelOrderConfirmModal({
       <div className={styles.top}>
         <h3 className={styles.title}>주문 취소</h3>
         <div className={styles.description}>정말로 주문을 취소하시겠어요?</div>
+        {notice && <div className={styles.description}>{notice}</div>}
       </div>
 
       <div className={styles.contentDivider} />

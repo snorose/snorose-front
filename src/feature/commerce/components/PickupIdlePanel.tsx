@@ -12,23 +12,25 @@ export default function PickupIdlePanel({
   onClearDevice,
 }: PickupIdlePanelProps) {
   return (
-    <section className={styles.panel} aria-live='polite'>
+    <section
+      className={`${styles.panel} ${styles.idlePanel}`}
+      aria-live='polite'
+    >
       <div className={styles.statusBadge}>대기</div>
       <div className={styles.panelHeader}>
-        <h1 className={styles.title}>수령 확인 대기 중</h1>
-        <p className={styles.description}>현재 표시할 주문이 없습니다.</p>
+        <h1 className={styles.title}>수령·입장 확인 대기 중</h1>
+        <p className={styles.description}>현재 표시할 내역이 없습니다.</p>
+        {connectionMessage && (
+          <p className={styles.connectionMessage}>{connectionMessage}</p>
+        )}
       </div>
-
-      {connectionMessage && (
-        <p className={styles.connectionMessage}>{connectionMessage}</p>
-      )}
 
       <PrimaryButton
         className={styles.secondaryButton}
         type='button'
         onClick={onClearDevice}
       >
-        다시 페어링
+        다시 연결
       </PrimaryButton>
     </section>
   );

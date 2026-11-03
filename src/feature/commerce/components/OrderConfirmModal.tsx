@@ -1,11 +1,12 @@
 import DimModalLayout from '@/shared/component/modal/DimModalLayout/DimModalLayout';
 import { formatNumber } from '@/shared/lib';
 
-import type { SelectedOrderItem } from '@/feature/commerce/types';
+import type { SaleType, SelectedOrderItem } from '@/feature/commerce/types';
 
 import styles from '@/page/commerce/SaleDetailPage.module.css';
 
 type OrderConfirmModalProps = {
+  saleType?: SaleType;
   selectedOrderItems: SelectedOrderItem[];
   phoneNumber: string;
   totalPaymentAmount: number;
@@ -15,6 +16,7 @@ type OrderConfirmModalProps = {
 };
 
 export default function OrderConfirmModal({
+  saleType,
   selectedOrderItems,
   phoneNumber,
   totalPaymentAmount,
@@ -36,7 +38,9 @@ export default function OrderConfirmModal({
               id='orderConfirmModalTitle'
               className={styles.accountModalTitle}
             >
-              주문 내용을 확인해주세요
+              {saleType === 'LECTURE'
+                ? '신청 내용을 확인해주세요'
+                : '주문 내용을 확인해주세요'}
             </h3>
 
             <section className={styles.orderConfirmSection}>
@@ -93,7 +97,11 @@ export default function OrderConfirmModal({
             onClick={onConfirm}
             disabled={isSubmitting}
           >
-            {isSubmitting ? '주문 중' : '주문하기'}
+            {isSubmitting
+              ? '처리 중...'
+              : saleType === 'LECTURE'
+                ? '신청하기'
+                : '주문하기'}
           </button>
         </div>
       </div>

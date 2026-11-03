@@ -8,8 +8,10 @@ import {
   isPaymentPending,
   isPickedUp,
   isPickUpPending,
+  isRegistrationComplete,
   isReview,
 } from '@/feature/commerce/utils/commerceRules';
+import { fulfillmentWord } from '@/feature/commerce/utils/saleLabels';
 
 import styles from '@/page/commerce/OrderListPage.module.css';
 
@@ -17,6 +19,9 @@ import altImage from '@/assets/images/altImage.png';
 
 export default function OrderItem({
   orderNumber,
+  saleType,
+  autoPaymentEnabled = true,
+  fulfillmentMethod,
   saleTitle,
   thumbnailUrl,
   itemSummary,
@@ -49,22 +54,48 @@ export default function OrderItem({
           </div>
         </div>
         <div className={styles.statusList}>
-          {isPaymentPending(orderStatus, paymentStatus, fulfillmentStatus) && (
-            <Chip name={'입금 대기'} variant={'gradient'} size='sm' />
+          {autoPaymentEnabled &&
+            isPaymentPending(orderStatus, paymentStatus, fulfillmentStatus) && (
+              <Chip name={'입금 대기'} variant={'gradient'} size='sm' />
+            )}
+          {isPickUpPending(
+            orderStatus,
+            paymentStatus,
+            fulfillmentStatus,
+            autoPaymentEnabled,
+            fulfillmentMethod
+          ) && (
+            <Chip
+              name={`${fulfillmentWord(saleType)} 대기`}
+              variant={'gradient'}
+              size='sm'
+            />
           )}
-          {isPickUpPending(orderStatus, paymentStatus, fulfillmentStatus) && (
-            <Chip name={'수령 대기'} variant={'gradient'} size='sm' />
+          {isPickedUp(
+            orderStatus,
+            paymentStatus,
+            fulfillmentStatus,
+            autoPaymentEnabled
+          ) && (
+            <Chip
+              name={`${fulfillmentWord(saleType)} 완료`}
+              variant={'grey'}
+              size='sm'
+            />
           )}
-          {isPickedUp(orderStatus, paymentStatus, fulfillmentStatus) && (
-            <Chip name={'수령 완료'} variant={'grey'} size='sm' />
-          )}
-          {isReview(paymentStatus) && (
+          {isRegistrationComplete(
+            orderStatus,
+            paymentStatus,
+            fulfillmentStatus,
+            fulfillmentMethod
+          ) && <Chip name='신청 완료' variant='grey' size='sm' />}
+          {autoPaymentEnabled && isReview(orderStatus, paymentStatus) && (
             <Chip name={'검토 필요'} variant={'gradient'} size='sm' />
           )}
-          {isCanceled(orderStatus, paymentStatus) && (
+          {isCanceled(orderStatus, paymentStatus, autoPaymentEnabled) && (
             <Chip name={'주문 취소'} variant={'grey'} size='sm' />
           )}
-          {isExpired(orderStatus, paymentStatus) && (
+          {autoPaymentEnabled && isExpired(orderStatus, paymentStatus) && (
             <Chip name={'입금 만료'} variant={'grey'} size='sm' />
           )}
         </div>
