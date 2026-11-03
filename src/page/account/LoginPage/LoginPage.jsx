@@ -16,6 +16,7 @@ import {
 import { TOAST } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 
+import { getRedirectPath } from '@/feature/auth/getRedirectPath';
 import { useLogin } from '@/feature/auth/hooks';
 import {
   getMaintenanceAccess,
@@ -170,23 +171,4 @@ export default function Login() {
       </form>
     </div>
   );
-}
-
-function getRedirectPath(state) {
-  const from = state?.from;
-  const pathname = from?.pathname;
-
-  if (
-    typeof pathname !== 'string' ||
-    !pathname.startsWith('/') ||
-    pathname.startsWith('//') ||
-    pathname === '/login'
-  ) {
-    return '/';
-  }
-
-  const search = typeof from.search === 'string' ? from.search : '';
-  const hash = typeof from.hash === 'string' ? from.hash : '';
-
-  return `${pathname}${search}${hash}`;
 }
