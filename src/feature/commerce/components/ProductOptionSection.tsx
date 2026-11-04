@@ -4,12 +4,14 @@ import type {
   ProductOption,
   QuantityMap,
   SaleResponse,
+  SaleType,
 } from '@/feature/commerce/types';
 import { isPlusQuantityInvalid } from '@/feature/commerce/utils/commerceRules';
 
 import styles from '@/page/commerce/SaleDetailPage.module.css';
 
 type ProductOptionSectionProps = {
+  saleType?: SaleType;
   products: SaleResponse['products'];
   quantityMap: QuantityMap;
   handlePlusQuantity: (productId: number, variantId: number) => void;
@@ -17,6 +19,7 @@ type ProductOptionSectionProps = {
 };
 
 export default function ProductOptionSection({
+  saleType,
   products,
   quantityMap,
   handlePlusQuantity,
@@ -48,7 +51,8 @@ export default function ProductOptionSection({
               {product.inventoryPolicy === 'LIMITED_STOCK' &&
                 product.maxPerBuyer && (
                   <span className={styles.productMaxPerBuyer}>
-                    최대 {product.maxPerBuyer}개 구매 가능
+                    최대 {product.maxPerBuyer}
+                    {saleType === 'LECTURE' ? '매 신청 가능' : '개 구매 가능'}
                   </span>
                 )}
             </div>
@@ -71,6 +75,7 @@ export default function ProductOptionSection({
                 return (
                   <ProductOptionItem
                     option={option}
+                    saleType={saleType}
                     quantity={quantityMap[product.productId][option.variantId]}
                     onIncrease={handlePlusQuantity}
                     onDecrease={handleMinusQuantity}
@@ -90,6 +95,7 @@ export default function ProductOptionSection({
 
 export function ProductOptionItem({
   option,
+  saleType,
   quantity,
   onIncrease,
   onDecrease,
@@ -98,6 +104,7 @@ export function ProductOptionItem({
   inventoryPolicy,
 }: {
   option: ProductOption;
+  saleType?: SaleType;
   quantity: number;
   onIncrease: (productId: number, variantId: number) => void;
   onDecrease: (productId: number, variantId: number) => void;
@@ -122,7 +129,11 @@ export function ProductOptionItem({
         </div>
       </div>
 
-      {isSoldOut && <span className={styles.soldOutBadge}>품절</span>}
+      {isSoldOut && (
+        <span className={styles.soldOutBadge}>
+          {saleType === 'LECTURE' ? '신청 마감' : '품절'}
+        </span>
+      )}
       {!isSoldOut && (
         <div className={styles.quantityControl}>
           <button

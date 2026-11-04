@@ -1,5 +1,10 @@
 import {
+  isCanceled,
+  isExpired,
+  isPickUpPending,
   isProductQuantityLimitReached,
+  isRegistrationComplete,
+  isReview,
   isValidPhoneNumber,
 } from '@/feature/commerce/utils/commerceRules';
 
@@ -49,5 +54,64 @@ describe('유효한 연락처', () => {
     const phoneNumber = '0101111222';
 
     expect(isValidPhoneNumber(phoneNumber)).toBe(false);
+  });
+});
+
+it('구매 수량 제한이 없는 상품은 잔여 구매 한도를 초과하지 않는다', () => {
+  expect(
+    isProductQuantityLimitReached(
+      { productId: 1, remainingForBuyer: null },
+      { 1: { 1: 0 } }
+    )
+  ).toBe(false);
+  expect(
+    isProductQuantityLimitReached(
+      { productId: 1, remainingForBuyer: null },
+      { 1: { 1: 3 } }
+    )
+  ).toBe(false);
+});
+
+describe('수령 절차가 없는 신청 상태', () => {
+  it('입금 확인된 신청은 수령 대기가 아니라 신청 완료로 본다', () => {
+    expect(isPickUpPending('ACTIVE', 'PAID', 'PENDING', true, 'NONE')).toBe(
+      false
+    );
+    expect(isRegistrationComplete('ACTIVE', 'PAID', 'PENDING', 'NONE')).toBe(
+      true
+    );
+  });
+
+  it('입금 확인 없는 신청은 신청 즉시 완료로 보고, 취소되면 완료로 보지 않는다', () => {
+    expect(isRegistrationComplete('ACTIVE', null, 'NOT_REQUIRED', 'NONE')).toBe(
+      true
+    );
+    expect(
+      isRegistrationComplete('CANCELLED', null, 'NOT_REQUIRED', 'NONE')
+    ).toBe(false);
+  });
+
+  it('수령 절차가 있는 판매는 그대로 수령 대기로 본다', () => {
+    expect(isPickUpPending('ACTIVE', 'PAID', 'PENDING', true, 'PICKUP')).toBe(
+      true
+    );
+    expect(isRegistrationComplete('ACTIVE', 'PAID', 'PENDING', 'PICKUP')).toBe(
+      false
+    );
+  });
+});
+
+describe('취소된 주문 상태', () => {
+  it('운영 취소는 결제 상태가 남아 있어도 주문 취소로 표시하고 검토 필요로 보지 않는다', () => {
+    expect(isCanceled('CANCELLED', 'PAID', true)).toBe(true);
+    expect(isCanceled('CANCELLED', 'WAITING', true)).toBe(true);
+    expect(isCanceled('CANCELLED', 'REVIEW_REQUIRED', true)).toBe(true);
+    expect(isReview('CANCELLED', 'REVIEW_REQUIRED')).toBe(false);
+    expect(isReview('ACTIVE', 'REVIEW_REQUIRED')).toBe(true);
+  });
+
+  it('입금 기한 만료는 주문 취소가 아니라 입금 만료로 표시한다', () => {
+    expect(isCanceled('CANCELLED', 'EXPIRED', true)).toBe(false);
+    expect(isExpired('CANCELLED', 'EXPIRED')).toBe(true);
   });
 });

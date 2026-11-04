@@ -1,8 +1,17 @@
 import { DimModalLayout } from '@/shared/component';
 
+import type { SaleType } from '@/feature/commerce/types';
+import { fulfillmentWord } from '@/feature/commerce/utils/saleLabels';
+
 import styles from '@/page/commerce/SaleDetailPage.module.css';
 
-export default function SaleClosedModal({ onClose }: { onClose: () => void }) {
+export default function SaleClosedModal({
+  onClose,
+  saleType,
+}: {
+  onClose: () => void;
+  saleType?: SaleType;
+}) {
   return (
     <DimModalLayout>
       <div
@@ -16,8 +25,8 @@ export default function SaleClosedModal({ onClose }: { onClose: () => void }) {
             판매가 마감되었어요
           </h3>
           <p className={styles.saleClosedModalDescription}>
-            이 상품은 새 주문을 받을 수 없어요. 기존 주문과 수령 안내는 판매자의
-            공지를 확인해주세요.
+            새 신청을 받을 수 없어요. 기존 신청과 {fulfillmentWord(saleType)}{' '}
+            안내는 판매자의 공지를 확인해주세요.
           </p>
         </div>
 
