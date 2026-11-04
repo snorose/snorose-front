@@ -10,16 +10,16 @@
 }
 
 .submitBtn {
-  background-color: transparent;
   padding: 1.4rem 2rem;
   font-size: 1.6rem;
+  background-color: transparent;
 }
 
 .contentContainer {
   display: flex;
   flex-direction: column;
-  padding: 1.4rem 2rem;
   gap: 5.1rem;
+  padding: 1.4rem 2rem;
 }
 
 .pageTitle {

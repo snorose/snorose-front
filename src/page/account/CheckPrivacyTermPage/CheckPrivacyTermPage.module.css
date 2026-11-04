@@ -1,21 +1,20 @@
 .container {
-  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  height: 100%;
 }
 
 .body {
   display: flex;
   flex-direction: column;
-  padding: 0 var(--default-margin) 2rem;
   gap: 2rem;
+  padding: 0 var(--default-margin) 2rem;
 }
 
 .title {
   display: flex;
   gap: 5px;
-
   font: var(--text-title-1-bold);
   white-space: pre-line;
 }
@@ -23,25 +22,29 @@
 .required {
   width: 8px;
   height: 8px;
-  border-radius: 100%;
   background: #ff4b6c;
+  border-radius: 100%;
 }
 
 .description {
-  height: 600px;
-  overflow: scroll !important;
-
   display: flex;
+
   flex-direction: column;
+
   gap: 0.5rem;
+
+  height: 600px;
 
   padding: 1.4rem;
 
-  border-radius: 0.5rem;
-  background: var(--grey-1-1);
+  overflow: scroll !important;
 
   font: var(--text-body-1-reg);
+
   white-space: pre-line;
+
+  background: var(--grey-1-1);
+  border-radius: 0.5rem;
 }
 
 .summary,

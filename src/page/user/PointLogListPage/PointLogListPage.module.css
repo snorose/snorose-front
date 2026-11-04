@@ -4,10 +4,9 @@
 }
 
 .contentWrapper {
-  padding: 0 var(--default-margin) 5.4rem;
-
   display: flex;
   flex-direction: column;
+  padding: 0 var(--default-margin) 5.4rem;
 }
 
 .topContainer {
@@ -22,12 +21,12 @@
 
 .totalPointWrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .totalPoints {
-  color: var(--blue-4);
   font: var(--text-headline-1-med);
+  color: var(--blue-4);
 }

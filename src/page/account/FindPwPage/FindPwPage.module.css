@@ -1,42 +1,37 @@
 .container {
   height: 100%;
-
   padding-top: var(--default-appbar-height);
-
   overflow-y: scroll;
 }
 
 .container form {
-  height: 100%;
-
-  margin: 0 var(--default-margin);
-
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100%;
+  margin: 0 var(--default-margin);
 }
 
 .findIdFrame {
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   gap: 4rem;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
 }
 
 .pageTitle {
-  font: var(--text-title-1-bold);
   margin-top: 1.4rem;
   margin-bottom: 5.1rem;
+  font: var(--text-title-1-bold);
 }
 
 .form {
-  margin-bottom: 2.4rem;
-
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
+  margin-bottom: 2.4rem;
 }
 
 .idInfoBtn.active {
@@ -44,16 +39,21 @@
 }
 
 .idInfoBtn {
+  display: flex;
+
+  gap: 0.4rem;
+
+  align-items: center;
+  justify-content: center;
+
   width: 12.2rem;
   height: 3.6rem;
-  border-radius: 0.5rem;
-  border: solid 0.1rem var(--grey-3);
+
   margin-top: 1.8rem;
   margin-left: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.4rem;
+
+  border: solid 0.1rem var(--grey-3);
+  border-radius: 0.5rem;
   & p {
     font: var(--text-body-1-reg);
     color: var(--blue-3);
@@ -72,18 +72,21 @@
     gap: 0.6rem;
   }
   & li {
-    list-style: none;
     position: relative;
     padding-left: 1.6rem;
+    list-style: none;
     &::before {
-      content: '';
       position: absolute;
-      left: 0;
       top: calc((1lh - 0.8rem) / 2);
+      left: 0;
+
       width: 0.8rem;
       height: 0.8rem;
-      border-radius: 50%;
+
+      content: '';
+
       background-color: var(--grey-3);
+      border-radius: 50%;
     }
   }
 
@@ -100,21 +103,25 @@
 }
 
 .googleFormBtn {
+  display: flex;
+
+  gap: 0.1rem;
+
+  align-items: center;
+  justify-content: center;
+
   width: 8.5rem;
   height: 3.6rem;
-  border-radius: 0.5rem;
-  border: solid 0.1rem var(--grey-3);
+
   margin-top: 1.8rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.1rem;
+
+  border: solid 0.1rem var(--grey-3);
+  border-radius: 0.5rem;
 }
 
 .buttonFrame {
-  margin-bottom: 4rem;
-
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  margin-bottom: 4rem;
 }

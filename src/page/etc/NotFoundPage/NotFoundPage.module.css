@@ -1,17 +1,17 @@
 .main {
-  height: 100vh;
   display: flex;
   flex-direction: column;
+  height: 100vh;
   padding: 0 var(--default-margin) 6rem;
 }
 
 .illustrationWrapper {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   flex: 1;
+  flex-direction: column;
   gap: 1.2rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .illustration {
@@ -21,8 +21,8 @@
 }
 
 .text {
-  color: var(--grey-4);
   font: var(--text-headline-2-reg);
+  color: var(--grey-4);
 }
 
 .button {
