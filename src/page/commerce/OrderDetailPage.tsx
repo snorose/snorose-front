@@ -116,7 +116,9 @@ function OrderDetailView() {
         <section className={`${styles.info} ${styles.paymentInfo}`}>
           <h2 className={styles.infoTitle}>입금 안내</h2>
           {!autoPaymentEnabled && (
-            <p>이 판매는 입금 상태 조회를 제공하지 않아요.</p>
+            <p className={styles.infoDescription}>
+              이 판매는 입금 상태 조회를 제공하지 않아요.
+            </p>
           )}
           <dl className={styles.infoList}>
             <div className={styles.infoItem}>

@@ -11,6 +11,11 @@
   font: var(--text-headline-2-bold);
 }
 
+.infoDescription {
+  margin-bottom: 2rem;
+  font: var(--text-body-2-med);
+}
+
 .infoList {
   display: flex;
   flex-direction: column;
