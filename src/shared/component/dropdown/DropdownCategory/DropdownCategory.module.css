@@ -12,28 +12,30 @@
 
 .trigger {
   display: flex;
+
   align-items: center;
   justify-content: space-between;
 
   width: 100%;
   min-height: 5.6rem;
+
   padding: 0 1.6rem;
+
+  cursor: pointer;
 
   background: var(--white-2);
   border: 1px solid var(--blue-2);
   border-radius: 0.8rem;
-
-  cursor: pointer;
 }
 
 .placeholder {
-  color: var(--grey-3-1);
   font: var(--text-body-1-reg);
+  color: var(--grey-3-1);
 }
 
 .value {
-  color: var(--grey-4);
   font: var(--text-body-1-reg);
+  color: var(--grey-4);
 }
 
 .arrow {
@@ -61,20 +63,23 @@
 
 .item {
   display: flex;
+
   align-items: center;
   justify-content: space-between;
 
   width: 100%;
   min-height: 5.6rem;
+
   padding: 0 2rem;
 
   font-size: 1.6rem;
+
   text-align: left;
+
+  cursor: pointer;
 
   background: var(--white-2);
   border: 0;
-
-  cursor: pointer;
 }
 
 .item span {

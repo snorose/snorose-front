@@ -1,34 +1,39 @@
 /* Tile */
 
 .tile {
-  width: 3.2rem;
-  height: 5.2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 0.4rem;
+  align-items: center;
+  width: 3.2rem;
+  height: 5.2rem;
 }
 
 .day {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
   width: 3.2rem;
   height: 3.2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
   font-size: 1.6rem;
-  text-align: center;
+
   color: var(--white);
+
+  text-align: center;
 }
 
 .day.today {
-  border-radius: 100%;
-  background: var(--blue-1);
   font-weight: 700;
   color: var(--blue-4);
+  background: var(--blue-1);
+  border-radius: 100%;
 }
 
 .difference {
   font-size: 1.2rem;
-  text-align: center;
   color: var(--pink-2);
+  text-align: center;
 }

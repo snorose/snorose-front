@@ -1,9 +1,7 @@
 .container {
-  min-height: 100vh;
-
   display: flex;
   flex-direction: column;
-
+  min-height: 100vh;
   overflow-y: scroll;
 }
 
@@ -18,9 +16,8 @@
 }
 
 .signupFrame {
-  flex: 1;
-
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: space-between;
 }

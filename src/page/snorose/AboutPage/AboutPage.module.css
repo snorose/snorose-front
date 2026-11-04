@@ -14,8 +14,8 @@
 /* 스노로즈 소개 */
 
 .aboutUs {
-  white-space: pre-wrap;
   word-break: keep-all;
+  white-space: pre-wrap;
 }
 
 /* 명예의 전당 */
@@ -27,15 +27,15 @@
 
 .hallOfFameImage {
   display: block;
-  margin: 0 auto;
   width: 80%;
+  margin: 0 auto;
 }
 
 .hallOfFame .tags {
-  margin: 0 0.8rem;
-  padding-bottom: 2rem;
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   gap: 0.6rem;
+  justify-content: center;
+  padding-bottom: 2rem;
+  margin: 0 0.8rem;
 }

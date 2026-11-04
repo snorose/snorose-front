@@ -7,11 +7,11 @@
 }
 
 .emptyContainer {
-  flex: 1;
   display: flex;
-  justify-content: center;
+  flex: 1;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  color: var(--grey-4);
   font: var(--text-headline-2-reg);
+  color: var(--grey-4);
 }

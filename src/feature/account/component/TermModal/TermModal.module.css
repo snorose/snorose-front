@@ -2,22 +2,26 @@
   position: absolute;
   top: 0;
   left: 0;
+  z-index: var(--z-index-popup);
+
+  display: flex;
+
+  flex-direction: column;
+
   width: 100%;
   height: 100%;
+
   background-color: var(--white);
-  z-index: var(--z-index-popup);
-  display: flex;
-  flex-direction: column;
 }
 
 .appBar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
   width: 100%;
   height: var(--default-appbar-height);
   padding: 0 2rem;
-  display: flex;
-  align-items: center;
   background-color: var(--white);
-  flex-shrink: 0;
 }
 
 .closeIcon {
@@ -29,39 +33,46 @@
 }
 
 .title {
-  font: var(--text-title-1-bold);
   display: flex;
-  align-items: flex-start;
   gap: 0.4rem;
+  align-items: flex-start;
+  font: var(--text-title-1-bold);
 }
 
 .required {
+  flex-shrink: 0;
   width: 0.6rem;
   height: 0.6rem;
-  border-radius: 50%;
-  background-color: var(--pink-3);
-  flex-shrink: 0;
   margin-top: 0.3rem;
+  background-color: var(--pink-3);
+  border-radius: 50%;
 }
 
 .contentWrapper {
+  display: flex;
   flex: 1;
+  flex-direction: column;
   padding: 0 var(--default-margin) 2rem;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
 .content {
   flex: 1;
+
   padding: 2rem 1.3rem;
-  border-radius: 0.5rem;
-  background: #f5f5f5;
-  color: var(--grey-4);
-  font: var(--text-body-1-reg);
-  line-height: 1.6;
-  white-space: pre-line;
+
   overflow-y: auto;
+
+  font: var(--text-body-1-reg);
+
+  line-height: 1.6;
+
+  color: var(--grey-4);
+
+  white-space: pre-line;
+
+  background: #f5f5f5;
+  border-radius: 0.5rem;
 }
 
 .content section {
@@ -73,24 +84,24 @@
 }
 
 .content ul {
-  list-style-type: disc;
   padding-left: 2rem;
   font: var(--text-body-2-reg);
+  list-style-type: disc;
 }
 
 .content ol {
-  list-style-type: decimal;
   padding-left: 2.2rem;
   font: var(--text-body-2-reg);
+  list-style-type: decimal;
 }
 
 .footer {
-  padding: 2rem var(--default-margin);
-  background: var(--white);
-  flex-shrink: 0;
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
   gap: 1.2rem;
+  padding: 2rem var(--default-margin);
+  background: var(--white);
 }
 
 /* 스크롤바 스타일링 */

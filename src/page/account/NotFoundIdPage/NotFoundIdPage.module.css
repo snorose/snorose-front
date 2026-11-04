@@ -1,12 +1,10 @@
 .container {
-  height: 100vh;
-
-  padding-top: var(--default-appbar-height);
-  padding-bottom: 4rem;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100vh;
+  padding-top: var(--default-appbar-height);
+  padding-bottom: 4rem;
 }
 
 .explanation,
@@ -24,22 +22,22 @@
 }
 
 .pageExplanation {
+  margin-top: 0.6rem;
   font: var(--text-headline-2-reg);
   color: var(--grey-4);
-  margin-top: 0.6rem;
 }
 
 .pageMiddleFrame {
-  height: fit-content;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  height: fit-content;
 }
 
 .illustration {
+  flex-shrink: 0;
   width: 25rem;
   height: 25rem;
-  flex-shrink: 0;
 }
 
 .pageBottomFrame {

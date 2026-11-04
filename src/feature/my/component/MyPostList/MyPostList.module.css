@@ -1,26 +1,30 @@
 .noContentWrapper {
-  display: flex;
   position: relative;
+  display: flex;
+  flex-grow: 1;
   flex-direction: column;
   justify-content: space-between;
-  flex-grow: 1;
 }
 
 .noContentMessage {
-  color: var(--grey-4);
   font-size: 1.6rem;
   font-weight: 500;
+  color: var(--grey-4);
 }
 
 .imageWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
+
+  display: flex;
+
+  flex: 1;
+
+  align-items: center;
+  justify-content: center;
+
   width: auto;
   height: auto;
   min-height: 36.25rem;
-  flex: 1;
 }
 
 .posts {

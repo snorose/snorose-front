@@ -1,9 +1,8 @@
 .container {
   width: 28.8rem;
-
+  overflow: hidden;
   background-color: white;
   border-radius: 1rem;
-  overflow: hidden;
 }
 
 .content {
@@ -15,28 +14,34 @@
 }
 
 .title {
-  color: var(--black);
   font: var(--text-headline-1-med);
+  color: var(--black);
   word-break: keep-all;
 }
 
 .description {
-  color: var(--grey-4);
   font: var(--text-headline-2-reg);
+  color: var(--grey-4);
   word-break: keep-all;
   white-space: pre-line;
 }
 
 .confirmButton {
   width: 100%;
+
   padding: 1.3rem 5.7rem;
-  color: var(--blue-4);
+
   font: var(--text-headline-2-med);
+
+  color: var(--blue-4);
+
   cursor: pointer;
-  transition: background-color 0.2s ease;
+
   border-top: solid 0.1rem var(--grey-2);
-  border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+
+  transition: background-color 0.2s ease;
 }
 
 .confirmButton:hover {

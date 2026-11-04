@@ -1,17 +1,16 @@
 .container {
-  padding-top: var(--default-appbar-height);
-  height: 100vh;
-
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  padding-top: var(--default-appbar-height);
 }
 
 .contentWrapper {
-  flex: 1;
-  padding: 0 var(--default-margin) 5.4rem;
-  width: 100%;
   display: flex;
+  flex: 1;
   flex-direction: column;
+  width: 100%;
+  padding: 0 var(--default-margin) 5.4rem;
 }
 
 .topContainer {

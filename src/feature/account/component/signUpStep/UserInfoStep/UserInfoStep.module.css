@@ -1,14 +1,13 @@
 .container {
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-direction: column;
-
   margin-bottom: 4rem;
 }
 
 .title {
-  font: var(--text-title-1-bold);
   margin-bottom: 2rem;
+  font: var(--text-title-1-bold);
 }
 
 .inputList {
@@ -33,8 +32,8 @@
 }
 .checkTerms {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .label {
@@ -57,13 +56,11 @@
 }
 
 .tag {
+  display: flex;
+  align-items: center;
   height: 2rem;
   padding: 0 0.4rem;
   margin: 0 0.8rem 0 1rem;
-
-  display: flex;
-  align-items: center;
-
   border-radius: 0.5rem;
 
   &.required {

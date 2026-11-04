@@ -1,23 +1,19 @@
 .container {
   position: relative;
-
-  margin: 0 var(--default-margin);
-
   flex: 1;
+  margin: 0 var(--default-margin);
 }
 
 .inputList {
-  padding-bottom: 5.4rem;
-
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
+  padding-bottom: 5.4rem;
 }
 
 /* button */
 .button {
   position: sticky;
   bottom: 2rem;
-
   width: 100%;
 }

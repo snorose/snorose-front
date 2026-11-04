@@ -1,26 +1,32 @@
 /* 모달 공통 스타일 */
 .dim {
-  display: flex;
-  align-items: center;
   position: fixed;
   top: 0;
   left: 50%;
   z-index: 600;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
   width: 100vw;
   max-width: var(--default-width);
   height: 100vh;
-  justify-content: center;
-  transform: translateX(-50%);
+
   background: rgba(228, 228, 228, 0.6);
+
   -webkit-backdrop-filter: blur(1rem);
   backdrop-filter: blur(1rem);
+
+  transform: translateX(-50%);
   /* Note: backdrop-filter has minimal browser support */
 }
 
 .container {
   width: 28.8rem;
-  border-radius: 1rem;
   background: var(--white);
+  border-radius: 1rem;
 }
 
 .top {
@@ -33,9 +39,9 @@
 /* OptionModal: 옵션이 있는 모달 스타일 */
 
 .title {
-  color: var(--pink-3);
   font-size: 1.6rem;
   font-weight: 500;
+  color: var(--pink-3);
 }
 
 .center {
@@ -50,9 +56,9 @@
 
 .leftCloseBtn {
   padding: 1rem;
-  color: var(--grey-3-1);
   font-size: 1.4rem;
   font-weight: 500;
+  color: var(--grey-3-1);
   cursor: pointer;
 }
 
@@ -72,14 +78,14 @@
 
 .iconBox {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 3rem;
 }
 
 .optionText {
-  color: var(--grey-4);
   font-size: 1.4rem;
+  color: var(--grey-4);
 }
 
 /* DeleteModal: 삭제 모달 스타일 */
@@ -92,27 +98,32 @@
 
 .deleteCenter {
   display: flex;
-  color: var(--grey-4);
   justify-content: center;
-  color: var(--grey-4);
-  font-size: 1.3rem;
   padding-bottom: 1rem;
+  font-size: 1.3rem;
+  color: var(--grey-4);
+  color: var(--grey-4);
 }
 
 .deleteOrBack {
   display: flex;
+
+  gap: 8rem;
+
   align-items: center;
   justify-content: center;
-  color: var(--grey-3-1);
+
+  padding: 0.2rem 0 1rem 0;
+
   font-size: 1.4rem;
   font-weight: 500;
-  gap: 8rem;
-  padding: 0.2rem 0 1rem 0;
+
+  color: var(--grey-3-1);
 }
 
 .redBtn {
-  color: var(--pink-3);
   padding: 1rem;
+  color: var(--pink-3);
   cursor: pointer;
 }
 
@@ -129,10 +140,10 @@
 }
 
 .choiceOptions {
-  height: 4.8rem;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  height: 4.8rem;
   font-size: 1.3rem;
   border-top: 0.1rem solid var(--grey-2);
 }

@@ -1,16 +1,15 @@
 .content {
-  margin: 0 var(--default-margin);
-
   display: flex;
-  flex-direction: column;
   flex: 1;
+  flex-direction: column;
+  margin: 0 var(--default-margin);
 }
 
 .illustration {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex: 1;
+  align-items: center;
+  justify-content: center;
   padding: 2rem 0;
 }
 
@@ -20,8 +19,8 @@
 }
 
 .action {
-  margin: 3rem 0 4rem;
   flex-shrink: 0;
+  margin: 3rem 0 4rem;
 }
 
 /* button */

@@ -1,11 +1,9 @@
 .container {
-  height: 100vh;
-
-  padding-top: var(--default-appbar-height);
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100vh;
+  padding-top: var(--default-appbar-height);
 }
 
 .pageTopFrame,
@@ -25,27 +23,27 @@
 }
 
 .pageSubtitle {
+  margin-bottom: 1.6rem;
   font: var(--text-headline-2-reg);
   color: var(--grey-4);
-  margin-bottom: 1.6rem;
 }
 
 .pageExplanation {
+  margin-bottom: 1.8rem;
   font: var(--text-headline-2-reg);
   color: var(--grey-3-1);
-  margin-bottom: 1.8rem;
 }
 
 .pageMiddleFrame {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .illustration {
+  flex-shrink: 0;
   width: 25rem;
   height: 25rem;
-  flex-shrink: 0;
   padding-left: 1.8rem;
 }
 
@@ -62,9 +60,9 @@
 .result {
   display: flex;
   align-items: center;
+  margin-top: 1.8rem;
   font: var(--text-title-1-bold);
   color: var(--blue-4);
-  margin-top: 1.8rem;
 }
 
 .result p {
@@ -73,11 +71,11 @@
 }
 
 .dot {
-  height: 0.6rem;
-  width: 0.6rem;
-  border-radius: 50%;
   display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
   margin-bottom: 0.7rem;
+  border-radius: 50%;
 }
 
 .first {
@@ -102,7 +100,7 @@
 .pageBottomFrame {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 1.2rem;
+  align-items: center;
   margin-bottom: 4rem;
 }

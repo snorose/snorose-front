@@ -1,12 +1,18 @@
 .title {
   display: flex;
-  justify-content: center;
+
   align-items: flex-start;
+  justify-content: center;
+
   width: 100%;
+
   padding: 2.3rem 4rem;
-  border-bottom: 0.1rem solid var(--blue-0);
-  color: var(--pink-3);
+
   font: var(--text-headline-1-med);
+
+  color: var(--pink-3);
+
+  border-bottom: 0.1rem solid var(--blue-0);
 }
 
 .content {
@@ -14,17 +20,25 @@
 }
 
 .contentItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   box-sizing: border-box;
-  padding: 0 2rem 0 1.8rem;
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
   height: 5rem;
-  border-bottom: 0.1rem solid var(--blue-0);
-  color: var(--black);
+
+  padding: 0 2rem 0 1.8rem;
+
   font: var(--text-headline-2-reg);
-  transition: all 200ms ease-in-out;
+
+  color: var(--black);
+
   cursor: pointer;
+
+  border-bottom: 0.1rem solid var(--blue-0);
+
+  transition: all 200ms ease-in-out;
 
   &:hover {
     background-color: var(--blue-0);
@@ -36,12 +50,18 @@
 }
 
 .bottomButton {
-  width: 100%;
   display: flex;
-  justify-content: center;
+
   align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
   padding: 1.3rem 5.7rem;
-  color: var(--blue-4);
+
   font: var(--text-headline-2-med);
+
+  color: var(--blue-4);
+
   cursor: pointer;
 }

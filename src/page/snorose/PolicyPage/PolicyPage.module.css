@@ -1,16 +1,15 @@
 .container {
   --policy-title-height: 6.9rem;
-  padding-top: var(--default-appbar-height);
 
   display: flex;
   flex-direction: column;
+  padding-top: var(--default-appbar-height);
 }
 
 .contentWrapper {
-  padding: var(--policy-title-height) var(--default-margin) 5.4rem;
-
   display: flex;
   flex-direction: column;
+  padding: var(--policy-title-height) var(--default-margin) 5.4rem;
 }
 .contentWrapper section {
   margin-bottom: 2rem;
@@ -23,32 +22,36 @@
   padding: 0.4rem 0.2rem;
 }
 .contentWrapper ul {
-  list-style-type: disc;
   padding-left: 2rem;
+  list-style-type: disc;
 }
 .contentWrapper ol {
-  list-style-type: decimal;
   padding-left: 2.2rem;
+  list-style-type: decimal;
 }
 
 .title {
   position: fixed;
   top: var(--default-appbar-height);
-  height: var(--policy-title-height);
+  z-index: var(--z-index-appbar);
+
   width: 100%;
   max-width: var(--default-width);
-  background: #fff;
-  z-index: var(--z-index-appbar);
+  height: var(--policy-title-height);
+
   padding: 1.4rem var(--default-margin) 2.1rem;
+
   font: var(--text-title-1-bold);
+
+  background: #fff;
 }
 
 .content {
   padding: 2rem 1.3rem;
-  border-radius: 0.5rem;
-  background: #f5f5f5;
-  color: var(--grey-4);
   font: var(--text-body-1-reg);
   line-height: 1.6;
+  color: var(--grey-4);
   white-space: pre-line;
+  background: #f5f5f5;
+  border-radius: 0.5rem;
 }

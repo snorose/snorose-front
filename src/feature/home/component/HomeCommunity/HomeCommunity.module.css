@@ -3,16 +3,15 @@
 }
 
 .list {
-  margin: 0 var(--default-margin);
   display: flex;
   gap: 1rem;
+  margin: 0 var(--default-margin);
 }
 
 .notLogin {
-  margin-top: 1.2rem;
   display: flex;
   justify-content: center;
-
+  margin-top: 1.2rem;
   font: var(--text-body-1-med);
   color: var(--grey-3-1);
 }

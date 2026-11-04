@@ -33,9 +33,9 @@ select,
 option,
 textarea,
 pre {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
   font: inherit;
   vertical-align: baseline;
 }
@@ -45,8 +45,8 @@ textarea,
 keygen,
 select,
 button {
-  letter-spacing: inherit;
   line-height: inherit;
+  letter-spacing: inherit;
 }
 
 p,
@@ -77,8 +77,8 @@ abbr {
 }
 
 button {
-  outline: none;
-  border: none;
-  background-color: transparent;
   cursor: pointer;
+  outline: none;
+  background-color: transparent;
+  border: none;
 }

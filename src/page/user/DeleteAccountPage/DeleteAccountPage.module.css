@@ -13,78 +13,88 @@
 
 .titleDescWrapper {
   display: flex;
-  flex-direction: column;
-  padding: 2rem;
-  gap: 1.4rem;
   flex-grow: 1;
+  flex-direction: column;
+  gap: 1.4rem;
+  padding: 2rem;
 }
 
 .title {
-  color: var(--black);
   font: var(--text-title-1-bold);
+  color: var(--black);
 }
 
 .descriptionWrapper {
   display: flex;
   flex-direction: column;
-  justify-content: start;
   gap: 0.5rem;
+  justify-content: start;
   padding-bottom: 1.3rem;
 }
 
 .dotDescriptionList {
   display: flex;
-  align-items: start;
   gap: 1.2rem;
+  align-items: start;
 }
 
 .middleDot {
+  flex-shrink: 0;
   width: 0.6rem;
   height: 0.6rem;
   margin-top: 1rem;
-  flex-shrink: 0;
-  border-radius: 50%;
   background-color: var(--grey-4);
+  border-radius: 50%;
 }
 
 .description {
-  color: var(--grey-4);
   font: var(--text-headline-2-reg);
-  white-space: normal;
+  color: var(--grey-4);
   word-break: keep-all;
+  white-space: normal;
 }
 
 /* 하단 버튼 */
 .buttonWrapper {
+  bottom: 0;
   display: flex;
   flex-direction: column;
-  bottom: 0;
-  width: 100%;
   gap: 0.8rem;
+  width: 100%;
   padding: 2rem 2rem 5.4rem;
 }
 
 .goBackButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   box-sizing: border-box;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
   height: 5.4rem;
-  border-radius: 0.5rem;
-  border: 0.1rem solid var(--blue-4);
+
   font: var(--text-headline-2-med);
+
+  border: 0.1rem solid var(--blue-4);
+  border-radius: 0.5rem;
 }
 
 .deleteAccountButton {
   display: flex;
-  justify-content: center;
+
   align-items: center;
+  justify-content: center;
+
   width: 100%;
   height: 5.4rem;
-  border-radius: 0.5rem;
-  background: var(--blue-4);
-  color: var(--white);
-  text-align: center;
+
   font: var(--text-headline-2-med);
+
+  color: var(--white);
+
+  text-align: center;
+
+  background: var(--blue-4);
+  border-radius: 0.5rem;
 }

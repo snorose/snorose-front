@@ -1,12 +1,18 @@
 .main {
-  min-height: 100vh;
   display: flex;
+
   flex-direction: column;
-  justify-content: center;
+
   align-items: center;
-  background: #ffffff;
-  word-break: keep-all;
+  justify-content: center;
+
+  min-height: 100vh;
+
   padding: 1rem;
+
+  word-break: keep-all;
+
+  background: #ffffff;
 }
 
 .logo {
@@ -35,11 +41,11 @@
 }
 
 .content {
-  font: var(--text-headline-2-reg);
-  margin: 1.3rem 1rem 0;
   padding: 1rem;
-  text-align: center;
+  margin: 1.3rem 1rem 0;
+  font: var(--text-headline-2-reg);
   color: var(--grey-4);
+  text-align: center;
 }
 
 @media (min-width: 768px) {

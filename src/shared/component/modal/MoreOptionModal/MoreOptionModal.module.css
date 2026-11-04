@@ -1,6 +1,6 @@
 .background {
-  z-index: 1;
   position: fixed;
+  z-index: 1;
   width: 100vw;
   max-width: var(--default-width);
   height: 100vh;
@@ -8,14 +8,17 @@
 }
 
 .container {
-  z-index: 2;
   position: absolute;
   right: 2rem;
-  width: 24.4rem;
+  z-index: 2;
+
   flex-shrink: 0;
+
+  width: 24.4rem;
+
+  background-color: var(--white);
   border-radius: 0.5rem;
   box-shadow: 0 0 3.6rem 0 rgba(0, 0, 0, 0.1);
-  background-color: var(--white);
 }
 
 .title {
@@ -34,15 +37,23 @@
 
 .contentItem {
   display: flex;
-  justify-content: space-between;
+
   align-items: center;
-  padding: 0 2rem 0 1.8rem;
+  justify-content: space-between;
+
   height: 5rem;
-  border-bottom: 0.1rem solid var(--blue-0);
-  color: var(--black);
+
+  padding: 0 2rem 0 1.8rem;
+
   font: var(--text-headline-2-reg);
-  transition: all 200ms ease-in-out;
+
+  color: var(--black);
+
   cursor: pointer;
+
+  border-bottom: 0.1rem solid var(--blue-0);
+
+  transition: all 200ms ease-in-out;
 
   &:hover {
     background-color: var(--blue-0);

@@ -1,27 +1,26 @@
 .container {
-  min-height: 100dvh;
-
   display: flex;
   flex-direction: column;
+  min-height: 100dvh;
 }
 
 .indicator {
-  margin: 0.9rem var(--default-margin) 2.8rem var(--default-margin);
   display: flex;
   gap: 1.1rem;
+  margin: 0.9rem var(--default-margin) 2.8rem var(--default-margin);
 }
 
 .check {
+  flex-shrink: 0;
   margin: 1.3rem var(--default-margin) 1.9rem
     calc(var(--default-margin) - 0.3rem);
-  flex-shrink: 0;
 }
 
 .dot {
   width: 0.9rem;
   height: 0.9rem;
-  border-radius: 100%;
   background-color: var(--grey-2);
+  border-radius: 100%;
 }
 
 .dot.select {
@@ -30,17 +29,14 @@
 
 .title {
   margin: 0 var(--default-margin) 1.6rem var(--default-margin);
-
   font: var(--text-title-1-bold);
   white-space: pre-line;
 }
 
 .description {
   margin: 0 var(--default-margin) 2.7rem var(--default-margin);
-
   font: var(--text-headline-2-reg);
-  white-space: pre-line;
-  word-break: keep-all;
-
   color: var(--grey-4);
+  word-break: keep-all;
+  white-space: pre-line;
 }

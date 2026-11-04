@@ -11,18 +11,18 @@
 }
 
 .submitBtn {
-  background-color: transparent;
   padding: 1.4rem 2rem;
   font-size: 1.6rem;
+  background-color: transparent;
 }
 
 /* 프로필 */
 .profileContainer {
   display: flex;
   flex-direction: column;
+  gap: 2.6rem;
   justify-content: center;
   padding: 1.4rem 2rem;
-  gap: 2.6rem;
 }
 
 .pageTitle {
@@ -42,14 +42,13 @@
 
 .profileImg {
   --size: 8.2rem;
-
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
   width: var(--size);
   height: var(--size);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  position: relative;
   /* cursor: pointer; */
 }
 
@@ -65,8 +64,8 @@
 
 .blueCamera {
   position: absolute;
-  bottom: 1.5rem;
   right: 1.5rem;
+  bottom: 1.5rem;
 }
 
 .contentContainer {
@@ -82,8 +81,8 @@
 }
 
 .inputTitle {
-  color: var(--grey-4);
   font: var(--text-headline-2-med);
+  color: var(--grey-4);
 }
 
 .inputWrapper {
@@ -94,15 +93,21 @@
 
 .inputText {
   display: flex;
+
   width: 100%;
   height: 5rem;
-  border-radius: 0.5rem;
+
   padding: 1.6rem 1.3rem;
-  border: none;
-  background: var(--grey-1-1);
-  outline: none;
-  color: var(--black);
+
   font: var(--text-body-1-reg);
+
+  color: var(--black);
+
+  outline: none;
+
+  background: var(--grey-1-1);
+  border: none;
+  border-radius: 0.5rem;
 
   &:disabled {
     background: var(--grey-3);
@@ -110,8 +115,8 @@
 }
 
 .errorMessage {
-  color: var(--pink-3);
   font: var(--text-body-1-reg);
+  color: var(--pink-3);
 }
 
 .errorInputText {

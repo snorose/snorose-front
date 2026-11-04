@@ -1,38 +1,33 @@
 .content {
   position: relative;
-
-  margin: 0 var(--default-margin);
-
   flex: 1;
+  margin: 0 var(--default-margin);
 }
 
 .terms {
-  margin-bottom: 1.4rem;
   padding: 1.4rem;
+  margin-bottom: 1.4rem;
   background: var(--grey-1-1);
   border-radius: 0.5rem;
 }
 
 .text {
   font: var(--text-body-1-reg);
+  color: var(--grey-4);
   word-break: keep-all;
   text-wrap: wrap;
-
-  color: var(--grey-4);
 }
 
 .list {
   margin: 2rem 0;
   margin-left: 2.2rem;
-
   list-style-type: disc;
 }
 
 /* button */
 .button {
   position: absolute;
-  left: 0;
   bottom: 4rem;
-
+  left: 0;
   height: 5.4rem;
 }
