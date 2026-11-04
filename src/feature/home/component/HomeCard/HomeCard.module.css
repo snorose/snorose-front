@@ -1,10 +1,10 @@
 /* HomeCard */
 
 .layout {
-  margin: 3rem var(--default-margin);
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  margin: 3rem var(--default-margin);
 }
 
 .notice,
@@ -13,41 +13,41 @@
 }
 
 .noticeCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   height: 7rem;
   padding: 1.4rem 1.6rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   background: var(--blue-0);
   border-radius: 0.6rem;
 }
 
 .noticeText {
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-direction: column;
-  min-width: 0;
   gap: 0.2rem;
+  min-width: 0;
 }
 
 .noticeHeader {
   display: flex;
-  align-items: center;
   gap: 0.8rem;
+  align-items: center;
 }
 
 .noticeLabel {
-  color: var(--Blue-Blue-4, #00368e);
   font: var(--text-headline-2-med);
+  color: var(--Blue-Blue-4, #00368e);
 }
 
 .noticeContent {
-  overflow: hidden;
   display: -webkit-box;
+  overflow: hidden;
   -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  color: var(--Grey-Grey-4, #484848);
   font: var(--text-body-1-med);
+  color: var(--Grey-Grey-4, #484848);
+  -webkit-box-orient: vertical;
 }
 
 .noticeArrow {
@@ -56,22 +56,22 @@
 }
 
 .attendanceCard {
-  height: 4.7rem;
-  padding: 1.4rem 1.6rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 4.7rem;
+  padding: 1.4rem 1.6rem;
   background: var(--gradient-5);
   border-radius: 5px;
 }
 
 .attendanceText {
   display: flex;
-  align-items: center;
   gap: 0.8rem;
+  align-items: center;
 }
 
 .attendanceTitle {
-  color: var(--White-White, #fff);
   font: var(--text-headline-2-med);
+  color: var(--White-White, #fff);
 }

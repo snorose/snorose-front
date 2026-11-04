@@ -1,6 +1,6 @@
 .list {
-  margin: 0 var(--default-margin);
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  margin: 0 var(--default-margin);
 }

@@ -6,8 +6,8 @@
 
 .item {
   display: flex;
-  align-items: flex-start;
   gap: 1.2rem;
+  align-items: flex-start;
 }
 
 .icon {
@@ -16,16 +16,16 @@
 
 .itemContainer {
   display: flex;
-  align-items: flex-start;
   gap: 0.2rem;
+  align-items: flex-start;
 }
 
 .name {
-  white-space: nowrap;
   display: flex;
-  align-items: center;
-  gap: 0.2rem;
   flex-shrink: 0;
+  gap: 0.2rem;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .description {
