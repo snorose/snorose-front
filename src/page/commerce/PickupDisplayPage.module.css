@@ -1,41 +1,52 @@
 .container {
   --pickup-display-content-max-width: 64rem;
   --pickup-display-vertical-space: 4.8rem;
-
-  min-height: 100%;
-  padding: 2.4rem var(--default-margin);
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 100%;
+  padding: 2.4rem var(--default-margin);
   background-color: var(--white);
 }
 
 .panel,
 .pairingForm {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2.4rem;
+
+  justify-content: center;
+
   width: 100%;
   min-height: min(62rem, calc(100vh - 4.8rem));
   min-height: min(62rem, calc(100dvh - 4.8rem));
+
   padding: 3.2rem 2.4rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 2.4rem;
+
+  background-color: var(--white-2);
   border: 0.1rem solid var(--grey-2);
   border-radius: 0.8rem;
-  background-color: var(--white-2);
 }
 
 .statusBadge {
-  width: fit-content;
-  min-height: 3.2rem;
-  padding: 0.6rem 1rem;
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
-  border-radius: 0.5rem;
-  background-color: var(--blue-1);
-  color: var(--blue-4);
+
+  width: fit-content;
+  min-height: 3.2rem;
+
+  padding: 0.6rem 1rem;
+
   font: var(--text-body-1-bold);
+
+  color: var(--blue-4);
+
+  background-color: var(--blue-1);
+  border-radius: 0.5rem;
 }
 
 .panelHeader {
@@ -46,26 +57,26 @@
 }
 
 .title {
-  color: var(--grey-4);
   font: var(--text-title-1-bold);
+  color: var(--grey-4);
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
 
 .description {
-  color: var(--grey-3-1);
   font: var(--text-headline-2-reg);
+  color: var(--grey-3-1);
   word-break: keep-all;
 }
 
 .buyerInfo {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
   gap: 0.8rem;
-  color: var(--grey-4);
+  align-items: center;
+  justify-content: center;
   font: var(--text-headline-1-bold);
+  color: var(--grey-4);
 }
 
 .panel.lecturePanel,
@@ -104,10 +115,10 @@
 
 .lecturePanel .studentNumber {
   max-width: 100%;
-  color: var(--blue-4);
   font-size: clamp(3.2rem, 6vw, 5.6rem);
-  line-height: 1.3;
   font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+  color: var(--blue-4);
   overflow-wrap: anywhere;
 }
 
@@ -119,40 +130,45 @@
 
 .armedItemList,
 .confirmedItemList {
+  align-self: center;
   width: 100%;
   max-width: var(--pickup-display-content-max-width);
-  align-self: center;
 }
 
 .item {
-  min-height: 7.2rem;
-  padding: 1.4rem 1.6rem;
   display: flex;
+
+  gap: 1.2rem;
+
   align-items: center;
   justify-content: space-between;
-  gap: 1.2rem;
+
+  min-height: 7.2rem;
+
+  padding: 1.4rem 1.6rem;
+
+  background-color: var(--white);
   border: 0.1rem solid var(--grey-2);
   border-radius: 0.7rem;
-  background-color: var(--white);
 }
 
 .itemInfo {
-  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  min-width: 0;
 }
 
 .itemInfo strong {
-  color: var(--grey-4);
   font: var(--text-headline-2-bold);
+  color: var(--grey-4);
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
 
 .itemInfo span {
-  color: var(--grey-3-1);
   font: var(--text-body-1-reg);
+  color: var(--grey-3-1);
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
@@ -160,18 +176,18 @@
 .quantity {
   flex-shrink: 0;
   min-width: 5.6rem;
-  text-align: right;
-  color: var(--blue-4);
   font: var(--text-heading-1-bold);
+  color: var(--blue-4);
+  text-align: right;
 }
 
 .fieldList {
-  width: 100%;
-  max-width: var(--pickup-display-content-max-width);
-  align-self: center;
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
+  align-self: center;
+  width: 100%;
+  max-width: var(--pickup-display-content-max-width);
 }
 
 .field {
@@ -187,34 +203,34 @@
 }
 
 .primaryButton {
+  align-self: center;
   width: 100%;
   max-width: var(--pickup-display-content-max-width);
-  align-self: center;
 }
 
 .confirmButton {
+  align-self: center;
   width: 100%;
   max-width: var(--pickup-display-content-max-width);
   margin-top: auto;
-  align-self: center;
 }
 
 .secondaryButton {
+  align-self: center;
   width: 100%;
   max-width: var(--pickup-display-content-max-width);
   margin-top: auto;
-  align-self: center;
   color: var(--grey-4);
   background-color: var(--grey-2);
 }
 
 .errorMessage,
 .connectionMessage {
-  color: var(--grey-3-1);
+  margin-bottom: auto;
   font: var(--text-body-1-reg);
+  color: var(--grey-3-1);
   text-align: center;
   word-break: keep-all;
-  margin-bottom: auto;
 }
 
 .errorMessage {
@@ -249,11 +265,11 @@
 
   .panel,
   .pairingForm {
+    gap: 3.2rem;
     max-width: none;
     min-height: min(70rem, calc(100vh - 6.4rem));
     min-height: min(70rem, calc(100dvh - 6.4rem));
     padding: 4rem;
-    gap: 3.2rem;
   }
 
   .itemList {

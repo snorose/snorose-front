@@ -6,23 +6,20 @@
 
 /* meta */
 .meta {
-  padding: 0.4rem var(--default-margin) 2.2rem;
-
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-
+  padding: 0.4rem var(--default-margin) 2.2rem;
   margin-bottom: 1rem;
-
   font: var(--text-body-2-reg);
   color: var(--grey-3-1);
 }
 
 .metaHeader {
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
   gap: 0.8rem;
+  align-items: center;
 }
 
 .sellerName {
@@ -38,11 +35,10 @@
 }
 
 .deadline {
-  font: var(--text-body-2-reg);
-  color: var(--grey-4);
-
   flex-shrink: 0;
   padding-top: 0.2rem;
+  font: var(--text-body-2-reg);
+  color: var(--grey-4);
 }
 
 .feedback {
@@ -59,8 +55,8 @@
 }
 
 .productInfo {
-  padding: 2rem var(--default-margin);
   min-width: 0;
+  padding: 2rem var(--default-margin);
 }
 
 .productName {
@@ -73,8 +69,8 @@
 .productDescription {
   font: var(--text-body-1-reg);
   color: var(--grey-4);
-  white-space: pre-wrap;
   word-break: keep-all;
+  white-space: pre-wrap;
 }
 
 /* border */
@@ -98,12 +94,10 @@
 
 .product {
   & .productName {
-    margin: 0 var(--default-margin) 1rem;
-
     display: flex;
-    align-items: center;
     gap: 1rem;
-
+    align-items: center;
+    margin: 0 var(--default-margin) 1rem;
     font: var(--text-body-1-bold);
   }
 
@@ -113,16 +107,16 @@
   }
 
   .optionList {
-    margin: 0 var(--default-margin) 2rem;
     display: flex;
     flex-direction: column;
+    margin: 0 var(--default-margin) 2rem;
   }
 
   .optionItem {
     display: flex;
+    gap: 1.2rem;
     align-items: center;
     justify-content: space-between;
-    gap: 1.2rem;
     padding: 1.4rem 0;
     border-bottom: 0.1rem solid var(--grey-2);
   }
@@ -164,47 +158,54 @@
 
   .quantityControl {
     display: flex;
-    align-items: center;
     flex-shrink: 0;
     gap: 0.6rem;
+    align-items: center;
   }
 
   .quantityButton {
     width: 3.2rem;
     height: 3.2rem;
-    border: 0.1rem solid var(--grey-2);
-    border-radius: 0.4rem;
     font: var(--text-headline-2-med);
     color: var(--grey-4);
     background-color: var(--white);
+    border: 0.1rem solid var(--grey-2);
+    border-radius: 0.4rem;
   }
 
   .quantityButton:disabled {
-    cursor: auto;
     color: var(--grey-3);
+    cursor: auto;
     background-color: var(--grey-1);
   }
 
   .quantity {
     width: 2.8rem;
-    text-align: center;
     font: var(--text-body-1-bold);
     color: var(--grey-4);
+    text-align: center;
   }
 
   .soldOutBadge {
     display: inline-flex;
+
+    flex-shrink: 0;
+
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
+
     min-width: 5.2rem;
     height: 3.2rem;
+
     padding: 0 1rem;
+
+    font: var(--text-body-2-bold);
+
+    color: var(--grey-3-1);
+
+    background-color: var(--grey-1);
     border: 0.1rem solid var(--grey-2);
     border-radius: 0.4rem;
-    background-color: var(--grey-1);
-    font: var(--text-body-2-bold);
-    color: var(--grey-3-1);
   }
 }
 
@@ -219,11 +220,11 @@
 
 /* closed */
 .closedSection {
-  margin: 0 var(--default-margin);
-  padding: 3.2rem 0 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 3.2rem 0 1rem;
+  margin: 0 var(--default-margin);
   text-align: center;
 }
 
@@ -242,8 +243,8 @@
 .closedDescription {
   max-width: 31rem;
   font: var(--text-body-1-reg);
-  color: var(--grey-3-1);
   line-height: 1.5;
+  color: var(--grey-3-1);
   word-break: keep-all;
 }
 
@@ -255,8 +256,8 @@
 
 .closedInfoItem {
   display: flex;
-  justify-content: space-between;
   gap: 1.2rem;
+  justify-content: space-between;
   padding: 1.3rem 0;
   border-bottom: 0.1rem solid var(--grey-2);
 }
@@ -269,9 +270,9 @@
 
 .closedInfoItem dd {
   min-width: 0;
-  text-align: right;
   font: var(--text-body-1-bold);
   color: var(--grey-4);
+  text-align: right;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
@@ -288,12 +289,11 @@
 }
 
 .checkItem {
-  margin: 0 var(--default-margin);
-
   display: flex;
-  align-items: flex-start;
   gap: 0.8rem;
+  align-items: flex-start;
   padding: 0.4rem 0;
+  margin: 0 var(--default-margin);
 }
 
 .checkItem > div {
@@ -301,30 +301,34 @@
 }
 
 .noticeAgreementLabel {
-  min-width: 0;
   display: flex;
-  align-items: flex-start;
   gap: 0.6rem;
+  align-items: flex-start;
+  min-width: 0;
   cursor: pointer;
 }
 
 .noticeAgreementText {
   font: var(--text-body-2-reg);
-  color: var(--grey-4);
   line-height: 1.5;
+  color: var(--grey-4);
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
 
 .noticeRequiredBadge {
   flex-shrink: 0;
-  margin-top: 0.1rem;
+
   padding: 0.1rem 0.5rem;
-  border-radius: 0.4rem;
-  background-color: var(--grey-2);
+  margin-top: 0.1rem;
+
   font: var(--text-caption-1-reg);
   font-weight: 700;
+
   color: var(--grey-3-1);
+
+  background-color: var(--grey-2);
+  border-radius: 0.4rem;
 }
 
 .system {
@@ -344,26 +348,33 @@
 }
 
 .totalPaymentAmount {
-  margin-right: var(--default-margin);
-
   min-width: 0;
-  text-align: right;
+  margin-right: var(--default-margin);
   font: var(--text-headline-2-bold);
   color: var(--blue-4);
+  text-align: right;
   word-break: break-all;
 }
 
 .paymentNoticeList {
-  margin: 1.4rem var(--default-margin) 0;
-  padding-left: 1.6rem;
   display: flex;
+
   flex-direction: column;
+
   gap: 0.6rem;
-  list-style: disc;
+
+  padding-left: 1.6rem;
+  margin: 1.4rem var(--default-margin) 0;
+
   font: var(--text-body-2-reg);
-  color: var(--grey-3-1);
+
   line-height: 1.5;
+
+  color: var(--grey-3-1);
+
   word-break: keep-all;
+
+  list-style: disc;
 }
 
 .button {
@@ -372,11 +383,11 @@
 
 /* account modal */
 .accountModal {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-height: calc(100vh - 4rem);
   max-height: calc(100dvh - 4rem);
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
 }
 
@@ -395,16 +406,16 @@
 
 .accountModalTitle {
   margin-bottom: 1.8rem;
-  text-align: center;
   font: var(--text-headline-1-bold);
   color: var(--grey-4);
+  text-align: center;
 }
 
 .saleClosedModalDescription {
-  text-align: center;
   font: var(--text-body-1-reg);
-  color: var(--grey-3-1);
   line-height: 1.5;
+  color: var(--grey-3-1);
+  text-align: center;
   word-break: keep-all;
 }
 
@@ -423,12 +434,10 @@
 }
 
 .orderConfirmProductItem {
-  padding: 1.2rem 0;
-
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-
+  padding: 1.2rem 0;
   border-bottom: 0.1rem solid var(--grey-2);
 }
 
@@ -445,16 +454,24 @@
 }
 
 .orderConfirmNoticeList {
-  margin-top: 1.8rem;
-  padding-left: 1.6rem;
   display: flex;
+
   flex-direction: column;
+
   gap: 0.6rem;
-  list-style: disc;
+
+  padding-left: 1.6rem;
+  margin-top: 1.8rem;
+
   font: var(--text-body-2-reg);
-  color: var(--grey-3-1);
+
   line-height: 1.5;
+
+  color: var(--grey-3-1);
+
   word-break: keep-all;
+
+  list-style: disc;
 }
 
 .accountInfoList {
@@ -476,32 +493,32 @@
 
 .accountInfoItem dd {
   min-width: 0;
-  text-align: right;
   font: var(--text-body-1-bold);
   color: var(--grey-4);
+  text-align: right;
   word-break: break-all;
 }
 
 .accountModalButton {
-  width: 100%;
   flex-shrink: 0;
+  width: 100%;
   padding: 1.3rem 0;
-  border-top: 0.1rem solid var(--grey-2);
   font: var(--text-headline-2-med);
   color: var(--blue-4);
+  border-top: 0.1rem solid var(--grey-2);
 }
 
 .accountModalButton:disabled {
-  cursor: auto;
   color: var(--grey-3);
+  cursor: auto;
   background-color: var(--grey-1);
 }
 
 .accountModalButtonGroup {
-  width: 100%;
-  flex-shrink: 0;
   display: grid;
+  flex-shrink: 0;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
   border-top: 0.1rem solid var(--grey-2);
 }
 
@@ -510,8 +527,8 @@
 }
 
 .accountModalSecondaryButton {
-  border-right: 0.1rem solid var(--grey-2);
   color: var(--grey-3-1);
+  border-right: 0.1rem solid var(--grey-2);
 }
 
 /* orderer */
@@ -520,10 +537,10 @@
 }
 
 .ordererInfo {
-  margin: 0 var(--default-margin);
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
+  margin: 0 var(--default-margin);
 }
 
 .readonlyFieldList {
@@ -533,14 +550,20 @@
 }
 
 .readonlyField {
-  min-height: 5rem;
-  padding: 1rem 1.3rem;
   display: flex;
+
   flex-direction: column;
-  justify-content: center;
+
   gap: 0.4rem;
-  border-radius: 0.5rem;
+
+  justify-content: center;
+
+  min-height: 5rem;
+
+  padding: 1rem 1.3rem;
+
   background-color: var(--grey-1-1);
+  border-radius: 0.5rem;
 }
 
 .readonlyLabel {
@@ -562,15 +585,15 @@
 
 .consentField {
   display: flex;
-  align-items: flex-start;
   gap: 0.8rem;
+  align-items: flex-start;
 }
 
 .consentLabel {
   padding-top: 0.1rem;
   font: var(--text-body-2-reg);
-  color: var(--grey-4);
   line-height: 1.5;
+  color: var(--grey-4);
   word-break: keep-all;
   cursor: pointer;
 }
@@ -582,7 +605,7 @@
 }
 
 .message {
+  margin-left: 0.5rem;
   font: var(--text-body-2-reg);
   color: var(--grey-3-1);
-  margin-left: 0.5rem;
 }
