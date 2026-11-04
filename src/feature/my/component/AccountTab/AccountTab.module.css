@@ -4,8 +4,8 @@
   flex-direction: column;
   padding: 0.4rem 1.3rem;
   margin: 0 2rem;
-  border-radius: 0.5rem;
   background: var(--grey-1);
+  border-radius: 0.5rem;
 }
 
 .info {
@@ -20,41 +20,51 @@
 }
 
 .label {
-  color: var(--grey-3-1);
   font: var(--text-body-2-reg);
+  color: var(--grey-3-1);
 }
 
 .value {
-  color: var(--grey-4);
   font: var(--text-headline-2-med);
+  color: var(--grey-4);
 }
 
 /* 버튼 */
 .buttonWrapper {
   display: flex;
-  justify-content: flex-end;
   gap: 1.6rem;
+  justify-content: flex-end;
   margin: 2rem;
 }
 
 .editButton {
   display: flex;
-  justify-content: center;
+
   align-items: center;
-  border-radius: 0.5rem;
+  justify-content: center;
+
   padding: 0.9rem 1.5rem;
-  background: var(--blue-4);
-  color: var(--white);
+
   font: var(--text-body-1-reg);
+
+  color: var(--white);
+
+  background: var(--blue-4);
+  border-radius: 0.5rem;
 }
 
 .passwordButton {
   display: flex;
-  justify-content: center;
+
   align-items: center;
-  border-radius: 0.5rem;
+  justify-content: center;
+
   padding: 0.9rem 1.5rem;
-  background: var(--blue-1);
-  color: var(--blue-4);
+
   font: var(--text-body-1-reg);
+
+  color: var(--blue-4);
+
+  background: var(--blue-1);
+  border-radius: 0.5rem;
 }

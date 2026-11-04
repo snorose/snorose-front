@@ -1,17 +1,17 @@
 .pointBox {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 0.5rem;
-  background: var(--grey-1-1);
-  padding: 1.4rem;
   gap: 1.4rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem;
+  background: var(--grey-1-1);
+  border-radius: 0.5rem;
 }
 
 .pointIconContentWrapper {
   display: flex;
-  align-items: center;
   gap: 1.4rem;
+  align-items: center;
 }
 
 .pointIcon {
@@ -26,28 +26,28 @@
 
 .pointTitle {
   padding-bottom: 0.2rem;
-  color: var(--blue-4);
   font: var(--text-body-1-med);
+  color: var(--blue-4);
 }
 
 .pointDescription {
   display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--grey-4);
+  -webkit-line-clamp: 1;
   font: var(--text-body-2-reg);
+  color: var(--grey-4);
+  -webkit-box-orient: vertical;
 }
 
 .pointDate {
-  color: var(--grey-3-1);
   font: var(--text-body-2-reg);
+  color: var(--grey-3-1);
 }
 
 .chargePoint {
-  color: var(--blue-4);
   font: var(--text-headline-2-med);
+  color: var(--blue-4);
 }
 
 .negative {
