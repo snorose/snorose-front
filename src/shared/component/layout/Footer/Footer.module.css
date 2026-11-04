@@ -2,22 +2,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 2.8rem;
   margin: 4.4rem 0 11.2rem;
   background: linear-gradient(180deg, #f9f9f9 0%, var(--white) 100%);
-  padding-top: 2.8rem;
 }
 
 .info {
   display: flex;
+
   flex-direction: column;
-  align-items: center;
+
   gap: 0.6rem;
+
+  align-items: center;
+
   margin: 1.4rem 0 0.9rem 0;
 
   font: var(--text-body-2-reg);
-  text-align: center;
 
   color: var(--grey-3-1);
+
+  text-align: center;
 }
 
 .info .bold {
@@ -30,11 +35,9 @@
 
 .menu {
   display: flex;
-  justify-content: center;
   align-items: center;
-
+  justify-content: center;
   font: var(--text-body-2-reg);
-
   color: var(--grey-3-1);
 }
 

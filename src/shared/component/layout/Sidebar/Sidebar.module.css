@@ -1,29 +1,39 @@
 .dim {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: var(--z-index-sidebar);
+
   width: 100vw;
   max-width: var(--default-width);
   height: 100vh;
   height: 100dvh;
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: var(--z-index-sidebar);
+
   background: rgba(228, 228, 228, 0.6);
+
   backdrop-filter: blur(1rem);
+
+  transform: translateX(-50%);
   /* Note: backdrop-filter has minimal browser support */
 }
 
 .sidebar {
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  height: 100%;
-  padding-left: 3rem;
   position: absolute;
   right: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  width: 80%;
+  height: 100%;
+
+  padding-left: 3rem;
+
   overflow: hidden;
-  border-radius: 1.5rem 0 0 0;
+
   background-color: var(--white);
+  border-radius: 1.5rem 0 0 0;
 }
 
 .logo {
@@ -43,9 +53,7 @@
 
 .title {
   margin: 2rem 0;
-
   font: var(--text-headline-1-bold);
-
   color: var(--grey-4);
 }
 
@@ -58,7 +66,6 @@
 
 .item {
   font: var(--text-headline-2-reg);
-
   color: var(--grey-4);
 }
 

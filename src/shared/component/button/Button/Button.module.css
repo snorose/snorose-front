@@ -7,12 +7,12 @@
 
 .ready,
 .wrong {
-  background-color: var(--blue-1);
   color: var(--blue-3);
   pointer-events: none;
+  background-color: var(--blue-1);
 }
 
 .right {
-  background-color: var(--blue-4);
   color: var(--white);
+  background-color: var(--blue-4);
 }

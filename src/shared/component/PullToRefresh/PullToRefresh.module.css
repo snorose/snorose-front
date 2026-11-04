@@ -10,9 +10,9 @@
 }
 
 .refreshIcon {
-  animation: rotateAndPause 1s linear infinite;
   width: 3.4rem;
   height: 2.1rem;
+  animation: rotateAndPause 1s linear infinite;
 }
 
 .refreshIcon svg {
@@ -22,12 +22,12 @@
 }
 
 .ptrTouchZone {
-  width: 100%;
-  height: 30rem;
   position: absolute;
   z-index: var(--z-index-pull-to-refresh);
-  user-select: none;
+  width: 100%;
+  height: 30rem;
   pointer-events: none;
+  user-select: none;
 }
 
 .content {

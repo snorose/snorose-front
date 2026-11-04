@@ -1,9 +1,9 @@
 .retry {
   padding: 1rem;
   font-size: 2rem;
-  transition: 400ms all ease;
-  border-radius: 100%;
   cursor: pointer;
+  border-radius: 100%;
+  transition: 400ms all ease;
 }
 
 .retry:hover {

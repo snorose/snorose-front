@@ -1,12 +1,17 @@
 .toast {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0.5rem;
-  padding: 1.5rem 1.8rem;
-  transition: 500ms opacity ease-in-out;
+
   gap: 1rem;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 1.5rem 1.8rem;
+
+  border-radius: 0.5rem;
   box-shadow: 0 0 3.6rem 0 rgba(0, 0, 0, 0.1);
+
+  transition: 500ms opacity ease-in-out;
 }
 
 .icon {
@@ -14,35 +19,41 @@
 }
 
 .message {
+  font: var(--text-body-1-reg);
   text-align: center;
   word-break: keep-all;
   white-space: pre-wrap;
-  font: var(--text-body-1-reg);
   white-space: nowrap;
 }
 
 .error {
-  background: var(--pink-1);
   color: var(--pink-3);
+  background: var(--pink-1);
 }
 
 .info {
-  background: var(--blue-2);
   color: var(--blue-4);
+  background: var(--blue-2);
 }
 
 .success {
-  background: var(--green-1);
   color: var(--grey-4);
+  background: var(--green-1);
 }
 
 .button {
   display: flex;
+
   align-items: center;
+
   height: 2.2rem;
+
   padding: 0 0.4rem;
+
   font: var(--text-body-1-reg);
+
   color: var(--grey-4);
-  border-radius: 0.5rem;
+
   background: var(--white);
+  border-radius: 0.5rem;
 }

@@ -1,10 +1,8 @@
 .profile {
-  margin: 2rem var(--default-margin) 2.5rem;
-
   display: flex;
-  align-items: center;
   gap: 0.8rem;
-
+  align-items: center;
+  margin: 2rem var(--default-margin) 2.5rem;
   color: var(--grey-3-1);
 }
 

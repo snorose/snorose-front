@@ -1,29 +1,30 @@
 .field {
-  margin: 0 var(--default-margin);
-
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
+  margin: 0 var(--default-margin);
 }
 
 .label {
   align-self: flex-start;
-
   font: var(--text-headline-2-med);
   color: var(--grey-4);
 }
 
 .input {
-  outline: none;
+  height: 5rem;
+
   padding: 0 1.3rem;
 
-  height: 5rem;
-  border-radius: 0.5rem;
+  font: var(--text-body-1-reg);
+
+  color: var(--grey-4);
+
+  outline: none;
+
   background-color: var(--blue-0);
   border: 1px solid var(--blue-2);
-
-  font: var(--text-body-1-reg);
-  color: var(--grey-4);
+  border-radius: 0.5rem;
 
   transition: 100ms ease border-color;
 

@@ -3,15 +3,16 @@
   top: 0;
   z-index: var(--z-index-appbar);
 
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
   width: 100%;
   max-width: 60rem;
   height: var(--default-appbar-height);
 
   padding: 0 2rem;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 
   background-color: var(--white);
 }
@@ -27,8 +28,8 @@
 
 .backDiv {
   display: flex;
-  align-items: center;
   gap: 1.2rem;
+  align-items: center;
 }
 
 .back {
@@ -41,13 +42,13 @@
 
 .actions {
   display: flex;
-  align-items: center;
   gap: 1.6rem;
+  align-items: center;
 }
 
 .hasWideWidth {
   display: flex;
-  align-items: center;
   gap: 1.6rem;
+  align-items: center;
   width: 100%;
 }
