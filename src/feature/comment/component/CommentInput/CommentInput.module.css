@@ -1,40 +1,51 @@
 .container {
-  max-width: var(--default-width);
-  width: 100%;
-  min-height: 8.4rem;
-  padding: 1.3rem 2.2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.8rem;
-  background: var(--white);
-  border-radius: 1rem 1rem 0 0;
-  box-shadow: 0 0 3.6rem 0 rgba(0, 0, 0, 0.1);
   /* Default */
   position: fixed;
   bottom: 0;
   z-index: 10;
+
+  display: flex;
+
+  gap: 0.8rem;
+
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  max-width: var(--default-width);
+  min-height: 8.4rem;
+
+  padding: 1.3rem 2.2rem;
+
+  background: var(--white);
+  border-radius: 1rem 1rem 0 0;
+  box-shadow: 0 0 3.6rem 0 rgba(0, 0, 0, 0.1);
 }
 
 .inputBar {
-  background-color: var(--grey-1-1);
+  display: flex;
+
+  gap: 1.4rem;
+
+  align-items: center;
+
   width: 100%;
   min-height: 4rem;
-  display: flex;
-  align-items: center;
-  gap: 1.4rem;
+
   padding: 1.3rem 1.9rem;
+
+  background-color: var(--grey-1-1);
   border-radius: 0.5rem;
 }
 
 .inputZone {
   width: 100%;
   min-height: 2rem;
-  outline: none;
-  border: none;
-  background-color: transparent;
   font: var(--text-headline-2-reg);
   resize: none;
+  outline: none;
+  background-color: transparent;
+  border: none;
 }
 
 .inputZone::placeholder {
