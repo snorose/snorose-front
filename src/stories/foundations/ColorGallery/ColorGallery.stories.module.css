@@ -1,9 +1,9 @@
 .page {
   width: 100%;
   padding: 32px 0 40px;
-  color: var(--grey-4);
   font-size: 14px;
   line-height: 1.5;
+  color: var(--grey-4);
   letter-spacing: 0;
 }
 
@@ -19,8 +19,8 @@
 
 .description {
   margin-top: 4px;
-  color: var(--grey-3-1);
   font: var(--text-body-2-reg);
+  color: var(--grey-3-1);
   letter-spacing: 0;
 }
 
@@ -40,11 +40,17 @@
 }
 .tile {
   display: flex;
+
   flex-direction: column;
+
   gap: 8px;
-  padding: 12px;
-  text-align: center;
+
   min-width: 0;
+
+  padding: 12px;
+
+  text-align: center;
+
   border: 1px solid var(--grey-2);
   border-radius: 8px;
 }
@@ -52,10 +58,10 @@
   position: relative;
   width: 100%;
   min-height: 36px;
-  border-radius: inherit;
   color: inherit;
   text-align: center;
   letter-spacing: 0;
+  border-radius: inherit;
 }
 .copy:focus-visible {
   outline: 2px solid var(--blue-4);
@@ -67,8 +73,8 @@
   inset: 0;
   display: grid;
   place-items: center;
-  color: var(--blue-4);
   font-size: 12px;
+  color: var(--blue-4);
   pointer-events: none;
 }
 .swatch {
@@ -85,8 +91,8 @@
 .value {
   font-size: 12px;
   line-height: 1.5;
-  overflow-wrap: anywhere;
   color: var(--grey-3-1);
+  overflow-wrap: anywhere;
 }
 .empty {
   padding: 40px 0;
