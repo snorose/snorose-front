@@ -1,20 +1,18 @@
 .container {
   flex: 1;
-
   margin-bottom: 4rem;
 }
 
 .title {
-  font: var(--text-title-1-bold);
   margin-bottom: 2rem;
+  font: var(--text-title-1-bold);
 }
 
 .inputList {
-  margin-bottom: 4rem;
-
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin-bottom: 4rem;
 }
 
 .field {

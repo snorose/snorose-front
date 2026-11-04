@@ -1,20 +1,18 @@
 .container {
-  flex: 1;
-
-  margin-bottom: 4rem;
-
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: space-between;
+  margin-bottom: 4rem;
 }
 
 .title {
-  font: var(--text-title-1-bold);
   margin-bottom: 0.6rem;
+  font: var(--text-title-1-bold);
 }
 
 .text {
+  margin-bottom: 2.3rem;
   font: var(--text-headline-2-reg);
   color: var(--grey-4);
-  margin-bottom: 2.3rem;
 }
