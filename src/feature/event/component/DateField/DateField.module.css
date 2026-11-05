@@ -27,13 +27,20 @@
 .dateSection > div {
   display: flex;
   flex: 1;
+  min-width: 0;
 }
 
 .dateInput {
   flex: 1;
+
   width: 100%;
-  padding: 1.4rem;
+  min-width: 0;
+  min-height: 4.4rem;
+
+  padding: 1rem;
+
   color: var(--grey-3-1);
+
   background-color: transparent;
   border: 1px solid var(--blue-2);
   border-radius: 0.5rem;
