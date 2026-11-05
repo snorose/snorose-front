@@ -48,6 +48,7 @@ function AttachmentList({ attachmentsInfo, setAttachmentsInfo }) {
             //첨부파일이 이미지일 경우
             <img
               src={getSafeSrc(att)}
+              alt={att.fileName || `첨부 이미지 ${index + 1} 미리보기`}
               className={styles.image}
               onError={(e) => {
                 e.currentTarget.src = altImage;
