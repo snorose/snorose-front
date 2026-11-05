@@ -18,6 +18,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 
 import {
+  AttachmentSwiper,
   BackAppBar,
   Badge,
   FetchLoading,
@@ -27,13 +28,17 @@ import { LIKE_TYPE, QUERY_KEY, ROLE, TOAST } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useAuth, useToast } from '@/shared/hook';
 import { useModalReset } from '@/shared/hook/useBlocker';
-import { DateTime, getBoard, renderTextWithLinks } from '@/shared/lib';
+import { DateTime, getBoard } from '@/shared/lib';
 
-import { PostModalRenderer } from '@/feature/board/component';
+import {
+  FullScreenAttachment,
+  PostModalRenderer,
+} from '@/feature/board/component';
 import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { CommentInput, CommentListSuspense } from '@/feature/comment/component';
 import { useCommentContext } from '@/feature/comment/context';
 import { GuideModal } from '@/feature/event/component';
+import EventContent from '@/feature/event/component/EventContent/EventContent';
 import { EVENT_GUIDE_MODAL_OPTIONS } from '@/feature/event/constant';
 import { isUrlValid } from '@/feature/event/lib';
 import { useLike } from '@/feature/like/hook';
@@ -85,6 +90,7 @@ export default function EventPage() {
 
   // 신청 시간 판단
   const now = Date.now();
+  const hasApplyLink = Boolean(data?.link?.trim() && isUrlValid(data.link));
 
   const openDraw =
     data?.startAt != null ? new Date(data.startAt).getTime() : undefined;
@@ -123,9 +129,11 @@ export default function EventPage() {
   })();
 
   const [open, setOpen] = useState(false);
+  const [clickedImageIndex, setClickedImageIndex] = useState(0);
 
   // '신청하기'버튼 누르면 폼으로 이동
   const handleApplyClick = () => {
+    if (!hasApplyLink) return;
     if (!isUrlValid(data.link, { open: true })) {
       toast.error(TOAST.EVENT.FAIL);
     }
@@ -141,7 +149,7 @@ export default function EventPage() {
     );
   }
 
-  if (error?.response.status === 404) {
+  if (error?.response?.status === 404) {
     return <NotFoundPage />;
   }
 
@@ -169,7 +177,15 @@ export default function EventPage() {
 
   return (
     <div className={styles.container}>
-      <BackAppBar backgroundColor={'#eaf5fd'} />
+      {clickedImageIndex === 0 ? (
+        <BackAppBar backgroundColor='var(--white-2)' />
+      ) : (
+        <FullScreenAttachment
+          attachmentUrls={data.attachments ?? []}
+          clickedImageIndex={clickedImageIndex}
+          setClickedImageIndex={setClickedImageIndex}
+        />
+      )}
 
       <div className={styles.blueContainer}>
         <MetaContainer
@@ -186,7 +202,7 @@ export default function EventPage() {
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>{data.title}</h1>
           <span className={styles.views}>
-            &nbsp;&nbsp;{data.viewCount.toLocaleString()} views
+            &nbsp;&nbsp;{(data.viewCount ?? 0).toLocaleString()} views
           </span>
         </div>
 
@@ -229,11 +245,13 @@ export default function EventPage() {
             </div>
           )}
 
-          <div className={styles.drawCount}>
-            <IconPerson width={20} height={20} color={'var(--grey-4)'} />
-            <p>추첨 인원</p>
-            <p className={styles.data}>{data.drawCount}</p>
-          </div>
+          {data.drawCount?.trim() && (
+            <div className={styles.drawCount}>
+              <IconPerson width={20} height={20} color={'var(--grey-4)'} />
+              <p>추첨 인원</p>
+              <p className={styles.data}>{data.drawCount.trim()}</p>
+            </div>
+          )}
 
           {(data.startAt != null || data.endAt != null) && (
             <div className={styles.applicationDate}>
@@ -263,9 +281,13 @@ export default function EventPage() {
             </div>
           )}
 
-          <p className={styles.contentText}>
-            {renderTextWithLinks(data.content)}
-          </p>
+          <EventContent content={data.content} />
+          {data.attachments?.length > 0 && (
+            <AttachmentSwiper
+              data={data}
+              setClickedImageIndex={setClickedImageIndex}
+            />
+          )}
 
           <div className={styles.note}>
             <p>
@@ -275,15 +297,13 @@ export default function EventPage() {
             </p>
           </div>
 
-          {/* <div className={styles.iamges}></div> */}
-
-          {beforeOpen && (
+          {hasApplyLink && beforeOpen && (
             <PrimaryButton className={styles.button} disabled>
               응모 시작 전이에요
             </PrimaryButton>
           )}
 
-          {opened && (
+          {hasApplyLink && opened && (
             <>
               <PrimaryButton
                 className={styles.button}
@@ -304,7 +324,7 @@ export default function EventPage() {
             </>
           )}
 
-          {closed && (
+          {hasApplyLink && closed && (
             <PrimaryButton className={styles.button} disabled>
               응모 마감
             </PrimaryButton>
