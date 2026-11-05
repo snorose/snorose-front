@@ -37,6 +37,7 @@ export default function AttachmentSwiper({ data, setClickedImageIndex }) {
               {item.type === 'PHOTO' ? (
                 <img
                   src={item.url}
+                  alt={item.fileName || `첨부 이미지 ${index + 1}`}
                   className={styles.attachment}
                   draggable={false}
                   onClick={() => {
