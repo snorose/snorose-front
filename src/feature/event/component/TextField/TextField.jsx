@@ -30,7 +30,7 @@ export default function TextField({
     }
   };
 
-  const isLinkField = label === '연계 링크';
+  const isLinkField = name === 'link';
 
   return (
     <div>
@@ -38,15 +38,19 @@ export default function TextField({
         <TextareaAutosize
           className={`${styles.textarea} ${error ? styles.error : ''}`}
           placeholder={placeholder}
+          aria-label={label}
           value={value}
           onChange={(e) => onChange(name, e.target.value)}
           {...props}
         />
         {isLinkField && (
-          <PrimaryButton className={styles.button} onClick={handleCheckLink}>
-            미리
-            <br />
-            보기
+          <PrimaryButton
+            type='button'
+            className={styles.button}
+            onClick={handleCheckLink}
+            disabled={!data.link?.trim()}
+          >
+            미리보기
           </PrimaryButton>
         )}
       </div>

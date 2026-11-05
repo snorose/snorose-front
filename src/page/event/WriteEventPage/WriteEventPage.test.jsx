@@ -8,7 +8,10 @@ import { createThumbnail, postEvent, postPost } from '@/apis';
 
 import WriteEventPage from './WriteEventPage';
 
-const mockQueryClient = { removeQueries: jest.fn() };
+const mockQueryClient = {
+  removeQueries: jest.fn(),
+  invalidateQueries: jest.fn(),
+};
 const mockInvalidUserInfoQuery = jest.fn();
 const mockToast = { error: jest.fn(), info: jest.fn() };
 
@@ -122,11 +125,15 @@ jest.mock('@/feature/editor/lib/sanitize', () => ({
   sanitizeHtml: (html) => html,
 }));
 jest.mock('@/feature/event/component', () => ({
-  EventForm: () => null,
+  EventForm: () => <div data-testid='event-form' />,
   NoticeForm: jest.requireActual(
     '@/feature/event/component/NoticeForm/NoticeForm'
   ).default,
 }));
+jest.mock(
+  '@/feature/event/component/EventEditorToolbar/EventEditorToolbar',
+  () => () => null
+);
 jest.mock('@/apis', () => ({
   createThumbnail: jest.fn(),
   postEvent: jest.fn(),
@@ -177,7 +184,7 @@ test('공지사항 선택 시 같은 화면에 에디터와 하단 첨부 바를
   );
   fireEvent.click(screen.getByText('영화'));
   expect(screen.queryByTestId('notice-editor')).not.toBeInTheDocument();
-  expect(screen.queryByLabelText('이미지 첨부')).not.toBeInTheDocument();
+  expect(screen.getByTestId('event-form')).toBeInTheDocument();
   fireEvent.click(
     screen.getByText('영화', { selector: '.categorySelectText' })
   );

@@ -76,6 +76,7 @@ export default function FullScreenAttachment({
               {att.type === 'PHOTO' ? (
                 <img
                   src={att.url}
+                  alt={att.fileName || `첨부 이미지 ${index + 1}`}
                   className={styles.attachment}
                   draggable={false}
                   onError={(e) => {
