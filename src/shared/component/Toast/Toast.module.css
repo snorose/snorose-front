@@ -27,8 +27,15 @@
 }
 
 .error {
+  max-width: calc(100vw - 4rem);
   color: var(--pink-3);
   background: var(--pink-1);
+}
+
+.error .message {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
 
 .info {

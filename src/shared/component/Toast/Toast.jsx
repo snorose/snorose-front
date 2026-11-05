@@ -7,7 +7,7 @@ import {
   IconMultiInfoCircle,
 } from '@snorose/icons';
 
-import { useToast } from '@/shared/hook';
+import { useToastContext } from '@/shared/context/ToastContext';
 
 import styles from './Toast.module.css';
 
@@ -27,7 +27,7 @@ const toastConfig = {
 };
 
 export default function Toast({ toast }) {
-  const { removeToast } = useToast();
+  const { setToasts } = useToastContext();
   const toastRef = useRef(null);
 
   const config = toastConfig[toast.variant];
@@ -42,14 +42,14 @@ export default function Toast({ toast }) {
     }, 300000);
 
     const unmount = setTimeout(() => {
-      removeToast(toast.id);
+      setToasts((previous) => previous.filter((item) => item.id !== toast.id));
     }, 3500);
 
     return () => {
       clearTimeout(fadeOut);
       clearTimeout(unmount);
     };
-  }, [toast]);
+  }, [toast, setToasts]);
 
   const root = document.getElementById('toast');
   if (!root) return null;
