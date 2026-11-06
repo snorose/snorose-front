@@ -269,6 +269,14 @@ export const BOARD_MENUS = [
     category: BOARD_CATEGORY.COMMUNITY,
   },
   {
+    id: 20,
+    to: '/board/besookt',
+    textId: 'besookt',
+    title: '베숙트',
+    desc: '추천을 가장 많이 받은 게시물 모아보기',
+    category: BOARD_CATEGORY.COMMUNITY,
+  },
+  {
     id: 25,
     to: '/board/promotion',
     textId: 'promotion',
@@ -276,14 +284,6 @@ export const BOARD_MENUS = [
     desc: '홍보·소식 공유 커뮤니티',
     category: BOARD_CATEGORY.COMMUNITY,
     feature: FEATURE_FLAG.newBoard,
-  },
-  {
-    id: 20,
-    to: '/board/besookt',
-    textId: 'besookt',
-    title: '베숙트',
-    desc: '추천을 가장 많이 받은 게시물 모아보기',
-    category: BOARD_CATEGORY.COMMUNITY,
   },
   {
     id: 32,
@@ -390,6 +390,14 @@ export const BOARD_MENUS = [
     category: BOARD_CATEGORY.CULTURE,
   },
   {
+    id: 71,
+    to: '/board/study-abroad',
+    textId: 'study-abroad',
+    title: '교환학생·어학연수',
+    desc: '교환학생·어학연수 정보 커뮤니티',
+    category: BOARD_CATEGORY.CAMPUS,
+  },
+  {
     id: 70,
     to: '/board/club',
     textId: 'club',
@@ -397,14 +405,6 @@ export const BOARD_MENUS = [
     desc: '동아리 정보·활동 커뮤니티',
     category: BOARD_CATEGORY.CAMPUS,
     feature: FEATURE_FLAG.newBoard,
-  },
-  {
-    id: 71,
-    to: '/board/study-abroad',
-    textId: 'study-abroad',
-    title: '교환학생·어학연수',
-    desc: '교환학생·어학연수 정보 커뮤니티',
-    category: BOARD_CATEGORY.CAMPUS,
   },
   {
     id: 1007,
