@@ -1,5 +1,6 @@
 import {
   IllustrationBarChartCoins,
+  IllustrationBookFemaleSymbol,
   IllustrationBooksCap,
   IllustrationBooksCertificate,
   IllustrationBookshelf,
@@ -12,9 +13,12 @@ import {
   IllustrationGlobe,
   IllustrationHeartPill,
   IllustrationIceCupBowl,
+  IllustrationLampVase,
   IllustrationLipstick,
+  IllustrationMegaphone,
   IllustrationMicrophone,
   IllustrationPawBone,
+  IllustrationPeopleComments,
   IllustrationPhoneBooks,
   IllustrationPotPaper,
   IllustrationResidence,
@@ -52,6 +56,42 @@ interface BoardImages {
 }
 
 export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
+  'women-studies': {
+    category: IllustrationBookFemaleSymbol,
+    categoryLayout: {
+      right: '0.6rem',
+      bottom: '0.2rem',
+      width: '10.3rem',
+      height: '8rem',
+    },
+  },
+  living: {
+    category: IllustrationLampVase,
+    categoryLayout: {
+      right: '1.2rem',
+      bottom: '0.45rem',
+      width: '8.3rem',
+      height: '7.6rem',
+    },
+  },
+  promotion: {
+    category: IllustrationMegaphone,
+    categoryLayout: {
+      right: '1.15rem',
+      bottom: '0.4rem',
+      width: '8.1rem',
+      height: '8.3rem',
+    },
+  },
+  club: {
+    category: IllustrationPeopleComments,
+    categoryLayout: {
+      right: '1.1rem',
+      bottom: '0.5rem',
+      width: '8.6rem',
+      height: '7.2rem',
+    },
+  },
   'first-snow': {
     category: IllustrationSnowfall,
     categoryLayout: {
@@ -65,47 +105,47 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   'large-snow': {
     category: IllustrationSnowGround,
     categoryLayout: {
-      right: '-0.3rem',
-      bottom: '-0.2rem',
-      width: '22.2rem',
-      height: '10.6rem',
+      right: '0rem',
+      bottom: '0rem',
+      width: '21.9rem',
+      height: '9.8rem',
     },
     main: IllustrationSnowGroundCircle,
   },
   'permanent-snow': {
     category: IllustrationSnowMountain,
     categoryLayout: {
-      right: '-0.1rem',
-      bottom: '-1rem',
-      width: '22.3rem',
-      height: '12rem',
+      right: '0rem',
+      bottom: '0rem',
+      width: '21.5rem',
+      height: '9.8rem',
     },
     main: IllustrationSnowMountainCircle,
   },
   besookt: {
     category: IllustrationStarHonorBoard,
     categoryLayout: {
-      right: '3.1rem',
-      bottom: '-0.2rem',
-      width: '8.6rem',
+      right: '1rem',
+      bottom: '-0.3rem',
+      width: '9rem',
       height: '7.2rem',
     },
   },
   'student-council': {
     category: IllustrationMicrophone,
     categoryLayout: {
-      right: '2.3rem',
-      bottom: '-0.2rem',
-      width: '10.3rem',
-      height: '8.4rem',
+      right: '1rem',
+      bottom: '0rem',
+      width: '10.7rem',
+      height: '8.2rem',
     },
   },
   'graduation-preparation': {
     category: IllustrationBooksCap,
     categoryLayout: {
-      right: '0.5rem',
+      right: '-0.4rem',
       bottom: '0.4rem',
-      width: '14.2rem',
+      width: '14.3rem',
       height: '7.9rem',
     },
   },
@@ -133,7 +173,7 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   sookplace: {
     category: IllustrationIceCupBowl,
     categoryLayout: {
-      right: '3.1rem',
+      right: '1.2rem',
       bottom: '1.2rem',
       width: '8.7rem',
       height: '7.2rem',
@@ -142,17 +182,17 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   residence: {
     category: IllustrationResidence,
     categoryLayout: {
-      right: '2.5rem',
-      bottom: '1rem',
+      right: '1.2rem',
+      bottom: '0.92rem',
       width: '11.5rem',
-      height: '6.1rem',
+      height: '6.2rem',
     },
   },
   'video-content': {
     category: IllustrationTv,
     categoryLayout: {
-      right: '2.5rem',
-      bottom: '1rem',
+      right: '1.2rem',
+      bottom: '0.7rem',
       width: '8.6rem',
       height: '6.1rem',
     },
@@ -160,8 +200,8 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   'anime-comics': {
     category: IllustrationPhoneBooks,
     categoryLayout: {
-      right: '2.5rem',
-      bottom: '1rem',
+      right: '0.3rem',
+      bottom: '0.8rem',
       width: '10.6rem',
       height: '6.5rem',
     },
@@ -169,8 +209,8 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   book: {
     category: IllustrationBookshelf,
     categoryLayout: {
-      right: '2.5rem',
-      bottom: '1rem',
+      right: '1.2rem',
+      bottom: '0.7rem',
       width: '9.9rem',
       height: '6.2rem',
     },
@@ -178,8 +218,8 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   music: {
     category: IllustrationSpeakerNotes,
     categoryLayout: {
-      right: '2.5rem',
-      bottom: '1rem',
+      right: '1.1rem',
+      bottom: '0.6rem',
       width: '10.1rem',
       height: '7.5rem',
     },
@@ -187,8 +227,8 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   performance: {
     category: IllustrationStage,
     categoryLayout: {
-      right: '2.5rem',
-      bottom: '1rem',
+      right: '1rem',
+      bottom: '0.3rem',
       width: '8.8rem',
       height: '6.5rem',
     },
@@ -196,8 +236,8 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   exhibition: {
     category: IllustrationFrameRope,
     categoryLayout: {
-      right: '2.5rem',
-      bottom: '1rem',
+      right: '1.1rem',
+      bottom: '0.6rem',
       width: '9.2rem',
       height: '7rem',
     },
@@ -205,8 +245,8 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   health: {
     category: IllustrationHeartPill,
     categoryLayout: {
-      right: '2.5rem',
-      bottom: '1rem',
+      right: '1.4rem',
+      bottom: '0.5rem',
       width: '8.7rem',
       height: '6.1rem',
     },
@@ -214,8 +254,8 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   pet: {
     category: IllustrationPawBone,
     categoryLayout: {
-      right: '2.5rem',
-      bottom: '1rem',
+      right: '1.1rem',
+      bottom: '0.5rem',
       width: '8rem',
       height: '6.6rem',
     },
@@ -223,7 +263,7 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   trip: {
     category: IllustrationSuitcase,
     categoryLayout: {
-      right: '2.5rem',
+      right: '2rem',
       bottom: '0.5rem',
       width: '6.3rem',
       height: '8.3rem',
@@ -232,8 +272,8 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   cooking: {
     category: IllustrationPotPaper,
     categoryLayout: {
-      right: '2.5rem',
-      bottom: '1rem',
+      right: '1.3rem',
+      bottom: '0.6rem',
       width: '10.1rem',
       height: '7.5rem',
     },
@@ -241,8 +281,8 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   sport: {
     category: IllustrationDumbbellTowel,
     categoryLayout: {
-      right: '2.5rem',
-      bottom: '1rem',
+      right: '1rem',
+      bottom: '0.6rem',
       width: '9.6rem',
       height: '5.5rem',
     },
@@ -250,7 +290,7 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   beauty: {
     category: IllustrationLipstick,
     categoryLayout: {
-      right: '3.3rem',
+      right: '1.5rem',
       bottom: '-0.05rem',
       width: '8rem',
       height: '8.9rem',
@@ -259,7 +299,7 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   finance: {
     category: IllustrationBarChartCoins,
     categoryLayout: {
-      right: '2.5rem',
+      right: '1.1rem',
       bottom: '0.7rem',
       width: '9.1rem',
       height: '5.7rem',
@@ -268,7 +308,7 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   'study-abroad': {
     category: IllustrationGlobe,
     categoryLayout: {
-      right: '2.5rem',
+      right: '1.1rem',
       bottom: '0.5rem',
       width: '7.5rem',
       height: '8.5rem',
@@ -277,19 +317,19 @@ export const BOARD_IMAGES: Partial<Record<BoardKey, BoardImages>> = {
   game: {
     category: IllustrationGamepad,
     categoryLayout: {
-      right: '2.5rem',
-      bottom: '0.5rem',
-      width: '9.5rem',
-      height: '8rem',
+      right: '0.6rem',
+      bottom: '0rem',
+      width: '9rem',
+      height: '8.6rem',
     },
   },
   certification: {
     category: IllustrationBooksCertificate,
     categoryLayout: {
-      right: '2.5rem',
-      bottom: '0.5rem',
-      width: '9.5rem',
-      height: '8rem',
+      right: '1.1rem',
+      bottom: '0.6rem',
+      width: '10.2rem',
+      height: '7.6rem',
     },
   },
 };
