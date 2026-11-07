@@ -7,10 +7,10 @@
 }
 
 .panelHeader {
-  padding: 1.3rem 1.4rem 1.3rem 2rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  padding: 1.3rem 1.4rem 1.3rem 2rem;
   cursor: pointer;
   background: var(--blue-0);
 }
@@ -28,8 +28,8 @@
 }
 
 .accordion:last-child.opend .panelHeader {
-  border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .panelHeader span {
@@ -51,22 +51,24 @@
   transition: 300ms transform ease;
 }
 
-
 .opend .toggleIcon {
   transform: rotate(180deg);
 }
 
 .panelBody {
   max-height: 0;
+
   padding: 0 2rem;
 
   overflow: hidden;
 
-  background: var(--blue-0);
+  font: var(--text-body-1-reg);
+
   color: var(--grey-4);
 
-  font: var(--text-body-1-reg);
   white-space: pre-line;
+
+  background: var(--blue-0);
 
   transition:
     max-height 300ms ease,
@@ -74,8 +76,8 @@
 }
 
 .opend .panelBody {
-  padding: 2rem;
   max-height: 250rem;
+  padding: 2rem;
   overflow-y: auto;
   background: var(--blue-1);
 }

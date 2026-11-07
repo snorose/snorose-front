@@ -1,7 +1,7 @@
 .header {
-  margin: 0 var(--default-margin) 1.2rem var(--default-margin);
   display: flex;
   justify-content: space-between;
+  margin: 0 var(--default-margin) 1.2rem var(--default-margin);
 }
 
 .title {
@@ -10,11 +10,9 @@
 
 .more {
   display: flex;
-  align-items: center;
   gap: 0.1rem;
-
+  align-items: center;
   font: var(--text-body-1-reg);
-  text-decoration: none;
-
   color: var(--grey-4);
+  text-decoration: none;
 }

@@ -17,8 +17,8 @@
 
 .description {
   margin-top: 4px;
-  color: var(--grey-3-1);
   font: var(--text-body-2-reg);
+  color: var(--grey-3-1);
   letter-spacing: 0;
 }
 
@@ -35,8 +35,8 @@
 
 .groupHeader {
   display: flex;
-  align-items: center;
   gap: 8px;
+  align-items: center;
   margin-bottom: 12px;
 }
 
@@ -47,25 +47,30 @@
 
 .count {
   min-width: 24px;
+
   padding: 2px 7px;
-  border-radius: 999px;
-  background-color: var(--grey-1);
-  color: var(--grey-3-1);
+
   font: var(--text-caption-1-bold);
-  letter-spacing: 0;
+
+  color: var(--grey-3-1);
+
   text-align: center;
+  letter-spacing: 0;
+
+  background-color: var(--grey-1);
+  border-radius: 999px;
 }
 
 .tokenList {
-  border-top: 1px solid var(--grey-2);
   list-style: none;
+  border-top: 1px solid var(--grey-2);
 }
 
 .token {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 0.7fr);
-  align-items: center;
   gap: 32px;
+  align-items: center;
   min-width: 0;
   padding: 20px 0;
   border-bottom: 1px solid var(--grey-2);
@@ -73,28 +78,33 @@
 
 .preview {
   min-width: 0;
-  overflow-wrap: anywhere;
   letter-spacing: 0;
+  overflow-wrap: anywhere;
 }
 
 .details {
   position: relative;
   display: grid;
-  min-width: 0;
   gap: 5px;
   justify-items: start;
+  min-width: 0;
 }
 
 .copyButton {
   max-width: 100%;
+
   padding: 4px 6px;
   margin-left: -6px;
+
+  color: var(--blue-4);
+
+  text-align: left;
+
+  cursor: pointer;
+
+  background: transparent;
   border: 0;
   border-radius: 4px;
-  background: transparent;
-  color: var(--blue-4);
-  cursor: pointer;
-  text-align: left;
 }
 
 .copyButton:hover {
@@ -122,21 +132,28 @@
   position: absolute;
   top: 4px;
   right: 0;
-  color: var(--blue-4);
   font: var(--text-caption-1-med);
+  color: var(--blue-4);
   letter-spacing: 0;
 }
 
 .empty {
   display: grid;
-  min-height: 200px;
-  margin-top: 24px;
+
   place-items: center;
+
+  min-height: 200px;
+
+  margin-top: 24px;
+
+  font: var(--text-body-1-med);
+
+  color: var(--grey-3-1);
+
+  letter-spacing: 0;
+
   border: 1px solid var(--grey-2);
   border-radius: 8px;
-  color: var(--grey-3-1);
-  font: var(--text-body-1-med);
-  letter-spacing: 0;
 }
 
 @media (max-width: 640px) {

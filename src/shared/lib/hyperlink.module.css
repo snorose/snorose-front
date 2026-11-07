@@ -1,7 +1,7 @@
 .link {
   color: var(--blue-3);
-  cursor: pointer;
   word-break: break-all;
+  cursor: pointer;
 }
 
 .link:hover {

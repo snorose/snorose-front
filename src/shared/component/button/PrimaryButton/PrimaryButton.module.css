@@ -1,16 +1,14 @@
 .button {
   width: 100%;
   padding: 1.65rem 0;
-  border-radius: 0.5rem;
-
   font: var(--text-headline-2-med);
-
   color: var(--white);
   background: var(--blue-4);
+  border-radius: 0.5rem;
 }
 
 .button:disabled {
+  color: var(--grey-3-1);
   cursor: auto;
   background: var(--grey-2);
-  color: var(--grey-3-1);
 }

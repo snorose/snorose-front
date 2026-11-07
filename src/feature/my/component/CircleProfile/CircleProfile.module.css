@@ -1,16 +1,22 @@
 .profileImage {
-  width: 13.5rem;
-  height: 13.5rem;
-  padding: 0.6rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
   top: 12.5rem;
   left: 50%;
-  transform: translateX(-50%);
   z-index: var(--z-index-profile-image);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 13.5rem;
+  height: 13.5rem;
+
+  padding: 0.6rem;
+
   overflow: hidden;
+
+  transform: translateX(-50%);
 }
 
 .profileImage img,

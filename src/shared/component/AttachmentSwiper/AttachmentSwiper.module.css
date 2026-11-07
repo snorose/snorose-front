@@ -1,9 +1,9 @@
 .swiperContainer {
   width: 100%;
-  overflow: hidden;
-  margin-bottom: 1.063rem;
-  padding-bottom: 12px;
   padding-right: 10px;
+  padding-bottom: 12px;
+  margin-bottom: 1.063rem;
+  overflow: hidden;
 }
 .attachmentsContainer {
   width: 100%;
@@ -19,8 +19,8 @@
 .attachment {
   width: 100%;
   height: 14.4rem;
-  border-radius: 0.75rem;
   object-fit: cover;
+  border-radius: 0.75rem;
 }
 .videoIcon {
   position: absolute;
@@ -29,9 +29,9 @@
 }
 .customScrollbar {
   height: 4px;
+  padding-right: 1rem;
   background: rgba(0, 0, 0, 0.01); /* scrollbar track */
   border-radius: 2px;
-  padding-right: 1rem;
 }
 .custom-swiper-scrollbar .swiper-scrollbar-drag {
   background: #888; /* scrollbar thumb */

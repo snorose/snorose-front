@@ -3,8 +3,8 @@
   flex-direction: column;
   padding: 0.4rem 1.3rem;
   margin: 0 2rem;
-  border-radius: 0.5rem;
   background: var(--grey-1);
+  border-radius: 0.5rem;
 }
 
 .itemList {
@@ -21,11 +21,11 @@
 
 .item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   padding: 1.2rem 0;
-  color: var(--grey-4);
   font: var(--text-headline-2-med);
+  color: var(--grey-4);
 
   svg {
     width: 2.4rem;
@@ -36,29 +36,39 @@
 /* 버튼 */
 .buttonWrapper {
   display: flex;
-  justify-content: flex-end;
   gap: 1.6rem;
+  justify-content: flex-end;
   margin: 2rem;
 }
 
 .logoutButton {
   display: flex;
-  justify-content: center;
+
   align-items: center;
-  border-radius: 0.5rem;
+  justify-content: center;
+
   padding: 0.9rem 1.5rem;
-  background: var(--blue-4);
-  color: var(--white);
+
   font: var(--text-body-1-reg);
+
+  color: var(--white);
+
+  background: var(--blue-4);
+  border-radius: 0.5rem;
 }
 
 .deleteAccountButton {
   display: flex;
-  justify-content: center;
+
   align-items: center;
-  border-radius: 0.5rem;
+  justify-content: center;
+
   padding: 0.9rem 1.5rem;
-  background: var(--blue-1);
-  color: var(--blue-4);
+
   font: var(--text-body-1-reg);
+
+  color: var(--blue-4);
+
+  background: var(--blue-1);
+  border-radius: 0.5rem;
 }

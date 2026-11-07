@@ -7,9 +7,9 @@
 
 .header {
   display: flex;
+  gap: 16px;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 16px;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--grey-2);
 }
@@ -21,8 +21,8 @@
 
 .description {
   margin-top: 4px;
-  color: var(--grey-3-1);
   font: var(--text-body-2-reg);
+  color: var(--grey-3-1);
   letter-spacing: 0;
 }
 
@@ -41,8 +41,8 @@
 
 .groupHeader {
   display: flex;
-  align-items: center;
   gap: 8px;
+  align-items: center;
 }
 
 .groupTitle {
@@ -52,13 +52,18 @@
 
 .count {
   min-width: 24px;
+
   padding: 2px 7px;
-  border-radius: 999px;
-  background-color: var(--grey-1);
-  color: var(--grey-3-1);
+
   font: var(--text-caption-1-bold);
-  letter-spacing: 0;
+
+  color: var(--grey-3-1);
+
   text-align: center;
+  letter-spacing: 0;
+
+  background-color: var(--grey-1);
+  border-radius: 999px;
 }
 
 .grid {
@@ -70,31 +75,36 @@
 
 .tile {
   display: flex;
-  min-width: 0;
+
   flex-direction: column;
+
   gap: 8px;
+
+  min-width: 0;
+
   padding: 12px;
+
+  background-color: var(--white);
   border: 1px solid var(--grey-2);
   border-radius: 8px;
-  background-color: var(--white);
 }
 
 .copyTile,
 .copyImport {
   position: relative;
-  border: 0;
-  background: transparent;
   color: inherit;
   cursor: pointer;
+  background: transparent;
+  border: 0;
   border-radius: 4px;
 }
 
 .copyTile {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 8px;
   width: 100%;
-  flex: 1;
   text-align: center;
 }
 
@@ -105,9 +115,9 @@
 
 .copyImport {
   display: flex;
+  gap: 6px;
   align-items: center;
   justify-content: center;
-  gap: 6px;
   min-height: 36px;
   font-size: 12px;
 }
@@ -126,10 +136,10 @@
   position: absolute;
   inset: auto 0 0;
   padding: 6px;
-  background: var(--white);
-  color: var(--blue-4);
   font-size: 12px;
+  color: var(--blue-4);
   text-align: center;
+  background: var(--white);
 }
 
 .copyImport .copyStatus:not(:empty) {
@@ -137,9 +147,9 @@
   display: grid;
   place-items: center;
   padding: 0 6px;
-  border-radius: inherit;
-  background: var(--white);
   pointer-events: none;
+  background: var(--white);
+  border-radius: inherit;
 }
 
 .copyImport:hover .copyStatus:not(:empty) {
@@ -148,21 +158,21 @@
 
 .docsLinks {
   display: flex;
-  gap: 20px;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
 .examples {
   display: flex;
-  align-items: center;
-  gap: 32px;
   flex-wrap: wrap;
+  gap: 32px;
+  align-items: center;
 }
 
 .examples figure {
   display: grid;
-  justify-items: center;
   gap: 8px;
+  justify-items: center;
   margin: 0;
 }
 
@@ -176,10 +186,10 @@
 
 .preview {
   display: grid;
-  min-height: 72px;
   place-items: center;
-  border-radius: 6px;
+  min-height: 72px;
   background-color: var(--grey-1);
+  border-radius: 6px;
 }
 
 .icon {
@@ -188,22 +198,29 @@
 }
 
 .name {
-  overflow-wrap: anywhere;
-  color: var(--grey-4);
   font: var(--text-caption-1-med);
+  color: var(--grey-4);
   letter-spacing: 0;
+  overflow-wrap: anywhere;
 }
 
 .empty {
   display: grid;
-  min-height: 200px;
-  margin-top: 24px;
+
   place-items: center;
+
+  min-height: 200px;
+
+  margin-top: 24px;
+
+  font: var(--text-body-1-med);
+
+  color: var(--grey-3-1);
+
+  letter-spacing: 0;
+
   border: 1px solid var(--grey-2);
   border-radius: 8px;
-  color: var(--grey-3-1);
-  font: var(--text-body-1-med);
-  letter-spacing: 0;
 }
 
 @media (max-width: 600px) {

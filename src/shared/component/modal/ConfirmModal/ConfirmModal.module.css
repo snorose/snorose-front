@@ -1,36 +1,41 @@
 .top {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 0.8rem;
-  width: 100%;
-  padding: 2.3rem 0 0;
   box-sizing: border-box;
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.8rem;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  padding: 2.3rem 0 0;
 }
 
 .contentDivider {
   width: 100%;
   height: 0.1rem;
-  background-color: var(--grey-2);
   margin-top: 2.3rem;
+  background-color: var(--grey-2);
 }
 
 .title {
   display: flex;
   justify-content: center;
-  text-align: center;
-  color: var(--black);
-  font: var(--text-headline-1-med);
   padding-inline: 2rem;
+  font: var(--text-headline-1-med);
+  color: var(--black);
+  text-align: center;
 }
 
 .description {
-  text-align: center;
-  color: var(--grey-4);
-  font: var(--text-body-1-reg);
-  white-space: pre-line;
   padding-inline: 3.6rem;
+  font: var(--text-body-1-reg);
+  color: var(--grey-4);
+  text-align: center;
+  white-space: pre-line;
 }
 
 .bottom {
@@ -38,12 +43,12 @@
   width: 100%;
 
   button:first-child {
-    color: var(--grey-3-1);
     font: var(--text-headline-2-reg);
+    color: var(--grey-3-1);
   }
   button:last-child {
-    color: var(--pink-3);
     font: var(--text-headline-2-med);
+    color: var(--pink-3);
   }
 }
 
@@ -56,8 +61,8 @@
 
 .bottomButton {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
   cursor: pointer;
   transition: all 200ms ease-in-out;

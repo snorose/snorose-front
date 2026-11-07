@@ -1,10 +1,9 @@
 .container {
-  height: 100%;
-  padding: 0 var(--default-margin);
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100%;
+  padding: 0 var(--default-margin);
 }
 
 .icon {
@@ -12,14 +11,13 @@
   margin-bottom: 1.9rem;
 }
 
-
 .icon path {
   stroke-width: 2.4;
 }
 
 .title {
-  font: var(--text-title-1-bold);
   margin-bottom: 0.6rem;
+  font: var(--text-title-1-bold);
 }
 
 .explanation {
@@ -28,17 +26,17 @@
 }
 
 .img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: fit-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .illustration {
+  flex-shrink: 0;
   width: 25rem;
   height: 25rem;
-  flex-shrink: 0;
 }
 
 .submit {

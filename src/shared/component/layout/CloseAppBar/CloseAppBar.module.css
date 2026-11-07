@@ -3,20 +3,22 @@
   top: 0;
   z-index: var(--z-index-appbar);
 
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
   width: 100%;
   max-width: 60rem;
   height: var(--default-appbar-height);
 
   padding: 0 2rem;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  background-color: var(--white);
   font: var(--text-headline-1-bold);
   font-size: 1.6rem;
   font-weight: 400;
+
+  background-color: var(--white);
 }
 
 .close {
@@ -25,9 +27,9 @@
 
 .actions {
   display: flex;
-  align-items: center;
   gap: 0.4rem;
-  cursor: pointer;
+  align-items: center;
   font-size: 1.6rem;
   font-weight: 400;
+  cursor: pointer;
 }

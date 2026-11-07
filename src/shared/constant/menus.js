@@ -89,12 +89,12 @@ export const SIDEBAR_MENUS = Object.freeze([
       { to: '/board/first-snow', name: '첫눈온방' },
       { to: '/board/large-snow', name: '함박눈방' },
       { to: '/board/permanent-snow', name: '만년설방' },
+      { to: '/board/besookt', name: '베숙트' },
       {
         to: '/board/promotion',
         name: '홍보게시판',
         feature: FEATURE_FLAG.newBoard,
       },
-      { to: '/board/besookt', name: '베숙트' },
     ],
   },
   {
@@ -157,12 +157,12 @@ export const SIDEBAR_MENUS = Object.freeze([
     to: '/board',
     title: '캠퍼스',
     items: [
+      { to: '/board/study-abroad', name: '교환학생·어학연수' },
       {
         to: '/board/club',
         name: '동아리 이모저모',
         feature: FEATURE_FLAG.newBoard,
       },
-      { to: '/board/study-abroad', name: '교환학생·어학연수' },
     ],
   },
   {
