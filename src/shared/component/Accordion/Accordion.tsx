@@ -75,7 +75,7 @@ function AccordionHeader({ children }: { children: React.ReactNode }) {
         id={`${id}-header`}
         aria-controls={`${id}-content`}
         aria-expanded={isOpen}
-        className={`${styles.trigger} ${isOpen ? styles.opened : ''}`}
+        className={`${styles.header} ${isOpen ? styles.opened : ''}`}
         onClick={handleClick}
       >
         <span>{children}</span>
