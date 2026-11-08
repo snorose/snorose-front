@@ -66,6 +66,9 @@ export default function EditInquiryPage() {
       toast.success(TOAST.INQUIRY.update);
 
       queryClient.invalidateQueries({ queryKey: QUERY_KEY.post(postId) });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.myInquiriesAndReports],
+      });
 
       navigate(-1);
     },
