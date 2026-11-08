@@ -83,10 +83,13 @@ function InquiryDetailLoader() {
       }
       CommentInputContainer={CommentInputContainer}
       Chip={
-        <Chip
-          name={INQUIRY_STATUS_MAP[data.status].label}
-          variant={INQUIRY_STATUS_MAP[data.status].variant}
-        />
+        <>
+          <Chip name='문의' variant='grey' />
+          <Chip
+            name={INQUIRY_STATUS_MAP[data.status].label}
+            variant={INQUIRY_STATUS_MAP[data.status].variant}
+          />
+        </>
       }
       Actions={
         data.status === 'PENDING' && <MeatBallIcon onClick={onMenuOpen} />
