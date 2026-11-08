@@ -63,10 +63,13 @@ function ReportDetailLoader() {
       }
       CommentInputContainer={CommentInputContainer}
       Chip={
-        <Chip
-          name={REPORT_STATUS_MAP[data.status].label}
-          variant={REPORT_STATUS_MAP[data.status].variant}
-        />
+        <>
+          <Chip name='신고' variant='grey' />
+          <Chip
+            name={REPORT_STATUS_MAP[data.status].label}
+            variant={REPORT_STATUS_MAP[data.status].variant}
+          />
+        </>
       }
       Actions={
         data.status === 'PENDING' && <MeatBallIcon onClick={onMenuOpen} />
