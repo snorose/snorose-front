@@ -7,7 +7,6 @@ import { ConfirmModal } from '@/shared/component';
 import {
   BOARD_ID,
   CONFIRM_MODAL_TEXT,
-  QUERY_KEY,
   QUERY_KEYS,
   TOAST,
 } from '@/shared/constant';
@@ -70,7 +69,7 @@ export default function EditInquiryPage() {
       });
 
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY.myInquiriesAndReports],
+        queryKey: QUERY_KEYS.myActivity.list('inquiryReport'),
       });
 
       toast.success(TOAST.INQUIRY.update);

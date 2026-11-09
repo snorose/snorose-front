@@ -16,12 +16,7 @@ import {
   NoticeModal,
   ServerErrorFallback,
 } from '@/shared/component';
-import {
-  NOTICE_MODAL_TEXT,
-  QUERY_KEY,
-  QUERY_KEYS,
-  TOAST,
-} from '@/shared/constant';
+import { NOTICE_MODAL_TEXT, QUERY_KEYS, TOAST } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useToast } from '@/shared/hook';
 
@@ -65,7 +60,7 @@ function InquiryDetailLoader() {
       });
 
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY.myInquiriesAndReports],
+        queryKey: QUERY_KEYS.myActivity.list('inquiryReport'),
       });
 
       toast.success(TOAST.INQUIRY.delete);

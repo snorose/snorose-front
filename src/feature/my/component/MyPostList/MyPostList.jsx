@@ -28,7 +28,7 @@ export default function MyPostList({
     ref,
     isFetchingNextPage,
   } = useSuspenseInfiniteScroll({
-    queryKey: [queryKey],
+    queryKey,
     queryFn: ({ pageParam }) => queryFn({ page: pageParam }),
     staleTime: STALE_TIME.mypageActivity,
     getItemKey: (item) => item.postId,

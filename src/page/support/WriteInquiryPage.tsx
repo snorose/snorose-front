@@ -7,7 +7,7 @@ import { ConfirmModal } from '@/shared/component';
 import {
   BOARD_ID,
   CONFIRM_MODAL_TEXT,
-  QUERY_KEY,
+  QUERY_KEYS,
   TOAST,
 } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
@@ -54,7 +54,7 @@ export default function WriteInquiryPage() {
       toast.success(TOAST.INQUIRY.create);
 
       queryClient.removeQueries({
-        queryKey: [QUERY_KEY.myInquiriesAndReports],
+        queryKey: QUERY_KEYS.myActivity.list('inquiryReport'),
       });
 
       navigate(`/inquiry/${inquiryId}`, { replace: true });

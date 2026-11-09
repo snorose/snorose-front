@@ -13,12 +13,6 @@ export const QUERY_KEY = Object.freeze({
   notices: 'notices',
   pointHistory: 'pointHistory',
   userInfo: 'userInfo',
-  myPosts: 'myPosts',
-  myCommentedPosts: 'myCommentedPosts',
-  myDownloadedExamReviews: 'myDownloadedExamReviews',
-  myInquiriesAndReports: 'myInquiriesAndReports',
-  myScrapedPosts: 'myScrapedPosts',
-  myScrapedExamReviews: 'myScrapedExamReviews',
   best3: 'best3',
   notifications: (category) =>
     category ? ['notifications', { category }] : ['notifications'],

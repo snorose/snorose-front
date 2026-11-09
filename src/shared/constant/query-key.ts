@@ -3,8 +3,8 @@ type MY_ACTIVITY =
   | 'commentedPost'
   | 'downloadedReview'
   | 'inquiryReport'
-  | 'scrapedPost'
-  | 'scrapedExamReview';
+  | 'scrapedReview'
+  | 'scrapedPost';
 
 export const QUERY_KEYS = {
   inquiry: {
@@ -14,5 +14,9 @@ export const QUERY_KEYS = {
   report: {
     all: ['report'],
     byId: (reportId: number) => ['report', 'byId', reportId],
+  },
+  myActivity: {
+    all: ['myActivity'],
+    list: (type: MY_ACTIVITY) => ['myActivity', type],
   },
 };

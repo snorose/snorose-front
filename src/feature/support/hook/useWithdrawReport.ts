@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { QUERY_KEY, QUERY_KEYS } from '@/shared/constant';
+import { QUERY_KEYS } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 
 import { withdrawReport } from '@/feature/support/api';
@@ -24,7 +24,7 @@ export default function useWithdrawReport() {
       });
 
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY.myInquiriesAndReports],
+        queryKey: QUERY_KEYS.myActivity.list('inquiryReport'),
       });
 
       toast.success('신고가 철회되었어요');
