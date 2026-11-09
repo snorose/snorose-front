@@ -8,6 +8,7 @@ import {
   BOARD_ID,
   CONFIRM_MODAL_TEXT,
   QUERY_KEY,
+  QUERY_KEYS,
   TOAST,
 } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
@@ -18,16 +19,17 @@ import { Attachment, UploadFile } from '@/feature/attachment/types';
 import { updateInquiry } from '@/feature/support/api';
 import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 import { INQUIRY_OPTIONS } from '@/feature/support/data';
-import type { InquiryDTO } from '@/feature/support/types';
+import type { InquiryReadResponse } from '@/feature/support/types';
 import { SupportFormView } from '@/feature/support/ui';
 
 import { createThumbnail } from '@/apis';
 import { Option } from '@/types';
 
 export default function EditInquiryPage() {
-  const post = useLoaderData() as InquiryDTO;
+  const post = useLoaderData() as InquiryReadResponse;
 
-  const { postId } = useParams();
+  const { postId: postIdParam } = useParams();
+  const inquiryId = Number(postIdParam);
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
@@ -42,7 +44,7 @@ export default function EditInquiryPage() {
       const deletedIds = originalIds.filter((id) => !remainingIds.has(id));
 
       return updateInquiry({
-        postId: postId!,
+        inquiryId,
         title,
         content,
         subGroup: selectedOption!.key,
@@ -53,9 +55,9 @@ export default function EditInquiryPage() {
     },
 
     onSuccess: (data) => {
-      const { postId } = data;
+      const { inquiryId } = data;
 
-      createThumbnail(BOARD_ID.inquiryAndReport, postId) //
+      createThumbnail(BOARD_ID.inquiryAndReport, inquiryId) //
         .catch((error) => {
           /**
            * TODO: 썸네일 생성 실패는 치명적이지 않으므로, 에러를 사용자에게 알리지 않고 조용히 실패 처리합니다.
@@ -63,12 +65,15 @@ export default function EditInquiryPage() {
            */
         });
 
-      toast.success(TOAST.INQUIRY.update);
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.inquiry.byId(inquiryId),
+      });
 
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY.post(postId) });
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY.myInquiriesAndReports],
       });
+
+      toast.success(TOAST.INQUIRY.update);
 
       navigate(-1);
     },

@@ -41,9 +41,9 @@ export default function WriteInquiryPage() {
       }),
 
     onSuccess: (data) => {
-      const { postId } = data;
+      const { inquiryId } = data;
 
-      createThumbnail(BOARD_ID.inquiryAndReport, postId) //
+      createThumbnail(BOARD_ID.inquiryAndReport, inquiryId) //
         .catch((error) => {
           /**
            * TODO: 썸네일 생성 실패는 치명적이지 않으므로, 에러를 사용자에게 알리지 않고 조용히 실패 처리합니다.
@@ -57,7 +57,7 @@ export default function WriteInquiryPage() {
         queryKey: [QUERY_KEY.myInquiriesAndReports],
       });
 
-      navigate(`/inquiry/${postId}`, { replace: true });
+      navigate(`/inquiry/${inquiryId}`, { replace: true });
     },
 
     onError: (error) => {

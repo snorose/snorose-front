@@ -16,7 +16,12 @@ import {
   NoticeModal,
   ServerErrorFallback,
 } from '@/shared/component';
-import { NOTICE_MODAL_TEXT, QUERY_KEY, TOAST } from '@/shared/constant';
+import {
+  NOTICE_MODAL_TEXT,
+  QUERY_KEY,
+  QUERY_KEYS,
+  TOAST,
+} from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useToast } from '@/shared/hook';
 
@@ -39,7 +44,7 @@ export default function InquiryDetailPage() {
 function InquiryDetailLoader() {
   const navigate = useNavigate();
   const { postId: postIdParam } = useParams();
-  const postId = Number(postIdParam);
+  const inquiryId = Number(postIdParam);
 
   const queryClient = useQueryClient();
 
@@ -47,16 +52,24 @@ function InquiryDetailLoader() {
   const { toast } = useToast();
 
   const { data } = useSuspenseQuery({
-    queryKey: QUERY_KEY.post(postId),
-    queryFn: () => readInquiry(postId),
+    queryKey: QUERY_KEYS.inquiry.byId(inquiryId),
+    queryFn: () => readInquiry(inquiryId),
     staleTime: 1000 * 60 * 5,
   });
 
   const { mutate: deleteInquiryMutate } = useMutation({
-    mutationFn: () => deleteInquiry(postId),
+    mutationFn: () => deleteInquiry(inquiryId),
     onSuccess: () => {
+      queryClient.removeQueries({
+        queryKey: QUERY_KEYS.inquiry.byId(inquiryId),
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.myInquiriesAndReports],
+      });
+
       toast.success(TOAST.INQUIRY.delete);
-      queryClient.removeQueries(QUERY_KEY.post(postId));
+
       navigate(-1);
     },
     onError: (error) => {

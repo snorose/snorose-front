@@ -1,4 +1,5 @@
 import { Attachment } from '@/feature/attachment/types';
+import { ReportReadResponse } from '@/feature/support/types';
 
 import { putFileInBucket } from '@/apis';
 import { authAxios } from '@/axios';
@@ -43,30 +44,6 @@ export const createReport = async ({
   }
 
   return { reportId: postId };
-};
-
-type ReportReadResponse = {
-  reportId: number;
-  userRoleId: number;
-  isWriter: boolean;
-  encryptedUserId: string;
-  userDisplay: string;
-  title: string;
-  content: string;
-  group: string;
-  subGroup: string;
-  reportCause: string;
-  status: 'PENDING' | 'COMPLETED';
-  target: string;
-  targetPostId: number;
-  targetBoardId: number;
-  commentCount: number;
-  createdAt: string;
-  updatedAt: string | null;
-  isEdited: boolean;
-  isWriterWithdrawn: boolean;
-  attachments: string[];
-  category: string;
 };
 
 export const readReport = async (
