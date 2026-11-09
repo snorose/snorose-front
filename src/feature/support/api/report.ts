@@ -4,7 +4,7 @@ import { ReportReadResponse } from '@/feature/support/types';
 import { putFileInBucket } from '@/apis';
 import { authAxios } from '@/axios';
 
-export type ReportCreateRequest = {
+type ReportCreateRequest = {
   targetId: string;
   title: string;
   content: string;
@@ -47,7 +47,7 @@ export const createReport = async ({
 };
 
 export const readReport = async (
-  reportId: string
+  reportId: number
 ): Promise<ReportReadResponse> => {
   const response = await authAxios.get(`/v1/reports/report/${reportId}`);
 

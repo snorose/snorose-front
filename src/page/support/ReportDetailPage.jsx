@@ -3,7 +3,6 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { IconEllipsis } from '@snorose/icons';
-import { useSuspenseQuery } from '@tanstack/react-query';
 
 import {
   BackAppBar,
@@ -12,14 +11,14 @@ import {
   NoticeModal,
   ServerErrorFallback,
 } from '@/shared/component';
-import { NOTICE_MODAL_TEXT, QUERY_KEYS } from '@/shared/constant';
+import { NOTICE_MODAL_TEXT } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 
 import { PostActionBar } from '@/feature/board/component';
 import { PostDetailView } from '@/feature/board/ui';
 import { CommentInputContainer } from '@/feature/comment/component';
-import { readReport } from '@/feature/support/api';
 import { REPORT_STATUS_MAP } from '@/feature/support/constant';
+import useReportDetail from '@/feature/support/hook/useReportDetail';
 import useWithdrawReport from '@/feature/support/hook/useWithdrawReport';
 
 export default function ReportDetailPage() {
@@ -38,12 +37,7 @@ function ReportDetailLoader() {
 
   const { setModal } = useContext(ModalContext);
 
-  const { data } = useSuspenseQuery({
-    queryKey: QUERY_KEYS.report.byId(reportId),
-    queryFn: () => readReport(reportId),
-    staleTime: 1000 * 60 * 5,
-  });
-
+  const { data } = useReportDetail(reportId);
   const { mutate: withdrawReport } = useWithdrawReport();
 
   const onMenuOpen = () => {
