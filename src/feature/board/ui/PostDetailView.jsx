@@ -266,7 +266,7 @@ function MetaContainer({
 function MoreModal({ deletePost, handleWithdrawReport, data }) {
   const navigate = useNavigate();
 
-  const { modal, setModal } = useContext(ModalContext);
+  const { setModal } = useContext(ModalContext);
 
   const { toast } = useToast();
 
@@ -300,7 +300,6 @@ function MoreModal({ deletePost, handleWithdrawReport, data }) {
 
   return (
     <PostModalRenderer
-      modal={modal}
       handleEdit={handleEdit}
       handleDelete={deletePost}
       handleShare={handleShare}
