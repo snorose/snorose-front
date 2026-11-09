@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { QUERY_KEY } from '@/shared/constant';
+import { QUERY_KEY, QUERY_KEYS } from '@/shared/constant';
 import { useToast } from '@/shared/hook';
 
 import { withdrawReport } from '@/feature/support/api';
@@ -16,10 +16,10 @@ export default function useWithdrawReport() {
   return useMutation({
     mutationFn: withdrawReport,
     onSuccess: (data) => {
-      const { postId } = data;
+      const { reportId } = data;
 
       queryClient.invalidateQueries({
-        queryKey: QUERY_KEY.post(postId),
+        queryKey: QUERY_KEYS.report.byId(reportId),
         exact: true,
       });
 

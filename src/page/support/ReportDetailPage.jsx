@@ -12,7 +12,7 @@ import {
   NoticeModal,
   ServerErrorFallback,
 } from '@/shared/component';
-import { NOTICE_MODAL_TEXT, QUERY_KEY } from '@/shared/constant';
+import { NOTICE_MODAL_TEXT, QUERY_KEYS } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 
 import { PostActionBar } from '@/feature/board/component';
@@ -34,13 +34,13 @@ export default function ReportDetailPage() {
 
 function ReportDetailLoader() {
   const { postId: postIdParam } = useParams();
-  const postId = Number(postIdParam);
+  const reportId = Number(postIdParam);
 
   const { setModal } = useContext(ModalContext);
 
   const { data } = useSuspenseQuery({
-    queryKey: QUERY_KEY.post(postId),
-    queryFn: () => readReport(postId),
+    queryKey: QUERY_KEYS.report.byId(reportId),
+    queryFn: () => readReport(reportId),
     staleTime: 1000 * 60 * 5,
   });
 
@@ -56,7 +56,7 @@ function ReportDetailLoader() {
   return (
     <PostDetailView
       data={data}
-      handleWithdrawReport={() => withdrawReport(postId)}
+      handleWithdrawReport={() => withdrawReport(reportId)}
       PostActionBar={
         <PostActionBar>
           <PostActionBar.Comment {...data} />

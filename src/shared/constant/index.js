@@ -9,6 +9,7 @@ export * from './majors';
 export * from './menus';
 export * from './modalOptions';
 export * from './modalText';
+export * from './query-key';
 export * from './reactQuery';
 export * from './role';
 export * from './route';

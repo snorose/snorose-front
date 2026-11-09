@@ -54,9 +54,9 @@ export default function WriteReportPage() {
       }),
 
     onSuccess: (data) => {
-      const { postId } = data;
+      const { reportId } = data;
 
-      createThumbnail(BOARD_ID.inquiryAndReport, postId) //
+      createThumbnail(BOARD_ID.inquiryAndReport, reportId) //
         .catch((error) => {
           /**
            * TODO: 썸네일 생성 실패는 치명적이지 않으므로, 에러를 사용자에게 알리지 않고 조용히 실패 처리합니다.
@@ -70,7 +70,7 @@ export default function WriteReportPage() {
 
       toast.success(TOAST.REPORT.create, {
         label: '신고 확인',
-        action: () => navigate(`/report/${postId}`),
+        action: () => navigate(`/report/${reportId}`),
       });
 
       navigate(-1);
