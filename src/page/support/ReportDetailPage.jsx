@@ -1,8 +1,8 @@
 import { Suspense, useContext, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import { IconEllipsis } from '@snorose/icons';
+import { IconArrowUpRight, IconEllipsis } from '@snorose/icons';
 
 import {
   BackAppBar,
@@ -14,6 +14,7 @@ import {
 import { NOTICE_MODAL_TEXT } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { useModalReset } from '@/shared/hook';
+import { getBoardTextId } from '@/shared/lib';
 
 import {
   AttachmentSwiper,
@@ -46,6 +47,10 @@ function ReportDetailLoader() {
 
   const { setModal } = useContext(ModalContext);
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
+
+  const hasLink = data.targetBoardId && data.targetPostId;
+  const boardName = hasLink ? getBoardTextId(data.targetBoardId) : '';
+  const link = `/board/${boardName}/post/${data.targetPostId}`;
 
   const onMenuOpen = () => {
     setModal({
@@ -93,11 +98,42 @@ function ReportDetailLoader() {
         <PostLayout.Body>
           <PostLayout.Title title={data.title} />
           <Content content={data.content} />
+
           {data.attachments.length > 0 && (
             <AttachmentSwiper
               attachments={data.attachments}
               setClickedImageIndex={setClickedImageIndex}
             />
+          )}
+
+          {hasLink && (
+            <Link to={link}>
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  padding: '1rem 1.4rem',
+                  border: '1px solid var(--grey-3-1)',
+                  borderRadius: '0.5rem',
+                  marginBottom: '1rem',
+                }}
+              >
+                <span
+                  style={{
+                    font: 'var(--text-body-2-reg)',
+                    color: 'var(--grey-4)',
+                  }}
+                >
+                  신고대상 확인하기
+                </span>
+                <IconArrowUpRight
+                  width={16}
+                  height={16}
+                  color='var(--grey-4)'
+                />
+              </div>
+            </Link>
           )}
         </PostLayout.Body>
 
