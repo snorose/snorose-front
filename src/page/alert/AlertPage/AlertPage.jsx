@@ -27,6 +27,7 @@ import {
   useNotification,
   useReadNotifications,
 } from '@/feature/alert/hook/notification';
+import { openNotificationUrl } from '@/feature/alert/lib/openNotificationUrl';
 
 import style from './AlertPage.module.css';
 
@@ -138,26 +139,9 @@ function NotificationList({ category }) {
   const { data: notifications } = useNotification(category);
   const { markNotificationAsRead } = useReadNotifications();
 
-  const openNotificationUrl = (url, isExternal = false) => {
-    const nextUrl = typeof url === 'string' ? url.trim() : '';
-
-    if (!nextUrl || nextUrl === '/') return;
-
-    if (
-      isExternal ||
-      /^https?:\/\//i.test(nextUrl) ||
-      nextUrl.startsWith('mailto:')
-    ) {
-      window.open(nextUrl, '_blank', 'noopener,noreferrer');
-      return;
-    }
-
-    navigate(nextUrl);
-  };
-
   const read = async (item) => {
     await markNotificationAsRead.mutateAsync(item);
-    openNotificationUrl(item.url, item.isExternal);
+    openNotificationUrl(item.url, item.isExternal, navigate);
   };
 
   if (notifications.length === 0) {

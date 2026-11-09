@@ -26,6 +26,7 @@ export default function DateField({
         <div>
           <input
             type={type}
+            aria-label={label}
             className={`${styles.dateInput} ${error ? styles.error : ''}`}
             value={value}
             onChange={(e) => onChange(name, e.target.value)}

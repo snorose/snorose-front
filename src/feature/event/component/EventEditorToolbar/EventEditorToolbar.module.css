@@ -1,0 +1,45 @@
+.bar {
+  position: fixed;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  max-width: var(--default-width);
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--blue-0);
+}
+
+.actions {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  min-height: 7rem;
+  padding: 0.2rem 1.2rem;
+}
+
+.actions button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 4.4rem;
+  min-height: 4.4rem;
+
+  padding: 0;
+
+  color: var(--blue-4);
+
+  cursor: pointer;
+
+  background: transparent;
+  border: 0;
+  border-radius: 0.5rem;
+}
+
+.actions button[aria-expanded='true'] {
+  background: var(--blue-2);
+}
+
+.actions button:focus-visible {
+  outline: 2px solid var(--blue-4);
+}

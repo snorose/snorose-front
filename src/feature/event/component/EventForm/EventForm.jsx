@@ -2,9 +2,12 @@ import { useEffect } from 'react';
 
 import { DateTime } from '@/shared/lib';
 
+import { EditorContainer } from '@/feature/editor/component';
+import { preserveEmptyParagraphs, sanitizeHtml } from '@/feature/editor/lib';
 import { DateField, TextField } from '@/feature/event/component';
 import { validateRequiredFields } from '@/feature/event/lib';
 
+import EventAttachmentField from '../EventAttachmentField/EventAttachmentField';
 import styles from './EventForm.module.css';
 
 export default function EventForm({
@@ -13,6 +16,11 @@ export default function EventForm({
   onChange,
   onValid,
   errors,
+  onEditorReady,
+  attachmentsInfo = [],
+  setAttachmentsInfo,
+  onDeleteAttachment,
+  disabled = false,
 }) {
   useEffect(() => {
     onValid(validateRequiredFields(formType, data, errors));
@@ -21,7 +29,7 @@ export default function EventForm({
   return (
     <div className={styles.form}>
       <div className={styles.section}>
-        <RequriedLabel>제목</RequriedLabel>
+        <RequiredLabel>제목</RequiredLabel>
         <TextField
           label='제목'
           name='title'
@@ -31,17 +39,22 @@ export default function EventForm({
           error={errors.title}
         />
       </div>
-
       <div className={styles.section}>
-        <RequriedLabel>
+        <RequiredLabel>
           {formType === 'theater'
             ? '공연명'
             : formType === 'movie'
               ? '영화명'
               : '주최'}
-        </RequriedLabel>
+        </RequiredLabel>
         <TextField
-          label='호스트'
+          label={
+            formType === 'theater'
+              ? '공연명'
+              : formType === 'movie'
+                ? '영화명'
+                : '주최'
+          }
           name='host'
           value={data.host}
           placeholder={
@@ -55,10 +68,9 @@ export default function EventForm({
           error={errors.host}
         />
       </div>
-
       {['theater', 'movie'].includes(formType) && (
         <div className={styles.section}>
-          <RequriedLabel>장소</RequriedLabel>
+          <RequiredLabel>장소</RequiredLabel>
           <TextField
             label='장소'
             name='place'
@@ -70,15 +82,62 @@ export default function EventForm({
         </div>
       )}
 
-      {/* 날짜 그룹 */}
       <div className={styles.section}>
-        <p>응모 날짜</p>
+        <RequiredLabel>상세 설명</RequiredLabel>
+        <div
+          className={`${styles.editorArea} ${errors.content ? styles.error : ''}`}
+        >
+          <EditorContainer
+            placeholder='이벤트 추첨 방식, 유의사항 등 상세한 설명을 입력해주세요'
+            text={data.content}
+            onEditorReady={onEditorReady}
+            onChangeEditor={(editor) =>
+              onChange(
+                'content',
+                sanitizeHtml(preserveEmptyParagraphs(editor.getHTML()))
+              )
+            }
+          />
+        </div>
+        {errors.content && (
+          <span className={styles.errorMessage} role='alert'>
+            {errors.content}
+          </span>
+        )}
+      </div>
+
+      <EventAttachmentField
+        attachmentsInfo={attachmentsInfo}
+        setAttachmentsInfo={setAttachmentsInfo}
+        onDeleteAttachment={onDeleteAttachment}
+        disabled={disabled}
+      />
+
+      <div className={styles.section}>
+        <p>
+          신청 링크 <span className={styles.optional}>(선택)</span>
+        </p>
+        <TextField
+          label='신청 링크'
+          name='link'
+          value={data.link}
+          placeholder='링크를 입력하면 상세 페이지에 신청 버튼이 표시돼요.'
+          onChange={onChange}
+          error={errors.link}
+          data={data}
+        />
+      </div>
+
+      <div className={styles.section}>
+        <p>
+          응모 날짜 <span className={styles.optional}>(선택)</span>
+        </p>
         <DateField
           label='시작일'
           name='startAt'
           type='datetime-local'
           value={
-            data?.startAt
+            data.startAt
               ? DateTime.format(data.startAt, 'ISO').slice(0, 16)
               : ''
           }
@@ -90,19 +149,18 @@ export default function EventForm({
           name='endAt'
           type='datetime-local'
           value={
-            data?.endAt ? DateTime.format(data.endAt, 'ISO').slice(0, 16) : ''
+            data.endAt ? DateTime.format(data.endAt, 'ISO').slice(0, 16) : ''
           }
           min={data.startAt}
           onChange={onChange}
           error={errors.endAt}
         />
-        <hr className={styles.divider} />
         <DateField
           label='당첨자 발표일'
           name='announceAt'
           type='datetime-local'
           value={
-            data?.announceAt
+            data.announceAt
               ? DateTime.format(data.announceAt, 'ISO').slice(0, 16)
               : ''
           }
@@ -111,52 +169,24 @@ export default function EventForm({
           error={errors.announceAt}
         />
       </div>
-
       <div className={styles.section}>
-        <p>추첨 인원</p>
+        <p>
+          추첨 인원 <span className={styles.optional}>(선택)</span>
+        </p>
         <TextField
           label='추첨 인원'
           name='drawCount'
           value={data.drawCount}
-          placeholder='단위와 함께 인원을 작성해주세요.(n 명) *빈칸시 미정'
+          placeholder='비워두면 표시하지 않아요. (예: 10명)'
           onChange={onChange}
           error={errors.drawCount}
-        />
-      </div>
-
-      <div className={styles.section}>
-        <RequriedLabel>상세 설명</RequriedLabel>
-        <TextField
-          label='상세 설명'
-          name='content'
-          value={data.content}
-          placeholder='이벤트 추첨 방식, 유의사항 등 상세한 설명을 입력해주세요'
-          onChange={onChange}
-          error={errors.content}
-        />
-      </div>
-
-      <div className={styles.section}>
-        <RequriedLabel>연계 링크</RequriedLabel>
-        <TextField
-          label='연계 링크'
-          name='link'
-          value={data.link}
-          placeholder={
-            ['theater', 'movie'].includes(formType)
-              ? '추첨 구글폼을 넣어주세요'
-              : 'https://로 시작하는 링크를 넣어주세요'
-          }
-          onChange={onChange}
-          error={errors.link}
-          data={data}
         />
       </div>
     </div>
   );
 }
 
-function RequriedLabel({ children }) {
+function RequiredLabel({ children }) {
   return (
     <p>
       {children}

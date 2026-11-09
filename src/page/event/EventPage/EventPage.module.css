@@ -1,6 +1,6 @@
 .blueContainer {
   padding: var(--default-appbar-height) var(--default-margin) 1rem;
-  background-color: var(--blue-0);
+  background-color: var(--white-2);
   border-radius: 0 0 1.5rem 1.5rem;
 }
 

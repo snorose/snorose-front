@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -30,12 +30,14 @@ import { DateTime, getBoard } from '@/shared/lib';
 import { AttachmentBar, DropDownMenu } from '@/feature/board/component';
 import { preserveEmptyParagraphs, sanitizeHtml } from '@/feature/editor/lib';
 import { EventForm, NoticeForm } from '@/feature/event/component';
+import EventEditorToolbar from '@/feature/event/component/EventEditorToolbar/EventEditorToolbar';
 import {
   EVENT_FORM_DATA,
   EVENT_TYPES,
   NOTICE_FORM_DATA,
 } from '@/feature/event/constant';
 import { validateOnSubmit } from '@/feature/event/lib';
+import { getEventErrorMessage } from '@/feature/event/lib/getEventErrorMessage';
 
 import { createThumbnail, postEvent, postPost } from '@/apis';
 
@@ -49,6 +51,8 @@ export default function WriteEventPage() {
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const submitInProgress = useRef(false);
+  const [pendingUpload, setPendingUpload] = useState(null);
   const { invalidUserInfoQuery } = useAuth();
   const [eventType, setEventType] = useState('유형을 선택해주세요');
   const isNotice = eventType === '공지사항';
@@ -59,6 +63,7 @@ export default function WriteEventPage() {
   const [attachmentsInfo, setAttachmentsInfo] = useState([]);
   const [editor, setEditor] = useState(null);
   const [isTitleFocused, setIsTitleFocused] = useState(false);
+  const [toolbarHeight, setToolbarHeight] = useState(0);
   const [isTrashOverlapped, setIsTrashOverlapped] = useState(false);
   const [trashImageIndex, setTrashImageIndex] = useState(null);
   const trashImageConfirmModal = useModal();
@@ -66,6 +71,10 @@ export default function WriteEventPage() {
 
   const { modal, setModal } = useContext(ModalContext);
   const [isBlock, setIsBlock] = useState(!!(data || noticeData));
+
+  useEffect(() => {
+    editor?.setEditable?.(!isSubmitting && !pendingUpload);
+  }, [editor, isSubmitting, pendingUpload]);
 
   // navigation guard
   useBlocker(isBlock);
@@ -79,20 +88,6 @@ export default function WriteEventPage() {
     setIsBlock(false);
     navigate(-1);
   };
-
-  // 이벤트 유형 변경 시 폼 초기화
-  useEffect(() => {
-    if (!isNotice) {
-      setData({
-        ...EVENT_FORM_DATA(eventType),
-        category: eventType,
-        isNotice: false,
-      });
-    } else {
-      setNoticeData((previous) => ({ ...previous, isNotice: true }));
-    }
-    setErrors({});
-  }, [eventType, isNotice]);
 
   // 입력값 표시 및 즉시 유효성 검사 항목
   const handleChange = (field, value) => {
@@ -134,8 +129,13 @@ export default function WriteEventPage() {
   };
 
   const handleEventTypeSelect = (selectedType) => {
+    if (isSubmitting || pendingUpload || selectedType === eventType) return;
     setIsFormValid(false);
-    if (selectedType !== '공지사항') setEditor(null);
+    setEditor(null);
+    setAttachmentsInfo([]);
+    setErrors({});
+    setData(EVENT_FORM_DATA(selectedType));
+    setNoticeData(NOTICE_FORM_DATA(boardId));
     setEventType(selectedType);
   };
 
@@ -166,11 +166,20 @@ export default function WriteEventPage() {
 
     return (
       <EventForm
+        key={eventType}
         formType={formType}
         data={data}
         onChange={handleChange}
         onValid={setIsFormValid}
         errors={errors}
+        onEditorReady={setEditor}
+        attachmentsInfo={attachmentsInfo}
+        setAttachmentsInfo={setAttachmentsInfo}
+        disabled={isSubmitting || Boolean(pendingUpload)}
+        onDeleteAttachment={(index) => {
+          setTrashImageIndex(index);
+          trashImageConfirmModal.openModal();
+        }}
       />
     );
   };
@@ -178,10 +187,12 @@ export default function WriteEventPage() {
   // '등록' 클릭 이벤트와 유효성 검사
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isFormValid || isSubmitting) return;
+    if (!isFormValid || isSubmitting || submitInProgress.current) return;
 
     let request;
-    if (isNotice) {
+    if (pendingUpload) {
+      request = pendingUpload.retry();
+    } else if (isNotice) {
       if (!noticeData.title.trim()) {
         toast.info(TOAST.POST.emptyTitle);
         return;
@@ -202,8 +213,9 @@ export default function WriteEventPage() {
         setIsFormValid(false);
         return;
       }
-      request = postEvent(data);
+      request = postEvent({ ...data, attachmentsInfo });
     }
+    submitInProgress.current = true;
     setIsSubmitting(true);
 
     request
@@ -211,18 +223,24 @@ export default function WriteEventPage() {
         if (response.status !== 200 && response.status !== 201) return;
 
         const newPostId = response.data.result.postId;
+        try {
+          await createThumbnail(boardId, newPostId);
+        } catch (error) {
+          toast.error(
+            getEventErrorMessage(error, '썸네일 생성 중 오류가 발생했습니다.')
+          );
+        }
         if (isNotice) {
-          try {
-            await createThumbnail(boardId, newPostId);
-          } catch {
-            toast.error('썸네일 생성 중 오류가 발생했습니다.');
-          }
           queryClient.removeQueries({
             queryKey: [QUERY_KEY.notices, boardId],
           });
         }
 
         queryClient.removeQueries({ queryKey: QUERY_KEY.post() });
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEY.events, boardId],
+        });
+        queryClient.invalidateQueries({ queryKey: [QUERY_KEY.posts, boardId] });
         invalidUserInfoQuery();
         navigate(
           isNotice ? '/board/event/notice' : `/board/event/post/${newPostId}`,
@@ -230,13 +248,11 @@ export default function WriteEventPage() {
         );
       })
       .catch((error) => {
-        toast.error(
-          error.response?.data?.message ??
-            error.message ??
-            '게시글 등록에 실패했어요.'
-        );
+        if (error?.retryUpload) setPendingUpload({ retry: error.retryUpload });
+        toast.error(getEventErrorMessage(error, '게시글 등록에 실패했어요.'));
       })
       .finally(() => {
+        submitInProgress.current = false;
         setIsSubmitting(false);
       });
   };
@@ -258,7 +274,7 @@ export default function WriteEventPage() {
               onClick={handleSubmit}
               disabled={!isFormValid || isSubmitting}
             >
-              등록
+              {pendingUpload ? '첨부파일 업로드 재시도' : '등록'}
             </ActionButton>
           </CloseAppBar>
         </div>
@@ -302,7 +318,18 @@ export default function WriteEventPage() {
             </div>
           </div>
 
-          <div className={styles.form}>{renderForm()}</div>
+          <fieldset
+            className={styles.form}
+            style={isNotice ? undefined : { paddingBottom: toolbarHeight + 16 }}
+            disabled={isSubmitting || Boolean(pendingUpload)}
+            onFocusCapture={(event) =>
+              setIsTitleFocused(
+                !event.target.closest('[contenteditable="true"]')
+              )
+            }
+          >
+            {renderForm()}
+          </fieldset>
         </div>
         {isNotice && (
           <>
@@ -336,13 +363,28 @@ export default function WriteEventPage() {
                 trashImageConfirmModal.openModal();
               }}
             />
-            <AttachmentBar
-              attachmentsInfo={attachmentsInfo}
-              setAttachmentsInfo={setAttachmentsInfo}
-              editor={editor}
-              isTitleFocused={isTitleFocused}
-            />
+            <fieldset
+              className={styles.form}
+              disabled={isSubmitting || Boolean(pendingUpload)}
+            >
+              <AttachmentBar
+                attachmentsInfo={attachmentsInfo}
+                setAttachmentsInfo={setAttachmentsInfo}
+                editor={editor}
+                isTitleFocused={
+                  isTitleFocused || isSubmitting || Boolean(pendingUpload)
+                }
+              />
+            </fieldset>
           </>
+        )}
+        {!isNotice && EVENT_TYPES[eventType] && (
+          <EventEditorToolbar
+            editor={editor}
+            visible={!isTitleFocused}
+            disabled={isSubmitting || Boolean(pendingUpload)}
+            onHeightChange={setToolbarHeight}
+          />
         )}
         {modal.id === 'exit-page' && (
           <ConfirmModal
@@ -351,7 +393,7 @@ export default function WriteEventPage() {
           />
         )}
       </div>
-      {isNotice && trashImageConfirmModal.isOpen && (
+      {trashImageConfirmModal.isOpen && (
         <ConfirmModal
           modalText={ATTACHMENT_MODAL_TEXT.DELETE_ATTACHMENT}
           onConfirm={() => {
