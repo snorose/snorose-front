@@ -27,7 +27,8 @@ import { ModalContext } from '@/shared/context';
 import { useAuth, useBlocker, useModal, useToast } from '@/shared/hook';
 import { DateTime, getBoard } from '@/shared/lib';
 
-import { AttachmentBar, DropDownMenu } from '@/feature/board/component';
+import { AttachmentBar } from '@/feature/attachment/component';
+import { DropDownMenu } from '@/feature/board/component';
 import { preserveEmptyParagraphs, sanitizeHtml } from '@/feature/editor/lib';
 import { EventForm, NoticeForm } from '@/feature/event/component';
 import {

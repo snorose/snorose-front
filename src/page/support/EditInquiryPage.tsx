@@ -1,82 +1,29 @@
 import { useContext, useState } from 'react';
-import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
-
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useLoaderData, useParams } from 'react-router-dom';
 
 import { ConfirmModal } from '@/shared/component';
-import {
-  BOARD_ID,
-  CONFIRM_MODAL_TEXT,
-  QUERY_KEY,
-  TOAST,
-} from '@/shared/constant';
+import { CONFIRM_MODAL_TEXT } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
-import { useToast } from '@/shared/hook';
 
 import { mapFileToAttachment } from '@/feature/attachment/lib';
 import { Attachment, UploadFile } from '@/feature/attachment/types';
-import { updateInquiry } from '@/feature/support/api';
 import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 import { INQUIRY_OPTIONS } from '@/feature/support/data';
-import type { InquiryDTO } from '@/feature/support/types';
+import useInquiryUpdate from '@/feature/support/hook/useInquiryUpdate';
+import type { InquiryReadResponse } from '@/feature/support/types';
 import { SupportFormView } from '@/feature/support/ui';
 
-import { createThumbnail } from '@/apis';
 import { Option } from '@/types';
 
 export default function EditInquiryPage() {
-  const post = useLoaderData() as InquiryDTO;
+  const post = useLoaderData() as InquiryReadResponse;
 
-  const { postId } = useParams();
-  const navigate = useNavigate();
+  const { postId: postIdParam } = useParams();
+  const inquiryId = Number(postIdParam);
 
-  const queryClient = useQueryClient();
+  const { mutate: updateInquiry } = useInquiryUpdate();
 
   const { modal, setModal } = useContext(ModalContext);
-  const { toast } = useToast();
-
-  const { mutate: submitInquiry } = useMutation({
-    mutationFn: () => {
-      const originalIds = post.attachments.map((at) => at.id);
-      const remainingIds = new Set(attachments.map((at) => at.id));
-      const deletedIds = originalIds.filter((id) => !remainingIds.has(id));
-
-      return updateInquiry({
-        postId: postId!,
-        title,
-        content,
-        subGroup: selectedOption!.key,
-        oldAttachments: attachments,
-        newAttachments: files.map(mapFileToAttachment),
-        deleteAttachments: deletedIds,
-      });
-    },
-
-    onSuccess: (data) => {
-      const { postId } = data;
-
-      createThumbnail(BOARD_ID.inquiryAndReport, postId) //
-        .catch((error) => {
-          /**
-           * TODO: 썸네일 생성 실패는 치명적이지 않으므로, 에러를 사용자에게 알리지 않고 조용히 실패 처리합니다.
-           * 에러 로그 수집 (모니터링: sentry)
-           */
-        });
-
-      toast.success(TOAST.INQUIRY.update);
-
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY.post(postId) });
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY.myInquiriesAndReports],
-      });
-
-      navigate(-1);
-    },
-
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
 
   const [title, setTitle] = useState(post?.title ?? '');
   const [content, setContent] = useState(post?.content ?? '');
@@ -87,6 +34,22 @@ export default function EditInquiryPage() {
     post?.attachments ?? []
   );
   const [files, setFiles] = useState<UploadFile[]>([]);
+
+  const handleUpdate = async () => {
+    const originalIds = post.attachments.map((at) => at.id);
+    const remainingIds = new Set(attachments.map((at) => at.id));
+    const deletedIds = originalIds.filter((id) => !remainingIds.has(id));
+
+    await updateInquiry({
+      inquiryId,
+      title,
+      content,
+      subGroup: selectedOption!.key,
+      oldAttachments: attachments,
+      newAttachments: files.map(mapFileToAttachment),
+      deleteAttachments: deletedIds,
+    });
+  };
 
   return (
     <>
@@ -110,7 +73,7 @@ export default function EditInquiryPage() {
       {modal.id === 'confirm-inquiry-update' && (
         <ConfirmModal
           modalText={CONFIRM_MODAL_TEXT.INQUIRY_UPDATE}
-          onConfirm={submitInquiry}
+          onConfirm={handleUpdate}
           onCancel={() => setModal({ id: null })}
         />
       )}

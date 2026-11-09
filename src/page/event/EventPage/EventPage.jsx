@@ -54,7 +54,7 @@ export default function EventPage() {
   const currentBoard = getBoard(pathname.split('/')[2]);
   const { userInfo } = useAuth();
 
-  const { modal, setModal } = useContext(ModalContext);
+  const { setModal } = useContext(ModalContext);
 
   // 페이지 언마운트 시 모달 상태 초기화
   useModalReset();
@@ -327,7 +327,6 @@ export default function EventPage() {
       />
 
       <PostModalRenderer
-        modal={modal}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
         handleShare={handleShare}

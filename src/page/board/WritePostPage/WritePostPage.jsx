@@ -13,7 +13,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import {
   ActionButton,
-  AttachmentList,
   Badge,
   CheckBox,
   CloseAppBar,
@@ -41,9 +40,12 @@ import {
 } from '@/shared/hook';
 import { DateTime, getBoard } from '@/shared/lib';
 
-import { Guideline } from '@/feature/attachment/component';
+import {
+  AttachmentBar,
+  AttachmentList,
+  Guideline,
+} from '@/feature/attachment/component';
 import { useGuide } from '@/feature/attachment/hook';
-import { AttachmentBar } from '@/feature/board/component';
 import { EditorContainer } from '@/feature/editor/component';
 import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
 import { sanitizeHtml } from '@/feature/editor/lib/sanitize';

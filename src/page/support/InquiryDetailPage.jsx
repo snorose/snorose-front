@@ -1,12 +1,8 @@
-import { Suspense, useContext } from 'react';
+import { Suspense, useContext, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
+import { IconEllipsis } from '@snorose/icons';
 
 import {
   BackAppBar,
@@ -15,15 +11,21 @@ import {
   NoticeModal,
   ServerErrorFallback,
 } from '@/shared/component';
-import { NOTICE_MODAL_TEXT, QUERY_KEY, TOAST } from '@/shared/constant';
+import { NOTICE_MODAL_TEXT } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
-import { useToast } from '@/shared/hook';
+import { useModalReset } from '@/shared/hook';
 
-import { MeatBallIcon, PostActionBar } from '@/feature/board/component';
-import { PostDetailView } from '@/feature/board/ui';
+import {
+  AttachmentSwiper,
+  FullScreenAttachment,
+} from '@/feature/attachment/component';
+import { Content, PostModalRenderer } from '@/feature/board/component';
+import { CommentActionButton } from '@/feature/board/component/PostActionBar/PostActionBar';
+import PostLayout from '@/feature/board/PostLayout/PostLayout';
 import { CommentInputContainer } from '@/feature/comment/component';
-import { deleteInquiry, readInquiry } from '@/feature/support/api';
 import { INQUIRY_STATUS_MAP } from '@/feature/support/constant';
+import useInquiryDelete from '@/feature/support/hook/useInquiryDelete';
+import useInquiryDetail from '@/feature/support/hook/useInquiryDetail';
 
 export default function InquiryDetailPage() {
   return (
@@ -38,63 +40,83 @@ export default function InquiryDetailPage() {
 function InquiryDetailLoader() {
   const navigate = useNavigate();
   const { postId: postIdParam } = useParams();
-  const postId = Number(postIdParam);
+  const inquiryId = Number(postIdParam);
 
-  const queryClient = useQueryClient();
+  const { data } = useInquiryDetail(inquiryId);
+  const { mutate: deleteInquiry } = useInquiryDelete();
 
   const { setModal } = useContext(ModalContext);
-  const { toast } = useToast();
-
-  const { data } = useSuspenseQuery({
-    queryKey: QUERY_KEY.post(postId),
-    queryFn: () => readInquiry(postId),
-    staleTime: 1000 * 60 * 5,
-  });
-
-  const { mutate: deleteInquiryMutate } = useMutation({
-    mutationFn: () => deleteInquiry(postId),
-    onSuccess: () => {
-      toast.success(TOAST.INQUIRY.delete);
-      queryClient.removeQueries(QUERY_KEY.post(postId));
-      navigate(-1);
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
+  const [clickedImageIndex, setClickedImageIndex] = useState(0);
 
   const onMenuOpen = () => {
-    const id = data.isWriter ? 'my-post-more-options' : 'post-more-options';
-
     setModal({
-      id,
+      id: 'my-post-more-options',
       type: null,
     });
   };
 
+  useModalReset();
+
   return (
-    <PostDetailView
-      data={data}
-      deletePost={deleteInquiryMutate}
-      PostActionBar={
-        <PostActionBar>
-          <PostActionBar.Comment {...data} />
-        </PostActionBar>
-      }
-      CommentInputContainer={CommentInputContainer}
-      Chip={
-        <>
-          <Chip name='문의' variant='grey' />
-          <Chip
-            name={INQUIRY_STATUS_MAP[data.status].label}
-            variant={INQUIRY_STATUS_MAP[data.status].variant}
-          />
-        </>
-      }
-      Actions={
-        data.status === 'PENDING' && <MeatBallIcon onClick={onMenuOpen} />
-      }
-    />
+    <div>
+      {clickedImageIndex === 0 ? (
+        <BackAppBar backgroundColor={'#fbfdff'} />
+      ) : (
+        <FullScreenAttachment
+          attachmentUrls={data.attachments}
+          clickedImageIndex={clickedImageIndex}
+          setClickedImageIndex={setClickedImageIndex}
+        />
+      )}
+
+      <PostLayout>
+        <PostLayout.Header>
+          <PostLayout.Meta {...data}>
+            <Chip name='문의' variant='grey' />
+            <Chip
+              name={INQUIRY_STATUS_MAP[data.status].label}
+              variant={INQUIRY_STATUS_MAP[data.status].variant}
+            />
+          </PostLayout.Meta>
+
+          <PostLayout.ActionGroup>
+            {data.status === 'PENDING' && (
+              <IconEllipsis
+                onClick={onMenuOpen}
+                width={24}
+                height={24}
+                color='var(--grey-3-1)'
+              />
+            )}
+          </PostLayout.ActionGroup>
+        </PostLayout.Header>
+
+        <PostLayout.Body>
+          <PostLayout.Title title={data.title} />
+          <Content content={data.content} />
+          {data.attachments.length > 0 && (
+            <AttachmentSwiper
+              attachments={data.attachments}
+              setClickedImageIndex={setClickedImageIndex}
+            />
+          )}
+        </PostLayout.Body>
+
+        <PostLayout.Footer>
+          <CommentActionButton {...data} />
+        </PostLayout.Footer>
+      </PostLayout>
+
+      <CommentInputContainer />
+
+      <PostModalRenderer
+        handleEdit={() => {
+          setModal({ id: null, type: null });
+          navigate(`./edit`);
+        }}
+        handleDelete={() => deleteInquiry(inquiryId)}
+      />
+    </div>
   );
 }
 

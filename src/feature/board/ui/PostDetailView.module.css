@@ -56,6 +56,15 @@
   display: flex;
   align-items: center;
   min-height: 2.4rem;
+
+  svg {
+    padding: 0.8rem;
+    cursor: pointer;
+  }
+
+  svg:last-child {
+    margin-right: -0.8rem;
+  }
 }
 
 /* title */

@@ -5,9 +5,7 @@ import { AppError } from '@/shared/lib';
 
 import { useUpdateCommentNotificationSetting } from '@/feature/alert/hook';
 
-import styles from './BellIcon.module.css';
-
-export default function BellIcon({ boardId, postId, isActive }) {
+export default function BellIconButton({ boardId, postId, isActive }) {
   const { toast } = useToast();
 
   const updateNotificationSetting = useUpdateCommentNotificationSetting(
@@ -36,13 +34,9 @@ export default function BellIcon({ boardId, postId, isActive }) {
     }
   };
 
-  return (
-    <div className={styles.icon} onClick={updateSetting}>
-      {isActive ? (
-        <IconMultiBellBlue width={18} height={21} />
-      ) : (
-        <IconMultiBellOff width={18} height={21} />
-      )}
-    </div>
-  );
+  if (isActive) {
+    return <IconMultiBellBlue onClick={updateSetting} width={24} height={24} />;
+  }
+
+  return <IconMultiBellOff onClick={updateSetting} width={24} height={24} />;
 }

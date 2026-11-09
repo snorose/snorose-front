@@ -1,10 +1,11 @@
 import type { Attachment } from '@/feature/attachment/types';
 import { isMaintenanceBlockedError } from '@/feature/maintenance/access';
+import { InquiryReadResponse } from '@/feature/support/types';
 
 import { putFileInBucket } from '@/apis';
 import { authAxios } from '@/axios';
 
-export type InquiryCreateRequest = {
+type InquiryCreateRequest = {
   title: string;
   content: string;
   subGroup: string;
@@ -16,7 +17,7 @@ export const createInquiry = async ({
   content,
   subGroup,
   attachments = [],
-}: InquiryCreateRequest) => {
+}: InquiryCreateRequest): Promise<{ inquiryId: number }> => {
   try {
     const response = await authAxios.post('/v1/inquiries/inquiry', {
       title,
@@ -38,7 +39,7 @@ export const createInquiry = async ({
       );
     }
 
-    return { postId };
+    return { inquiryId: postId };
   } catch (error) {
     if (isMaintenanceBlockedError(error)) throw error;
     const response = error?.response;
@@ -58,14 +59,16 @@ export const createInquiry = async ({
   }
 };
 
-export const readInquiry = async (postId: string) => {
-  const response = await authAxios.get(`/v1/inquiries/inquiry/${postId}`);
+export const readInquiry = async (
+  inquiryId: number
+): Promise<InquiryReadResponse> => {
+  const response = await authAxios.get(`/v1/inquiries/inquiry/${inquiryId}`);
 
   return response.data.result;
 };
 
-export type InquiryUpdateRequest = {
-  postId: string;
+type InquiryUpdateRequest = {
+  inquiryId: number;
   title: string;
   content: string;
   subGroup: string;
@@ -75,31 +78,34 @@ export type InquiryUpdateRequest = {
 };
 
 export const updateInquiry = async ({
-  postId,
+  inquiryId,
   title,
   content,
   subGroup,
   oldAttachments = [],
   newAttachments = [],
   deleteAttachments = [],
-}: InquiryUpdateRequest) => {
+}: InquiryUpdateRequest): Promise<{ inquiryId: number }> => {
   try {
-    const response = await authAxios.patch(`/v1/inquiries/inquiry/${postId}`, {
-      title,
-      content,
-      subGroup,
-      finalAttachments: [...oldAttachments, ...newAttachments].map(
-        ({ id, fileName, fileComment, type }) => ({
-          id,
-          fileName,
-          fileComment,
-          type,
-        })
-      ),
-      deleteAttachments,
-    });
+    const response = await authAxios.patch(
+      `/v1/inquiries/inquiry/${inquiryId}`,
+      {
+        title,
+        content,
+        subGroup,
+        finalAttachments: [...oldAttachments, ...newAttachments].map(
+          ({ id, fileName, fileComment, type }) => ({
+            id,
+            fileName,
+            fileComment,
+            type,
+          })
+        ),
+        deleteAttachments,
+      }
+    );
 
-    const { postId: inquiryId, attachmentUrlList } = response.data.result;
+    const { postId, attachmentUrlList } = response.data.result;
 
     if (attachmentUrlList.length > 0) {
       await putFileInBucket(
@@ -108,7 +114,7 @@ export const updateInquiry = async ({
       );
     }
 
-    return { postId: inquiryId };
+    return { inquiryId: postId };
   } catch (error) {
     if (isMaintenanceBlockedError(error)) throw error;
     const response = error?.response;
@@ -130,11 +136,17 @@ export const updateInquiry = async ({
   }
 };
 
-export const deleteInquiry = async (postId: string) => {
+export const deleteInquiry = async (
+  inquiryId: string
+): Promise<{ inquiryId: number }> => {
   try {
-    const response = await authAxios.delete(`/v1/inquiries/inquiry/${postId}`);
+    const response = await authAxios.delete(
+      `/v1/inquiries/inquiry/${inquiryId}`
+    );
 
-    return response.data.result;
+    const { postId } = response.data.result;
+
+    return { inquiryId: postId };
   } catch (error) {
     if (isMaintenanceBlockedError(error)) throw error;
     const response = error?.response;

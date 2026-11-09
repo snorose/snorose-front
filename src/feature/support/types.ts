@@ -1,15 +1,15 @@
 import { Attachment } from '@/feature/attachment/types';
 
-export type InquiryDTO = {
-  group: 'INQUIRY';
-  postId: number;
+export type InquiryReadResponse = {
+  inquiryId: number;
   userRoleId: number;
-  isWriter: boolean;
+  isWriter: false;
   encryptedUserId: string;
   userDisplay: string;
   title: string;
-  link: string;
   content: string;
+  category: string;
+  group: 'INQUIRY';
   subGroup:
     | 'EXAM_REVIEW_INQUIRY'
     | 'EVENT_INQUIRY'
@@ -19,21 +19,21 @@ export type InquiryDTO = {
   commentCount: number;
   createdAt: string;
   updatedAt: string | null;
-  isNotice: boolean;
   isEdited: boolean;
   isWriterWithdrawn: boolean;
   attachments: Attachment[];
 };
 
-export type ReportDTO = {
-  group: 'REPORT';
-  postId: number;
+export type ReportReadResponse = {
+  reportId: number;
   userRoleId: number;
   isWriter: boolean;
   encryptedUserId: string;
   userDisplay: string;
   title: string;
   content: string;
+  category: string;
+  group: 'REPORT';
   subGroup:
     | 'POST_REPORT'
     | 'EXAM_REVIEW_REPORT'
@@ -50,5 +50,4 @@ export type ReportDTO = {
   isEdited: boolean;
   isWriterWithdrawn: boolean;
   attachments: Attachment[];
-  category: string;
 };
