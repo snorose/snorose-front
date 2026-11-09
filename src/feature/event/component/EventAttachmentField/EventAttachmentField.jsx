@@ -18,6 +18,7 @@ export default function EventAttachmentField({
   attachmentsInfo,
   setAttachmentsInfo,
   onDeleteAttachment,
+  disabled = false,
 }) {
   const { changeImageUpload, changeVideoUpload } = useAttachmentUpload({
     attachmentsInfo,
@@ -31,6 +32,7 @@ export default function EventAttachmentField({
   ).length;
 
   const moveAttachment = (from, to) => {
+    if (disabled) return;
     setAttachmentsInfo((previous) => {
       if (
         !Number.isInteger(from) ||
@@ -68,6 +70,7 @@ export default function EventAttachmentField({
               aria-label='이미지 첨부'
               accept={ATTACHMENT_EXTENSION_LIMIT.imageExtensions.join(', ')}
               multiple
+              disabled={disabled}
               onChange={changeImageUpload}
             />
           </label>
@@ -78,6 +81,7 @@ export default function EventAttachmentField({
               aria-label='동영상 첨부'
               accept={ATTACHMENT_EXTENSION_LIMIT.videoExtensions.join(', ')}
               multiple
+              disabled={disabled}
               onChange={changeVideoUpload}
             />
           </label>
@@ -90,6 +94,7 @@ export default function EventAttachmentField({
                 attachment={attachment}
                 index={index}
                 count={attachmentsInfo.length}
+                disabled={disabled}
                 onDelete={() => onDeleteAttachment(index)}
                 onMove={moveAttachment}
               />
@@ -110,7 +115,14 @@ export default function EventAttachmentField({
   );
 }
 
-function AttachmentCard({ attachment, index, count, onDelete, onMove }) {
+function AttachmentCard({
+  attachment,
+  index,
+  count,
+  disabled,
+  onDelete,
+  onMove,
+}) {
   const { file, url, fileName, type } = attachment;
   const [src, setSrc] = useState(url || undefined);
   useEffect(() => {
@@ -124,8 +136,12 @@ function AttachmentCard({ attachment, index, count, onDelete, onMove }) {
   return (
     <li
       className={styles.card}
-      draggable
+      draggable={!disabled}
       onDragStart={(event) => {
+        if (disabled) {
+          event.preventDefault();
+          return;
+        }
         event.dataTransfer.setData('text/plain', String(index));
         event.dataTransfer.effectAllowed = 'move';
       }}
@@ -159,6 +175,7 @@ function AttachmentCard({ attachment, index, count, onDelete, onMove }) {
         type='button'
         className={styles.delete}
         aria-label={`${fileName} 삭제`}
+        disabled={disabled}
         onClick={onDelete}
       >
         <IconX width={14} height={14} aria-hidden='true' />
@@ -167,7 +184,7 @@ function AttachmentCard({ attachment, index, count, onDelete, onMove }) {
         <button
           type='button'
           aria-label={`${fileName} 앞으로 이동`}
-          disabled={index === 0}
+          disabled={disabled || index === 0}
           onClick={() => onMove(index, index - 1)}
         >
           ←
@@ -176,7 +193,7 @@ function AttachmentCard({ attachment, index, count, onDelete, onMove }) {
         <button
           type='button'
           aria-label={`${fileName} 뒤로 이동`}
-          disabled={index === count - 1}
+          disabled={disabled || index === count - 1}
           onClick={() => onMove(index, index + 1)}
         >
           →

@@ -20,6 +20,7 @@ export default function EventForm({
   attachmentsInfo = [],
   setAttachmentsInfo,
   onDeleteAttachment,
+  disabled = false,
 }) {
   useEffect(() => {
     onValid(validateRequiredFields(formType, data, errors));
@@ -83,9 +84,7 @@ export default function EventForm({
 
       <div className={styles.section}>
         <RequiredLabel>상세 설명</RequiredLabel>
-        <div
-          className={`${styles.editorArea} ${errors.content ? styles.error : ''}`}
-        >
+        <div className={errors.content ? styles.error : undefined}>
           <EditorContainer
             placeholder='이벤트 추첨 방식, 유의사항 등 상세한 설명을 입력해주세요'
             text={data.content}
@@ -109,6 +108,7 @@ export default function EventForm({
         attachmentsInfo={attachmentsInfo}
         setAttachmentsInfo={setAttachmentsInfo}
         onDeleteAttachment={onDeleteAttachment}
+        disabled={disabled}
       />
 
       <div className={styles.section}>

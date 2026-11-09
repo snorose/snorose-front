@@ -13,12 +13,6 @@
   color: var(--grey-4);
 }
 
-.editorArea {
-  padding: 1rem;
-  border: 1px solid var(--blue-2);
-  border-radius: 0.5rem;
-}
-
 .optional {
   font: var(--text-body-2-reg);
   color: var(--grey-3-1);

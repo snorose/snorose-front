@@ -175,6 +175,7 @@ export default function WriteEventPage() {
         onEditorReady={setEditor}
         attachmentsInfo={attachmentsInfo}
         setAttachmentsInfo={setAttachmentsInfo}
+        disabled={isSubmitting || Boolean(pendingUpload)}
         onDeleteAttachment={(index) => {
           setTrashImageIndex(index);
           trashImageConfirmModal.openModal();

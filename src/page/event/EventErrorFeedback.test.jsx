@@ -2,6 +2,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
+  act,
   cleanup,
   fireEvent,
   render,
@@ -222,6 +223,89 @@ function renderPage(mode) {
 
 const javaError =
   'Cannot invoke "java.util.List.stream()" because "finalAttachmentRequests" is null';
+
+test.each(['작성', '수정'])(
+  '%s 요청 중과 업로드 재시도 대기 중에도 첨부 드래그 순서를 잠근다',
+  async (mode) => {
+    const saveEvent = mode === '작성' ? postEvent : patchEvent;
+    let rejectSave;
+    saveEvent.mockReturnValue(
+      new Promise((_, reject) => {
+        rejectSave = reject;
+      })
+    );
+    const retryUpload = jest.fn().mockRejectedValue(new Error('재시도 실패'));
+    renderPage(mode);
+    if (mode === '작성') {
+      fireEvent.click(screen.getByText('유형을 선택해주세요'));
+      fireEvent.click(screen.getByText('기타'));
+      fireEvent.change(screen.getByLabelText('제목'), {
+        target: { value: event.title },
+      });
+      fireEvent.change(screen.getByLabelText('주최'), {
+        target: { value: event.host },
+      });
+      fireEvent.change(
+        screen.getByPlaceholderText(
+          '이벤트 추첨 방식, 유의사항 등 상세한 설명을 입력해주세요'
+        ),
+        {
+          target: { value: '<p>첨부 순서를 잠그는 이벤트 본문입니다</p>' },
+        }
+      );
+    }
+    const submit = await screen.findByRole('button', {
+      name: mode === '작성' ? '등록' : '수정',
+    });
+    await waitFor(() => expect(submit).toBeEnabled());
+    fireEvent.change(screen.getByLabelText('이미지 첨부'), {
+      target: {
+        files: ['first.png', 'second.png'].map(
+          (name) => new File(['image'], name, { type: 'image/png' })
+        ),
+      },
+    });
+    const dataTransfer = { setData: jest.fn(), getData: () => '1' };
+    fireEvent.dragStart(screen.getAllByRole('listitem')[1], { dataTransfer });
+    fireEvent.click(submit);
+    await waitFor(() =>
+      expect(screen.getAllByRole('listitem')[1]).toHaveAttribute(
+        'draggable',
+        'false'
+      )
+    );
+    fireEvent.drop(screen.getAllByRole('listitem')[0], { dataTransfer });
+    expect(screen.getAllByRole('img').map((image) => image.alt)).toEqual([
+      'first.png',
+      'second.png',
+    ]);
+    expect(
+      saveEvent.mock.calls[0][0].attachmentsInfo.map(
+        (attachment) => attachment.fileName
+      )
+    ).toEqual(['first.png', 'second.png']);
+
+    await act(async () => {
+      rejectSave(Object.assign(new Error('업로드 실패'), { retryUpload }));
+    });
+    const retry = await screen.findByRole('button', {
+      name: '첨부파일 업로드 재시도',
+    });
+    await waitFor(() => expect(retry).toBeEnabled());
+    expect(screen.getAllByRole('listitem')[1]).toHaveAttribute(
+      'draggable',
+      'false'
+    );
+    fireEvent.drop(screen.getAllByRole('listitem')[0], { dataTransfer });
+    expect(screen.getAllByRole('img').map((image) => image.alt)).toEqual([
+      'first.png',
+      'second.png',
+    ]);
+    fireEvent.click(retry);
+    await waitFor(() => expect(retryUpload).toHaveBeenCalledTimes(1));
+    expect(saveEvent).toHaveBeenCalledTimes(1);
+  }
+);
 
 test.each([
   ['영화', '기타'],

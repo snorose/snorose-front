@@ -196,6 +196,7 @@ export default function EditEventPage() {
 
   const editorProps = {
     data,
+    disabled: isLocked,
     onChange: handleChange,
     onValid: setIsFormValid,
     onEditorReady: (instance) => {

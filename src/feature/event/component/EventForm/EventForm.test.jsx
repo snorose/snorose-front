@@ -66,7 +66,7 @@ const initial = {
   drawCount: '',
 };
 
-function Harness({ values = {}, errors = {} }) {
+function Harness({ values = {}, errors = {}, disabled = false }) {
   const [data, setData] = useState({ ...initial, ...values });
   const [attachmentsInfo, setAttachmentsInfo] = useState([]);
   return (
@@ -78,6 +78,7 @@ function Harness({ values = {}, errors = {} }) {
       }
       onValid={mockValid}
       errors={errors}
+      disabled={disabled}
       attachmentsInfo={attachmentsInfo}
       setAttachmentsInfo={setAttachmentsInfo}
       onDeleteAttachment={(index) =>
@@ -171,6 +172,51 @@ test('사진 추가, 터치용 화살표 재정렬, 카드 안의 삭제 버튼�
     screen.getAllByRole('img').map((image) => image.getAttribute('alt'))
   ).toEqual(['second.png', 'third.png']);
   expect(URL.revokeObjectURL).toHaveBeenCalled();
+});
+
+test('드래그 도중 잠기면 순서 변경을 막고 잠금이 해제되면 다시 이동할 수 있다', () => {
+  const { rerender } = render(<Harness />);
+  const files = ['first.png', 'second.png'].map(
+    (name) => new File(['image'], name, { type: 'image/png' })
+  );
+  fireEvent.change(screen.getByLabelText('이미지 첨부'), { target: { files } });
+  const dataTransfer = { setData: jest.fn(), getData: () => '1' };
+  fireEvent.dragStart(screen.getAllByRole('listitem')[1], { dataTransfer });
+  expect(dataTransfer.setData).toHaveBeenCalledWith('text/plain', '1');
+
+  rerender(<Harness disabled />);
+  expect(screen.getByLabelText('이미지 첨부')).toBeDisabled();
+  expect(screen.getByLabelText('동영상 첨부')).toBeDisabled();
+  expect(
+    screen.getByRole('button', { name: 'second.png 앞으로 이동' })
+  ).toBeDisabled();
+  expect(screen.getByRole('button', { name: 'first.png 삭제' })).toBeDisabled();
+  expect(screen.getAllByRole('listitem')[0]).toHaveAttribute(
+    'draggable',
+    'false'
+  );
+  fireEvent.drop(screen.getAllByRole('listitem')[0], { dataTransfer });
+  expect(screen.getAllByRole('img').map((image) => image.alt)).toEqual([
+    'first.png',
+    'second.png',
+  ]);
+
+  dataTransfer.setData.mockClear();
+  expect(
+    fireEvent.dragStart(screen.getAllByRole('listitem')[1], { dataTransfer })
+  ).toBe(false);
+  expect(dataTransfer.setData).not.toHaveBeenCalled();
+
+  rerender(<Harness />);
+  expect(screen.getAllByRole('listitem')[0]).toHaveAttribute(
+    'draggable',
+    'true'
+  );
+  fireEvent.drop(screen.getAllByRole('listitem')[0], { dataTransfer });
+  expect(screen.getAllByRole('img').map((image) => image.alt)).toEqual([
+    'second.png',
+    'first.png',
+  ]);
 });
 
 test('새 첨부 영역도 기존 최대 사진 개수 정책을 적용한다', () => {
