@@ -1,4 +1,4 @@
-import { Suspense, useContext } from 'react';
+import { Suspense, useContext, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -13,9 +13,15 @@ import {
 } from '@/shared/component';
 import { NOTICE_MODAL_TEXT } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
+import { useModalReset } from '@/shared/hook';
 
-import { PostActionBar } from '@/feature/board/component';
-import { PostDetailView } from '@/feature/board/ui';
+import {
+  AttachmentSwiper,
+  FullScreenAttachment,
+} from '@/feature/attachment/component';
+import { Content, PostModalRenderer } from '@/feature/board/component';
+import { CommentActionButton } from '@/feature/board/component/PostActionBar/PostActionBar';
+import PostLayout from '@/feature/board/PostLayout/PostLayout';
 import { CommentInputContainer } from '@/feature/comment/component';
 import { REPORT_STATUS_MAP } from '@/feature/support/constant';
 import useReportDetail from '@/feature/support/hook/useReportDetail';
@@ -35,10 +41,11 @@ function ReportDetailLoader() {
   const { postId: postIdParam } = useParams();
   const reportId = Number(postIdParam);
 
-  const { setModal } = useContext(ModalContext);
-
   const { data } = useReportDetail(reportId);
   const { mutate: withdrawReport } = useWithdrawReport();
+
+  const { setModal } = useContext(ModalContext);
+  const [clickedImageIndex, setClickedImageIndex] = useState(0);
 
   const onMenuOpen = () => {
     setModal({
@@ -47,36 +54,64 @@ function ReportDetailLoader() {
     });
   };
 
+  useModalReset();
+
   return (
-    <PostDetailView
-      data={data}
-      handleWithdrawReport={() => withdrawReport(reportId)}
-      PostActionBar={
-        <PostActionBar>
-          <PostActionBar.Comment {...data} />
-        </PostActionBar>
-      }
-      CommentInputContainer={CommentInputContainer}
-      Chip={
-        <>
-          <Chip name='신고' variant='grey' />
-          <Chip
-            name={REPORT_STATUS_MAP[data.status].label}
-            variant={REPORT_STATUS_MAP[data.status].variant}
-          />
-        </>
-      }
-      Actions={
-        data.status === 'PENDING' && (
-          <IconEllipsis
-            onClick={onMenuOpen}
-            width={24}
-            height={24}
-            color='var(--grey-3-1)'
-          />
-        )
-      }
-    />
+    <div>
+      {clickedImageIndex === 0 ? (
+        <BackAppBar backgroundColor={'#fbfdff'} />
+      ) : (
+        <FullScreenAttachment
+          attachmentUrls={data.attachments}
+          clickedImageIndex={clickedImageIndex}
+          setClickedImageIndex={setClickedImageIndex}
+        />
+      )}
+
+      <PostLayout>
+        <PostLayout.Header>
+          <PostLayout.Meta {...data}>
+            <Chip name='신고' variant='grey' />
+            <Chip
+              name={REPORT_STATUS_MAP[data.status].label}
+              variant={REPORT_STATUS_MAP[data.status].variant}
+            />
+          </PostLayout.Meta>
+
+          <PostLayout.ActionGroup>
+            {data.status === 'PENDING' && (
+              <IconEllipsis
+                onClick={onMenuOpen}
+                width={24}
+                height={24}
+                color='var(--grey-3-1)'
+              />
+            )}
+          </PostLayout.ActionGroup>
+        </PostLayout.Header>
+
+        <PostLayout.Body>
+          <PostLayout.Title title={data.title} />
+          <Content content={data.content} />
+          {data.attachments.length > 0 && (
+            <AttachmentSwiper
+              attachments={data.attachments}
+              setClickedImageIndex={setClickedImageIndex}
+            />
+          )}
+        </PostLayout.Body>
+
+        <PostLayout.Footer>
+          <CommentActionButton {...data} />
+        </PostLayout.Footer>
+      </PostLayout>
+
+      <CommentInputContainer />
+
+      <PostModalRenderer
+        handleWithdrawReport={() => withdrawReport(reportId)}
+      />
+    </div>
   );
 }
 

@@ -46,7 +46,7 @@ export function CommentActionButton({ isNotice, commentCount }) {
   );
 }
 
-function LikeActionButton({ postId, isLiked, likeCount }) {
+export function LikeActionButton({ postId, isLiked, likeCount }) {
   const [isLikeAnimating, setIsLikeAnimating] = useState(false);
   const [optimisticIsLiked, setOptimisticIsLiked] = useState(null);
   const { like, unlike } = useLike({
@@ -97,7 +97,7 @@ function LikeActionButton({ postId, isLiked, likeCount }) {
   );
 }
 
-function ScrapActionButton({ isScrapped, scrapCount }) {
+export function ScrapActionButton({ isScrapped, scrapCount }) {
   const { scrap, unscrap } = useScrap();
   const IconComponent = isScrapped ? IconBookmarkFill : IconBookmark;
 

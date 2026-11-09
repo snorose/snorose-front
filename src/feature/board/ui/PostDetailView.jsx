@@ -147,7 +147,7 @@ export default function PostDetailView({
 
         {data.attachments.length !== 0 && (
           <AttachmentSwiper
-            data={data}
+            attachments={data.attachments}
             setClickedImageIndex={setClickedImageIndex}
           />
         )}
