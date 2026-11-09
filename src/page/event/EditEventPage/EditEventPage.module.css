@@ -74,5 +74,9 @@
 }
 
 .form {
+  min-width: 0;
+  padding: 0;
   padding-bottom: 2rem;
+  margin: 0;
+  border: 0;
 }
