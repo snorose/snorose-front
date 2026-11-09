@@ -3,11 +3,6 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { IconEllipsis } from '@snorose/icons';
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
 
 import {
   BackAppBar,
@@ -16,15 +11,15 @@ import {
   NoticeModal,
   ServerErrorFallback,
 } from '@/shared/component';
-import { NOTICE_MODAL_TEXT, QUERY_KEYS, TOAST } from '@/shared/constant';
+import { NOTICE_MODAL_TEXT } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
-import { useToast } from '@/shared/hook';
 
 import { PostActionBar } from '@/feature/board/component';
 import { PostDetailView } from '@/feature/board/ui';
 import { CommentInputContainer } from '@/feature/comment/component';
-import { deleteInquiry, readInquiry } from '@/feature/support/api';
 import { INQUIRY_STATUS_MAP } from '@/feature/support/constant';
+import useInquiryDelete from '@/feature/support/hook/useInquiryDelete';
+import useInquiryDetail from '@/feature/support/hook/useInquiryDetail';
 
 export default function InquiryDetailPage() {
   return (
@@ -37,40 +32,13 @@ export default function InquiryDetailPage() {
 }
 
 function InquiryDetailLoader() {
-  const navigate = useNavigate();
   const { postId: postIdParam } = useParams();
   const inquiryId = Number(postIdParam);
 
-  const queryClient = useQueryClient();
+  const { data } = useInquiryDetail(inquiryId);
+  const { mutate: deleteInquiry } = useInquiryDelete();
 
   const { setModal } = useContext(ModalContext);
-  const { toast } = useToast();
-
-  const { data } = useSuspenseQuery({
-    queryKey: QUERY_KEYS.inquiry.byId(inquiryId),
-    queryFn: () => readInquiry(inquiryId),
-    staleTime: 1000 * 60 * 5,
-  });
-
-  const { mutate: deleteInquiryMutate } = useMutation({
-    mutationFn: () => deleteInquiry(inquiryId),
-    onSuccess: () => {
-      queryClient.removeQueries({
-        queryKey: QUERY_KEYS.inquiry.byId(inquiryId),
-      });
-
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.myActivity.list('inquiryReport'),
-      });
-
-      toast.success(TOAST.INQUIRY.delete);
-
-      navigate(-1);
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
 
   const onMenuOpen = () => {
     const id = data.isWriter ? 'my-post-more-options' : 'post-more-options';
@@ -84,7 +52,7 @@ function InquiryDetailLoader() {
   return (
     <PostDetailView
       data={data}
-      deletePost={deleteInquiryMutate}
+      deletePost={() => deleteInquiry(inquiryId)}
       PostActionBar={
         <PostActionBar>
           <PostActionBar.Comment {...data} />

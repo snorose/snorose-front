@@ -5,7 +5,7 @@ import { InquiryReadResponse } from '@/feature/support/types';
 import { putFileInBucket } from '@/apis';
 import { authAxios } from '@/axios';
 
-export type InquiryCreateRequest = {
+type InquiryCreateRequest = {
   title: string;
   content: string;
   subGroup: string;
@@ -60,14 +60,14 @@ export const createInquiry = async ({
 };
 
 export const readInquiry = async (
-  inquiryId: string
+  inquiryId: number
 ): Promise<InquiryReadResponse> => {
   const response = await authAxios.get(`/v1/inquiries/inquiry/${inquiryId}`);
 
   return response.data.result;
 };
 
-export type InquiryUpdateRequest = {
+type InquiryUpdateRequest = {
   inquiryId: number;
   title: string;
   content: string;

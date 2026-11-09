@@ -1,69 +1,22 @@
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { ConfirmModal } from '@/shared/component';
-import {
-  BOARD_ID,
-  CONFIRM_MODAL_TEXT,
-  QUERY_KEYS,
-  TOAST,
-} from '@/shared/constant';
+import { CONFIRM_MODAL_TEXT } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
-import { useToast } from '@/shared/hook';
 
 import { mapFileToAttachment } from '@/feature/attachment/lib';
 import { Attachment, UploadFile } from '@/feature/attachment/types';
-import { createInquiry } from '@/feature/support/api';
 import { INQUIRY_PLACEHOLDERS } from '@/feature/support/constant';
 import { INQUIRY_OPTIONS } from '@/feature/support/data';
+import useInquiryCreate from '@/feature/support/hook/useInquiryCreate';
 import { SupportFormView } from '@/feature/support/ui';
 
-import { createThumbnail } from '@/apis';
 import { Option } from '@/types';
 
 export default function WriteInquiryPage() {
-  const navigate = useNavigate();
-
-  const queryClient = useQueryClient();
+  const { mutate: createInquiry } = useInquiryCreate();
 
   const { modal, setModal } = useContext(ModalContext);
-  const { toast } = useToast();
-
-  const { mutate: submitInquiry } = useMutation({
-    mutationFn: () =>
-      createInquiry({
-        title,
-        content,
-        subGroup: selectedOption!.key,
-        attachments: files.map(mapFileToAttachment),
-      }),
-
-    onSuccess: (data) => {
-      const { inquiryId } = data;
-
-      createThumbnail(BOARD_ID.inquiryAndReport, inquiryId) //
-        .catch((error) => {
-          /**
-           * TODO: 썸네일 생성 실패는 치명적이지 않으므로, 에러를 사용자에게 알리지 않고 조용히 실패 처리합니다.
-           * 에러 로그 수집 (모니터링: sentry)
-           */
-        });
-
-      toast.success(TOAST.INQUIRY.create);
-
-      queryClient.removeQueries({
-        queryKey: QUERY_KEYS.myActivity.list('inquiryReport'),
-      });
-
-      navigate(`/inquiry/${inquiryId}`, { replace: true });
-    },
-
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -93,9 +46,14 @@ export default function WriteInquiryPage() {
       {modal.id === 'confirm-inquiry-write' && (
         <ConfirmModal
           modalText={CONFIRM_MODAL_TEXT.INQUIRY_CREATE}
-          onConfirm={() => {
-            submitInquiry();
-          }}
+          onConfirm={() =>
+            createInquiry({
+              title,
+              content,
+              subGroup: selectedOption!.key,
+              attachments: files.map(mapFileToAttachment),
+            })
+          }
           onCancel={() => setModal({ id: null })}
         />
       )}
