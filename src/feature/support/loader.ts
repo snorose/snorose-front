@@ -17,10 +17,11 @@ export function validateReportWriteLoader({ params }: LoaderFunctionArgs) {
 }
 
 export const inquiryEditLoader = async ({ params }: LoaderFunctionArgs) => {
-  const { postId } = params;
+  const { postId: postIdParam } = params;
+  const inquiryId = Number(postIdParam);
 
   try {
-    const post = await readInquiry(postId);
+    const post = await readInquiry(inquiryId);
 
     if (post.status === 'COMPLETED') {
       throw json({ code: 6102 }, { status: 403 });

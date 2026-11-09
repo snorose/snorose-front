@@ -1,6 +1,6 @@
 import { IconX } from '@snorose/icons';
 
-import { AttachmentList } from '@/shared/component';
+import { AttachmentList } from '@/feature/attachment/component';
 
 import styles from './NoticeAttachmentList.module.css';
 

@@ -12,7 +12,6 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
-  AttachmentList,
   BackAppBar,
   Badge,
   CloseAppBar,
@@ -40,10 +39,13 @@ import {
 } from '@/shared/hook';
 import { DateTime } from '@/shared/lib';
 
-import { AttachmentBar } from '@/feature/board/component';
+import {
+  AttachmentBar,
+  AttachmentList,
+  NoticeAttachmentList,
+} from '@/feature/attachment/component';
 import { EditorContainer } from '@/feature/editor/component';
 import { preserveEmptyParagraphs, sanitizeHtml } from '@/feature/editor/lib';
-import { NoticeAttachmentList } from '@/feature/event/component';
 
 import { createThumbnail, getPostContent, patchPost } from '@/apis';
 

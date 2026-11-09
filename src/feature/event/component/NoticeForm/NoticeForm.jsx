@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
+import { NoticeAttachmentList } from '@/feature/attachment/component';
 import { EditorContainer } from '@/feature/editor/component';
 import { preserveEmptyParagraphs, sanitizeHtml } from '@/feature/editor/lib';
 
-import NoticeAttachmentList from '../NoticeAttachmentList/NoticeAttachmentList';
 import styles from './NoticeForm.module.css';
 
 export default function NoticeForm({

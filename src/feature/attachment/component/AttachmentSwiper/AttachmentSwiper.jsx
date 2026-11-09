@@ -8,7 +8,10 @@ import altImage from '@/assets/images/altImage.png';
 
 import styles from './AttachmentSwiper.module.css';
 
-export default function AttachmentSwiper({ data, setClickedImageIndex }) {
+export default function AttachmentSwiper({
+  attachments,
+  setClickedImageIndex,
+}) {
   const scrollbarRef = useRef(null);
   return (
     <div className={styles.swiperContainer}>
@@ -31,7 +34,7 @@ export default function AttachmentSwiper({ data, setClickedImageIndex }) {
         freeMode={true}
         loop={false}
       >
-        {data.attachments.map((item, index) => (
+        {attachments.map((item, index) => (
           <SwiperSlide key={index} className={styles.attachmentSlide}>
             <div className={styles.attchmentDiv}>
               {item.type === 'PHOTO' ? (

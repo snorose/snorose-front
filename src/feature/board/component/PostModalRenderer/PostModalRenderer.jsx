@@ -1,17 +1,19 @@
+import { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { ConfirmModal, MoreOptionModal } from '@/shared/component';
 import { CONFIRM_MODAL_TEXT, MORE_OPTION_MODAL_TEXT } from '@/shared/constant';
+import { ModalContext } from '@/shared/context';
 import { getBoard } from '@/shared/lib';
 
 export default function PostModalRenderer({
-  modal,
   handleEdit,
   handleReport,
   handleDelete,
   handleShare,
   handleWithdrawReport,
 }) {
+  const { modal } = useContext(ModalContext);
   const { pathname } = useLocation();
   const currentBoardId =
     pathname.startsWith('/inquiry') || pathname.startsWith('/report')

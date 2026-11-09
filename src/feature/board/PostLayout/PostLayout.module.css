@@ -1,0 +1,149 @@
+.container {
+  padding-top: var(--default-appbar-height);
+  overflow: hidden;
+  background-color: var(--white-2);
+  border-bottom: 1px solid var(--blue-0);
+  border-radius: 0 0 1.5rem 1.5rem;
+}
+
+/* header */
+
+.header {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 var(--default-margin);
+
+  .meta {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    min-width: 0;
+
+    .info {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      min-width: 0;
+      min-height: 2.4rem;
+      font: var(--text-body-2-reg);
+      color: var(--grey-3-1);
+
+      & > :not(.userDisplay) {
+        flex-shrink: 0;
+      }
+
+      .userDisplay {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .badge {
+        margin-left: -0.3rem;
+      }
+
+      .dot {
+        font-weight: 800;
+      }
+    }
+
+    .chips {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      min-height: 2.4rem;
+    }
+  }
+
+  .actionGroup {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    margin-top: -0.8rem;
+
+    div {
+      padding: 0.8rem;
+      cursor: pointer;
+    }
+
+    div:last-child {
+      margin-right: -0.8rem;
+    }
+  }
+}
+
+/* body */
+
+.body {
+  padding: 0 var(--default-margin);
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    align-items: flex-start;
+    margin: 0.7rem 0 2.6rem 0;
+
+    h1 {
+      font: var(--text-title-1-bold);
+      color: var(--grey-4);
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    .views {
+      font: var(--text-caption-1-reg);
+      color: var(--blue-3);
+    }
+  }
+
+  .sponsorBanner {
+    width: 100%;
+    height: auto;
+    margin: 0.2rem 0 1.7rem;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 0.5rem;
+    }
+  }
+}
+
+/* footer */
+
+.footer {
+  position: relative;
+  display: flex;
+  gap: 1.6rem;
+  justify-content: space-between;
+  height: 5.7rem;
+  padding: 0.6rem var(--default-margin);
+
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 2rem;
+    left: 2rem;
+    content: '';
+    border-bottom: 0.05rem solid rgba(var(--grey-3-1-rgb), 0.7);
+  }
+}
+
+/* 기존 후원 배너만 모바일에서 높이를 고정하고 양옆 크롭 */
+@media (max-width: 768px) {
+  .croppedBanner {
+    height: 8rem;
+    overflow: hidden;
+  }
+
+  .croppedBanner .sponsorBanner {
+    height: 100%;
+    object-position: center;
+  }
+}

@@ -1,18 +1,18 @@
 .bar {
-  width: 100%;
-  max-width: var(--default-width);
   /* Default */
   position: fixed;
   bottom: 0;
   z-index: 100;
+  width: 100%;
+  max-width: var(--default-width);
 }
 
 .attachmentBar {
-  height: 7rem;
-  background-color: var(--blue-0);
-  padding: 2.2rem;
   display: flex;
   align-items: center;
+  height: 7rem;
+  padding: 2.2rem;
+  background-color: var(--blue-0);
 }
 
 .image {
@@ -21,16 +21,16 @@
 }
 
 .disabled {
-  opacity: 0.35;
   cursor: not-allowed;
+  opacity: 0.35;
 }
 
 .uploadControl {
   position: relative;
   display: inline-grid;
+  flex-shrink: 0;
   width: 24px;
   height: 24px;
-  flex-shrink: 0;
   margin-right: 2.4rem;
   cursor: pointer;
 }
@@ -77,11 +77,15 @@
   position: absolute;
   top: -10px;
   left: -10px;
+
   width: 44px;
   height: 44px;
-  margin: 0;
+
   padding: 0;
-  opacity: 0;
-  cursor: pointer;
+  margin: 0;
+
   touch-action: manipulation;
+  cursor: pointer;
+
+  opacity: 0;
 }

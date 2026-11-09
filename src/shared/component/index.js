@@ -51,8 +51,6 @@ export { default as ShimmerEffect } from './suspense/ShimmerEffect/ShimmerEffect
 
 // etc
 export { default as Accordion } from './Accordion/Accordion';
-export { default as AttachmentList } from './AttachmentList/AttachmentList';
-export { default as AttachmentSwiper } from './AttachmentSwiper/AttachmentSwiper';
 export { default as Badge } from './Badge/Badge';
 export { default as Carousel } from './Carousel/Carousel';
 export { default as CarouselErrorFallback } from './Carousel/CarouselErrorFallback';

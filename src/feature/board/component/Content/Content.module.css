@@ -1,0 +1,7 @@
+.container {
+  padding-bottom: 1.5rem;
+  font: var(--text-headline-2-reg);
+  color: var(--grey-4);
+  white-space: pre-wrap;
+  cursor: text;
+}
