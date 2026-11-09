@@ -1,6 +1,7 @@
 export { default as AccordianBoards } from './AccordianBoards/AccordianBoards';
 export { default as BoardBar } from './BoardBar/BoardBar';
 export * from './BoardBar/BoardBar';
+export { default as Content } from './Content/Content';
 export { default as DropDownMenu } from './DropDownMenu/DropDownMenu';
 export { default as NoticeBar } from './NoticeBar/NoticeBar';
 export { default as PostActionBar } from './PostActionBar/PostActionBar';
