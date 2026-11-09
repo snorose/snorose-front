@@ -2,6 +2,7 @@ import { Suspense, useContext } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { IconEllipsis } from '@snorose/icons';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import {
@@ -14,7 +15,7 @@ import {
 import { NOTICE_MODAL_TEXT, QUERY_KEY } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 
-import { MeatBallIcon, PostActionBar } from '@/feature/board/component';
+import { PostActionBar } from '@/feature/board/component';
 import { PostDetailView } from '@/feature/board/ui';
 import { CommentInputContainer } from '@/feature/comment/component';
 import { readReport } from '@/feature/support/api';
@@ -72,7 +73,14 @@ function ReportDetailLoader() {
         </>
       }
       Actions={
-        data.status === 'PENDING' && <MeatBallIcon onClick={onMenuOpen} />
+        data.status === 'PENDING' && (
+          <IconEllipsis
+            onClick={onMenuOpen}
+            width={24}
+            height={24}
+            color='var(--grey-3-1)'
+          />
+        )
       }
     />
   );

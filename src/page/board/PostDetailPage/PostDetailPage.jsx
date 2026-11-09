@@ -2,6 +2,7 @@ import { Suspense, useContext } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useLocation, useParams } from 'react-router-dom';
 
+import { IconEllipsis } from '@snorose/icons';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { BackAppBar, FetchLoading } from '@/shared/component';
@@ -9,8 +10,8 @@ import { QUERY_KEY, ROLE } from '@/shared/constant';
 import { ModalContext } from '@/shared/context/ModalContext';
 import { getBoard } from '@/shared/lib';
 
-import { BellIcon } from '@/feature/alert/component';
-import { MeatBallIcon, PostActionBar } from '@/feature/board/component';
+import { BellIconButton } from '@/feature/alert/component';
+import { PostActionBar } from '@/feature/board/component';
 import { useDeletePostHandler } from '@/feature/board/hook/useDeletePostHandler';
 import { PostDetailView } from '@/feature/board/ui';
 import { CommentInputContainer } from '@/feature/comment/component';
@@ -81,14 +82,19 @@ function PostDetailLoader() {
       Actions={
         <>
           {!data.isNotice && data.isWriter && (
-            <BellIcon
+            <BellIconButton
               boardId={currentBoard.id}
               postId={postId}
               isActive={data.isCommentAlertConsent}
             />
           )}
           {(!data.isNotice || data.isWriter) && (
-            <MeatBallIcon onClick={onMenuOpen} />
+            <IconEllipsis
+              onClick={onMenuOpen}
+              width={24}
+              height={24}
+              color='var(--grey-3-1)'
+            />
           )}
         </>
       }
