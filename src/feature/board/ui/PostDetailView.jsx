@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { IconMultiCloudLogo } from '@snorose/icons';
 
 import {
-  AttachmentSwiper,
   BackAppBar,
   Badge,
   Chip as CategoryChip,
@@ -18,9 +17,10 @@ import useAuth from '@/shared/hook/useAuth';
 import { DateTime, hashtagifyHtml, linkifyHtml } from '@/shared/lib';
 
 import {
+  AttachmentSwiper,
   FullScreenAttachment,
-  PostModalRenderer,
-} from '@/feature/board/component';
+} from '@/feature/attachment/component';
+import { PostModalRenderer } from '@/feature/board/component';
 import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
 import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
 import { sanitizePostHtml } from '@/feature/editor/lib/sanitize';
