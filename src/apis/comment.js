@@ -33,12 +33,3 @@ export const editComment = async ({ postId, commentId, content }) => {
   );
   return response?.data.result;
 };
-
-export const reportComment = async (postId, commentId, body) => {
-  const { data } = await authAxios.post(
-    `/v1/posts/${postId}/comments/${commentId}/report`,
-    body
-  );
-
-  return data;
-};

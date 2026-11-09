@@ -44,13 +44,17 @@ export default function useComment() {
   };
 
   const updateCommentCountCache = ({ type }) => {
-    queryClient.setQueryData(QUERY_KEY.post(postId), (prev) => ({
-      ...prev,
-      commentCount:
-        type === COMMENT_ACTION_TYPE.create
-          ? prev.commentCount + 1
-          : prev.commentCount - 1,
-    }));
+    queryClient.setQueryData(QUERY_KEY.post(postId), (prev) => {
+      if (!prev) return prev;
+
+      return {
+        ...prev,
+        commentCount:
+          type === COMMENT_ACTION_TYPE.create
+            ? prev.commentCount + 1
+            : prev.commentCount - 1,
+      };
+    });
   };
 
   const updateUserPoints = (pointDifference) => {
@@ -140,8 +144,8 @@ export default function useComment() {
 
   const editComment = useMutation({
     mutationKey: [MUTATION_KEY.editComment],
-    mutationFn: async ({ commentId, content, parentId }) => {
-      return await edit({ postId, commentId, content, parentId });
+    mutationFn: async ({ commentId, content }) => {
+      return await edit({ postId, commentId, content });
     },
     onSuccess: (editedComment) => {
       const { id, content } = editedComment;
