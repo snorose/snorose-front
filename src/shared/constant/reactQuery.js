@@ -35,7 +35,6 @@ export const MUTATION_KEY = Object.freeze({
   editComment: 'editComment',
   reportPost: 'reportPost',
   reportUser: 'reportUser',
-  reportComment: 'reportComment',
   like: 'like',
   unlike: 'unlike',
   scrap: 'scrap',
