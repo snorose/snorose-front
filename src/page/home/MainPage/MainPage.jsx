@@ -9,6 +9,7 @@ import {
   CarouselSkeleton,
   Footer,
   Header,
+  Slide,
 } from '@/shared/component';
 import { NEW_ROUTES } from '@/shared/constant';
 import { useAuth } from '@/shared/hook';
@@ -23,7 +24,6 @@ import {
   HomeCommunity,
   ListHeader,
   PopUp,
-  Slide,
 } from '@/feature/home/component';
 import { useBanner } from '@/feature/home/hook';
 import { Search } from '@/feature/search/component';
