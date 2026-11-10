@@ -26,7 +26,7 @@ import {
   ListHeader,
   PopUp,
 } from '@/feature/home/component';
-import { useBanner } from '@/feature/home/hook';
+import { useHomeBanners } from '@/feature/home/hook';
 import { Search } from '@/feature/search/component';
 
 import styles from './MainPage.module.css';
@@ -49,7 +49,7 @@ export default function MainPage() {
             FallbackComponent={CarouselErrorFallback}
           >
             <Suspense fallback={<CarouselSkeleton />}>
-              <Banner />
+              <HomeBanners />
             </Suspense>
           </ErrorBoundary>
         )}
@@ -92,8 +92,8 @@ export default function MainPage() {
   );
 }
 
-function Banner() {
-  const { data: items } = useBanner();
+function HomeBanners() {
+  const { data: items } = useHomeBanners();
 
   return (
     <Carousel
