@@ -14,6 +14,7 @@ import {
 import { NEW_ROUTES } from '@/shared/constant';
 import { useAuth } from '@/shared/hook';
 
+import { BannerGA } from '@/feature/advertisement/component';
 import {
   HomeBesookt,
   HomeBesooktErrorFallback,
@@ -98,9 +99,17 @@ function Banner() {
     <Carousel
       className={styles.banner}
       items={items}
-      renderItem={({ imageUrl, redirectUrl }) => (
-        <Slide src={imageUrl} redirectUrl={redirectUrl} alt='banner' />
-      )}
+      renderItem={({ bannerType, imageUrl, redirectUrl, ...props }) => {
+        if (bannerType.toUpperCase() === 'AD') {
+          return (
+            <BannerGA {...props}>
+              <Slide src={imageUrl} redirectUrl={redirectUrl} alt='banner' />
+            </BannerGA>
+          );
+        }
+
+        return <Slide src={imageUrl} redirectUrl={redirectUrl} alt='banner' />;
+      }}
     />
   );
 }
