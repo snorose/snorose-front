@@ -66,4 +66,5 @@ export { default as MenuIcon } from './MenuIcon/MenuIcon';
 export { default as Portal } from './Portal/Portal';
 export { default as Profile } from './Profile/Profile';
 export { default as PullToRefresh } from './PullToRefresh/PullToRefresh';
+export { default as Slide } from './Slide/Slide';
 export { default as Toast } from './Toast/Toast';

@@ -3,9 +3,6 @@ export { default as Accordion } from './Accordion/Accordion';
 export { default as AccordionListItem } from './AccordionListItem/AccordionListItem';
 export { default as AccordionTag } from './AccordionTag/AccordionTag';
 
-// 배너 슬라이드
-export { default as Slide } from './Slide/Slide';
-
 // 공지 / 출첵
 export { default as HomeCard } from './HomeCard/HomeCard';
 export { default as HomeCardErrorFallback } from './HomeCard/HomeCardErrorFallback';
