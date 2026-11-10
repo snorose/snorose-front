@@ -2,6 +2,7 @@ export const QUERY_KEY = Object.freeze({
   homeNotice: 'homeNotice',
   banner: {
     home: ['banner', 'home'],
+    page: (page) => ['banner', page],
   },
   attendance: 'monthlyAttendanceHistory',
   search: 'search',

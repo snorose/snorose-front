@@ -1,5 +1,5 @@
 import { useContext, useMemo, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { IconMultiCloudLogo } from '@snorose/icons';
 
@@ -17,6 +17,7 @@ import { useModalReset, useToast } from '@/shared/hook';
 import useAuth from '@/shared/hook/useAuth';
 import { DateTime, hashtagifyHtml, linkifyHtml } from '@/shared/lib';
 
+import { AdSlot } from '@/feature/advertisement/component';
 import {
   FullScreenAttachment,
   PostModalRenderer,
@@ -25,14 +26,8 @@ import { useIframeAutoResize } from '@/feature/editor/hook/useIframeAutoResize';
 import { preserveEmptyParagraphs } from '@/feature/editor/lib/emptyFormat';
 import { sanitizePostHtml } from '@/feature/editor/lib/sanitize';
 
-import geminiBanner from '@/assets/banners/gemini-banner.png';
-import sponsorBanner from '@/assets/banners/sponsorBanner.png';
-
 import editorStyles from '../../editor/component/EditorContainer/EditorContainer.module.css';
 import styles from './PostDetailView.module.css';
-
-// 한국 시간 기준 2026년 11월 27일까지 Gemini 배너 노출
-const GEMINI_BANNER_END_AT = new Date('2026-11-28T00:00:00+09:00').getTime();
 
 export default function PostDetailView({
   data,
@@ -45,7 +40,6 @@ export default function PostDetailView({
 }) {
   const { userInfo } = useAuth();
   const navigate = useNavigate();
-  const isGeminiBannerActive = Date.now() < GEMINI_BANNER_END_AT;
 
   const [linkModalOpen, setLinkModalOpen] = useState(false);
   const [selectedLink, setSelectedLink] = useState('');
@@ -151,30 +145,7 @@ export default function PostDetailView({
           />
         )}
 
-        <div
-          className={[
-            styles.sponsorBannerWrapper,
-            !isGeminiBannerActive && styles.croppedBanner,
-          ]
-            .filter(Boolean)
-            .join(' ')}
-        >
-          {isGeminiBannerActive ? (
-            <Link to='/board/event/post/1931493'>
-              <img
-                src={geminiBanner}
-                alt='Gemini 프로모션 이벤트 게시글 보기'
-                className={styles.sponsorBanner}
-              />
-            </Link>
-          ) : (
-            <img
-              src={sponsorBanner}
-              alt='스노로즈 후원하기'
-              className={styles.sponsorBanner}
-            />
-          )}
-        </div>
+        <AdSlot page='post_detail' />
 
         {PostActionBar}
       </div>

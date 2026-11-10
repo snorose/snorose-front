@@ -91,30 +91,3 @@
   color: var(--blue-3);
   white-space: nowrap;
 }
-
-.sponsorBannerWrapper {
-  width: 100%;
-  height: auto;
-  margin: 0.2rem 0 1.7rem;
-}
-
-.sponsorBanner {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 0.5rem;
-}
-
-/* 기존 후원 배너만 모바일에서 높이를 고정하고 양옆 크롭 */
-@media (max-width: 768px) {
-  .croppedBanner {
-    height: 8rem;
-    overflow: hidden;
-  }
-
-  .croppedBanner .sponsorBanner {
-    height: 100%;
-    object-position: center;
-  }
-}
