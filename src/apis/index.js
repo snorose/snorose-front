@@ -1,6 +1,5 @@
 export * from './alert';
 export * from './attendance';
-export * from './banner';
 export * from './besookt';
 export * from './comment';
 export * from './event';

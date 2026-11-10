@@ -1,6 +1,8 @@
 export const QUERY_KEY = Object.freeze({
   homeNotice: 'homeNotice',
-  banner: 'banner',
+  banner: {
+    home: ['banner', 'home'],
+  },
   attendance: 'monthlyAttendanceHistory',
   search: 'search',
   post: (postId) => (postId ? ['post', postId] : ['post']),
