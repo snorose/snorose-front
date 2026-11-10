@@ -13,7 +13,7 @@ export default function BannerGA({
 }) {
   return (
     <div
-      data-ga-banner-click
+      data-ga-banner
       data-banner-id={bannerId}
       data-banner-name={bannerName}
       data-placement={placement}
