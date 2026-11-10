@@ -1,8 +1,6 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Link } from 'react-router-dom';
 
-import { IconChevronRight } from '@snorose/icons';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import {
@@ -15,7 +13,6 @@ import {
 import { NEW_ROUTES } from '@/shared/constant';
 import { useAuth } from '@/shared/hook';
 
-import { recordCommerceClick } from '@/feature/commerce/apis';
 import {
   HomeBesookt,
   HomeBesooktErrorFallback,
