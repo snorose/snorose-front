@@ -28,6 +28,31 @@ import styles from './PopUpContents.module.css';
 /** @type {PopupContent[]} */
 const POPUP_CONTENTS = [
   {
+    title: '[모집] 스노로즈 서비스 리뷰어를 모집합니다! 🔍',
+    description:
+      '스노로즈의 기존 기능을 직접 사용하고, 불편한 점과 개선 아이디어를 들려주실 서비스 리뷰어를 모집합니다!',
+    contentList: [
+      '모집 대상 및 인원: 스노로즈 정회원 10명 (학적상태 무관)',
+
+      '모집 기간: ~ 11/14(토) 23:59',
+      '참여 보상: 최대 160포인트',
+    ],
+    link: [
+      {
+        title: '서비스 리뷰어 모집 공지 보기',
+        url: '/board/notice/post/1932838',
+        isExternal: false,
+      },
+      {
+        title: '서비스 리뷰어 신청하기 (구글폼)',
+        url: 'https://forms.gle/ad82ksUnj66tz2PZ9',
+        isExternal: true,
+      },
+    ],
+    startDate: '2026-11-09',
+    endDate: '2026-11-14',
+  },
+  {
     title: '2026 하반기 스노로즈 신입 리자 모집 안내',
     description:
       '오직 숙명인으로만 구성된 숙명인 커뮤니티, 스노로즈에서 신입 리자를 모집합니다. 많은 관심과 지원 부탁드립니다!',
