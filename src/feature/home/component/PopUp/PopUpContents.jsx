@@ -30,7 +30,7 @@ const POPUP_CONTENTS = [
   {
     title: '[모집] 스노로즈 서비스 리뷰어를 모집합니다! 🔍',
     description:
-      '스노로즈의 기존 기능을 직접 사용하고, 불편한 점과 개선 아이디어를 들려주실 서비스 리뷰어를 모집합니다!',
+      '기능을 직접 사용하고, 불편한 점과 개선 아이디어를 들려주실 리뷰어를 모집합니다!',
     contentList: [
       '모집 대상 및 인원: 스노로즈 정회원 10명',
 
@@ -39,7 +39,7 @@ const POPUP_CONTENTS = [
     ],
     link: [
       {
-        title: '모집 공지 보기',
+        title: '모집 공고 확인하기',
         url: '/board/notice/post/1932838',
         isExternal: false,
       },
@@ -55,7 +55,7 @@ const POPUP_CONTENTS = [
   {
     title: '‼️D-day‼️ 스노로즈 서비스 리뷰어 모집 마감',
     description:
-      '스노로즈의 기존 기능을 직접 사용하고, 불편한 점과 개선 아이디어를 들려주실 서비스 리뷰어를 모집합니다!',
+      '기능을 직접 사용하고, 불편한 점과 개선 아이디어를 들려주실 리뷰어를 모집합니다!',
     contentList: [
       '모집 대상 및 인원: 스노로즈 정회원 10명',
 
@@ -64,7 +64,7 @@ const POPUP_CONTENTS = [
     ],
     link: [
       {
-        title: '모집 공지 보기',
+        title: '모집 공고 확인하기',
         url: '/board/notice/post/1932838',
         isExternal: false,
       },
@@ -81,10 +81,7 @@ const POPUP_CONTENTS = [
     title: '❄️ [모집] 2027 스노로즈 백엔드 파트장 모집 ❄️',
     description:
       '숙명인을 위한 커뮤니티, 스노로즈에서 백엔드 파트장을 모집합니다!',
-    contentList: [
-      '지원 마감: 11/18(수) 23:59',
-      '지원 방법: 모집 요강 확인 후 숙명 이메일로 로그인하여 구글폼 작성',
-    ],
+    contentList: ['지원 마감: 11/18(수) 23:59'],
     link: [
       {
         title: '백엔드 파트장 모집 공고 확인하기',
@@ -104,10 +101,7 @@ const POPUP_CONTENTS = [
     title: '‼️D-day‼️ 2027 스노로즈 백엔드 파트장 모집 ❄️',
     description:
       '숙명인을 위한 커뮤니티, 스노로즈에서 백엔드 파트장을 모집합니다!',
-    contentList: [
-      '지원 마감: 11/18(수) 23:59',
-      '지원 방법: 모집 요강 확인 후 숙명 이메일로 로그인하여 구글폼 작성',
-    ],
+    contentList: ['지원 마감: 11/18(수) 23:59'],
     link: [
       {
         title: '백엔드 파트장 모집 공고 확인하기',
@@ -124,7 +118,7 @@ const POPUP_CONTENTS = [
     endDate: '2026-11-18',
   },
   {
-    title: '[강연] 스노로즈 제2회 특별 초청강연',
+    title: '[강연] 스노로즈 제2회 특별 초청강연 (윤혜지 작가)',
     description:
       '몰랑이 원작자이자 눈송이 리뉴얼을 맡은 동문 윤혜지 작가님의 이야기를 만나보세요!',
     contentList: [
