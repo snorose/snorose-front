@@ -175,65 +175,7 @@ const POPUP_CONTENTS = [
     startDate: '2026-11-18',
     endDate: '2026-11-18',
   },
-  {
-    title: '2026 하반기 스노로즈 신입 리자 모집 안내',
-    description:
-      '오직 숙명인으로만 구성된 숙명인 커뮤니티, 스노로즈에서 신입 리자를 모집합니다. 많은 관심과 지원 부탁드립니다!',
-    contentList: [
-      '모집 분야: 운영기획팀(회계)',
-      '지원 자격: 스노로즈 정회원인 숙명인 모두 (재학, 휴학, 졸업 여부 무관)',
-      '지원 방법: 아래 구글폼을 통한 지원서 제출',
-      '서류 모집: 2026.10.27(화) ~ 11.05(목) 23:59',
-    ],
-    link: [
-      {
-        title: '모집 공고 자세히 보기',
-        url: 'https://snorose.notion.site/10c7ef0aa3bf8027a04ee35b7c521e12',
-        isExternal: true,
-      },
-      {
-        title: '지원서 제출하기 (구글폼)',
-        url: 'https://forms.gle/1h8JjJZgiPSNi9Ev5',
-        isExternal: true,
-      },
-    ],
-    startDate: '2026-10-27',
-    endDate: '2026-11-05',
-  },
-  {
-    title: '[EVENT] 제미나이 무료 가입 이벤트 🎁',
-    description:
-      '제미나이 무료 가입 시 네이버페이 1만 원 증정! 참여 방법과 자세한 조건은 이벤트 게시글을 확인해 주세요.',
-    image: geminiBanner,
-    link: [
-      {
-        title: '이벤트 자세히 보기',
-        url: '/board/event/post/1931493',
-        isExternal: false,
-      },
-    ],
-    startDate: '2026-11-02',
-    endDate: '2026-11-09',
-  },
-  {
-    title: '[EVENT] 스노로즈 X 웰라쥬 체험단 이벤트 🎁✨',
-    description: '무너진 피부에 #속수분텐션업할 시간!',
-    contentList: [
-      '모집 인원: 스노로즈 가입자 중 숙명여대 재학생, 휴학생, 졸업생 포함 총 50인',
-      '체험 제품: 웰라쥬 리얼 히알루로닉 수딩 크림 본품(80ml)',
-      '모집 기간: 4월 27일(월) ~ 5월 4일(월)',
-    ],
-    link: [
-      {
-        title: '이벤트 관련 링크 (스노로즈 공지)',
-        url: '/board/notice/post/1895414',
-        isExternal: false,
-      },
-    ],
-    image: eventImage,
-    startDate: '2026-04-28',
-    endDate: '2026-05-04',
-  },
+
   {
     title: '숙플레이스 및 주거 게시판 오픈 이벤트 안내',
     description:
@@ -271,20 +213,7 @@ const POPUP_CONTENTS = [
   //   startDate: '2026-09-28',
   //   endDate: '2026-10-03',
   // },
-  {
-    title: '[블로그] 스노로즈 초청강연 - 유트루 편',
-    description:
-      '지난 해 진행했던 첫 초청 강연의 비하인드와 강연 당일 현장을 담은 이벤트기획팀의 이야기를 확인해 보세요.',
-    link: [
-      {
-        title: '블로그 링크 (노션)',
-        url: 'https://snorose.notion.site/3a87ef0aa3bf80948861e5ab33627445',
-        isExternal: true,
-      },
-    ],
-    startDate: '2026-07-27',
-    endDate: '2026-08-10',
-  },
+
   {
     title: '[공지] 포인트 미지급 기간',
     contentList: ['일시: 2026/10/13(화) ~ 2026/10/26(월)'],
