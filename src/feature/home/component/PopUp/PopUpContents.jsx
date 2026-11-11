@@ -78,6 +78,52 @@ const POPUP_CONTENTS = [
     endDate: '2026-11-14',
   },
   {
+    title: '❄️ [모집] 2027 스노로즈 백엔드 파트장 모집 ❄️',
+    description:
+      '숙명인을 위한 커뮤니티, 스노로즈에서 백엔드 파트장을 모집합니다!',
+    contentList: [
+      '지원 마감: 11/18(수) 23:59',
+      '지원 방법: 모집 요강 확인 후 숙명 이메일로 로그인하여 구글폼 작성',
+    ],
+    link: [
+      {
+        title: '백엔드 파트장 모집 공고 확인하기',
+        url: 'https://snorose.notion.site/2027-40d7ef0aa3bf805b8f57e299578a4937',
+        isExternal: true,
+      },
+      {
+        title: '백엔드 파트장 지원하기 (구글폼)',
+        url: 'https://forms.gle/ubEwuYxKv5FNsTtj8',
+        isExternal: true,
+      },
+    ],
+    startDate: '2026-11-04',
+    endDate: '2026-11-17',
+  },
+  {
+    title: '‼️D-day‼️ 2027 스노로즈 백엔드 파트장 모집 ❄️',
+    description:
+      '숙명인을 위한 커뮤니티, 스노로즈에서 백엔드 파트장을 모집합니다!',
+    contentList: [
+      '지원 마감: 11/18(수) 23:59',
+      '지원 방법: 모집 요강 확인 후 숙명 이메일로 로그인하여 구글폼 작성',
+    ],
+    link: [
+      {
+        title: '백엔드 파트장 모집 공고 확인하기',
+        url: 'https://snorose.notion.site/2027-40d7ef0aa3bf805b8f57e299578a4937',
+        isExternal: true,
+      },
+      {
+        title: '백엔드 파트장 지원하기 (구글폼)',
+        url: 'https://forms.gle/ubEwuYxKv5FNsTtj8',
+        isExternal: true,
+      },
+    ],
+    startDate: '2026-11-18',
+    endDate: '2026-11-18',
+  },
+  {
     title: '[강연] 스노로즈 제2회 특별 초청강연',
     description:
       '몰랑이 원작자이자 눈송이 리뉴얼을 맡은 동문 윤혜지 작가님의 이야기를 만나보세요!',
