@@ -28,6 +28,23 @@ import styles from './PopUpContents.module.css';
 /** @type {PopupContent[]} */
 const POPUP_CONTENTS = [
   {
+    title: '[공지] 스노로즈 서버 점검 안내',
+    description: '안정적인 서비스 제공을 위한 서버 점검이 진행됩니다.',
+    contentList: [
+      '일시: 2026년 11월 14일 (토) 14:00 ~ 18:00',
+      '점검 시간 동안 스노로즈 이용이 일시 중단됩니다.',
+    ],
+    link: [
+      {
+        title: '스노로즈 공지',
+        url: '/board/notice/post/1934110',
+        isExternal: false,
+      },
+    ],
+    startDate: '2026-11-13',
+    endDate: '2026-11-14',
+  },
+  {
     title: '[모집] 스노로즈 서비스 리뷰어를 모집합니다! 🔍',
     description:
       '기능을 직접 사용하고, 불편한 점과 개선 아이디어를 들려주실 리뷰어를 모집합니다!',
@@ -190,23 +207,6 @@ const POPUP_CONTENTS = [
     startDate: '2026-08-30',
     endDate: '2026-09-05',
   },
-  // {
-  //   title: '[공지] 스노로즈 서버 점검 안내',
-  //   description: '안정적인 서비스 제공을 위한 서버 점검이 진행됩니다.',
-  //   contentList: [
-  //     '일시: 2026년 10월 3일 (토) 14:00 ~ 18:00',
-  //     '점검 시간 동안 스노로즈 이용이 일시 중단됩니다.',
-  //   ],
-  //   link: [
-  //     {
-  //       title: '스노로즈 공지',
-  //       url: '/board/notice/post/1922743',
-  //       isExternal: false,
-  //     },
-  //   ],
-  //   startDate: '2026-09-28',
-  //   endDate: '2026-10-03',
-  // },
 
   {
     title: '[공지] 포인트 미지급 기간',
