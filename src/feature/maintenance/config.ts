@@ -2,7 +2,7 @@ import { ROLE } from '@/shared/constant/role';
 
 // 추후 어드민 설정 API로 교체할 점검 정책입니다.
 export const MAINTENANCE_START = new Date('2026-11-14T14:00:00+09:00');
-export const MAINTENANCE_END = new Date('2026-11-14T18:00:00+09:00');
+export const MAINTENANCE_END = new Date('2026-11-14T19:00:00+09:00');
 export const MAINTENANCE_ALLOWED_ROLES: readonly number[] = [ROLE.admin];
 
 export function isMaintenanceTime(now = Date.now()) {
