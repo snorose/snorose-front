@@ -11,9 +11,13 @@ import MaintenanceGate from '@/feature/maintenance/component/MaintenanceGate';
 import {
   MAINTENANCE_END,
   MAINTENANCE_START,
-} from '@/feature/maintenance/config';
+  setMaintenanceTestTime,
+} from '@/feature/maintenance/testClock';
 
 import Login from './LoginPage';
+jest.mock('@/feature/maintenance/status', () => ({
+  refreshMaintenanceStatus: jest.fn(),
+}));
 
 jest.mock(
   '@snorose/icons',
@@ -45,7 +49,7 @@ describe('maintenance on an already logged-in admin login page', () => {
     jest.useFakeTimers();
     localStorage.clear();
     localStorage.setItem('accessToken', 'admin');
-    jest.setSystemTime(MAINTENANCE_START.getTime() - 1000);
+    setMaintenanceTestTime(MAINTENANCE_START.getTime() - 1000);
     invalidateMaintenanceSession();
     setMaintenanceRoleVerifier(jest.fn().mockResolvedValue(4));
   });
@@ -67,6 +71,7 @@ describe('maintenance on an already logged-in admin login page', () => {
     renderLogin();
     expect(screen.getByRole('button', { name: '로그인하기' })).toBeVisible();
     await act(async () => {
+      setMaintenanceTestTime(MAINTENANCE_START);
       jest.advanceTimersByTime(1000);
     });
     expect(
@@ -78,13 +83,13 @@ describe('maintenance on an already logged-in admin login page', () => {
   });
 
   it('restores the login form after maintenance ends without navigation', async () => {
-    jest.setSystemTime(MAINTENANCE_START);
+    setMaintenanceTestTime(MAINTENANCE_START);
     await refreshMaintenanceAccess();
     renderLogin();
     expect(
       screen.getByRole('heading', { name: '서버 점검 안내' })
     ).toBeVisible();
-    jest.setSystemTime(MAINTENANCE_END.getTime() + 1);
+    setMaintenanceTestTime(MAINTENANCE_END.getTime() + 1);
     fireEvent.focus(window);
     expect(screen.getByRole('button', { name: '로그인하기' })).toBeVisible();
     expect(

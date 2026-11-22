@@ -1,6 +1,10 @@
 import { createStore } from 'zustand/vanilla';
 
-import { isMaintenanceTime, MAINTENANCE_ALLOWED_ROLES } from './config';
+import {
+  isMaintenanceTime,
+  MAINTENANCE_ALLOWED_ROLES,
+  subscribeMaintenanceStatus,
+} from './config';
 
 type Access = 'inactive' | 'checking' | 'allowed' | 'blocked';
 type VerifyRole = () => Promise<number>;
@@ -95,5 +99,21 @@ export class MaintenanceBlockedError extends Error {
 }
 
 export function isMaintenanceBlockedError(error: unknown) {
-  return error instanceof MaintenanceBlockedError;
+  return (
+    error instanceof MaintenanceBlockedError ||
+    (typeof error === 'object' &&
+      error !== null &&
+      'response' in error &&
+      (error as { response?: { status?: number; data?: { code?: number } } })
+        .response?.status === 503 &&
+      (error as { response?: { data?: { code?: number } } }).response?.data
+        ?.code === 2135)
+  );
 }
+
+subscribeMaintenanceStatus((next, previous) => {
+  if (next.inProgress !== previous.inProgress) {
+    invalidateMaintenanceSession();
+    void refreshMaintenanceAccess();
+  }
+});

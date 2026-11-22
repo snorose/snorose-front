@@ -40,12 +40,20 @@
   text-align: center;
 }
 
+.noticeImage {
+  max-width: 100%;
+  max-height: 40vh;
+  object-fit: contain;
+}
+
 .content {
   padding: 1rem;
   margin: 1.3rem 1rem 0;
   font: var(--text-headline-2-reg);
   color: var(--grey-4);
   text-align: center;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
 }
 
 @media (min-width: 768px) {

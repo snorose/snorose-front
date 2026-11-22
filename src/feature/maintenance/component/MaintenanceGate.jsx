@@ -16,18 +16,9 @@ import {
   subscribeMaintenanceAccess,
 } from '../access';
 import { isMaintenanceTime } from '../config';
+import { refreshMaintenanceStatus } from '../status';
 
-// reload는 테스트에서 교체할 수 있도록 분리합니다.
-function reloadForMaintenance() {
-  window.location.reload();
-}
-
-export default function MaintenanceGate({
-  children,
-  reload = reloadForMaintenance,
-}) {
-  const startedOutsideMaintenance = useRef(!isMaintenanceTime());
-  const reloaded = useRef(false);
+export default function MaintenanceGate({ children }) {
   const admitted = useRef(false);
   const status = useSyncExternalStore(
     subscribeMaintenanceAccess,
@@ -42,8 +33,14 @@ export default function MaintenanceGate({
   if (!blocked) admitted.current = true;
 
   useEffect(() => {
-    const check = () => refreshMaintenanceAccess();
-    const onFocus = () => refreshMaintenanceAccess(true);
+    const check = () => {
+      void refreshMaintenanceStatus();
+      void refreshMaintenanceAccess();
+    };
+    const onFocus = () => {
+      void refreshMaintenanceStatus(true);
+      void refreshMaintenanceAccess(true);
+    };
     const onVisibility = () => {
       if (document.visibilityState === 'visible') onFocus();
     };
@@ -81,17 +78,6 @@ export default function MaintenanceGate({
       });
     };
   }, [blocked]);
-
-  useEffect(() => {
-    if (
-      current === 'blocked' &&
-      startedOutsideMaintenance.current &&
-      !reloaded.current
-    ) {
-      reloaded.current = true;
-      reload();
-    }
-  }, [current, reload]);
 
   // 재검증 중에는 기존 리자 화면을 잠시 숨겨 상태를 유지합니다.
   const showApp = !blocked || (current === 'checking' && admitted.current);

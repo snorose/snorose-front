@@ -4,7 +4,10 @@ import {
   refreshMaintenanceAccess,
   setMaintenanceRoleVerifier,
 } from '@/feature/maintenance/access';
-import { MAINTENANCE_START } from '@/feature/maintenance/config';
+import {
+  MAINTENANCE_START,
+  setMaintenanceTestTime,
+} from '@/feature/maintenance/testClock';
 
 import { downloadFromS3 } from './attachment';
 
@@ -15,7 +18,7 @@ describe('maintenance guard for attachment fetch', () => {
   const originalFetch = global.fetch;
   beforeEach(() => {
     jest.useFakeTimers();
-    jest.setSystemTime(MAINTENANCE_START);
+    setMaintenanceTestTime(MAINTENANCE_START);
     localStorage.clear();
     invalidateMaintenanceSession();
     global.fetch = jest.fn().mockResolvedValue({ ok: true });
@@ -41,7 +44,7 @@ describe('maintenance guard for attachment fetch', () => {
   });
 
   it('does not change downloads outside maintenance', async () => {
-    jest.setSystemTime(MAINTENANCE_START.getTime() - 1);
+    setMaintenanceTestTime(MAINTENANCE_START.getTime() - 1);
     await downloadFromS3('https://bucket.example/file');
     expect(global.fetch).toHaveBeenCalledTimes(1);
   });
