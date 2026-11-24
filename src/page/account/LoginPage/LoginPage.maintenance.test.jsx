@@ -6,8 +6,8 @@ import {
   invalidateMaintenanceSession,
   refreshMaintenanceAccess,
   setMaintenanceRoleVerifier,
-} from '@/feature/maintenance/access';
-import MaintenanceGate from '@/feature/maintenance/component/MaintenanceGate';
+} from '@/feature/maintenance';
+import { MaintenanceGate } from '@/feature/maintenance/component';
 import {
   MAINTENANCE_END,
   MAINTENANCE_START,

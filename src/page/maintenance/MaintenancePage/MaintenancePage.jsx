@@ -8,7 +8,7 @@ import {
 import {
   getMaintenanceStatus,
   subscribeMaintenanceStatus,
-} from '@/feature/maintenance/config';
+} from '@/feature/maintenance';
 
 import styles from './MaintenancePage.module.css';
 

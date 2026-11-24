@@ -8,7 +8,7 @@ import {
   refreshMaintenanceAccess,
   setMaintenanceRoleVerifier,
   syncMaintenanceAccess,
-} from '@/feature/maintenance/access';
+} from '@/feature/maintenance';
 import {
   MAINTENANCE_END,
   MAINTENANCE_START,

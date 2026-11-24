@@ -7,15 +7,13 @@ import axios, {
 
 import { activateSession, clearAuthTokens } from '@/feature/auth/libs';
 import {
+  getMaintenanceStatus,
   isMaintenanceBlocked,
   isMaintenanceBlockedError,
-  MaintenanceBlockedError,
-} from '@/feature/maintenance/access';
-import {
-  getMaintenanceStatus,
   isMaintenanceTime,
+  MaintenanceBlockedError,
   setMaintenanceStatus,
-} from '@/feature/maintenance/config';
+} from '@/feature/maintenance';
 
 type RetryableRequestConfig = InternalAxiosRequestConfig & {
   _retry?: boolean;

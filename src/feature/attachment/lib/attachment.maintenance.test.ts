@@ -3,7 +3,7 @@ import {
   MaintenanceBlockedError,
   refreshMaintenanceAccess,
   setMaintenanceRoleVerifier,
-} from '@/feature/maintenance/access';
+} from '@/feature/maintenance';
 import {
   MAINTENANCE_START,
   setMaintenanceTestTime,

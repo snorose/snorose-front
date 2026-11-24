@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import { setMaintenanceStatus } from '@/feature/maintenance/config';
+import { setMaintenanceStatus } from '@/feature/maintenance';
 
 import MaintenancePage from './MaintenancePage';
 
