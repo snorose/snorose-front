@@ -15,6 +15,7 @@ import { htmlToText } from '@/feature/editor/lib';
 import { ConfirmedChip } from '@/feature/exam/component';
 
 import altImage from '@/assets/images/altImage.png';
+import reindeerCloudLogo from '@/assets/images/ic-multi-cloud-logo-reindeer.svg';
 
 import styles from './PostBar.module.css';
 
@@ -84,7 +85,13 @@ function Meta({
 
   return (
     <div className={styles.meta}>
-      <IconMultiCloudLogo width={22} height={14} role='img' aria-label='로고' />
+      {/* <IconMultiCloudLogo width={22} height={14} role='img' aria-label='로고' /> */}
+      <img
+        src={reindeerCloudLogo}
+        width={22}
+        height={17}
+        alt='크리스마스 임시 로고'
+      />
       <div className={styles.userDisplay} title={userDisplay || undefined}>
         {userDisplay}
       </div>
