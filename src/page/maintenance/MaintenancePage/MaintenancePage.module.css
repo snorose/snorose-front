@@ -46,10 +46,18 @@
   font: var(--text-headline-2-reg);
   color: var(--grey-4);
   text-align: center;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
 }
 
 @media (min-width: 768px) {
   .logo {
     margin-top: 4rem;
   }
+}
+
+.noticeImage {
+  max-width: 100%;
+  max-height: 40vh;
+  object-fit: contain;
 }

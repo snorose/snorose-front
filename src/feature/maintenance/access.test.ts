@@ -1,35 +1,40 @@
 import {
+  MAINTENANCE_END,
+  MAINTENANCE_START,
+  setMaintenanceTestTime,
+} from '@/feature/maintenance/testClock';
+
+import {
   getMaintenanceAccess,
   invalidateMaintenanceSession,
   isMaintenanceBlocked,
   refreshMaintenanceAccess,
   setMaintenanceRoleVerifier,
 } from './access';
-import {
-  isMaintenanceTime,
-  MAINTENANCE_END,
-  MAINTENANCE_START,
-} from './config';
+import { isMaintenanceTime } from './config';
 
 describe('maintenance access', () => {
   beforeEach(() => {
     jest.useFakeTimers();
-    jest.setSystemTime(MAINTENANCE_START);
+    setMaintenanceTestTime(MAINTENANCE_START);
     localStorage.clear();
     invalidateMaintenanceSession();
   });
   afterEach(() => jest.useRealTimers());
 
   it('includes both boundaries and allows requests outside the period', () => {
-    expect(isMaintenanceTime(MAINTENANCE_START.getTime() - 1)).toBe(false);
-    expect(isMaintenanceTime(MAINTENANCE_START.getTime())).toBe(true);
-    expect(isMaintenanceTime(MAINTENANCE_END.getTime())).toBe(true);
-    jest.setSystemTime(MAINTENANCE_END.getTime() + 1);
+    setMaintenanceTestTime(MAINTENANCE_START.getTime() - 1);
+    expect(isMaintenanceTime()).toBe(false);
+    setMaintenanceTestTime(MAINTENANCE_START);
+    expect(isMaintenanceTime()).toBe(true);
+    setMaintenanceTestTime(MAINTENANCE_END);
+    expect(isMaintenanceTime()).toBe(true);
+    setMaintenanceTestTime(MAINTENANCE_END.getTime() + 1);
     expect(isMaintenanceBlocked()).toBe(false);
   });
 
   it('does not verify roles outside maintenance', async () => {
-    jest.setSystemTime(MAINTENANCE_START.getTime() - 1);
+    setMaintenanceTestTime(MAINTENANCE_START.getTime() - 1);
     localStorage.setItem('accessToken', 'session');
     const verifier = jest.fn().mockResolvedValue(4);
     setMaintenanceRoleVerifier(verifier);
@@ -118,7 +123,7 @@ describe('maintenance access', () => {
     );
     const request = refreshMaintenanceAccess();
     await Promise.resolve();
-    jest.setSystemTime(MAINTENANCE_END.getTime() + 1);
+    setMaintenanceTestTime(MAINTENANCE_END.getTime() + 1);
     resolveRole!(4);
     await request;
     expect(getMaintenanceAccess()).toBe('inactive');
