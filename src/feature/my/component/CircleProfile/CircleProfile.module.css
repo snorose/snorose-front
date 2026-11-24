@@ -14,12 +14,12 @@
 
   padding: 0.6rem;
 
-  overflow: hidden;
+  overflow: visible;
 
   transform: translateX(-50%);
 }
 
-.profileImage img,
+.profileImage img:not(.santaHat),
 .profileImage svg {
   display: block;
   width: 100%;
@@ -27,4 +27,18 @@
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 50%;
+}
+
+.santaHat {
+  position: absolute;
+  top: -26%;
+  left: 16%;
+  z-index: 1;
+
+  display: block;
+  width: 83%;
+  height: auto;
+
+  object-fit: contain;
+  pointer-events: none;
 }
