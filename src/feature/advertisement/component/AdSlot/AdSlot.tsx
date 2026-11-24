@@ -25,7 +25,7 @@ function AdContent({ page }: { page: string }) {
   const { data: banner } = useBannerByPage(page);
 
   return (
-    <BannerGA key={banner.bannerId} {...banner}>
+    <BannerGA key={banner.bannerId} {...banner} impressionTime={1000}>
       <Link to={banner.redirectUrl}>
         <Banner imageUrl={banner.imageUrl} alt={banner.bannerName} />
       </Link>
