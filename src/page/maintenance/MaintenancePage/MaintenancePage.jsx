@@ -13,7 +13,7 @@ import {
 import styles from './MaintenancePage.module.css';
 
 export default function MaintenancePage() {
-  const { endAt, noticeMessage, imageUrl } = useSyncExternalStore(
+  const { title, endAt, noticeMessage, imageUrl } = useSyncExternalStore(
     subscribeMaintenanceStatus,
     getMaintenanceStatus
   );
@@ -30,7 +30,7 @@ export default function MaintenancePage() {
       ) : (
         <IllustrationClipboardSearch role='img' aria-label='서버 점검' />
       )}
-      <h1 className={styles.title}>서버 점검 안내</h1>
+      <h1 className={styles.title}>{title}</h1>
       <div className={styles.text}>
         {endAt && (
           <p className={styles.date}>
