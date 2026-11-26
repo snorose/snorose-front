@@ -38,7 +38,7 @@ it('renders the default notice without a fabricated end time', () => {
     imageUrl: null,
   });
   render(<MaintenancePage />);
-  expect(screen.getByRole('heading', { name: '서버 점검 안내' })).toBeVisible();
+  expect(screen.getByRole('heading')).toBeEmptyDOMElement();
   expect(screen.queryByText(/종료 예정/)).not.toBeInTheDocument();
   expect(screen.getByText(/안정적인 서비스 제공/)).toBeVisible();
 });

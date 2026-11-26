@@ -30,7 +30,7 @@ export default function MaintenancePage() {
       ) : (
         <IllustrationClipboardSearch role='img' aria-label='서버 점검' />
       )}
-      <h1 className={styles.title}>{title || '서버 점검 안내'}</h1>
+      <h1 className={styles.title}>{title}</h1>
       <div className={styles.text}>
         {endAt && <p className={styles.date}>종료 예정 : {endAt}</p>}
 
