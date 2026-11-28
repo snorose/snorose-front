@@ -31,6 +31,8 @@ import { openNotificationUrl } from '@/feature/alert/lib/openNotificationUrl';
 
 import style from './AlertPage.module.css';
 
+const SUPPORT_CATEGORY = { REPORT: '신고', INQUIRY: '문의' };
+
 export default function AlertPage() {
   const navigate = useNavigate();
 
@@ -163,7 +165,7 @@ function NotificationList({ category }) {
         <NotificationItem
           key={item.id}
           {...item}
-          category={CATEGORY[item.category]}
+          category={SUPPORT_CATEGORY[item.category] ?? CATEGORY[item.category]}
           onClick={() => read(item)}
         />
       ))}
