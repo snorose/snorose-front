@@ -1,3 +1,5 @@
+import { Navigate } from 'react-router-dom';
+
 import { FEATURE_FLAG, NEW_BOARD_KILL_SWITCH, ROLE } from '@/shared/constant';
 import { NEW_BOARD_KEYS } from '@/shared/lib';
 import { attendanceLoader } from '@/shared/loader';
@@ -51,7 +53,6 @@ import {
   WriteExamReviewPage,
 } from '@/page/exam';
 import { AttendancePage, MainPage } from '@/page/home';
-import { MaintenancePage } from '@/page/maintenance';
 import { SearchPage } from '@/page/search';
 import {
   AboutPage,
@@ -830,7 +831,7 @@ export const routeList = [
       },
       {
         path: '/maintenance',
-        element: <MaintenancePage />,
+        element: <Navigate to='/' replace />,
       },
       {
         path: '*',

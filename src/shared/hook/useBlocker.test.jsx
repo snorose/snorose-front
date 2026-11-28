@@ -8,8 +8,11 @@ import {
   invalidateMaintenanceSession,
   refreshMaintenanceAccess,
   setMaintenanceRoleVerifier,
-} from '@/feature/maintenance/access';
-import { MAINTENANCE_START } from '@/feature/maintenance/config';
+} from '@/feature/maintenance';
+import {
+  MAINTENANCE_START,
+  setMaintenanceTestTime,
+} from '@/feature/maintenance/testClock';
 
 import useBlocker from './useBlocker';
 
@@ -28,7 +31,7 @@ describe('writing page beforeunload during maintenance', () => {
   let router;
   beforeEach(() => {
     jest.useFakeTimers();
-    jest.setSystemTime(MAINTENANCE_START.getTime() - 1);
+    setMaintenanceTestTime(MAINTENANCE_START.getTime() - 1);
     localStorage.clear();
     invalidateMaintenanceSession();
     router = createMemoryRouter([{ path: '/', element: <WritingPage /> }]);
@@ -45,7 +48,7 @@ describe('writing page beforeunload during maintenance', () => {
       </ModalProvider>
     );
     expect(beforeUnload()).toBe(true);
-    jest.setSystemTime(MAINTENANCE_START);
+    setMaintenanceTestTime(MAINTENANCE_START);
     expect(beforeUnload()).toBe(false);
   });
 
@@ -55,7 +58,7 @@ describe('writing page beforeunload during maintenance', () => {
         <RouterProvider router={router} />
       </ModalProvider>
     );
-    jest.setSystemTime(MAINTENANCE_START);
+    setMaintenanceTestTime(MAINTENANCE_START);
     localStorage.setItem('accessToken', 'admin');
     setMaintenanceRoleVerifier(jest.fn().mockResolvedValue(4));
     await act(async () => {

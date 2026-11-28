@@ -7,7 +7,8 @@ import { ToastProvider } from '@/shared/context/ToastContext';
 import {
   MAINTENANCE_END,
   MAINTENANCE_START,
-} from '@/feature/maintenance/config';
+  setMaintenanceTestTime,
+} from '@/feature/maintenance/testClock';
 
 import useToast from './useToast';
 
@@ -82,16 +83,16 @@ it('keeps one copy of a message when called repeatedly before a render', () => {
 it.each(['success', 'error', 'info'])(
   '%s is blocked during maintenance and resumes afterwards',
   (variant) => {
-    jest.setSystemTime(MAINTENANCE_START.getTime() - 1);
+    setMaintenanceTestTime(MAINTENANCE_START.getTime() - 1);
     const { result } = renderHook(() => useToast(), { wrapper });
     act(() => result.current.toast[variant]('점검 전'));
     expect(screen.getByText('점검 전')).toBeInTheDocument();
 
-    jest.setSystemTime(MAINTENANCE_START);
+    setMaintenanceTestTime(MAINTENANCE_START);
     act(() => result.current.toast[variant]('점검 중'));
     expect(screen.queryByText('점검 중')).not.toBeInTheDocument();
 
-    jest.setSystemTime(MAINTENANCE_END.getTime() + 1);
+    setMaintenanceTestTime(MAINTENANCE_END.getTime() + 1);
     act(() => result.current.toast[variant]('점검 후'));
     expect(screen.getByText('점검 후')).toBeInTheDocument();
   }

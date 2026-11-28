@@ -8,11 +8,12 @@ import {
   refreshMaintenanceAccess,
   setMaintenanceRoleVerifier,
   syncMaintenanceAccess,
-} from '@/feature/maintenance/access';
+} from '@/feature/maintenance';
 import {
   MAINTENANCE_END,
   MAINTENANCE_START,
-} from '@/feature/maintenance/config';
+  setMaintenanceTestTime,
+} from '@/feature/maintenance/testClock';
 
 import {
   authAxios,
@@ -36,7 +37,7 @@ describe('maintenance request guard', () => {
   const originalRefreshAdapter = refreshClient.defaults.adapter;
   beforeEach(() => {
     jest.useFakeTimers();
-    jest.setSystemTime(MAINTENANCE_START);
+    setMaintenanceTestTime(MAINTENANCE_START);
     localStorage.clear();
     invalidateMaintenanceSession();
     setMaintenanceRoleVerifier(
@@ -122,7 +123,7 @@ describe('maintenance request guard', () => {
   });
 
   it('continues normal requests outside maintenance', async () => {
-    jest.setSystemTime(MAINTENANCE_START.getTime() - 1);
+    setMaintenanceTestTime(MAINTENANCE_START.getTime() - 1);
     const adapter = jest.fn(async (config) => response(config));
     await createAxiosClient({ adapter }).post('/v2/users/login');
     expect(adapter).toHaveBeenCalledTimes(1);
@@ -160,7 +161,7 @@ describe('token refresh across maintenance', () => {
 
   beforeEach(() => {
     jest.useFakeTimers();
-    jest.setSystemTime(MAINTENANCE_START.getTime() - 1);
+    setMaintenanceTestTime(MAINTENANCE_START.getTime() - 1);
     localStorage.clear();
     localStorage.setItem('accessToken', 'existing-access-token');
     localStorage.setItem('refreshToken', 'existing-refresh-token');
@@ -192,7 +193,7 @@ describe('token refresh across maintenance', () => {
       .fn()
       .mockImplementationOnce(async (config) => {
         // The request reached the server before maintenance; its 401 arrives after.
-        jest.setSystemTime(MAINTENANCE_START);
+        setMaintenanceTestTime(MAINTENANCE_START);
         throw unauthorized(config);
       })
       .mockImplementation(async (config) => response(config));
@@ -205,7 +206,7 @@ describe('token refresh across maintenance', () => {
     expect(localStorage.getItem('accessToken')).toBe('renewed-access-token');
     expect(localStorage.getItem('refreshToken')).toBe('existing-refresh-token');
 
-    jest.setSystemTime(MAINTENANCE_END.getTime() + 1);
+    setMaintenanceTestTime(MAINTENANCE_END.getTime() + 1);
     await expect(
       authAxios.get('/v1/boards/1/posts/newpost', { adapter })
     ).resolves.toMatchObject({ status: 200 });

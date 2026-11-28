@@ -7,11 +7,13 @@ import axios, {
 
 import { activateSession, clearAuthTokens } from '@/feature/auth/libs';
 import {
+  getMaintenanceStatus,
   isMaintenanceBlocked,
   isMaintenanceBlockedError,
+  isMaintenanceTime,
   MaintenanceBlockedError,
-} from '@/feature/maintenance/access';
-import { isMaintenanceTime } from '@/feature/maintenance/config';
+  setMaintenanceStatus,
+} from '@/feature/maintenance';
 
 type RetryableRequestConfig = InternalAxiosRequestConfig & {
   _retry?: boolean;
@@ -50,6 +52,12 @@ export function createAxiosClient(config?: AxiosRequestConfig): AxiosInstance {
     }
     return request;
   });
+  client.interceptors.response.use(undefined, (error) => {
+    if (error.response?.status === 503 && error.response?.data?.code === 2135) {
+      setMaintenanceStatus({ ...getMaintenanceStatus(), inProgress: true });
+    }
+    return Promise.reject(error);
+  });
   return client;
 }
 
@@ -65,6 +73,8 @@ function getMaintenanceRequestType(config: InternalAxiosRequestConfig) {
   if (method === 'POST' && requestUrl.pathname === '/v2/users/login')
     return 'login';
   if (
+    (method === 'GET' &&
+      requestUrl.pathname === '/v1/server-maintenance/status') ||
     (method === 'GET' && requestUrl.pathname === '/v1/users/mypage') ||
     (method === 'POST' && requestUrl.pathname === '/v2/users/reissueToken') ||
     (method === 'POST' && requestUrl.pathname === '/v2/users/logout')
