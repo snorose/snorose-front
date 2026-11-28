@@ -48,7 +48,7 @@ function ReportDetailLoader() {
   const { setModal } = useContext(ModalContext);
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
 
-  const hasLink = data.targetBoardId && data.targetPostId;
+  const hasLink = Boolean(data.targetBoardId && data.targetPostId);
   const boardName = hasLink ? getBoardTextId(data.targetBoardId) : '';
   const link = `/board/${boardName}/post/${data.targetPostId}`;
 
